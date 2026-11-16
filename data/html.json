@@ -1,0 +1,54 @@
+{
+  "language": "HTML",
+  "description": "Contenido de referencia de HTML.",
+  "topics": [
+    {
+      "id": 1,
+      "title": "Estructura básica",
+      "summary": "doctype, html, head y body",
+      "lessons": []
+    },
+    {
+      "id": 2,
+      "title": "Etiquetas y elementos",
+      "summary": "Títulos, párrafos, enlaces e imágenes",
+      "lessons": []
+    },
+    {
+      "id": 3,
+      "title": "Atributos",
+      "summary": "class, id, href, src y más",
+      "lessons": []
+    },
+    {
+      "id": 4,
+      "title": "Formularios",
+      "summary": "Inputs, labels, botones y validación",
+      "lessons": []
+    },
+    {
+      "id": 5,
+      "title": "Tablas y multimedia",
+      "summary": "Datos tabulares, audio y video",
+      "lessons": []
+    },
+    {
+      "id": 6,
+      "title": "HTML semántico",
+      "summary": "header, nav, main, article y footer",
+      "lessons": []
+    },
+    {
+      "id": 7,
+      "title": "Accesibilidad",
+      "summary": "Buenas prácticas para todos los usuarios",
+      "lessons": []
+    },
+    {
+      "id": 8,
+      "title": "Errores frecuentes",
+      "summary": "Problemas comunes y cómo resolverlos",
+      "lessons": []
+    }
+  ]
+}
