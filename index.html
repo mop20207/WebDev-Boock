@@ -1,86 +1,38 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d18">
-  <meta name="description" content="WebDev Book: una enciclopedia interactiva para aprender HTML, CSS y JavaScript.">
-  <title>WebDev Book | Aprende desarrollo web</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/global.css">
-  <script src="js/app.js" defer></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18"><meta name="description" content="WebDev Book: aprendé HTML, CSS y JavaScript.">
+<title>WebDev Book | Inicio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/home.css">
+<script defer src="js/theme.js"></script><script defer src="js/navigation.js"></script><script defer src="js/search.js"></script><script defer src="js/editor.js"></script><script defer src="js/app.js"></script>
 </head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <a class="brand" href="#inicio" aria-label="WebDev Book, inicio">
-        <span class="brand-mark">&lt;/&gt;</span>
-        <span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span>
-      </a>
-      <div class="sidebar-label">MENÚ PRINCIPAL</div>
-      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
-        <a class="nav-link active" href="#inicio" data-page="inicio"><span class="nav-icon">⌂</span> Inicio</a>
-        <a class="nav-link" href="#html" data-page="html"><span class="nav-icon html-icon">5</span> HTML</a>
-        <a class="nav-link" href="#css" data-page="css"><span class="nav-icon css-icon">✳</span> CSS</a>
-        <a class="nav-link" href="#javascript" data-page="javascript"><span class="nav-icon js-icon">JS</span> JavaScript</a>
-        <div class="nav-divider"></div>
-        <a class="nav-link" href="#ejercicios" data-page="ejercicios"><span class="nav-icon">✎</span> Ejercicios</a>
-        <a class="nav-link" href="#proyectos" data-page="proyectos"><span class="nav-icon">▣</span> Proyectos</a>
-        <a class="nav-link" href="#favoritos" data-page="favoritos"><span class="nav-icon">☆</span> Favoritos</a>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Un paso a la vez</strong><p>Aprendé, practicá y construí tus propios proyectos.</p></div>
-        <button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button>
-      </div>
-    </aside>
-
-    <main class="main-area">
-      <header class="topbar">
-        <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú" type="button">☰</button>
-        <div class="breadcrumb"><span>Biblioteca</span><b>/</b><strong id="breadcrumbCurrent">Inicio</strong></div>
-        <label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar conceptos, etiquetas..." autocomplete="off"><kbd>⌘ K</kbd></label>
-        <button class="top-icon" id="topThemeToggle" type="button" aria-label="Cambiar tema">◐</button>
-      </header>
-
-      <div class="page-content" id="pageContent">
-        <section class="welcome-row">
-          <div><div class="eyebrow"><span class="status-dot"></span> TU ESPACIO DE APRENDIZAJE</div><h1>El desarrollo web,<br><span>en un solo lugar.</span></h1><p class="welcome-copy">Una biblioteca interactiva para aprender HTML, CSS y JavaScript. Explorá conceptos, mirá ejemplos y practicá con tu propio código.</p><div class="welcome-actions"><a class="button button-primary" href="#html">Comenzar a aprender <span>→</span></a><button class="button button-ghost" id="openEditorTop" type="button"><span>⌘</span> Abrir laboratorio</button></div></div>
-          <div class="hero-visual" aria-label="Ilustración de código"><div class="visual-glow"></div><div class="code-window"><div class="window-bar"><i></i><i></i><i></i><span>index.html</span></div><div class="code-lines"><p><em>01</em> <span class="code-purple">&lt;main&gt;</span></p><p><em>02</em> &nbsp;&nbsp;<span class="code-blue">&lt;h1&gt;</span>Hola mundo<span class="code-blue">&lt;/h1&gt;</span></p><p><em>03</em> &nbsp;&nbsp;<span class="code-purple">&lt;p&gt;</span>Creá algo increíble.<span class="code-purple">&lt;/p&gt;</span></p><p><em>04</em> <span class="code-purple">&lt;/main&gt;</span></p><p><em>05</em> <span class="code-green">▍</span></p></div><div class="visual-badge"><span>✦</span> Aprender haciendo</div></div></div>
-        </section>
-
-        <section class="section-block"><div class="section-heading"><div><div class="eyebrow">LOS TRES PILARES</div><h2>¿Qué querés aprender?</h2></div><span class="section-note">Elegí un lenguaje para explorar</span></div>
-          <div class="language-grid">
-            <a class="language-card html-card" href="#html" data-page="html"><div class="language-top"><span class="language-symbol">5</span><span class="card-arrow">↗</span></div><h3>HTML</h3><p>La estructura de la web. Aprendé a organizar el contenido con etiquetas y elementos.</p><div class="card-tags"><span>Estructura</span><span>Etiquetas</span><span>Semántica</span></div><div class="card-bottom"><span>Explorar HTML</span><b>→</b></div></a>
-            <a class="language-card css-card" href="#css" data-page="css"><div class="language-top"><span class="language-symbol">✳</span><span class="card-arrow">↗</span></div><h3>CSS</h3><p>Dale estilo a tus páginas. Dominá diseños, colores, animaciones y diseño adaptable.</p><div class="card-tags"><span>Diseño</span><span>Estilos</span><span>Responsive</span></div><div class="card-bottom"><span>Explorar CSS</span><b>→</b></div></a>
-            <a class="language-card js-card" href="#javascript" data-page="javascript"><div class="language-top"><span class="language-symbol">JS</span><span class="card-arrow">↗</span></div><h3>JavaScript</h3><p>Agregá interacción y lógica. Creá experiencias dinámicas que respondan al usuario.</p><div class="card-tags"><span>Lógica</span><span>Interacción</span><span>APIs</span></div><div class="card-bottom"><span>Explorar JavaScript</span><b>→</b></div></a>
-          </div>
-        </section>
-
-        <section class="lower-grid"><div class="panel quick-panel"><div class="panel-heading"><div><div class="eyebrow">SEGUÍ EXPLORANDO</div><h2>Accesos rápidos</h2></div><span class="panel-icon">⌁</span></div><a class="quick-link" href="#ejercicios" data-page="ejercicios"><span class="quick-icon">✎</span><span><strong>Ejercicios prácticos</strong><small>Comprobá lo que aprendiste</small></span><b>→</b></a><a class="quick-link" href="#proyectos" data-page="proyectos"><span class="quick-icon">▣</span><span><strong>Pequeños proyectos</strong><small>Convertí teoría en práctica</small></span><b>→</b></a><a class="quick-link" href="#favoritos" data-page="favoritos"><span class="quick-icon">☆</span><span><strong>Tus favoritos</strong><small>Guardá conceptos importantes</small></span><b>→</b></a></div>
-          <div class="panel lab-panel"><div class="lab-decoration">&lt;/&gt;</div><div class="eyebrow">PRACTICÁ EN TIEMPO REAL</div><h2>Tu laboratorio<br>de código.</h2><p>Probá HTML, CSS y JavaScript en un mismo espacio y mirá el resultado al instante.</p><button class="button button-primary" id="openEditor" type="button">Abrir editor <span>→</span></button></div></section>
-        <footer class="footer"><span>WebDev Book <b>·</b> Aprendé construyendo.</span><span>Versión inicial 0.1</span></footer>
-      </div>
-    </main>
-  </div>
-  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-  <button class="floating-editor" id="floatingEditor" type="button" aria-label="Abrir laboratorio"><span>⌘</span><b>Laboratorio</b></button>
-  <section class="editor-modal" id="editorModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
-    <div class="editor-dialog"><div class="editor-header"><div><div class="eyebrow">WEBDEV BOOK / PLAYGROUND</div><h2 id="editorTitle">Laboratorio de código</h2></div><button class="close-editor" id="closeEditor" type="button" aria-label="Cerrar">×</button></div>
-      <div class="editor-toolbar"><div class="editor-tabs"><button class="editor-tab active" data-tab="html" type="button">HTML</button><button class="editor-tab" data-tab="css" type="button">CSS</button><button class="editor-tab" data-tab="js" type="button">JavaScript</button></div><div class="editor-actions"><button class="button button-small button-ghost" id="resetCode" type="button">Restablecer</button><button class="button button-small button-primary" id="runCode" type="button">▶ Ejecutar</button></div></div>
-      <div class="editor-workspace"><div class="code-editor-area"><div class="editor-pane active" data-pane="html"><textarea id="htmlCode" spellcheck="false" aria-label="Código HTML"><h1>¡Hola, mundo!</h1>
-<p>Este es mi primer experimento.</p>
-<button onclick="alert('¡Funciona!')">Hacé clic</button></textarea></div><div class="editor-pane" data-pane="css"><textarea id="cssCode" spellcheck="false" aria-label="Código CSS">body {
-  font-family: Arial, sans-serif;
-  padding: 24px;
-  background: #f0f4ff;
-  color: #172554;
-}
-h1 { color: #4169e1; }</textarea></div><div class="editor-pane" data-pane="js"><textarea id="jsCode" spellcheck="false" aria-label="Código JavaScript">console.log("¡Hola desde JavaScript!");</textarea></div></div><div class="preview-area"><div class="preview-heading"><span><i></i> VISTA PREVIA</span><button id="refreshPreview" type="button">↻ Actualizar</button></div><iframe id="previewFrame" title="Vista previa del código" sandbox="allow-scripts"></iframe><div class="console-output" id="consoleOutput"><span>CONSOLA</span><pre id="consoleText">La salida de console.log aparecerá acá.</pre></div></div></div>
-      <div class="editor-footer"><span>Los cambios se ejecutan en una vista previa aislada.</span><span>HTML · CSS · JS</span></div>
-    </div>
-  </section>
-</body>
-</html>
+<body data-page="home">
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+<div class="sidebar-label">MENÚ PRINCIPAL</div>
+<nav class="main-nav" aria-label="Navegación principal">
+<a class="nav-link active" href="index.html"><span class="nav-icon">⌂</span> Inicio</a>
+<a class="nav-link" href="pages/html.html"><span class="nav-icon html-icon">5</span> HTML</a>
+<a class="nav-link" href="pages/css.html"><span class="nav-icon css-icon">✳</span> CSS</a>
+<a class="nav-link" href="pages/javascript.html"><span class="nav-icon js-icon">JS</span> JavaScript</a>
+<div class="nav-divider"></div><a class="nav-link" href="#ejercicios"><span class="nav-icon">✎</span> Ejercicios</a><a class="nav-link" href="#proyectos"><span class="nav-icon">▣</span> Proyectos</a><a class="nav-link" href="#favoritos"><span class="nav-icon">☆</span> Favoritos</a>
+</nav>
+<div class="sidebar-bottom"><div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Un paso a la vez</strong><p>Aprendé, practicá y construí tus propios proyectos.</p></div><button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button></div>
+</aside>
+<main class="main-area"><header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button><div class="breadcrumb"><span>Biblioteca</span><b>/</b><strong>Inicio</strong></div><label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar conceptos, etiquetas..." autocomplete="off"></label><button class="top-icon" id="topThemeToggle" aria-label="Cambiar tema">◐</button></header>
+<div class="page-content">
+<section class="welcome-row"><div><div class="eyebrow"><span class="status-dot"></span> TU ESPACIO DE APRENDIZAJE</div><h1>El desarrollo web,<br><span>en un solo lugar.</span></h1><p class="welcome-copy">Una biblioteca interactiva para aprender HTML, CSS y JavaScript. Explorá conceptos, mirá ejemplos y practicá con tu propio código.</p><div class="welcome-actions"><a class="button button-primary" href="pages/html.html">Comenzar a aprender <span>→</span></a><button class="button button-ghost" data-open-editor type="button">⌘ Abrir laboratorio</button></div></div>
+<div class="hero-visual"><div class="visual-glow"></div><div class="code-window"><div class="window-bar"><i></i><i></i><i></i><span>index.html</span></div><div class="code-lines"><p><em>01</em> <span class="code-purple">&lt;main&gt;</span></p><p><em>02</em> &nbsp;&nbsp;<span class="code-blue">&lt;h1&gt;</span>Hola mundo<span class="code-blue">&lt;/h1&gt;</span></p><p><em>03</em> &nbsp;&nbsp;<span class="code-purple">&lt;p&gt;</span>Creá algo increíble.<span class="code-purple">&lt;/p&gt;</span></p><p><em>04</em> <span class="code-purple">&lt;/main&gt;</span></p><p><em>05</em> <span class="code-green">▍</span></p></div><div class="visual-badge">✦ Aprender haciendo</div></div></div></section>
+<section class="section-block"><div class="section-heading"><div><div class="eyebrow">LOS TRES PILARES</div><h2>¿Qué querés aprender?</h2></div><span class="section-note">Elegí un lenguaje para explorar</span></div>
+<div class="language-grid"><a class="language-card html-card" href="pages/html.html"><div class="language-top"><span class="language-symbol">5</span><span class="card-arrow">↗</span></div><h3>HTML</h3><p>La estructura de la web. Aprendé a organizar el contenido con etiquetas y elementos.</p><div class="card-tags"><span>Estructura</span><span>Etiquetas</span><span>Semántica</span></div><div class="card-bottom"><span>Explorar HTML</span><b>→</b></div></a>
+<a class="language-card css-card" href="pages/css.html"><div class="language-top"><span class="language-symbol">✳</span><span class="card-arrow">↗</span></div><h3>CSS</h3><p>Dale estilo a tus páginas. Dominá diseños, colores, animaciones y diseño adaptable.</p><div class="card-tags"><span>Diseño</span><span>Estilos</span><span>Responsive</span></div><div class="card-bottom"><span>Explorar CSS</span><b>→</b></div></a>
+<a class="language-card js-card" href="pages/javascript.html"><div class="language-top"><span class="language-symbol">JS</span><span class="card-arrow">↗</span></div><h3>JavaScript</h3><p>Agregá interacción y lógica. Creá experiencias dinámicas que respondan al usuario.</p><div class="card-tags"><span>Lógica</span><span>Interacción</span><span>APIs</span></div><div class="card-bottom"><span>Explorar JavaScript</span><b>→</b></div></a></div></section>
+<section class="lower-grid"><div class="panel quick-panel"><div class="panel-heading"><div><div class="eyebrow">SEGUÍ EXPLORANDO</div><h2>Accesos rápidos</h2></div></div><a class="quick-link" href="#ejercicios"><span class="quick-icon">✎</span><span><strong>Ejercicios prácticos</strong><small>Comprobá lo que aprendiste</small></span><b>→</b></a><a class="quick-link" href="#proyectos"><span class="quick-icon">▣</span><span><strong>Pequeños proyectos</strong><small>Convertí teoría en práctica</small></span><b>→</b></a><a class="quick-link" href="#favoritos"><span class="quick-icon">☆</span><span><strong>Tus favoritos</strong><small>Guardá conceptos importantes</small></span><b>→</b></a></div>
+<div class="panel lab-panel"><div class="lab-decoration">&lt;/&gt;</div><div class="eyebrow">PRACTICÁ EN TIEMPO REAL</div><h2>Tu laboratorio<br>de código.</h2><p>Probá HTML, CSS y JavaScript en un mismo espacio y mirá el resultado al instante.</p><button class="button button-primary" data-open-editor>Abir editor →</button></div></section>
+<footer class="footer"><span>WebDev Book · Aprendé construyendo.</span><span>Versión inicial 0.2</span></footer>
+</div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div>
+</body></html>
