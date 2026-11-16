@@ -1,0 +1,66 @@
+{
+  "language": "JavaScript",
+  "description": "Contenido de referencia de JavaScript.",
+  "topics": [
+    {
+      "id": 1,
+      "title": "Variables y constantes",
+      "summary": "let, const y alcance",
+      "lessons": []
+    },
+    {
+      "id": 2,
+      "title": "Tipos de datos",
+      "summary": "Strings, números, booleanos y más",
+      "lessons": []
+    },
+    {
+      "id": 3,
+      "title": "Operadores y condiciones",
+      "summary": "Expresiones, if, else y switch",
+      "lessons": []
+    },
+    {
+      "id": 4,
+      "title": "Bucles",
+      "summary": "for, while y recorridos",
+      "lessons": []
+    },
+    {
+      "id": 5,
+      "title": "Funciones",
+      "summary": "Parámetros, retorno y funciones flecha",
+      "lessons": []
+    },
+    {
+      "id": 6,
+      "title": "Arrays y objetos",
+      "summary": "Colecciones y estructuras de datos",
+      "lessons": []
+    },
+    {
+      "id": 7,
+      "title": "DOM y eventos",
+      "summary": "Modificar la página y responder al usuario",
+      "lessons": []
+    },
+    {
+      "id": 8,
+      "title": "Asincronía y Fetch",
+      "summary": "Promesas, async/await y APIs",
+      "lessons": []
+    },
+    {
+      "id": 9,
+      "title": "Almacenamiento",
+      "summary": "LocalStorage, SessionStorage e IndexedDB",
+      "lessons": []
+    },
+    {
+      "id": 10,
+      "title": "APIs del navegador",
+      "summary": "Date, Observer, Notifications y otras",
+      "lessons": []
+    }
+  ]
+}
