@@ -68,3 +68,33 @@
 .css-property-tile.is-selected{background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 58%,var(--tile-accent) 42%),color-mix(in srgb,var(--surface-2) 78%,var(--tile-accent) 22%));box-shadow:0 14px 30px color-mix(in srgb,var(--tile-accent) 20%,transparent)}
 .css-property-expand{background:color-mix(in srgb,var(--family-accent) 15%,var(--surface));border-color:color-mix(in srgb,var(--family-accent) 48%,var(--line))}
 @media(max-width:760px){.css-hero-art{width:75%;max-width:370px;margin:0 auto 13px}.topic-grid{grid-template-columns:1fr;gap:12px}.topic-card{min-height:112px;padding:16px;gap:14px;border-radius:14px}.topic-art{flex-basis:54px;width:54px;height:54px;border-radius:15px}.topic-art svg{width:31px;height:31px}.topic-card h3{font-size:14px}.topic-card p{font-size:10px}}
+
+/* Contenido complementario de CSS: definición, compatibilidad, práctica y recursos. */
+.css-about-card,.css-browser-intro,.css-support-list,.css-playground-card{border:1px solid var(--line);border-radius:13px;background:var(--surface)}
+.css-about-card{padding:22px;background:radial-gradient(ellipse at 100% 0%,#5b9cff20,transparent 48%),var(--surface)}
+.css-about-card>p{font-size:13px;line-height:1.9;color:var(--muted);margin:0;max-width:900px}.css-about-card>p strong{color:var(--text)}
+.css-about-points{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.css-about-points article{padding:14px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2)}
+.css-about-points b{display:block;color:#78aaff;font:700 11px "Space Grotesk",sans-serif;margin-bottom:8px}.css-about-points strong{display:block;font-size:12px;margin-bottom:4px}.css-about-points span{font-size:10px;line-height:1.7;color:var(--muted)}
+.css-browser-intro{padding:17px 19px}.css-browser-intro p{font-size:12px;line-height:1.8;color:var(--muted);margin:0}
+.css-support-legend{display:flex;flex-wrap:wrap;gap:15px;margin:15px 0;font-size:10px;color:var(--muted)}.css-support-legend span{display:flex;align-items:center;gap:7px}
+.css-support-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.css-support-dot.red{background:#e46d70}.css-support-dot.yellow{background:#e9c44f}.css-support-dot.green{background:#53c997}
+.css-support-list{padding:7px 17px}.css-support-row{display:grid;grid-template-columns:175px minmax(70px,1fr) 145px;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}.css-support-row:last-child{border-bottom:0}
+.css-browser-name{font-size:12px;font-weight:600}.css-support-track{height:8px;border-radius:20px;background:var(--surface-3);overflow:hidden}.css-support-track i{display:block;height:100%;border-radius:20px}.css-green-fill{background:#53c997}.css-yellow-fill{background:#e9c44f}.css-red-fill{background:#e46d70}
+.css-support-status{font-size:10px;text-align:right}.css-green-text{color:#53c997}.css-yellow-text{color:#d8b53f}.css-red-text{color:#e46d70}
+.css-support-footnote{font-size:10px;line-height:1.7;color:var(--muted);margin:12px 2px 0}
+.css-playground-card{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.css-playground-card .playground-controls{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.css-playground-card .playground-controls label{font-size:11px;font-weight:700}.css-playground-card .playground-controls select{max-width:250px;padding:8px 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2);color:var(--text);font-size:11px}
+.css-code{background:#0d1728;color:#e8eef8;min-width:0}.css-code-head,.css-preview-head{height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:1px solid #293850;font-size:9px;color:#9aabc6;font-weight:700;letter-spacing:.7px}
+.css-code pre{margin:0;padding:18px;min-height:185px;white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.85 "DejaVu Sans Mono",monospace;color:#9ed0ff}
+.css-preview{padding:15px;background:var(--surface-2);min-height:220px}.css-preview-head{padding:0;height:24px;border:0;color:var(--muted)}.css-preview-stage{min-height:115px;display:grid;place-items:center;padding:12px}
+.css-demo-box{padding:15px 22px;border-radius:9px;background:#426be5;color:#fff;font:600 15px "Space Grotesk",sans-serif;text-align:center;transition:.25s}
+.css-demo-box.demo-rounded{border-radius:30px;background:#7a58c9;transform:rotate(-2deg)}.css-demo-box.demo-flex{background:#1c9a83;box-shadow:0 9px 22px #1c9a8340}
+.css-preview>p{font-size:10px;color:var(--muted);line-height:1.6}.css-preview>.button{font-size:10px;padding:8px 12px}
+.css-resource-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.css-resource-card{--resource:#75aaff;display:flex;flex-direction:column;min-height:190px;padding:17px;border:1px solid var(--line);border-radius:12px;background:var(--surface);transition:.2s}
+.css-resource-card:hover{transform:translateY(-3px);border-color:var(--resource)}.css-resource-card>span{font-size:9px;letter-spacing:.8px;color:var(--resource);font-weight:700}.css-resource-card h3{font:600 17px "Space Grotesk",sans-serif;margin:16px 0 5px}.css-resource-card p{font-size:10px;line-height:1.7;color:var(--muted);margin:0 0 14px}.css-resource-card b{font-size:10px;color:var(--resource);margin-top:auto}
+.css-resource-mdn{--resource:#78a9ef}.css-resource-w3{--resource:#7bc99c}.css-resource-free{--resource:#e6b85a}.css-resource-video{--resource:#bb91ed}
+@media(max-width:1050px){.css-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.css-about-points{grid-template-columns:1fr}.css-support-row{grid-template-columns:115px minmax(35px,1fr);gap:8px}.css-support-status{grid-column:1/-1;text-align:left;margin:-5px 0 0 2px}.css-support-list{padding:7px 12px}.css-support-legend{gap:9px}.css-support-legend span{font-size:9px}.css-playground-card{grid-template-columns:1fr}.css-playground-card .playground-controls{grid-column:auto;align-items:flex-start;flex-direction:column}.css-playground-card .playground-controls select{width:100%;max-width:none}.css-code pre{min-height:130px}.css-resource-grid{grid-template-columns:1fr}}
