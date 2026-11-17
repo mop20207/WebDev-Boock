@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+<title id="title">Emblema CSS</title><desc id="desc">Insignia tridimensional estilizada de CSS en tonos azules, celestes y violetas, rodeada de trazos de código.</desc>
+<defs>
+ <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#74d7ff"/><stop offset=".48" stop-color="#2879ed"/><stop offset="1" stop-color="#2737a8"/></linearGradient>
+ <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#263b9b"/><stop offset="1" stop-color="#101a50"/></linearGradient>
+ <linearGradient id="letter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#c9eaff"/></linearGradient>
+ <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c3a4ff"/><stop offset="1" stop-color="#6a48d7"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>
+<ellipse cx="360" cy="258" rx="190" ry="20" fill="#246de8" opacity=".25" filter="url(#shadow)"/>
+<g fill="none" stroke-linecap="round" opacity=".75">
+ <path d="M90 85h110M105 105h65M520 72h105M555 92h65M100 220h90M535 215h90" stroke="#5bc9ff" stroke-width="3"/>
+ <path d="m145 55-24 20 24 20m430-40 24 20-24 20" stroke="#8b7cff" stroke-width="5"/>
+ <circle cx="210" cy="70" r="5" fill="#6fe2ff" stroke="none"/><circle cx="505" cy="220" r="5" fill="#b79aff" stroke="none"/>
+</g>
+<g transform="translate(250 16)">
+ <path d="M35 8 190 28 172 226 111 258 50 226 17 28Z" fill="url(#side)" transform="translate(10 9)"/>
+ <path d="M35 8 190 28 172 226 111 258 50 226 17 28Z" fill="url(#shield)" stroke="#a9eaff" stroke-width="4"/>
+ <path d="m35 8 77 12v214l-62-25L17 28Z" fill="#76d8ff" opacity=".18"/>
+ <path d="m48 43 130 16-5 24-129-16Z" fill="#fff" opacity=".12"/>
+ <path d="m55 93 105 13-4 23-105-13Z" fill="#152d80" opacity=".22"/>
+ <text x="108" y="163" text-anchor="middle" font-family="Arial,sans-serif" font-size="94" font-weight="900" letter-spacing="-8" fill="url(#letter)">CSS</text>
+ <path d="m74 188 35 15 36-15-3 22-33 15-32-15Z" fill="url(#violet)" opacity=".95"/>
+ <path d="m60 239 51 18 61-31" fill="none" stroke="#b7efff" stroke-width="3" opacity=".55"/>
+</g>
+<g fill="#8edfff" opacity=".9"><path d="m205 150 10-10 10 10-10 10z"/><path d="m505 130 7-7 7 7-7 7z"/></g>
+<g fill="#a78aff" opacity=".85"><circle cx="225" cy="210" r="4"/><circle cx="493" cy="183" r="4"/><circle cx="540" cy="112" r="3"/></g>
+</svg>
