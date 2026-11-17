@@ -38,4 +38,21 @@
 <section class="periodic-family family-group-interactive"><h3>Elementos interactivos y componentes<span>5 elementos</span></h3><div class="periodic-grid"><div class="periodic-tile family-interactive" title="Panel desplegable" aria-label="Elemento details: Panel desplegable"><code>&lt;details&gt;</code><span>Panel desplegable</span></div><div class="periodic-tile family-interactive" title="Resumen del panel" aria-label="Elemento summary: Resumen del panel"><code>&lt;summary&gt;</code><span>Resumen del panel</span></div><div class="periodic-tile family-interactive" title="Diálogo" aria-label="Elemento dialog: Diálogo"><code>&lt;dialog&gt;</code><span>Diálogo</span></div><div class="periodic-tile family-interactive" title="Punto de inserción" aria-label="Elemento slot: Punto de inserción"><code>&lt;slot&gt;</code><span>Punto de inserción</span></div><div class="periodic-extra-wrap" hidden><div class="periodic-tile periodic-extra family-interactive" title="Opción seleccionada" aria-label="Elemento selectedcontent: Opción seleccionada"><code>&lt;selectedcontent&gt;</code><span>Opción seleccionada</span></div></div></div><button class="periodic-expand" type="button" aria-expanded="false"><span class="expand-arrow">⌄</span><span class="expand-label">Ver los 1 elementos restantes</span></button></section>
 </div>
 <p class="periodic-footnote">Catálogo visual de elementos HTML actuales. SVG se incluye como contenido vectorial integrado en documentos HTML.</p>
-</section><footer class="footer"><span>WebDev Book · HTML</span><span>Contenido en construcción</span></footer></div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div></body></html>
+</section><footer class="footer"><span>WebDev Book · HTML</span><span>Contenido en construcción</span></footer></div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div><script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".periodic-expand").forEach((button) => {
+    button.addEventListener("click", () => {
+      const family = button.closest(".periodic-family");
+      const extra = family?.querySelector(".periodic-extra-wrap");
+      if (!extra) return;
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      extra.hidden = expanded;
+      button.setAttribute("aria-expanded", String(!expanded));
+      button.querySelector(".expand-label").textContent = expanded
+        ? "Ver los elementos restantes"
+        : "Mostrar menos";
+      button.querySelector(".expand-arrow").textContent = expanded ? "⌄" : "⌃";
+    });
+  });
+});
+</script></body></html>
