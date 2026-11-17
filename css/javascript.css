@@ -64,7 +64,7 @@
 .demo-output{font:600 20px "Space Grotesk",sans-serif;min-height:42px;margin-bottom:12px;color:var(--text)}
 .demo-stage .button{padding:9px 13px;font-size:10px}
 .demo-stage>p{font-size:10px;color:var(--muted);margin:11px 0 0}
-.tutorial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.tutorial-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
 .tutorial-card{position:relative;display:flex;flex-direction:column;min-height:220px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;transition:.2s}
 .tutorial-card:hover{transform:translateY(-3px);border-color:var(--tutorial)}
 .tutorial-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--tutorial)}
@@ -80,3 +80,8 @@ body.light .about-points div{background:#f7f8fb}
 @media(max-width:1050px){.js-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.js-hero{gap:10px}.support-row{grid-template-columns:145px minmax(60px,1fr) 125px}}
 @media(max-width:760px){.js-hero{grid-template-columns:1fr;gap:0;padding-top:8px;min-height:0}.js-hero h1{font-size:44px;margin:12px 0}.js-hero-art{width:min(100%,340px);justify-self:center;margin:-3px auto -5px}.js-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.js-topic-card{min-height:180px;padding:13px}.js-topic-card h3{font-size:13px}.js-topic-card p{font-size:10px}.js-periodic{grid-template-columns:1fr}.about-points,.tutorial-grid{grid-template-columns:1fr}.support-row{grid-template-columns:118px minmax(35px,1fr);gap:8px}.support-status{grid-column:1/-1;text-align:left;margin-left:2px;margin-top:-5px}.support-list{padding:7px 12px}.support-legend{gap:9px}.support-legend span{font-size:9px}.playground-card{grid-template-columns:1fr}.playground-controls{grid-column:auto}.mini-code pre{min-height:130px}.demo-stage{min-height:175px}.tutorial-card{min-height:190px}}
 @media(max-width:390px){.js-topic-grid{grid-template-columns:1fr}.js-topic-card{min-height:0}.topic-visual{margin-bottom:9px}.js-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.playground-controls{align-items:flex-start;flex-direction:column}.playground-controls select{max-width:none;width:100%}.js-hero h1{font-size:39px}}
+
+/* Botón auxiliar de la demostración de eventos. */
+.demo-action{margin:0 0 10px;padding:9px 13px;border:1px solid #d9b849;border-radius:7px;background:#f0d15c;color:#28210d;font-size:10px;font-weight:700;cursor:pointer}.demo-action[hidden]{display:none}.denzdev{--tutorial:#8ca6c8}
+@media(max-width:1050px){.tutorial-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.tutorial-grid{grid-template-columns:1fr}}
