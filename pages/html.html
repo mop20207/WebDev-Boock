@@ -40,6 +40,7 @@
 <p class="periodic-footnote">Catálogo visual de elementos HTML actuales. SVG se incluye como contenido vectorial integrado en documentos HTML.</p>
 </section><footer class="footer"><span>WebDev Book · HTML</span><span>Contenido en construcción</span></footer></div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div><script>
 document.addEventListener("DOMContentLoaded", () => {
+  // Despliega y contrae las etiquetas adicionales de cada familia.
   document.querySelectorAll(".periodic-expand").forEach((button) => {
     button.addEventListener("click", () => {
       const family = button.closest(".periodic-family");
@@ -52,6 +53,80 @@ document.addEventListener("DOMContentLoaded", () => {
         ? "Ver los elementos restantes"
         : "Mostrar menos";
       button.querySelector(".expand-arrow").textContent = expanded ? "⌄" : "⌃";
+    });
+  });
+
+  // Convierte cada ficha en un control seleccionable y muestra su explicación.
+  const explanations = {
+    html: "Es el elemento raíz que contiene todo el documento HTML.",
+    head: "Agrupa los metadatos y recursos que describen el documento.",
+    title: "Define el título que aparece en la pestaña del navegador.",
+    body: "Contiene todo el contenido visible de la página.",
+    header: "Representa la cabecera de una página o de una sección.",
+    nav: "Agrupa los enlaces principales de navegación.",
+    main: "Identifica el contenido principal y único de la página.",
+    section: "Agrupa contenido relacionado bajo un mismo tema.",
+    article: "Representa contenido independiente que podría distribuirse por separado.",
+    aside: "Contiene información complementaria al contenido principal.",
+    footer: "Representa el pie de una página o sección.",
+    h1: "Define el encabezado de mayor nivel de una página o sección.",
+    p: "Agrupa un párrafo de texto.",
+    a: "Crea un enlace hacia otra página, archivo o ubicación.",
+    img: "Inserta una imagen. El atributo alt aporta una alternativa textual.",
+    video: "Incorpora un reproductor de vídeo en la página.",
+    audio: "Incorpora contenido de audio reproducible.",
+    form: "Agrupa controles para enviar información del usuario.",
+    label: "Asocia un texto descriptivo con un control de formulario.",
+    input: "Crea un campo de entrada cuyo tipo se define con type.",
+    button: "Crea un botón que puede ejecutar una acción.",
+    table: "Representa datos organizados en filas y columnas.",
+    tr: "Define una fila dentro de una tabla.",
+    th: "Define una celda que funciona como encabezado de tabla.",
+    td: "Define una celda de datos dentro de una tabla.",
+    script: "Permite incluir o enlazar código JavaScript.",
+    style: "Permite escribir reglas CSS dentro del documento.",
+    link: "Relaciona el documento con un recurso externo, como una hoja CSS.",
+    meta: "Proporciona metadatos como codificación o configuración de pantalla.",
+    iframe: "Inserta otra página HTML dentro del documento actual.",
+    svg: "Permite incluir gráficos vectoriales escalables."
+  };
+
+  document.querySelectorAll(".periodic-tile").forEach((tile) => {
+    const code = tile.querySelector("code")?.textContent || "";
+    const tag = code.replace(/[<>/]/g, "").trim();
+    const shortLabel = tile.querySelector("span")?.textContent?.trim() || "Elemento HTML";
+    const detail = explanations[tag] || `Se utiliza para representar ${shortLabel.toLowerCase()} dentro de la estructura del documento HTML.`;
+
+    tile.setAttribute("role", "button");
+    tile.setAttribute("tabindex", "0");
+    tile.setAttribute("aria-pressed", "false");
+
+    const description = document.createElement("span");
+    description.className = "periodic-detail";
+    description.textContent = detail;
+    description.hidden = true;
+    tile.appendChild(description);
+
+    const selectTile = () => {
+      const wasSelected = tile.classList.contains("is-selected");
+      document.querySelectorAll(".periodic-tile.is-selected").forEach((selected) => {
+        selected.classList.remove("is-selected");
+        selected.setAttribute("aria-pressed", "false");
+        selected.querySelector(".periodic-detail").hidden = true;
+      });
+      if (!wasSelected) {
+        tile.classList.add("is-selected");
+        tile.setAttribute("aria-pressed", "true");
+        description.hidden = false;
+      }
+    };
+
+    tile.addEventListener("click", selectTile);
+    tile.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectTile();
+      }
     });
   });
 });
