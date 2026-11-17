@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 390" fill="none">
+<defs><linearGradient id="gold" x1="110" y1="70" x2="410" y2="330" gradientUnits="userSpaceOnUse"><stop stop-color="#F7E17A"/><stop offset="1" stop-color="#D99A32"/></linearGradient><linearGradient id="panel" x1="85" y1="40" x2="430" y2="340" gradientUnits="userSpaceOnUse"><stop stop-color="#1B2940"/><stop offset="1" stop-color="#101827"/></linearGradient><filter id="shadow" x="25" y="15" width="470" height="365" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="16"/></filter></defs>
+<circle cx="264" cy="190" r="150" fill="#EAC34F" opacity=".10" filter="url(#shadow)"/>
+<path d="M92 71h333a20 20 0 0 1 20 20v211a20 20 0 0 1-20 20H92a20 20 0 0 1-20-20V91a20 20 0 0 1 20-20Z" fill="url(#panel)" stroke="#40516B" stroke-width="2"/>
+<path d="M72 111h373" stroke="#40516B" stroke-width="2"/><circle cx="97" cy="91" r="5" fill="#E87979"/><circle cx="115" cy="91" r="5" fill="#E8C56D"/><circle cx="133" cy="91" r="5" fill="#68C995"/>
+<g font-family="monospace" font-size="13"><text x="105" y="151" fill="#7387A8">01</text><text x="105" y="184" fill="#7387A8">02</text><text x="105" y="217" fill="#7387A8">03</text><text x="105" y="250" fill="#7387A8">04</text><text x="105" y="283" fill="#7387A8">05</text>
+<text x="143" y="151" fill="#D4B6FF">const</text><text x="193" y="151" fill="#F4D36A">web</text><text x="224" y="151" fill="#E8EEF8">=</text><text x="240" y="151" fill="#8BD8B2">"interactiva"</text>
+<text x="143" y="184" fill="#D4B6FF">function</text><text x="215" y="184" fill="#F4D36A">saludar</text><text x="274" y="184" fill="#E8EEF8">() {</text>
+<text x="160" y="217" fill="#8BD8B2">console.log</text><text x="253" y="217" fill="#E8EEF8">("¡Hola!")</text>
+<text x="143" y="250" fill="#E8EEF8">}</text><text x="143" y="283" fill="#F4D36A">saludar()</text></g>
+<rect x="303" y="230" width="132" height="106" rx="14" fill="#F0CC57"/><path d="M303 250h132" stroke="#D7AD37" stroke-width="1.5"/><text x="319" y="245" font-family="Arial,sans-serif" font-size="8" font-weight="700" fill="#624B13">JAVASCRIPT</text><path d="M321 268h96v52h-96z" fill="#19263A" rx="5"/><text x="367" y="308" text-anchor="middle" font-family="Arial,sans-serif" font-size="33" font-weight="700" fill="#F4D76A">JS</text>
+<path d="M43 156l15-15 15 15-15 15-15-15Z" fill="#E7BD4A" opacity=".75"/><circle cx="457" cy="139" r="8" fill="#E7BD4A" opacity=".7"/><circle cx="455" cy="328" r="5" fill="#E7BD4A"/><path d="M69 331h44" stroke="#E7BD4A" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>
