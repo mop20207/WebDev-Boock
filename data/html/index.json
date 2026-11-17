@@ -1,0 +1,76 @@
+{
+  "language": "HTML",
+  "description": "Índice de contenidos de HTML en WebDev Book.",
+  "sections": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos de HTML",
+      "description": "Conceptos esenciales del lenguaje de marcado.",
+      "file": "fundamentos.json",
+      "order": 1
+    },
+    {
+      "id": "estructura",
+      "title": "Estructura del documento",
+      "description": "DOCTYPE, html, head, body y organización de una página.",
+      "file": "estructura.json",
+      "order": 2
+    },
+    {
+      "id": "etiquetas",
+      "title": "Etiquetas HTML",
+      "description": "Catálogo de elementos HTML organizado por categorías.",
+      "file": "etiquetas.json",
+      "order": 3
+    },
+    {
+      "id": "atributos",
+      "title": "Atributos HTML",
+      "description": "Atributos globales y específicos de los elementos.",
+      "file": "atributos.json",
+      "order": 4
+    },
+    {
+      "id": "formularios",
+      "title": "Formularios",
+      "description": "Controles, tipos de campos y validación nativa.",
+      "file": "formularios.json",
+      "order": 5
+    },
+    {
+      "id": "multimedia",
+      "title": "Contenido multimedia",
+      "description": "Imágenes, audio, vídeo, iframe y recursos integrados.",
+      "file": "multimedia.json",
+      "order": 6
+    },
+    {
+      "id": "svg",
+      "title": "SVG",
+      "description": "Gráficos vectoriales, formas, trazados y animaciones.",
+      "file": "svg.json",
+      "order": 7
+    },
+    {
+      "id": "semantica",
+      "title": "HTML semántico",
+      "description": "Elementos que describen el significado y la estructura del contenido.",
+      "file": "semantica.json",
+      "order": 8
+    },
+    {
+      "id": "accesibilidad",
+      "title": "Accesibilidad",
+      "description": "Buenas prácticas para crear contenido accesible.",
+      "file": "accesibilidad.json",
+      "order": 9
+    },
+    {
+      "id": "retos",
+      "title": "Retos de HTML",
+      "description": "Prácticas para construir estructuras y componentes usando HTML.",
+      "file": "retos.json",
+      "order": 10
+    }
+  ]
+}
