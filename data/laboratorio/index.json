@@ -1,0 +1,45 @@
+{
+  "name": "Laboratorio de código",
+  "description": "Configuración y contenidos del espacio donde se pueden escribir, ejecutar y probar ejemplos de HTML, CSS y JavaScript.",
+  "version": 1,
+  "languages": [
+    {
+      "id": "html",
+      "name": "HTML",
+      "enabled": true,
+      "description": "Estructura y contenido de la página."
+    },
+    {
+      "id": "css",
+      "name": "CSS",
+      "enabled": true,
+      "description": "Estilos y presentación visual."
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "enabled": true,
+      "description": "Interactividad y lógica."
+    }
+  ],
+  "features": [
+    {
+      "id": "preview",
+      "name": "Vista previa",
+      "enabled": true
+    },
+    {
+      "id": "console",
+      "name": "Consola",
+      "enabled": true
+    },
+    {
+      "id": "reset",
+      "name": "Restablecer código",
+      "enabled": true
+    }
+  ],
+  "content_files": {
+    "examples": "ejemplos.json"
+  }
+}
