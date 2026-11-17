@@ -1,0 +1,83 @@
+{
+  "language": "JAVASCRIPT",
+  "description": "Índice de contenidos de JavaScript en WebDev Book.",
+  "sections": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos de JavaScript",
+      "description": "Contenido sobre fundamentos de javascript.",
+      "file": "fundamentos.json",
+      "order": 1
+    },
+    {
+      "id": "variables",
+      "title": "Variables y tipos de datos",
+      "description": "Contenido sobre variables y tipos de datos.",
+      "file": "variables.json",
+      "order": 2
+    },
+    {
+      "id": "operadores",
+      "title": "Operadores y condiciones",
+      "description": "Contenido sobre operadores y condiciones.",
+      "file": "operadores.json",
+      "order": 3
+    },
+    {
+      "id": "funciones",
+      "title": "Funciones",
+      "description": "Contenido sobre funciones.",
+      "file": "funciones.json",
+      "order": 4
+    },
+    {
+      "id": "arrays-objetos",
+      "title": "Arrays y objetos",
+      "description": "Contenido sobre arrays y objetos.",
+      "file": "arrays-objetos.json",
+      "order": 5
+    },
+    {
+      "id": "dom",
+      "title": "DOM",
+      "description": "Contenido sobre dom.",
+      "file": "dom.json",
+      "order": 6
+    },
+    {
+      "id": "eventos",
+      "title": "Eventos",
+      "description": "Contenido sobre eventos.",
+      "file": "eventos.json",
+      "order": 7
+    },
+    {
+      "id": "asincronia",
+      "title": "Asincronía",
+      "description": "Contenido sobre asincronía.",
+      "file": "asincronia.json",
+      "order": 8
+    },
+    {
+      "id": "fetch-api",
+      "title": "Fetch y APIs",
+      "description": "Contenido sobre fetch y apis.",
+      "file": "fetch-api.json",
+      "order": 9
+    },
+    {
+      "id": "almacenamiento",
+      "title": "Almacenamiento",
+      "description": "Contenido sobre almacenamiento.",
+      "file": "almacenamiento.json",
+      "order": 10
+    },
+    {
+      "id": "retos",
+      "title": "Retos de JavaScript",
+      "description": "Contenido sobre retos de javascript.",
+      "file": "retos.json",
+      "order": 11
+    }
+  ]
+}
