@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080d18">
-  <title>Formularios | HTML | WebDev Book</title>
+  <title>Categoría HTML | WebDev Book</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@
     <main class="main-area">
       <header class="topbar">
         <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button>
-        <div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><a href="html.html">HTML</a><b>/</b><strong>Formularios</strong></div>
+        <div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><a href="html.html">HTML</a><b>/</b><strong id="breadcrumbCategory">Categoría</strong></div>
         <label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar conceptos, etiquetas..." autocomplete="off"></label>
         <button class="top-icon" id="topThemeToggle" aria-label="Cambiar tema">◐</button>
       </header>
@@ -46,52 +46,24 @@
         <section class="category-hero">
           <div class="category-hero-copy">
             <div class="eyebrow"><span class="html-dot"></span> HTML / CATEGORÍA</div>
-            <div class="category-title-row"><span class="category-symbol">&lt;form&gt;</span><span class="category-count">12 ARTÍCULOS</span></div>
-            <h1>Formularios</h1>
-            <p>Aprendé a crear formularios para recopilar información de los usuarios. Conocé sus controles, atributos, tipos de campos y herramientas de validación.</p>
+            <div class="category-title-row"><span class="category-symbol">&lt;form&gt;</span><span class="category-count" id="categoryCount">ARTÍCULOS</span></div>
+            <h1 id="categoryTitle">Categoría</h1>
+            <p id="categoryDescription">Explorá los conceptos y elementos de esta sección de HTML.</p>
             <div class="category-meta"><span>◈ HTML</span><span>◷ Lectura y referencia</span><span>▦ Nivel básico a avanzado</span></div>
           </div>
           <div class="form-illustration" aria-hidden="true">
-            <div class="mini-window"><div class="mini-window-bar"><i></i><i></i><i></i><span>formulario.html</span></div><div class="mini-form"><b>Crear cuenta</b><small>Nombre</small><div class="fake-input"></div><small>Correo electrónico</small><div class="fake-input"></div><div class="fake-button">Enviar formulario&nbsp; →</div></div></div>
+            <div class="mini-window"><div class="mini-window-bar"><i></i><i></i><i></i><span>documento.html</span></div><div class="mini-form"><b>&lt;!DOCTYPE html&gt;</b><small>&lt;html lang="es"&gt;</small><div class="fake-input"></div><small>&lt;head&gt; · &lt;body&gt;</small><div class="fake-input"></div><div class="fake-button">HTML · ESTRUCTURA WEB</div></div></div>
             <span class="float-tag tag-one">&lt;input&gt;</span><span class="float-tag tag-two">required</span>
           </div>
         </section>
         <section class="category-toolbar">
           <div><div class="eyebrow">BIBLIOTECA DE CONTENIDO</div><h2>Explorá los artículos</h2><p>Seleccioná un tema para consultar su documentación.</p></div>
-          <label class="category-search"><span>⌕</span><input id="articleSearch" type="search" placeholder="Buscar en Formularios..." autocomplete="off"><kbd>⌕</kbd></label>
+          <label class="category-search"><span>⌕</span><input id="articleSearch" type="search" placeholder="Buscar en esta categoría..." autocomplete="off"><kbd>⌕</kbd></label>
         </section>
         <div class="article-filters" aria-label="Filtrar artículos">
-          <button class="filter-chip active" data-filter="todos" type="button">Todos <span>8</span></button>
-          <button class="filter-chip" data-filter="elementos" type="button">Elementos</button>
-          <button class="filter-chip" data-filter="atributos" type="button">Atributos</button>
-          <button class="filter-chip" data-filter="validacion" type="button">Validación</button>
+          <button class="filter-chip active" data-filter="todos" type="button">Todos</button><button class="filter-chip" data-filter="elementos" type="button">Elementos</button><button class="filter-chip" data-filter="conceptos" type="button">Conceptos</button><button class="filter-chip" data-filter="practica" type="button">Práctica</button>
         </div>
-        <section class="article-grid" id="articleGrid" aria-label="Artículos de Formularios">
-          <a class="article-card featured-article" href="articulo.html?lenguaje=html&id=form" data-category="elementos">
-            <div class="article-card-top"><span class="article-type">ELEMENTO HTML</span><span class="article-arrow">↗</span></div><code>&lt;form&gt;</code><h3>El formulario</h3><p>El elemento que agrupa controles y permite enviar información del usuario.</p><div class="article-card-bottom"><span>Fundamental</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=input" data-category="elementos">
-            <div class="article-card-top"><span class="article-type">ELEMENTO HTML</span><span class="article-arrow">↗</span></div><code>&lt;input&gt;</code><h3>Campos de entrada</h3><p>Conocé los distintos tipos de campos para introducir datos.</p><div class="article-card-bottom"><span>Elemento</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=label" data-category="elementos">
-            <div class="article-card-top"><span class="article-type">ELEMENTO HTML</span><span class="article-arrow">↗</span></div><code>&lt;label&gt;</code><h3>Etiquetas de campo</h3><p>Asociá un texto descriptivo con su control de formulario.</p><div class="article-card-bottom"><span>Accesibilidad</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=textarea" data-category="elementos">
-            <div class="article-card-top"><span class="article-type">ELEMENTO HTML</span><span class="article-arrow">↗</span></div><code>&lt;textarea&gt;</code><h3>Área de texto</h3><p>Permite escribir mensajes y textos de varias líneas.</p><div class="article-card-bottom"><span>Elemento</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=select" data-category="elementos">
-            <div class="article-card-top"><span class="article-type">ELEMENTO HTML</span><span class="article-arrow">↗</span></div><code>&lt;select&gt;</code><h3>Listas desplegables</h3><p>Ofrecé un conjunto de opciones para que el usuario elija.</p><div class="article-card-bottom"><span>Elemento</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=button" data-category="elementos">
-            <div class="article-card-top"><span class="article-type">ELEMENTO HTML</span><span class="article-arrow">↗</span></div><code>&lt;button&gt;</code><h3>Botones</h3><p>Creá controles para enviar formularios o ejecutar acciones.</p><div class="article-card-bottom"><span>Elemento</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=required" data-category="atributos">
-            <div class="article-card-top"><span class="article-type">ATRIBUTO HTML</span><span class="article-arrow">↗</span></div><code>required</code><h3>Campo obligatorio</h3><p>Indicá qué campos deben completarse antes del envío.</p><div class="article-card-bottom"><span>Atributo</span><b>Ver artículo →</b></div>
-          </a>
-          <a class="article-card" href="articulo.html?lenguaje=html&id=validacion" data-category="validacion">
-            <div class="article-card-top"><span class="article-type">CONCEPTO</span><span class="article-arrow">↗</span></div><code>validity</code><h3>Validación de formularios</h3><p>Comprendé cómo el navegador comprueba los datos ingresados.</p><div class="article-card-bottom"><span>Concepto</span><b>Ver artículo →</b></div>
-          </a>
-        </section>
+        <section class="article-grid" id="articleGrid" aria-label="Artículos de la categoría"></section>
         <div class="empty-state" id="emptyState" hidden>No encontramos artículos que coincidan con tu búsqueda.</div>
         <div class="category-footer"><a href="html.html">← Regresar a las categorías de HTML</a><span>WEBDEV BOOK <b>·</b> HTML</span></div>
       </div>
