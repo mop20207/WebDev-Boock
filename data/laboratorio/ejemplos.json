@@ -1,0 +1,23 @@
+{
+  "description": "Ejemplos iniciales que utiliza el Laboratorio de código. Este archivo podrá ampliarse con plantillas y desafíos.",
+  "examples": [
+    {
+      "id": "primer-html",
+      "title": "Mi primera página",
+      "language": "html",
+      "code": "<h1>¡Hola, mundo!</h1>\n<p>Este es mi primer experimento.</p>"
+    },
+    {
+      "id": "primer-css",
+      "title": "Primeros estilos",
+      "language": "css",
+      "code": "body {\n  font-family: Arial, sans-serif;\n  padding: 24px;\n}\n\nh1 {\n  color: #4169e1;\n}"
+    },
+    {
+      "id": "primer-javascript",
+      "title": "Primer mensaje",
+      "language": "javascript",
+      "code": "console.log(\"¡Hola desde JavaScript!\");"
+    }
+  ]
+}
