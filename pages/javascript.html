@@ -1,12 +1,130 @@
 <!doctype html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#080d18"><title>JavaScript | WebDev Book</title>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#080d18">
+<title>JavaScript | WebDev Book</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/javascript.css">
-<script defer src="../js/theme.js"></script><script defer src="../js/navigation.js"></script><script defer src="../js/search.js"></script><script defer src="../js/editor.js"></script><script defer src="../js/app.js"></script></head>
-<body data-page="javascript"><div class="app-shell"><aside class="sidebar" id="sidebar"><a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a><div class="sidebar-label">MENÚ PRINCIPAL</div><nav class="main-nav" aria-label="Navegación principal">
-<a class="nav-link" href="../index.html"><span class="nav-icon">⌂</span> Inicio</a><a class="nav-link " href="html.html"><span class="nav-icon html-icon">5</span> HTML</a><a class="nav-link " href="css.html"><span class="nav-icon css-icon">✳</span> CSS</a><a class="nav-link active" href="javascript.html"><span class="nav-icon js-icon">JS</span> JavaScript</a><div class="nav-divider"></div><a class="nav-link" href="../index.html#ejercicios"><span class="nav-icon">✎</span> Ejercicios</a><a class="nav-link" href="../index.html#proyectos"><span class="nav-icon">▣</span> Proyectos</a><a class="nav-link" href="../index.html#favoritos"><span class="nav-icon">☆</span> Favoritos</a></nav>
-<div class="sidebar-bottom"><div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Un paso a la vez</strong><p>Aprendé, practicá y construí tus propios proyectos.</p></div><button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button></div></aside>
-<main class="main-area"><header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button><div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><strong>JavaScript</strong></div><label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar conceptos, etiquetas..." autocomplete="off"></label><button class="top-icon" id="topThemeToggle" aria-label="Cambiar tema">◐</button></header>
-<div class="page-content"><section class="content-hero"><div class="eyebrow">JAVASCRIPT / GUÍA DE APRENDIZAJE</div><h1>Dale lógica e interacción.</h1><p class="welcome-copy">JavaScript es un lenguaje de programación que permite crear páginas dinámicas, responder a eventos, manipular el DOM, trabajar con datos y comunicarse con servicios web.</p><div class="welcome-actions"><button class="button button-primary" data-open-editor>Probar en el laboratorio →</button><a class="button button-ghost" href="../index.html">Volver al inicio</a></div></section>
-<section class="section-block"><div class="section-heading"><div><div class="eyebrow">CONTENIDO</div><h2>Explorá los temas</h2></div><span class="section-note">10 temas iniciales</span></div><div class="topic-grid"><article class="topic-card"><span class="topic-number">01</span><div><h3>Variables y constantes</h3><p>let, const y alcance</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">02</span><div><h3>Tipos de datos</h3><p>Strings, números, booleanos y más</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">03</span><div><h3>Operadores y condiciones</h3><p>Expresiones, if, else y switch</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">04</span><div><h3>Bucles</h3><p>for, while y recorridos</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">05</span><div><h3>Funciones</h3><p>Parámetros, retorno y funciones flecha</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">06</span><div><h3>Arrays y objetos</h3><p>Colecciones y estructuras de datos</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">07</span><div><h3>DOM y eventos</h3><p>Modificar la página y responder al usuario</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">08</span><div><h3>Asincronía y Fetch</h3><p>Promesas, async/await y APIs</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">09</span><div><h3>Almacenamiento</h3><p>LocalStorage, SessionStorage e IndexedDB</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">10</span><div><h3>APIs del navegador</h3><p>Date, Observer, Notifications y otras</p></div><span class="topic-arrow">→</span></article></div></section>
-<section class="panel next-panel"><div class="eyebrow">APRENDÉ PRACTICANDO</div><h2>La teoría se entiende mejor con ejemplos.</h2><p class="welcome-copy">El laboratorio te permite escribir código y ver el resultado sin salir de esta página.</p><button class="button button-primary" data-open-editor>Abrir laboratorio →</button></section><footer class="footer"><span>WebDev Book · JavaScript</span><span>Contenido en construcción</span></footer></div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div></body></html>
+<script defer src="../js/theme.js"></script><script defer src="../js/navigation.js"></script><script defer src="../js/search.js"></script><script defer src="../js/editor.js"></script><script defer src="../js/app.js"></script>
+</head>
+<body data-page="javascript">
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+<div class="sidebar-label">MENÚ PRINCIPAL</div>
+<nav class="main-nav" aria-label="Navegación principal">
+<a class="nav-link" href="../index.html"><span class="nav-icon">⌂</span> Inicio</a><a class="nav-link" href="html.html"><span class="nav-icon html-icon">5</span> HTML</a><a class="nav-link" href="css.html"><span class="nav-icon css-icon">✳</span> CSS</a><a class="nav-link active" href="javascript.html"><span class="nav-icon js-icon">JS</span> JavaScript</a>
+<div class="nav-divider"></div><a class="nav-link" href="../index.html#ejercicios"><span class="nav-icon">✎</span> Ejercicios</a><a class="nav-link" href="../index.html#proyectos"><span class="nav-icon">▣</span> Proyectos</a><a class="nav-link" href="../index.html#favoritos"><span class="nav-icon">☆</span> Favoritos</a>
+</nav>
+<div class="sidebar-bottom"><div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Un paso a la vez</strong><p>Aprendé, practicá y construí tus propios proyectos.</p></div><button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button></div>
+</aside>
+<main class="main-area">
+<header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button><div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><strong>JavaScript</strong></div><label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar conceptos, etiquetas..." autocomplete="off"></label><button class="top-icon" id="topThemeToggle" aria-label="Cambiar tema">◐</button></header>
+<div class="page-content js-page">
+<section class="js-hero">
+<div class="js-hero-copy"><div class="eyebrow">JAVASCRIPT / GUÍA DE APRENDIZAJE</div><h1>Dale lógica<br> a la web<span>.</span></h1><p class="welcome-copy">El lenguaje que convierte páginas estáticas en experiencias interactivas. Respondé a eventos, manipulá el contenido, procesá datos y conectá tu web con el mundo.</p></div>
+<img class="js-hero-art" src="../assets/images/javascript-hero.svg" alt="Ilustración del símbolo JavaScript en una ventana de código">
+</section>
+
+<section class="section-block js-topics">
+<div class="section-heading"><div><div class="eyebrow">EXPLORÁ Y DESCUBRÍ</div><h2>Temas de JavaScript</h2></div><span class="section-note">11 áreas principales</span></div>
+<div class="js-topic-grid">
+<a class="js-topic-card topic-a" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h28v32H10zM17 17h14M17 24h14M17 31h8" /></svg></span><span class="topic-index">01 / BASES</span><h3>Fundamentos</h3><p>Qué es JavaScript, sintaxis y cómo ejecutarlo.</p></a>
+<a class="js-topic-card topic-b" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 13h24M12 24h24M12 35h24M18 9v8M29 20v8M22 31v8" /></svg></span><span class="topic-index">02 / DATOS</span><h3>Variables y tipos</h3><p>let, const, strings, números y booleanos.</p></a>
+<a class="js-topic-card topic-c" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 12 7 24l10 12M31 12l10 12-10 12M27 8l-6 32" /></svg></span><span class="topic-index">03 / LÓGICA</span><h3>Operadores y condiciones</h3><p>Comparaciones, if, else y switch.</p></a>
+<a class="js-topic-card topic-d" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7v8m0 0-8 7m8-7 8 7M16 22v8m16-8v8M16 30l-7 8m7-8 7 8m9-8-7 8m7-8 7 8" /></svg></span><span class="topic-index">04 / CONTROL</span><h3>Bucles</h3><p>for, while y repetición de instrucciones.</p></a>
+<a class="js-topic-card topic-e" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 15h32M8 24h20M8 33h13M33 27l7 7-7 7" /></svg></span><span class="topic-index">05 / REUTILIZAR</span><h3>Funciones</h3><p>Parámetros, retorno, callbacks y arrow functions.</p></a>
+<a class="js-topic-card topic-f" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="10" width="34" height="28" rx="4"/><path d="M7 19h34M18 19v19M29 19v19" /></svg></span><span class="topic-index">06 / ESTRUCTURAS</span><h3>Arrays y objetos</h3><p>Guardar, organizar y recorrer información.</p></a>
+<a class="js-topic-card topic-g" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 10h34v28H7zM13 17h22M13 24h12M13 31h17" /><circle cx="34" cy="31" r="3"/></svg></span><span class="topic-index">07 / NAVEGADOR</span><h3>DOM y eventos</h3><p>Seleccionar elementos y reaccionar a acciones.</p></a>
+<a class="js-topic-card topic-h" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 15h32M8 24h22M8 33h14M34 27l6 6-6 6" /></svg></span><span class="topic-index">08 / TIEMPO</span><h3>Asincronía</h3><p>Promesas, async y await sin bloquear la página.</p></a>
+<a class="js-topic-card topic-i" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15"/><path d="M9 24h30M24 9c9 9 9 21 0 30M24 9c-9 9-9 21 0 30" /></svg></span><span class="topic-index">09 / INTERNET</span><h3>Fetch y APIs</h3><p>Solicitar y recibir datos de otros servicios.</p></a>
+<a class="js-topic-card topic-j" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 8h24v32H12zM18 17h12M18 24h12M18 31h7" /></svg></span><span class="topic-index">10 / PERSISTENCIA</span><h3>Almacenamiento</h3><p>LocalStorage, SessionStorage e IndexedDB.</p></a>
+<a class="js-topic-card topic-k" href="#mapa-js"><span class="topic-visual"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="16"/><path d="M24 14v11l8 5" /></svg></span><span class="topic-index">11 / HERRAMIENTAS</span><h3>APIs del navegador</h3><p>Date, Observer, notificaciones y más.</p></a>
+</div>
+</section>
+
+<section class="section-block" id="mapa-js">
+<div class="section-heading"><div><div class="eyebrow">MAPA DE REFERENCIA</div><h2>Mapa de conceptos JavaScript</h2></div><span class="section-note">Explorá las piezas del lenguaje</span></div>
+<p class="section-intro">Una vista rápida de las herramientas que vas a encontrar en JavaScript. Seleccioná una ficha para leer para qué sirve.</p>
+<div class="js-periodic">
+<div class="js-family"><div class="family-title"><b>01</b><span>Fundamentos</span></div><div class="js-tiles"><button data-info="let" data-desc="Declara una variable cuyo valor puede cambiar. Su alcance está limitado al bloque.">let</button><button data-info="const" data-desc="Declara una referencia que no puede reasignarse. En objetos, sus propiedades todavía pueden cambiar.">const</button><button data-info="typeof" data-desc="Devuelve una cadena que indica el tipo del valor consultado.">typeof</button><button data-info="strict" data-desc="La igualdad estricta compara valor y tipo sin convertirlos automáticamente.">===</button><button data-info="null" data-desc="Representa intencionalmente la ausencia de un valor.">null</button><button data-info="undefined" data-desc="Indica que una variable declarada todavía no tiene un valor asignado.">undefined</button></div></div>
+<div class="js-family"><div class="family-title"><b>02</b><span>Control y funciones</span></div><div class="js-tiles"><button data-info="if" data-desc="Ejecuta un bloque cuando una condición se cumple.">if</button><button data-info="switch" data-desc="Permite elegir entre varios casos posibles de una expresión.">switch</button><button data-info="for" data-desc="Repite instrucciones mientras se cumple la condición del bucle.">for</button><button data-info="while" data-desc="Repite un bloque mientras su condición sea verdadera.">while</button><button data-info="function" data-desc="Define un bloque reutilizable que puede recibir parámetros y devolver un resultado.">function</button><button data-info="return" data-desc="Finaliza una función y opcionalmente devuelve un valor.">return</button></div></div>
+<div class="js-family"><div class="family-title"><b>03</b><span>Datos y colecciones</span></div><div class="js-tiles"><button data-info="string" data-desc="Tipo de dato utilizado para representar texto.">String</button><button data-info="number" data-desc="Tipo numérico para enteros y decimales.">Number</button><button data-info="array" data-desc="Estructura ordenada que permite almacenar varios valores.">Array</button><button data-info="object" data-desc="Colección de propiedades organizadas mediante claves y valores.">Object</button><button data-info="map" data-desc="Colección de pares clave-valor que admite claves de distintos tipos.">Map</button><button data-info="json" data-desc="Formato de texto ligero para intercambiar datos estructurados.">JSON</button></div></div>
+<div class="js-family"><div class="family-title"><b>04</b><span>Navegador y asincronía</span></div><div class="js-tiles"><button data-info="document" data-desc="Punto de entrada al documento HTML: permite consultar y modificar el DOM.">document</button><button data-info="event" data-desc="Representa una acción o suceso, como un clic o una tecla presionada.">Event</button><button data-info="fetch" data-desc="Realiza solicitudes de red y devuelve una promesa con la respuesta.">fetch()</button><button data-info="promise" data-desc="Representa el resultado futuro de una operación asíncrona.">Promise</button><button data-info="async" data-desc="Marca una función que devuelve una promesa y permite usar await.">async</button><button data-info="storage" data-desc="API del navegador para guardar datos clave-valor en el dispositivo.">Storage</button></div></div>
+</div>
+<div class="js-info-card" aria-live="polite"><span>FICHA SELECCIONADA</span><strong id="jsInfoTitle">Elegí un concepto</strong><p id="jsInfoText">Tocá cualquiera de las fichas para ver una explicación breve.</p></div>
+</section>
+
+<section class="section-block browser-section">
+<div class="section-heading"><div><div class="eyebrow">COMPATIBILIDAD</div><h2>¿En qué navegadores funciona?</h2></div><span class="section-note">Panorama general</span></div>
+<div class="browser-intro"><p>JavaScript funciona en prácticamente todos los navegadores actuales. Lo que puede variar es el soporte de una característica nueva o de una API específica; por eso conviene comprobar cada función antes de usarla.</p></div>
+<div class="support-legend"><span><i class="support-dot red"></i>No compatible / obsoleto</span><span><i class="support-dot yellow"></i>Parcial o con límites</span><span><i class="support-dot green"></i>Soporte actual amplio</span></div>
+<div class="support-list">
+<div class="support-row"><div class="browser-name"><span class="browser-symbol">◉</span> Chrome</div><div class="support-track"><i class="green-fill" style="width:100%"></i></div><b class="support-status green-text">Amplio</b></div>
+<div class="support-row"><div class="browser-name"><span class="browser-symbol">◉</span> Firefox</div><div class="support-track"><i class="green-fill" style="width:100%"></i></div><b class="support-status green-text">Amplio</b></div>
+<div class="support-row"><div class="browser-name"><span class="browser-symbol">◉</span> Edge</div><div class="support-track"><i class="green-fill" style="width:100%"></i></div><b class="support-status green-text">Amplio</b></div>
+<div class="support-row"><div class="browser-name"><span class="browser-symbol">◉</span> Safari</div><div class="support-track"><i class="yellow-fill" style="width:82%"></i></div><b class="support-status yellow-text">Según versión / API</b></div>
+<div class="support-row"><div class="browser-name"><span class="browser-symbol">◉</span> Opera</div><div class="support-track"><i class="green-fill" style="width:100%"></i></div><b class="support-status green-text">Amplio</b></div>
+<div class="support-row"><div class="browser-name"><span class="browser-symbol">◉</span> Internet Explorer</div><div class="support-track"><i class="red-fill" style="width:12%"></i></div><b class="support-status red-text">Obsoleto</b></div>
+</div>
+<p class="support-footnote">La barra es orientativa, no un porcentaje de compatibilidad medido. No existe un único “JavaScript funciona al 100%”: ECMAScript y las APIs del navegador evolucionan por separado. En versiones antiguas pueden faltar sintaxis o APIs; Internet Explorer ya no recibe soporte moderno. Consultá la compatibilidad de cada característica en MDN o Can I use.</p>
+</section>
+
+<section class="section-block about-js">
+<div class="about-js-card"><div class="eyebrow">ENTENDÉ EL LENGUAJE</div><h2>¿Qué es JavaScript?</h2><p>JavaScript es un lenguaje de programación estandarizado como ECMAScript. En la web trabaja junto con HTML y CSS: HTML define el contenido, CSS su presentación y JavaScript agrega comportamiento e interacción.</p><div class="about-points"><div><b>01</b><strong>En el navegador</strong><span>Manipula el DOM, escucha eventos, valida formularios y consume APIs.</span></div><div><b>02</b><strong>Fuera del navegador</strong><span>Con entornos como Node.js también puede ejecutarse en servidores y herramientas.</span></div><div><b>03</b><strong>Un lenguaje, distintos entornos</strong><span>El núcleo del lenguaje no incluye automáticamente todas las APIs del navegador.</span></div></div></div>
+</section>
+
+<section class="section-block playground-section">
+<div class="section-heading"><div><div class="eyebrow">PROBÁ SIN MIEDO</div><h2>Pequeñas pruebas de código</h2></div><span class="section-note">Ejecutá y mirá qué sucede</span></div>
+<div class="playground-card">
+<div class="playground-controls"><label for="jsExample">Elegí un ejemplo</label><select id="jsExample"><option value="hello">Saludar a alguien</option><option value="button">Cambiar un texto con un clic</option><option value="counter">Contador simple</option></select></div>
+<div class="mini-code"><div class="mini-code-head"><span><i></i><i></i><i></i></span><small id="exampleName">saludo.js</small></div><pre id="exampleCode">const nombre = "Akamini";
+const mensaje = "¡Hola, " + nombre + "!";
+document.querySelector("#demoOutput").textContent = mensaje;</pre></div>
+<div class="demo-stage"><div class="demo-stage-label">VISTA PREVIA HTML</div><div id="demoOutput" class="demo-output">¡Hola, Akamini!</div><button id="runExample" class="button button-primary" type="button">▶ Ejecutar ejemplo</button><p id="demoHint">El código modifica el contenido de un elemento HTML.</p></div>
+</div>
+</section>
+
+<section class="section-block tutorials-section">
+<div class="section-heading"><div><div class="eyebrow">SEGUÍ APRENDIENDO</div><h2>Tutoriales y cursos completos</h2></div><span class="section-note">Recursos externos</span></div>
+<div class="tutorial-grid">
+<a class="tutorial-card dalto" href="https://www.youtube.com/watch?v=z95mZVUcJ-E" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">YOUTUBE · CURSO COMPLETO</span><span class="tutorial-mark">▶</span><h3>Soy Dalto</h3><p>Curso de JavaScript desde cero — Nivel Junior. Fundamentos, arrays, funciones, DOM y ejercicios.</p><b>Ver curso <span>↗</span></b></a>
+<a class="tutorial-card campocode" href="https://cacg-code.github.io/web-desde-cero/javascript/" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">CURSO INTERACTIVO</span><span class="tutorial-mark">⌘</span><h3>CampoCode</h3><p>JavaScript desde cero con apuntes, editor integrado, consola y ejercicios autocorregibles.</p><b>Ir al curso <span>↗</span></b></a>
+<a class="tutorial-card jscamp" href="https://www.jscamp.dev/javascript" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">BOOTCAMP GRATUITO</span><span class="tutorial-mark">JS</span><h3>JSCamp · midudev</h3><p>Clases de JavaScript, DOM, eventos, Fetch, JSON y módulos dentro de una ruta Full Stack.</p><b>Explorar clases <span>↗</span></b></a>
+</div>
+<p class="tutorial-note">Los cursos y sitios enlazados son recursos externos e independientes de WebDev Book. Se abren en una pestaña nueva.</p>
+</section>
+<footer class="footer"><span>WebDev Book · JavaScript</span><span>Contenido en construcción</span></footer>
+</div>
+</main>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div>
+<script>
+// Datos de los ejemplos. Cada opción incluye código visible y una función que actualiza la demostración.
+const jsExamples = {
+ hello: { name: "saludo.js", code: 'const nombre = "Akamini";\nconst mensaje = "¡Hola, " + nombre + "!";\ndocument.querySelector("#demoOutput").textContent = mensaje;', hint: "El código selecciona un elemento HTML y cambia su texto.", run: () => { document.querySelector("#demoOutput").textContent = "¡Hola, Akamini!"; } },
+ button: { name: "evento-click.js", code: 'const boton = document.querySelector("#demoAction");\nboton.addEventListener("click", () => {\n  document.querySelector("#demoOutput").textContent = "¡Hiciste clic!";\n});', hint: "addEventListener escucha el evento click del botón de demostración.", run: () => { document.querySelector("#demoOutput").textContent = "¡Hiciste clic!"; } },
+ counter: { name: "contador.js", code: 'let contador = 0;\ncontador++;\ndocument.querySelector("#demoOutput").textContent = contador;', hint: "Una variable guarda el número y el operador ++ lo incrementa.", run: () => { const output = document.querySelector("#demoOutput"); const next = Number(output.dataset.count || 0) + 1; output.dataset.count = next; output.textContent = "Contador: " + next; } }
+};
+// Cambia el ejemplo mostrado y reinicia su resultado.
+const exampleSelect = document.querySelector("#jsExample");
+function loadExample() {
+  const example = jsExamples[exampleSelect.value];
+  document.querySelector("#exampleName").textContent = example.name;
+  document.querySelector("#exampleCode").textContent = example.code;
+  document.querySelector("#demoHint").textContent = example.hint;
+  document.querySelector("#demoOutput").dataset.count = "0";
+  document.querySelector("#demoOutput").textContent = exampleSelect.value === "hello" ? "¡Hola, Akamini!" : exampleSelect.value === "button" ? "Esperando un clic…" : "Contador: 0";
+}
+exampleSelect.addEventListener("change", loadExample);
+document.querySelector("#runExample").addEventListener("click", () => jsExamples[exampleSelect.value].run());
+// Las fichas del mapa muestran su explicación en el panel inferior.
+document.querySelectorAll(".js-tiles button").forEach(tile => tile.addEventListener("click", () => {
+  document.querySelectorAll(".js-tiles button").forEach(item => item.classList.remove("selected"));
+  tile.classList.add("selected");
+  document.querySelector("#jsInfoTitle").textContent = tile.dataset.info;
+  document.querySelector("#jsInfoText").textContent = tile.dataset.desc;
+}));
+</script>
+</body>
+</html>
