@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
  const examples={
   color:{code:'color: #ffffff;\nbackground: #426be5;\nfont-family: "Arial", sans-serif;\nfont-size: 20px;\nfont-weight: 700;',hint:'color, background y font-* modifican el aspecto del texto y su fondo.',apply:box=>{box.className='css-demo-box';box.style.cssText='color:#fff;background:#426be5;font:700 20px Arial,sans-serif;padding:15px 22px;border-radius:9px;transform:none;box-shadow:none;'}},
   rounded:{code:'border-radius: 30px;\nbackground: #7a58c9;\ntransform: rotate(-2deg);\nbox-shadow: 0 10px 24px #0003;',hint:'border-radius redondea las esquinas; transform rota el elemento y box-shadow agrega sombra.',apply:box=>{box.className='css-demo-box demo-rounded';box.style.cssText=''}},
-  flex:{code:'display: flex;\njustify-content: center;\nalign-items: center;\ngap: 12px;',hint:'Flexbox alinea y distribuye elementos dentro de un contenedor flexible.',apply:box=>{box.className='css-demo-box demo-flex';box.style.cssText=''}}
+  flex:{code:'display: flex;\njustify-content: center;\nalign-items: center;\ngap: 12px;',hint:'Flexbox alinea y distribuye elementos dentro de un contenedor flexible.',apply:box=>{box.className='css-demo-box demo-flex';box.style.cssText='';box.innerHTML='<span>HTML</span><span>CSS</span><span>JS</span>'}}
  };
  const select=document.querySelector('#cssExample'),code=document.querySelector('#cssCode'),box=document.querySelector('#cssDemoBox');
  function apply(){const item=examples[select.value];code.textContent=item.code;document.querySelector('#cssHint').textContent=item.hint;item.apply(box);}
