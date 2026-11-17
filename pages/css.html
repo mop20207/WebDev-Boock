@@ -9,4 +9,163 @@
 <main class="main-area"><header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button><div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><strong>CSS</strong></div><label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar conceptos, etiquetas..." autocomplete="off"></label><button class="top-icon" id="topThemeToggle" aria-label="Cambiar tema">◐</button></header>
 <div class="page-content"><section class="content-hero"><div class="eyebrow">CSS / GUÍA DE APRENDIZAJE</div><h1>El diseño cobra vida.</h1><p class="welcome-copy">CSS (Cascading Style Sheets) permite controlar la presentación visual de los documentos HTML: colores, tamaños, distribución, animaciones y adaptación a pantallas.</p><div class="welcome-actions"><button class="button button-primary" data-open-editor>Probar en el laboratorio →</button><a class="button button-ghost" href="../index.html">Volver al inicio</a></div></section>
 <section class="section-block"><div class="section-heading"><div><div class="eyebrow">CONTENIDO</div><h2>Explorá los temas</h2></div><span class="section-note">8 temas iniciales</span></div><div class="topic-grid"><article class="topic-card"><span class="topic-number">01</span><div><h3>Selectores</h3><p>Elementos, clases, IDs y combinadores</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">02</span><div><h3>Propiedades y valores</h3><p>Colores, medidas, fuentes y fondos</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">03</span><div><h3>Cascada y especificidad</h3><p>Herencia, prioridad y reglas</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">04</span><div><h3>Modelo de caja</h3><p>Margin, border, padding y content</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">05</span><div><h3>Flexbox</h3><p>Distribución flexible en una dimensión</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">06</span><div><h3>CSS Grid</h3><p>Diseños en filas y columnas</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">07</span><div><h3>Responsive design</h3><p>Media queries y diseño adaptable</p></div><span class="topic-arrow">→</span></article><article class="topic-card"><span class="topic-number">08</span><div><h3>Transiciones y animaciones</h3><p>Transform, transition y keyframes</p></div><span class="topic-arrow">→</span></article></div></section>
-<section class="panel next-panel"><div class="eyebrow">APRENDÉ PRACTICANDO</div><h2>La teoría se entiende mejor con ejemplos.</h2><p class="welcome-copy">El laboratorio te permite escribir código y ver el resultado sin salir de esta página.</p><button class="button button-primary" data-open-editor>Abrir laboratorio →</button></section><footer class="footer"><span>WebDev Book · CSS</span><span>Contenido en construcción</span></footer></div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div></body></html>
+
+<section class="css-reference" aria-labelledby="cssReferenceTitle">
+  <div class="section-heading"><div><div class="eyebrow">REFERENCIA VISUAL</div><h2 id="cssReferenceTitle">Mapa de propiedades CSS</h2></div><span class="section-note">Propiedades y herramientas</span></div>
+  <p class="css-reference-intro">CSS no tiene etiquetas como HTML. En este mapa reunimos propiedades y conceptos, agrupados según lo que permiten modificar. Tocá una ficha para ampliarla y leer qué hace.</p>
+  <div class="css-reference-legend"><span class="css-legend-layout">Diseño</span><span class="css-legend-size">Tamaño y espacio</span><span class="css-legend-color">Color y fondo</span><span class="css-legend-text">Texto</span><span class="css-legend-motion">Movimiento</span><span class="css-legend-responsive">Adaptación</span></div>
+  <div class="css-reference-groups">
+    <section class="css-property-family family-layout"><h3>Diseño y distribución <span>8 propiedades</span></h3><div class="css-property-grid">
+      <button class="css-property-tile" type="button" data-property="display"><code>display</code><span>Modo de visualización</span></button>
+      <button class="css-property-tile" type="button" data-property="position"><code>position</code><span>Posicionamiento</span></button>
+      <button class="css-property-tile" type="button" data-property="flex"><code>flex</code><span>Elemento flexible</span></button>
+      <button class="css-property-tile" type="button" data-property="grid"><code>grid</code><span>Cuadrícula</span></button>
+      <div class="css-property-extra" hidden>
+        <button class="css-property-tile" type="button" data-property="justify-content"><code>justify-content</code><span>Distribución principal</span></button>
+        <button class="css-property-tile" type="button" data-property="align-items"><code>align-items</code><span>Alineación cruzada</span></button>
+        <button class="css-property-tile" type="button" data-property="gap"><code>gap</code><span>Separación</span></button>
+        <button class="css-property-tile" type="button" data-property="z-index"><code>z-index</code><span>Orden de apilado</span></button>
+      </div>
+    </div><button class="css-property-expand" type="button" aria-expanded="false">⌄ <span>Ver 4 propiedades más</span></button></section>
+    <section class="css-property-family family-size"><h3>Tamaño y espacio <span>8 propiedades</span></h3><div class="css-property-grid">
+      <button class="css-property-tile" type="button" data-property="width"><code>width</code><span>Ancho</span></button>
+      <button class="css-property-tile" type="button" data-property="height"><code>height</code><span>Alto</span></button>
+      <button class="css-property-tile" type="button" data-property="margin"><code>margin</code><span>Margen externo</span></button>
+      <button class="css-property-tile" type="button" data-property="padding"><code>padding</code><span>Espacio interno</span></button>
+      <div class="css-property-extra" hidden>
+        <button class="css-property-tile" type="button" data-property="min-width"><code>min-width</code><span>Ancho mínimo</span></button>
+        <button class="css-property-tile" type="button" data-property="max-width"><code>max-width</code><span>Ancho máximo</span></button>
+        <button class="css-property-tile" type="button" data-property="border"><code>border</code><span>Borde</span></button>
+        <button class="css-property-tile" type="button" data-property="box-sizing"><code>box-sizing</code><span>Cálculo de caja</span></button>
+      </div>
+    </div><button class="css-property-expand" type="button" aria-expanded="false">⌄ <span>Ver 4 propiedades más</span></button></section>
+    <section class="css-property-family family-color"><h3>Color y fondos <span>6 propiedades</span></h3><div class="css-property-grid">
+      <button class="css-property-tile" type="button" data-property="color"><code>color</code><span>Color del texto</span></button>
+      <button class="css-property-tile" type="button" data-property="background"><code>background</code><span>Fondo completo</span></button>
+      <button class="css-property-tile" type="button" data-property="background-color"><code>background-color</code><span>Color de fondo</span></button>
+      <button class="css-property-tile" type="button" data-property="opacity"><code>opacity</code><span>Opacidad</span></button>
+      <div class="css-property-extra" hidden>
+        <button class="css-property-tile" type="button" data-property="box-shadow"><code>box-shadow</code><span>Sombra de caja</span></button>
+        <button class="css-property-tile" type="button" data-property="border-radius"><code>border-radius</code><span>Esquinas redondeadas</span></button>
+      </div>
+    </div><button class="css-property-expand" type="button" aria-expanded="false">⌄ <span>Ver 2 propiedades más</span></button></section>
+    <section class="css-property-family family-text"><h3>Texto y tipografía <span>6 propiedades</span></h3><div class="css-property-grid">
+      <button class="css-property-tile" type="button" data-property="font-family"><code>font-family</code><span>Familia tipográfica</span></button>
+      <button class="css-property-tile" type="button" data-property="font-size"><code>font-size</code><span>Tamaño de letra</span></button>
+      <button class="css-property-tile" type="button" data-property="font-weight"><code>font-weight</code><span>Grosor</span></button>
+      <button class="css-property-tile" type="button" data-property="text-align"><code>text-align</code><span>Alineación</span></button>
+      <div class="css-property-extra" hidden>
+        <button class="css-property-tile" type="button" data-property="line-height"><code>line-height</code><span>Altura de línea</span></button>
+        <button class="css-property-tile" type="button" data-property="text-decoration"><code>text-decoration</code><span>Decoración</span></button>
+      </div>
+    </div><button class="css-property-expand" type="button" aria-expanded="false">⌄ <span>Ver 2 propiedades más</span></button></section>
+    <section class="css-property-family family-motion"><h3>Transformaciones y movimiento <span>6 propiedades</span></h3><div class="css-property-grid">
+      <button class="css-property-tile" type="button" data-property="transform"><code>transform</code><span>Transformar elemento</span></button>
+      <button class="css-property-tile" type="button" data-property="transition"><code>transition</code><span>Transición</span></button>
+      <button class="css-property-tile" type="button" data-property="animation"><code>animation</code><span>Animación</span></button>
+      <button class="css-property-tile" type="button" data-property="filter"><code>filter</code><span>Efectos visuales</span></button>
+      <div class="css-property-extra" hidden>
+        <button class="css-property-tile" type="button" data-property="animation-duration"><code>animation-duration</code><span>Duración animada</span></button>
+        <button class="css-property-tile" type="button" data-property="cursor"><code>cursor</code><span>Cursor del puntero</span></button>
+      </div>
+    </div><button class="css-property-expand" type="button" aria-expanded="false">⌄ <span>Ver 2 propiedades más</span></button></section>
+    <section class="css-property-family family-responsive"><h3>Adaptación y desbordamiento <span>6 conceptos</span></h3><div class="css-property-grid">
+      <button class="css-property-tile" type="button" data-property="media-query"><code>@media</code><span>Regla adaptable</span></button>
+      <button class="css-property-tile" type="button" data-property="container-query"><code>@container</code><span>Consulta de contenedor</span></button>
+      <button class="css-property-tile" type="button" data-property="overflow"><code>overflow</code><span>Desbordamiento</span></button>
+      <button class="css-property-tile" type="button" data-property="object-fit"><code>object-fit</code><span>Ajuste de imagen</span></button>
+      <div class="css-property-extra" hidden>
+        <button class="css-property-tile" type="button" data-property="flex-wrap"><code>flex-wrap</code><span>Envolver elementos</span></button>
+        <button class="css-property-tile" type="button" data-property="clamp"><code>clamp()</code><span>Valor flexible limitado</span></button>
+      </div>
+    </div><button class="css-property-expand" type="button" aria-expanded="false">⌄ <span>Ver 2 conceptos más</span></button></section>
+  </div>
+  <p class="css-reference-note">Mapa introductorio, no catálogo completo de CSS. Las propiedades se combinan con selectores, valores y reglas para construir estilos.</p>
+</section>
+<section class="panel next-panel"><div class="eyebrow">APRENDÉ PRACTICANDO</div><h2>La teoría se entiende mejor con ejemplos.</h2><p class="welcome-copy">El laboratorio te permite escribir código y ver el resultado sin salir de esta página.</p><button class="button button-primary" data-open-editor>Abrir laboratorio →</button></section><footer class="footer"><span>WebDev Book · CSS</span><span>Contenido en construcción</span></footer></div></main></div><div class="sidebar-backdrop" id="sidebarBackdrop"></div><div id="editorMount"></div><script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Mostrar u ocultar las propiedades adicionales de cada familia.
+  document.querySelectorAll(".css-property-expand").forEach((button) => {
+    button.addEventListener("click", () => {
+      const family = button.closest(".css-property-family");
+      const extra = family?.querySelector(".css-property-extra");
+      if (!extra) return;
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      extra.hidden = expanded;
+      button.setAttribute("aria-expanded", String(!expanded));
+      button.innerHTML = expanded
+        ? '⌄ <span>Ver las propiedades restantes</span>'
+        : '⌃ <span>Mostrar menos</span>';
+    });
+  });
+
+  // Descripciones breves de propiedades y conceptos CSS.
+  const descriptions = {
+    display:"Define cómo participa un elemento en el diseño: block, inline, flex, grid y otros modos.",
+    position:"Establece cómo se posiciona un elemento: static, relative, absolute, fixed o sticky.",
+    flex:"Permite definir cómo un elemento flexible crece, se encoge y ocupa espacio dentro de un contenedor flex.",
+    grid:"Es una forma abreviada para configurar filas, columnas y áreas de una cuadrícula CSS.",
+    "justify-content":"Distribuye los elementos a lo largo del eje principal de un contenedor flex o grid.",
+    "align-items":"Alinea los elementos en el eje transversal de un contenedor flex o en su área de grid.",
+    gap:"Establece el espacio entre filas y columnas, sin añadir márgenes a los elementos.",
+    "z-index":"Controla el orden de apilamiento de elementos posicionados y determinados contextos de apilamiento.",
+    width:"Define el ancho de la caja de un elemento.",
+    height:"Define la altura de la caja de un elemento.",
+    margin:"Establece el espacio exterior alrededor de la caja.",
+    padding:"Establece el espacio interior entre el contenido y el borde.",
+    "min-width":"Establece el ancho mínimo que puede tener un elemento.",
+    "max-width":"Limita el ancho máximo de un elemento.",
+    border:"Es una propiedad abreviada para definir el borde: grosor, estilo y color.",
+    "box-sizing":"Determina cómo se calculan width y height respecto del contenido, padding y borde.",
+    color:"Define el color del texto y, por herencia, puede afectar a otros contenidos de texto.",
+    background:"Propiedad abreviada para configurar color, imagen, posición, tamaño y otras capas del fondo.",
+    "background-color":"Define el color que se pinta detrás del contenido y el padding.",
+    opacity:"Controla la transparencia visual de un elemento completo y de sus descendientes.",
+    "box-shadow":"Añade una o varias sombras alrededor de la caja de un elemento.",
+    "border-radius":"Redondea las esquinas del borde de un elemento.",
+    "font-family":"Indica la familia tipográfica que se utilizará para mostrar el texto.",
+    "font-size":"Define el tamaño de los caracteres.",
+    "font-weight":"Controla el grosor o peso de la tipografía.",
+    "text-align":"Alinea el contenido en línea, como texto, dentro de su bloque.",
+    "line-height":"Define la altura de cada línea de texto.",
+    "text-decoration":"Añade o modifica decoraciones del texto, como subrayados o tachados.",
+    transform:"Modifica visualmente la posición, rotación, escala o inclinación de un elemento.",
+    transition:"Permite que los cambios de ciertas propiedades ocurran gradualmente durante un intervalo.",
+    animation:"Propiedad abreviada para aplicar una animación definida mediante @keyframes.",
+    filter:"Aplica efectos gráficos como desenfoque, brillo, contraste o escala de grises.",
+    "animation-duration":"Define cuánto tiempo tarda en completarse un ciclo de una animación.",
+    cursor:"Cambia la apariencia del puntero cuando se coloca sobre un elemento.",
+    "media-query":"La regla @media aplica estilos según características del dispositivo o del área de visualización, como el ancho.",
+    "container-query":"La regla @container permite aplicar estilos según el tamaño o las características de un contenedor.",
+    overflow:"Controla qué ocurre cuando el contenido supera el espacio disponible en la caja.",
+    "object-fit":"Indica cómo una imagen o vídeo se ajusta dentro de las dimensiones de su contenedor.",
+    "flex-wrap":"Permite que los elementos flex pasen a nuevas líneas cuando no caben en una sola.",
+    clamp:"La función clamp() limita un valor entre un mínimo, un valor preferido y un máximo."
+  };
+
+  document.querySelectorAll(".css-property-tile").forEach((tile) => {
+    const key = tile.dataset.property;
+    const detail = document.createElement("span");
+    detail.className = "css-property-detail";
+    detail.textContent = descriptions[key] || "Propiedad o concepto de CSS utilizado para controlar la presentación de los elementos.";
+    detail.hidden = true;
+    tile.appendChild(detail);
+
+    tile.setAttribute("aria-pressed","false");
+    const select = () => {
+      const wasSelected = tile.classList.contains("is-selected");
+      document.querySelectorAll(".css-property-tile.is-selected").forEach((active) => {
+        active.classList.remove("is-selected");
+        active.setAttribute("aria-pressed","false");
+        active.querySelector(".css-property-detail").hidden = true;
+      });
+      if (!wasSelected) {
+        tile.classList.add("is-selected");
+        tile.setAttribute("aria-pressed","true");
+        detail.hidden = false;
+      }
+    };
+    tile.addEventListener("click",select);
+  });
+});
+</script></body></html>
