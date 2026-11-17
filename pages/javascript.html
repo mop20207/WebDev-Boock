@@ -81,7 +81,7 @@
 <div class="mini-code"><div class="mini-code-head"><span><i></i><i></i><i></i></span><small id="exampleName">saludo.js</small></div><pre id="exampleCode">const nombre = "Akamini";
 const mensaje = "¡Hola, " + nombre + "!";
 document.querySelector("#demoOutput").textContent = mensaje;</pre></div>
-<div class="demo-stage"><div class="demo-stage-label">VISTA PREVIA HTML</div><div id="demoOutput" class="demo-output">¡Hola, Akamini!</div><button id="runExample" class="button button-primary" type="button">▶ Ejecutar ejemplo</button><p id="demoHint">El código modifica el contenido de un elemento HTML.</p></div>
+<div class="demo-stage"><div class="demo-stage-label">VISTA PREVIA HTML</div><div id="demoOutput" class="demo-output">¡Hola, Akamini!</div><button id="demoAction" class="demo-action" type="button" hidden>Probar evento click</button><button id="runExample" class="button button-primary" type="button">▶ Preparar / ejecutar</button><p id="demoHint">El código modifica el contenido de un elemento HTML.</p></div>
 </div>
 </section>
 
@@ -90,7 +90,7 @@ document.querySelector("#demoOutput").textContent = mensaje;</pre></div>
 <div class="tutorial-grid">
 <a class="tutorial-card dalto" href="https://www.youtube.com/watch?v=z95mZVUcJ-E" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">YOUTUBE · CURSO COMPLETO</span><span class="tutorial-mark">▶</span><h3>Soy Dalto</h3><p>Curso de JavaScript desde cero — Nivel Junior. Fundamentos, arrays, funciones, DOM y ejercicios.</p><b>Ver curso <span>↗</span></b></a>
 <a class="tutorial-card campocode" href="https://cacg-code.github.io/web-desde-cero/javascript/" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">CURSO INTERACTIVO</span><span class="tutorial-mark">⌘</span><h3>CampoCode</h3><p>JavaScript desde cero con apuntes, editor integrado, consola y ejercicios autocorregibles.</p><b>Ir al curso <span>↗</span></b></a>
-<a class="tutorial-card jscamp" href="https://www.jscamp.dev/javascript" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">BOOTCAMP GRATUITO</span><span class="tutorial-mark">JS</span><h3>JSCamp · midudev</h3><p>Clases de JavaScript, DOM, eventos, Fetch, JSON y módulos dentro de una ruta Full Stack.</p><b>Explorar clases <span>↗</span></b></a>
+<a class="tutorial-card jscamp" href="https://www.jscamp.dev/javascript" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">BOOTCAMP GRATUITO</span><span class="tutorial-mark">JS</span><h3>JSCamp · midudev</h3><p>Clases de JavaScript, DOM, eventos, Fetch, JSON y módulos dentro de una ruta Full Stack.</p><b>Explorar clases <span>↗</span></b></a><a class="tutorial-card denzdev" href="https://www.youtube.com/results?search_query=Denz+Dev+JavaScript" target="_blank" rel="noopener noreferrer"><span class="tutorial-type">YOUTUBE · BÚSQUEDA</span><span class="tutorial-mark">▶</span><h3>Denz Dev</h3><p>Resultados de JavaScript para este nombre en YouTube. Verificá el canal antes de seguir una serie.</p><b>Buscar videos <span>↗</span></b></a>
 </div>
 <p class="tutorial-note">Los cursos y sitios enlazados son recursos externos e independientes de WebDev Book. Se abren en una pestaña nueva.</p>
 </section>
@@ -103,7 +103,7 @@ document.querySelector("#demoOutput").textContent = mensaje;</pre></div>
 // Datos de los ejemplos. Cada opción incluye código visible y una función que actualiza la demostración.
 const jsExamples = {
  hello: { name: "saludo.js", code: 'const nombre = "Akamini";\nconst mensaje = "¡Hola, " + nombre + "!";\ndocument.querySelector("#demoOutput").textContent = mensaje;', hint: "El código selecciona un elemento HTML y cambia su texto.", run: () => { document.querySelector("#demoOutput").textContent = "¡Hola, Akamini!"; } },
- button: { name: "evento-click.js", code: 'const boton = document.querySelector("#demoAction");\nboton.addEventListener("click", () => {\n  document.querySelector("#demoOutput").textContent = "¡Hiciste clic!";\n});', hint: "addEventListener escucha el evento click del botón de demostración.", run: () => { document.querySelector("#demoOutput").textContent = "¡Hiciste clic!"; } },
+ button: { name: "evento-click.js", code: 'const boton = document.querySelector("#demoAction");\nboton.addEventListener("click", () => {\n  document.querySelector("#demoOutput").textContent = "¡Hiciste clic!";\n});', hint: "addEventListener escucha el evento click del botón de demostración.", run: () => { const button = document.querySelector("#demoAction"); button.hidden = false; button.onclick = () => { document.querySelector("#demoOutput").textContent = "¡Hiciste clic!"; }; document.querySelector("#demoOutput").textContent = "Esperando un clic…"; } },
  counter: { name: "contador.js", code: 'let contador = 0;\ncontador++;\ndocument.querySelector("#demoOutput").textContent = contador;', hint: "Una variable guarda el número y el operador ++ lo incrementa.", run: () => { const output = document.querySelector("#demoOutput"); const next = Number(output.dataset.count || 0) + 1; output.dataset.count = next; output.textContent = "Contador: " + next; } }
 };
 // Cambia el ejemplo mostrado y reinicia su resultado.
@@ -117,7 +117,7 @@ function loadExample() {
   document.querySelector("#demoOutput").textContent = exampleSelect.value === "hello" ? "¡Hola, Akamini!" : exampleSelect.value === "button" ? "Esperando un clic…" : "Contador: 0";
 }
 exampleSelect.addEventListener("change", loadExample);
-document.querySelector("#runExample").addEventListener("click", () => jsExamples[exampleSelect.value].run());
+document.querySelector("#runExample").addEventListener("click", () => jsExamples[exampleSelect.value].run());\nloadExample();
 // Las fichas del mapa muestran su explicación en el panel inferior.
 document.querySelectorAll(".js-tiles button").forEach(tile => tile.addEventListener("click", () => {
   document.querySelectorAll(".js-tiles button").forEach(item => item.classList.remove("selected"));
