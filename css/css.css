@@ -46,7 +46,22 @@
 .topic-card p{font-size:11px;line-height:1.55;color:var(--muted);margin:0}
 .topic-arrow{align-self:center;margin-left:auto;padding-left:6px;color:var(--topic-accent);font-size:20px;transition:transform .2s}
 .topic-card:hover .topic-arrow{transform:translate(3px,-3px)}
-.topic-selectores{--topic-accent:#66aaff;--topic-tint:rgba(102,170,255,.14)}
+
+.topic-fundamentos{--topic-accent:#66aaff;--topic-tint:rgba(102,170,255,.14)}
+.topic-selectores{--topic-accent:#79b7ff;--topic-tint:rgba(121,183,255,.14)}
+.topic-cascada{--topic-accent:#63d0cf;--topic-tint:rgba(99,208,207,.14)}
+.topic-valores{--topic-accent:#b18aff;--topic-tint:rgba(177,138,255,.14)}
+.topic-variables{--topic-accent:#e0a2ff;--topic-tint:rgba(224,162,255,.14)}
+.topic-caja{--topic-accent:#f0ad68;--topic-tint:rgba(240,173,104,.14)}
+.topic-posicionamiento{--topic-accent:#f08e86;--topic-tint:rgba(240,142,134,.14)}
+.topic-flexbox{--topic-accent:#69c9a0;--topic-tint:rgba(105,201,160,.14)}
+.topic-grid{--topic-accent:#8e9cff;--topic-tint:rgba(142,156,255,.14)}
+.topic-tipografia{--topic-accent:#d6a0ff;--topic-tint:rgba(214,160,255,.14)}
+.topic-colores{--topic-accent:#e9bd69;--topic-tint:rgba(233,189,105,.14)}
+.topic-transformaciones{--topic-accent:#ed91b8;--topic-tint:rgba(237,145,184,.14)}
+.topic-animaciones{--topic-accent:#f08e86;--topic-tint:rgba(240,142,134,.14)}
+.topic-responsive{--topic-accent:#e58dbd;--topic-tint:rgba(229,141,189,.14)}
+.topic-accesibilidad{--topic-accent:#83c995;--topic-tint:rgba(131,201,149,.14)}
 .topic-propiedades{--topic-accent:#b18aff;--topic-tint:rgba(177,138,255,.14)}
 .topic-cascada{--topic-accent:#63d0cf;--topic-tint:rgba(99,208,207,.14)}
 .topic-caja{--topic-accent:#f0ad68;--topic-tint:rgba(240,173,104,.14)}
