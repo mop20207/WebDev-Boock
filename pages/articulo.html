@@ -50,6 +50,16 @@
           <p id="articleLead">Documentación práctica para aprender HTML.</p>
           <div class="article-meta"><span>◈ HTML5 y HTML moderno</span><span>◷ Lectura de referencia</span><span id="articleLevel">Nivel básico</span></div>
         </header>
+        <section class="article-navigation" aria-label="Navegación entre artículos">
+          <label class="article-jump-label" for="articleJump">IR DIRECTAMENTE A UN TEMA</label>
+          <select id="articleJump" class="article-jump">
+            <option value="">Cargando artículos…</option>
+          </select>
+          <div class="article-step-links">
+            <a id="previousArticle" href="#" hidden>← Anterior</a>
+            <a id="nextArticle" href="#" hidden>Siguiente →</a>
+          </div>
+        </section>
         <div class="article-layout">
           <article class="article-body" id="articleBody"></article>
           <aside class="article-aside">
