@@ -1,0 +1,215 @@
+{
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos de CSS",
+      "desc": "Sintaxis, reglas, declaraciones, comentarios y organización de archivos.",
+      "items": [
+        "Qué es CSS y cómo trabaja con HTML",
+        "Reglas, selectores, declaraciones y bloques",
+        "Cómo escribir comentarios CSS",
+        "Formas de aplicar CSS: externo, interno y en línea",
+        "Cómo enlazar una hoja de estilos",
+        "Organización de archivos y estructura de proyecto"
+      ]
+    },
+    {
+      "id": "selectores",
+      "title": "Selectores",
+      "desc": "Elementos, clases, IDs, atributos, combinadores y pseudoselectores.",
+      "items": [
+        "Selector universal, de tipo, clase e ID",
+        "Selectores de atributos",
+        "Combinadores: descendiente, hijo, adyacente y hermano",
+        "Pseudoclases de interacción y estado",
+        "Pseudoelementos ::before y ::after",
+        "Selectores estructurales :nth-child() y relacionados",
+        "La función :is(), :where() y :has()"
+      ]
+    },
+    {
+      "id": "cascada",
+      "title": "Cascada, herencia y especificidad",
+      "desc": "Cómo se resuelven los conflictos entre reglas y de dónde vienen los estilos.",
+      "items": [
+        "Cómo funciona la cascada",
+        "Especificidad: tipos de selectores y cálculo",
+        "Herencia y valores heredados",
+        "Valores initial, inherit, unset y revert",
+        "!important y cuándo evitarlo",
+        "Origen, capas y orden de las declaraciones"
+      ]
+    },
+    {
+      "id": "valores",
+      "title": "Propiedades, valores y unidades",
+      "desc": "Propiedades, valores, px, rem, em, %, vw, vh y funciones de cálculo.",
+      "items": [
+        "Propiedades y valores CSS",
+        "Unidades absolutas y relativas",
+        "Unidades de viewport: vw, vh, svh y dvh",
+        "Porcentajes y unidades relativas al contexto",
+        "Funciones calc(), min(), max() y clamp()",
+        "Valores, palabras clave y valores calculados"
+      ]
+    },
+    {
+      "id": "variables",
+      "title": "Variables y funciones CSS",
+      "desc": "Custom properties, var(), calc(), min(), max() y clamp().",
+      "items": [
+        "Custom properties y la sintaxis --nombre",
+        "Definir variables en :root",
+        "Usar variables con var()",
+        "Valores de respaldo en var()",
+        "Alcance y herencia de variables",
+        "Funciones matemáticas CSS",
+        "Funciones de color y otras funciones modernas"
+      ]
+    },
+    {
+      "id": "caja",
+      "title": "Modelo de caja",
+      "desc": "Content, padding, border, margin, box-sizing y desbordamiento.",
+      "items": [
+        "Las cuatro partes del modelo de caja",
+        "width, height y dimensiones reales",
+        "box-sizing: content-box y border-box",
+        "Margin, padding y shorthand",
+        "Colapso de márgenes",
+        "Bordes, outline y border-radius",
+        "Overflow y contenido desbordado"
+      ]
+    },
+    {
+      "id": "posicionamiento",
+      "title": "Posicionamiento y apilamiento",
+      "desc": "Static, relative, absolute, fixed, sticky, z-index y contextos de apilamiento.",
+      "items": [
+        "Flujo normal y position: static",
+        "relative y desplazamiento visual",
+        "absolute y elementos de referencia",
+        "fixed y elementos fijados a la ventana",
+        "sticky y encabezados persistentes",
+        "z-index y orden de apilamiento",
+        "Contextos de apilamiento"
+      ]
+    },
+    {
+      "id": "flexbox",
+      "title": "Flexbox",
+      "desc": "Ejes, alineación, distribución, crecimiento, reducción y salto de línea.",
+      "items": [
+        "Activar display: flex y entender los ejes",
+        "flex-direction y flex-wrap",
+        "justify-content y align-items",
+        "align-content y align-self",
+        "gap y separación entre elementos",
+        "flex-grow, flex-shrink y flex-basis",
+        "La propiedad abreviada flex"
+      ]
+    },
+    {
+      "id": "grid",
+      "title": "CSS Grid",
+      "desc": "Filas, columnas, áreas, tracks, alineación y diseños bidimensionales.",
+      "items": [
+        "Activar display: grid",
+        "Definir columnas y filas",
+        "Unidades fr y funciones repeat()",
+        "gap y espacios de cuadrícula",
+        "Ubicar elementos con líneas",
+        "grid-template-areas",
+        "auto-fit, auto-fill y minmax()",
+        "Alineación en Grid"
+      ]
+    },
+    {
+      "id": "tipografia",
+      "title": "Tipografía y texto",
+      "desc": "Fuentes, @font-face, tamaño, peso, espaciado, alineación y lectura.",
+      "items": [
+        "font-family y fuentes de respaldo",
+        "Cargar fuentes con @font-face",
+        "font-size y unidades recomendadas",
+        "font-weight y estilos de fuente",
+        "line-height y legibilidad",
+        "text-align, text-decoration y text-transform",
+        "letter-spacing, word-spacing y text-indent",
+        "Fuentes variables y tipografía fluida"
+      ]
+    },
+    {
+      "id": "colores",
+      "title": "Colores, fondos y bordes",
+      "desc": "Color, gradientes, imágenes de fondo, bordes, radios y sombras.",
+      "items": [
+        "Sistemas de color: nombres, HEX, RGB y HSL",
+        "color y background-color",
+        "background-image y fondos múltiples",
+        "Gradientes lineales, radiales y cónicos",
+        "background-size, position y repeat",
+        "Bordes, radios y contornos",
+        "box-shadow y text-shadow",
+        "Transparencia y opacidad"
+      ]
+    },
+    {
+      "id": "transformaciones",
+      "title": "Transformaciones y efectos",
+      "desc": "Transform, filtros, máscaras, clip-path y mezcla de capas.",
+      "items": [
+        "translate(), rotate(), scale() y skew()",
+        "transform-origin y transform-box",
+        "filter: blur(), brightness() y otros",
+        "backdrop-filter",
+        "clip-path y formas",
+        "Máscaras CSS",
+        "mix-blend-mode y isolation"
+      ]
+    },
+    {
+      "id": "animaciones",
+      "title": "Transiciones y animaciones",
+      "desc": "Transition, @keyframes, duración, temporización y movimiento.",
+      "items": [
+        "transition-property, duration y delay",
+        "Timing functions y curvas de movimiento",
+        "Crear animaciones con @keyframes",
+        "animation-duration, iteration-count y direction",
+        "animation-fill-mode y animation-play-state",
+        "Animar transform y opacity eficientemente",
+        "prefers-reduced-motion"
+      ]
+    },
+    {
+      "id": "responsive",
+      "title": "Responsive design y container queries",
+      "desc": "Media queries, container queries, viewport y diseños adaptables.",
+      "items": [
+        "Diseño adaptable y enfoque mobile first",
+        "Media queries con @media",
+        "Breakpoints y consultas por características",
+        "Imágenes y contenido flexible",
+        "Container queries: @container",
+        "Unidades de viewport modernas",
+        "Diseños fluidos con clamp() y Grid/Flexbox"
+      ]
+    },
+    {
+      "id": "accesibilidad",
+      "title": "Accesibilidad y CSS moderno",
+      "desc": "Focus visible, contraste, movimiento reducido, propiedades lógicas y nuevas reglas.",
+      "items": [
+        "Contraste y uso del color",
+        "Estados :focus y :focus-visible",
+        " prefers-reduced-motion y movimiento seguro",
+        "Propiedades lógicas: margin-inline y padding-block",
+        "Cascade layers con @layer",
+        "Nesting nativo de CSS",
+        "@supports y mejoras progresivas",
+        "Buenas prácticas para interfaces accesibles"
+      ]
+    }
+  ]
+}
