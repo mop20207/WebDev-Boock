@@ -48,3 +48,14 @@
 .article-step-links a:hover{background:#d9825518;border-color:#e99a70}
 .article-step-links a[hidden]{display:none}
 @media(max-width:650px){.article-navigation{grid-template-columns:1fr}.article-jump-label{grid-column:auto}.article-step-links{justify-content:space-between}.article-step-links a{flex:1}}
+
+/* Documentación ampliada: atributos, temas relacionados y recursos externos. */
+.attribute-list,.related-list,.resource-list{display:grid;gap:10px;margin:15px 0}
+.attribute-item{display:grid;grid-template-columns:minmax(105px,150px) 1fr;gap:13px;align-items:start;padding:13px 15px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+.attribute-item>code{width:max-content;max-width:100%;color:#e99a70;font:600 11px "DejaVu Sans Mono",monospace;overflow-wrap:anywhere}
+.attribute-item p{margin:0!important}
+.related-list,.resource-list{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.related-list a,.resource-list a{display:flex;justify-content:space-between;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);font-size:12px;line-height:1.5;transition:.2s}
+.related-list a:hover,.resource-list a:hover{border-color:#e99a70;color:#e99a70;transform:translateY(-2px)}
+.related-list span,.resource-list span{color:#e99a70}
+@media(max-width:560px){.attribute-item{grid-template-columns:1fr;gap:6px}}
