@@ -125,16 +125,19 @@ document.addEventListener("DOMContentLoaded", () => {
   count.textContent = current.items.length + " ARTÍCULOS";
   document.querySelector(".category-search input")?.setAttribute("placeholder", "Buscar en " + current.title + "...");
 
+  // Escapa caracteres especiales para que las etiquetas se muestren como texto y no se interpreten como HTML.
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[char]));
+
   // Construye las tarjetas a partir del catálogo de la categoría.
   grid.innerHTML = current.items.map(([articleId, articleTitle, summary, type], index) => {
-    const codeLike = articleTitle.startsWith("<") || articleTitle.includes("id") || articleTitle.includes("class") || articleTitle.includes("href") || articleTitle.includes("src") || articleTitle.includes("alt") || articleTitle.includes("required") || articleTitle.includes("viewBox") || articleTitle.includes("fill") || articleTitle.includes("stroke");
-    const label = type === "elementos" ? "ELEMENTO HTML" : type === "practica" ? "RETO PRÁCTICO" : "CONCEPTO HTML";
-    const visualTitle = codeLike ? articleTitle : articleTitle;
-    return `<a class="article-card ${index===0?"featured-article":""}" href="articulo.html?lenguaje=html&id=${encodeURIComponent(articleId)}" data-category="${type}">
-      <div class="article-card-top"><span class="article-type">${label}</span><span class="article-arrow">↗</span></div>
-      <code>${visualTitle}</code><h3>${articleTitle.startsWith("<") ? "Elemento " + articleTitle : articleTitle}</h3>
-      <p>${summary}</p><div class="article-card-bottom"><span>${type==="practica"?"Práctica":type==="elementos"?"Elemento":"Concepto"}</span><b>Ver artículo →</b></div>
-    </a>`;
+    const label = type === "elementos" ? "ELEMENTO HTML" : type === "practica" ? "RETO PRÁCTICO" : type === "atributos" ? "ATRIBUTO HTML" : "CONCEPTO HTML";
+    const displayTitle = escapeHTML(articleTitle);
+    const heading = escapeHTML(articleTitle.startsWith("<") ? "Elemento " + articleTitle : articleTitle);
+    return '<a class="article-card ' + (index===0 ? "featured-article" : "") + '" href="articulo.html?lenguaje=html&id=' + encodeURIComponent(articleId) + '" data-category="' + escapeHTML(type) + '">' +
+      '<div class="article-card-top"><span class="article-type">' + label + '</span><span class="article-arrow">↗</span></div>' +
+      '<code>' + displayTitle + '</code><h3>' + heading + '</h3>' +
+      '<p>' + escapeHTML(summary) + '</p><div class="article-card-bottom"><span>' + (type==="practica" ? "Práctica" : type==="elementos" ? "Elemento" : type==="atributos" ? "Atributo" : "Concepto") + '</span><b>Ver artículo →</b></div>' +
+    '</a>';
   }).join("");
 
   // Actualiza las tarjetas según el texto y el filtro seleccionado.
