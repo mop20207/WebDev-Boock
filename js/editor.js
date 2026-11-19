@@ -51,7 +51,7 @@ function init(){
  function run(){
   const html=value("html"),css=value("css"),js=value("js").replace(/<\/script/gi,"<\\/script");
   const safeCss=css.replace(/<\/style/gi,"<\\/style");
-  const script='<script>console.log=(...a)=>parent.postMessage({type:"webdev-log",text:a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" ")},"*");window.onerror=m=>parent.postMessage({type:"webdev-error",text:String(m)},"*");try{'+js+'}catch(e){parent.postMessage({type:"webdev-error",text:e.message},"*")}<\\/script>';
+  const script='<script>console.log=(...a)=>parent.postMessage({type:"webdev-log",text:a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" ")},"*");window.onerror=m=>parent.postMessage({type:"webdev-error",text:String(m)},"*");try{'+js+'}catch(e){parent.postMessage({type:"webdev-error",text:e.message},"*")}</scr"+"ipt>";
   const doc="<!doctype html><html><head><meta charset=\"utf-8\"><style>"+safeCss+"</style></head><body>"+html+script+"</body></html>";
   document.getElementById("previewFrame").srcdoc=doc;
   document.getElementById("consoleText").textContent="Vista previa actualizada.";
