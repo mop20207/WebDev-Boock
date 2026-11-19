@@ -9775,9 +9775,10 @@
           "options": [
             "Sí",
             "No",
-            1
+            "Depende del contexto"
           ],
-          "correct": "Acompañá el color con texto, iconos o señales adicionales."
+          "correct": 1,
+          "explanation": "No. Acompañá el color con texto, iconos o señales adicionales para que el estado no dependa solo del color."
         }
       }
     },
@@ -10068,9 +10069,10 @@
           "options": [
             "Sí",
             "No",
-            1
+            "Depende del contexto"
           ],
-          "correct": "Acompañá el color con texto, iconos o señales adicionales."
+          "correct": 1,
+          "explanation": "No. Acompañá el color con texto, iconos o señales adicionales para que el estado no dependa solo del color."
         }
       }
     },
@@ -10361,9 +10363,10 @@
           "options": [
             "Sí",
             "No",
-            1
+            "Depende del contexto"
           ],
-          "correct": "Acompañá el color con texto, iconos o señales adicionales."
+          "correct": 1,
+          "explanation": "No. Acompañá el color con texto, iconos o señales adicionales para que el estado no dependa solo del color."
         }
       }
     }
