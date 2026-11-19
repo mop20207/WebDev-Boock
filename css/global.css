@@ -21,3 +21,18 @@ body.light{color-scheme:light;--bg:#f3f6fc;--surface:#fff;--surface-2:#f0f3fa;--
 .CodeMirror-hint{padding:6px 10px;color:#d4d4d4}.CodeMirror-hint-active{background:#094771;color:#fff}
 .editor-pane{min-height:0}.editor-pane .CodeMirror{overflow:auto}
 @media(max-width:760px){.editor-pane .CodeMirror{font-size:11px}}
+
+/* Laboratorio: CodeMirror con colores de sintaxis tipo VS Code Dark+ */
+.editor-pane .CodeMirror{height:100%;min-height:100%;background:#1e1e1e!important;color:#d4d4d4!important;font:12px/1.75 Consolas,"Cascadia Code",monospace}
+.editor-pane .CodeMirror-gutters{background:#1e1e1e!important;border-right:1px solid #333}
+.editor-pane .CodeMirror-linenumber{color:#858585}
+.cm-s-material-darker .cm-tag{color:#569cd6!important}.cm-s-material-darker .cm-bracket{color:#808080!important}
+.cm-s-material-darker .cm-attribute{color:#9cdcfe!important}.cm-s-material-darker .cm-string{color:#ce9178!important}
+.cm-s-material-darker .cm-property{color:#9cdcfe!important}.cm-s-material-darker .cm-number{color:#b5cea8!important}
+.cm-s-material-darker .cm-comment{color:#6a9955!important}.cm-s-material-darker .cm-keyword{color:#c586c0!important}
+.cm-s-material-darker .cm-def{color:#dcdcaa!important}.cm-s-material-darker .cm-variable{color:#9cdcfe!important}
+.cm-s-material-darker .cm-operator{color:#d4d4d4!important}.cm-s-material-darker .cm-atom{color:#569cd6!important}
+.CodeMirror-cursor{border-left:2px solid #aeafad!important}.CodeMirror-selected{background:#264f78!important}
+.CodeMirror-hints{z-index:1000!important;background:#252526!important;border:1px solid #454545!important;color:#d4d4d4!important;box-shadow:0 8px 24px #0008;font:12px "DM Sans",sans-serif}
+.CodeMirror-hint{padding:7px 10px;color:#d4d4d4}.CodeMirror-hint-active{background:#094771!important;color:#fff!important}
+.editor-pane .CodeMirror{overflow:auto}
