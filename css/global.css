@@ -10,3 +10,14 @@ body.light{color-scheme:light;--bg:#f3f6fc;--surface:#fff;--surface-2:#f0f3fa;--
 /* Componentes compartidos de las páginas internas */
 .content-hero{padding:28px 0 8px}.content-hero h1{font:700 clamp(34px,4vw,48px)/1.12 "Space Grotesk",sans-serif;letter-spacing:-1.8px;margin:14px 0}.content-hero .welcome-copy{max-width:760px}.topic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.topic-card{display:flex;align-items:center;gap:14px;padding:17px;border:1px solid var(--line);background:var(--surface);border-radius:11px;min-height:88px;transition:.2s}.topic-card:hover{border-color:var(--blue);transform:translateY(-2px)}.topic-number{font:600 14px "Space Grotesk",sans-serif;color:var(--blue);background:var(--surface-2);border-radius:8px;padding:9px}.topic-card h3{font:600 13px "Space Grotesk",sans-serif;margin:0 0 3px}.topic-card p{font-size:11px;color:var(--muted);margin:0}.topic-arrow{margin-left:auto;color:var(--muted)}.next-panel{margin-top:24px}.next-panel h2{margin:8px 0}.next-panel .button{margin-top:15px}
 @media(max-width:760px){.topic-grid{grid-template-columns:1fr}.content-hero{padding-top:12px}.content-hero h1{font-size:36px}}
+
+/* CodeMirror: laboratorio con paleta inspirada en VS Code Dark+ */
+.CodeMirror{height:100%;min-height:100%;background:#1e1e1e;color:#d4d4d4;font:12px/1.75 "Cascadia Code",Consolas,monospace;tab-size:2}
+.CodeMirror-gutters{background:#1e1e1e;border-right:1px solid #333}
+.CodeMirror-linenumber{color:#858585}
+.cm-s-vscode-dark .cm-keyword{color:#c586c0}.cm-s-vscode-dark .cm-tag{color:#569cd6}.cm-s-vscode-dark .cm-attribute{color:#9cdcfe}.cm-s-vscode-dark .cm-string{color:#ce9178}.cm-s-vscode-dark .cm-property{color:#9cdcfe}.cm-s-vscode-dark .cm-number{color:#b5cea8}.cm-s-vscode-dark .cm-comment{color:#6a9955}.cm-s-vscode-dark .cm-def{color:#dcdcaa}.cm-s-vscode-dark .cm-variable{color:#9cdcfe}.cm-s-vscode-dark .cm-operator{color:#d4d4d4}
+.CodeMirror-cursor{border-left:2px solid #aeafad}.CodeMirror-selected{background:#264f78!important}
+.CodeMirror-hints{z-index:1000;background:#252526;border:1px solid #454545;color:#d4d4d4;box-shadow:0 8px 24px #0008;font:12px "DM Sans",sans-serif}
+.CodeMirror-hint{padding:6px 10px;color:#d4d4d4}.CodeMirror-hint-active{background:#094771;color:#fff}
+.editor-pane{min-height:0}.editor-pane .CodeMirror{overflow:auto}
+@media(max-width:760px){.editor-pane .CodeMirror{font-size:11px}}
