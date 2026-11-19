@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       labSection.append(labGrid);
       const updatePreview = () => {
         preview.srcdoc = "<!doctype html><html lang='es'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><style>" +
-          cssEditor.value.replace(/<\\/style/gi, "<\\\\/style") +
+          cssEditor.value.split("</style").join("<\\/style") +
           "</style></head><body>" + htmlEditor.value + "</body></html>";
       };
       runButton.addEventListener("click", updatePreview);
