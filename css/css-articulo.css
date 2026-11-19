@@ -39,3 +39,26 @@
 .quiz-feedback.is-correct{color:#21865b}.quiz-feedback.is-wrong{color:#c77b28}
 @media(max-width:850px){.lab-grid{grid-template-columns:1fr}.lab-preview{height:360px}}
 @media(max-width:600px){.lab-editor-panel,.lab-preview-panel{padding:10px}.lab-preview{height:330px}.lab-css{min-height:210px}}
+
+
+/* Código con resaltado inspirado en VS Code Dark+ y controles de copia */
+.article-code{position:relative;margin-top:0;padding:18px 20px 20px;background:#1e1e1e;color:#d4d4d4;border:1px solid #34383f;border-radius:0 0 11px 11px;font:12px/1.75 "Cascadia Code",Consolas,ui-monospace,monospace;white-space:pre;tab-size:2}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;background:#252526;border:1px solid #34383f;border-bottom:0;border-radius:11px 11px 0 0}
+.code-language{color:#9da3ad;font:700 9px/1 "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.code-copy{padding:6px 10px;border:1px solid #454950;border-radius:6px;background:#303136;color:#d6d6d6;font:600 10px "DM Sans",sans-serif;cursor:pointer;transition:background .15s,border-color .15s}
+.code-copy:hover{background:#3b3c42;border-color:#7b8ca8}
+.code-copy.is-copied{color:#8bd49c;border-color:#477c58}
+.article-code code[class*="language-"],.article-code pre[class*="language-"]{color:#d4d4d4;text-shadow:none;font:inherit}
+.article-code .token.comment,.article-code .token.prolog,.article-code .token.doctype{color:#6a9955}
+.article-code .token.punctuation{color:#d4d4d4}
+.article-code .token.property,.article-code .token.tag,.article-code .token.constant,.article-code .token.symbol{color:#9cdcfe}
+.article-code .token.selector,.article-code .token.attr-name{color:#d7ba7d}
+.article-code .token.string,.article-code .token.attr-value{color:#ce9178}
+.article-code .token.function,.article-code .token.class-name{color:#dcdcaa}
+.article-code .token.keyword,.article-code .token.atrule{color:#c586c0}
+.article-code .token.number,.article-code .token.boolean{color:#b5cea8}
+.article-code .token.operator{color:#d4d4d4}
+.article-visual{overflow:hidden}
+.visual-frame{display:grid;place-items:center;margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#111b2b,#19263a);overflow-x:auto}
+.visual-frame svg{display:block;width:100%;max-width:760px;height:auto;min-width:310px}
+@media(max-width:600px){.article-code{font-size:11px;padding:14px}.code-toolbar{padding:7px 9px}.visual-frame{padding:10px}}
