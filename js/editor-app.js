@@ -136,6 +136,7 @@ function save(){
 }
 async function switchProject(id){
  if(!projectCatalog.some(p=>p.id===id))return;
+ if(id===projectId){closeProjectsDialog();return;}
  await saveNow();
  projectId=id;
  let record=localDB?await readLocalProject(localDB,id):readFallback(id);
@@ -307,9 +308,10 @@ function showAction(mode,target="",isFolder=false){
  if(mode==="choose"){
   title.textContent=(isFolder?"Carpeta: ":"Archivo: ")+basename(target);
   message.innerHTML="<p>¿Qué querés hacer con este elemento?</p>";
-  for(const [label,action] of [["✎ Renombrar","rename"],["⇄ Mover","move"],["🗑 Eliminar","delete"]]){
+  const options=isFolder?[["＋ Subcarpeta","subfolder"],["＋ Archivo aquí","file-here"],["✎ Renombrar","rename"],["⇄ Mover","move"],["🗑 Eliminar","delete"]]:[["✎ Renombrar","rename"],["⇄ Mover","move"],["🗑 Eliminar","delete"]];
+  for(const [label,action] of options){
    const btn=document.createElement("button");btn.type="button";btn.className="action-choice";btn.textContent=label;
-   btn.addEventListener("click",()=>showAction(action,target,isFolder));message.appendChild(btn);
+   btn.addEventListener("click",()=>{if(action==="subfolder"){closeAction();createFolder(target);}else if(action==="file-here"){closeAction();createFile(target);}else showAction(action,target,isFolder);});message.appendChild(btn);
   }
   confirm.style.display="none";
  }else{
@@ -362,9 +364,10 @@ async function confirmAction(){
  }
  closeAction();
 }
-function createFile(){
+function createFile(parent=""){
+ if(typeof parent!=="string")parent="";
  const dialog=$("fileDialog"),input=$("newFileName");
- folderSelect($("newFileFolder"));dialog.classList.add("open");dialog.setAttribute("aria-hidden","false");input.value="";input.focus();
+ folderSelect($("newFileFolder"));$("newFileFolder").value=parent;dialog.classList.add("open");dialog.setAttribute("aria-hidden","false");input.value="";input.focus();
 }
 function closeFileDialog(){$("fileDialog").classList.remove("open");$("fileDialog").setAttribute("aria-hidden","true");}
 function confirmCreateFile(){
@@ -430,6 +433,9 @@ function mobileKey(key,button){
  else if(key==="undo")editor.trigger("mobile","undo");
  else if(key==="redo")editor.trigger("mobile","redo");
  else if(key==="tab")editor.trigger("mobile",modifierCtrl?"editor.action.outdentLines":"editor.action.indentLines");
+ else if(modifierCtrl&&key==="/")editor.trigger("mobile","editor.action.commentLine");
+ else if(modifierAlt&&key==="up")editor.trigger("mobile","editor.action.moveLinesUpAction");
+ else if(modifierAlt&&key==="down")editor.trigger("mobile","editor.action.moveLinesDownAction");
  else if(key==="escape"){editor.trigger("mobile","hideSuggestWidget");editor.trigger("mobile","closeFindWidget");}
  else if(["left","right","up","down"].includes(key)){
   const model=editor.getModel();if(model){
