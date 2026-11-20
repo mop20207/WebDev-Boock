@@ -60,3 +60,13 @@
  .workbench-top #downloadBtn{display:none}
  .settings-float{width:39px;height:39px;font-size:20px;bottom:12px}
 }
+
+
+#actionDialog{z-index:125}
+#projectsDialog{z-index:110}
+.action-choice{display:block;width:100%;text-align:left;margin:8px 0;padding:11px 12px;border:1px solid #3b547a;background:#1a2d49;color:#dbe7ff;border-radius:7px;cursor:pointer}
+.action-choice:hover{background:#29456f}
+#actionDialog .action-message p{margin:0 0 12px}
+#actionDialog .file-dialog-card label{margin-top:13px}
+#actionDialog #actionConfirm.danger{background:#b94450;border-color:#d96670}
+@media(max-width:560px){.settings-panel{bottom:62px}.file-dialog-card{max-height:90dvh;overflow:auto}}
