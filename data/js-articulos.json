@@ -4937,7 +4937,7 @@
       "id": "bucles-8",
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
-      "title": "迭 Métodos de iteración frente a bucles tradicionales",
+      "title": "Métodos de iteración frente a bucles tradicionales",
       "summary": "Los bucles tradicionales ofrecen control detallado del recorrido; los métodos de arrays expresan operaciones como transformar, filtrar o acumular. La elección depende de si necesitás producir un nuevo array, obtener un valor o controlar manualmente el flujo.",
       "sections": [
         {
