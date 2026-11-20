@@ -2890,7 +2890,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "Qué es una iteración y cuándo utilizarla",
-      "summary": "Qué es una iteración y cuándo utilizarla. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "Una iteración repite instrucciones para procesar datos o esperar a que se cumpla una condición. Elegir el mecanismo correcto depende de si conocés la cantidad de repeticiones, si recorrés una colección o si esperás un evento/condición.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -2906,40 +2906,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "Antes de elegir un bucle, preguntate: ¿conozco el número de vueltas?, ¿quiero recorrer valores?, ¿la repetición depende de una condición que puede cambiar? for suele servir para contadores; for...of para valores iterables; while para condiciones; do...while cuando debe ejecutarse al menos una vez."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Inicial",
-        "estimatedMinutes": 8,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa qué es una iteración y cuándo utilizarla.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Repetir una cantidad conocida",
+            "description": "Un bucle permite evitar copiar y pegar la misma instrucción.",
+            "code": "for (let vuelta = 1; vuelta <= 3; vuelta++) {\n  console.log(\"Vuelta\", vuelta);\n}\n// Salida: 1, 2, 3"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Recorrer una colección",
+            "description": "Cuando la tarea consiste en visitar cada valor de un iterable, for...of expresa la intención con claridad.",
+            "code": "const temas = [\"HTML\", \"CSS\", \"JavaScript\"];\nfor (const tema of temas) {\n  console.log(\"Estudiar:\", tema);\n}"
+          },
+          {
+            "title": "Repetir hasta cumplir una condición",
+            "description": "while resulta útil cuando no sabés de antemano cuántas vueltas serán necesarias.",
+            "code": "let intentos = 0;\nlet codigoCorrecto = false;\n\nwhile (!codigoCorrecto && intentos < 3) {\n  intentos++;\n  console.log(\"Intento\", intentos);\n  // En una app real, aquí se comprobaría la entrada.\n}"
           }
         ],
         "lab": {
@@ -2953,29 +2964,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Qué es una iteración y cuándo utilizarla» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «Qué es una iteración y cuándo utilizarla». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "for (let vuelta = 1; vuelta <= 3; vuelta++) {\n  console.log(\"Vuelta\", vuelta);\n}\n// Salida: 1, 2, 3"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre qué es una iteración y cuándo utilizarla?",
+          "question": "¿Qué afirmación describe correctamente «Qué es una iteración y cuándo utilizarla»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "La estructura debe elegirse según cómo se controla la repetición",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "Antes de elegir un bucle, preguntate: ¿conozco el número de vueltas?, ¿quiero recorrer valores?, ¿la repetición depende de una condición que puede cambiar? for suele servir para contadores; for...of para valores iterables; while para condiciones; do...while cuando debe ejecutarse al menos una vez."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -2983,7 +2995,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "Bucle for",
-      "summary": "Bucle for. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "for agrupa inicialización, condición y actualización en una misma estructura. Es especialmente útil cuando necesitás controlar un contador, recorrer índices o repetir una operación un número conocido de veces.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -2999,40 +3011,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "Sintaxis: for (inicialización; condición; actualización). Si la condición comienza siendo false, el cuerpo no se ejecuta. Evitá modificar el contador en varios lugares porque dificulta razonar cuándo termina. Para recorrer valores sin necesitar el índice, suele ser más claro for...of."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Inicial",
-        "estimatedMinutes": 10,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa bucle for.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Contar del 0 al 4",
+            "description": "La inicialización ocurre una vez; la condición se comprueba antes de cada vuelta; la actualización se ejecuta al final de cada vuelta.",
+            "code": "for (let i = 0; i < 5; i++) {\n  console.log(i);\n}\n// 0, 1, 2, 3, 4"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Recorrer un array por índice",
+            "description": "El índice permite acceder al elemento y también conocer su posición.",
+            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\n\nfor (let i = 0; i < frutas.length; i++) {\n  console.log(i, frutas[i]);\n}\n// 0 manzana | 1 pera | 2 uva"
+          },
+          {
+            "title": "Recorrer en sentido inverso",
+            "description": "Ajustá la condición y la actualización para disminuir el contador.",
+            "code": "const pasos = [\"uno\", \"dos\", \"tres\"];\n\nfor (let i = pasos.length - 1; i >= 0; i--) {\n  console.log(pasos[i]);\n}\n// tres, dos, uno"
           }
         ],
         "lab": {
@@ -3046,29 +3069,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Bucle for» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «Bucle for». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "for (let i = 0; i < 5; i++) {\n  console.log(i);\n}\n// 0, 1, 2, 3, 4"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre bucle for?",
+          "question": "¿Qué afirmación describe correctamente «Bucle for»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "La estructura debe elegirse según cómo se controla la repetición",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "Sintaxis: for (inicialización; condición; actualización). Si la condición comienza siendo false, el cuerpo no se ejecuta. Evitá modificar el contador en varios lugares porque dificulta razonar cuándo termina. Para recorrer valores sin necesitar el índice, suele ser más claro for...of."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3076,7 +3100,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "Bucle while",
-      "summary": "Bucle while. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "while ejecuta su bloque mientras la condición sea verdadera. La condición se comprueba antes de cada iteración, por lo que puede ejecutarse cero veces.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3092,40 +3116,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "Usá while cuando la repetición dependa de una condición y no sepas exactamente cuántas vueltas habrá. Asegurate de que algo dentro del ciclo pueda cambiar la condición. Un ciclo infinito accidental puede congelar la pestaña."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Inicial",
-        "estimatedMinutes": 12,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa bucle while.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Contador controlado",
+            "description": "Actualizá la variable que participa en la condición para que el bucle pueda terminar.",
+            "code": "let numero = 1;\nwhile (numero <= 3) {\n  console.log(numero);\n  numero++; // acerca el contador al final\n}\n// 1, 2, 3"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Buscar hasta encontrar",
+            "description": "La cantidad de vueltas depende de dónde aparece el elemento.",
+            "code": "const codigos = [12, 18, 25, 31];\nlet indice = 0;\n\nwhile (indice < codigos.length && codigos[indice] !== 25) {\n  indice++;\n}\n\nconsole.log(indice); // 2"
+          },
+          {
+            "title": "Condición que inicialmente es falsa",
+            "description": "Como la condición se comprueba antes, el cuerpo puede no ejecutarse.",
+            "code": "let saldo = 0;\nwhile (saldo > 0) {\n  console.log(\"Hay saldo disponible\");\n}\nconsole.log(\"El bucle no se ejecutó\");"
           }
         ],
         "lab": {
@@ -3139,29 +3174,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Bucle while» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «Bucle while». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "let numero = 1;\nwhile (numero <= 3) {\n  console.log(numero);\n  numero++; // acerca el contador al final\n}\n// 1, 2, 3"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre bucle while?",
+          "question": "¿Qué afirmación describe correctamente «Bucle while»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "La estructura debe elegirse según cómo se controla la repetición",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "Usá while cuando la repetición dependa de una condición y no sepas exactamente cuántas vueltas habrá. Asegurate de que algo dentro del ciclo pueda cambiar la condición. Un ciclo infinito accidental puede congelar la pestaña."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3169,7 +3205,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "Bucle do...while",
-      "summary": "Bucle do...while. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "do...while ejecuta primero el bloque y comprueba la condición al final. Por eso el cuerpo se ejecuta al menos una vez, incluso si la condición es falsa desde el comienzo.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3185,40 +3221,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "La diferencia central con while está en el momento de comprobar la condición. No elijas do...while solo porque parece parecido: utilizalo cuando la primera ejecución sea obligatoria. Si no necesitás esa garantía, while suele comunicar mejor la intención."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 14,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa bucle do...while.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Se ejecuta al menos una vez",
+            "description": "La condición se evalúa después del primer recorrido.",
+            "code": "let intentos = 0;\ndo {\n  intentos++;\n  console.log(\"Intento\", intentos);\n} while (intentos < 3);\n// 1, 2, 3"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Condición inicialmente falsa",
+            "description": "A diferencia de while, el cuerpo se ejecuta una vez aunque la condición sea false.",
+            "code": "let continuar = false;\ndo {\n  console.log(\"Esta línea aparece una vez\");\n} while (continuar);"
+          },
+          {
+            "title": "Validación de entrada conceptual",
+            "description": "Es útil cuando una acción debe realizarse antes de comprobar si se repite. En una interfaz real, la lectura de la entrada depende del control usado.",
+            "code": "let respuesta;\ndo {\n  respuesta = \"confirmado\"; // simula una respuesta\n  console.log(\"Se comprobó la respuesta\");\n} while (respuesta !== \"confirmado\");"
           }
         ],
         "lab": {
@@ -3232,29 +3279,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Bucle do...while» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «Bucle do...while». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "let intentos = 0;\ndo {\n  intentos++;\n  console.log(\"Intento\", intentos);\n} while (intentos < 3);\n// 1, 2, 3"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre bucle do...while?",
+          "question": "¿Qué afirmación describe correctamente «Bucle do...while»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "do...while comprueba la condición después del cuerpo",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "La diferencia central con while está en el momento de comprobar la condición. No elijas do...while solo porque parece parecido: utilizalo cuando la primera ejecución sea obligatoria. Si no necesitás esa garantía, while suele comunicar mejor la intención."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3262,7 +3310,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "break y continue",
-      "summary": "break y continue. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "break termina inmediatamente el bucle más cercano; continue salta el resto de la iteración actual y pasa a la siguiente. Ambos permiten controlar el recorrido sin modificar manualmente el contador.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3278,40 +3326,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "break y continue afectan al bucle más interno, salvo que se utilicen etiquetas. En bucles anidados, un break interno no termina automáticamente el bucle exterior. Usalos con moderación: demasiados saltos pueden hacer difícil seguir el flujo."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 8,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa break y continue.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "break: detener al encontrar",
+            "description": "Una vez hallado el elemento, no hace falta seguir recorriendo.",
+            "code": "const usuarios = [\"Ana\", \"Leo\", \"Mara\", \"Sol\"];\nfor (const usuario of usuarios) {\n  if (usuario === \"Mara\") {\n    console.log(\"Encontrada:\", usuario);\n    break; // sale del for\n  }\n}"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "continue: omitir un caso",
+            "description": "El resto del cuerpo se salta para ese valor, pero el bucle continúa.",
+            "code": "for (let numero = 1; numero <= 5; numero++) {\n  if (numero === 3) continue;\n  console.log(numero);\n}\n// 1, 2, 4, 5"
+          },
+          {
+            "title": "Evitar anidamientos innecesarios",
+            "description": "Una condición de salida temprana puede hacer más legible un recorrido.",
+            "code": "const valores = [4, 8, -2, 10];\nlet total = 0;\nfor (const valor of valores) {\n  if (valor < 0) break; // detener ante dato inválido\n  total += valor;\n}\nconsole.log(total); // 12"
           }
         ],
         "lab": {
@@ -3325,29 +3384,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «break y continue» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «break y continue». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "const usuarios = [\"Ana\", \"Leo\", \"Mara\", \"Sol\"];\nfor (const usuario of usuarios) {\n  if (usuario === \"Mara\") {\n    console.log(\"Encontrada:\", usuario);\n    break; // sale del for\n  }\n}"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre break y continue?",
+          "question": "¿Qué afirmación describe correctamente «break y continue»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "break termina el bucle más cercano y continue salta a la siguiente iteración",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "break y continue afectan al bucle más interno, salvo que se utilicen etiquetas. En bucles anidados, un break interno no termina automáticamente el bucle exterior. Usalos con moderación: demasiados saltos pueden hacer difícil seguir el flujo."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3355,7 +3415,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "Recorrer cadenas y arrays",
-      "summary": "Recorrer cadenas y arrays. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "Las cadenas y los arrays pueden recorrerse para procesar cada carácter o elemento. Elegí el mecanismo según necesites valores, índices o compatibilidad con operaciones específicas.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3371,40 +3431,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "Para arrays, for...of es cómodo si solo necesitás el valor; for si necesitás controlar el índice o usar break; forEach si querés ejecutar una acción por elemento y no necesitás interrumpir el recorrido. Evitá for...in para arrays porque recorre nombres de propiedades enumerables."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 10,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa recorrer cadenas y arrays.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Recorrer una cadena por carácter",
+            "description": "for...of recorre los valores de una cadena Unicode como puntos de código, por lo que maneja mejor muchos caracteres compuestos que un índice simple.",
+            "code": "const palabra = \"Hola\";\nfor (const caracter of palabra) {\n  console.log(caracter);\n}\n// H, o, l, a"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Array con índice",
+            "description": "Un for tradicional permite utilizar la posición para consultar o actualizar elementos.",
+            "code": "const notas = [7, 8, 10];\nfor (let i = 0; i < notas.length; i++) {\n  console.log(\"Nota\", i + 1, \"=\", notas[i]);\n}"
+          },
+          {
+            "title": "forEach con índice",
+            "description": "forEach entrega el elemento y su índice al callback, pero no permite detener el recorrido con break.",
+            "code": "const tareas = [\"leer\", \"practicar\", \"repasar\"];\ntareas.forEach((tarea, indice) => {\n  console.log(indice + 1, tarea);\n});"
           }
         ],
         "lab": {
@@ -3418,29 +3489,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Recorrer cadenas y arrays» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «Recorrer cadenas y arrays». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "const palabra = \"Hola\";\nfor (const caracter of palabra) {\n  console.log(caracter);\n}\n// H, o, l, a"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre recorrer cadenas y arrays?",
+          "question": "¿Qué afirmación describe correctamente «Recorrer cadenas y arrays»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "La estructura debe elegirse según cómo se controla la repetición",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "Para arrays, for...of es cómodo si solo necesitás el valor; for si necesitás controlar el índice o usar break; forEach si querés ejecutar una acción por elemento y no necesitás interrumpir el recorrido. Evitá for...in para arrays porque recorre nombres de propiedades enumerables."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3448,7 +3520,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "for...of: recorrer valores iterables",
-      "summary": "for...of: recorrer valores iterables. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "for...of recorre los valores que proporciona un objeto iterable, como arrays, strings, Map, Set y NodeList. No recorre las claves de un objeto plano común.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3464,40 +3536,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "Usá for...of cuando el objeto implemente el protocolo iterable. Para un objeto literal como {nombre: 'Ana'}, Object.entries(objeto) combinado con for...of permite recorrer sus pares. Si necesitás índices, podés usar array.entries()."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 12,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa for...of: recorrer valores iterables.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Array: recibir cada valor",
+            "description": "En cada vuelta, la variable recibe el siguiente elemento.",
+            "code": "const lenguajes = [\"HTML\", \"CSS\", \"JavaScript\"];\nfor (const lenguaje of lenguajes) {\n  console.log(lenguaje);\n}"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Map: recibir pares clave-valor",
+            "description": "Map es iterable y cada vuelta entrega un par que puede desestructurarse.",
+            "code": "const precios = new Map([\n  [\"teclado\", 30],\n  [\"mouse\", 15]\n]);\n\nfor (const [producto, precio] of precios) {\n  console.log(producto, precio);\n}"
+          },
+          {
+            "title": "Set: valores únicos",
+            "description": "Set es iterable y no repite valores duplicados.",
+            "code": "const etiquetas = new Set([\"js\", \"html\", \"js\", \"css\"]);\nfor (const etiqueta of etiquetas) {\n  console.log(etiqueta);\n}\n// js, html, css"
           }
         ],
         "lab": {
@@ -3511,29 +3594,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «for...of: recorrer valores iterables» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «for...of: recorrer valores iterables». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "const lenguajes = [\"HTML\", \"CSS\", \"JavaScript\"];\nfor (const lenguaje of lenguajes) {\n  console.log(lenguaje);\n}"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre for...of: recorrer valores iterables?",
+          "question": "¿Qué afirmación describe correctamente «for...of: recorrer valores iterables»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "for...of recorre valores de objetos iterables",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "Usá for...of cuando el objeto implemente el protocolo iterable. Para un objeto literal como {nombre: 'Ana'}, Object.entries(objeto) combinado con for...of permite recorrer sus pares. Si necesitás índices, podés usar array.entries()."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3541,7 +3625,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "for...in: recorrer propiedades enumerables",
-      "summary": "for...in: recorrer propiedades enumerables. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "for...in recorre las claves de propiedades enumerables de un objeto. Es útil para inspeccionar propiedades, pero no es la opción recomendada para recorrer los valores de un array.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3557,40 +3641,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "for...in enumera claves de propiedades enumerables, incluidas las heredadas. Para arrays, preferí for...of, for, o métodos como map y forEach según el objetivo. Para objetos, si solo querés las propiedades propias, Object.keys/entries suelen hacer explícito ese alcance."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 14,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa for...in: recorrer propiedades enumerables.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Recorrer propiedades de un objeto",
+            "description": "La variable del ciclo recibe el nombre de cada propiedad enumerable.",
+            "code": "const usuario = { nombre: \"Ana\", edad: 25, activo: true };\nfor (const clave in usuario) {\n  console.log(clave, usuario[clave]);\n}"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Comprobar propiedad propia",
+            "description": "for...in también puede recorrer propiedades heredadas enumerables; Object.hasOwn permite filtrar las propias.",
+            "code": "const perfil = { nombre: \"Leo\" };\nfor (const clave in perfil) {\n  if (Object.hasOwn(perfil, clave)) {\n    console.log(clave, perfil[clave]);\n  }\n}"
+          },
+          {
+            "title": "Comparar for...in y for...of",
+            "description": "En un array, for...in entrega índices como claves; for...of entrega los valores.",
+            "code": "const numeros = [10, 20];\nfor (const clave in numeros) console.log(clave); // \"0\", \"1\"\nfor (const valor of numeros) console.log(valor); // 10, 20"
           }
         ],
         "lab": {
@@ -3604,29 +3699,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «for...in: recorrer propiedades enumerables» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «for...in: recorrer propiedades enumerables». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "const usuario = { nombre: \"Ana\", edad: 25, activo: true };\nfor (const clave in usuario) {\n  console.log(clave, usuario[clave]);\n}"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre for...in: recorrer propiedades enumerables?",
+          "question": "¿Qué afirmación describe correctamente «for...in: recorrer propiedades enumerables»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "for...in recorre claves enumerables de propiedades",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "for...in enumera claves de propiedades enumerables, incluidas las heredadas. Para arrays, preferí for...of, for, o métodos como map y forEach según el objetivo. Para objetos, si solo querés las propiedades propias, Object.keys/entries suelen hacer explícito ese alcance."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3634,7 +3730,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "迭 Métodos de iteración frente a bucles tradicionales",
-      "summary": "迭 Métodos de iteración frente a bucles tradicionales. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "Los bucles tradicionales ofrecen control detallado del recorrido; los métodos de arrays expresan operaciones como transformar, filtrar o acumular. La elección depende de si necesitás producir un nuevo array, obtener un valor o controlar manualmente el flujo.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3650,40 +3746,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "No uses map si no vas a utilizar el array que devuelve: para efectos secundarios, forEach o un bucle suele expresar mejor la intención. filter selecciona, map transforma, reduce acumula. Los métodos no ofrecen break/continue; elegí un bucle si necesitás interrumpir o controlar el flujo."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Avanzado",
-        "estimatedMinutes": 8,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa 迭 métodos de iteración frente a bucles tradicionales.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "map: transformar",
+            "description": "map devuelve un array nuevo con el resultado del callback para cada elemento.",
+            "code": "const precios = [10, 20, 30];\nconst conIVA = precios.map(precio => precio * 1.21);\nconsole.log(conIVA); // [12.1, 24.2, 36.3]"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "filter: seleccionar",
+            "description": "filter crea un array con los elementos cuyo callback devuelve un valor truthy.",
+            "code": "const edades = [14, 18, 25, 16];\nconst mayores = edades.filter(edad => edad >= 18);\nconsole.log(mayores); // [18, 25]"
+          },
+          {
+            "title": "for...of: control manual",
+            "description": "Un bucle permite break, continue y lógica de varios pasos sin forzar un método de array.",
+            "code": "const pedidos = [12, 0, 8, 15];\nlet total = 0;\nfor (const pedido of pedidos) {\n  if (pedido === 0) continue;\n  total += pedido;\n}\nconsole.log(total); // 35"
           }
         ],
         "lab": {
@@ -3697,29 +3804,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «迭 Métodos de iteración frente a bucles tradicionales» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «迭 Métodos de iteración frente a bucles tradicionales». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "const precios = [10, 20, 30];\nconst conIVA = precios.map(precio => precio * 1.21);\nconsole.log(conIVA); // [12.1, 24.2, 36.3]"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre 迭 métodos de iteración frente a bucles tradicionales?",
+          "question": "¿Qué afirmación describe correctamente «迭 Métodos de iteración frente a bucles tradicionales»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "map transforma y devuelve un array nuevo",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "No uses map si no vas a utilizar el array que devuelve: para efectos secundarios, forEach o un bucle suele expresar mejor la intención. filter selecciona, map transforma, reduce acumula. Los métodos no ofrecen break/continue; elegí un bucle si necesitás interrumpir o controlar el flujo."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
@@ -3727,7 +3835,7 @@
       "categoryId": "bucles",
       "categoryTitle": "Bucles e iteraciones",
       "title": "Bucles anidados y control de rendimiento",
-      "summary": "Bucles anidados y control de rendimiento. Un bucle repite un bloque de instrucciones. Permite recorrer colecciones o repetir una operación mientras una condición se cumpla.",
+      "summary": "Los bucles anidados son ciclos dentro de otros ciclos. Permiten trabajar con tablas, matrices y combinaciones, pero el número de operaciones puede crecer rápidamente cuando aumenta el tamaño de los datos.",
       "sections": [
         {
           "title": "Qué es y cómo funciona",
@@ -3743,40 +3851,51 @@
           "language": "javascript"
         },
         {
+          "title": "Cómo funciona en profundidad",
+          "body": "Un doble bucle sobre n elementos suele implicar O(n²) iteraciones; tres niveles pueden crecer aún más. No significa que todo bucle anidado sea malo: es correcto para matrices o comparaciones por pares. Medí con datos representativos y buscá estructuras auxiliares como Map o Set cuando permitan evitar búsquedas repetidas."
+        },
+        {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Olvidar actualizar la variable que controla la condición y provocar un bucle infinito.",
+            "Usar un tipo de bucle que no corresponde al dato: por ejemplo, for...in para recorrer valores de un array.",
+            "Modificar el contador o la colección durante el recorrido sin tener claro cómo afecta a las siguientes iteraciones.",
+            "No probar el caso de colección vacía, condición inicialmente falsa o dato que no aparece."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Usá llaves incluso cuando el cuerpo tenga una sola instrucción; facilita ampliar el bloque sin introducir errores.",
+            "Elegí nombres que describan el elemento o índice, como producto, indice o fila.",
+            "Elegí for...of para valores iterables, for...in para claves enumerables de objetos y métodos de arrays para transformar o filtrar.",
+            "Probá colecciones vacías, un solo elemento y varios elementos; verificá que el ciclo siempre tenga una condición de salida cuando corresponda."
           ]
         }
       ],
       "learning": {
         "level": "Avanzado",
-        "estimatedMinutes": 10,
+        "estimatedMinutes": 16,
         "goals": [
-          "Explicar con tus palabras qué significa bucles anidados y control de rendimiento.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué controla cada parte de esta estructura y cuándo se ejecuta.",
+          "Elegir entre las alternativas de iteración según el dato y el resultado que se necesita.",
+          "Modificar los ejemplos, predecir la salida y comprobarla en el laboratorio."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+            "title": "Recorrer una matriz",
+            "description": "El bucle exterior recorre filas y el interior recorre columnas.",
+            "code": "const matriz = [[1, 2], [3, 4]];\nfor (let fila = 0; fila < matriz.length; fila++) {\n  for (let columna = 0; columna < matriz[fila].length; columna++) {\n    console.log(matriz[fila][columna]);\n  }\n}"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
+            "title": "Construir pares",
+            "description": "Dos ciclos permiten combinar cada elemento de una lista con cada elemento de otra.",
+            "code": "const talles = [\"S\", \"M\"];\nconst colores = [\"negro\", \"azul\"];\nfor (const talle of talles) {\n  for (const color of colores) {\n    console.log(talle, color);\n  }\n}\n// 4 combinaciones"
+          },
+          {
+            "title": "Pensar en el costo",
+            "description": "Si cada ciclo recorre n elementos, dos ciclos anidados pueden realizar aproximadamente n × n operaciones.",
+            "code": "const datos = [1, 2, 3, 4];\nlet comparaciones = 0;\nfor (const a of datos) {\n  for (const b of datos) {\n    comparaciones++;\n  }\n}\nconsole.log(comparaciones); // 16 (4 × 4)"
           }
         ],
         "lab": {
@@ -3790,29 +3909,30 @@
           "starterJs": "const tareas=[\"Estudiar variables\",\"Practicar funciones\",\"Crear un proyecto\"];for(const tarea of tareas){const li=document.createElement(\"li\");li.textContent=tarea;document.querySelector(\"#lista\").append(li);}"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Bucles anidados y control de rendimiento» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: aplicá el bucle",
+          "prompt": "Creá un ejemplo propio usando «Bucles anidados y control de rendimiento». Incluí una colección o condición con al menos cuatro pasos, registrá el resultado y probá también un caso límite (colección vacía, condición falsa o elemento inexistente, según corresponda).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Identificá qué valor cambia en cada iteración.",
+            "Asegurate de que la condición pueda terminar.",
+            "Probá primero con pocos datos y luego con un caso límite."
           ],
-          "solution": "const frutas = [\"manzana\", \"pera\", \"uva\"];\nfor (const fruta of frutas) console.log(fruta);"
+          "solution": "const matriz = [[1, 2], [3, 4]];\nfor (let fila = 0; fila < matriz.length; fila++) {\n  for (let columna = 0; columna < matriz[fila].length; columna++) {\n    console.log(matriz[fila][columna]);\n  }\n}"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre bucles anidados y control de rendimiento?",
+          "question": "¿Qué afirmación describe correctamente «Bucles anidados y control de rendimiento»?",
           "options": [
-            "for...of recorre valores iterables",
-            "for...of recorre solo claves",
-            "while siempre se ejecuta una vez"
+            "Los bucles anidados pueden multiplicar el número de iteraciones",
+            "Todos los bucles recorren siempre las claves de los objetos",
+            "Un bucle puede ejecutarse sin ninguna condición de salida"
           ],
           "correct": 0,
-          "explanation": "Elegí for para controlar índices o repeticiones, for...of para recorrer valores iterables y while cuando la condición determina el final."
+          "explanation": "Un doble bucle sobre n elementos suele implicar O(n²) iteraciones; tres niveles pueden crecer aún más. No significa que todo bucle anidado sea malo: es correcto para matrices o comparaciones por pares. Medí con datos representativos y buscá estructuras auxiliares como Map o Set cuando permitan evitar búsquedas repetidas."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in"
       ]
     },
     {
