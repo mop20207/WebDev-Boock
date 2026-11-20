@@ -70,3 +70,9 @@
 #actionDialog .file-dialog-card label{margin-top:13px}
 #actionDialog #actionConfirm.danger{background:#b94450;border-color:#d96670}
 @media(max-width:560px){.settings-panel{bottom:62px}.file-dialog-card{max-height:90dvh;overflow:auto}}
+
+
+/* El área visible se adapta al teclado virtual en Android. */
+.code-workbench{height:var(--editor-vh,100dvh)}
+.workbench{height:calc(var(--editor-vh,100dvh) - 58px)}
+@media(max-width:560px){.workbench{height:calc(var(--editor-vh,100dvh) - 52px)}}
