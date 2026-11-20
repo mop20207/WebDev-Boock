@@ -295,20 +295,97 @@ function openPreviewTab(){
  setTimeout(()=>URL.revokeObjectURL(url),60000);
 }
 function schedulePreview(){clearTimeout(timer);timer=setTimeout(updatePreview,450);}
-function fileOptions(name){const action=prompt("Opciones para "+name+": escribe renombrar o eliminar");if(action==="eliminar"){if(!confirm("¿Eliminar "+name+"?"))return;delete files[name];if(models[name]){models[name].dispose();delete models[name];}if(active===name){active=Object.keys(files)[0]||"";if(active)openFile(active);}renderTree();renderTabs();save();schedulePreview();}else if(action==="renombrar"){const next=prompt("Nuevo nombre de archivo",name);if(!next||next===name||files[next]!==undefined)return toast("Nombre no válido o ya existente");files[next]=files[name];delete files[name];if(models[name]){models[name].dispose();delete models[name];}if(active===name)active=next;openFile(next);save();}}
+function showAction(mode,target="",isFolder=false){
+ dialogMode=mode;dialogTarget=target;
+ const dialog=$("actionDialog"),title=$("actionTitle"),input=$("actionInput"),message=$("actionMessage"),confirm=$("actionConfirm");
+ $("actionInputRow").style.display=["rename","folder","project-new","project-rename"].includes(mode)?"grid":"none";
+ $("actionFolderRow").style.display=mode==="move"?"grid":"none";
+ confirm.classList.toggle("danger",mode==="delete"||mode==="project-delete");
+ confirm.textContent=(mode==="delete"||mode==="project-delete")?"Eliminar":"Aceptar";
+ message.textContent="";input.value="";
+ if(mode==="choose"){
+  title.textContent=(isFolder?"Carpeta: ":"Archivo: ")+basename(target);
+  message.innerHTML="<p>¿Qué querés hacer con este elemento?</p>";
+  for(const [label,action] of [["✎ Renombrar","rename"],["⇄ Mover","move"],["🗑 Eliminar","delete"]]){
+   const btn=document.createElement("button");btn.type="button";btn.className="action-choice";btn.textContent=label;
+   btn.addEventListener("click",()=>showAction(action,target,isFolder));message.appendChild(btn);
+  }
+  confirm.style.display="none";
+ }else{
+  confirm.style.display="inline-block";
+  if(mode==="rename"){title.textContent="Renombrar "+(isFolder?"carpeta":"archivo");input.value=basename(target);$("actionInputRow").firstChild.textContent="Nuevo nombre";}
+  if(mode==="folder"){title.textContent="Crear carpeta";$("actionInputRow").firstChild.textContent="Nombre de la carpeta";input.placeholder="ejemplo";message.textContent=target?"Dentro de: "+target:"En la raíz del proyecto";}
+  if(mode==="move"){title.textContent="Mover "+(isFolder?"carpeta":"archivo");folderSelect($("actionFolder"),isFolder?target:"");$("actionFolder").value=parentPath(target);}
+  if(mode==="delete"){title.textContent="Eliminar "+(isFolder?"carpeta":"archivo");message.textContent="Se eliminará "+target+(isFolder?" y todos sus archivos y subcarpetas.":"")+". Esta acción no se puede deshacer.";}
+  if(mode==="project-new"){title.textContent="Nuevo proyecto";input.placeholder="Nombre del proyecto";}
+  if(mode==="project-rename"){title.textContent="Renombrar proyecto";input.value=projectCatalog.find(p=>p.id===target)?.name||"";}
+  if(mode==="project-delete"){title.textContent="Eliminar proyecto";message.textContent="Se borrará definitivamente el proyecto «"+(projectCatalog.find(p=>p.id===target)?.name||"")+"» y todos sus archivos locales.";}
+ }
+ dialog.classList.add("open");dialog.setAttribute("aria-hidden","false");
+ if($("actionInputRow").style.display!=="none")setTimeout(()=>{input.focus();input.select();},30);
+}
+function closeAction(){const d=$("actionDialog");d.classList.remove("open");d.setAttribute("aria-hidden","true");}
+function fileOptions(name,isFolder=false){showAction("choose",name,isFolder);}
+function createFolder(parent=""){showAction("folder",parent);}
+async function confirmAction(){
+ const mode=dialogMode,target=dialogTarget,value=$("actionInput").value.trim();
+ const folder=allFolders().includes(target);
+ if(["rename","folder","project-new","project-rename"].includes(mode)&&(!value||(mode!=="project-new"&&mode!=="project-rename"&&!cleanName(value)))){toast("Escribí un nombre válido");return;}
+ if(mode==="folder"){
+  const path=(target?target+"/":"")+value;
+  if(allFolders().includes(path)||files[path]!==undefined){toast("Esa carpeta ya existe");return;}
+  folders.add(path);collapsed.delete(target);save();renderTree();
+ }else if(mode==="rename"){
+  if(!replacePath(target,(parentPath(target)?parentPath(target)+"/":"")+value,folder))return;
+ }else if(mode==="move"){
+  moveEntry(target,$("actionFolder").value);
+ }else if(mode==="delete"){
+  removeEntry(target,folder);
+ }else if(mode==="project-new"){
+  const id="project-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7);
+  projectCatalog.push({id,name:value});await switchProject(id);
+  files={...starter};folders=new Set();projectName=value;$("projectName").textContent=value;
+  await saveNow();if(editor)openFile("index.html");
+ }else if(mode==="project-rename"){
+  const project=projectCatalog.find(p=>p.id===target);if(project){project.name=value;if(projectId===target){projectName=value;$("projectName").textContent=value;await saveNow();}else{const record=localDB?await readLocalProject(localDB,target):readFallback(target);if(record){record.name=value;if(localDB)await writeLocalProject(localDB,target,record);else localStorage.setItem("webdev-project-"+target,JSON.stringify(record));}}updateCatalog();renderProjects();}
+ }else if(mode==="project-delete"){
+  if(projectCatalog.length===1){toast("Creá otro proyecto antes de eliminar el último.");return;}
+  if(projectId===target){const next=projectCatalog.find(p=>p.id!==target);await switchProject(next.id);}
+  projectCatalog=projectCatalog.filter(p=>p.id!==target);
+  if(localDB)await deleteLocalProject(localDB,target);
+  try{localStorage.removeItem("webdev-project-"+target);}catch(e){}
+  updateCatalog();renderProjects();
+ }
+ closeAction();
+}
 function createFile(){
  const dialog=$("fileDialog"),input=$("newFileName");
- dialog.classList.add("open");dialog.setAttribute("aria-hidden","false");input.value="";input.focus();
+ folderSelect($("newFileFolder"));dialog.classList.add("open");dialog.setAttribute("aria-hidden","false");input.value="";input.focus();
 }
-function closeFileDialog(){ $("fileDialog").classList.remove("open");$("fileDialog").setAttribute("aria-hidden","true"); }
+function closeFileDialog(){$("fileDialog").classList.remove("open");$("fileDialog").setAttribute("aria-hidden","true");}
 function confirmCreateFile(){
- let name=$("newFileName").value.trim();
- if(!name)return toast("Escribí un nombre para el archivo.");
- if(!/^[\\w.-]+$/.test(name)||name.startsWith(".")||files[name]!==undefined)return toast("Nombre no válido o ya existe.");
+ const name=$("newFileName").value.trim(),folder=$("newFileFolder").value;
+ if(!cleanName(name)){toast("Escribí un nombre de archivo válido");return;}
+ const path=(folder?folder+"/":"")+name;
+ if(files[path]!==undefined||allFolders().includes(path)){toast("Ese nombre ya existe");return;}
  const ext=name.split(".").pop().toLowerCase();
- files[name]=ext==="html"?"<!doctype html>\n<html lang=\"es\">\n<head><meta charset=\"UTF-8\"><title>Nuevo archivo</title></head>\n<body>\n  \n</body>\n</html>":ext==="css"?"/* Escribe tus estilos aquí */\n":ext==="js"?"// Escribe tu JavaScript aquí\n":ext==="json"?"{\n  \n}\n":"";
- openFile(name);save();closeFileDialog();
+ files[path]=ext==="html"?"<!doctype html>\n<html lang=\"es\">\n<head><meta charset=\"UTF-8\"><title>Nuevo archivo</title></head>\n<body>\n  \n</body>\n</html>":ext==="css"?"/* Escribe tus estilos aquí */\n":ext==="js"?"// Escribe tu JavaScript aquí\n":ext==="json"?"{\n  \n}\n":"";
+ if(folder)collapsed.delete(folder);
+ openFile(path);save();closeFileDialog();schedulePreview();
 }
+function renderProjects(){
+ const root=$("projectsList");root.innerHTML="";
+ for(const project of projectCatalog){
+  const row=document.createElement("div");row.className="project-entry"+(project.id===projectId?" active":"");
+  const open=document.createElement("button");open.className="project-open";open.textContent=project.name+(project.id===projectId?" ✓":"");open.addEventListener("click",()=>switchProject(project.id));row.appendChild(open);
+  for(const [icon,mode] of [["✎","project-rename"],["🗑","project-delete"]]){
+   const b=document.createElement("button");b.className="project-action"+(mode==="project-delete"?" danger":"");b.textContent=icon;b.title=mode==="project-delete"?"Eliminar proyecto":"Renombrar proyecto";b.addEventListener("click",()=>showAction(mode,project.id));row.appendChild(b);
+  }
+  root.appendChild(row);
+ }
+}
+function openProjectsDialog(){renderProjects();$("projectsDialog").classList.add("open");$("projectsDialog").setAttribute("aria-hidden","false");}
+function closeProjectsDialog(){$("projectsDialog").classList.remove("open");$("projectsDialog").setAttribute("aria-hidden","true");}
 function formatCurrent(){if(!editor)return;editor.getAction("editor.action.formatDocument")?.run();}
 function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mi-proyecto.zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
 async function init(){
