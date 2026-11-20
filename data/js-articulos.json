@@ -3820,56 +3820,69 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Qué es una función y por qué utilizarla",
-      "summary": "Qué es una función y por qué utilizarla. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Una función es un bloque reutilizable de instrucciones. Puede recibir datos mediante parámetros, ejecutar una tarea y devolver un resultado. Permite dividir un programa en responsabilidades pequeñas y evitar repetir código.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Qué es una función y por qué utilizarla: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar qué es una función y por qué utilizarla, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Definir e invocar no es lo mismo",
+          "body": "La definición prepara la función. Sus instrucciones se ejecutan recién cuando se la invoca, escribiendo su nombre seguido de paréntesis.",
+          "code": "function mostrarBienvenida() {\n  console.log(\"Bienvenido a WebDev Book\");\n}\n\n// La función todavía no se ejecutó.\nmostrarBienvenida(); // Ahora se ejecuta",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Entradas, proceso y salida",
+          "body": "Los parámetros reciben los datos, el cuerpo realiza el trabajo y return entrega un resultado a quien llamó la función.",
+          "code": "function calcularSubtotal(precio, cantidad) {\n  // Multiplicamos los datos recibidos.\n  const subtotal = precio * cantidad;\n  return subtotal; // Entregamos el resultado.\n}\n\nconst total = calcularSubtotal(120, 2);\nconsole.log(total); // 240",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Reutilizar una misma lógica",
+          "body": "Una sola definición puede procesar distintos valores. Esto evita copiar y pegar la misma operación en varios lugares.",
+          "code": "function convertirAMayusculas(texto) {\n  return texto.toUpperCase();\n}\n\nconsole.log(convertirAMayusculas(\"javascript\")); // JAVASCRIPT\nconsole.log(convertirAMayusculas(\"html\"));       // HTML",
+          "language": "javascript"
+        },
+        {
+          "title": "Funciones que realizan acciones",
+          "body": "No todas las funciones tienen que devolver un dato. Algunas realizan una acción, como mostrar un mensaje. Si no hay return con valor, la llamada devuelve undefined.",
+          "code": "function mostrarAviso() {\n  console.log(\"Hay cambios pendientes\");\n}\n\nconst resultado = mostrarAviso();\nconsole.log(resultado); // undefined",
+          "language": "javascript"
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
         "level": "Inicial",
-        "estimatedMinutes": 8,
+        "estimatedMinutes": 17,
         "goals": [
-          "Explicar con tus palabras qué significa qué es una función y por qué utilizarla.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Diferenciar definir una función de invocarla.",
+          "Reconocer parámetros, argumentos y valores de retorno.",
+          "Identificar tareas repetidas que pueden convertirse en funciones."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Sin parámetros",
+            "description": "Ejecuta una acción sin recibir datos.",
+            "code": "function mostrarEstado() {\n  console.log(\"Sistema listo\");\n}\nmostrarEstado();"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Con parámetros",
+            "description": "La misma función puede trabajar con diferentes argumentos.",
+            "code": "function calcularArea(ancho, alto) {\n  return ancho * alto;\n}\nconsole.log(calcularArea(5, 3)); // 15\nconsole.log(calcularArea(8, 2)); // 16"
+          },
+          {
+            "title": "Separar responsabilidades",
+            "description": "Una función puede utilizar el resultado de otra más pequeña.",
+            "code": "function subtotal(precio, cantidad) {\n  return precio * cantidad;\n}\nfunction conImpuesto(valor, tasa) {\n  return valor * (1 + tasa);\n}\nconst base = subtotal(100, 2);\nconsole.log(conImpuesto(base, 0.21)); // 242"
+          },
+          {
+            "title": "Devolver true o false",
+            "description": "Una función también puede responder una condición.",
+            "code": "function esMayorDeEdad(edad) {\n  return edad >= 18;\n}\nconsole.log(esMayorDeEdad(20)); // true\nconsole.log(esMayorDeEdad(15)); // false"
           }
         ],
         "lab": {
@@ -3883,29 +3896,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Qué es una función y por qué utilizarla» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Caja registradora",
+          "prompt": "Creá calcularTotal(precio, cantidad), llamala con tres productos y sumá los resultados.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "La función recibe dos parámetros.",
+            "Usá return para devolver el subtotal.",
+            "Sumá los resultados fuera de la función."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function calcularTotal(precio, cantidad) {\n  return precio * cantidad;\n}\nconst teclado = calcularTotal(25, 1);\nconst mouse = calcularTotal(10, 2);\nconst cable = calcularTotal(5, 3);\nconsole.log(teclado + mouse + cable); // 60"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre qué es una función y por qué utilizarla?",
+          "question": "¿Qué ocurre al definir una función pero no invocarla?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "Sus instrucciones se ejecutan automáticamente",
+            "Queda definida, pero su cuerpo no se ejecuta",
+            "JavaScript devuelve siempre true"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 1,
+          "explanation": "La definición crea la función. Para ejecutar sus instrucciones hay que invocarla."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -3913,56 +3926,62 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Declaración de función (function declaration)",
-      "summary": "Declaración de función (function declaration). Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Una declaración de función utiliza function, un nombre, parámetros y un bloque. Las declaraciones tienen hoisting: pueden invocarse antes de su posición dentro del ámbito.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Declaración de función (function declaration): Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar declaración de función (function declaration), identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Estructura de una declaración",
+          "body": "La palabra function inicia la declaración; luego aparecen el nombre, los parámetros entre paréntesis y el cuerpo entre llaves.",
+          "code": "function saludar(nombre) {\n  return \"Hola, \" + nombre;\n}\nconsole.log(saludar(\"Ana\")); // Hola, Ana",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Una definición, varias llamadas",
+          "body": "La función se define una vez y puede invocarse con argumentos distintos.",
+          "code": "function crearEtiqueta(producto) {\n  return \"[Producto] \" + producto;\n}\nconsole.log(crearEtiqueta(\"Teclado\"));\nconsole.log(crearEtiqueta(\"Monitor\"));",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Hoisting de declaraciones",
+          "body": "Una function declaration está disponible con su definición al inicio del ámbito. Por eso esta llamada anterior a la declaración funciona.",
+          "code": "console.log(calcularDoble(6)); // 12\n\nfunction calcularDoble(numero) {\n  return numero * 2;\n}",
+          "language": "javascript"
+        },
+        {
+          "title": "Ámbito de la declaración",
+          "body": "El nombre de la función está disponible en el ámbito donde se declara. Conviene declarar funciones en el nivel que representa su responsabilidad y evitar nombres duplicados."
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
         "level": "Inicial",
-        "estimatedMinutes": 10,
+        "estimatedMinutes": 17,
         "goals": [
-          "Explicar con tus palabras qué significa declaración de función (function declaration).",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Reconocer la estructura de una declaración de función.",
+          "Invocar una función con argumentos.",
+          "Comprender el hoisting de function declaration."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Operación matemática",
+            "description": "Una función nombrada puede encapsular un cálculo.",
+            "code": "function restar(a, b) {\n  return a - b;\n}\nconsole.log(restar(9, 4)); // 5"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Llamada anterior a la declaración",
+            "description": "El hoisting aplica a las declaraciones de función.",
+            "code": "console.log(minutosASegundos(5)); // 300\nfunction minutosASegundos(minutos) {\n  return minutos * 60;\n}"
+          },
+          {
+            "title": "Validar antes de continuar",
+            "description": "Una declaración puede utilizar retornos tempranos.",
+            "code": "function dividir(a, b) {\n  if (b === 0) return null; // caso inválido\n  return a / b;\n}\nconsole.log(dividir(10, 2)); // 5\nconsole.log(dividir(10, 0)); // null"
           }
         ],
         "lab": {
@@ -3976,29 +3995,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Declaración de función (function declaration)» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Conversor de minutos",
+          "prompt": "Declarà minutosASegundos(minutos) y probá llamarla antes de su declaración.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Un minuto equivale a 60 segundos.",
+            "Devolvé el cálculo con return.",
+            "La llamada puede aparecer antes de la declaración."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "console.log(minutosASegundos(1)); // 60\nconsole.log(minutosASegundos(5)); // 300\nfunction minutosASegundos(minutos) {\n  return minutos * 60;\n}"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre declaración de función (function declaration)?",
+          "question": "¿Por qué puede funcionar una llamada antes de una function declaration?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "Todas las líneas se ejecutan al revés",
+            "Las declaraciones de función tienen hoisting",
+            "La función se inventa al invocarla"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 1,
+          "explanation": "La declaración y su definición están disponibles al inicio de su ámbito."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4006,56 +4025,62 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Expresiones de función",
-      "summary": "Expresiones de función. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Una expresión de función crea un valor función que puede asignarse a una variable, pasarse como argumento o almacenarse en una propiedad. Su asignación debe evaluarse antes de invocar la función.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Expresiones de función: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar expresiones de función, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Qué es una expresión de función",
+          "body": "La función aparece como parte de una expresión, por ejemplo a la derecha de una asignación. Puede ser anónima o tener un nombre interno.",
+          "code": "const saludar = function (nombre) {\n  return \"Hola, \" + nombre;\n};\nconsole.log(saludar(\"Mara\"));",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Expresión anónima y nombrada",
+          "body": "Una expresión anónima no tiene nombre propio. Una expresión nombrada puede utilizar su nombre interno para autorreferencia, por ejemplo en una recursión.",
+          "code": "const factorial = function factorialInterno(n) {\n  if (n <= 1) return 1;\n  return n * factorialInterno(n - 1);\n};\nconsole.log(factorial(5)); // 120",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Las funciones son valores",
+          "body": "Una función puede guardarse en una variable y pasarse a otra función. La función receptora decide cuándo invocarla.",
+          "code": "function aplicar(valor, transformacion) {\n  return transformacion(valor);\n}\nconst mayusculas = function (texto) {\n  return texto.toUpperCase();\n};\nconsole.log(aplicar(\"hola\", mayusculas)); // HOLA",
+          "language": "javascript"
+        },
+        {
+          "title": "Disponibilidad de la expresión",
+          "body": "Una expresión asignada a const no puede invocarse antes de inicializar la variable. No tiene el mismo hoisting que una declaración de función."
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
-        "level": "Inicial",
-        "estimatedMinutes": 12,
+        "level": "Intermedio",
+        "estimatedMinutes": 17,
         "goals": [
-          "Explicar con tus palabras qué significa expresiones de función.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Distinguir una expresión de una declaración.",
+          "Asignar funciones a variables y pasarlas como valores.",
+          "Reconocer expresiones anónimas y nombradas."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Asignada a const",
+            "description": "La variable almacena una referencia a la función.",
+            "code": "const cuadrado = function (n) {\n  return n ** 2;\n};\nconsole.log(cuadrado(5)); // 25"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Expresión nombrada",
+            "description": "El nombre interno permite que la función se invoque a sí misma.",
+            "code": "const cuenta = function contar(n) {\n  if (n <= 0) return \"Fin\";\n  return n + \"...\" + contar(n - 1);\n};\nconsole.log(cuenta(3)); // 3...2...1...Fin"
+          },
+          {
+            "title": "Pasar como argumento",
+            "description": "Se pasa la referencia sin paréntesis; la otra función la ejecuta.",
+            "code": "function ejecutar(a, b, operacion) {\n  return operacion(a, b);\n}\nconst sumar = function (x, y) { return x + y; };\nconsole.log(ejecutar(3, 4, sumar)); // 7"
           }
         ],
         "lab": {
@@ -4069,29 +4094,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Expresiones de función» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Selector de operaciones",
+          "prompt": "Creá expresiones sumar y multiplicar y pasalas a ejecutar(a, b, operacion).",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Asigná cada función a una constante.",
+            "Pasá la función sin paréntesis.",
+            "Invocá operacion dentro de ejecutar."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "const sumar = function (a, b) { return a + b; };\nconst multiplicar = function (a, b) { return a * b; };\nfunction ejecutar(a, b, operacion) {\n  return operacion(a, b);\n}\nconsole.log(ejecutar(4, 3, sumar)); // 7\nconsole.log(ejecutar(4, 3, multiplicar)); // 12"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre expresiones de función?",
+          "question": "¿Qué sucede si invocás una expresión asignada a const antes de inicializarla?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "Se ejecuta por hoisting",
+            "Se produce ReferenceError",
+            "Se convierte en función flecha"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 1,
+          "explanation": "La expresión se evalúa al llegar a la asignación; const no puede leerse antes de inicializarse."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4099,56 +4124,75 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Parámetros y argumentos",
-      "summary": "Parámetros y argumentos. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Los parámetros son nombres declarados en la función; los argumentos son los valores entregados al invocarla. Se pueden pasar valores primitivos, objetos, arrays y funciones. Los parámetros rest reúnen argumentos adicionales en un array.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Parámetros y argumentos: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar parámetros y argumentos, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Parámetros y argumentos",
+          "body": "En la definición, nombre y precio son parámetros. En la llamada, los valores concretos son argumentos.",
+          "code": "function describirProducto(nombre, precio) { // parámetros\n  return nombre + \": $\" + precio;\n}\n// \"Teclado\" y 25 son argumentos\nconsole.log(describirProducto(\"Teclado\", 25));",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Orden posicional",
+          "body": "Los argumentos se asignan a los parámetros según su posición. Invertirlos cambia el significado de los datos.",
+          "code": "function presentar(nombre, ciudad) {\n  return nombre + \" vive en \" + ciudad;\n}\nconsole.log(presentar(\"Lucía\", \"Corrientes\"));\n// Si se invierten, el resultado también se invierte.",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Argumentos faltantes o adicionales",
+          "body": "Un parámetro sin argumento vale undefined si no tiene valor predeterminado. Los argumentos adicionales no se asignan a parámetros declarados, salvo que se recojan con rest.",
+          "code": "function sumar(a, b) {\n  return a + b;\n}\nconsole.log(sumar(5)); // NaN: b es undefined\nconsole.log(sumar(5, 2, 9)); // 7: el tercer argumento no se usa",
+          "language": "javascript"
+        },
+        {
+          "title": "Objetos como argumentos",
+          "body": "Al pasar un objeto, se pasa una copia de su valor de referencia. La función puede modificar las propiedades del mismo objeto, pero reasignar el parámetro no cambia la variable externa.",
+          "code": "const usuario = { nombre: \"Ana\" };\nfunction cambiarNombre(persona) {\n  persona.nombre = \"Sofía\"; // modifica el objeto\n}\ncambiarNombre(usuario);\nconsole.log(usuario.nombre); // Sofía",
+          "language": "javascript"
+        },
+        {
+          "title": "Parámetros rest",
+          "body": "...nombre reúne los argumentos restantes en un array y debe ser el último parámetro.",
+          "code": "function sumarTodos(...numeros) {\n  return numeros.reduce((total, n) => total + n, 0);\n}\nconsole.log(sumarTodos(2, 3, 4, 5)); // 14",
+          "language": "javascript"
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 14,
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa parámetros y argumentos.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Diferenciar parámetros de argumentos.",
+          "Predecir qué ocurre si faltan o sobran argumentos.",
+          "Pasar objetos y recolectar argumentos con rest."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Parámetros posicionales",
+            "description": "Cada argumento ocupa la posición correspondiente.",
+            "code": "function nombreCompleto(nombre, apellido) {\n  return nombre + \" \" + apellido;\n}\nconsole.log(nombreCompleto(\"Ana\", \"Pérez\"));"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Falta un argumento",
+            "description": "Sin un valor predeterminado, el parámetro faltante es undefined.",
+            "code": "function descuento(precio, porcentaje) {\n  return precio * porcentaje / 100;\n}\nconsole.log(descuento(200, 10)); // 20\nconsole.log(descuento(200)); // NaN"
+          },
+          {
+            "title": "Cantidad variable con rest",
+            "description": "Rest convierte los argumentos restantes en un array.",
+            "code": "function listar(evento, ...personas) {\n  console.log(evento, personas);\n}\nlistar(\"Taller JS\", \"Ana\", \"Luis\", \"Mara\");"
+          },
+          {
+            "title": "Desestructurar al recibir",
+            "description": "Podés extraer propiedades de un objeto directamente en los parámetros.",
+            "code": "function mostrarFicha({ nombre, edad }) {\n  console.log(nombre + \" tiene \" + edad + \" años\");\n}\nmostrarFicha({ nombre: \"Leo\", edad: 25 });"
           }
         ],
         "lab": {
@@ -4162,29 +4206,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Parámetros y argumentos» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Calcular un promedio",
+          "prompt": "Creá promedio(...notas), que calcule una cantidad variable de notas y devuelva null si no recibe ninguna.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Rest produce un array.",
+            "Comprobá notas.length antes de dividir.",
+            "Podés sumar con reduce."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function promedio(...notas) {\n  if (notas.length === 0) return null;\n  const suma = notas.reduce((total, n) => total + n, 0);\n  return suma / notas.length;\n}\nconsole.log(promedio(8, 9, 7)); // 8\nconsole.log(promedio()); // null"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre parámetros y argumentos?",
+          "question": "En function saludar(nombre) y saludar(\"Mara\"), ¿qué representa \"Mara\"?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "Un parámetro",
+            "Un argumento",
+            "El valor de retorno"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 1,
+          "explanation": "nombre es el parámetro; Mara es el argumento entregado en la llamada."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4192,56 +4236,73 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "return y valores de retorno",
-      "summary": "return y valores de retorno. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "return termina la ejecución de la función actual y entrega un valor a quien la invocó. Mostrar algo con console.log no es lo mismo que devolverlo. Si no se ejecuta un return con valor, el resultado es undefined.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "return y valores de retorno: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar return y valores de retorno, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Devolver un valor",
+          "body": "La expresión que sigue a return se evalúa y se entrega a quien llamó la función. El código posterior a ese return no se ejecuta en esa ruta.",
+          "code": "function doble(numero) {\n  return numero * 2;\n  console.log(\"No se ejecuta\");\n}\nconst resultado = doble(7);\nconsole.log(resultado); // 14",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "console.log no es return",
+          "body": "console.log muestra información en la consola. No entrega ese valor como resultado de la función.",
+          "code": "function sumarYMostrar(a, b) {\n  console.log(a + b); // muestra, no devuelve\n}\nconst resultado = sumarYMostrar(2, 3);\nconsole.log(resultado); // undefined\n\nfunction sumarYDevolver(a, b) {\n  return a + b;\n}\nconsole.log(sumarYDevolver(2, 3)); // 5",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Retorno temprano",
+          "body": "return puede salir de la función antes de llegar al final, por ejemplo para validar datos.",
+          "code": "function dividir(a, b) {\n  if (b === 0) {\n    return \"No se puede dividir por cero\";\n  }\n  return a / b;\n}\nconsole.log(dividir(10, 2)); // 5",
+          "language": "javascript"
+        },
+        {
+          "title": "Devolver estructuras",
+          "body": "Una función devuelve un único valor. Ese valor puede ser un objeto o array que agrupe varios datos.",
+          "code": "function calcularRectangulo(ancho, alto) {\n  return {\n    area: ancho * alto,\n    perimetro: 2 * (ancho + alto)\n  };\n}\nconst { area, perimetro } = calcularRectangulo(5, 3);\nconsole.log(area, perimetro); // 15 16",
+          "language": "javascript"
+        },
+        {
+          "title": "return sin expresión",
+          "body": "return; termina la función y devuelve undefined. Llegar al final sin ejecutar return también devuelve undefined."
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 8,
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa return y valores de retorno.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué hace return y cuándo termina una función.",
+          "Diferenciar devolver un valor de mostrarlo en consola.",
+          "Utilizar retornos tempranos y devolver estructuras."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Usar el resultado en otro cálculo",
+            "description": "El valor devuelto puede guardarse y reutilizarse.",
+            "code": "function calcularIVA(precio, tasa) {\n  return precio * tasa;\n}\nconst iva = calcularIVA(1000, 0.21);\nconsole.log(1000 + iva); // 1210"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Retorno temprano",
+            "description": "La validación termina la función cuando detecta un dato inválido.",
+            "code": "function evaluarEdad(edad) {\n  if (edad < 0) return \"Edad inválida\";\n  return edad >= 18 ? \"Mayor\" : \"Menor\";\n}\nconsole.log(evaluarEdad(-2)); // Edad inválida"
+          },
+          {
+            "title": "Devolver varios datos",
+            "description": "Se agrupan los resultados en un objeto.",
+            "code": "function rectangulo(a, b) {\n  return { area: a * b, perimetro: 2 * (a + b) };\n}\nconst resultado = rectangulo(5, 3);\nconsole.log(resultado.area); // 15"
+          },
+          {
+            "title": "Mostrar frente a devolver",
+            "description": "La primera función no devuelve el valor que muestra.",
+            "code": "function incorrecta() { console.log(15); }\nfunction correcta() { return 15; }\nconsole.log(incorrecta()); // undefined\nconsole.log(correcta()); // 15"
           }
         ],
         "lab": {
@@ -4255,29 +4316,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «return y valores de retorno» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Calcular una compra",
+          "prompt": "Creá calcularCompra(precio, cantidad, descuento) que devuelva subtotal, ahorro y total. Si hay valores negativos, devolvé null.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Validá primero los valores negativos.",
+            "Calculá subtotal y ahorro.",
+            "Devolvé las tres propiedades en un objeto."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function calcularCompra(precio, cantidad, descuento) {\n  if (precio < 0 || cantidad < 0 || descuento < 0) return null;\n  const subtotal = precio * cantidad;\n  const ahorro = subtotal * descuento / 100;\n  return { subtotal, ahorro, total: subtotal - ahorro };\n}\nconsole.log(calcularCompra(100, 2, 10));\n// { subtotal: 200, ahorro: 20, total: 180 }"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre return y valores de retorno?",
+          "question": "¿Qué devuelve una función si llega al final sin ejecutar return con valor?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "0",
+            "false",
+            "undefined"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 2,
+          "explanation": "JavaScript devuelve undefined cuando una función no devuelve explícitamente un valor."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4285,56 +4346,75 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Parámetros por defecto",
-      "summary": "Parámetros por defecto. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Los parámetros por defecto asignan un valor inicial cuando un argumento se omite o se pasa como undefined. No se activan con null y pueden utilizar expresiones o parámetros anteriores.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Parámetros por defecto: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar parámetros por defecto, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Sintaxis del valor por defecto",
+          "body": "Se escribe = y el valor alternativo en la definición. Se utiliza si el argumento se omite o es undefined.",
+          "code": "function saludar(nombre = \"invitado\") {\n  return \"Hola, \" + nombre;\n}\nconsole.log(saludar(\"Mara\")); // Hola, Mara\nconsole.log(saludar()); // Hola, invitado",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "undefined no es null",
+          "body": "El valor por defecto se activa ante un argumento omitido o undefined. null es un valor explícito y se conserva.",
+          "code": "function mostrar(valor = \"por defecto\") {\n  return valor;\n}\nconsole.log(mostrar()); // por defecto\nconsole.log(mostrar(undefined)); // por defecto\nconsole.log(mostrar(null)); // null\nconsole.log(mostrar(\"\")); // cadena vacía",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Expresiones como valor predeterminado",
+          "body": "El valor puede calcularse al invocar la función y puede depender de un parámetro anterior.",
+          "code": "function crearRango(inicio, fin = inicio + 10) {\n  return [inicio, fin];\n}\nconsole.log(crearRango(5)); // [5, 15]\nconsole.log(crearRango(5, 20)); // [5, 20]",
+          "language": "javascript"
+        },
+        {
+          "title": "Omitir un parámetro intermedio",
+          "body": "Para omitir un argumento posicional intermedio y proporcionar otro posterior, podés pasar undefined explícitamente.",
+          "code": "function configurar(ancho, alto = 300, color = \"azul\") {\n  return { ancho, alto, color };\n}\nconsole.log(configurar(500, undefined, \"verde\"));\n// { ancho: 500, alto: 300, color: \"verde\" }",
+          "language": "javascript"
+        },
+        {
+          "title": "Agrupar opciones en un objeto",
+          "body": "Cuando una función tiene varias opciones, un objeto puede hacer las llamadas más legibles.",
+          "code": "function crearTarjeta({ titulo, color = \"dorado\", visible = true }) {\n  return { titulo, color, visible };\n}\nconsole.log(crearTarjeta({ titulo: \"JavaScript\" }));",
+          "language": "javascript"
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 10,
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa parámetros por defecto.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Aplicar valores predeterminados a parámetros opcionales.",
+          "Diferenciar argumentos omitidos, undefined y null.",
+          "Diseñar funciones con opciones claras."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Valor por defecto sencillo",
+            "description": "Se utiliza cuando no se proporciona el argumento.",
+            "code": "function idiomaActual(idioma = \"es\") { return idioma; }\nconsole.log(idiomaActual()); // es\nconsole.log(idiomaActual(\"en\")); // en"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "undefined frente a null",
+            "description": "Solo undefined activa el valor predeterminado.",
+            "code": "function colorActual(color = \"negro\") { return color; }\nconsole.log(colorActual(undefined)); // negro\nconsole.log(colorActual(null)); // null"
+          },
+          {
+            "title": "Predeterminado calculado",
+            "description": "El valor alternativo puede depender de un parámetro anterior.",
+            "code": "function precioFinal(precio, impuesto = precio * 0.21) {\n  return precio + impuesto;\n}\nconsole.log(precioFinal(100)); // 121\nconsole.log(precioFinal(100, 10)); // 110"
+          },
+          {
+            "title": "Objeto de opciones",
+            "description": "Una opción omitida puede recibir su valor predeterminado al desestructurar.",
+            "code": "function tarjeta({ titulo, ancho = 320, color = \"dorado\" }) {\n  return { titulo, ancho, color };\n}\nconsole.log(tarjeta({ titulo: \"JS\" }));"
           }
         ],
         "lab": {
@@ -4348,29 +4428,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Parámetros por defecto» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Configurar una tarjeta",
+          "prompt": "Creá crearTarjeta(titulo, color, ancho) con color y ancho predeterminados. Probá omitirlos y pasar undefined.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Los valores se declaran en la definición.",
+            "undefined activa el valor predeterminado; null no.",
+            "Devolvé un objeto para inspeccionar el resultado."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function crearTarjeta(titulo, color = \"dorado\", ancho = 320) {\n  return { titulo, color, ancho };\n}\nconsole.log(crearTarjeta(\"JS\", \"amarillo\", 400));\nconsole.log(crearTarjeta(\"CSS\"));\nconsole.log(crearTarjeta(\"HTML\", undefined, 500));"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre parámetros por defecto?",
+          "question": "Si function f(valor = 10), ¿qué devuelve f(null)?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "10",
+            "null",
+            "undefined"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 1,
+          "explanation": "null es un valor explícito; el valor por defecto se aplica si se omite el argumento o se pasa undefined."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4500,56 +4580,75 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Scope global, de función y de bloque",
-      "summary": "Scope global, de función y de bloque. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "El scope o ámbito determina desde dónde se puede acceder a una variable. JavaScript utiliza ámbitos globales, de función y de bloque. let y const respetan el bloque; var tiene ámbito de función.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Scope global, de función y de bloque: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar scope global, de función y de bloque, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Ámbito global y de módulo",
+          "body": "Una variable declarada en el nivel superior de un script clásico puede ser accesible desde funciones de ese script. En módulos, el nivel superior tiene ámbito de módulo y no se convierte automáticamente en una propiedad global.",
+          "code": "const nombreSitio = \"WebDev Book\";\nfunction mostrarSitio() {\n  console.log(nombreSitio); // lee el ámbito exterior\n}\nmostrarSitio();",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Ámbito de función",
+          "body": "Las variables declaradas dentro de una función solo están disponibles en ella y en sus funciones internas.",
+          "code": "function calcularTotal() {\n  const precio = 100;\n  const cantidad = 2;\n  return precio * cantidad;\n}\nconsole.log(calcularTotal()); // 200\n// console.log(precio); // ReferenceError",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Ámbito de bloque: let y const",
+          "body": "Un bloque es un conjunto de instrucciones entre llaves. let y const quedan limitadas a ese bloque.",
+          "code": "if (true) {\n  const mensaje = \"Dentro del bloque\";\n  let contador = 1;\n  console.log(mensaje, contador);\n}\n// mensaje y contador no están disponibles aquí.",
+          "language": "javascript"
+        },
+        {
+          "title": "var tiene ámbito de función",
+          "body": "var no crea un ámbito nuevo por cada bloque. Permanece disponible dentro de la función que la contiene.",
+          "code": "function ejemploVar() {\n  if (true) {\n    var resultado = \"visible en la función\";\n  }\n  console.log(resultado); // visible en la función\n}\nejemploVar();",
+          "language": "javascript"
+        },
+        {
+          "title": "Cadena de ámbitos y shadowing",
+          "body": "Una función interna puede consultar ámbitos externos. Si declara un nombre ya existente, lo oculta dentro de su propio ámbito.",
+          "code": "const color = \"dorado\";\nfunction mostrarColor() {\n  const color = \"azul\"; // oculta la variable externa\n  console.log(color); // azul\n}\nmostrarColor();\nconsole.log(color); // dorado",
+          "language": "javascript"
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
         "level": "Intermedio",
-        "estimatedMinutes": 14,
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa scope global, de función y de bloque.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Identificar los ámbitos global, de función y de bloque.",
+          "Distinguir var frente a let y const.",
+          "Comprender la cadena de ámbitos y el shadowing."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Leer una variable exterior",
+            "description": "Una función puede consultar variables de ámbitos superiores.",
+            "code": "const impuesto = 0.21;\nfunction total(precio) { return precio * (1 + impuesto); }\nconsole.log(total(100)); // 121"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "let y const dentro de un bloque",
+            "description": "Las variables no existen fuera del bloque.",
+            "code": "for (let i = 0; i < 3; i++) {\n  const mensaje = \"Vuelta \" + i;\n  console.log(mensaje);\n}\n// i y mensaje no están disponibles aquí."
+          },
+          {
+            "title": "Comparar var con let",
+            "description": "var atraviesa el bloque, pero no el límite de la función.",
+            "code": "function probar() {\n  if (true) {\n    var conVar = \"función\";\n    let conLet = \"bloque\";\n  }\n  console.log(conVar); // función\n  // console.log(conLet); // ReferenceError\n}\nprobar();"
+          },
+          {
+            "title": "Shadowing",
+            "description": "El nombre local oculta al exterior dentro de ese bloque.",
+            "code": "const usuario = \"Global\";\nfunction mostrar() {\n  const usuario = \"Local\";\n  console.log(usuario); // Local\n}\nmostrar();\nconsole.log(usuario); // Global"
           }
         ],
         "lab": {
@@ -4563,29 +4662,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Scope global, de función y de bloque» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Detectar el ámbito",
+          "prompt": "Creá una función con una variable local y otra global. Dentro de un if probá let y var y explicá por qué una se puede leer fuera del bloque y la otra no.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Una función crea su propio ámbito.",
+            "let respeta el bloque.",
+            "var respeta la función, no el bloque."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "const sitio = \"WebDev Book\";\nfunction mostrarDatos() {\n  const seccion = \"Funciones\";\n  if (true) {\n    let mensajeBloque = \"Solo dentro del if\";\n    var mensajeFuncion = \"Dentro de la función\";\n    console.log(mensajeBloque);\n  }\n  console.log(sitio, seccion, mensajeFuncion);\n  // console.log(mensajeBloque); // ReferenceError\n}\nmostrarDatos();"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre scope global, de función y de bloque?",
+          "question": "¿Cuál afirmación sobre let y var es correcta?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "let tiene ámbito de bloque; var tiene ámbito de función",
+            "var tiene ámbito de bloque y let es global",
+            "ambas tienen el mismo alcance"
           ],
           "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "explanation": "let y const respetan el bloque. var tiene alcance de función o global según dónde se declare."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4593,56 +4692,73 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Hoisting de declaraciones y expresiones",
-      "summary": "Hoisting de declaraciones y expresiones. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Hoisting describe cómo JavaScript procesa declaraciones antes de ejecutar el código. Las declaraciones de función quedan disponibles con su definición; var se inicializa como undefined; let y const no pueden leerse antes de inicializarse.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Hoisting de declaraciones y expresiones: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar hoisting de declaraciones y expresiones, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Qué significa hoisting",
+          "body": "Es una forma de describir cómo ciertas declaraciones se procesan antes de ejecutar el código. No significa que el motor mueva literalmente las líneas del archivo.",
+          "code": "saludar(); // Hola\nfunction saludar() {\n  console.log(\"Hola\");\n}",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Function declaration",
+          "body": "Las declaraciones de función están disponibles con su definición al inicio del ámbito.",
+          "code": "console.log(cuadrado(4)); // 16\nfunction cuadrado(numero) {\n  return numero * numero;\n}",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Expresión de función y const",
+          "body": "La variable existe en el ámbito, pero no puede leerse antes de inicializarse. La expresión se crea cuando se evalúa la asignación.",
+          "code": "// saludar(); // ReferenceError si se ejecuta aquí\nconst saludar = function () {\n  console.log(\"Hola\");\n};\nsaludar(); // correcto después de inicializar",
+          "language": "javascript"
+        },
+        {
+          "title": "var, let y const",
+          "body": "var se inicializa con undefined. let y const tienen una zona temporal muerta (TDZ) hasta su inicialización.",
+          "code": "console.log(valorVar); // undefined\nvar valorVar = 10;\n\n// console.log(valorLet); // ReferenceError\nlet valorLet = 20;\n\n// console.log(valorConst); // ReferenceError\nconst valorConst = 30;",
+          "language": "javascript"
+        },
+        {
+          "title": "Cómo escribir código claro",
+          "body": "Aunque el hoisting explica estos comportamientos, suele ser más sencillo de leer declarar las variables y expresiones antes de utilizarlas."
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir la sintaxis o el momento de ejecución.",
+            "No contemplar valores faltantes o casos límite.",
+            "Usar nombres poco descriptivos o mezclar responsabilidades."
           ]
         }
       ],
       "learning": {
-        "level": "Avanzado",
-        "estimatedMinutes": 8,
+        "level": "Intermedio",
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa hoisting de declaraciones y expresiones.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué se entiende por hoisting.",
+          "Comparar declaraciones y expresiones de función.",
+          "Reconocer undefined y la zona temporal muerta."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Declaración antes de su línea",
+            "description": "Una function declaration puede invocarse antes de aparecer en el código.",
+            "code": "console.log(doble(3)); // 6\nfunction doble(n) { return n * 2; }"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "var antes de asignar",
+            "description": "La variable ya existe y contiene undefined hasta que se ejecuta la asignación.",
+            "code": "console.log(contador); // undefined\nvar contador = 5;\nconsole.log(contador); // 5"
+          },
+          {
+            "title": "TDZ con let",
+            "description": "Leer la variable antes de inicializarla produce ReferenceError.",
+            "code": "// console.log(puntos); // ReferenceError\nlet puntos = 10;\nconsole.log(puntos); // 10"
+          },
+          {
+            "title": "Expresión primero, llamada después",
+            "description": "La expresión asignada a const debe inicializarse antes de invocarse.",
+            "code": "const duplicar = function (n) { return n * 2; };\nconsole.log(duplicar(6)); // 12"
           }
         ],
         "lab": {
@@ -4656,29 +4772,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Hoisting de declaraciones y expresiones» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Predecir antes de ejecutar",
+          "prompt": "Probá por separado una function declaration llamada antes de definirse, una var leída antes de asignarse y una const leída antes de inicializarse.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "La declaración de función funciona.",
+            "var produce undefined antes de la asignación.",
+            "const en TDZ produce ReferenceError."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "console.log(doble(3)); // 6\nfunction doble(n) { return n * 2; }\n\nconsole.log(mensajeVar); // undefined\nvar mensajeVar = \"listo\";\n\n// Descomentá para observar ReferenceError:\n// console.log(mensajeConst);\nconst mensajeConst = \"inicializado\";"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre hoisting de declaraciones y expresiones?",
+          "question": "¿Qué sucede al leer let antes de inicializarla?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "Devuelve undefined",
+            "Produce ReferenceError por la TDZ",
+            "Se convierte en var"
           ],
-          "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "correct": 1,
+          "explanation": "let y const no pueden leerse antes de su inicialización."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function"
       ]
     },
     {
@@ -4686,56 +4802,78 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Closures y alcance léxico",
-      "summary": "Closures y alcance léxico. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Un closure combina una función con referencias al entorno léxico donde fue creada. Permite que una función interna siga accediendo a variables externas incluso después de que la función externa haya terminado.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Closures y alcance léxico: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar closures y alcance léxico, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Alcance léxico",
+          "body": "JavaScript resuelve los nombres según dónde se crea la función, no según desde dónde se la llama. Una función interna puede leer variables de la función que la contiene.",
+          "code": "function crearSaludo() {\n  const nombre = \"Mara\";\n  function saludar() {\n    return \"Hola, \" + nombre;\n  }\n  return saludar();\n}\nconsole.log(crearSaludo()); // Hola, Mara",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "La función conserva su entorno",
+          "body": "El closure se observa cuando una función interna se devuelve y se ejecuta después de que la función externa terminó.",
+          "code": "function crearSaludo(nombre) {\n  return function () {\n    return \"Hola, \" + nombre;\n  };\n}\nconst saludarAna = crearSaludo(\"Ana\");\nconst saludarLuis = crearSaludo(\"Luis\");\nconsole.log(saludarAna()); // Hola, Ana\nconsole.log(saludarLuis()); // Hola, Luis",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Fábrica de funciones",
+          "body": "La función externa puede crear funciones especializadas que comparten lógica, pero conservan distintos valores.",
+          "code": "function crearMultiplicador(factor) {\n  return function (numero) {\n    return numero * factor;\n  };\n}\nconst duplicar = crearMultiplicador(2);\nconst triplicar = crearMultiplicador(3);\nconsole.log(duplicar(5)); // 10\nconsole.log(triplicar(5)); // 15",
+          "language": "javascript"
+        },
+        {
+          "title": "Encapsular estado",
+          "body": "Un closure permite mantener una variable fuera del acceso directo y exponer métodos que la consultan o modifican.",
+          "code": "function crearContador() {\n  let valor = 0; // estado interno\n  return {\n    incrementar() { valor++; },\n    decrementar() { valor--; },\n    obtenerValor() { return valor; }\n  };\n}\nconst contador = crearContador();\ncontador.incrementar();\ncontador.incrementar();\nconsole.log(contador.obtenerValor()); // 2",
+          "language": "javascript"
+        },
+        {
+          "title": "El closure observa cambios",
+          "body": "Se conserva el acceso a la variable, no una copia congelada de su valor. Si cambia, llamadas posteriores pueden observar el nuevo valor. Evitá retener referencias grandes sin necesidad."
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Confundir closure con una copia congelada: se conserva acceso a las variables y sus cambios.",
+            "Crear closures que retengan referencias grandes sin necesidad.",
+            "Usar estado global cuando un closure puede encapsularlo."
           ]
         }
       ],
       "learning": {
         "level": "Avanzado",
-        "estimatedMinutes": 10,
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa closures y alcance léxico.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué entorno conserva un closure.",
+          "Crear funciones que recuerdan valores de llamadas anteriores.",
+          "Usar closures para encapsular estado."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Recordar un parámetro",
+            "description": "La función devuelta conserva el acceso al nombre.",
+            "code": "function crearPresentacion(nombre) {\n  return function () { console.log(\"Soy \" + nombre); };\n}\nconst presentar = crearPresentacion(\"Lucía\");\npresentar(); // Soy Lucía"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Fábrica de potencias",
+            "description": "Cada función creada conserva su exponente.",
+            "code": "function crearPotencia(exponente) {\n  return base => base ** exponente;\n}\nconst cuadrado = crearPotencia(2);\nconst cubo = crearPotencia(3);\nconsole.log(cuadrado(4)); // 16\nconsole.log(cubo(4)); // 64"
+          },
+          {
+            "title": "Estado privado",
+            "description": "El estado se modifica a través de las funciones que devuelve la fábrica.",
+            "code": "function crearSaldo(inicial) {\n  let saldo = inicial;\n  return {\n    consultar: () => saldo,\n    depositar: monto => { if (monto > 0) saldo += monto; }\n  };\n}\nconst cuenta = crearSaldo(100);\ncuenta.depositar(50);\nconsole.log(cuenta.consultar()); // 150"
+          },
+          {
+            "title": "Closures independientes",
+            "description": "Cada llamada a la función externa crea su propio entorno.",
+            "code": "function crearContador() {\n  let numero = 0;\n  return () => ++numero;\n}\nconst a = crearContador();\nconst b = crearContador();\nconsole.log(a()); // 1\nconsole.log(a()); // 2\nconsole.log(b()); // 1"
+          },
+          {
+            "title": "Variable actualizada",
+            "description": "La función sigue accediendo a la misma variable del entorno.",
+            "code": "function crearLector() {\n  let mensaje = \"primero\";\n  return {\n    leer: () => mensaje,\n    cambiar: valor => { mensaje = valor; }\n  };\n}\nconst lector = crearLector();\nconsole.log(lector.leer()); // primero\nlector.cambiar(\"segundo\");\nconsole.log(lector.leer()); // segundo"
           }
         ],
         "lab": {
@@ -4749,29 +4887,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Closures y alcance léxico» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Contador encapsulado",
+          "prompt": "Construí crearContador(inicial) que devuelva incrementar(), decrementar() y valor(). Creá dos contadores independientes.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Declarar let dentro de la fábrica.",
+            "Devolver un objeto con métodos.",
+            "Cada invocación crea su propio estado."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function crearContador(inicial = 0) {\n  let valorActual = inicial;\n  return {\n    incrementar() { valorActual++; },\n    decrementar() { valorActual--; },\n    valor() { return valorActual; }\n  };\n}\nconst a = crearContador(10);\nconst b = crearContador();\na.incrementar();\nb.decrementar();\nconsole.log(a.valor()); // 11\nconsole.log(b.valor()); // -1"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre closures y alcance léxico?",
+          "question": "¿Qué permite un closure?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "Acceder a variables del entorno léxico donde se creó la función, incluso después de que ese ámbito terminó",
+            "Convertir todas las variables en globales",
+            "Congelar para siempre el valor de cada variable"
           ],
           "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "explanation": "Un closure conserva acceso a las vinculaciones del entorno capturado. Si una variable cambia, puede observar ese cambio."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Closures",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions"
       ]
     },
     {
@@ -4779,56 +4917,78 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Callbacks: funciones como argumentos",
-      "summary": "Callbacks: funciones como argumentos. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "Un callback es una función que se entrega a otra función para que esta la invoque en un momento determinado. Se utiliza en eventos, métodos de arrays, temporizadores y operaciones asíncronas.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Callbacks: funciones como argumentos: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar callbacks: funciones como argumentos, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Una función como argumento",
+          "body": "Se pasa la referencia de la función sin invocarla. La función receptora decide cuándo y con qué argumentos ejecutar el callback.",
+          "code": "function procesarUsuario(nombre, callback) {\n  const mensaje = \"Usuario: \" + nombre;\n  callback(mensaje); // invocación del callback\n}\nfunction mostrar(texto) { console.log(texto); }\nprocesarUsuario(\"Ana\", mostrar);",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Callbacks síncronos en arrays",
+          "body": "forEach, map y filter reciben callbacks y los invocan durante el recorrido del método.",
+          "code": "const precios = [100, 200, 300];\nprecios.forEach((precio, indice) => {\n  console.log(indice, precio);\n});\nconst conIVA = precios.map(precio => precio * 1.21);\nconsole.log(conIVA); // [121, 242, 363]",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Callback en eventos",
+          "body": "El navegador conserva la función y la invoca cuando ocurre el evento. No se ejecuta al registrar el listener.",
+          "code": "const boton = document.querySelector(\"#guardar\");\nfunction guardarCambios() {\n  console.log(\"Se hizo clic en Guardar\");\n}\n// Se pasa la referencia, sin paréntesis.\nboton.addEventListener(\"click\", guardarCambios);",
+          "language": "javascript"
+        },
+        {
+          "title": "Callbacks y temporizadores",
+          "body": "Algunas APIs guardan la función para ejecutarla más tarde. setTimeout establece un retraso mínimo aproximado, no una hora exacta.",
+          "code": "console.log(\"Primero\");\nsetTimeout(() => {\n  console.log(\"Callback posterior\");\n}, 500);\nconsole.log(\"Segundo\");\n// Primero y Segundo aparecen antes del callback.",
+          "language": "javascript"
+        },
+        {
+          "title": "Errores y anidamiento",
+          "body": "No todos los callbacks son asíncronos. Si muchos callbacks asíncronos dependen unos de otros, el anidamiento puede dificultar la lectura; promesas y async/await suelen ordenar esos flujos."
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Pasar callback() en lugar de callback cuando se espera una función.",
+            "Suponer que todos los callbacks son asíncronos: map y filter son síncronos.",
+            "Anidar demasiados callbacks para encadenar operaciones complejas."
           ]
         }
       ],
       "learning": {
-        "level": "Avanzado",
-        "estimatedMinutes": 12,
+        "level": "Intermedio",
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa callbacks: funciones como argumentos.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Explicar qué es un callback y quién lo invoca.",
+          "Distinguir callbacks síncronos y asíncronos.",
+          "Reconocer el error de invocar una función al registrarla."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Callback básico",
+            "description": "La función receptora decide cuándo invocar la función recibida.",
+            "code": "function ejecutarTarea(tarea, alTerminar) {\n  console.log(\"Ejecutando:\", tarea);\n  alTerminar();\n}\nejecutarTarea(\"compilar\", () => console.log(\"Finalizada\"));"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Callback que recibe datos",
+            "description": "La función receptora puede pasar valores al callback.",
+            "code": "function obtenerPrecio(callback) {\n  const precio = 250;\n  callback(precio);\n}\nobtenerPrecio(valor => console.log(\"Precio:\", valor));"
+          },
+          {
+            "title": "filter como callback síncrono",
+            "description": "filter conserva los elementos para los que el callback devuelve true.",
+            "code": "const edades = [12, 18, 25, 15, 31];\nconst mayores = edades.filter(edad => edad >= 18);\nconsole.log(mayores); // [18, 25, 31]"
+          },
+          {
+            "title": "setTimeout asíncrono",
+            "description": "El callback se ejecuta cuando vence el temporizador y el entorno puede procesarlo.",
+            "code": "console.log(\"A\");\nsetTimeout(() => console.log(\"B: callback\"), 0);\nconsole.log(\"C\");\n// A, C y luego B."
+          },
+          {
+            "title": "Patrón error-first",
+            "description": "Algunas APIs tradicionales pasan primero un error o null y después el resultado.",
+            "code": "function simularLectura(callback) {\n  const error = null;\n  const contenido = \"Archivo leído\";\n  callback(error, contenido);\n}\nsimularLectura((error, contenido) => {\n  if (error) return console.error(error);\n  console.log(contenido);\n});"
           }
         ],
         "lab": {
@@ -4842,29 +5002,30 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Callbacks: funciones como argumentos» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Procesar una lista",
+          "prompt": "Creá procesarLista(lista, callback), que recorra los elementos y pase el elemento y su índice al callback.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Recorré con forEach.",
+            "Invocá callback(elemento, indice).",
+            "Pasá una función como segundo argumento."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function procesarLista(lista, callback) {\n  lista.forEach((elemento, indice) => {\n    callback(elemento, indice);\n  });\n}\nconst lenguajes = [\"HTML\", \"CSS\", \"JavaScript\"];\nprocesarLista(lenguajes, (lenguaje, indice) => {\n  console.log(indice + \": \" + lenguaje);\n});"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre callbacks: funciones como argumentos?",
+          "question": "¿Qué se pasa a addEventListener para registrar un callback?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "La referencia a la función, sin ejecutarla",
+            "El resultado de ejecutar la función",
+            "Una cadena con el nombre"
           ],
           "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "explanation": "Se pasa la referencia. El navegador invoca la función cuando ocurre el evento."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Glossary/Callback_function",
+        "https://developer.mozilla.org/es/docs/Web/API/EventTarget/addEventListener",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
       ]
     },
     {
@@ -4872,56 +5033,80 @@
       "categoryId": "funciones",
       "categoryTitle": "Funciones",
       "title": "Recursividad y funciones puras",
-      "summary": "Recursividad y funciones puras. Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado.",
+      "summary": "La recursividad ocurre cuando una función se invoca a sí misma. Una función pura devuelve el mismo resultado para las mismas entradas y no produce efectos secundarios observables ni modifica datos externos.",
       "sections": [
         {
-          "title": "Qué es y cómo funciona",
-          "body": "Recursividad y funciones puras: Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Cómo se utiliza",
-          "body": "Para estudiar recursividad y funciones puras, identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
-        },
-        {
-          "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "title": "Qué es la recursividad",
+          "body": "Una función recursiva se llama a sí misma para resolver una versión más pequeña del problema. Necesita un caso base que detenga las llamadas y un paso que se acerque a él.",
+          "code": "function cuentaRegresiva(numero) {\n  if (numero <= 0) { // caso base\n    console.log(\"Fin\");\n    return;\n  }\n  console.log(numero);\n  cuentaRegresiva(numero - 1); // paso recursivo\n}\ncuentaRegresiva(3); // 3, 2, 1, Fin",
           "language": "javascript"
         },
         {
-          "title": "Errores frecuentes",
-          "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
-          ]
+          "title": "Caso base y pila de llamadas",
+          "body": "Cada llamada crea un contexto que permanece en la pila hasta que termina. Sin un caso base alcanzable, la recursión puede provocar un desbordamiento de pila.",
+          "code": "function factorial(n) {\n  if (n <= 1) return 1; // caso base\n  return n * factorial(n - 1); // llamada recursiva\n}\nconsole.log(factorial(5)); // 120",
+          "language": "javascript"
         },
         {
-          "title": "Buenas prácticas",
+          "title": "Recursividad frente a iteración",
+          "body": "Muchos problemas se pueden resolver con recursión o con un bucle. La iteración suele ser más adecuada cuando la profundidad puede ser grande.",
+          "code": "function factorialIterativo(n) {\n  let resultado = 1;\n  for (let i = 2; i <= n; i++) {\n    resultado *= i;\n  }\n  return resultado;\n}\nconsole.log(factorialIterativo(5)); // 120",
+          "language": "javascript"
+        },
+        {
+          "title": "Qué es una función pura",
+          "body": "Una función pura depende de sus argumentos, devuelve el mismo resultado para las mismas entradas y no modifica estado externo ni produce efectos secundarios observables.",
+          "code": "function sumar(a, b) {\n  return a + b; // solo calcula y devuelve\n}\nconsole.log(sumar(2, 3)); // 5\nconsole.log(sumar(2, 3)); // 5",
+          "language": "javascript"
+        },
+        {
+          "title": "Evitar mutaciones",
+          "body": "Una función que modifica un array recibido tiene un efecto secundario. map permite crear otro array sin alterar el original.",
+          "code": "function agregarImpuesto(precios, tasa) {\n  return precios.map(precio => precio * (1 + tasa));\n}\nconst originales = [100, 200];\nconst finales = agregarImpuesto(originales, 0.21);\nconsole.log(originales); // [100, 200]\nconsole.log(finales); // [121, 242]",
+          "language": "javascript"
+        },
+        {
+          "title": "Errores frecuentes y buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Olvidar el caso base o no acercarse a él.",
+            "Usar recursión demasiado profunda y alcanzar el límite de la pila.",
+            "Llamar pura a una función que modifica datos externos o depende de estado cambiante."
           ]
         }
       ],
       "learning": {
         "level": "Avanzado",
-        "estimatedMinutes": 14,
+        "estimatedMinutes": 20,
         "goals": [
-          "Explicar con tus palabras qué significa recursividad y funciones puras.",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Identificar el caso base y el paso recursivo.",
+          "Comparar una solución recursiva con otra iterativa.",
+          "Distinguir funciones puras de funciones con efectos secundarios."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "Suma recursiva",
+            "description": "Cada llamada reduce el número hasta llegar al caso base.",
+            "code": "function sumarHasta(n) {\n  if (n <= 0) return 0;\n  return n + sumarHasta(n - 1);\n}\nconsole.log(sumarHasta(4)); // 10"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Recorrer un árbol",
+            "description": "La recursión se adapta a estructuras cuyos nodos contienen otros nodos.",
+            "code": "const carpetas = { nombre: \"raiz\", hijos: [\n  { nombre: \"imagenes\", hijos: [] },\n  { nombre: \"proyectos\", hijos: [\n    { nombre: \"web\", hijos: [] }\n  ] }\n]};\nfunction mostrar(carpeta) {\n  console.log(carpeta.nombre);\n  carpeta.hijos.forEach(mostrar);\n}\nmostrar(carpetas);"
+          },
+          {
+            "title": "Comparar recursión e iteración",
+            "description": "Ambas funciones resuelven la misma suma.",
+            "code": "function sumaRecursiva(n) {\n  if (n <= 0) return 0;\n  return n + sumaRecursiva(n - 1);\n}\nfunction sumaIterativa(n) {\n  let total = 0;\n  for (let i = 1; i <= n; i++) total += i;\n  return total;\n}\nconsole.log(sumaRecursiva(5)); // 15\nconsole.log(sumaIterativa(5)); // 15"
+          },
+          {
+            "title": "Pura frente a mutación",
+            "description": "La versión pura devuelve un array nuevo; la otra modifica el recibido.",
+            "code": "function duplicarPuro(datos) {\n  return datos.map(n => n * 2);\n}\nfunction duplicarMutando(datos) {\n  for (let i = 0; i < datos.length; i++) datos[i] *= 2;\n  return datos;\n}\nconst original = [1, 2, 3];\nconst copia = duplicarPuro(original);\nconsole.log(original); // [1, 2, 3]\nconsole.log(copia); // [2, 4, 6]"
+          },
+          {
+            "title": "Dependencia externa",
+            "description": "Si una función depende de una variable externa cambiante, el mismo argumento puede producir resultados distintos.",
+            "code": "let tasa = 0.1;\nfunction precioFinal(precio) {\n  return precio + precio * tasa;\n}\nconsole.log(precioFinal(100)); // 110\ntasa = 0.2;\nconsole.log(precioFinal(100)); // 120"
           }
         ],
         "lab": {
@@ -4935,29 +5120,29 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Recursividad y funciones puras» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Árbol y función pura",
+          "prompt": "Escribí contarNodos(arbol) para contar el nodo y todos sus descendientes. Luego creá duplicarValores(lista) sin modificar el array original.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Cada nodo cuenta como uno.",
+            "Sumá recursivamente los hijos.",
+            "map devuelve un array nuevo."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "function contarNodos(nodo) {\n  return 1 + nodo.hijos.reduce((total, hijo) => {\n    return total + contarNodos(hijo);\n  }, 0);\n}\nconst arbol = { nombre: \"raiz\", hijos: [\n  { nombre: \"a\", hijos: [] },\n  { nombre: \"b\", hijos: [\n    { nombre: \"c\", hijos: [] }\n  ] }\n]};\nconsole.log(contarNodos(arbol)); // 4\n\nfunction duplicarValores(lista) {\n  return lista.map(n => n * 2);\n}\nconst original = [1, 2, 3];\nconsole.log(duplicarValores(original)); // [2, 4, 6]\nconsole.log(original); // [1, 2, 3]"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre recursividad y funciones puras?",
+          "question": "¿Cuál combinación describe correctamente recursividad y pureza?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "La recursiva se llama a sí misma; la pura evita efectos secundarios y depende de sus entradas",
+            "La recursiva siempre usa bucles; la pura modifica arrays",
+            "Ambas requieren una variable global"
           ],
           "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "explanation": "La recursividad describe cómo se invoca una función. La pureza describe la relación entre entradas, resultado y efectos secundarios."
         }
       },
       "resources": [
-        "https://developer.mozilla.org/es/docs/Web/JavaScript",
-        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide"
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions#recursi%C3%B3n",
+        "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions"
       ]
     },
     {
