@@ -85,3 +85,29 @@ body.light .about-points div{background:#f7f8fb}
 .demo-action{margin:0 0 10px;padding:9px 13px;border:1px solid #d9b849;border-radius:7px;background:#f0d15c;color:#28210d;font-size:10px;font-weight:700;cursor:pointer}.demo-action[hidden]{display:none}.denzdev{--tutorial:#8ca6c8}
 @media(max-width:1050px){.tutorial-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.tutorial-grid{grid-template-columns:1fr}}
+
+
+/* Ruta de aprendizaje y referencia rápida: reemplaza la antigua tabla periódica. */
+.js-topic-card{display:flex;flex-direction:column}
+.js-topic-card .topic-link{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px;color:var(--topic);font-size:10px;font-weight:700}
+.js-topic-card .topic-link b{font-size:17px}
+.js-roadmap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.roadmap-phase{overflow:hidden;border:1px solid var(--line);border-radius:13px;background:var(--surface)}
+.roadmap-phase-head{padding:18px 19px 14px;border-bottom:1px solid var(--line);background:linear-gradient(120deg,#e7c34b12,transparent)}
+.roadmap-phase-head>span{font-size:9px;letter-spacing:1.2px;font-weight:800;color:#c6a43b}
+.roadmap-phase-head h3{font:600 17px "Space Grotesk",sans-serif;margin:7px 0 5px;color:var(--text)}
+.roadmap-phase-head p{font-size:11px;line-height:1.6;color:var(--muted);margin:0}
+.roadmap-links{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:13px}
+.roadmap-links a{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2);font-size:10px;color:var(--text);transition:.18s}
+.roadmap-links a:hover{border-color:#d8b64b;color:#c5a13a;transform:translateY(-1px)}
+.roadmap-links b{font:700 9px "DejaVu Sans Mono",monospace;color:var(--muted)}
+.js-reference-panel{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;margin-top:15px;padding:21px;border:1px solid #d7b64b55;border-radius:13px;background:radial-gradient(ellipse at 0 0,#e5bd3b13,transparent 48%),var(--surface)}
+.js-reference-panel h3{font:600 19px "Space Grotesk",sans-serif;margin:8px 0}
+.js-reference-panel p{font-size:11px;line-height:1.75;color:var(--muted);margin:0}
+.js-reference-groups{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.js-reference-groups div{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+.js-reference-groups b{display:block;font-size:11px;margin-bottom:6px;color:#c6a43b}
+.js-reference-groups span{font-size:10px;line-height:1.7;color:var(--muted)}
+body.light .roadmap-phase,body.light .js-reference-panel{background-color:var(--surface)}
+@media(max-width:760px){.js-roadmap{grid-template-columns:1fr}.roadmap-links{grid-template-columns:1fr 1fr}.js-reference-panel{grid-template-columns:1fr}.js-reference-groups{grid-template-columns:1fr 1fr}}
+@media(max-width:390px){.roadmap-links,.js-reference-groups{grid-template-columns:1fr}}
