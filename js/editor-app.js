@@ -40,7 +40,7 @@ button {
   "lenguajes": ["HTML", "CSS", "JavaScript"]
 }`
 };
-let files={},active="",editor=null,models={},timer=null,localDB=null,saveTimer=null,storageMode="indexeddb";
+let files={},folders=new Set(),collapsed=new Set(),active="",editor=null,models={},timer=null,localDB=null,saveTimer=null,storageMode="indexeddb",projectId="main",projectName="Mi proyecto",projectCatalog=[],settings={fontSize:13,theme:"dark",wrap:"on",keys:true},dialogMode="",dialogTarget="",modifierCtrl=false,modifierAlt=false;
 const langFor=name=>({html:"html",htm:"html",css:"css",js:"javascript",mjs:"javascript",json:"json",svg:"xml",xml:"xml",md:"markdown",txt:"plaintext"}[name.split(".").pop().toLowerCase()]||"plaintext");
 const iconFor=name=>({html:"5",htm:"5",css:"#",js:"JS",mjs:"JS",json:"{}",svg:"◇"}[name.split(".").pop().toLowerCase()]||"·");
 const escapeHtml=s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -55,52 +55,96 @@ function openLocalDB(){
   request.onblocked=()=>reject(new Error("La base local está bloqueada"));
  });
 }
-function readLocalProject(db){
+function readLocalProject(db,id){
  return new Promise((resolve,reject)=>{
-  const tx=db.transaction("projects","readonly"),request=tx.objectStore("projects").get("main");
-  request.onsuccess=()=>resolve(request.result||null);
-  request.onerror=()=>reject(request.error);
+  const tx=db.transaction("projects","readonly"),req=tx.objectStore("projects").get(id);
+  req.onsuccess=()=>resolve(req.result||null);
+  req.onerror=()=>reject(req.error);
  });
 }
-function writeLocalProject(db,snapshot){
+function listLocalProjects(db){
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction("projects","readonly"),req=tx.objectStore("projects").getAllKeys();
+  req.onsuccess=()=>resolve(req.result);
+  req.onerror=()=>reject(req.error);
+ });
+}
+function writeLocalProject(db,id,snapshot){
  return new Promise((resolve,reject)=>{
   const tx=db.transaction("projects","readwrite");
-  tx.objectStore("projects").put({files:snapshot,updatedAt:Date.now()},"main");
+  tx.objectStore("projects").put(snapshot,id);
   tx.oncomplete=()=>resolve();
   tx.onerror=()=>reject(tx.error||new Error("No se pudo guardar"));
   tx.onabort=()=>reject(tx.error||new Error("Guardado cancelado"));
  });
 }
+function deleteLocalProject(db,id){
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction("projects","readwrite");
+  tx.objectStore("projects").delete(id);
+  tx.oncomplete=resolve;
+  tx.onerror=()=>reject(tx.error);
+ });
+}
+function readFallback(id){
+ try{return JSON.parse(localStorage.getItem("webdev-project-"+id)||(id==="main"?localStorage.getItem(KEY):"null"));}catch(e){return null;}
+}
+function updateCatalog(){
+ try{localStorage.setItem("webdev-project-catalog",JSON.stringify(projectCatalog));localStorage.setItem("webdev-project-active",projectId);}catch(e){}
+}
 async function loadLocalFiles(){
- try{
-  localDB=await openLocalDB();
-  const saved=await readLocalProject(localDB);
-  if(saved&&saved.files&&typeof saved.files==="object"&&Object.keys(saved.files).length){files=saved.files;storageMode="indexeddb";return;}
-  const legacy=localStorage.getItem(KEY);
-  if(legacy){const parsed=JSON.parse(legacy);if(parsed&&typeof parsed==="object"&&Object.keys(parsed).length){files=parsed;await writeLocalProject(localDB,files);storageMode="indexeddb";return;}}
-  files={...starter};storageMode="indexeddb";
- }catch(error){
-  storageMode="localstorage";
-  try{const saved=localStorage.getItem(KEY);files=saved?JSON.parse(saved):{...starter};}catch(e){files={...starter};}
+ try{localDB=await openLocalDB();storageMode="indexeddb";}catch(e){storageMode="localstorage";}
+ try{projectCatalog=JSON.parse(localStorage.getItem("webdev-project-catalog")||"[]");if(!Array.isArray(projectCatalog))projectCatalog=[];}catch(e){projectCatalog=[];}
+ if(localDB){
+  const ids=await listLocalProjects(localDB);
+  for(const id of ids){if(!projectCatalog.some(p=>p.id===id)){const record=await readLocalProject(localDB,id);projectCatalog.push({id,name:record?.name||"Mi proyecto"});}}
  }
- if(!files||typeof files!=="object"||!Object.keys(files).length)files={...starter};
- $("saveStatus").textContent=storageMode==="indexeddb"?"Almacenamiento del dispositivo":"Guardado en navegador";
+ if(!projectCatalog.length)projectCatalog=[{id:"main",name:"Mi proyecto"}];
+ const preferred=localStorage.getItem("webdev-project-active")||"main";
+ projectId=projectCatalog.some(p=>p.id===preferred)?preferred:projectCatalog[0].id;
+ let record=localDB?await readLocalProject(localDB,projectId):readFallback(projectId);
+ if(!record&&projectId==="main"){
+  const legacy=readFallback("main");
+  if(legacy)record=legacy.files?legacy:{files:legacy,name:"Mi proyecto",folders:[]};
+ }
+ if(!record)record={name:projectCatalog.find(p=>p.id===projectId)?.name||"Mi proyecto",files:{...starter},folders:[]};
+ files=record.files&&typeof record.files==="object"?record.files:{...starter};
+ folders=new Set(Array.isArray(record.folders)?record.folders:[]);
+ projectName=record.name||projectCatalog.find(p=>p.id===projectId)?.name||"Mi proyecto";
+ if(!Object.keys(files).length)files={"index.html":starter["index.html"]};
+ $("projectName").textContent=projectName;
+ $("saveStatus").textContent="Almacenamiento local";
+ updateCatalog();
 }
 async function saveNow(){
  clearTimeout(saveTimer);
- const snapshot=JSON.parse(JSON.stringify(files));
+ const id=projectId,snapshot={name:projectName,files:{...files},folders:[...folders],updatedAt:Date.now()};
  try{
-  if(localDB&&storageMode==="indexeddb")await writeLocalProject(localDB,snapshot);
-  else localStorage.setItem(KEY,JSON.stringify(snapshot));
-  $("saveStatus").textContent=storageMode==="indexeddb"?"Guardado en este dispositivo":"Guardado en navegador";
+  if(localDB&&storageMode==="indexeddb")await writeLocalProject(localDB,id,snapshot);
+  else localStorage.setItem("webdev-project-"+id,JSON.stringify(snapshot));
+  $("saveStatus").textContent="Guardado local";
  }catch(error){
-  try{localStorage.setItem(KEY,JSON.stringify(snapshot));storageMode="localstorage";$("saveStatus").textContent="Guardado en navegador";}catch(e){$("saveStatus").textContent="Error al guardar";}
+  try{localStorage.setItem("webdev-project-"+id,JSON.stringify(snapshot));storageMode="localstorage";$("saveStatus").textContent="Guardado en navegador";}catch(e){$("saveStatus").textContent="Error al guardar";toast("No se pudo guardar. Exportá una copia ZIP.");}
  }
+ updateCatalog();
 }
 function save(){
  $("saveStatus").textContent="Guardando…";
  clearTimeout(saveTimer);
  saveTimer=setTimeout(saveNow,350);
+}
+async function switchProject(id){
+ if(!projectCatalog.some(p=>p.id===id))return;
+ await saveNow();
+ projectId=id;
+ let record=localDB?await readLocalProject(localDB,id):readFallback(id);
+ if(!record)record={name:projectCatalog.find(p=>p.id===id).name,files:{...starter},folders:[]};
+ files=record.files||{...starter};folders=new Set(record.folders||[]);collapsed.clear();
+ projectName=record.name||"Mi proyecto";active="";
+ Object.values(models).forEach(m=>m.dispose());models={};
+ $("projectName").textContent=projectName;updateCatalog();
+ if(editor){const first=files["index.html"]!==undefined?"index.html":Object.keys(files)[0];if(first)openFile(first);else{editor.setModel(null);renderTree();renderTabs();}}
+ updatePreview();closeProjectsDialog();toast("Proyecto: "+projectName);
 }
 function modelFor(name){if(!models[name])models[name]=monaco.editor.createModel(files[name],langFor(name),monaco.Uri.parse("file:///"+name));return models[name];}
 function renderTree(){const root=$("fileTree");root.innerHTML="";Object.keys(files).sort((a,b)=>a.localeCompare(b)).forEach(name=>{const row=document.createElement("div");row.className="file-row"+(name===active?" active":"");const ext=name.split(".").pop().toLowerCase();row.innerHTML='<span class="file-icon '+escapeHtml(ext)+'">'+iconFor(name)+'</span><span>'+escapeHtml(name)+'</span><button class="file-menu" title="Opciones">···</button>';row.addEventListener("click",()=>openFile(name));row.querySelector("button").addEventListener("click",e=>{e.stopPropagation();fileOptions(name)});root.appendChild(row);});}
