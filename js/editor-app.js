@@ -490,14 +490,76 @@ function initControls(){
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAction();closeFileDialog();closeProjectsDialog();toggleSettings(false);}});
  loadSettings();
 }
+function registerCodeSnippets(language,entries){
+ monaco.languages.registerCompletionItemProvider(language,{
+  provideCompletionItems(model,position){
+   const word=model.getWordUntilPosition(position),prefix=word.word.toLowerCase();
+   if(prefix.length<2)return{suggestions:[]};
+   const range={startLineNumber:position.lineNumber,endLineNumber:position.lineNumber,startColumn:word.startColumn,endColumn:word.endColumn};
+   return{suggestions:entries.filter(item=>item.trigger.startsWith(prefix)).map(item=>({
+    label:item.label,kind:monaco.languages.CompletionItemKind.Snippet,detail:item.detail,
+    documentation:item.documentation||item.detail,filterText:item.trigger,sortText:"000_"+item.trigger,
+    insertText:item.insertText,insertTextRules:monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,range
+   }))};
+  }
+ });
+}
+const voidHtmlTags=new Set(["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"]);
+function autoCloseHtmlTag(event){
+ if(!active||langFor(active)!=="html"||!event?.changes?.some(change=>change.text.includes(">")))return;
+ const model=editor?.getModel();if(!model)return;
+ const position=editor.getPosition(),selection=editor.getSelection();
+ if(!selection?.isEmpty())return;
+ const line=model.getLineContent(position.lineNumber);
+ const before=line.slice(0,position.column-1),match=before.match(/<([a-z][\w:-]*)(?:\s[^<>]*?)?>$/i);
+ if(!match||before.endsWith("/>"))return;
+ const tag=match[1];if(voidHtmlTags.has(tag.toLowerCase()))return;
+ const after=line.slice(position.column-1);
+ if(new RegExp("^\\s*</"+tag+"\\s*>","i").test(after))return;
+ const range=new monaco.Range(position.lineNumber,position.column,position.lineNumber,position.column);
+ editor.executeEdits("webdev-auto-close-tag",[{range,text:"</"+tag+">"}],()=>[
+  new monaco.Selection(position.lineNumber,position.column,position.lineNumber,position.column)
+ ]);
+}
+function configureEditorAssist(){
+ if(window.emmetMonaco){
+  window.emmetMonaco.emmetHTML(monaco,["html"]);
+  window.emmetMonaco.emmetCSS(monaco,["css"]);
+  window.emmetMonaco.registerCustomSnippets("html",{
+   html5:'<!DOCTYPE html>\n<html lang="${1:es}">\n<head>\n\t<meta charset="UTF-8">\n\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n\t<title>${2:Mi página}</title>\n</head>\n<body>\n\t$0\n</body>\n</html>'
+  });
+ }else{
+  console.warn("No se pudo cargar el complemento Emmet.");
+ }
+ registerCodeSnippets("javascript",[
+  {trigger:"function",label:"function · bloque completo",detail:"Función tradicional con parámetros y cuerpo",insertText:"function ${1:nombre}(${2:parametros}) {\n\t$0\n}"},
+  {trigger:"fn",label:"fn · función",detail:"Función tradicional",insertText:"function ${1:nombre}(${2:parametros}) {\n\t$0\n}"},
+  {trigger:"af",label:"af · arrow function",detail:"Función flecha",insertText:"const ${1:nombre} = (${2:parametros}) => {\n\t$0\n};"},
+  {trigger:"cl",label:"cl · console.log",detail:"Mostrar un valor en la consola",insertText:"console.log(${1:valor});"},
+  {trigger:"foreach",label:"foreach · forEach",detail:"Recorrer los elementos de un array",insertText:"${1:array}.forEach((${2:elemento}, ${3:indice}) => {\n\t$0\n});"},
+  {trigger:"for",label:"for · bucle",detail:"Bucle for tradicional",insertText:"for (let ${1:i} = 0; ${1:i} < ${2:limite}; ${1:i}++) {\n\t$0\n}"},
+  {trigger:"if",label:"if · condicional",detail:"Estructura if",insertText:"if (${1:condicion}) {\n\t$0\n}"},
+  {trigger:"try",label:"try · manejo de errores",detail:"try / catch",insertText:"try {\n\t$1\n} catch (${2:error}) {\n\tconsole.error(${2:error});\n\t$0\n}"},
+  {trigger:"async",label:"async · función asíncrona",detail:"Función async con await",insertText:"async function ${1:nombre}(${2:parametros}) {\n\t$0\n}"},
+  {trigger:"fetch",label:"fetch · petición HTTP",detail:"Petición fetch con comprobación y catch",insertText:'fetch(${1:"/api/datos"})\n\t.then(response => {\n\t\tif (!response.ok) throw new Error("HTTP " + response.status);\n\t\treturn response.json();\n\t})\n\t.then(data => {\n\t\t$0\n\t})\n\t.catch(error => console.error(error));'},
+  {trigger:"dom",label:"dom · querySelector",detail:"Seleccionar un elemento del DOM",insertText:'document.querySelector("${1:selector}")'}
+ ]);
+ registerCodeSnippets("css",[
+  {trigger:"flexcenter",label:"flexcenter · centrar con Flexbox",detail:"Centrado horizontal y vertical",insertText:"display: flex;\njustify-content: center;\nalign-items: center;"},
+  {trigger:"gridcenter",label:"gridcenter · centrar con Grid",detail:"Centrado con CSS Grid",insertText:"display: grid;\nplace-items: center;"},
+  {trigger:"transition",label:"transition · transición",detail:"Transición suave",insertText:"transition: ${1:all} ${2:0.3s} ${3:ease};"},
+  {trigger:"shadow",label:"shadow · sombra",detail:"Sombra de caja",insertText:"box-shadow: ${1:0 4px 12px rgba(0, 0, 0, 0.15)};"}
+ ]);
+}
 async function init(){
  await loadLocalFiles();
  window.MonacoEnvironment={getWorkerUrl:function(workerId,label){const base="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/";const worker=label==="json"?"json":label==="css"?"css":label==="html"?"html":"editor";return "data:text/javascript;charset=utf-8,"+encodeURIComponent("self.MonacoEnvironment={baseUrl:'"+base+"'};importScripts('"+base+"vs/base/worker/workerMain.js');");}};
  require.config({paths:{vs:"https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs"}});
  require(["vs/editor/editor.main"],()=>{
+  configureEditorAssist();
   monaco.editor.defineTheme("webdev-dark",{base:"vs-dark",inherit:true,rules:[{token:"tag",foreground:"569CD6"},{token:"attribute.name",foreground:"9CDCFE"},{token:"attribute.value",foreground:"CE9178"},{token:"string",foreground:"CE9178"},{token:"comment",foreground:"6A9955"},{token:"keyword",foreground:"C586C0"},{token:"number",foreground:"B5CEA8"},{token:"type",foreground:"4EC9B0"}],colors:{"editor.background":"#1E1E1E","editorLineNumber.foreground":"#858585","editorCursor.foreground":"#AEAFAD","editor.selectionBackground":"#264F78","editorLineNumber.activeForeground":"#C6C6C6"}});
-  editor=monaco.editor.create($("monacoEditor"),{value:"",language:"html",theme:"webdev-dark",automaticLayout:true,fontSize:13,fontFamily:"Consolas, 'Cascadia Code', monospace",minimap:{enabled:false},scrollBeyondLastLine:false,wordWrap:"on",tabSize:2,insertSpaces:true,formatOnPaste:true,suggestOnTriggerCharacters:true,quickSuggestions:{other:true,comments:false,strings:true},acceptSuggestionOnEnter:"on",bracketPairColorization:{enabled:true},padding:{top:12}});
-  editor.onDidChangeModelContent(()=>{if(!active)return;files[active]=editor.getValue();save();schedulePreview();});
+  editor=monaco.editor.create($("monacoEditor"),{value:"",language:"html",theme:"webdev-dark",automaticLayout:true,fontSize:13,fontFamily:"Consolas, 'Cascadia Code', monospace",minimap:{enabled:false},scrollBeyondLastLine:false,wordWrap:"on",tabSize:2,insertSpaces:true,formatOnPaste:true,suggestOnTriggerCharacters:true,quickSuggestions:{other:true,comments:false,strings:true},acceptSuggestionOnEnter:"on",tabCompletion:"on",autoClosingBrackets:"always",autoClosingQuotes:"always",autoIndent:"full",bracketPairColorization:{enabled:true},padding:{top:12}});
+  editor.onDidChangeModelContent(event=>{if(!active)return;autoCloseHtmlTag(event);files[active]=editor.getValue();save();schedulePreview();});
   editor.onDidChangeCursorPosition(e=>$("cursorStatus").textContent="Línea "+e.position.lineNumber+", columna "+e.position.column);
   const first=files["index.html"]!==undefined?"index.html":Object.keys(files)[0];if(first)openFile(first);else renderTree();applySettings();updatePreview();
  });
