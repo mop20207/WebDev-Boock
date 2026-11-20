@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     {id:"concepto", title:"¿Qué es y para qué sirve?", html:"<p>" + escapeHTML(article.purpose) + "</p>"},
     {id:"implementacion", title:"¿Cómo se implementa?", html:"<p>" + escapeHTML(article.howTo) + "</p>"},
     {id:"ejemplo", title:"Código: cómo se escribe", html:'<p>Ejemplo de implementación:</p><div class="code-example"><span class="code-caption">CÓDIGO HTML</span><pre><code>' + escapeHTML(article.code) + '</code></pre></div>'},
+    {id:"ejemplos-adicionales", title:"Más ejemplos prácticos", html: (article.exampleVariants || []).map(item => '<div class="code-example"><h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description) + '</p><span class="code-caption">CÓDIGO HTML</span><pre><code>' + escapeHTML(item.code) + '</code></pre></div>').join("") || "<p>Este artículo todavía no incluye ejemplos adicionales.</p>"},
     {id:"detalles", title:"Detalles importantes", html:"<ul>" + article.details.map(item => "<li>" + escapeHTML(item) + "</li>").join("") + "</ul>"},
     {id:"cuando-no", title:"¿Cuándo no conviene usarlo?", html:'<div class="warning-box">' + escapeHTML(article.avoid) + '</div>'},
     {id:"buenas-practicas", title:"Buenas prácticas", html:'<div class="tip-box"><strong>Consejo:</strong> ' + escapeHTML(article.tip) + '</div><ul><li>Usá el elemento por su significado y no solamente por su apariencia.</li><li>Comprobá que los atributos correspondan al elemento.</li><li>Probá el resultado en distintos tamaños de pantalla y navegadores.</li></ul>'},
