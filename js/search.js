@@ -68,7 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
       titleSearch: normalize(title),
       categorySearch: normalize(category),
       summarySearch: normalize(summary),
-      idSearch: normalize(article.id || "")
+      idSearch: normalize(article.id || ""),
+      searchWords: new Set(searchable.split(" ").filter(Boolean)),
+      titleWords: normalize(title).split(" ").filter(Boolean),
+      categoryWords: normalize(category).split(" ").filter(Boolean),
+      summaryWords: normalize(summary).split(" ").filter(Boolean)
     };
   };
 
@@ -217,7 +221,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!terms.length) return [];
 
     return catalog.map(entry => {
-      if (!terms.every(term => entry.searchable.includes(term))) return null;
+      const matchesTerm = term =>
+        entry.searchWords.has(term) ||
+        (term.length >= 3 && entry.titleWords.some(word => word.startsWith(term))) ||
+        (term.length >= 3 && entry.categoryWords.some(word => word.startsWith(term)));
+      if (!terms.every(matchesTerm)) return null;
 
       let score = 0;
       const joined = terms.join(" ");
@@ -227,12 +235,13 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (entry.titleSearch.includes(joined)) score += 95;
 
       terms.forEach(term => {
-        if (entry.titleSearch.includes(term)) score += 34;
-        if (entry.idSearch.includes(term)) score += 24;
-        if (entry.summarySearch.includes(term)) score += 18;
-        if (entry.categorySearch.includes(term)) score += 14;
+        if (entry.titleWords.includes(term)) score += 36;
+        else if (entry.titleWords.some(word => word.startsWith(term))) score += 24;
+        if (entry.idSearch.split(" ").includes(term)) score += 24;
+        if (entry.summaryWords.includes(term)) score += 18;
+        if (entry.categoryWords.includes(term)) score += 14;
         if (entry.language.toLowerCase().includes(term)) score += 12;
-        if (entry.searchable.includes(term)) score += 5;
+        if (entry.searchWords.has(term)) score += 5;
       });
 
       return { entry, score };
