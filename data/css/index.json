@@ -1,69 +1,704 @@
 {
+  "version": 2,
   "language": "CSS",
-  "description": "Índice de contenidos de CSS en WebDev Book.",
+  "description": "Índice sincronizado de categorías y artículos CSS.",
+  "articlesFile": "../css-articulos.json",
+  "categoriesSource": "../css-categorias.json",
   "sections": [
     {
       "id": "fundamentos",
       "title": "Fundamentos de CSS",
-      "description": "Sintaxis, reglas, declaraciones y formas de aplicar CSS.",
-      "file": "fundamentos.json",
-      "order": 1
+      "description": "Sintaxis, reglas, declaraciones, comentarios y organización de archivos.",
+      "order": 1,
+      "articleCount": 6,
+      "articleIds": [
+        "fundamentos-0",
+        "fundamentos-1",
+        "fundamentos-2",
+        "fundamentos-3",
+        "fundamentos-4",
+        "fundamentos-5"
+      ],
+      "items": [
+        {
+          "id": "fundamentos-0",
+          "title": "Qué es CSS y cómo trabaja con HTML"
+        },
+        {
+          "id": "fundamentos-1",
+          "title": "Reglas, selectores, declaraciones y bloques"
+        },
+        {
+          "id": "fundamentos-2",
+          "title": "Cómo escribir comentarios CSS"
+        },
+        {
+          "id": "fundamentos-3",
+          "title": "Formas de aplicar CSS: externo, interno y en línea"
+        },
+        {
+          "id": "fundamentos-4",
+          "title": "Cómo enlazar una hoja de estilos"
+        },
+        {
+          "id": "fundamentos-5",
+          "title": "Organización de archivos y estructura de proyecto"
+        }
+      ]
     },
     {
       "id": "selectores",
       "title": "Selectores",
-      "description": "Selectores básicos, combinadores, pseudoclases y pseudoelementos.",
-      "file": "selectores.json",
-      "order": 2
+      "description": "Elementos, clases, IDs, atributos, combinadores y pseudoselectores.",
+      "order": 2,
+      "articleCount": 7,
+      "articleIds": [
+        "selectores-0",
+        "selectores-1",
+        "selectores-2",
+        "selectores-3",
+        "selectores-4",
+        "selectores-5",
+        "selectores-6"
+      ],
+      "items": [
+        {
+          "id": "selectores-0",
+          "title": "Selector universal, de tipo, clase e ID"
+        },
+        {
+          "id": "selectores-1",
+          "title": "Selectores de atributos"
+        },
+        {
+          "id": "selectores-2",
+          "title": "Combinadores: descendiente, hijo, adyacente y hermano"
+        },
+        {
+          "id": "selectores-3",
+          "title": "Pseudoclases de interacción y estado"
+        },
+        {
+          "id": "selectores-4",
+          "title": "Pseudoelementos ::before y ::after"
+        },
+        {
+          "id": "selectores-5",
+          "title": "Selectores estructurales :nth-child() y relacionados"
+        },
+        {
+          "id": "selectores-6",
+          "title": "La función :is(), :where() y :has()"
+        }
+      ]
     },
     {
-      "id": "propiedades",
-      "title": "Propiedades y valores",
-      "description": "Colores, tipografía, fondos, medidas y otras propiedades.",
-      "file": "propiedades.json",
-      "order": 3
+      "id": "cascada",
+      "title": "Cascada, herencia y especificidad",
+      "description": "Cómo se resuelven los conflictos entre reglas y de dónde vienen los estilos.",
+      "order": 3,
+      "articleCount": 6,
+      "articleIds": [
+        "cascada-0",
+        "cascada-1",
+        "cascada-2",
+        "cascada-3",
+        "cascada-4",
+        "cascada-5"
+      ],
+      "items": [
+        {
+          "id": "cascada-0",
+          "title": "Cómo funciona la cascada"
+        },
+        {
+          "id": "cascada-1",
+          "title": "Especificidad: tipos de selectores y cálculo"
+        },
+        {
+          "id": "cascada-2",
+          "title": "Herencia y valores heredados"
+        },
+        {
+          "id": "cascada-3",
+          "title": "Valores initial, inherit, unset y revert"
+        },
+        {
+          "id": "cascada-4",
+          "title": "!important y cuándo evitarlo"
+        },
+        {
+          "id": "cascada-5",
+          "title": "Origen, capas y orden de las declaraciones"
+        }
+      ]
     },
     {
-      "id": "modelo-caja",
+      "id": "valores",
+      "title": "Propiedades, valores y unidades",
+      "description": "Propiedades, valores, px, rem, em, %, vw, vh y funciones de cálculo.",
+      "order": 4,
+      "articleCount": 6,
+      "articleIds": [
+        "valores-0",
+        "valores-1",
+        "valores-2",
+        "valores-3",
+        "valores-4",
+        "valores-5"
+      ],
+      "items": [
+        {
+          "id": "valores-0",
+          "title": "Propiedades y valores CSS"
+        },
+        {
+          "id": "valores-1",
+          "title": "Unidades absolutas y relativas"
+        },
+        {
+          "id": "valores-2",
+          "title": "Unidades de viewport: vw, vh, svh y dvh"
+        },
+        {
+          "id": "valores-3",
+          "title": "Porcentajes y unidades relativas al contexto"
+        },
+        {
+          "id": "valores-4",
+          "title": "Funciones calc(), min(), max() y clamp()"
+        },
+        {
+          "id": "valores-5",
+          "title": "Valores, palabras clave y valores calculados"
+        }
+      ]
+    },
+    {
+      "id": "variables",
+      "title": "Variables y funciones CSS",
+      "description": "Custom properties, var(), calc(), min(), max() y clamp().",
+      "order": 5,
+      "articleCount": 7,
+      "articleIds": [
+        "variables-0",
+        "variables-1",
+        "variables-2",
+        "variables-3",
+        "variables-4",
+        "variables-5",
+        "variables-6"
+      ],
+      "items": [
+        {
+          "id": "variables-0",
+          "title": "Custom properties y la sintaxis --nombre"
+        },
+        {
+          "id": "variables-1",
+          "title": "Definir variables en :root"
+        },
+        {
+          "id": "variables-2",
+          "title": "Usar variables con var()"
+        },
+        {
+          "id": "variables-3",
+          "title": "Valores de respaldo en var()"
+        },
+        {
+          "id": "variables-4",
+          "title": "Alcance y herencia de variables"
+        },
+        {
+          "id": "variables-5",
+          "title": "Funciones matemáticas CSS"
+        },
+        {
+          "id": "variables-6",
+          "title": "Funciones de color y otras funciones modernas"
+        }
+      ]
+    },
+    {
+      "id": "caja",
       "title": "Modelo de caja",
-      "description": "Content, padding, border, margin y box-sizing.",
-      "file": "modelo-caja.json",
-      "order": 4
+      "description": "Content, padding, border, margin, box-sizing y desbordamiento.",
+      "order": 6,
+      "articleCount": 7,
+      "articleIds": [
+        "caja-0",
+        "caja-1",
+        "caja-2",
+        "caja-3",
+        "caja-4",
+        "caja-5",
+        "caja-6"
+      ],
+      "items": [
+        {
+          "id": "caja-0",
+          "title": "Las cuatro partes del modelo de caja"
+        },
+        {
+          "id": "caja-1",
+          "title": "width, height y dimensiones reales"
+        },
+        {
+          "id": "caja-2",
+          "title": "box-sizing: content-box y border-box"
+        },
+        {
+          "id": "caja-3",
+          "title": "Margin, padding y shorthand"
+        },
+        {
+          "id": "caja-4",
+          "title": "Colapso de márgenes"
+        },
+        {
+          "id": "caja-5",
+          "title": "Bordes, outline y border-radius"
+        },
+        {
+          "id": "caja-6",
+          "title": "Overflow y contenido desbordado"
+        }
+      ]
+    },
+    {
+      "id": "posicionamiento",
+      "title": "Posicionamiento y apilamiento",
+      "description": "Static, relative, absolute, fixed, sticky, z-index y contextos de apilamiento.",
+      "order": 7,
+      "articleCount": 7,
+      "articleIds": [
+        "posicionamiento-0",
+        "posicionamiento-1",
+        "posicionamiento-2",
+        "posicionamiento-3",
+        "posicionamiento-4",
+        "posicionamiento-5",
+        "posicionamiento-6"
+      ],
+      "items": [
+        {
+          "id": "posicionamiento-0",
+          "title": "Flujo normal y position: static"
+        },
+        {
+          "id": "posicionamiento-1",
+          "title": "relative y desplazamiento visual"
+        },
+        {
+          "id": "posicionamiento-2",
+          "title": "absolute y elementos de referencia"
+        },
+        {
+          "id": "posicionamiento-3",
+          "title": "fixed y elementos fijados a la ventana"
+        },
+        {
+          "id": "posicionamiento-4",
+          "title": "sticky y encabezados persistentes"
+        },
+        {
+          "id": "posicionamiento-5",
+          "title": "z-index y orden de apilamiento"
+        },
+        {
+          "id": "posicionamiento-6",
+          "title": "Contextos de apilamiento"
+        }
+      ]
     },
     {
       "id": "flexbox",
       "title": "Flexbox",
-      "description": "Distribución y alineación de elementos en una dimensión.",
-      "file": "flexbox.json",
-      "order": 5
+      "description": "Ejes, alineación, distribución, crecimiento, reducción y salto de línea.",
+      "order": 8,
+      "articleCount": 7,
+      "articleIds": [
+        "flexbox-0",
+        "flexbox-1",
+        "flexbox-2",
+        "flexbox-3",
+        "flexbox-4",
+        "flexbox-5",
+        "flexbox-6"
+      ],
+      "items": [
+        {
+          "id": "flexbox-0",
+          "title": "Activar display: flex y entender los ejes"
+        },
+        {
+          "id": "flexbox-1",
+          "title": "flex-direction y flex-wrap"
+        },
+        {
+          "id": "flexbox-2",
+          "title": "justify-content y align-items"
+        },
+        {
+          "id": "flexbox-3",
+          "title": "align-content y align-self"
+        },
+        {
+          "id": "flexbox-4",
+          "title": "gap y separación entre elementos"
+        },
+        {
+          "id": "flexbox-5",
+          "title": "flex-grow, flex-shrink y flex-basis"
+        },
+        {
+          "id": "flexbox-6",
+          "title": "La propiedad abreviada flex"
+        }
+      ]
     },
     {
       "id": "grid",
       "title": "CSS Grid",
-      "description": "Diseño de interfaces mediante filas, columnas y áreas.",
-      "file": "grid.json",
-      "order": 6
+      "description": "Filas, columnas, áreas, tracks, alineación y diseños bidimensionales.",
+      "order": 9,
+      "articleCount": 8,
+      "articleIds": [
+        "grid-0",
+        "grid-1",
+        "grid-2",
+        "grid-3",
+        "grid-4",
+        "grid-5",
+        "grid-6",
+        "grid-7"
+      ],
+      "items": [
+        {
+          "id": "grid-0",
+          "title": "Activar display: grid"
+        },
+        {
+          "id": "grid-1",
+          "title": "Definir columnas y filas"
+        },
+        {
+          "id": "grid-2",
+          "title": "Unidades fr y funciones repeat()"
+        },
+        {
+          "id": "grid-3",
+          "title": "gap y espacios de cuadrícula"
+        },
+        {
+          "id": "grid-4",
+          "title": "Ubicar elementos con líneas"
+        },
+        {
+          "id": "grid-5",
+          "title": "grid-template-areas"
+        },
+        {
+          "id": "grid-6",
+          "title": "auto-fit, auto-fill y minmax()"
+        },
+        {
+          "id": "grid-7",
+          "title": "Alineación en Grid"
+        }
+      ]
     },
     {
-      "id": "responsive",
-      "title": "Diseño responsive",
-      "description": "Media queries, unidades flexibles y adaptación a pantallas.",
-      "file": "responsive.json",
-      "order": 7
+      "id": "tipografia",
+      "title": "Tipografía y texto",
+      "description": "Fuentes, @font-face, tamaño, peso, espaciado, alineación y lectura.",
+      "order": 10,
+      "articleCount": 8,
+      "articleIds": [
+        "tipografia-0",
+        "tipografia-1",
+        "tipografia-2",
+        "tipografia-3",
+        "tipografia-4",
+        "tipografia-5",
+        "tipografia-6",
+        "tipografia-7"
+      ],
+      "items": [
+        {
+          "id": "tipografia-0",
+          "title": "font-family y fuentes de respaldo"
+        },
+        {
+          "id": "tipografia-1",
+          "title": "Cargar fuentes con @font-face"
+        },
+        {
+          "id": "tipografia-2",
+          "title": "font-size y unidades recomendadas"
+        },
+        {
+          "id": "tipografia-3",
+          "title": "font-weight y estilos de fuente"
+        },
+        {
+          "id": "tipografia-4",
+          "title": "line-height y legibilidad"
+        },
+        {
+          "id": "tipografia-5",
+          "title": "text-align, text-decoration y text-transform"
+        },
+        {
+          "id": "tipografia-6",
+          "title": "letter-spacing, word-spacing y text-indent"
+        },
+        {
+          "id": "tipografia-7",
+          "title": "Fuentes variables y tipografía fluida"
+        }
+      ]
+    },
+    {
+      "id": "colores",
+      "title": "Colores, fondos y bordes",
+      "description": "Color, gradientes, imágenes de fondo, bordes, radios y sombras.",
+      "order": 11,
+      "articleCount": 8,
+      "articleIds": [
+        "colores-0",
+        "colores-1",
+        "colores-2",
+        "colores-3",
+        "colores-4",
+        "colores-5",
+        "colores-6",
+        "colores-7"
+      ],
+      "items": [
+        {
+          "id": "colores-0",
+          "title": "Sistemas de color: nombres, HEX, RGB y HSL"
+        },
+        {
+          "id": "colores-1",
+          "title": "color y background-color"
+        },
+        {
+          "id": "colores-2",
+          "title": "background-image y fondos múltiples"
+        },
+        {
+          "id": "colores-3",
+          "title": "Gradientes lineales, radiales y cónicos"
+        },
+        {
+          "id": "colores-4",
+          "title": "background-size, position y repeat"
+        },
+        {
+          "id": "colores-5",
+          "title": "Bordes, radios y contornos"
+        },
+        {
+          "id": "colores-6",
+          "title": "box-shadow y text-shadow"
+        },
+        {
+          "id": "colores-7",
+          "title": "Transparencia y opacidad"
+        }
+      ]
+    },
+    {
+      "id": "transformaciones",
+      "title": "Transformaciones y efectos",
+      "description": "Transform, filtros, máscaras, clip-path y mezcla de capas.",
+      "order": 12,
+      "articleCount": 7,
+      "articleIds": [
+        "transformaciones-0",
+        "transformaciones-1",
+        "transformaciones-2",
+        "transformaciones-3",
+        "transformaciones-4",
+        "transformaciones-5",
+        "transformaciones-6"
+      ],
+      "items": [
+        {
+          "id": "transformaciones-0",
+          "title": "translate(), rotate(), scale() y skew()"
+        },
+        {
+          "id": "transformaciones-1",
+          "title": "transform-origin y transform-box"
+        },
+        {
+          "id": "transformaciones-2",
+          "title": "filter: blur(), brightness() y otros"
+        },
+        {
+          "id": "transformaciones-3",
+          "title": "backdrop-filter"
+        },
+        {
+          "id": "transformaciones-4",
+          "title": "clip-path y formas"
+        },
+        {
+          "id": "transformaciones-5",
+          "title": "Máscaras CSS"
+        },
+        {
+          "id": "transformaciones-6",
+          "title": "mix-blend-mode y isolation"
+        }
+      ]
     },
     {
       "id": "animaciones",
-      "title": "Transformaciones y animaciones",
-      "description": "Transform, transition, keyframes y efectos visuales.",
-      "file": "animaciones.json",
-      "order": 8
+      "title": "Transiciones y animaciones",
+      "description": "Transition, @keyframes, duración, temporización y movimiento.",
+      "order": 13,
+      "articleCount": 7,
+      "articleIds": [
+        "animaciones-0",
+        "animaciones-1",
+        "animaciones-2",
+        "animaciones-3",
+        "animaciones-4",
+        "animaciones-5",
+        "animaciones-6"
+      ],
+      "items": [
+        {
+          "id": "animaciones-0",
+          "title": "transition-property, duration y delay"
+        },
+        {
+          "id": "animaciones-1",
+          "title": "Timing functions y curvas de movimiento"
+        },
+        {
+          "id": "animaciones-2",
+          "title": "Crear animaciones con @keyframes"
+        },
+        {
+          "id": "animaciones-3",
+          "title": "animation-duration, iteration-count y direction"
+        },
+        {
+          "id": "animaciones-4",
+          "title": "animation-fill-mode y animation-play-state"
+        },
+        {
+          "id": "animaciones-5",
+          "title": "Animar transform y opacity eficientemente"
+        },
+        {
+          "id": "animaciones-6",
+          "title": "prefers-reduced-motion"
+        }
+      ]
     },
     {
-      "id": "retos",
-      "title": "Retos de CSS",
-      "description": "Ejercicios para construir diseños y efectos visuales.",
-      "file": "retos.json",
-      "order": 9
+      "id": "responsive",
+      "title": "Responsive design y container queries",
+      "description": "Media queries, container queries, viewport y diseños adaptables.",
+      "order": 14,
+      "articleCount": 7,
+      "articleIds": [
+        "responsive-0",
+        "responsive-1",
+        "responsive-2",
+        "responsive-3",
+        "responsive-4",
+        "responsive-5",
+        "responsive-6"
+      ],
+      "items": [
+        {
+          "id": "responsive-0",
+          "title": "Diseño adaptable y enfoque mobile first"
+        },
+        {
+          "id": "responsive-1",
+          "title": "Media queries con @media"
+        },
+        {
+          "id": "responsive-2",
+          "title": "Breakpoints y consultas por características"
+        },
+        {
+          "id": "responsive-3",
+          "title": "Imágenes y contenido flexible"
+        },
+        {
+          "id": "responsive-4",
+          "title": "Container queries: @container"
+        },
+        {
+          "id": "responsive-5",
+          "title": "Unidades de viewport modernas"
+        },
+        {
+          "id": "responsive-6",
+          "title": "Diseños fluidos con clamp() y Grid/Flexbox"
+        }
+      ]
+    },
+    {
+      "id": "accesibilidad",
+      "title": "Accesibilidad y CSS moderno",
+      "description": "Focus visible, contraste, movimiento reducido, propiedades lógicas y nuevas reglas.",
+      "order": 15,
+      "articleCount": 8,
+      "articleIds": [
+        "accesibilidad-0",
+        "accesibilidad-1",
+        "accesibilidad-2",
+        "accesibilidad-3",
+        "accesibilidad-4",
+        "accesibilidad-5",
+        "accesibilidad-6",
+        "accesibilidad-7"
+      ],
+      "items": [
+        {
+          "id": "accesibilidad-0",
+          "title": "Contraste y uso del color"
+        },
+        {
+          "id": "accesibilidad-1",
+          "title": "Estados :focus y :focus-visible"
+        },
+        {
+          "id": "accesibilidad-2",
+          "title": " prefers-reduced-motion y movimiento seguro"
+        },
+        {
+          "id": "accesibilidad-3",
+          "title": "Propiedades lógicas: margin-inline y padding-block"
+        },
+        {
+          "id": "accesibilidad-4",
+          "title": "Cascade layers con @layer"
+        },
+        {
+          "id": "accesibilidad-5",
+          "title": "Nesting nativo de CSS"
+        },
+        {
+          "id": "accesibilidad-6",
+          "title": "@supports y mejoras progresivas"
+        },
+        {
+          "id": "accesibilidad-7",
+          "title": "Buenas prácticas para interfaces accesibles"
+        }
+      ]
     }
   ]
 }
