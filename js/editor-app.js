@@ -183,7 +183,7 @@ function renderTree(){
    const row=document.createElement("div");row.className="file-row"+(path===active?" active":"");row.style.paddingLeft=(8+depth*15)+"px";row.draggable=true;
    const ext=basename(path).split(".").pop().toLowerCase();
    row.innerHTML='<span class="folder-caret"></span><span class="file-icon '+escapeHtml(ext)+'">'+iconFor(path)+'</span><span class="file-label">'+escapeHtml(basename(path))+'</span><button class="file-menu" aria-label="Opciones de archivo">···</button>';
-   row.addEventListener("click",()=>{openFile(path);$("workbench").classList.remove("explorer-open");});
+   row.addEventListener("click",()=>{openFile(path);$("workbench").classList.remove("explorer-open");requestAnimationFrame(()=>editor?.layout());});
    row.querySelector("button").addEventListener("click",e=>{e.stopPropagation();fileOptions(path,false);});
    row.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",path);row.classList.add("file-dragging");});
    row.addEventListener("dragend",()=>row.classList.remove("file-dragging"));
@@ -396,7 +396,7 @@ function renderProjects(){
 function openProjectsDialog(){renderProjects();$("projectsDialog").classList.add("open");$("projectsDialog").setAttribute("aria-hidden","false");}
 function closeProjectsDialog(){$("projectsDialog").classList.remove("open");$("projectsDialog").setAttribute("aria-hidden","true");}
 function formatCurrent(){if(!editor)return;editor.getAction("editor.action.formatDocument")?.run();}
-function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(projectName.replace(/[^a-z0-9_-]+/gi,"-")||"mi-proyecto")+".zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
+function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();for(const folder of folders)zip.folder(folder);Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(projectName.replace(/[^a-z0-9_-]+/gi,"-")||"mi-proyecto")+".zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
 function loadSettings(){
  try{const saved=JSON.parse(localStorage.getItem("webdev-editor-settings-v1")||"null");if(saved&&typeof saved==="object")settings={...settings,...saved};}catch(e){}
  settings.fontSize=Math.max(10,Math.min(26,Number(settings.fontSize)||13));
