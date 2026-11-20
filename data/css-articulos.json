@@ -61,7 +61,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Qué es CSS y cómo trabaja con HTML",
+            "title": "Ejemplo complementario · Qué es CSS y cómo trabaja con HTML",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Una regla CSS: selector + bloque de declaraciones. */\nh1 {\n  color: #1d4ed8;\n  font-size: 2rem;\n}"
           },
@@ -159,7 +159,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Reglas, selectores, declaraciones y bloques",
+            "title": "Ejemplo complementario · Reglas, selectores, declaraciones y bloques",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Un selector puede apuntar a una clase reutilizable. */\n.tarjeta {\n  padding: 1rem;\n  border: 1px solid #cbd5e1;\n  border-radius: .75rem;\n}"
           },
@@ -257,7 +257,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Cómo escribir comentarios CSS",
+            "title": "Ejemplo complementario · Cómo escribir comentarios CSS",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Los comentarios explican decisiones de implementación. */\n/* Mantener el título separado del texto. */\n.tarjeta__titulo { margin-block: 0 .5rem; }"
           },
@@ -313,7 +313,7 @@
         },
         {
           "title": "Ejemplo práctico",
-          "code": "<!-- HTML: forma externa recomendada -->\n<link rel=\"stylesheet\" href=\"./css/estilos.css\">\n\n/* CSS externo: estilos.css */\nbody { font-family: system-ui, sans-serif; }",
+          "code": "/* Archivo externo: css/estilos.css */\nbody {\n  font-family: system-ui, sans-serif;\n  color: #1e293b;\n}\n.boton {\n  background: #1d4ed8;\n  color: white;\n  padding: .65rem 1rem;\n}\n/* En HTML, la hoja se enlaza con:\n   <link rel=\"stylesheet\" href=\"./css/estilos.css\"> */",
           "language": "css"
         },
         {
@@ -355,9 +355,9 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Formas de aplicar CSS: externo, interno y en línea",
-            "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
-            "code": "<!-- HTML: forma externa recomendada -->\n<link rel=\"stylesheet\" href=\"./css/estilos.css\">\n\n/* CSS externo: estilos.css */\nbody { font-family: system-ui, sans-serif; }"
+            "title": "Ejemplo complementario · Formas de aplicar CSS: externo, interno y en línea",
+            "description": "El código CSS se guarda en un archivo externo; la etiqueta link se agrega en el head del documento HTML.",
+            "code": "/* Archivo externo: css/estilos.css */\nbody {\n  font-family: system-ui, sans-serif;\n  color: #1e293b;\n}\n.boton {\n  background: #1d4ed8;\n  color: white;\n  padding: .65rem 1rem;\n}\n/* En HTML, la hoja se enlaza con:\n   <link rel=\"stylesheet\" href=\"./css/estilos.css\"> */"
           },
           {
             "title": "Variación · comprobá el comportamiento",
@@ -411,7 +411,7 @@
         },
         {
           "title": "Ejemplo práctico",
-          "code": "<!-- La ruta se resuelve desde el archivo HTML. -->\n<link rel=\"stylesheet\" href=\"../css/componentes/boton.css\">\n\n/* css/componentes/boton.css */\n.boton { padding: .65rem 1rem; border-radius: .5rem; }",
+          "code": "/* Contenido de css/componentes/tarjeta.css */\n.tarjeta {\n  padding: 1rem;\n  border: 1px solid #cbd5e1;\n  border-radius: .75rem;\n}\n.tarjeta__titulo {\n  margin-block: 0 .5rem;\n}\n/* En HTML, link conecta este archivo con la página. */",
           "language": "css"
         },
         {
@@ -453,9 +453,9 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Cómo enlazar una hoja de estilos",
-            "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
-            "code": "<!-- La ruta se resuelve desde el archivo HTML. -->\n<link rel=\"stylesheet\" href=\"../css/componentes/boton.css\">\n\n/* css/componentes/boton.css */\n.boton { padding: .65rem 1rem; border-radius: .5rem; }"
+            "title": "Ejemplo complementario · Cómo enlazar una hoja de estilos",
+            "description": "Este es el contenido de la hoja de estilos. La ruta se conecta desde HTML mediante link rel=\"stylesheet\".",
+            "code": "/* Contenido de css/componentes/tarjeta.css */\n.tarjeta {\n  padding: 1rem;\n  border: 1px solid #cbd5e1;\n  border-radius: .75rem;\n}\n.tarjeta__titulo {\n  margin-block: 0 .5rem;\n}\n/* En HTML, link conecta este archivo con la página. */"
           },
           {
             "title": "Variación · comprobá el comportamiento",
@@ -551,7 +551,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Organización de archivos y estructura de proyecto",
+            "title": "Ejemplo complementario · Organización de archivos y estructura de proyecto",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Separá estilos globales y componentes. */\n:root { --color-texto: #1e293b; }\nbody { color: var(--color-texto); }\n.boton { font: inherit; }"
           },
@@ -649,7 +649,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Selector universal, de tipo, clase e ID",
+            "title": "Ejemplo complementario · Selector universal, de tipo, clase e ID",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Selector universal, tipo, clase e ID. */\n* { box-sizing: border-box; }\np { line-height: 1.6; }\n.tarjeta { padding: 1rem; }\n#principal { max-width: 70rem; margin-inline: auto; }"
           },
@@ -747,7 +747,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Selectores de atributos",
+            "title": "Ejemplo complementario · Selectores de atributos",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Los selectores de atributo detectan atributos y valores. */\ninput[type=\"email\"] { border-color: #64748b; }\n[required] { outline-offset: 3px; }\na[href^=\"https\"] { text-decoration-thickness: 2px; }"
           },
@@ -845,7 +845,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Combinadores: descendiente, hijo, adyacente y hermano",
+            "title": "Ejemplo complementario · Combinadores: descendiente, hijo, adyacente y hermano",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Combinadores: descendiente, hijo, adyacente y hermano. */\narticle p { line-height: 1.6; }\n.menu > li { list-style: none; }\nh2 + p { margin-block-start: .25rem; }\nh2 ~ p { color: #475569; }"
           },
@@ -943,7 +943,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Pseudoclases de interacción y estado",
+            "title": "Ejemplo complementario · Pseudoclases de interacción y estado",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Estados de interacción y validación. */\n.boton:hover { filter: brightness(1.08); }\n.campo:focus-visible { outline: 3px solid #2563eb; }\n.campo:invalid { border-color: #b42318; }"
           },
@@ -1041,7 +1041,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Pseudoelementos ::before y ::after",
+            "title": "Ejemplo complementario · Pseudoelementos ::before y ::after",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Pseudoelementos para decoración, no para contenido esencial. */\n.enlace-externo::after { content: \" ↗\"; }\n.titulo::after { content: \"\"; display: block; width: 3rem; height: 3px; background: currentColor; }"
           },
@@ -1139,7 +1139,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Selectores estructurales :nth-child() y relacionados",
+            "title": "Ejemplo complementario · Selectores estructurales :nth-child() y relacionados",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Selección por posición dentro de una lista. */\nli:nth-child(odd) { background: #f1f5f9; }\nli:nth-child(3n) { font-weight: 700; }\nli:last-child { margin-block-end: 0; }"
           },
@@ -1237,7 +1237,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · La función :is(), :where() y :has()",
+            "title": "Ejemplo complementario · La función :is(), :where() y :has()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Agrupar selectores sin repetir declaraciones. */\n:is(h1, h2, h3) { font-family: system-ui, sans-serif; }\n:where(article, section) p { line-height: 1.6; }\n.card:has(> img) { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; }"
           },
@@ -1335,7 +1335,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Cómo funciona la cascada",
+            "title": "Ejemplo complementario · Cómo funciona la cascada",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* La última regla con la misma especificidad prevalece. */\n.aviso { color: #475569; }\n.aviso { color: #1d4ed8; }"
           },
@@ -1433,7 +1433,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Especificidad: tipos de selectores y cálculo",
+            "title": "Ejemplo complementario · Especificidad: tipos de selectores y cálculo",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* La especificidad puede hacer que una regla gane. */\np { color: #64748b; }\n.panel p { color: #1e293b; }\n#principal .panel p { color: #1d4ed8; }"
           },
@@ -1531,7 +1531,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Herencia y valores heredados",
+            "title": "Ejemplo complementario · Herencia y valores heredados",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Algunas propiedades se heredan; otras no. */\nbody { color: #1e293b; font-family: system-ui, sans-serif; }\nbutton { color: inherit; font: inherit; }\n.card { border: 1px solid #cbd5e1; }"
           },
@@ -1629,7 +1629,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Valores initial, inherit, unset y revert",
+            "title": "Ejemplo complementario · Valores initial, inherit, unset y revert",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Elegí el comportamiento del valor de forma explícita. */\n.panel { color: navy; }\n.panel__titulo { color: inherit; }\n.panel__nota { color: initial; }\n.panel__enlace { color: unset; }"
           },
@@ -1727,7 +1727,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · !important y cuándo evitarlo",
+            "title": "Ejemplo complementario · !important y cuándo evitarlo",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Evitá usar !important como solución habitual. */\n.boton { color: white; background: #1d4ed8; }\n/* Reservá !important para casos excepcionales y documentados. */\n.boton--sistema { color: black !important; }"
           },
@@ -1825,7 +1825,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Origen, capas y orden de las declaraciones",
+            "title": "Ejemplo complementario · Origen, capas y orden de las declaraciones",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Definí capas con responsabilidades claras. */\n@layer reset, base, components, utilities;\n@layer base { body { margin: 0; } }\n@layer components { .card { padding: 1rem; } }\n@layer utilities { .mt-auto { margin-block-start: auto; } }"
           },
@@ -1922,7 +1922,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Propiedades y valores CSS",
+            "title": "Ejemplo complementario · Propiedades y valores CSS",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Una propiedad recibe un valor válido según su sintaxis. */\n.titulo { color: #1d4ed8; font-size: 2rem; }\n.panel { display: grid; gap: 1rem; }"
           },
@@ -2019,7 +2019,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Unidades absolutas y relativas",
+            "title": "Ejemplo complementario · Unidades absolutas y relativas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Unidades absolutas y relativas. */\n.panel { width: 32rem; padding: 1rem; }\n.titulo { font-size: 2em; }\n.contenido { max-width: 65ch; }"
           },
@@ -2116,7 +2116,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Unidades de viewport: vw, vh, svh y dvh",
+            "title": "Ejemplo complementario · Unidades de viewport: vw, vh, svh y dvh",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Unidades de viewport modernas. */\n.hero { min-height: 100svh; }\n.panel { min-height: 100dvh; }\n.titulo { font-size: clamp(2rem, 6vw, 5rem); }"
           },
@@ -2213,7 +2213,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Porcentajes y unidades relativas al contexto",
+            "title": "Ejemplo complementario · Porcentajes y unidades relativas al contexto",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Porcentajes dependen del contexto de referencia. */\n.contenedor { width: 90%; margin-inline: auto; }\n.columna { width: 50%; }\n.imagen { max-width: 100%; height: auto; }"
           },
@@ -2310,7 +2310,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Funciones calc(), min(), max() y clamp()",
+            "title": "Ejemplo complementario · Funciones calc(), min(), max() y clamp()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Funciones matemáticas para dimensiones fluidas. */\n.contenido { width: min(100% - 2rem, 72rem); margin-inline: auto; }\n.seccion { padding-inline: max(1rem, 4vw); }\n.titulo { font-size: clamp(1.8rem, 4vw, 3.5rem); }"
           },
@@ -2407,7 +2407,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Valores, palabras clave y valores calculados",
+            "title": "Ejemplo complementario · Valores, palabras clave y valores calculados",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Las palabras clave expresan estados o valores especiales. */\n.panel { width: auto; min-width: min-content; }\n.imagen { height: auto; }\n.hijo { color: inherit; }"
           },
@@ -2504,7 +2504,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Custom properties y la sintaxis --nombre",
+            "title": "Ejemplo complementario · Custom properties y la sintaxis --nombre",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Una custom property guarda un valor reutilizable. */\n:root { --color-acento: #2563eb; }\n.boton { background: var(--color-acento); color: white; }"
           },
@@ -2601,7 +2601,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Definir variables en :root",
+            "title": "Ejemplo complementario · Definir variables en :root",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* :root permite compartir tokens en todo el documento. */\n:root {\n  --color-texto: #1e293b;\n  --color-superficie: #f8fafc;\n  --espacio-base: 1rem;\n}\n.card { color: var(--color-texto); padding: var(--espacio-base); }"
           },
@@ -2698,7 +2698,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Usar variables con var()",
+            "title": "Ejemplo complementario · Usar variables con var()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* var() inserta el valor de una custom property. */\n:root { --radio-card: .75rem; }\n.card { border-radius: var(--radio-card); }"
           },
@@ -2795,7 +2795,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Valores de respaldo en var()",
+            "title": "Ejemplo complementario · Valores de respaldo en var()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* El segundo parámetro de var() es un fallback. */\n.boton { background: var(--color-boton, #1d4ed8); }\n.card { padding: var(--espacio, 1rem); }"
           },
@@ -2892,7 +2892,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Alcance y herencia de variables",
+            "title": "Ejemplo complementario · Alcance y herencia de variables",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Las variables heredan y pueden sobrescribirse localmente. */\n:root { --superficie: white; --texto: #1e293b; }\n.tema-oscuro { --superficie: #0f172a; --texto: #f8fafc; }\n.panel { background: var(--superficie); color: var(--texto); }"
           },
@@ -2989,7 +2989,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Funciones matemáticas CSS",
+            "title": "Ejemplo complementario · Funciones matemáticas CSS",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Las funciones matemáticas también pueden usar custom properties. */\n:root { --base: 1rem; }\n.panel { padding: calc(var(--base) * 1.5); }\n.titulo { font-size: clamp(1.5rem, calc(var(--base) * 3), 3rem); }"
           },
@@ -3086,7 +3086,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Funciones de color y otras funciones modernas",
+            "title": "Ejemplo complementario · Funciones de color y otras funciones modernas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Funciones de color para crear variaciones coherentes. */\n:root { --marca: oklch(58% .18 255); }\n.boton { background: var(--marca); }\n.boton:hover { background: color-mix(in oklab, var(--marca), black 15%); }"
           },
@@ -3183,7 +3183,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Las cuatro partes del modelo de caja",
+            "title": "Ejemplo complementario · Las cuatro partes del modelo de caja",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* El modelo de caja suma contenido, padding, borde y margen. */\n.tarjeta {\n  width: 20rem;\n  padding: 1rem;\n  border: 2px solid #cbd5e1;\n  margin: 1rem;\n}"
           },
@@ -3280,7 +3280,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · width, height y dimensiones reales",
+            "title": "Ejemplo complementario · width, height y dimensiones reales",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Establecé dimensiones flexibles y límites. */\n.imagen { width: 100%; max-width: 32rem; height: auto; }\n.panel { min-height: 12rem; max-height: 28rem; }"
           },
@@ -3377,7 +3377,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · box-sizing: content-box y border-box",
+            "title": "Ejemplo complementario · box-sizing: content-box y border-box",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* border-box incluye padding y border en el ancho declarado. */\n*,\n*::before,\n*::after { box-sizing: border-box; }\n.tarjeta { width: 20rem; padding: 1.5rem; border: 2px solid; }"
           },
@@ -3474,7 +3474,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Margin, padding y shorthand",
+            "title": "Ejemplo complementario · Margin, padding y shorthand",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* margin separa componentes; padding crea espacio interior. */\n.panel { margin-block: 1.5rem; padding: 1rem 1.25rem; }\n.panel h2 { margin-block-start: 0; }\n.panel p { margin-block-end: 0; }"
           },
@@ -3571,7 +3571,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Colapso de márgenes",
+            "title": "Ejemplo complementario · Colapso de márgenes",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Dos márgenes verticales pueden colapsar en flujo normal. */\n.primero { margin-block-end: 2rem; }\n.segundo { margin-block-start: 1rem; }\n/* Usá gap en un contenedor flex/grid para evitar depender del colapso. */\n.lista { display: flex; flex-direction: column; gap: 1rem; }"
           },
@@ -3668,7 +3668,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Bordes, outline y border-radius",
+            "title": "Ejemplo complementario · Bordes, outline y border-radius",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* border define el contorno; outline no ocupa espacio de caja. */\n.campo { border: 1px solid #94a3b8; border-radius: .5rem; }\n.campo:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }"
           },
@@ -3765,7 +3765,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Overflow y contenido desbordado",
+            "title": "Ejemplo complementario · Overflow y contenido desbordado",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Controlá el contenido que supera las dimensiones disponibles. */\n.panel { max-height: 12rem; overflow-y: auto; }\n.codigo { overflow-x: auto; white-space: pre; }\n.texto-largo { overflow-wrap: anywhere; }"
           },
@@ -3863,7 +3863,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Flujo normal y position: static",
+            "title": "Ejemplo complementario · Flujo normal y position: static",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* static es el posicionamiento normal del flujo. */\n.card { position: static; }\n.card + .card { margin-block-start: 1rem; }"
           },
@@ -3961,7 +3961,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · relative y desplazamiento visual",
+            "title": "Ejemplo complementario · relative y desplazamiento visual",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* relative conserva su espacio y desplaza visualmente el elemento. */\n.etiqueta { position: relative; inset-block-start: .25rem; }\n.card { position: relative; }"
           },
@@ -4059,7 +4059,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · absolute y elementos de referencia",
+            "title": "Ejemplo complementario · absolute y elementos de referencia",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* absolute se posiciona respecto del ancestro posicionado más cercano. */\n.card { position: relative; }\n.card__badge { position: absolute; inset-block-start: .75rem; inset-inline-end: .75rem; }"
           },
@@ -4157,7 +4157,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · fixed y elementos fijados a la ventana",
+            "title": "Ejemplo complementario · fixed y elementos fijados a la ventana",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* fixed se posiciona respecto de la ventana del navegador. */\n.boton-ayuda { position: fixed; inset-inline-end: 1rem; inset-block-end: 1rem; z-index: 20; }"
           },
@@ -4255,7 +4255,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · sticky y encabezados persistentes",
+            "title": "Ejemplo complementario · sticky y encabezados persistentes",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* sticky acompaña el desplazamiento hasta el límite de su contenedor. */\n.encabezado { position: sticky; top: 0; z-index: 10; background: white; }\nhtml { scroll-padding-top: 4rem; }"
           },
@@ -4353,7 +4353,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · z-index y orden de apilamiento",
+            "title": "Ejemplo complementario · z-index y orden de apilamiento",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* z-index organiza capas dentro de un contexto de apilamiento. */\n.menu { position: relative; z-index: 10; }\n.dialogo { position: fixed; inset: 0; z-index: 100; }"
           },
@@ -4451,7 +4451,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Contextos de apilamiento",
+            "title": "Ejemplo complementario · Contextos de apilamiento",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* transform y opacity pueden crear contextos de apilamiento. */\n.panel { position: relative; isolation: isolate; }\n.panel__badge { position: absolute; z-index: 1; inset-block-start: 0; }"
           },
@@ -4549,7 +4549,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Activar display: flex y entender los ejes",
+            "title": "Ejemplo complementario · Activar display: flex y entender los ejes",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* display:flex activa un contenedor flexible. */\n.navegacion { display: flex; align-items: center; gap: 1rem; }\n.navegacion__logo { margin-inline-end: auto; }"
           },
@@ -4647,7 +4647,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · flex-direction y flex-wrap",
+            "title": "Ejemplo complementario · flex-direction y flex-wrap",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* direction define el eje principal; wrap permite nuevas líneas. */\n.acciones { display: flex; flex-direction: row; flex-wrap: wrap; gap: .75rem; }\n@media (max-width: 36rem) { .acciones { flex-direction: column; } }"
           },
@@ -4745,7 +4745,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · justify-content y align-items",
+            "title": "Ejemplo complementario · justify-content y align-items",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* justify-content alinea en el eje principal; align-items en el transversal. */\n.header { display: flex; justify-content: space-between; align-items: center; }\n.header__acciones { display: flex; align-items: center; gap: .5rem; }"
           },
@@ -4843,7 +4843,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · align-content y align-self",
+            "title": "Ejemplo complementario · align-content y align-self",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* align-content distribuye líneas; align-self ajusta un hijo. */\n.catalogo { display: flex; flex-wrap: wrap; align-content: space-between; min-height: 20rem; }\n.catalogo__destacado { align-self: flex-start; }"
           },
@@ -4941,7 +4941,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · gap y separación entre elementos",
+            "title": "Ejemplo complementario · gap y separación entre elementos",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* gap crea espacio entre hijos sin añadir márgenes a los bordes. */\n.tags { display: flex; flex-wrap: wrap; column-gap: .75rem; row-gap: .5rem; }"
           },
@@ -5039,7 +5039,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · flex-grow, flex-shrink y flex-basis",
+            "title": "Ejemplo complementario · flex-grow, flex-shrink y flex-basis",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* grow, shrink y basis controlan el tamaño flexible. */\n.layout { display: flex; gap: 1rem; }\n.sidebar { flex: 0 0 15rem; }\n.contenido { flex: 1 1 0; min-width: 0; }"
           },
@@ -5137,7 +5137,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · La propiedad abreviada flex",
+            "title": "Ejemplo complementario · La propiedad abreviada flex",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* La abreviatura flex combina crecimiento, reducción y base. */\n.boton { flex: 0 1 auto; }\n.boton--principal { flex: 1 1 12rem; }\n.boton--fijo { flex: 0 0 3rem; }"
           },
@@ -5235,7 +5235,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Activar display: grid",
+            "title": "Ejemplo complementario · Activar display: grid",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* display:grid crea una cuadrícula bidimensional. */\n.dashboard { display: grid; grid-template-columns: 16rem 1fr; gap: 1rem; }"
           },
@@ -5333,7 +5333,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Definir columnas y filas",
+            "title": "Ejemplo complementario · Definir columnas y filas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Definí filas y columnas de manera explícita. */\n.layout { display: grid; grid-template-columns: 14rem 1fr; grid-template-rows: auto 1fr; gap: 1rem; }\n.header { grid-column: 1 / -1; }"
           },
@@ -5431,7 +5431,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Unidades fr y funciones repeat()",
+            "title": "Ejemplo complementario · Unidades fr y funciones repeat()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* fr reparte el espacio; repeat() evita repetir tracks. */\n.galeria { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }\n.panel { min-width: 0; }"
           },
@@ -5529,7 +5529,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · gap y espacios de cuadrícula",
+            "title": "Ejemplo complementario · gap y espacios de cuadrícula",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* gap define separación en filas y columnas. */\n.tablero { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 1.5rem; row-gap: 1rem; }"
           },
@@ -5627,7 +5627,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Ubicar elementos con líneas",
+            "title": "Ejemplo complementario · Ubicar elementos con líneas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Las líneas permiten ubicar un elemento en varias columnas. */\n.hero { display: grid; grid-template-columns: repeat(12, 1fr); }\n.hero__contenido { grid-column: 2 / 8; }\n.hero__imagen { grid-column: 8 / 13; }"
           },
@@ -5725,7 +5725,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · grid-template-areas",
+            "title": "Ejemplo complementario · grid-template-areas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Los nombres de área hacen explícita la estructura del layout. */\n.pagina { display: grid; grid-template-areas: \"header header\" \"nav main\" \"footer footer\"; grid-template-columns: 14rem 1fr; }\nheader { grid-area: header; } nav { grid-area: nav; } main { grid-area: main; } footer { grid-area: footer; }"
           },
@@ -5823,7 +5823,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · auto-fit, auto-fill y minmax()",
+            "title": "Ejemplo complementario · auto-fit, auto-fill y minmax()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* auto-fit y minmax crean columnas flexibles según el espacio. */\n.productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }"
           },
@@ -5921,7 +5921,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Alineación en Grid",
+            "title": "Ejemplo complementario · Alineación en Grid",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* place-items alinea elementos en ambos ejes. */\n.icon-grid { display: grid; place-items: center; min-height: 12rem; }\n.paneles { display: grid; justify-items: stretch; align-items: start; }"
           },
@@ -6019,7 +6019,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · font-family y fuentes de respaldo",
+            "title": "Ejemplo complementario · font-family y fuentes de respaldo",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Define una pila de fuentes con alternativas disponibles. */\nbody { font-family: Inter, \"Segoe UI\", system-ui, sans-serif; }\n.codigo { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }"
           },
@@ -6117,7 +6117,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Cargar fuentes con @font-face",
+            "title": "Ejemplo complementario · Cargar fuentes con @font-face",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* @font-face declara una fuente local del proyecto. */\n@font-face {\n  font-family: \"Interfaz\";\n  src: url(\"./fonts/inter.woff2\") format(\"woff2\");\n  font-weight: 100 900;\n  font-display: swap;\n}\nbody { font-family: \"Interfaz\", system-ui, sans-serif; }"
           },
@@ -6215,7 +6215,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · font-size y unidades recomendadas",
+            "title": "Ejemplo complementario · font-size y unidades recomendadas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* font-size puede escalar de forma fluida con límites. */\n.titulo { font-size: clamp(2rem, 5vw, 3.75rem); }\n.texto { font-size: 1rem; }"
           },
@@ -6313,7 +6313,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · font-weight y estilos de fuente",
+            "title": "Ejemplo complementario · font-weight y estilos de fuente",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* font-weight controla el grosor; font-style la inclinación. */\n.titulo { font-weight: 700; }\n.cita { font-style: italic; }\n.texto { font-weight: 400; }"
           },
@@ -6411,7 +6411,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · line-height y legibilidad",
+            "title": "Ejemplo complementario · line-height y legibilidad",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Line-height mejora la lectura de los párrafos. */\n.articulo p { font-size: 1rem; line-height: 1.7; max-width: 68ch; }\n.articulo h1 { line-height: 1.1; }"
           },
@@ -6509,7 +6509,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · text-align, text-decoration y text-transform",
+            "title": "Ejemplo complementario · text-align, text-decoration y text-transform",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Alineación, decoración y transformación del texto. */\n.titulo { text-align: start; text-transform: none; }\n.enlace { text-decoration-thickness: .08em; text-underline-offset: .18em; }"
           },
@@ -6607,7 +6607,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · letter-spacing, word-spacing y text-indent",
+            "title": "Ejemplo complementario · letter-spacing, word-spacing y text-indent",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Espaciado entre caracteres y palabras. */\n.etiqueta { letter-spacing: .08em; text-transform: uppercase; }\n.parrafo { word-spacing: .04em; text-indent: 1.5em; }"
           },
@@ -6705,7 +6705,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Fuentes variables y tipografía fluida",
+            "title": "Ejemplo complementario · Fuentes variables y tipografía fluida",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Una escala tipográfica fluida ayuda a mantener proporciones. */\n:root { --texto-base: clamp(1rem, .95rem + .2vw, 1.125rem); }\nbody { font-size: var(--texto-base); }\nh1 { font-size: clamp(2rem, 5vw, 4rem); }"
           },
@@ -6803,7 +6803,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Sistemas de color: nombres, HEX, RGB y HSL",
+            "title": "Ejemplo complementario · Sistemas de color: nombres, HEX, RGB y HSL",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* HEX, RGB y HSL representan colores de distintas maneras. */\n.hex { color: #1d4ed8; }\n.rgb { color: rgb(29 78 216); }\n.hsl { color: hsl(221 76% 48%); }"
           },
@@ -6901,7 +6901,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · color y background-color",
+            "title": "Ejemplo complementario · color y background-color",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* color afecta el texto; background-color la superficie. */\n.alerta { color: #7f1d1d; background-color: #fee2e2; border: 1px solid #fca5a5; }"
           },
@@ -6999,7 +6999,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · background-image y fondos múltiples",
+            "title": "Ejemplo complementario · background-image y fondos múltiples",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Se pueden apilar fondos e imágenes de fondo. */\n.hero { background-image: linear-gradient(rgb(15 23 42 / .45), rgb(15 23 42 / .45)), url(\"./paisaje.jpg\"); color: white; }"
           },
@@ -7097,7 +7097,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Gradientes lineales, radiales y cónicos",
+            "title": "Ejemplo complementario · Gradientes lineales, radiales y cónicos",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Gradiente lineal, radial y cónico. */\n.banner { background: linear-gradient(120deg, #1d4ed8, #7c3aed); }\n.avatar { background: radial-gradient(circle, #fef3c7, #d97706); }\n.grafico { background: conic-gradient(#2563eb 0 65%, #cbd5e1 65%); }"
           },
@@ -7195,7 +7195,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · background-size, position y repeat",
+            "title": "Ejemplo complementario · background-size, position y repeat",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Control de tamaño, posición y repetición de fondos. */\n.portada { background-image: url(\"./portada.jpg\"); background-size: cover; background-position: center; background-repeat: no-repeat; }"
           },
@@ -7293,7 +7293,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Bordes, radios y contornos",
+            "title": "Ejemplo complementario · Bordes, radios y contornos",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* border-radius suaviza las esquinas; outline no ocupa caja. */\n.card { border: 1px solid #cbd5e1; border-radius: .75rem; }\n.card:focus-within { outline: 2px solid #2563eb; outline-offset: 3px; }"
           },
@@ -7391,7 +7391,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · box-shadow y text-shadow",
+            "title": "Ejemplo complementario · box-shadow y text-shadow",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Sombras para separar superficies sin abusar del contraste. */\n.card { box-shadow: 0 10px 28px rgb(15 23 42 / .12); }\n.titulo { text-shadow: 0 1px 2px rgb(15 23 42 / .18); }"
           },
@@ -7489,7 +7489,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Transparencia y opacidad",
+            "title": "Ejemplo complementario · Transparencia y opacidad",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Opacidad y canales alfa son diferentes formas de transparencia. */\n.sobrepuesto { background: rgb(15 23 42 / .65); }\n.decoracion { opacity: .35; }\n/* opacity afecta al elemento completo y a todos sus descendientes. */"
           },
@@ -7587,7 +7587,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · translate(), rotate(), scale() y skew()",
+            "title": "Ejemplo complementario · translate(), rotate(), scale() y skew()",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* translate, rotate, scale y skew transforman visualmente un elemento. */\n.icono { transform: translateY(-2px) rotate(8deg) scale(1.05); }\n.ficha { transform: skewX(-4deg); }"
           },
@@ -7685,7 +7685,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · transform-origin y transform-box",
+            "title": "Ejemplo complementario · transform-origin y transform-box",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* transform-origin cambia el punto de referencia. */\n.puerta { transform-origin: left center; transition: transform .3s ease; }\n.puerta:hover { transform: perspective(30rem) rotateY(-25deg); }"
           },
@@ -7783,7 +7783,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · filter: blur(), brightness() y otros",
+            "title": "Ejemplo complementario · filter: blur(), brightness() y otros",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* filter aplica efectos a la imagen o elemento completo. */\n.foto { filter: grayscale(1) contrast(1.1); transition: filter .2s ease; }\n.foto:hover { filter: none; }"
           },
@@ -7881,7 +7881,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · backdrop-filter",
+            "title": "Ejemplo complementario · backdrop-filter",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* backdrop-filter afecta lo que queda detrás del panel. */\n.nav-flotante { background: rgb(255 255 255 / .75); backdrop-filter: blur(12px); border: 1px solid rgb(255 255 255 / .4); }"
           },
@@ -7979,7 +7979,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · clip-path y formas",
+            "title": "Ejemplo complementario · clip-path y formas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* clip-path recorta la región visible del elemento. */\n.avatar { width: 9rem; aspect-ratio: 1; object-fit: cover; clip-path: circle(48%); }\n.banner { clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); }"
           },
@@ -8077,7 +8077,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Máscaras CSS",
+            "title": "Ejemplo complementario · Máscaras CSS",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* mask-image crea una máscara de transparencia. */\n.foto { mask-image: linear-gradient(to bottom, black 70%, transparent); }\n.logo { mask-repeat: no-repeat; mask-size: contain; }"
           },
@@ -8175,7 +8175,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · mix-blend-mode y isolation",
+            "title": "Ejemplo complementario · mix-blend-mode y isolation",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* blend modes mezclan capas; isolation crea un contexto local. */\n.portada { isolation: isolate; background: #1e293b; }\n.portada__imagen { mix-blend-mode: screen; opacity: .8; }"
           },
@@ -8273,7 +8273,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · transition-property, duration y delay",
+            "title": "Ejemplo complementario · transition-property, duration y delay",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* transition declara qué propiedades animar y cuánto dura. */\n.boton { background: #1d4ed8; transition: background-color .2s ease, transform .2s ease; }\n.boton:hover { background: #1e40af; transform: translateY(-2px); }"
           },
@@ -8371,7 +8371,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Timing functions y curvas de movimiento",
+            "title": "Ejemplo complementario · Timing functions y curvas de movimiento",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* La curva temporal cambia la sensación del movimiento. */\n.barra { transition: width .5s cubic-bezier(.2, .8, .2, 1); }\n.barra.is-loaded { width: 100%; }"
           },
@@ -8469,7 +8469,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Crear animaciones con @keyframes",
+            "title": "Ejemplo complementario · Crear animaciones con @keyframes",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* @keyframes define varios estados de una animación. */\n@keyframes aparecer {\n  from { opacity: 0; transform: translateY(12px); }\n  to { opacity: 1; transform: translateY(0); }\n}\n.card { animation: aparecer .35s ease-out both; }"
           },
@@ -8567,7 +8567,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · animation-duration, iteration-count y direction",
+            "title": "Ejemplo complementario · animation-duration, iteration-count y direction",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Duración, repetición y dirección. */\n@keyframes pulso { 50% { transform: scale(1.04); } }\n.indicador { animation: pulso 1.2s ease-in-out 3 alternate; }"
           },
@@ -8665,7 +8665,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · animation-fill-mode y animation-play-state",
+            "title": "Ejemplo complementario · animation-fill-mode y animation-play-state",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* fill-mode conserva estilos y play-state pausa o reanuda. */\n@keyframes deslizar { to { transform: translateX(2rem); } }\n.elemento { animation: deslizar 1s ease-in-out both; }\n.elemento:hover { animation-play-state: paused; }"
           },
@@ -8763,7 +8763,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Animar transform y opacity eficientemente",
+            "title": "Ejemplo complementario · Animar transform y opacity eficientemente",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* transform y opacity suelen animarse con fluidez. */\n.card { opacity: 0; transform: translateY(1rem); transition: opacity .25s, transform .25s; }\n.card.is-visible { opacity: 1; transform: translateY(0); }"
           },
@@ -8861,7 +8861,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · prefers-reduced-motion",
+            "title": "Ejemplo complementario · prefers-reduced-motion",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Respetá la preferencia de movimiento reducido. */\n@media (prefers-reduced-motion: reduce) {\n  *, *::before, *::after {\n    animation-duration: .01ms !important;\n    transition-duration: .01ms !important;\n    scroll-behavior: auto !important;\n  }\n}"
           },
@@ -8959,7 +8959,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Diseño adaptable y enfoque mobile first",
+            "title": "Ejemplo complementario · Diseño adaptable y enfoque mobile first",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Mobile first: una columna es el punto de partida. */\n.layout { display: grid; grid-template-columns: 1fr; gap: 1rem; }\n@media (min-width: 48rem) { .layout { grid-template-columns: 16rem 1fr; } }"
           },
@@ -9057,7 +9057,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Media queries con @media",
+            "title": "Ejemplo complementario · Media queries con @media",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Media queries consultan condiciones del viewport y preferencias. */\n@media (max-width: 40rem) { .menu { flex-direction: column; } }\n@media (prefers-color-scheme: dark) { body { background: #0f172a; color: #f8fafc; } }"
           },
@@ -9155,7 +9155,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Breakpoints y consultas por características",
+            "title": "Ejemplo complementario · Breakpoints y consultas por características",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Elegí breakpoints cuando el contenido los necesite. */\n.grid { display: grid; grid-template-columns: 1fr; }\n@media (min-width: 42rem) { .grid { grid-template-columns: repeat(2, 1fr); } }\n@media (min-width: 68rem) { .grid { grid-template-columns: repeat(3, 1fr); } }"
           },
@@ -9253,7 +9253,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Imágenes y contenido flexible",
+            "title": "Ejemplo complementario · Imágenes y contenido flexible",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Recursos visuales flexibles no deben desbordar el contenedor. */\nimg, video { display: block; max-width: 100%; height: auto; }\niframe { max-width: 100%; }"
           },
@@ -9351,7 +9351,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Container queries: @container",
+            "title": "Ejemplo complementario · Container queries: @container",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* container queries responden al tamaño del componente. */\n.card-list { container-type: inline-size; }\n@container (min-width: 34rem) {\n  .card { display: grid; grid-template-columns: 8rem 1fr; }\n}"
           },
@@ -9449,7 +9449,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Unidades de viewport modernas",
+            "title": "Ejemplo complementario · Unidades de viewport modernas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* svh/dvh contemplan mejor las barras móviles dinámicas. */\n.hero { min-height: 100svh; }\n.panel { min-height: 100dvh; }"
           },
@@ -9547,7 +9547,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Diseños fluidos con clamp() y Grid/Flexbox",
+            "title": "Ejemplo complementario · Diseños fluidos con clamp() y Grid/Flexbox",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* clamp y minmax crean layouts fluidos con límites. */\n.contenedor { width: min(100% - 2rem, 72rem); margin-inline: auto; }\n.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }\nh1 { font-size: clamp(2rem, 5vw, 4rem); }"
           },
@@ -9645,7 +9645,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Contraste y uso del color",
+            "title": "Ejemplo complementario · Contraste y uso del color",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* El color no debe ser la única señal de un estado. */\n.error { color: #991b1b; background: #fee2e2; border-inline-start: 4px solid currentColor; }\n.error::before { content: \"Error: \"; font-weight: 700; }"
           },
@@ -9743,7 +9743,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Estados :focus y :focus-visible",
+            "title": "Ejemplo complementario · Estados :focus y :focus-visible",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* El foco del teclado debe permanecer visible. */\n:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }\nbutton:focus:not(:focus-visible) { outline: none; }"
           },
@@ -9841,7 +9841,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico ·  prefers-reduced-motion y movimiento seguro",
+            "title": "Ejemplo complementario ·  prefers-reduced-motion y movimiento seguro",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Respetá las preferencias de movimiento reducido. */\n@media (prefers-reduced-motion: reduce) {\n  .animado { animation: none; transition: none; }\n  html { scroll-behavior: auto; }\n}"
           },
@@ -9939,7 +9939,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Propiedades lógicas: margin-inline y padding-block",
+            "title": "Ejemplo complementario · Propiedades lógicas: margin-inline y padding-block",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Las propiedades lógicas siguen la dirección de escritura. */\n.tarjeta { margin-inline: auto; padding-block: 1rem; padding-inline: 1.25rem; border-inline-start: 4px solid #2563eb; }"
           },
@@ -10037,7 +10037,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Cascade layers con @layer",
+            "title": "Ejemplo complementario · Cascade layers con @layer",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Las capas separan reset, base y componentes. */\n@layer reset, base, components;\n@layer reset { * { box-sizing: border-box; } }\n@layer base { body { margin: 0; } }\n@layer components { .card { padding: 1rem; } }"
           },
@@ -10135,7 +10135,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Nesting nativo de CSS",
+            "title": "Ejemplo complementario · Nesting nativo de CSS",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Nesting nativo puede agrupar estilos del mismo componente. */\n.card {\n  padding: 1rem;\n  & h2 { margin-block: 0 .5rem; }\n  &:hover { border-color: #2563eb; }\n}"
           },
@@ -10233,7 +10233,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · @supports y mejoras progresivas",
+            "title": "Ejemplo complementario · @supports y mejoras progresivas",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* @supports permite aplicar mejoras de forma progresiva. */\n.card { display: block; }\n@supports (display: grid) {\n  .card { display: grid; grid-template-columns: 1fr auto; gap: 1rem; }\n}"
           },
@@ -10331,7 +10331,7 @@
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo específico · Buenas prácticas para interfaces accesibles",
+            "title": "Ejemplo complementario · Buenas prácticas para interfaces accesibles",
             "description": "Ejemplo centrado en el concepto: leé los comentarios y modificá los valores para comprobar cómo responde el navegador.",
             "code": "/* Un control accesible necesita foco, contraste y tamaño útil. */\n.boton { min-height: 2.75rem; padding-inline: 1rem; color: #fff; background: #1d4ed8; }\n.boton:focus-visible { outline: 3px solid #0f172a; outline-offset: 3px; }"
           },
