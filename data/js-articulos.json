@@ -4382,31 +4382,34 @@
       "sections": [
         {
           "title": "Qué es y cómo funciona",
-          "body": "Funciones flecha (arrow functions): Una función agrupa instrucciones que pueden ejecutarse al invocarla. Puede recibir parámetros y devolver un resultado. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "body": "Una función flecha (arrow function) es una expresión de función con una sintaxis compacta que utiliza =>. Es útil, entre otros casos, para callbacks y funciones breves. No es simplemente una forma abreviada idéntica a function: no crea su propio this, arguments, super ni new.target, y no puede utilizarse como constructor."
         },
         {
           "title": "Cómo se utiliza",
-          "body": "Para estudiar funciones flecha (arrow functions), identificá primero qué problema resuelve y qué valores intervienen. Después ejecutá un ejemplo pequeño, inspeccioná el resultado y probá un caso diferente. Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "body": "La forma se adapta al cuerpo y a los parámetros: () cuando no hay parámetros; un nombre de parámetro puede escribirse sin paréntesis; con dos o más se usan paréntesis. Si el cuerpo es una sola expresión, su resultado se devuelve implícitamente. Si se usan llaves para un bloque de instrucciones, hace falta escribir return cuando se quiere devolver un valor."
         },
         {
           "title": "Ejemplo práctico",
-          "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));",
+          "code": "// Función tradicional\nconst sumarTradicional = function (a, b) {\n  return a + b;\n};\n\n// La misma operación como función flecha\nconst sumar = (a, b) => a + b;\n\nconsole.log(sumarTradicional(4, 6)); // 10\nconsole.log(sumar(4, 6));           // 10",
           "language": "javascript"
         },
         {
           "title": "Errores frecuentes",
           "list": [
-            "No comprobar los valores de entrada ni sus tipos.",
-            "Confundir una característica del lenguaje con una API disponible solo en ciertos entornos.",
-            "No contemplar casos límite, errores o valores inesperados."
+            "Usar una función flecha como método de un objeto cuando se necesita que this sea el propio objeto: la flecha no crea su propio this.",
+            "Agregar llaves y olvidar return: el resultado de la función será undefined si no se devuelve explícitamente otro valor.",
+            "Intentar usar una función flecha con new: las funciones flecha no son constructores.",
+            "Creer que call(), apply() o bind() pueden cambiar el this propio de una función flecha: no lo hacen.",
+            "Escribir un objeto literal como cuerpo conciso sin paréntesis: las llaves se interpretan como bloque."
           ]
         },
         {
           "title": "Buenas prácticas",
           "list": [
-            "Preferí nombres descriptivos y ejemplos pequeños que se puedan probar por separado.",
-            "Consultá la consola y las herramientas de desarrollo cuando el resultado no sea el esperado.",
-            "Probá el comportamiento con más de un conjunto de datos antes de dar el código por terminado."
+            "Elegí funciones flecha para callbacks cuando no necesites un this propio.",
+            "Usá un cuerpo conciso para una expresión sencilla y un bloque con return explícito cuando haya varios pasos.",
+            "No las uses como métodos que dependen del this del objeto; para esos casos, una función tradicional suele ser adecuada.",
+            "Usá nombres descriptivos al asignarlas a variables y mantené cada función enfocada en una tarea."
           ]
         }
       ],
@@ -4414,20 +4417,46 @@
         "level": "Intermedio",
         "estimatedMinutes": 12,
         "goals": [
-          "Explicar con tus palabras qué significa funciones flecha (arrow functions).",
-          "Reconocer cuándo conviene utilizarlo y qué resultado produce.",
-          "Modificar el ejemplo, ejecutarlo y explicar el resultado."
+          "Reconocer la sintaxis de una función flecha y convertir una expresión de función sencilla.",
+          "Distinguir el retorno implícito de un bloque que requiere return.",
+          "Identificar cuándo conviene usar una función flecha como callback y cuándo evitarla por el comportamiento de this.",
+          "Reconocer sus límites: no tiene arguments propio y no puede utilizarse con new."
         ],
         "exampleVariants": [
           {
-            "title": "Ejemplo esencial",
-            "description": "Una muestra breve para reconocer la sintaxis y el comportamiento central.",
-            "code": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+            "title": "De función tradicional a flecha",
+            "description": "Ambas funciones reciben dos parámetros y devuelven su suma. La segunda utiliza la sintaxis de flecha.",
+            "code": "// Expresión de función tradicional\nconst sumarA = function (a, b) {\n  return a + b;\n};\n\n// Función flecha equivalente\nconst sumarB = (a, b) => a + b;\n\nconsole.log(sumarA(2, 3)); // 5\nconsole.log(sumarB(2, 3)); // 5"
           },
           {
-            "title": "Ejemplo en contexto",
-            "description": "La idea aplicada a una pequeña interfaz interactiva.",
-            "code": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
+            "title": "Parámetros y retorno implícito",
+            "description": "Sin parámetros se escribe (). Con un parámetro pueden omitirse los paréntesis. Con varios, son necesarios. Una expresión devuelve su resultado automáticamente.",
+            "code": "const saludo = () => \"¡Hola!\";       // cero parámetros\nconst duplicar = numero => numero * 2; // un parámetro\nconst multiplicar = (a, b) => a * b;   // dos parámetros\n\nconsole.log(saludo());       // ¡Hola!\nconsole.log(duplicar(4));    // 8\nconsole.log(multiplicar(3, 5)); // 15"
+          },
+          {
+            "title": "Bloque de instrucciones y return",
+            "description": "Cuando el cuerpo tiene llaves, se convierte en un bloque de instrucciones. El return ya no es implícito: hay que escribirlo.",
+            "code": "const calcularPrecioFinal = (precio, impuesto) => {\n  const total = precio + precio * impuesto;\n  console.log(\"Total calculado:\", total);\n\n  return total; // necesario para devolver el valor\n};\n\nconsole.log(calcularPrecioFinal(100, 0.21)); // 121"
+          },
+          {
+            "title": "Devolver un objeto literal",
+            "description": "Si el cuerpo conciso devuelve un objeto, envolvelo entre paréntesis para que JavaScript lo interprete como una expresión y no como un bloque.",
+            "code": "const crearUsuario = (nombre, edad) => ({\n  nombre: nombre,\n  edad: edad,\n  activo: true\n});\n\nconsole.log(crearUsuario(\"Ana\", 25));\n// { nombre: \"Ana\", edad: 25, activo: true }"
+          },
+          {
+            "title": "Uso en métodos de arrays",
+            "description": "Las funciones flecha son habituales como callbacks de map y filter. map transforma cada elemento; filter conserva los que cumplen la condición.",
+            "code": "const precios = [120, 80, 250, 40];\n\n// map devuelve un nuevo array transformado\nconst conDescuento = precios.map(precio => precio * 0.9);\n\n// filter devuelve los elementos que cumplen la condición\nconst mayoresA100 = precios.filter(precio => precio > 100);\n\nconsole.log(conDescuento); // [108, 72, 225, 36]\nconsole.log(mayoresA100);  // [120, 250]"
+          },
+          {
+            "title": "El this léxico: cuándo no usar una flecha",
+            "description": "Una función flecha no recibe un this propio. En un método de objeto, usá una función tradicional si necesitás que this apunte al objeto que recibe la llamada.",
+            "code": "const contador = {\n  valor: 0,\n\n  // Método tradicional: this es el objeto contador\n  incrementar() {\n    this.valor++;\n    console.log(this.valor);\n  }\n};\n\ncontador.incrementar(); // 1\n\n// No conviertas incrementar en:\n// incrementar: () => { this.valor++; }\n// Esa flecha no toma this del objeto contador."
+          },
+          {
+            "title": "Las funciones flecha no son constructoras",
+            "description": "No tienen el comportamiento constructor de las funciones tradicionales y no se pueden invocar con new.",
+            "code": "const Persona = function (nombre) {\n  this.nombre = nombre;\n};\n\nconst ana = new Persona(\"Ana\");\nconsole.log(ana.nombre); // Ana\n\nconst Flecha = nombre => {\n  this.nombre = nombre;\n};\n\n// new Flecha(\"Ana\"); // TypeError: no es un constructor"
           }
         ],
         "lab": {
@@ -4441,24 +4470,24 @@
           "starterJs": "function subtotal(precio,cantidad){return precio*cantidad}document.querySelector(\"#total\").textContent=\"Total: $\"+subtotal(150,3);"
         },
         "challenge": {
-          "title": "Desafío práctico",
-          "prompt": "Aplicá «Funciones flecha (arrow functions)» al laboratorio. Hacé dos modificaciones deliberadas: una en el código JavaScript y otra en los datos o en la interfaz. Explicá qué cambiaste y qué resultado esperabas obtener.",
+          "title": "Desafío práctico: transformar y elegir",
+          "prompt": "Creá una función flecha que reciba una lista de precios y devuelva otro array con los precios mayores a 100. Después, escribí un método tradicional dentro de un objeto que incremente una propiedad usando this. Explicá por qué elegiste cada tipo de función.",
           "hints": [
-            "Leé el ejemplo completo antes de modificarlo.",
-            "Cambiá una cosa por vez para identificar su efecto.",
-            "Usá console.log() y DevTools para comprobar los valores."
+            "Para filtrar un array podés utilizar filter() y una función flecha como callback.",
+            "El callback debe devolver una condición verdadera o falsa para cada precio.",
+            "Para que this represente al objeto al llamar a su método, utilizá una función tradicional o la sintaxis abreviada de método."
           ],
-          "solution": "function calcularTotal(precio, cantidad = 1) {\n  return precio * cantidad;\n}\nconsole.log(calcularTotal(120, 3));"
+          "solution": "const precios = [50, 120, 80, 250];\nconst mayoresA100 = precios.filter(precio => precio > 100);\nconsole.log(mayoresA100); // [120, 250]\n\nconst contador = {\n  valor: 0,\n  incrementar() {\n    this.valor++;\n    return this.valor;\n  }\n};\n\nconsole.log(contador.incrementar()); // 1"
         },
         "quiz": {
-          "question": "¿Cuál afirmación es correcta sobre funciones flecha (arrow functions)?",
+          "question": "¿Qué afirmación describe correctamente a una función flecha?",
           "options": [
-            "return devuelve un valor desde la función",
-            "una función no recibe argumentos",
-            "una función solo se ejecuta una vez"
+            "No crea su propio this y no puede utilizarse como constructor con new.",
+            "Siempre devuelve un objeto aunque no tenga return.",
+            "Su método call() permite cambiar su this léxico."
           ],
           "correct": 0,
-          "explanation": "Separá responsabilidades, usá nombres descriptivos y evitá depender innecesariamente de variables globales."
+          "explanation": "Las funciones flecha heredan this del contexto léxico donde se crean y no son constructoras. Si necesitás un this propio, considerá una función tradicional."
         }
       },
       "resources": [
