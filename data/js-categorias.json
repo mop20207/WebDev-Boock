@@ -65,7 +65,7 @@
         "Recorrer cadenas y arrays",
         "for...of: recorrer valores iterables",
         "for...in: recorrer propiedades enumerables",
-        "迭 Métodos de iteración frente a bucles tradicionales",
+        "Métodos de iteración frente a bucles tradicionales",
         "Bucles anidados y control de rendimiento"
       ]
     },
