@@ -28,13 +28,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     breadcrumb.textContent = category.title;
     count.textContent = category.items.length + (category.items.length === 1 ? " TEMA" : " TEMAS");
 
-    list.innerHTML = category.items.map((item, index) => `
-      <a class="js-subtopic" href="js-articulo.html?tema=${encodeURIComponent(category.id)}&item=${index}">
-        <span class="js-subtopic-number">${String(index + 1).padStart(2, "0")}</span>
-        <span class="js-subtopic-copy"><h3>${item}</h3><p>Leer explicación, ejemplos y práctica</p></span>
-        <span class="js-subtopic-status">VER ARTÍCULO ↗</span>
-      </a>
-    `).join("");
+    const fragment = document.createDocumentFragment();
+    category.items.forEach((item, index) => {
+      const link = document.createElement("a");
+      link.className = "js-subtopic";
+      link.href = "js-articulo.html?tema=" + encodeURIComponent(category.id) + "&item=" + index;
+
+      const number = document.createElement("span");
+      number.className = "js-subtopic-number";
+      number.textContent = String(index + 1).padStart(2, "0");
+
+      const copy = document.createElement("span");
+      copy.className = "js-subtopic-copy";
+      const heading = document.createElement("h3");
+      heading.textContent = item;
+      const summary = document.createElement("p");
+      summary.textContent = "Leer explicación, ejemplos y práctica";
+      copy.append(heading, summary);
+
+      const status = document.createElement("span");
+      status.className = "js-subtopic-status";
+      status.textContent = "VER ARTÍCULO ↗";
+      link.append(number, copy, status);
+      fragment.append(link);
+    });
+    list.replaceChildren(fragment);
   } catch (error) {
     title.textContent = "No se pudo cargar la categoría";
     description.textContent = "Comprobá tu conexión y volvé a intentarlo.";
