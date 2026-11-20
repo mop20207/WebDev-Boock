@@ -1,76 +1,2079 @@
 {
+  "version": 2,
   "language": "HTML",
-  "description": "Índice de contenidos de HTML en WebDev Book.",
+  "description": "Índice sincronizado de categorías y artículos HTML.",
+  "articlesFile": "../html-articulos.json",
+  "categoriesSource": "../js/categoria.js",
   "sections": [
     {
       "id": "fundamentos",
       "title": "Fundamentos de HTML",
-      "description": "Conceptos esenciales del lenguaje de marcado.",
-      "file": "fundamentos.json",
-      "order": 1
+      "description": "Conocé qué es HTML, cómo funciona el lenguaje de marcado y cuáles son sus conceptos esenciales.",
+      "order": 1,
+      "articleCount": 8,
+      "articleIds": [
+        "html",
+        "elemento-etiqueta",
+        "anatomia-elemento",
+        "anidamiento",
+        "elementos-vacios",
+        "comentarios-html",
+        "doctype",
+        "primer-documento"
+      ],
+      "items": [
+        {
+          "id": "html",
+          "title": "¿Qué es HTML?",
+          "summary": "Comprendé el papel de HTML en la construcción de páginas web.",
+          "type": "conceptos"
+        },
+        {
+          "id": "elemento-etiqueta",
+          "title": "Etiquetas y elementos",
+          "summary": "Aprendé la diferencia entre etiqueta de apertura, contenido y etiqueta de cierre.",
+          "type": "conceptos"
+        },
+        {
+          "id": "anatomia-elemento",
+          "title": "Anatomía de un elemento",
+          "summary": "Reconocé las partes que componen un elemento HTML.",
+          "type": "conceptos"
+        },
+        {
+          "id": "anidamiento",
+          "title": "Anidamiento de elementos",
+          "summary": "Organizá elementos dentro de otros respetando la estructura.",
+          "type": "conceptos"
+        },
+        {
+          "id": "elementos-vacios",
+          "title": "Elementos vacíos",
+          "summary": "Conocé elementos que no necesitan etiqueta de cierre.",
+          "type": "conceptos"
+        },
+        {
+          "id": "comentarios-html",
+          "title": "Comentarios en HTML",
+          "summary": "Agregá notas al código que no se muestran en la página.",
+          "type": "conceptos"
+        },
+        {
+          "id": "doctype",
+          "title": "DOCTYPE",
+          "summary": "Indicá al navegador que el documento utiliza HTML moderno.",
+          "type": "elementos"
+        },
+        {
+          "id": "primer-documento",
+          "title": "Tu primer documento",
+          "summary": "Construí una página HTML sencilla desde cero.",
+          "type": "practica"
+        }
+      ]
     },
     {
       "id": "estructura",
       "title": "Estructura del documento",
-      "description": "DOCTYPE, html, head, body y organización de una página.",
-      "file": "estructura.json",
-      "order": 2
+      "description": "Descubrí cómo se organiza un documento HTML desde la declaración inicial hasta el contenido visible.",
+      "order": 2,
+      "articleCount": 21,
+      "articleIds": [
+        "doctype",
+        "html",
+        "lang",
+        "head",
+        "meta",
+        "title",
+        "link",
+        "style",
+        "base",
+        "script",
+        "noscript",
+        "body",
+        "viewport",
+        "charset",
+        "meta-seo",
+        "open-graph",
+        "favicon",
+        "preload",
+        "async-defer",
+        "type-module",
+        "estructura-completa"
+      ],
+      "items": [
+        {
+          "id": "doctype",
+          "title": "DOCTYPE HTML",
+          "summary": "Declara que el documento utiliza HTML moderno.",
+          "type": "conceptos"
+        },
+        {
+          "id": "html",
+          "title": "<html>",
+          "summary": "Elemento raíz que envuelve todo el documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "lang",
+          "title": "lang",
+          "summary": "Define el idioma principal del documento.",
+          "type": "atributos"
+        },
+        {
+          "id": "head",
+          "title": "<head>",
+          "summary": "Contiene metadatos y referencias a recursos.",
+          "type": "elementos"
+        },
+        {
+          "id": "meta",
+          "title": "<meta>",
+          "summary": "Define metadatos como codificación, viewport y descripción.",
+          "type": "elementos"
+        },
+        {
+          "id": "title",
+          "title": "<title>",
+          "summary": "Establece el título de la pestaña del navegador.",
+          "type": "elementos"
+        },
+        {
+          "id": "link",
+          "title": "<link>",
+          "summary": "Relaciona el documento con hojas de estilo e iconos.",
+          "type": "elementos"
+        },
+        {
+          "id": "style",
+          "title": "<style>",
+          "summary": "Permite incluir reglas CSS dentro del documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "base",
+          "title": "<base>",
+          "summary": "Establece la URL base para direcciones relativas.",
+          "type": "elementos"
+        },
+        {
+          "id": "script",
+          "title": "<script>",
+          "summary": "Incorpora o enlaza código JavaScript.",
+          "type": "elementos"
+        },
+        {
+          "id": "noscript",
+          "title": "<noscript>",
+          "summary": "Ofrece contenido alternativo si JavaScript no está disponible.",
+          "type": "elementos"
+        },
+        {
+          "id": "body",
+          "title": "<body>",
+          "summary": "Contiene el contenido visible e interactivo.",
+          "type": "elementos"
+        },
+        {
+          "id": "viewport",
+          "title": "Meta viewport",
+          "summary": "Configura el área de visualización para diseños adaptables.",
+          "type": "conceptos"
+        },
+        {
+          "id": "charset",
+          "title": "Codificación UTF-8",
+          "summary": "Permite representar correctamente caracteres y símbolos.",
+          "type": "conceptos"
+        },
+        {
+          "id": "meta-seo",
+          "title": "Metadatos SEO",
+          "summary": "Configurá descripción, autor y otros datos que ayudan a describir la página.",
+          "type": "conceptos"
+        },
+        {
+          "id": "open-graph",
+          "title": "Open Graph",
+          "summary": "Definí cómo se presenta una página al compartirla en redes sociales.",
+          "type": "conceptos"
+        },
+        {
+          "id": "favicon",
+          "title": "Favicon",
+          "summary": "Agregá el icono que identifica tu sitio en pestañas y marcadores.",
+          "type": "conceptos"
+        },
+        {
+          "id": "preload",
+          "title": "Preload y preconnect",
+          "summary": "Conocé las pistas de recursos que ayudan a preparar conexiones y cargas importantes.",
+          "type": "conceptos"
+        },
+        {
+          "id": "async-defer",
+          "title": "async y defer",
+          "summary": "Comprendé las diferencias entre las formas de cargar scripts externos.",
+          "type": "atributos"
+        },
+        {
+          "id": "type-module",
+          "title": "Scripts como módulos",
+          "summary": "Utilizá type=module para trabajar con módulos JavaScript desde HTML.",
+          "type": "atributos"
+        },
+        {
+          "id": "estructura-completa",
+          "title": "Documento HTML completo",
+          "summary": "Reuní las partes del documento en una estructura funcional.",
+          "type": "practica"
+        }
+      ]
     },
     {
       "id": "etiquetas",
       "title": "Etiquetas HTML",
-      "description": "Catálogo de elementos HTML organizado por categorías.",
-      "file": "etiquetas.json",
-      "order": 3
+      "description": "Explorá los elementos HTML y aprendé qué función cumple cada uno al estructurar el contenido.",
+      "order": 3,
+      "articleCount": 85,
+      "articleIds": [
+        "headings",
+        "p",
+        "br",
+        "hr",
+        "a",
+        "ul",
+        "ol",
+        "li",
+        "dl",
+        "div",
+        "span",
+        "strong",
+        "em",
+        "blockquote",
+        "q",
+        "pre",
+        "code",
+        "figure",
+        "abbr",
+        "time",
+        "mark",
+        "del-ins",
+        "sub-sup",
+        "table",
+        "img",
+        "form",
+        "details",
+        "progress",
+        "meter",
+        "text-kbd",
+        "text-samp",
+        "text-cite",
+        "text-small",
+        "text-dfn",
+        "text-s",
+        "text-wbr",
+        "text-data",
+        "table-caption",
+        "table-sections",
+        "table-row",
+        "table-cells",
+        "table-columns",
+        "template",
+        "table-spans",
+        "address",
+        "article",
+        "aside",
+        "audio",
+        "b",
+        "bdi",
+        "bdo",
+        "canvas",
+        "caption",
+        "col",
+        "colgroup",
+        "dd",
+        "dt",
+        "fieldset",
+        "footer",
+        "header",
+        "hgroup",
+        "i",
+        "ins",
+        "legend",
+        "main",
+        "map",
+        "menu",
+        "object",
+        "optgroup",
+        "output",
+        "picture",
+        "rp",
+        "rt",
+        "ruby",
+        "search",
+        "slot",
+        "source",
+        "tbody",
+        "td",
+        "tfoot",
+        "th",
+        "thead",
+        "track",
+        "u",
+        "var"
+      ],
+      "items": [
+        {
+          "id": "headings",
+          "title": "<h1> a <h6>",
+          "summary": "Títulos y subtítulos organizados jerárquicamente.",
+          "type": "elementos"
+        },
+        {
+          "id": "p",
+          "title": "<p>",
+          "summary": "Párrafos de texto.",
+          "type": "elementos"
+        },
+        {
+          "id": "br",
+          "title": "<br>",
+          "summary": "Salto de línea dentro de un texto.",
+          "type": "elementos"
+        },
+        {
+          "id": "hr",
+          "title": "<hr>",
+          "summary": "Separación temática entre contenidos.",
+          "type": "elementos"
+        },
+        {
+          "id": "a",
+          "title": "<a>",
+          "summary": "Enlaces a páginas, archivos o fragmentos.",
+          "type": "elementos"
+        },
+        {
+          "id": "ul",
+          "title": "<ul>",
+          "summary": "Lista sin orden numérico.",
+          "type": "elementos"
+        },
+        {
+          "id": "ol",
+          "title": "<ol>",
+          "summary": "Lista ordenada por números o letras.",
+          "type": "elementos"
+        },
+        {
+          "id": "li",
+          "title": "<li>",
+          "summary": "Elemento individual de una lista.",
+          "type": "elementos"
+        },
+        {
+          "id": "dl",
+          "title": "<dl>, <dt>, <dd>",
+          "summary": "Lista de términos y descripciones.",
+          "type": "elementos"
+        },
+        {
+          "id": "div",
+          "title": "<div>",
+          "summary": "Contenedor genérico de bloque sin semántica propia.",
+          "type": "elementos"
+        },
+        {
+          "id": "span",
+          "title": "<span>",
+          "summary": "Contenedor genérico en línea.",
+          "type": "elementos"
+        },
+        {
+          "id": "strong",
+          "title": "<strong>",
+          "summary": "Marca contenido de gran importancia.",
+          "type": "elementos"
+        },
+        {
+          "id": "em",
+          "title": "<em>",
+          "summary": "Marca énfasis en el texto.",
+          "type": "elementos"
+        },
+        {
+          "id": "blockquote",
+          "title": "<blockquote>",
+          "summary": "Representa una cita extensa.",
+          "type": "elementos"
+        },
+        {
+          "id": "q",
+          "title": "<q>",
+          "summary": "Representa una cita breve en línea.",
+          "type": "elementos"
+        },
+        {
+          "id": "pre",
+          "title": "<pre>",
+          "summary": "Conserva espacios y saltos de línea.",
+          "type": "elementos"
+        },
+        {
+          "id": "code",
+          "title": "<code>",
+          "summary": "Representa fragmentos de código.",
+          "type": "elementos"
+        },
+        {
+          "id": "figure",
+          "title": "<figure> y <figcaption>",
+          "summary": "Agrupa contenido ilustrativo con su leyenda.",
+          "type": "elementos"
+        },
+        {
+          "id": "abbr",
+          "title": "<abbr>",
+          "summary": "Representa una abreviatura o acrónimo.",
+          "type": "elementos"
+        },
+        {
+          "id": "time",
+          "title": "<time>",
+          "summary": "Representa fecha u hora legible por máquinas.",
+          "type": "elementos"
+        },
+        {
+          "id": "mark",
+          "title": "<mark>",
+          "summary": "Resalta una parte relevante del texto.",
+          "type": "elementos"
+        },
+        {
+          "id": "del-ins",
+          "title": "<del> y <ins>",
+          "summary": "Representan contenido eliminado o añadido.",
+          "type": "elementos"
+        },
+        {
+          "id": "sub-sup",
+          "title": "<sub> y <sup>",
+          "summary": "Representan subíndices y superíndices.",
+          "type": "elementos"
+        },
+        {
+          "id": "table",
+          "title": "<table>",
+          "summary": "Crea una tabla de datos.",
+          "type": "elementos"
+        },
+        {
+          "id": "img",
+          "title": "<img>",
+          "summary": "Inserta una imagen en el documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "form",
+          "title": "<form>",
+          "summary": "Agrupa controles para recopilar y enviar datos.",
+          "type": "elementos"
+        },
+        {
+          "id": "details",
+          "title": "<details> y <summary>",
+          "summary": "Crea un panel desplegable nativo.",
+          "type": "elementos"
+        },
+        {
+          "id": "progress",
+          "title": "<progress>",
+          "summary": "Representa el progreso de una tarea.",
+          "type": "elementos"
+        },
+        {
+          "id": "meter",
+          "title": "<meter>",
+          "summary": "Representa una medida dentro de un rango conocido.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-kbd",
+          "title": "<kbd>",
+          "summary": "Representa una entrada realizada mediante teclado.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-samp",
+          "title": "<samp>",
+          "summary": "Representa la salida de un programa o sistema.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-cite",
+          "title": "<cite>",
+          "summary": "Identifica el título de una obra creativa citada.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-small",
+          "title": "<small>",
+          "summary": "Representa comentarios secundarios o letra pequeña.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-dfn",
+          "title": "<dfn>",
+          "summary": "Marca el término que se está definiendo.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-s",
+          "title": "<s>",
+          "summary": "Representa contenido que dejó de ser relevante o correcto.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-wbr",
+          "title": "<wbr>",
+          "summary": "Indica un posible punto de salto de línea.",
+          "type": "elementos"
+        },
+        {
+          "id": "text-data",
+          "title": "<data>",
+          "summary": "Asocia un contenido visible con un valor legible por máquinas.",
+          "type": "elementos"
+        },
+        {
+          "id": "table-caption",
+          "title": "<caption>",
+          "summary": "Añade un título o descripción breve a una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "table-sections",
+          "title": "<thead>, <tbody> y <tfoot>",
+          "summary": "Dividen una tabla en encabezado, cuerpo y pie.",
+          "type": "elementos"
+        },
+        {
+          "id": "table-row",
+          "title": "<tr>",
+          "summary": "Define una fila dentro de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "table-cells",
+          "title": "<th> y <td>",
+          "summary": "Crean celdas de encabezado y celdas de datos.",
+          "type": "elementos"
+        },
+        {
+          "id": "table-columns",
+          "title": "<colgroup> y <col>",
+          "summary": "Permiten agrupar y configurar columnas de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "template",
+          "title": "<template>",
+          "summary": "Guarda contenido HTML que no se representa hasta que se utiliza.",
+          "type": "elementos"
+        },
+        {
+          "id": "table-spans",
+          "title": "colspan y rowspan",
+          "summary": "Permiten que una celda abarque varias columnas o filas.",
+          "type": "conceptos"
+        },
+        {
+          "id": "address",
+          "title": "<address>",
+          "summary": "Información de contacto del autor o responsable de una página o artículo.",
+          "type": "elementos"
+        },
+        {
+          "id": "article",
+          "title": "<article>",
+          "summary": "Contenido independiente que puede distribuirse o reutilizarse por separado.",
+          "type": "elementos"
+        },
+        {
+          "id": "aside",
+          "title": "<aside>",
+          "summary": "Contenido complementario relacionado indirectamente con el contenido principal.",
+          "type": "elementos"
+        },
+        {
+          "id": "audio",
+          "title": "<audio>",
+          "summary": "Integra audio reproducible directamente en la página.",
+          "type": "elementos"
+        },
+        {
+          "id": "b",
+          "title": "<b>",
+          "summary": "Atrae la atención sobre texto sin añadir importancia semántica.",
+          "type": "elementos"
+        },
+        {
+          "id": "bdi",
+          "title": "<bdi>",
+          "summary": "Aísla texto cuya dirección de escritura puede ser desconocida.",
+          "type": "elementos"
+        },
+        {
+          "id": "bdo",
+          "title": "<bdo>",
+          "summary": "Fuerza la dirección de escritura de un fragmento de texto.",
+          "type": "elementos"
+        },
+        {
+          "id": "canvas",
+          "title": "<canvas>",
+          "summary": "Proporciona una superficie de dibujo controlada mediante JavaScript.",
+          "type": "elementos"
+        },
+        {
+          "id": "caption",
+          "title": "<caption>",
+          "summary": "Proporciona un título a una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "col",
+          "title": "<col>",
+          "summary": "Representa una o varias columnas dentro de un grupo de columnas.",
+          "type": "elementos"
+        },
+        {
+          "id": "colgroup",
+          "title": "<colgroup>",
+          "summary": "Agrupa columnas de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "dd",
+          "title": "<dd>",
+          "summary": "Contiene la descripción o definición de un término en una lista descriptiva.",
+          "type": "elementos"
+        },
+        {
+          "id": "dt",
+          "title": "<dt>",
+          "summary": "Identifica un término dentro de una lista descriptiva.",
+          "type": "elementos"
+        },
+        {
+          "id": "fieldset",
+          "title": "<fieldset>",
+          "summary": "Agrupa controles relacionados dentro de un formulario.",
+          "type": "elementos"
+        },
+        {
+          "id": "footer",
+          "title": "<footer>",
+          "summary": "Representa el pie de una página o sección.",
+          "type": "elementos"
+        },
+        {
+          "id": "header",
+          "title": "<header>",
+          "summary": "Representa contenido introductorio o de navegación de una página o sección.",
+          "type": "elementos"
+        },
+        {
+          "id": "hgroup",
+          "title": "<hgroup>",
+          "summary": "Agrupa un encabezado con contenido secundario asociado.",
+          "type": "elementos"
+        },
+        {
+          "id": "i",
+          "title": "<i>",
+          "summary": "Marca texto en una voz o estado alternativo, como un término técnico.",
+          "type": "elementos"
+        },
+        {
+          "id": "ins",
+          "title": "<ins>",
+          "summary": "Representa contenido añadido al documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "legend",
+          "title": "<legend>",
+          "summary": "Proporciona el título de un grupo de controles fieldset.",
+          "type": "elementos"
+        },
+        {
+          "id": "main",
+          "title": "<main>",
+          "summary": "Identifica el contenido dominante del documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "map",
+          "title": "<map>",
+          "summary": "Define un mapa de imagen con áreas interactivas.",
+          "type": "elementos"
+        },
+        {
+          "id": "menu",
+          "title": "<menu>",
+          "summary": "Representa una lista de comandos o elementos.",
+          "type": "elementos"
+        },
+        {
+          "id": "object",
+          "title": "<object>",
+          "summary": "Incorpora un recurso externo, con contenido alternativo cuando corresponde.",
+          "type": "elementos"
+        },
+        {
+          "id": "optgroup",
+          "title": "<optgroup>",
+          "summary": "Agrupa opciones relacionadas dentro de un select.",
+          "type": "elementos"
+        },
+        {
+          "id": "output",
+          "title": "<output>",
+          "summary": "Representa el resultado de un cálculo o acción.",
+          "type": "elementos"
+        },
+        {
+          "id": "picture",
+          "title": "<picture>",
+          "summary": "Permite seleccionar imágenes alternativas según formato o condiciones.",
+          "type": "elementos"
+        },
+        {
+          "id": "rp",
+          "title": "<rp>",
+          "summary": "Proporciona paréntesis alternativos para navegadores sin soporte ruby.",
+          "type": "elementos"
+        },
+        {
+          "id": "rt",
+          "title": "<rt>",
+          "summary": "Representa la anotación o pronunciación de un texto ruby.",
+          "type": "elementos"
+        },
+        {
+          "id": "ruby",
+          "title": "<ruby>",
+          "summary": "Asocia anotaciones de pronunciación o significado a caracteres.",
+          "type": "elementos"
+        },
+        {
+          "id": "search",
+          "title": "<search>",
+          "summary": "Agrupa controles o contenido relacionado con una búsqueda.",
+          "type": "elementos"
+        },
+        {
+          "id": "slot",
+          "title": "<slot>",
+          "summary": "Define un punto de inserción dentro de una plantilla de Web Components.",
+          "type": "elementos"
+        },
+        {
+          "id": "source",
+          "title": "<source>",
+          "summary": "Ofrece recursos alternativos para picture, audio o video.",
+          "type": "elementos"
+        },
+        {
+          "id": "tbody",
+          "title": "<tbody>",
+          "summary": "Agrupa las filas principales de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "td",
+          "title": "<td>",
+          "summary": "Representa una celda de datos de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "tfoot",
+          "title": "<tfoot>",
+          "summary": "Agrupa las filas de resumen o pie de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "th",
+          "title": "<th>",
+          "summary": "Representa una celda de encabezado de tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "thead",
+          "title": "<thead>",
+          "summary": "Agrupa las filas de encabezado de una tabla.",
+          "type": "elementos"
+        },
+        {
+          "id": "track",
+          "title": "<track>",
+          "summary": "Añade pistas de texto temporizadas, como subtítulos.",
+          "type": "elementos"
+        },
+        {
+          "id": "u",
+          "title": "<u>",
+          "summary": "Marca texto con una anotación no textual, como una marca ortográfica.",
+          "type": "elementos"
+        },
+        {
+          "id": "var",
+          "title": "<var>",
+          "summary": "Representa una variable en una expresión o contexto técnico.",
+          "type": "elementos"
+        }
+      ]
     },
     {
       "id": "atributos",
       "title": "Atributos HTML",
-      "description": "Atributos globales y específicos de los elementos.",
-      "file": "atributos.json",
-      "order": 4
+      "description": "Aprendé a configurar los elementos HTML mediante atributos globales y atributos específicos.",
+      "order": 4,
+      "articleCount": 38,
+      "articleIds": [
+        "globales",
+        "id",
+        "class",
+        "style",
+        "title",
+        "lang",
+        "dir",
+        "hidden",
+        "tabindex",
+        "contenteditable",
+        "draggable",
+        "data",
+        "href",
+        "target",
+        "rel",
+        "src",
+        "alt",
+        "width-height",
+        "name",
+        "value",
+        "type",
+        "placeholder",
+        "required",
+        "disabled",
+        "checked",
+        "readonly",
+        "multiple",
+        "min-max",
+        "minlength-maxlength",
+        "pattern",
+        "aria",
+        "booleanos",
+        "autocomplete",
+        "novalidate",
+        "formaction",
+        "formmethod",
+        "formenctype",
+        "popover"
+      ],
+      "items": [
+        {
+          "id": "globales",
+          "title": "Atributos globales",
+          "summary": "Atributos utilizables en la mayoría de elementos HTML.",
+          "type": "conceptos"
+        },
+        {
+          "id": "id",
+          "title": "id",
+          "summary": "Identificador único dentro del documento.",
+          "type": "atributos"
+        },
+        {
+          "id": "class",
+          "title": "class",
+          "summary": "Agrupa elementos para aplicar estilos o seleccionarlos.",
+          "type": "atributos"
+        },
+        {
+          "id": "style",
+          "title": "style",
+          "summary": "Aplica CSS directamente a un elemento.",
+          "type": "atributos"
+        },
+        {
+          "id": "title",
+          "title": "title",
+          "summary": "Añade información complementaria.",
+          "type": "atributos"
+        },
+        {
+          "id": "lang",
+          "title": "lang",
+          "summary": "Define el idioma del contenido.",
+          "type": "atributos"
+        },
+        {
+          "id": "dir",
+          "title": "dir",
+          "summary": "Indica la dirección de escritura.",
+          "type": "atributos"
+        },
+        {
+          "id": "hidden",
+          "title": "hidden",
+          "summary": "Oculta un elemento del renderizado.",
+          "type": "atributos"
+        },
+        {
+          "id": "tabindex",
+          "title": "tabindex",
+          "summary": "Controla la participación y el orden del foco.",
+          "type": "atributos"
+        },
+        {
+          "id": "contenteditable",
+          "title": "contenteditable",
+          "summary": "Permite editar el contenido en el navegador.",
+          "type": "atributos"
+        },
+        {
+          "id": "draggable",
+          "title": "draggable",
+          "summary": "Indica si un elemento puede arrastrarse.",
+          "type": "atributos"
+        },
+        {
+          "id": "data",
+          "title": "data-*",
+          "summary": "Almacena datos personalizados.",
+          "type": "atributos"
+        },
+        {
+          "id": "href",
+          "title": "href",
+          "summary": "Define el destino de un enlace.",
+          "type": "atributos"
+        },
+        {
+          "id": "target",
+          "title": "target",
+          "summary": "Indica dónde se abre el destino.",
+          "type": "atributos"
+        },
+        {
+          "id": "rel",
+          "title": "rel",
+          "summary": "Describe la relación con el recurso enlazado.",
+          "type": "atributos"
+        },
+        {
+          "id": "src",
+          "title": "src",
+          "summary": "Indica la dirección de un recurso.",
+          "type": "atributos"
+        },
+        {
+          "id": "alt",
+          "title": "alt",
+          "summary": "Proporciona alternativa textual para imágenes.",
+          "type": "atributos"
+        },
+        {
+          "id": "width-height",
+          "title": "width y height",
+          "summary": "Definen dimensiones de elementos compatibles.",
+          "type": "atributos"
+        },
+        {
+          "id": "name",
+          "title": "name",
+          "summary": "Identifica datos de controles al enviar formularios.",
+          "type": "atributos"
+        },
+        {
+          "id": "value",
+          "title": "value",
+          "summary": "Define el valor de un control.",
+          "type": "atributos"
+        },
+        {
+          "id": "type",
+          "title": "type",
+          "summary": "Determina el tipo de control o recurso.",
+          "type": "atributos"
+        },
+        {
+          "id": "placeholder",
+          "title": "placeholder",
+          "summary": "Muestra una sugerencia dentro de un campo.",
+          "type": "atributos"
+        },
+        {
+          "id": "required",
+          "title": "required",
+          "summary": "Indica que un campo debe completarse.",
+          "type": "atributos"
+        },
+        {
+          "id": "disabled",
+          "title": "disabled",
+          "summary": "Deshabilita un control compatible.",
+          "type": "atributos"
+        },
+        {
+          "id": "checked",
+          "title": "checked",
+          "summary": "Marca inicialmente controles seleccionables.",
+          "type": "atributos"
+        },
+        {
+          "id": "readonly",
+          "title": "readonly",
+          "summary": "Impide editar el valor de un control.",
+          "type": "atributos"
+        },
+        {
+          "id": "multiple",
+          "title": "multiple",
+          "summary": "Permite seleccionar varios valores.",
+          "type": "atributos"
+        },
+        {
+          "id": "min-max",
+          "title": "min y max",
+          "summary": "Establecen límites numéricos o temporales.",
+          "type": "atributos"
+        },
+        {
+          "id": "minlength-maxlength",
+          "title": "minlength y maxlength",
+          "summary": "Establecen límites de longitud de texto.",
+          "type": "atributos"
+        },
+        {
+          "id": "pattern",
+          "title": "pattern",
+          "summary": "Valida un valor mediante una expresión regular.",
+          "type": "atributos"
+        },
+        {
+          "id": "aria",
+          "title": "aria-*",
+          "summary": "Añade información accesible cuando es necesario.",
+          "type": "conceptos"
+        },
+        {
+          "id": "booleanos",
+          "title": "Atributos booleanos",
+          "summary": "Se activan por su presencia, sin necesitar true o false.",
+          "type": "conceptos"
+        },
+        {
+          "id": "autocomplete",
+          "title": "autocomplete",
+          "summary": "Sugiere o permite completar valores de formularios automáticamente.",
+          "type": "atributos"
+        },
+        {
+          "id": "novalidate",
+          "title": "novalidate",
+          "summary": "Desactiva la validación nativa al enviar un formulario.",
+          "type": "atributos"
+        },
+        {
+          "id": "formaction",
+          "title": "formaction",
+          "summary": "Sobrescribe la dirección de envío para un botón de formulario.",
+          "type": "atributos"
+        },
+        {
+          "id": "formmethod",
+          "title": "formmethod",
+          "summary": "Sobrescribe el método HTTP para un botón de envío.",
+          "type": "atributos"
+        },
+        {
+          "id": "formenctype",
+          "title": "formenctype",
+          "summary": "Sobrescribe la codificación de datos para un botón de envío.",
+          "type": "atributos"
+        },
+        {
+          "id": "popover",
+          "title": "popover",
+          "summary": "Convierte un elemento en un panel emergente controlable desde HTML.",
+          "type": "atributos"
+        }
+      ]
     },
     {
       "id": "formularios",
       "title": "Formularios",
-      "description": "Controles, tipos de campos y validación nativa.",
-      "file": "formularios.json",
-      "order": 5
+      "description": "Aprendé a crear formularios para recopilar información de los usuarios. Conocé sus controles, atributos, tipos de campos y herramientas de validación.",
+      "order": 5,
+      "articleCount": 39,
+      "articleIds": [
+        "form",
+        "action",
+        "method",
+        "enctype",
+        "input",
+        "input-text",
+        "input-email",
+        "input-password",
+        "input-number",
+        "input-date",
+        "input-search",
+        "input-tel",
+        "input-url",
+        "input-range",
+        "input-color",
+        "input-time",
+        "input-month",
+        "input-week",
+        "input-datetime-local",
+        "input-checkbox",
+        "input-radio",
+        "input-file",
+        "input-submit",
+        "label",
+        "textarea",
+        "select",
+        "option",
+        "optgroup",
+        "button",
+        "fieldset",
+        "legend",
+        "datalist",
+        "output",
+        "required",
+        "placeholder",
+        "pattern",
+        "min-max",
+        "validacion",
+        "formdata"
+      ],
+      "items": [
+        {
+          "id": "form",
+          "title": "<form>",
+          "summary": "Agrupa controles y define cómo se envían los datos.",
+          "type": "elementos"
+        },
+        {
+          "id": "action",
+          "title": "action",
+          "summary": "Indica la dirección que recibirá los datos.",
+          "type": "atributos"
+        },
+        {
+          "id": "method",
+          "title": "method",
+          "summary": "Define el método HTTP, normalmente GET o POST.",
+          "type": "atributos"
+        },
+        {
+          "id": "enctype",
+          "title": "enctype",
+          "summary": "Define cómo se codifican los datos enviados.",
+          "type": "atributos"
+        },
+        {
+          "id": "input",
+          "title": "<input>",
+          "summary": "Crea campos de entrada de distintos tipos.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-text",
+          "title": "input type=text",
+          "summary": "Permite introducir texto de una sola línea.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-email",
+          "title": "input type=email",
+          "summary": "Permite introducir y validar un correo.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-password",
+          "title": "input type=password",
+          "summary": "Permite introducir texto ocultando caracteres.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-number",
+          "title": "input type=number",
+          "summary": "Permite introducir un valor numérico.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-date",
+          "title": "input type=date",
+          "summary": "Permite seleccionar una fecha.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-search",
+          "title": "input type=search",
+          "summary": "Crea un campo pensado para introducir términos de búsqueda.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-tel",
+          "title": "input type=tel",
+          "summary": "Crea un campo para introducir números telefónicos.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-url",
+          "title": "input type=url",
+          "summary": "Crea un campo para introducir y validar direcciones web.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-range",
+          "title": "input type=range",
+          "summary": "Permite elegir un valor dentro de un intervalo mediante un control deslizante.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-color",
+          "title": "input type=color",
+          "summary": "Permite seleccionar un color.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-time",
+          "title": "input type=time",
+          "summary": "Permite seleccionar una hora.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-month",
+          "title": "input type=month",
+          "summary": "Permite seleccionar un mes y año.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-week",
+          "title": "input type=week",
+          "summary": "Permite seleccionar una semana de un año.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-datetime-local",
+          "title": "input type=datetime-local",
+          "summary": "Permite seleccionar fecha y hora local.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-checkbox",
+          "title": "input type=checkbox",
+          "summary": "Permite activar o desactivar una opción.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-radio",
+          "title": "input type=radio",
+          "summary": "Permite elegir una opción dentro de un grupo.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-file",
+          "title": "input type=file",
+          "summary": "Permite seleccionar archivos.",
+          "type": "elementos"
+        },
+        {
+          "id": "input-submit",
+          "title": "input type=submit",
+          "summary": "Crea un control para enviar el formulario.",
+          "type": "elementos"
+        },
+        {
+          "id": "label",
+          "title": "<label>",
+          "summary": "Asocia texto descriptivo con un control.",
+          "type": "elementos"
+        },
+        {
+          "id": "textarea",
+          "title": "<textarea>",
+          "summary": "Permite introducir texto de varias líneas.",
+          "type": "elementos"
+        },
+        {
+          "id": "select",
+          "title": "<select>",
+          "summary": "Crea una lista de opciones seleccionables.",
+          "type": "elementos"
+        },
+        {
+          "id": "option",
+          "title": "<option>",
+          "summary": "Define una opción dentro de una lista.",
+          "type": "elementos"
+        },
+        {
+          "id": "optgroup",
+          "title": "<optgroup>",
+          "summary": "Agrupa opciones relacionadas.",
+          "type": "elementos"
+        },
+        {
+          "id": "button",
+          "title": "<button>",
+          "summary": "Crea botones para enviar, reiniciar o ejecutar acciones.",
+          "type": "elementos"
+        },
+        {
+          "id": "fieldset",
+          "title": "<fieldset>",
+          "summary": "Agrupa controles relacionados.",
+          "type": "elementos"
+        },
+        {
+          "id": "legend",
+          "title": "<legend>",
+          "summary": "Proporciona un título al grupo fieldset.",
+          "type": "elementos"
+        },
+        {
+          "id": "datalist",
+          "title": "<datalist>",
+          "summary": "Ofrece sugerencias para un campo.",
+          "type": "elementos"
+        },
+        {
+          "id": "output",
+          "title": "<output>",
+          "summary": "Representa el resultado de un cálculo o acción.",
+          "type": "elementos"
+        },
+        {
+          "id": "required",
+          "title": "required",
+          "summary": "Hace obligatorio completar un control.",
+          "type": "atributos"
+        },
+        {
+          "id": "placeholder",
+          "title": "placeholder",
+          "summary": "Muestra una pista sobre el dato esperado.",
+          "type": "atributos"
+        },
+        {
+          "id": "pattern",
+          "title": "pattern",
+          "summary": "Valida el valor mediante una expresión regular.",
+          "type": "atributos"
+        },
+        {
+          "id": "min-max",
+          "title": "min y max",
+          "summary": "Establece valores mínimos y máximos permitidos.",
+          "type": "atributos"
+        },
+        {
+          "id": "validacion",
+          "title": "Validación nativa",
+          "summary": "Conocé las reglas que aplica el navegador.",
+          "type": "conceptos"
+        },
+        {
+          "id": "formdata",
+          "title": "Envío y FormData",
+          "summary": "Comprendé cómo se agrupan los valores para enviarlos.",
+          "type": "conceptos"
+        }
+      ]
     },
     {
       "id": "multimedia",
       "title": "Contenido multimedia",
-      "description": "Imágenes, audio, vídeo, iframe y recursos integrados.",
-      "file": "multimedia.json",
-      "order": 6
+      "description": "Incorporá imágenes, audio, vídeo y contenido externo para enriquecer tus páginas web.",
+      "order": 6,
+      "articleCount": 27,
+      "articleIds": [
+        "img",
+        "alt",
+        "picture",
+        "source",
+        "srcset",
+        "sizes",
+        "loading",
+        "audio",
+        "video",
+        "controls",
+        "autoplay",
+        "muted",
+        "loop",
+        "poster",
+        "track",
+        "iframe",
+        "sandbox",
+        "figure",
+        "figcaption",
+        "map",
+        "area",
+        "embed",
+        "object",
+        "fallback",
+        "media-formats",
+        "responsive-images",
+        "media-accessibility"
+      ],
+      "items": [
+        {
+          "id": "img",
+          "title": "<img>",
+          "summary": "Inserta imágenes con una alternativa textual.",
+          "type": "elementos"
+        },
+        {
+          "id": "alt",
+          "title": "Atributo alt",
+          "summary": "Describe el contenido o propósito de una imagen.",
+          "type": "atributos"
+        },
+        {
+          "id": "picture",
+          "title": "<picture>",
+          "summary": "Permite elegir imágenes alternativas según condiciones.",
+          "type": "elementos"
+        },
+        {
+          "id": "source",
+          "title": "<source>",
+          "summary": "Proporciona archivos alternativos para picture, audio o video.",
+          "type": "elementos"
+        },
+        {
+          "id": "srcset",
+          "title": "srcset",
+          "summary": "Ofrece varias resoluciones o fuentes de imagen.",
+          "type": "atributos"
+        },
+        {
+          "id": "sizes",
+          "title": "sizes",
+          "summary": "Describe el tamaño previsto para imágenes adaptables.",
+          "type": "atributos"
+        },
+        {
+          "id": "loading",
+          "title": "loading",
+          "summary": "Permite indicar carga diferida de recursos compatibles.",
+          "type": "atributos"
+        },
+        {
+          "id": "audio",
+          "title": "<audio>",
+          "summary": "Incorpora audio reproducible en la página.",
+          "type": "elementos"
+        },
+        {
+          "id": "video",
+          "title": "<video>",
+          "summary": "Incorpora vídeo con controles y opciones de reproducción.",
+          "type": "elementos"
+        },
+        {
+          "id": "controls",
+          "title": "controls",
+          "summary": "Muestra controles nativos de reproducción.",
+          "type": "atributos"
+        },
+        {
+          "id": "autoplay",
+          "title": "autoplay",
+          "summary": "Solicita reproducción automática cuando el navegador lo permite.",
+          "type": "atributos"
+        },
+        {
+          "id": "muted",
+          "title": "muted",
+          "summary": "Inicia el audio silenciado.",
+          "type": "atributos"
+        },
+        {
+          "id": "loop",
+          "title": "loop",
+          "summary": "Repite el contenido al finalizar.",
+          "type": "atributos"
+        },
+        {
+          "id": "poster",
+          "title": "poster",
+          "summary": "Define una imagen previa para un vídeo.",
+          "type": "atributos"
+        },
+        {
+          "id": "track",
+          "title": "<track>",
+          "summary": "Añade subtítulos y pistas de texto temporizadas.",
+          "type": "elementos"
+        },
+        {
+          "id": "iframe",
+          "title": "<iframe>",
+          "summary": "Incrusta otro documento o contenido externo.",
+          "type": "elementos"
+        },
+        {
+          "id": "sandbox",
+          "title": "sandbox",
+          "summary": "Aplica restricciones al contenido de un iframe.",
+          "type": "atributos"
+        },
+        {
+          "id": "figure",
+          "title": "<figure>",
+          "summary": "Agrupa una imagen u otro contenido independiente.",
+          "type": "elementos"
+        },
+        {
+          "id": "figcaption",
+          "title": "<figcaption>",
+          "summary": "Añade una leyenda a una figura.",
+          "type": "elementos"
+        },
+        {
+          "id": "map",
+          "title": "<map>",
+          "summary": "Define un mapa de imagen con áreas interactivas.",
+          "type": "elementos"
+        },
+        {
+          "id": "area",
+          "title": "<area>",
+          "summary": "Define una región interactiva dentro de un mapa de imagen.",
+          "type": "elementos"
+        },
+        {
+          "id": "embed",
+          "title": "<embed>",
+          "summary": "Incrusta contenido externo compatible.",
+          "type": "elementos"
+        },
+        {
+          "id": "object",
+          "title": "<object>",
+          "summary": "Representa un recurso externo en el documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "fallback",
+          "title": "Contenido alternativo",
+          "summary": "Planificá una alternativa cuando el recurso no se pueda mostrar.",
+          "type": "conceptos"
+        },
+        {
+          "id": "media-formats",
+          "title": "Formatos de audio y vídeo",
+          "summary": "Compará formatos habituales y consideraciones de compatibilidad.",
+          "type": "conceptos"
+        },
+        {
+          "id": "responsive-images",
+          "title": "Imágenes adaptables",
+          "summary": "Combiná picture, srcset y sizes para servir imágenes apropiadas a cada pantalla.",
+          "type": "conceptos"
+        },
+        {
+          "id": "media-accessibility",
+          "title": "Accesibilidad multimedia",
+          "summary": "Añadí subtítulos, transcripciones y alternativas para contenido audiovisual.",
+          "type": "conceptos"
+        }
+      ]
     },
     {
       "id": "svg",
       "title": "SVG",
-      "description": "Gráficos vectoriales, formas, trazados y animaciones.",
-      "file": "svg.json",
-      "order": 7
+      "description": "Aprendé a crear gráficos vectoriales escalables directamente en HTML mediante SVG.",
+      "order": 7,
+      "articleCount": 25,
+      "articleIds": [
+        "svg",
+        "namespace",
+        "viewbox",
+        "width-height",
+        "rect",
+        "circle",
+        "ellipse",
+        "line",
+        "polyline",
+        "polygon",
+        "path",
+        "text",
+        "tspan",
+        "g",
+        "defs",
+        "use",
+        "title-desc",
+        "fill",
+        "stroke",
+        "gradient",
+        "stop",
+        "clip-path",
+        "mask",
+        "transform",
+        "svg-practica"
+      ],
+      "items": [
+        {
+          "id": "svg",
+          "title": "<svg>",
+          "summary": "Contenedor raíz para gráficos vectoriales escalables.",
+          "type": "elementos"
+        },
+        {
+          "id": "namespace",
+          "title": "Namespace SVG",
+          "summary": "Comprendé cómo se integra SVG en documentos HTML y XML.",
+          "type": "conceptos"
+        },
+        {
+          "id": "viewbox",
+          "title": "viewBox",
+          "summary": "Define el sistema de coordenadas y el área visible.",
+          "type": "atributos"
+        },
+        {
+          "id": "width-height",
+          "title": "width y height",
+          "summary": "Controlan las dimensiones del viewport SVG.",
+          "type": "atributos"
+        },
+        {
+          "id": "rect",
+          "title": "<rect>",
+          "summary": "Dibuja rectángulos y cuadrados.",
+          "type": "elementos"
+        },
+        {
+          "id": "circle",
+          "title": "<circle>",
+          "summary": "Dibuja círculos mediante centro y radio.",
+          "type": "elementos"
+        },
+        {
+          "id": "ellipse",
+          "title": "<ellipse>",
+          "summary": "Dibuja elipses con radios horizontal y vertical.",
+          "type": "elementos"
+        },
+        {
+          "id": "line",
+          "title": "<line>",
+          "summary": "Dibuja una línea entre dos puntos.",
+          "type": "elementos"
+        },
+        {
+          "id": "polyline",
+          "title": "<polyline>",
+          "summary": "Dibuja segmentos conectados.",
+          "type": "elementos"
+        },
+        {
+          "id": "polygon",
+          "title": "<polygon>",
+          "summary": "Dibuja una forma cerrada de varios lados.",
+          "type": "elementos"
+        },
+        {
+          "id": "path",
+          "title": "<path>",
+          "summary": "Define trazados mediante comandos de dibujo.",
+          "type": "elementos"
+        },
+        {
+          "id": "text",
+          "title": "<text>",
+          "summary": "Inserta texto dentro del gráfico vectorial.",
+          "type": "elementos"
+        },
+        {
+          "id": "tspan",
+          "title": "<tspan>",
+          "summary": "Permite ajustar fragmentos de texto SVG.",
+          "type": "elementos"
+        },
+        {
+          "id": "g",
+          "title": "<g>",
+          "summary": "Agrupa elementos SVG.",
+          "type": "elementos"
+        },
+        {
+          "id": "defs",
+          "title": "<defs>",
+          "summary": "Guarda elementos gráficos reutilizables.",
+          "type": "elementos"
+        },
+        {
+          "id": "use",
+          "title": "<use>",
+          "summary": "Reutiliza elementos SVG definidos previamente.",
+          "type": "elementos"
+        },
+        {
+          "id": "title-desc",
+          "title": "<title> y <desc>",
+          "summary": "Proporcionan título y descripción al gráfico.",
+          "type": "elementos"
+        },
+        {
+          "id": "fill",
+          "title": "fill",
+          "summary": "Define el relleno de una forma.",
+          "type": "atributos"
+        },
+        {
+          "id": "stroke",
+          "title": "stroke",
+          "summary": "Define el contorno de una forma.",
+          "type": "atributos"
+        },
+        {
+          "id": "gradient",
+          "title": "<linearGradient> y <radialGradient>",
+          "summary": "Crea degradados para las formas.",
+          "type": "elementos"
+        },
+        {
+          "id": "stop",
+          "title": "<stop>",
+          "summary": "Define puntos de color de un degradado.",
+          "type": "elementos"
+        },
+        {
+          "id": "clip-path",
+          "title": "<clipPath>",
+          "summary": "Limita qué partes de un gráfico se muestran.",
+          "type": "elementos"
+        },
+        {
+          "id": "mask",
+          "title": "<mask>",
+          "summary": "Controla la visibilidad de partes del gráfico.",
+          "type": "elementos"
+        },
+        {
+          "id": "transform",
+          "title": "transform",
+          "summary": "Traslada, rota, escala o inclina elementos.",
+          "type": "atributos"
+        },
+        {
+          "id": "svg-practica",
+          "title": "Construí un icono SVG",
+          "summary": "Combiná formas, colores y trazados en un icono.",
+          "type": "practica"
+        }
+      ]
     },
     {
       "id": "semantica",
       "title": "HTML semántico",
-      "description": "Elementos que describen el significado y la estructura del contenido.",
-      "file": "semantica.json",
-      "order": 8
+      "description": "Utilizá elementos que describen el significado del contenido y ayudan a organizar mejor cada página.",
+      "order": 8,
+      "articleCount": 21,
+      "articleIds": [
+        "semantica",
+        "header",
+        "nav",
+        "main",
+        "section",
+        "article",
+        "aside",
+        "footer",
+        "address",
+        "search",
+        "hgroup",
+        "figure",
+        "figcaption",
+        "time",
+        "details",
+        "summary",
+        "dialog",
+        "div-vs-section",
+        "article-vs-section",
+        "landmarks",
+        "outline"
+      ],
+      "items": [
+        {
+          "id": "semantica",
+          "title": "¿Qué es HTML semántico?",
+          "summary": "Comprendé por qué el significado de los elementos importa.",
+          "type": "conceptos"
+        },
+        {
+          "id": "header",
+          "title": "<header>",
+          "summary": "Representa la cabecera de una página o sección.",
+          "type": "elementos"
+        },
+        {
+          "id": "nav",
+          "title": "<nav>",
+          "summary": "Agrupa enlaces de navegación importantes.",
+          "type": "elementos"
+        },
+        {
+          "id": "main",
+          "title": "<main>",
+          "summary": "Identifica el contenido principal del documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "section",
+          "title": "<section>",
+          "summary": "Agrupa contenido relacionado bajo un tema.",
+          "type": "elementos"
+        },
+        {
+          "id": "article",
+          "title": "<article>",
+          "summary": "Representa contenido independiente y reutilizable.",
+          "type": "elementos"
+        },
+        {
+          "id": "aside",
+          "title": "<aside>",
+          "summary": "Contiene información complementaria.",
+          "type": "elementos"
+        },
+        {
+          "id": "footer",
+          "title": "<footer>",
+          "summary": "Representa el pie de una página o sección.",
+          "type": "elementos"
+        },
+        {
+          "id": "address",
+          "title": "<address>",
+          "summary": "Proporciona información de contacto relacionada.",
+          "type": "elementos"
+        },
+        {
+          "id": "search",
+          "title": "<search>",
+          "summary": "Agrupa controles o contenido relacionado con búsquedas.",
+          "type": "elementos"
+        },
+        {
+          "id": "hgroup",
+          "title": "<hgroup>",
+          "summary": "Agrupa un encabezado con contenido secundario relacionado.",
+          "type": "elementos"
+        },
+        {
+          "id": "figure",
+          "title": "<figure>",
+          "summary": "Agrupa contenido ilustrativo o autónomo.",
+          "type": "elementos"
+        },
+        {
+          "id": "figcaption",
+          "title": "<figcaption>",
+          "summary": "Proporciona una leyenda para una figura.",
+          "type": "elementos"
+        },
+        {
+          "id": "time",
+          "title": "<time>",
+          "summary": "Representa fechas u horas legibles por máquinas.",
+          "type": "elementos"
+        },
+        {
+          "id": "details",
+          "title": "<details>",
+          "summary": "Crea un panel que el usuario puede expandir.",
+          "type": "elementos"
+        },
+        {
+          "id": "summary",
+          "title": "<summary>",
+          "summary": "Define el encabezado visible de details.",
+          "type": "elementos"
+        },
+        {
+          "id": "dialog",
+          "title": "<dialog>",
+          "summary": "Representa un cuadro de diálogo.",
+          "type": "elementos"
+        },
+        {
+          "id": "div-vs-section",
+          "title": "<div> frente a <section>",
+          "summary": "Diferenciá un contenedor genérico de una sección temática.",
+          "type": "conceptos"
+        },
+        {
+          "id": "article-vs-section",
+          "title": "<article> frente a <section>",
+          "summary": "Diferenciá contenido independiente de una agrupación temática.",
+          "type": "conceptos"
+        },
+        {
+          "id": "landmarks",
+          "title": "Regiones de referencia",
+          "summary": "Organizá la página con landmarks reconocibles.",
+          "type": "conceptos"
+        },
+        {
+          "id": "outline",
+          "title": "Jerarquía de encabezados",
+          "summary": "Estructurá títulos y subtítulos con sentido lógico.",
+          "type": "conceptos"
+        }
+      ]
     },
     {
       "id": "accesibilidad",
       "title": "Accesibilidad",
-      "description": "Buenas prácticas para crear contenido accesible.",
-      "file": "accesibilidad.json",
-      "order": 9
+      "description": "Creá contenido que pueda ser comprendido y utilizado por personas con distintas capacidades y formas de navegación.",
+      "order": 9,
+      "articleCount": 8,
+      "articleIds": [
+        "alt-texto",
+        "label-form",
+        "teclado",
+        "focus",
+        "jerarquia",
+        "lang",
+        "aria",
+        "accesibilidad-practica"
+      ],
+      "items": [
+        {
+          "id": "alt-texto",
+          "title": "Texto alternativo",
+          "summary": "Describí imágenes para quienes no pueden verlas.",
+          "type": "conceptos"
+        },
+        {
+          "id": "label-form",
+          "title": "Etiquetas de formularios",
+          "summary": "Asegurá que los campos tengan nombres comprensibles.",
+          "type": "conceptos"
+        },
+        {
+          "id": "teclado",
+          "title": "Navegación con teclado",
+          "summary": "Permití recorrer e interactuar con la página sin ratón.",
+          "type": "conceptos"
+        },
+        {
+          "id": "focus",
+          "title": "Foco visible",
+          "summary": "Mantené visible qué elemento está seleccionado.",
+          "type": "conceptos"
+        },
+        {
+          "id": "jerarquia",
+          "title": "Jerarquía de encabezados",
+          "summary": "Organizá títulos para facilitar la comprensión y navegación.",
+          "type": "conceptos"
+        },
+        {
+          "id": "lang",
+          "title": "Atributo lang",
+          "summary": "Indicá el idioma principal del documento.",
+          "type": "elementos"
+        },
+        {
+          "id": "aria",
+          "title": "Atributos ARIA",
+          "summary": "Añadí información accesible cuando el HTML nativo no alcanza.",
+          "type": "conceptos"
+        },
+        {
+          "id": "accesibilidad-practica",
+          "title": "Revisá la accesibilidad",
+          "summary": "Detectá problemas comunes en una página sencilla.",
+          "type": "practica"
+        }
+      ]
     },
     {
       "id": "retos",
       "title": "Retos de HTML",
-      "description": "Prácticas para construir estructuras y componentes usando HTML.",
-      "file": "retos.json",
-      "order": 10
+      "description": "Poné en práctica lo aprendido construyendo estructuras y componentes reales con HTML.",
+      "order": 10,
+      "articleCount": 8,
+      "articleIds": [
+        "reto-perfil",
+        "reto-lista",
+        "reto-navegacion",
+        "reto-formulario",
+        "reto-tabla",
+        "reto-articulo",
+        "reto-semantico",
+        "reto-completo"
+      ],
+      "items": [
+        {
+          "id": "reto-perfil",
+          "title": "Tarjeta de perfil",
+          "summary": "Construí una tarjeta con imagen, título, descripción y enlace.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-lista",
+          "title": "Lista de tareas",
+          "summary": "Representá tareas y estados usando listas y elementos semánticos.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-navegacion",
+          "title": "Menú de navegación",
+          "summary": "Creá una navegación con enlaces a distintas secciones.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-formulario",
+          "title": "Formulario de contacto",
+          "summary": "Combiná campos, etiquetas y validación nativa.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-tabla",
+          "title": "Tabla de datos",
+          "summary": "Organizá información tabular con encabezados y filas.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-articulo",
+          "title": "Artículo de blog",
+          "summary": "Estructurá una publicación con títulos, párrafos e imágenes.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-semantico",
+          "title": "Página semántica",
+          "summary": "Combiná header, nav, main, section y footer.",
+          "type": "practica"
+        },
+        {
+          "id": "reto-completo",
+          "title": "Página personal completa",
+          "summary": "Integrá varias etiquetas para crear una página desde cero.",
+          "type": "practica"
+        }
+      ]
     }
   ]
 }
