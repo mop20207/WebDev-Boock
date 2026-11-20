@@ -14480,7 +14480,7 @@
           {
             "title": "Comprobación · probá y compará",
             "description": "Prueba adicional de «FormData y envío de archivos». Anticipá qué ocurrirá antes de ejecutar el código.",
-            "code": "const archivo = document.querySelector(\"input[type=file]\")?.files?.[0];\nif (archivo) {\n  const url = URL.createObjectURL(archivo);\n  document.querySelector(\"#vista previa\")?.setAttribute(\"src\", url);\n  // Revocá la URL cuando ya no se necesite: URL.revokeObjectURL(url).\n}"
+            "code": "const archivo = document.querySelector(\"input[type=file]\")?.files?.[0];\nif (archivo) {\n  const url = URL.createObjectURL(archivo);\n  document.querySelector(\"#vista-previa\")?.setAttribute(\"src\", url);\n  // Revocá la URL cuando ya no se necesite: URL.revokeObjectURL(url).\n}"
           }
         ],
         "lab": {
@@ -16691,7 +16691,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Math y generación de valores aleatorios» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -16720,7 +16720,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Math y generación de valores aleatorios» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -16816,7 +16816,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «JSON y estructuración de datos» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -16845,7 +16845,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «JSON y estructuración de datos» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -16941,7 +16941,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Timers y requestAnimationFrame()» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -16970,7 +16970,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Timers y requestAnimationFrame()» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -17316,7 +17316,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «MutationObserver y cambios en el DOM» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -17345,7 +17345,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «MutationObserver y cambios en el DOM» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -17441,7 +17441,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Visibility API y estado de la pestaña» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -17470,7 +17470,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Visibility API y estado de la pestaña» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -17566,7 +17566,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Geolocation API y permisos» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -17595,7 +17595,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Geolocation API y permisos» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -17691,7 +17691,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Clipboard API y portapapeles» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -17720,7 +17720,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Clipboard API y portapapeles» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -17816,7 +17816,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «File API, FileReader, Blob y URL.createObjectURL()» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -17845,7 +17845,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «File API, FileReader, Blob y URL.createObjectURL()» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -17941,7 +17941,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Drag and Drop API» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -17970,7 +17970,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Drag and Drop API» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -18066,7 +18066,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Notification API y permisos» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -18095,7 +18095,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Notification API y permisos» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -18191,7 +18191,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Módulos JavaScript: import y export» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -18220,7 +18220,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Módulos JavaScript: import y export» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
@@ -18316,7 +18316,7 @@
         {
           "title": "Práctica guiada 2 · Escuchar un cambio de tamaño",
           "body": "Caso práctico de «Manejo de errores y debugging con DevTools» en una situación habitual de desarrollo.",
-          "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");",
+          "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));",
           "language": "javascript"
         },
         {
@@ -18345,7 +18345,7 @@
           {
             "title": "Ejemplo aplicado · segundo escenario",
             "description": "Caso práctico de «Manejo de errores y debugging con DevTools» en una situación habitual de desarrollo.",
-            "code": "const esperarFrame = () => new Promise(resolve => requestAnimationFrame(resolve));\nawait esperarFrame();\nconsole.log(\"El navegador completó un frame\");"
+            "code": "requestAnimationFrame(() => console.log(\"El navegador completó un frame\"));"
           },
           {
             "title": "Variación · caso alternativo",
