@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     {id:"implementacion", title:"¿Cómo se implementa?", html:"<p>" + escapeHTML(article.howTo) + "</p>"},
     {id:"ejemplo", title:"Código: cómo se escribe", html:'<p>Ejemplo de implementación:</p><div class="code-example"><span class="code-caption">CÓDIGO HTML</span><pre><code>' + escapeHTML(article.code) + '</code></pre></div>'},
     {id:"ejemplos-adicionales", title:"Más ejemplos prácticos", html: (article.exampleVariants || []).map(item => '<div class="code-example"><h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description) + '</p><span class="code-caption">CÓDIGO HTML</span><pre><code>' + escapeHTML(item.code) + '</code></pre></div>').join("") || "<p>Este artículo todavía no incluye ejemplos adicionales.</p>"},
+    {id:"laboratorio-html", title:"Laboratorio práctico", html:'<p>Modificá el marcado y ejecutá la vista previa. El laboratorio está aislado: el HTML se muestra, pero los scripts del ejemplo no se ejecutan.</p><div class="html-lab-grid"><div class="html-lab-editor"><label for="htmlLabCode">Tu código HTML</label><textarea id="htmlLabCode" spellcheck="false" aria-label="Editor HTML del laboratorio">' + escapeHTML(article.code || "<h1>Hola, web</h1>\\n<p>Mi primera práctica.</p>") + '</textarea><div class="html-lab-actions"><button type="button" id="runHtmlLab">▶ Ejecutar</button><button type="button" id="resetHtmlLab">Restablecer</button><span id="htmlLabStatus" aria-live="polite">Vista previa lista para ejecutar</span></div></div><div class="html-lab-preview"><label>Resultado</label><iframe id="htmlLabFrame" title="Vista previa del laboratorio HTML" sandbox></iframe></div></div><div class="html-practice-task"><strong>Reto de este artículo</strong><p id="htmlPracticeTask"></p><details><summary>Una pista para empezar</summary><p>' + escapeHTML(article.tip || "Cambiá una parte del marcado, guardá una copia y observá cómo cambia el resultado.") + '</p></details><a class="html-open-editor" href="editor.html">Abrir el editor completo ↗</a></div>'},
     {id:"detalles", title:"Detalles importantes", html:"<ul>" + article.details.map(item => "<li>" + escapeHTML(item) + "</li>").join("") + "</ul>"},
     {id:"cuando-no", title:"¿Cuándo no conviene usarlo?", html:'<div class="warning-box">' + escapeHTML(article.avoid) + '</div>'},
     {id:"buenas-practicas", title:"Buenas prácticas", html:'<div class="tip-box"><strong>Consejo:</strong> ' + escapeHTML(article.tip) + '</div><ul><li>Usá el elemento por su significado y no solamente por su apariencia.</li><li>Comprobá que los atributos correspondan al elemento.</li><li>Probá el resultado en distintos tamaños de pantalla y navegadores.</li></ul>'},
@@ -96,6 +97,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     '<section class="article-section" id="' + section.id + '"><h2>' +
     section.title + '</h2>' + section.html + '</section>'
   ).join("");
+  // Laboratorio HTML: el contenido se muestra en un iframe aislado y sin permisos de script.
+  const labEditor = document.getElementById("htmlLabCode");
+  const labFrame = document.getElementById("htmlLabFrame");
+  const labStatus = document.getElementById("htmlLabStatus");
+  const task = document.getElementById("htmlPracticeTask");
+  const practiceTasks = {
+    estructura: "Convertí el fragmento en una página con doctype, html, head y body. Agregá un título de documento y un h1 para el contenido principal.",
+    etiquetas: "Usá el elemento que estás estudiando en un contexto real. Completá el contenido y agregá los atributos necesarios para que tenga sentido.",
+    atributos: "Probá distintos valores del atributo de este artículo. Observá qué cambia y verificá si el valor elegido es válido para el elemento.",
+    formularios: "Construí un formulario pequeño con etiquetas label asociadas a cada control, atributos name y al menos una validación nativa.",
+    multimedia: "Agregá un recurso multimedia con una alternativa apropiada: texto alternativo, subtítulos, transcripción o contenido de respaldo.",
+    semantica: "Organizá el contenido en header, nav, main, section, article o footer según la función real de cada bloque.",
+    accesibilidad: "Revisá nombres accesibles, textos alternativos, etiquetas y orden de lectura. Intentá completar la práctica únicamente con el teclado.",
+    retos: "Construí una pequeña página que use el concepto estudiado, tenga estructura semántica y funcione en una pantalla estrecha."
+  };
+  if (task) task.textContent = practiceTasks[article.category] || ("Partiendo del ejemplo de «" + article.title + "», creá una variante propia, modificá el contenido y comprobá que el marcado siga siendo válido.");
+  const runHtmlLab = () => {
+    if (!labEditor || !labFrame) return;
+    const source = labEditor.value;
+    const completeDocument = /<!doctype|<html[\\s>]/i.test(source)
+      ? source
+      : '<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:system-ui,sans-serif;line-height:1.55;padding:1rem;color:#1e293b}img,video{max-width:100%;height:auto}a{color:#2457c5}</style></head><body>' + source + '</body></html>';
+    labFrame.srcdoc = completeDocument;
+    if (labStatus) labStatus.textContent = "Vista previa actualizada";
+  };
+  document.getElementById("runHtmlLab")?.addEventListener("click", runHtmlLab);
+  document.getElementById("resetHtmlLab")?.addEventListener("click", () => {
+    if (labEditor) labEditor.value = article.code || "";
+    runHtmlLab();
+    if (labStatus) labStatus.textContent = "Código original restaurado";
+  });
+  labEditor?.addEventListener("input", () => {
+    if (labStatus) labStatus.textContent = "Hay cambios sin ejecutar";
+  });
+  runHtmlLab();
+
   document.getElementById("articleToc").innerHTML = sections.map(section =>
     '<a href="#' + section.id + '">' + section.title + '</a>'
   ).join("");
