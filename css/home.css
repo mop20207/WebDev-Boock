@@ -55,3 +55,20 @@ body.light .favorite-item{background:#f8faff;border-color:#dce5f2}
 body.light .favorites-heading h2{color:#1d3454}
 body.light .favorite-item{background:#f8faff;border-color:#dce5f2}
 @media(max-width:760px){.favorites-section{padding:16px}.favorites-heading h2{font-size:18px}}
+
+
+/* Galería de pequeños proyectos guiados. */
+.mini-projects-section{margin-top:18px;padding:22px}
+.mini-projects-section h2{margin:5px 0 0;font-size:20px;color:var(--text)}
+.mini-project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:16px}
+.mini-project-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.mini-project-level{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.08em}
+.mini-project-card h3{margin:10px 0 6px;color:var(--text);font-size:14px}
+.mini-project-card>p{margin:0;color:var(--muted);font-size:10px;line-height:1.6}
+.mini-project-card ul{margin:12px 0 16px;padding-left:17px;color:var(--muted);font-size:10px;line-height:1.8}
+.mini-project-card>a{margin-top:auto;display:inline-flex;align-items:center;min-height:32px;padding:0 11px;border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:10px;font-weight:800}
+.mini-project-card>a:hover{border-color:var(--accent);color:var(--accent)}
+body.light .mini-projects-section h2,body.light .mini-project-card h3{color:#1d3454}
+body.light .mini-project-card{background:#f8faff;border-color:#dce5f2}
+@media(max-width:1000px){.mini-project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.mini-projects-section{padding:16px}.mini-projects-section h2{font-size:18px}.mini-project-grid{grid-template-columns:1fr}}
