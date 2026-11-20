@@ -29,14 +29,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     count.textContent = category.items.length + (category.items.length === 1 ? " TEMA" : " TEMAS");
 
     list.innerHTML = category.items.map((item, index) => `
-      <article class="js-subtopic">
+      <a class="js-subtopic" href="js-articulo.html?tema=${encodeURIComponent(category.id)}&item=${index}">
         <span class="js-subtopic-number">${String(index + 1).padStart(2, "0")}</span>
-        <div class="js-subtopic-copy">
-          <h3>${item}</h3>
-          <p>Contenido incluido en esta categoría</p>
-        </div>
-        <span class="js-subtopic-status">EN EL ÍNDICE</span>
-      </article>
+        <span class="js-subtopic-copy"><h3>${item}</h3><p>Leer explicación, ejemplos y práctica</p></span>
+        <span class="js-subtopic-status">VER ARTÍCULO ↗</span>
+      </a>
     `).join("");
   } catch (error) {
     title.textContent = "No se pudo cargar la categoría";
