@@ -1,66 +1,251 @@
 {
+  "version": 2,
   "language": "JavaScript",
-  "description": "Contenido de referencia de JavaScript.",
+  "description": "Catálogo general de JavaScript en WebDev Book. El índice de navegación y sus artículos se encuentran en los archivos indicados.",
+  "sourceIndex": "javascript/index.json",
+  "articlesFile": "js-articulos.json",
   "topics": [
     {
-      "id": 1,
-      "title": "Variables y constantes",
-      "summary": "let, const y alcance",
-      "lessons": []
+      "id": "fundamentos",
+      "title": "Fundamentos de JavaScript",
+      "summary": "Conocé el lenguaje, cómo se ejecuta y las herramientas básicas para empezar a programar.",
+      "articleCount": 10,
+      "articleIds": [
+        "fundamentos-0",
+        "fundamentos-1",
+        "fundamentos-2",
+        "fundamentos-3",
+        "fundamentos-4",
+        "fundamentos-5",
+        "fundamentos-6",
+        "fundamentos-7",
+        "fundamentos-8",
+        "fundamentos-9"
+      ]
     },
     {
-      "id": 2,
-      "title": "Tipos de datos",
-      "summary": "Strings, números, booleanos y más",
-      "lessons": []
+      "id": "variables",
+      "title": "Variables y tipos de datos",
+      "summary": "Aprendé a almacenar información, reconocer tipos de datos y convertir valores.",
+      "articleCount": 10,
+      "articleIds": [
+        "variables-0",
+        "variables-1",
+        "variables-2",
+        "variables-3",
+        "variables-4",
+        "variables-5",
+        "variables-6",
+        "variables-7",
+        "variables-8",
+        "variables-9"
+      ]
     },
     {
-      "id": 3,
+      "id": "operadores",
       "title": "Operadores y condiciones",
-      "summary": "Expresiones, if, else y switch",
-      "lessons": []
+      "summary": "Construí expresiones, compará valores y hacé que tus programas tomen decisiones.",
+      "articleCount": 11,
+      "articleIds": [
+        "operadores-0",
+        "operadores-1",
+        "operadores-2",
+        "operadores-3",
+        "operadores-4",
+        "operadores-5",
+        "operadores-6",
+        "operadores-7",
+        "operadores-8",
+        "operadores-9",
+        "operadores-10"
+      ]
     },
     {
-      "id": 4,
-      "title": "Bucles",
-      "summary": "for, while y recorridos",
-      "lessons": []
+      "id": "bucles",
+      "title": "Bucles e iteraciones",
+      "summary": "Repetí instrucciones, recorré colecciones y controlá cada ciclo.",
+      "articleCount": 10,
+      "articleIds": [
+        "bucles-0",
+        "bucles-1",
+        "bucles-2",
+        "bucles-3",
+        "bucles-4",
+        "bucles-5",
+        "bucles-6",
+        "bucles-7",
+        "bucles-8",
+        "bucles-9"
+      ]
     },
     {
-      "id": 5,
+      "id": "funciones",
       "title": "Funciones",
-      "summary": "Parámetros, retorno y funciones flecha",
-      "lessons": []
+      "summary": "Organizá tu código en bloques reutilizables que reciben datos y producen resultados.",
+      "articleCount": 12,
+      "articleIds": [
+        "funciones-0",
+        "funciones-1",
+        "funciones-2",
+        "funciones-3",
+        "funciones-4",
+        "funciones-5",
+        "funciones-6",
+        "funciones-7",
+        "funciones-8",
+        "funciones-9",
+        "funciones-10",
+        "funciones-11"
+      ]
     },
     {
-      "id": 6,
+      "id": "arrays-objetos",
       "title": "Arrays y objetos",
-      "summary": "Colecciones y estructuras de datos",
-      "lessons": []
+      "summary": "Modelá información y trabajá con colecciones y estructuras de datos.",
+      "articleCount": 15,
+      "articleIds": [
+        "arrays-objetos-0",
+        "arrays-objetos-1",
+        "arrays-objetos-2",
+        "arrays-objetos-3",
+        "arrays-objetos-4",
+        "arrays-objetos-5",
+        "arrays-objetos-6",
+        "arrays-objetos-7",
+        "arrays-objetos-8",
+        "arrays-objetos-9",
+        "arrays-objetos-10",
+        "arrays-objetos-11",
+        "arrays-objetos-12",
+        "arrays-objetos-13",
+        "arrays-objetos-14"
+      ]
     },
     {
-      "id": 7,
-      "title": "DOM y eventos",
-      "summary": "Modificar la página y responder al usuario",
-      "lessons": []
+      "id": "dom",
+      "title": "DOM",
+      "summary": "Conectá JavaScript con el documento HTML para consultar y modificar sus elementos.",
+      "articleCount": 13,
+      "articleIds": [
+        "dom-0",
+        "dom-1",
+        "dom-2",
+        "dom-3",
+        "dom-4",
+        "dom-5",
+        "dom-6",
+        "dom-7",
+        "dom-8",
+        "dom-9",
+        "dom-10",
+        "dom-11",
+        "dom-12"
+      ]
     },
     {
-      "id": 8,
-      "title": "Asincronía y Fetch",
-      "summary": "Promesas, async/await y APIs",
-      "lessons": []
+      "id": "eventos",
+      "title": "Eventos",
+      "summary": "Respondé a clics, teclas, envíos de formularios y otras acciones del usuario.",
+      "articleCount": 12,
+      "articleIds": [
+        "eventos-0",
+        "eventos-1",
+        "eventos-2",
+        "eventos-3",
+        "eventos-4",
+        "eventos-5",
+        "eventos-6",
+        "eventos-7",
+        "eventos-8",
+        "eventos-9",
+        "eventos-10",
+        "eventos-11"
+      ]
     },
     {
-      "id": 9,
+      "id": "asincronia",
+      "title": "Asincronía",
+      "summary": "Entendé cómo JavaScript organiza tareas que terminan en distintos momentos.",
+      "articleCount": 12,
+      "articleIds": [
+        "asincronia-0",
+        "asincronia-1",
+        "asincronia-2",
+        "asincronia-3",
+        "asincronia-4",
+        "asincronia-5",
+        "asincronia-6",
+        "asincronia-7",
+        "asincronia-8",
+        "asincronia-9",
+        "asincronia-10",
+        "asincronia-11"
+      ]
+    },
+    {
+      "id": "fetch-apis",
+      "title": "Fetch y APIs",
+      "summary": "Comunicá tu aplicación con servidores, servicios externos y datos en formato JSON.",
+      "articleCount": 13,
+      "articleIds": [
+        "fetch-apis-0",
+        "fetch-apis-1",
+        "fetch-apis-2",
+        "fetch-apis-3",
+        "fetch-apis-4",
+        "fetch-apis-5",
+        "fetch-apis-6",
+        "fetch-apis-7",
+        "fetch-apis-8",
+        "fetch-apis-9",
+        "fetch-apis-10",
+        "fetch-apis-11",
+        "fetch-apis-12"
+      ]
+    },
+    {
+      "id": "almacenamiento",
       "title": "Almacenamiento",
-      "summary": "LocalStorage, SessionStorage e IndexedDB",
-      "lessons": []
+      "summary": "Guardá información en el navegador y recuperala cuando la aplicación la necesite.",
+      "articleCount": 12,
+      "articleIds": [
+        "almacenamiento-0",
+        "almacenamiento-1",
+        "almacenamiento-2",
+        "almacenamiento-3",
+        "almacenamiento-4",
+        "almacenamiento-5",
+        "almacenamiento-6",
+        "almacenamiento-7",
+        "almacenamiento-8",
+        "almacenamiento-9",
+        "almacenamiento-10",
+        "almacenamiento-11"
+      ]
     },
     {
-      "id": 10,
-      "title": "APIs del navegador",
-      "summary": "Date, Observer, Notifications y otras",
-      "lessons": []
+      "id": "apis-navegador",
+      "title": "APIs del navegador y herramientas",
+      "summary": "Explorá las capacidades del navegador y herramientas que amplían JavaScript.",
+      "articleCount": 16,
+      "articleIds": [
+        "apis-navegador-0",
+        "apis-navegador-1",
+        "apis-navegador-2",
+        "apis-navegador-3",
+        "apis-navegador-4",
+        "apis-navegador-5",
+        "apis-navegador-6",
+        "apis-navegador-7",
+        "apis-navegador-8",
+        "apis-navegador-9",
+        "apis-navegador-10",
+        "apis-navegador-11",
+        "apis-navegador-12",
+        "apis-navegador-13",
+        "apis-navegador-14",
+        "apis-navegador-15"
+      ]
     }
   ]
 }
