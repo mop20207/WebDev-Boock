@@ -190,3 +190,66 @@ body.light .roadmap-phase,body.light .js-reference-panel{background-color:var(--
  .js-topic-card p{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.js-topic-card,.topic-link b{transition:none}}
+
+
+/* Identidad JavaScript unificada: amarillo/dorado en todas las tarjetas y encabezados. */
+.js-page .js-topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.js-page .js-topic-card{
+  display:grid;grid-template-columns:62px minmax(0,1fr);
+  grid-template-areas:"icon kicker" "icon title" "icon description" "icon action";
+  align-content:center;align-items:center;column-gap:17px;row-gap:3px;
+  min-height:132px;padding:20px 19px;border-radius:16px;
+  border:1px solid color-mix(in srgb,#dfb94c 26%,var(--line));
+  background:linear-gradient(135deg,var(--surface),color-mix(in srgb,var(--surface) 88%,#e8bd4c 12%));
+}
+.js-page .js-topic-card:before{display:none}
+.js-page .js-topic-card:after{
+  width:145px;height:145px;right:-55px;top:-65px;bottom:auto;
+  background:#e8bd4c;opacity:.075;filter:blur(3px)
+}
+.js-page .js-topic-card:hover{
+  border-color:#d9b348;box-shadow:0 13px 30px #0003;
+}
+.js-page .js-topic-card .topic-visual{
+  grid-area:icon;flex:none;width:62px;height:62px;margin:0;
+  border-radius:17px;background:color-mix(in srgb,#e8bd4c 14%,var(--surface));
+  color:#d6ad3e;border:1px solid color-mix(in srgb,#d6ad3e 32%,transparent);
+}
+.js-page .js-topic-card .topic-visual svg{
+  width:35px;height:35px;stroke:currentColor;filter:drop-shadow(0 3px 8px #d6ad3e30)
+}
+.js-page .js-topic-card .topic-index{
+  grid-area:kicker;display:block;margin:0 0 2px;
+  color:#c5a13a;font-size:8px;font-weight:800;letter-spacing:1.15px
+}
+.js-page .js-topic-card h3{
+  grid-area:title;margin:0 0 2px;font-size:15px;line-height:1.35;color:var(--text)
+}
+.js-page .js-topic-card p{
+  grid-area:description;max-width:100%;margin:0;font-size:11px;line-height:1.55;color:var(--muted)
+}
+.js-page .js-topic-card .topic-link{
+  grid-area:action;display:flex;align-items:center;justify-content:space-between;
+  gap:8px;margin:7px 0 0;padding:0;color:#c5a13a;font-size:9px;font-weight:700
+}
+.js-page .js-topic-card .topic-link b{font-size:18px;transition:transform .2s}
+.js-page .js-topic-card:hover .topic-link b{transform:translateX(3px)}
+/* Todos los temas comparten el dorado de JavaScript, con variaciones muy suaves. */
+.js-page .topic-a,.js-page .topic-b,.js-page .topic-c,.js-page .topic-d,
+.js-page .topic-e,.js-page .topic-f,.js-page .topic-g,.js-page .topic-h,
+.js-page .topic-i,.js-page .topic-j,.js-page .topic-k,.js-page .topic-l{--topic:#d8b34a}
+.js-page .js-topics .section-heading .eyebrow,
+.js-page .js-roadmap-section>.section-heading .eyebrow{color:#c5a13a}
+.js-page .roadmap-phase{border-color:color-mix(in srgb,#dfb94c 25%,var(--line))}
+.js-page .roadmap-phase-head{background:linear-gradient(115deg,#e7c34b18,transparent 76%)}
+.js-page .roadmap-phase-head>span,
+.js-page .js-reference-groups b{color:#c5a13a}
+.js-page .roadmap-links a:hover{border-color:#d8b64b;color:#bd9936}
+@media(max-width:760px){
+  .js-page .js-topic-grid{grid-template-columns:1fr;gap:12px}
+  .js-page .js-topic-card{min-height:112px;padding:16px;gap:3px 14px;border-radius:14px}
+  .js-page .js-topic-card .topic-visual{width:54px;height:54px}
+  .js-page .js-topic-card .topic-visual svg{width:31px;height:31px}
+  .js-page .js-topic-card h3{font-size:14px}
+  .js-page .js-topic-card p{font-size:10px}
+}
