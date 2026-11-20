@@ -388,6 +388,89 @@ function openProjectsDialog(){renderProjects();$("projectsDialog").classList.add
 function closeProjectsDialog(){$("projectsDialog").classList.remove("open");$("projectsDialog").setAttribute("aria-hidden","true");}
 function formatCurrent(){if(!editor)return;editor.getAction("editor.action.formatDocument")?.run();}
 function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mi-proyecto.zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
+function loadSettings(){
+ try{const saved=JSON.parse(localStorage.getItem("webdev-editor-settings-v1")||"null");if(saved&&typeof saved==="object")settings={...settings,...saved};}catch(e){}
+ settings.fontSize=Math.max(10,Math.min(26,Number(settings.fontSize)||13));
+ settings.theme=settings.theme==="light"?"light":"dark";
+ settings.wrap=settings.wrap==="off"?"off":"on";
+ settings.keys=settings.keys!==false;
+ $("fontSizeSetting").value=settings.fontSize;$("fontSizeValue").textContent=settings.fontSize+" px";
+ $("themeSetting").value=settings.theme;$("wrapSetting").value=settings.wrap;$("keysSetting").checked=settings.keys;
+ applySettings();
+}
+function applySettings(){
+ if(editor){editor.updateOptions({fontSize:settings.fontSize,wordWrap:settings.wrap});monaco.editor.setTheme(settings.theme==="light"?"vs":"webdev-dark");}
+ $("mobileKeys").classList.toggle("keys-hidden",!settings.keys);
+ $("fontSizeValue").textContent=settings.fontSize+" px";
+ try{localStorage.setItem("webdev-editor-settings-v1",JSON.stringify(settings));}catch(e){}
+}
+function toggleSettings(force){
+ const open=typeof force==="boolean"?force:!$("settingsPanel").classList.contains("open");
+ $("settingsPanel").classList.toggle("open",open);$("settingsPanel").setAttribute("aria-hidden",String(!open));
+}
+function insertMobileText(value,paired=false){
+ if(!editor||!editor.getModel())return;
+ const selection=editor.getSelection(),selected=editor.getModel().getValueInRange(selection);
+ const text=paired?value[0]+selected+value[1]:value;
+ editor.executeEdits("mobile-keys",[{range:selection,text,forceMoveMarkers:true}]);
+ if(paired){const pos=editor.getPosition();editor.setPosition({lineNumber:pos.lineNumber,column:Math.max(1,pos.column-1)});}
+ editor.focus();
+}
+function mobileKey(key,button){
+ if(!editor)return;
+ if(key==="ctrl"||key==="alt"){
+  if(key==="ctrl")modifierCtrl=!modifierCtrl;else modifierAlt=!modifierAlt;
+  button.setAttribute("aria-pressed",String(key==="ctrl"?modifierCtrl:modifierAlt));return;
+ }
+ if(key==="save"||modifierCtrl&&key==="s"){saveNow();toast("Guardado local");}
+ else if(key==="undo")editor.trigger("mobile","undo");
+ else if(key==="redo")editor.trigger("mobile","redo");
+ else if(key==="tab")editor.trigger("mobile",modifierCtrl?"editor.action.outdentLines":"editor.action.indentLines");
+ else if(key==="escape"){editor.trigger("mobile","hideSuggestWidget");editor.trigger("mobile","closeFindWidget");}
+ else if(["left","right","up","down"].includes(key)){
+  const model=editor.getModel();if(model){
+   const p=editor.getPosition();let line=p.lineNumber,col=p.column;
+   if(key==="left"){if(col>1)col--;else if(line>1){line--;col=model.getLineMaxColumn(line);}}
+   if(key==="right"){if(col<model.getLineMaxColumn(line))col++;else if(line<model.getLineCount()){line++;col=1;}}
+   if(key==="up")line=Math.max(1,line-1);
+   if(key==="down")line=Math.min(model.getLineCount(),line+1);
+   col=Math.min(col,model.getLineMaxColumn(line));editor.setPosition({lineNumber:line,column:col});editor.revealPositionInCenterIfOutsideViewport({lineNumber:line,column:col});
+  }
+ }else if(key==="{")insertMobileText("{}",true);
+ else if(key==="(")insertMobileText("()",true);
+ else insertMobileText(key);
+ modifierCtrl=false;modifierAlt=false;
+ document.querySelectorAll('#mobileKeys [aria-pressed]').forEach(b=>b.setAttribute("aria-pressed","false"));
+ editor.focus();
+}
+function initControls(){
+ $("projectPicker").addEventListener("click",openProjectsDialog);
+ $("projectsClose").addEventListener("click",closeProjectsDialog);
+ $("projectsDialog").addEventListener("click",e=>{if(e.target===$("projectsDialog"))closeProjectsDialog();});
+ $("newProjectBtn").addEventListener("click",()=>showAction("project-new"));
+ $("newFolderSmall").addEventListener("click",()=>createFolder());
+ $("toggleExplorer").addEventListener("click",()=>{
+  $("workbench").classList.remove("preview-open");
+  $("workbench").classList.toggle("explorer-open");
+ });
+ $("actionClose").addEventListener("click",closeAction);
+ $("actionCancel").addEventListener("click",closeAction);
+ $("actionConfirm").addEventListener("click",confirmAction);
+ $("actionInput").addEventListener("keydown",e=>{if(e.key==="Enter")confirmAction();});
+ $("actionDialog").addEventListener("click",e=>{if(e.target===$("actionDialog"))closeAction();});
+ $("fileTree").addEventListener("dragover",e=>e.preventDefault());
+ $("fileTree").addEventListener("drop",e=>{if(e.target.closest(".folder-row"))return;e.preventDefault();const path=e.dataTransfer.getData("text/plain");if(path)moveEntry(path,"");});
+ $("settingsFloat").addEventListener("click",()=>toggleSettings());
+ $("closeSettings").addEventListener("click",()=>toggleSettings(false));
+ $("fontSizeSetting").addEventListener("input",e=>{settings.fontSize=Number(e.target.value);applySettings();});
+ $("themeSetting").addEventListener("change",e=>{settings.theme=e.target.value;applySettings();});
+ $("wrapSetting").addEventListener("change",e=>{settings.wrap=e.target.value;applySettings();});
+ $("keysSetting").addEventListener("change",e=>{settings.keys=e.target.checked;applySettings();});
+ $("mobileKeys").addEventListener("pointerdown",e=>{if(e.target.closest("button"))e.preventDefault();});
+ $("mobileKeys").addEventListener("click",e=>{const b=e.target.closest("button[data-key]");if(b)mobileKey(b.dataset.key,b);});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAction();closeFileDialog();closeProjectsDialog();toggleSettings(false);}});
+ loadSettings();
+}
 async function init(){
  await loadLocalFiles();
  window.MonacoEnvironment={getWorkerUrl:function(workerId,label){const base="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/";const worker=label==="json"?"json":label==="css"?"css":label==="html"?"html":"editor";return "data:text/javascript;charset=utf-8,"+encodeURIComponent("self.MonacoEnvironment={baseUrl:'"+base+"'};importScripts('"+base+"vs/base/worker/workerMain.js');");}};
@@ -397,8 +480,9 @@ async function init(){
   editor=monaco.editor.create($("monacoEditor"),{value:"",language:"html",theme:"webdev-dark",automaticLayout:true,fontSize:13,fontFamily:"Consolas, 'Cascadia Code', monospace",minimap:{enabled:false},scrollBeyondLastLine:false,wordWrap:"on",tabSize:2,insertSpaces:true,formatOnPaste:true,suggestOnTriggerCharacters:true,quickSuggestions:{other:true,comments:false,strings:true},acceptSuggestionOnEnter:"on",bracketPairColorization:{enabled:true},padding:{top:12}});
   editor.onDidChangeModelContent(()=>{if(!active)return;files[active]=editor.getValue();save();schedulePreview();});
   editor.onDidChangeCursorPosition(e=>$("cursorStatus").textContent="Línea "+e.position.lineNumber+", columna "+e.position.column);
-  openFile(Object.keys(files).includes("index.html")?"index.html":Object.keys(files)[0]);updatePreview();
+  const first=files["index.html"]!==undefined?"index.html":Object.keys(files)[0];if(first)openFile(first);else renderTree();applySettings();updatePreview();
  });
+ initControls();
  $("newFileBtn").addEventListener("click",createFile);$("newFileSmall").addEventListener("click",createFile);$("createFileConfirm").addEventListener("click",confirmCreateFile);$("cancelFile").addEventListener("click",closeFileDialog);$("cancelFile2").addEventListener("click",closeFileDialog);$("fileDialog").addEventListener("click",e=>{if(e.target===$("fileDialog"))closeFileDialog();});$("newFileName").addEventListener("keydown",e=>{if(e.key==="Enter")confirmCreateFile();});document.querySelectorAll("[data-ext]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-ext]").forEach(x=>x.classList.toggle("active",x===b));$("newFileName").value="nuevo."+b.dataset.ext;}));$("refreshFiles").addEventListener("click",()=>{if(confirm("¿Restaurar los archivos iniciales? Se perderán los cambios actuales.")){files={...starter};Object.values(models).forEach(m=>m.dispose());models={};openFile("index.html");save();updatePreview();}});
  $("downloadBtn").addEventListener("click",downloadZip);$("formatBtn").addEventListener("click",formatCurrent);$("closeTabBtn").addEventListener("click",()=>toast("Las pestañas se mantienen abiertas para no perder el trabajo."));
  $("runPreview").addEventListener("click",updatePreview);$("openPreviewTab").addEventListener("click",openPreviewTab);$("showPreviewBtn").addEventListener("click",()=>{$("workbench").classList.toggle("preview-open");$("showPreviewBtn").textContent=$("workbench").classList.contains("preview-open")?"‹ Volver al código":"▷ Vista previa";updatePreview();});$("clearConsole").addEventListener("click",()=>$("consoleOutput").textContent="Consola limpia.");
