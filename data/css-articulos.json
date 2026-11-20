@@ -56,7 +56,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de qué es css y cómo trabaja con html.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Qué es CSS y cómo trabaja con HTML» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -154,7 +154,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de reglas, selectores, declaraciones y bloques.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Reglas, selectores, declaraciones y bloques» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -252,7 +252,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de cómo escribir comentarios css.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Cómo escribir comentarios CSS» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -263,8 +263,8 @@
           },
           {
             "title": "Variación · comprobá el comportamiento",
-            "description": "En «Cómo escribir comentarios CSS», cambiá una declaración por vez y observá qué regla gana, cómo se calcula el espacio o cómo cambia la presentación.",
-            "code": "/* Los comentarios CSS no se anidan. */\n/* Se puede escribir /* dentro de un comentario? */\n/* El comentario termina en el primer cierre */\n.notice { color: #334155; }"
+            "description": "Los comentarios se delimitan con /* y */. No se pueden anidar: el primer */ cierra el comentario actual.",
+            "code": "/* Comentario multilínea:\n   documenta una decisión que no resulta obvia. */\n.card {\n  padding: 1rem;\n}\n\n/* Los comentarios CSS no se anidan.\n   Este bloque termina en el primer delimitador de cierre. */\n.card__title { margin: 0; }"
           }
         ],
         "lab": {
@@ -350,7 +350,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de formas de aplicar css: externo, interno y en línea.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Formas de aplicar CSS: externo, interno y en línea» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -448,7 +448,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de cómo enlazar una hoja de estilos.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Cómo enlazar una hoja de estilos» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -546,7 +546,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de organización de archivos y estructura de proyecto.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Organización de archivos y estructura de proyecto» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -644,7 +644,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de selector universal, de tipo, clase e id.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Selector universal, de tipo, clase e ID» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -742,7 +742,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de selectores de atributos.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Selectores de atributos» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -840,7 +840,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de combinadores: descendiente, hijo, adyacente y hermano.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Combinadores: descendiente, hijo, adyacente y hermano» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -938,7 +938,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de pseudoclases de interacción y estado.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Pseudoclases de interacción y estado» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1036,7 +1036,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de pseudoelementos ::before y ::after.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Pseudoelementos ::before y ::after» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1134,7 +1134,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de selectores estructurales :nth-child() y relacionados.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Selectores estructurales :nth-child() y relacionados» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1232,7 +1232,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de la función :is(), :where() y :has().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «La función :is(), :where() y :has()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1330,7 +1330,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de cómo funciona la cascada.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Cómo funciona la cascada» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1428,7 +1428,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de especificidad: tipos de selectores y cálculo.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Especificidad: tipos de selectores y cálculo» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1526,7 +1526,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de herencia y valores heredados.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Herencia y valores heredados» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1624,7 +1624,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de valores initial, inherit, unset y revert.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Valores initial, inherit, unset y revert» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1722,7 +1722,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de !important y cuándo evitarlo.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «!important y cuándo evitarlo» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1820,7 +1820,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de origen, capas y orden de las declaraciones.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Origen, capas y orden de las declaraciones» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -1917,7 +1917,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de propiedades y valores css.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Propiedades y valores CSS» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2014,7 +2014,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de unidades absolutas y relativas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Unidades absolutas y relativas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2111,7 +2111,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de unidades de viewport: vw, vh, svh y dvh.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Unidades de viewport: vw, vh, svh y dvh» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2208,7 +2208,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de porcentajes y unidades relativas al contexto.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Porcentajes y unidades relativas al contexto» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2305,7 +2305,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de funciones calc(), min(), max() y clamp().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Funciones calc(), min(), max() y clamp()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2402,7 +2402,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de valores, palabras clave y valores calculados.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Valores, palabras clave y valores calculados» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2499,7 +2499,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de custom properties y la sintaxis --nombre.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Custom properties y la sintaxis --nombre» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2596,7 +2596,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de definir variables en :root.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Definir variables en :root» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2693,7 +2693,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de usar variables con var().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Usar variables con var()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2790,7 +2790,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de valores de respaldo en var().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Valores de respaldo en var()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2887,7 +2887,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de alcance y herencia de variables.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Alcance y herencia de variables» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -2984,7 +2984,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de funciones matemáticas css.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Funciones matemáticas CSS» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3081,7 +3081,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de funciones de color y otras funciones modernas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Funciones de color y otras funciones modernas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3178,7 +3178,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de las cuatro partes del modelo de caja.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Las cuatro partes del modelo de caja» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3275,7 +3275,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de width, height y dimensiones reales.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «width, height y dimensiones reales» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3372,7 +3372,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de box-sizing: content-box y border-box.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «box-sizing: content-box y border-box» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3469,7 +3469,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de margin, padding y shorthand.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Margin, padding y shorthand» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3566,7 +3566,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de colapso de márgenes.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Colapso de márgenes» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3663,7 +3663,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de bordes, outline y border-radius.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Bordes, outline y border-radius» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3760,7 +3760,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de overflow y contenido desbordado.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Overflow y contenido desbordado» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3858,7 +3858,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de flujo normal y position: static.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Flujo normal y position: static» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -3956,7 +3956,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de relative y desplazamiento visual.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «relative y desplazamiento visual» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4054,7 +4054,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de absolute y elementos de referencia.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «absolute y elementos de referencia» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4152,7 +4152,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de fixed y elementos fijados a la ventana.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «fixed y elementos fijados a la ventana» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4250,7 +4250,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de sticky y encabezados persistentes.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «sticky y encabezados persistentes» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4348,7 +4348,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de z-index y orden de apilamiento.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «z-index y orden de apilamiento» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4446,7 +4446,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de contextos de apilamiento.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Contextos de apilamiento» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4544,7 +4544,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de activar display: flex y entender los ejes.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Activar display: flex y entender los ejes» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4642,7 +4642,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de flex-direction y flex-wrap.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «flex-direction y flex-wrap» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4740,7 +4740,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de justify-content y align-items.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «justify-content y align-items» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4838,7 +4838,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de align-content y align-self.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «align-content y align-self» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -4936,7 +4936,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de gap y separación entre elementos.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «gap y separación entre elementos» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5034,7 +5034,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de flex-grow, flex-shrink y flex-basis.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «flex-grow, flex-shrink y flex-basis» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5132,7 +5132,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de la propiedad abreviada flex.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «La propiedad abreviada flex» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5230,7 +5230,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de activar display: grid.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Activar display: grid» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5328,7 +5328,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de definir columnas y filas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Definir columnas y filas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5426,7 +5426,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de unidades fr y funciones repeat().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Unidades fr y funciones repeat()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5524,7 +5524,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de gap y espacios de cuadrícula.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «gap y espacios de cuadrícula» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5622,7 +5622,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de ubicar elementos con líneas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Ubicar elementos con líneas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5720,7 +5720,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de grid-template-areas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «grid-template-areas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5818,7 +5818,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de auto-fit, auto-fill y minmax().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «auto-fit, auto-fill y minmax()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -5916,7 +5916,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de alineación en grid.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Alineación en Grid» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6014,7 +6014,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de font-family y fuentes de respaldo.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «font-family y fuentes de respaldo» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6112,7 +6112,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de cargar fuentes con @font-face.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Cargar fuentes con @font-face» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6210,7 +6210,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de font-size y unidades recomendadas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «font-size y unidades recomendadas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6308,7 +6308,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de font-weight y estilos de fuente.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «font-weight y estilos de fuente» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6406,7 +6406,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de line-height y legibilidad.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «line-height y legibilidad» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6504,7 +6504,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de text-align, text-decoration y text-transform.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «text-align, text-decoration y text-transform» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6602,7 +6602,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de letter-spacing, word-spacing y text-indent.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «letter-spacing, word-spacing y text-indent» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6700,7 +6700,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de fuentes variables y tipografía fluida.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Fuentes variables y tipografía fluida» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6798,7 +6798,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de sistemas de color: nombres, hex, rgb y hsl.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Sistemas de color: nombres, HEX, RGB y HSL» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6896,7 +6896,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de color y background-color.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «color y background-color» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -6994,7 +6994,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de background-image y fondos múltiples.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «background-image y fondos múltiples» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7092,7 +7092,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de gradientes lineales, radiales y cónicos.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Gradientes lineales, radiales y cónicos» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7190,7 +7190,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de background-size, position y repeat.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «background-size, position y repeat» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7288,7 +7288,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de bordes, radios y contornos.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Bordes, radios y contornos» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7386,7 +7386,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de box-shadow y text-shadow.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «box-shadow y text-shadow» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7484,7 +7484,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de transparencia y opacidad.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Transparencia y opacidad» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7582,7 +7582,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de translate(), rotate(), scale() y skew().",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «translate(), rotate(), scale() y skew()» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7680,7 +7680,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de transform-origin y transform-box.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «transform-origin y transform-box» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7778,7 +7778,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de filter: blur(), brightness() y otros.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «filter: blur(), brightness() y otros» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7876,7 +7876,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de backdrop-filter.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «backdrop-filter» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -7974,7 +7974,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de clip-path y formas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «clip-path y formas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8072,7 +8072,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de máscaras css.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Máscaras CSS» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8170,7 +8170,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de mix-blend-mode y isolation.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «mix-blend-mode y isolation» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8268,7 +8268,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de transition-property, duration y delay.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «transition-property, duration y delay» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8366,7 +8366,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de timing functions y curvas de movimiento.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Timing functions y curvas de movimiento» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8464,7 +8464,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de crear animaciones con @keyframes.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Crear animaciones con @keyframes» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8562,7 +8562,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de animation-duration, iteration-count y direction.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «animation-duration, iteration-count y direction» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8660,7 +8660,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de animation-fill-mode y animation-play-state.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «animation-fill-mode y animation-play-state» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8758,7 +8758,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de animar transform y opacity eficientemente.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Animar transform y opacity eficientemente» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8856,7 +8856,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de prefers-reduced-motion.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «prefers-reduced-motion» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -8954,7 +8954,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de diseño adaptable y enfoque mobile first.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Diseño adaptable y enfoque mobile first» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9052,7 +9052,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de media queries con @media.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Media queries con @media» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9150,7 +9150,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de breakpoints y consultas por características.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Breakpoints y consultas por características» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9248,7 +9248,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de imágenes y contenido flexible.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Imágenes y contenido flexible» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9346,7 +9346,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de container queries: @container.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Container queries: @container» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9444,7 +9444,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de unidades de viewport modernas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Unidades de viewport modernas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9542,7 +9542,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de diseños fluidos con clamp() y grid/flexbox.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Diseños fluidos con clamp() y Grid/Flexbox» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9640,7 +9640,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de contraste y uso del color.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Contraste y uso del color» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9738,7 +9738,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de estados :focus y :focus-visible.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Estados :focus y :focus-visible» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9836,7 +9836,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de  prefers-reduced-motion y movimiento seguro.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo « prefers-reduced-motion y movimiento seguro» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -9934,7 +9934,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de propiedades lógicas: margin-inline y padding-block.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Propiedades lógicas: margin-inline y padding-block» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -10032,7 +10032,7 @@
         "estimatedMinutes": 8,
         "goals": [
           "Explicar con tus palabras el concepto de cascade layers con @layer.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Cascade layers con @layer» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -10130,7 +10130,7 @@
         "estimatedMinutes": 11,
         "goals": [
           "Explicar con tus palabras el concepto de nesting nativo de css.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Nesting nativo de CSS» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -10228,7 +10228,7 @@
         "estimatedMinutes": 14,
         "goals": [
           "Explicar con tus palabras el concepto de @supports y mejoras progresivas.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «@supports y mejoras progresivas» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
@@ -10326,7 +10326,7 @@
         "estimatedMinutes": 17,
         "goals": [
           "Explicar con tus palabras el concepto de buenas prácticas para interfaces accesibles.",
-          "Reconocer cuándo conviene aplicar esta técnica en una interfaz.",
+          "Identificar cuándo «Buenas prácticas para interfaces accesibles» resuelve una necesidad concreta de una interfaz.",
           "Modificar un ejemplo y anticipar el resultado antes de ejecutarlo."
         ],
         "exampleVariants": [
