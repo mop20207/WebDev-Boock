@@ -147,9 +147,95 @@ async function switchProject(id){
  updatePreview();closeProjectsDialog();toast("Proyecto: "+projectName);
 }
 function modelFor(name){if(!models[name])models[name]=monaco.editor.createModel(files[name],langFor(name),monaco.Uri.parse("file:///"+name));return models[name];}
-function renderTree(){const root=$("fileTree");root.innerHTML="";Object.keys(files).sort((a,b)=>a.localeCompare(b)).forEach(name=>{const row=document.createElement("div");row.className="file-row"+(name===active?" active":"");const ext=name.split(".").pop().toLowerCase();row.innerHTML='<span class="file-icon '+escapeHtml(ext)+'">'+iconFor(name)+'</span><span>'+escapeHtml(name)+'</span><button class="file-menu" title="Opciones">···</button>';row.addEventListener("click",()=>openFile(name));row.querySelector("button").addEventListener("click",e=>{e.stopPropagation();fileOptions(name)});root.appendChild(row);});}
-function renderTabs(){const tabs=$("editorTabs");tabs.innerHTML="";Object.keys(models).forEach(name=>{const b=document.createElement("button");b.className="editor-tab"+(name===active?" active":"");b.textContent=name;b.addEventListener("click",()=>openFile(name));tabs.appendChild(b);});}
-function openFile(name){if(!files[name])return;active=name;editor.setModel(modelFor(name));$("activeFileLabel").textContent=name;$("languageStatus").textContent=langFor(name).toUpperCase();renderTree();renderTabs();editor.focus();}
+const basename=path=>path.split("/").pop();
+const parentPath=path=>path.includes("/")?path.slice(0,path.lastIndexOf("/")):"";
+const cleanName=name=>/^[a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ .-]+$/.test(name)&&name.trim()===name&&name!=="."&&name!==".."&&!name.includes("/")&&!name.includes("\\");
+function allFolders(){
+ const result=new Set(folders);
+ Object.keys(files).forEach(path=>{let parent=parentPath(path);while(parent){result.add(parent);parent=parentPath(parent);}});
+ for(const path of [...result]){let parent=parentPath(path);while(parent){result.add(parent);parent=parentPath(parent);}}
+ return [...result].sort((a,b)=>a.localeCompare(b));
+}
+function folderSelect(select,exclude=""){
+ select.innerHTML="";
+ const root=document.createElement("option");root.value="";root.textContent="Raíz del proyecto";select.appendChild(root);
+ allFolders().forEach(path=>{if(exclude&&(path===exclude||path.startsWith(exclude+"/")))return;const o=document.createElement("option");o.value=path;o.textContent="📁 "+path;select.appendChild(o);});
+}
+function renderTree(){
+ const root=$("fileTree");root.innerHTML="";
+ const dirs=allFolders(),paths=Object.keys(files);
+ const add=(parent,depth)=>{
+  const children=dirs.filter(p=>parentPath(p)===parent).sort((a,b)=>a.localeCompare(b));
+  for(const path of children){
+   const row=document.createElement("div");row.className="file-row folder-row";row.style.paddingLeft=(8+depth*15)+"px";row.dataset.path=path;
+   row.innerHTML='<span class="folder-caret">'+(collapsed.has(path)?"▸":"▾")+'</span><span class="file-icon">📁</span><span class="file-label">'+escapeHtml(basename(path))+'</span><button class="file-menu" aria-label="Opciones de carpeta">···</button>';
+   row.addEventListener("click",()=>{if(collapsed.has(path))collapsed.delete(path);else collapsed.add(path);renderTree();});
+   row.querySelector("button").addEventListener("click",e=>{e.stopPropagation();fileOptions(path,true);});
+   row.addEventListener("dragover",e=>{e.preventDefault();row.classList.add("drag-over");});
+   row.addEventListener("dragleave",()=>row.classList.remove("drag-over"));
+   row.addEventListener("drop",e=>{e.preventDefault();e.stopPropagation();row.classList.remove("drag-over");const source=e.dataTransfer.getData("text/plain");if(source)moveEntry(source,path);});
+   root.appendChild(row);
+   if(!collapsed.has(path))add(path,depth+1);
+  }
+  paths.filter(p=>parentPath(p)===parent).sort((a,b)=>a.localeCompare(b)).forEach(path=>{
+   const row=document.createElement("div");row.className="file-row"+(path===active?" active":"");row.style.paddingLeft=(8+depth*15)+"px";row.draggable=true;
+   const ext=basename(path).split(".").pop().toLowerCase();
+   row.innerHTML='<span class="folder-caret"></span><span class="file-icon '+escapeHtml(ext)+'">'+iconFor(path)+'</span><span class="file-label">'+escapeHtml(basename(path))+'</span><button class="file-menu" aria-label="Opciones de archivo">···</button>';
+   row.addEventListener("click",()=>{openFile(path);$("workbench").classList.remove("explorer-open");});
+   row.querySelector("button").addEventListener("click",e=>{e.stopPropagation();fileOptions(path,false);});
+   row.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",path);row.classList.add("file-dragging");});
+   row.addEventListener("dragend",()=>row.classList.remove("file-dragging"));
+   root.appendChild(row);
+  });
+ };
+ add("",0);
+ if(!root.children.length){const empty=document.createElement("div");empty.className="file-row empty-state";empty.textContent="Proyecto vacío. Creá un archivo.";root.appendChild(empty);}
+}
+function renderTabs(){
+ const tabs=$("editorTabs");tabs.innerHTML="";
+ Object.keys(models).forEach(name=>{if(files[name]===undefined)return;const b=document.createElement("button");b.className="editor-tab"+(name===active?" active":"");b.textContent=basename(name);b.title=name;b.addEventListener("click",()=>openFile(name));tabs.appendChild(b);});
+}
+function openFile(name){
+ if(files[name]===undefined||!editor)return;
+ active=name;editor.setModel(modelFor(name));$("activeFileLabel").textContent=name;$("languageStatus").textContent=langFor(name).toUpperCase();
+ renderTree();renderTabs();editor.focus();
+}
+function replacePath(oldPath,newPath,isFolder){
+ if(oldPath===newPath)return true;
+ if(!newPath||newPath===oldPath||newPath.startsWith(oldPath+"/")){toast("Destino no válido");return false;}
+ const affected=Object.keys(files).filter(p=>p===oldPath||isFolder&&p.startsWith(oldPath+"/"));
+ if(!isFolder&&files[oldPath]===undefined)return false;
+ if(isFolder&&(!allFolders().includes(oldPath)))return false;
+ const mappings=affected.map(p=>[p,newPath+p.slice(oldPath.length)]);
+ if(mappings.some(([from,to])=>files[to]!==undefined&&!affected.includes(to))||(!isFolder&&allFolders().includes(newPath))||(isFolder&&allFolders().includes(newPath))){toast("Ya existe un elemento con ese nombre");return false;}
+ const copy={...files};
+ for(const [from] of mappings)delete copy[from];
+ for(const [from,to] of mappings)copy[to]=files[from];
+ files=copy;
+ if(isFolder){const updated=new Set();for(const p of folders)updated.add(p===oldPath||p.startsWith(oldPath+"/")?newPath+p.slice(oldPath.length):p);updated.add(newPath);folders=updated;}
+ for(const [from] of mappings){if(models[from]){models[from].dispose();delete models[from];}}
+ const current=mappings.find(([from])=>from===active);
+ if(current)active=current[1];
+ const parents=newPath.split("/");parents.pop();let parent="";
+ for(const segment of parents){parent=parent?parent+"/"+segment:segment;folders.add(parent);}
+ if(active&&files[active]!==undefined)openFile(active);else renderTree();
+ renderTabs();save();schedulePreview();return true;
+}
+function moveEntry(path,dest){
+ const isFolder=allFolders().includes(path);
+ if(dest===parentPath(path))return;
+ if(isFolder&&(dest===path||dest.startsWith(path+"/"))){toast("No podés mover una carpeta dentro de sí misma");return;}
+ replacePath(path,(dest?dest+"/":"")+basename(path),isFolder);
+}
+function removeEntry(path,isFolder){
+ if(isFolder){for(const p of Object.keys(files))if(p.startsWith(path+"/"))delete files[p];for(const p of [...folders])if(p===path||p.startsWith(path+"/"))folders.delete(p);}
+ else delete files[path];
+ Object.values(models).forEach(m=>m.dispose());models={};
+ if(!files[active])active="";
+ const next=active||Object.keys(files)[0];
+ if(next)openFile(next);else{active="";editor.setModel(null);$("activeFileLabel").textContent="Sin archivo";renderTree();renderTabs();}
+ save();updatePreview();
+}
 function updatePreview(){
  if(!files["index.html"])return;
  let html=files["index.html"];
