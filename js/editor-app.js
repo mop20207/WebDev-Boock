@@ -151,7 +151,7 @@ async function switchProject(id){
 function modelFor(name){if(!models[name])models[name]=monaco.editor.createModel(files[name],langFor(name),monaco.Uri.parse("file:///"+name));return models[name];}
 const basename=path=>path.split("/").pop();
 const parentPath=path=>path.includes("/")?path.slice(0,path.lastIndexOf("/")):"";
-const cleanName=name=>/^[a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ .-]+$/.test(name)&&name.trim()===name&&name!=="."&&name!==".."&&!name.includes("/")&&!name.includes("\\");
+const cleanName=name=>/^[a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ .()\[\]-]+$/.test(name)&&name.trim()===name&&name!=="."&&name!==".."&&!name.includes("/")&&!name.includes("\\");
 function allFolders(){
  const result=new Set(folders);
  Object.keys(files).forEach(path=>{let parent=parentPath(path);while(parent){result.add(parent);parent=parentPath(parent);}});
@@ -474,6 +474,10 @@ function initControls(){
  $("fileTree").addEventListener("dragover",e=>e.preventDefault());
  $("fileTree").addEventListener("drop",e=>{if(e.target.closest(".folder-row"))return;e.preventDefault();const path=e.dataTransfer.getData("text/plain");if(path)moveEntry(path,"");});
  $("settingsFloat").addEventListener("click",()=>toggleSettings());
+ $("settingsExport").addEventListener("click",()=>{downloadZip();toggleSettings(false);});
+ $("settingsImport").addEventListener("click",()=>{toggleSettings(false);$("filePicker").click();});
+ $("settingsProjects").addEventListener("click",()=>{toggleSettings(false);openProjectsDialog();});
+ $("settingsFolder").addEventListener("click",()=>{toggleSettings(false);createFolder();});
  $("closeSettings").addEventListener("click",()=>toggleSettings(false));
  $("fontSizeSetting").addEventListener("input",e=>{settings.fontSize=Number(e.target.value);applySettings();});
  $("themeSetting").addEventListener("change",e=>{settings.theme=e.target.value;applySettings();});
