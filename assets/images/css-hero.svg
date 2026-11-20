@@ -1,28 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
-<title id="title">Emblema CSS</title><desc id="desc">Insignia tridimensional estilizada de CSS en tonos azules, celestes y violetas, rodeada de trazos de código.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 390" fill="none" role="img" aria-labelledby="title desc">
+<title id="title">CSS</title><desc id="desc">Ventana de código con una insignia azul de CSS y un escudo estilizado.</desc>
 <defs>
- <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#74d7ff"/><stop offset=".48" stop-color="#2879ed"/><stop offset="1" stop-color="#2737a8"/></linearGradient>
- <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#263b9b"/><stop offset="1" stop-color="#101a50"/></linearGradient>
- <linearGradient id="letter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#c9eaff"/></linearGradient>
- <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c3a4ff"/><stop offset="1" stop-color="#6a48d7"/></linearGradient>
- <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="12"/></filter>
+ <linearGradient id="blue" x1="310" y1="235" x2="430" y2="345" gradientUnits="userSpaceOnUse"><stop stop-color="#83D9FF"/><stop offset=".55" stop-color="#438DEB"/><stop offset="1" stop-color="#665BD6"/></linearGradient>
+ <linearGradient id="panel" x1="85" y1="40" x2="430" y2="340" gradientUnits="userSpaceOnUse"><stop stop-color="#1B2940"/><stop offset="1" stop-color="#101827"/></linearGradient>
+ <filter id="shadow" x="20" y="10" width="480" height="370" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="15"/></filter>
 </defs>
-<ellipse cx="360" cy="258" rx="190" ry="20" fill="#246de8" opacity=".25" filter="url(#shadow)"/>
-<g fill="none" stroke-linecap="round" opacity=".75">
- <path d="M90 85h110M105 105h65M520 72h105M555 92h65M100 220h90M535 215h90" stroke="#5bc9ff" stroke-width="3"/>
- <path d="m145 55-24 20 24 20m430-40 24 20-24 20" stroke="#8b7cff" stroke-width="5"/>
- <circle cx="210" cy="70" r="5" fill="#6fe2ff" stroke="none"/><circle cx="505" cy="220" r="5" fill="#b79aff" stroke="none"/>
+<circle cx="260" cy="190" r="150" fill="#69B8F5" opacity=".12" filter="url(#shadow)"/>
+<path d="M92 62h333a20 20 0 0 1 20 20v229a20 20 0 0 1-20 20H92a20 20 0 0 1-20-20V82a20 20 0 0 1 20-20Z" fill="url(#panel)" stroke="#46536A" stroke-width="2"/>
+<path d="M72 103h373" stroke="#46536A" stroke-width="2"/>
+<circle cx="98" cy="83" r="6" fill="#E87979"/><circle cx="118" cy="83" r="6" fill="#E8C56D"/><circle cx="138" cy="83" r="6" fill="#68C995"/>
+<g font-family="monospace" font-size="13">
+ <g fill="#7185A5"><text x="105" y="145">01</text><text x="105" y="180">02</text><text x="105" y="215">03</text><text x="105" y="250">04</text><text x="105" y="285">05</text></g>
+ <text x="145" y="145" fill="#83CFFF">.card</text><text x="190" y="145" fill="#E8EEF8">{</text>
+ <text x="160" y="180" fill="#D2A8FF">display</text><text x="225" y="180" fill="#E8EEF8">:</text><text x="237" y="180" fill="#8BD8B2">flex</text><text x="270" y="180" fill="#E8EEF8">;</text>
+ <text x="160" y="215" fill="#D2A8FF">color</text><text x="205" y="215" fill="#E8EEF8">:</text><text x="218" y="215" fill="#F4D36A">#fff</text><text x="254" y="215" fill="#E8EEF8">;</text>
+ <text x="160" y="250" fill="#D2A8FF">gap</text><text x="190" y="250" fill="#E8EEF8">:</text><text x="203" y="250" fill="#8BD8B2">1rem</text><text x="244" y="250" fill="#E8EEF8">;</text>
+ <text x="145" y="285" fill="#E8EEF8">}</text>
 </g>
-<g transform="translate(250 16)">
- <path d="M35 8 190 28 172 226 111 258 50 226 17 28Z" fill="url(#side)" transform="translate(10 9)"/>
- <path d="M35 8 190 28 172 226 111 258 50 226 17 28Z" fill="url(#shield)" stroke="#a9eaff" stroke-width="4"/>
- <path d="m35 8 77 12v214l-62-25L17 28Z" fill="#76d8ff" opacity=".18"/>
- <path d="m48 43 130 16-5 24-129-16Z" fill="#fff" opacity=".12"/>
- <path d="m55 93 105 13-4 23-105-13Z" fill="#152d80" opacity=".22"/>
- <text x="108" y="163" text-anchor="middle" font-family="Arial,sans-serif" font-size="94" font-weight="900" letter-spacing="-8" fill="url(#letter)">CSS</text>
- <path d="m74 188 35 15 36-15-3 22-33 15-32-15Z" fill="url(#violet)" opacity=".95"/>
- <path d="m60 239 51 18 61-31" fill="none" stroke="#b7efff" stroke-width="3" opacity=".55"/>
-</g>
-<g fill="#8edfff" opacity=".9"><path d="m205 150 10-10 10 10-10 10z"/><path d="m505 130 7-7 7 7-7 7z"/></g>
-<g fill="#a78aff" opacity=".85"><circle cx="225" cy="210" r="4"/><circle cx="493" cy="183" r="4"/><circle cx="540" cy="112" r="3"/></g>
+<rect x="320" y="232" width="116" height="112" rx="15" fill="url(#blue)"/><path d="M320 254h116" stroke="#315EA7" stroke-width="1.5" opacity=".65"/>
+<text x="335" y="247" font-family="Arial,sans-serif" font-size="8" font-weight="700" fill="#153F77">CSS</text>
+<path d="m378 266 29 6-5 49-24 9-24-9-5-49 29-6Z" fill="#18345D" stroke="#D8F2FF" stroke-width="2.5"/>
+<text x="378" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="900" fill="#E8F7FF">3</text>
+<path d="m43 156 15-15 15 15-15 15-15-15Z" fill="#7BCBFA" opacity=".8"/><circle cx="458" cy="139" r="8" fill="#8B83E9" opacity=".75"/><circle cx="455" cy="329" r="5" fill="#69B8F5"/><path d="M69 331h44" stroke="#69B8F5" stroke-width="3" stroke-linecap="round"/>
 </svg>
