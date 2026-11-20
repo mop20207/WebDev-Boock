@@ -153,24 +153,79 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderResults = results => {
-    visibleResults = results;
+    const allResults = results;
     activeIndex = -1;
     panel.replaceChildren();
 
-    if (!results.length) {
+    if (!allResults.length) {
       renderMessage("No encontramos coincidencias. Probá con el nombre de una etiqueta, propiedad, método o concepto.");
       return;
     }
 
     const heading = document.createElement("div");
     heading.className = "search-results-heading";
-    heading.textContent = results.length + (results.length === 1 ? " resultado" : " resultados") + " · HTML, CSS y JavaScript";
-    panel.append(heading);
+
+    const filters = document.createElement("div");
+    filters.className = "search-filter-row";
+
+    const makeFilter = (labelText, className) => {
+      const label = document.createElement("label");
+      label.className = "search-filter";
+      const caption = document.createElement("span");
+      caption.textContent = labelText;
+      const select = document.createElement("select");
+      select.className = className;
+      label.append(caption, select);
+      return { label, select };
+    };
+
+    const languageFilter = makeFilter("Lenguaje", "search-language-filter");
+    const categoryFilter = makeFilter("Categoría", "search-category-filter");
+
+    const addOption = (select, value, label) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      select.append(option);
+    };
+
+    addOption(languageFilter.select, "", "Todos");
+    ["HTML", "CSS", "JavaScript"].forEach(language => addOption(languageFilter.select, language, language));
+    addOption(categoryFilter.select, "", "Todas");
+
+    const updateCategoryOptions = () => {
+      const selectedLanguage = languageFilter.select.value;
+      categoryFilter.select.replaceChildren();
+      addOption(categoryFilter.select, "", "Todas");
+      const categories = [...new Set(catalog
+        .filter(item => !selectedLanguage || item.language === selectedLanguage)
+        .map(item => item.language + "|" + item.category))]
+        .sort((a, b) => a.localeCompare(b, "es"));
+      categories.forEach(value => {
+        const [language, category] = value.split("|");
+        addOption(categoryFilter.select, value, language + " · " + category);
+      });
+    };
+
+    updateCategoryOptions();
+    languageFilter.select.addEventListener("change", () => {
+      categoryFilter.select.value = "";
+      updateCategoryOptions();
+      renderFilteredResults();
+    });
+    categoryFilter.select.addEventListener("change", renderFilteredResults);
 
     const list = document.createElement("div");
     list.className = "search-results-list";
+    list.id = "globalSearchOptions";
+    list.setAttribute("role", "listbox");
+    list.setAttribute("aria-label", "Artículos encontrados");
+    input.setAttribute("aria-controls", list.id);
 
-    results.forEach(result => {
+    const footer = document.createElement("div");
+    footer.className = "search-results-footer";
+
+    const addResult = result => {
       const link = document.createElement("a");
       link.className = "search-result";
       link.href = result.href;
@@ -204,15 +259,41 @@ document.addEventListener("DOMContentLoaded", () => {
         setActive(index);
       });
       list.append(link);
-    });
+    };
 
-    const footer = document.createElement("div");
-    footer.className = "search-results-footer";
-    footer.textContent = "↑ ↓ para recorrer · Enter para abrir · Esc para cerrar";
+    const renderFilteredResults = () => {
+      const selectedLanguage = languageFilter.select.value;
+      const selectedCategory = categoryFilter.select.value;
+      const filtered = allResults.filter(result => {
+        if (selectedLanguage && result.language !== selectedLanguage) return false;
+        if (selectedCategory && (result.language + "|" + result.category) !== selectedCategory) return false;
+        return true;
+      });
 
-    panel.append(list, footer);
+      visibleResults = filtered.slice(0, 8);
+      activeIndex = -1;
+      list.replaceChildren();
+
+      if (!filtered.length) {
+        const empty = document.createElement("p");
+        empty.className = "search-filter-empty";
+        empty.textContent = "No hay coincidencias con estos filtros. Elegí otro lenguaje o categoría.";
+        list.append(empty);
+      } else {
+        visibleResults.forEach(addResult);
+      }
+
+      heading.textContent = filtered.length + (filtered.length === 1 ? " coincidencia" : " coincidencias");
+      footer.textContent = filtered.length > 8
+        ? "Se muestran 8 de " + filtered.length + " · ↑ ↓ para recorrer · Enter para abrir · Esc para cerrar"
+        : "↑ ↓ para recorrer · Enter para abrir · Esc para cerrar";
+    };
+
+    filters.append(languageFilter.label, categoryFilter.label);
+    panel.append(heading, filters, list, footer);
     panel.hidden = false;
     input.setAttribute("aria-expanded", "true");
+    renderFilteredResults();
   };
 
   const searchCatalog = query => {
@@ -248,7 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .filter(Boolean)
     .sort((a, b) => b.score - a.score || a.entry.title.localeCompare(b.entry.title, "es"))
-    .slice(0, 8)
     .map(item => item.entry);
   };
 
@@ -258,8 +338,10 @@ document.addEventListener("DOMContentLoaded", () => {
       closePanel();
       return;
     }
-    if (normalize(query).length < 2) {
-      renderMessage("Escribí al menos dos caracteres para buscar.");
+    const normalizedQuery = normalize(query);
+    const shortTerms = new Set(["a", "p", "b", "i", "u", "q", "s", "br", "hr", "em", "li", "ol", "ul", "dt", "dd", "th", "td", "tr", "h1", "h2", "h3", "h4", "h5", "h6"]);
+    if (normalizedQuery.length < 2 && !shortTerms.has(normalizedQuery)) {
+      renderMessage("Escribí al menos dos caracteres. También podés buscar etiquetas cortas como <a> o <p>.");
       return;
     }
 
