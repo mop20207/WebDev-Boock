@@ -50,10 +50,49 @@ function modelFor(name){if(!models[name])models[name]=monaco.editor.createModel(
 function renderTree(){const root=$("fileTree");root.innerHTML="";Object.keys(files).sort((a,b)=>a.localeCompare(b)).forEach(name=>{const row=document.createElement("div");row.className="file-row"+(name===active?" active":"");const ext=name.split(".").pop().toLowerCase();row.innerHTML='<span class="file-icon '+escapeHtml(ext)+'">'+iconFor(name)+'</span><span>'+escapeHtml(name)+'</span><button class="file-menu" title="Opciones">···</button>';row.addEventListener("click",()=>openFile(name));row.querySelector("button").addEventListener("click",e=>{e.stopPropagation();fileOptions(name)});root.appendChild(row);});}
 function renderTabs(){const tabs=$("editorTabs");tabs.innerHTML="";Object.keys(models).forEach(name=>{const b=document.createElement("button");b.className="editor-tab"+(name===active?" active":"");b.textContent=name;b.addEventListener("click",()=>openFile(name));tabs.appendChild(b);});}
 function openFile(name){if(!files[name])return;active=name;editor.setModel(modelFor(name));$("activeFileLabel").textContent=name;$("languageStatus").textContent=langFor(name).toUpperCase();renderTree();renderTabs();editor.focus();}
-function updatePreview(){if(!files["index.html"])return;let html=files["index.html"];const css=files["style.css"]||"",js=files["script.js"]||"";const style="<style>"+css.replace(/<\/style/gi,"<\\/style")+"</style>";const script="<script>const send=(type,args)=>parent.postMessage({webdevEditor:true,type,args:args.map(x=>{try{return typeof x==='object'?JSON.stringify(x):String(x)}catch(e){return String(x)}})},'*');['log','warn','error','info'].forEach(k=>{const old=console[k];console[k]=(...a)=>{send(k,a);old.apply(console,a)}});window.onerror=(m,s,l)=>send('error',[m+' (línea '+l+')']);<\/script><script>"+js.replace(/<\/script/gi,"<\\/script")+"</script>";if(/<\/head>/i.test(html))html=html.replace(/<\/head>/i,style+"</head>");else html=style+html;if(/<\/body>/i.test(html))html=html.replace(/<\/body>/i,script+"</body>");else html+=script;$("livePreview").srcdoc=html;$("previewState").textContent="Actualizada "+new Date().toLocaleTimeString();}
+function updatePreview(){
+ if(!files["index.html"])return;
+ let html=files["index.html"];
+ const parser=new DOMParser(),doc=parser.parseFromString(html,"text/html");
+ const linkedCss=new Set(),linkedJs=new Set();
+ doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(link=>{
+  const name=decodeURIComponent(link.getAttribute("href").split("/").pop().split("?")[0]);
+  if(files[name]!==undefined){const style=doc.createElement("style");style.textContent=files[name];link.replaceWith(style);linkedCss.add(name);}
+ });
+ doc.querySelectorAll("script[src]").forEach(old=>{
+  const name=decodeURIComponent(old.getAttribute("src").split("/").pop().split("?")[0]);
+  if(files[name]!==undefined){const script=doc.createElement("script");script.textContent=files[name];old.replaceWith(script);linkedJs.add(name);}
+ });
+ if(files["style.css"]&&!linkedCss.has("style.css")){const style=doc.createElement("style");style.textContent=files["style.css"];doc.head.appendChild(style);}
+ const bridge=doc.createElement("script");
+ bridge.textContent="const send=(type,args)=>parent.postMessage({webdevEditor:true,type,args:args.map(x=>{try{return typeof x==='object'?JSON.stringify(x):String(x)}catch(e){return String(x)}})},'*');['log','warn','error','info'].forEach(k=>{const old=console[k];console[k]=(...a)=>{send(k,a);old.apply(console,a)}});window.onerror=(m,s,l)=>send('error',[m+' (línea '+l+')']);";
+ doc.head.appendChild(bridge);
+ if(files["script.js"]&&!linkedJs.has("script.js")){const script=doc.createElement("script");script.textContent=files["script.js"];doc.body.appendChild(script);}
+ $("livePreview").srcdoc="<!doctype html>"+doc.documentElement.outerHTML;
+ $("previewState").textContent="Actualizada "+new Date().toLocaleTimeString();
+}
+function openPreviewTab(){
+ updatePreview();
+ const blob=new Blob([$("livePreview").srcdoc],{type:"text/html"});
+ const url=URL.createObjectURL(blob),tab=window.open(url,"_blank");
+ if(!tab){toast("Permití las ventanas emergentes para abrir la vista previa.");URL.revokeObjectURL(url);return;}
+ setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
 function schedulePreview(){clearTimeout(timer);timer=setTimeout(updatePreview,450);}
 function fileOptions(name){const action=prompt("Opciones para "+name+": escribe renombrar o eliminar");if(action==="eliminar"){if(!confirm("¿Eliminar "+name+"?"))return;delete files[name];if(models[name]){models[name].dispose();delete models[name];}if(active===name){active=Object.keys(files)[0]||"";if(active)openFile(active);}renderTree();renderTabs();save();schedulePreview();}else if(action==="renombrar"){const next=prompt("Nuevo nombre de archivo",name);if(!next||next===name||files[next]!==undefined)return toast("Nombre no válido o ya existente");files[next]=files[name];delete files[name];if(models[name]){models[name].dispose();delete models[name];}if(active===name)active=next;openFile(next);save();}}
-function createFile(){const name=prompt("Nombre del archivo (ejemplo: app.js, datos.json)");if(!name)return;if(!/^[\w.-]+$/.test(name)||name.startsWith(".")||files[name]!==undefined)return toast("Nombre no válido o ya existe");files[name]=name.endsWith(".html")?"<!doctype html>\n<html lang=\"es\">\n<head><meta charset=\"UTF-8\"><title>Nuevo archivo</title></head>\n<body>\n  \n</body>\n</html>":name.endsWith(".css")?"/* Escribe tus estilos aquí */\n":name.endsWith(".js")?"// Escribe tu JavaScript aquí\n":name.endsWith(".json")?"{\n  \n}\n":"";openFile(name);save();}
+function createFile(){
+ const dialog=$("fileDialog"),input=$("newFileName");
+ dialog.classList.add("open");dialog.setAttribute("aria-hidden","false");input.value="";input.focus();
+}
+function closeFileDialog(){ $("fileDialog").classList.remove("open");$("fileDialog").setAttribute("aria-hidden","true"); }
+function confirmCreateFile(){
+ let name=$("newFileName").value.trim();
+ if(!name)return toast("Escribí un nombre para el archivo.");
+ if(!/^[\\w.-]+$/.test(name)||name.startsWith(".")||files[name]!==undefined)return toast("Nombre no válido o ya existe.");
+ const ext=name.split(".").pop().toLowerCase();
+ files[name]=ext==="html"?"<!doctype html>\n<html lang=\"es\">\n<head><meta charset=\"UTF-8\"><title>Nuevo archivo</title></head>\n<body>\n  \n</body>\n</html>":ext==="css"?"/* Escribe tus estilos aquí */\n":ext==="js"?"// Escribe tu JavaScript aquí\n":ext==="json"?"{\n  \n}\n":"";
+ openFile(name);save();closeFileDialog();
+}
 function formatCurrent(){if(!editor)return;editor.getAction("editor.action.formatDocument")?.run();}
 function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mi-proyecto.zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
 function init(){
@@ -68,9 +107,9 @@ function init(){
   editor.onDidChangeCursorPosition(e=>$("cursorStatus").textContent="Línea "+e.position.lineNumber+", columna "+e.position.column);
   openFile(Object.keys(files).includes("index.html")?"index.html":Object.keys(files)[0]);updatePreview();
  });
- $("newFileBtn").addEventListener("click",createFile);$("newFileSmall").addEventListener("click",createFile);$("refreshFiles").addEventListener("click",()=>{if(confirm("¿Restaurar los archivos iniciales? Se perderán los cambios actuales.")){files={...starter};Object.values(models).forEach(m=>m.dispose());models={};openFile("index.html");save();updatePreview();}});
+ $("newFileBtn").addEventListener("click",createFile);$("newFileSmall").addEventListener("click",createFile);$("createFileConfirm").addEventListener("click",confirmCreateFile);$("cancelFile").addEventListener("click",closeFileDialog);$("cancelFile2").addEventListener("click",closeFileDialog);$("fileDialog").addEventListener("click",e=>{if(e.target===$("fileDialog"))closeFileDialog();});$("newFileName").addEventListener("keydown",e=>{if(e.key==="Enter")confirmCreateFile();});document.querySelectorAll("[data-ext]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-ext]").forEach(x=>x.classList.toggle("active",x===b));$("newFileName").value="nuevo."+b.dataset.ext;}));$("refreshFiles").addEventListener("click",()=>{if(confirm("¿Restaurar los archivos iniciales? Se perderán los cambios actuales.")){files={...starter};Object.values(models).forEach(m=>m.dispose());models={};openFile("index.html");save();updatePreview();}});
  $("downloadBtn").addEventListener("click",downloadZip);$("formatBtn").addEventListener("click",formatCurrent);$("closeTabBtn").addEventListener("click",()=>toast("Las pestañas se mantienen abiertas para no perder el trabajo."));
- $("runPreview").addEventListener("click",updatePreview);$("clearConsole").addEventListener("click",()=>$("consoleOutput").textContent="Consola limpia.");
+ $("runPreview").addEventListener("click",updatePreview);$("openPreviewTab").addEventListener("click",openPreviewTab);$("showPreviewBtn").addEventListener("click",()=>{$("workbench").classList.toggle("preview-open");$("showPreviewBtn").textContent=$("workbench").classList.contains("preview-open")?"‹ Volver al código":"▷ Vista previa";updatePreview();});$("clearConsole").addEventListener("click",()=>$("consoleOutput").textContent="Consola limpia.");
  $("importBtn").addEventListener("click",()=>$("filePicker").click());$("filePicker").addEventListener("change",async e=>{for(const f of e.target.files){if(f.size>1024*1024){toast(f.name+" supera 1 MB");continue;}files[f.name]=await f.text();if(models[f.name]){models[f.name].dispose();delete models[f.name];}}const first=e.target.files[0];if(first)openFile(first.name);save();renderTree();renderTabs();schedulePreview();e.target.value="";});
  document.querySelectorAll("[data-size]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-size]").forEach(x=>x.classList.toggle("active",x===b));$("livePreview").className=b.dataset.size==="desktop"?"":b.dataset.size;}));
  window.addEventListener("message",e=>{if(!e.data?.webdevEditor)return;const out=$("consoleOutput"),line="["+e.data.type.toUpperCase()+"] "+(e.data.args||[]).join(" ");out.textContent=(out.textContent==="La salida de JavaScript aparecerá aquí."?"":out.textContent+"\n")+line;});
