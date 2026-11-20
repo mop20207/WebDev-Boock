@@ -20,13 +20,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     description.textContent = category.desc;
     document.getElementById("categoryBreadcrumb").textContent = category.title;
     document.getElementById("categoryCount").textContent = category.items.length + " TEMAS";
-    list.innerHTML = category.items.map((item,index) =>
-      '<a class="css-subtopic" href="css-articulo.html?tema=' + encodeURIComponent(category.id) + '&item=' + index + '">' +
-        '<span class="css-subtopic-number">' + String(index+1).padStart(2,"0") + '</span>' +
-        '<span class="css-subtopic-copy"><h3>' + item + '</h3><p>Consultar este tema</p></span>' +
-        '<span class="css-subtopic-status">VER ARTÍCULO ↗</span>' +
-      '</a>'
-    ).join("");
+    const fragment = document.createDocumentFragment();
+    category.items.forEach((item, index) => {
+      const link = document.createElement("a");
+      link.className = "css-subtopic";
+      link.href = "css-articulo.html?tema=" + encodeURIComponent(category.id) + "&item=" + index;
+
+      const number = document.createElement("span");
+      number.className = "css-subtopic-number";
+      number.textContent = String(index + 1).padStart(2, "0");
+
+      const copy = document.createElement("span");
+      copy.className = "css-subtopic-copy";
+      const heading = document.createElement("h3");
+      heading.textContent = item;
+      const summary = document.createElement("p");
+      summary.textContent = "Consultar explicación, ejemplos y práctica";
+      copy.append(heading, summary);
+
+      const status = document.createElement("span");
+      status.className = "css-subtopic-status";
+      status.textContent = "VER ARTÍCULO ↗";
+      link.append(number, copy, status);
+      fragment.append(link);
+    });
+    list.replaceChildren(fragment);
   } catch (error) {
     title.textContent = "No se pudo cargar la categoría";
     description.textContent = "Comprobá tu conexión y volvé a intentarlo.";
