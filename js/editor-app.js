@@ -103,6 +103,7 @@ async function loadLocalFiles(){
  const preferred=localStorage.getItem("webdev-project-active")||"main";
  projectId=projectCatalog.some(p=>p.id===preferred)?preferred:projectCatalog[0].id;
  let record=localDB?await readLocalProject(localDB,projectId):readFallback(projectId);
+ if(record&&record.files===undefined&&projectId==="main")record={name:"Mi proyecto",files:record,folders:[]};
  if(!record&&projectId==="main"){
   const legacy=readFallback("main");
   if(legacy)record=legacy.files?legacy:{files:legacy,name:"Mi proyecto",folders:[]};
@@ -231,7 +232,7 @@ function removeEntry(path,isFolder){
  if(isFolder){for(const p of Object.keys(files))if(p.startsWith(path+"/"))delete files[p];for(const p of [...folders])if(p===path||p.startsWith(path+"/"))folders.delete(p);}
  else delete files[path];
  Object.values(models).forEach(m=>m.dispose());models={};
- if(!files[active])active="";
+ if(files[active]===undefined)active="";
  const next=active||Object.keys(files)[0];
  if(next)openFile(next);else{active="";editor.setModel(null);$("activeFileLabel").textContent="Sin archivo";renderTree();renderTabs();}
  save();updatePreview();
@@ -317,6 +318,7 @@ function showAction(mode,target="",isFolder=false){
   if(mode==="folder"){title.textContent="Crear carpeta";$("actionInputRow").firstChild.textContent="Nombre de la carpeta";input.placeholder="ejemplo";message.textContent=target?"Dentro de: "+target:"En la raíz del proyecto";}
   if(mode==="move"){title.textContent="Mover "+(isFolder?"carpeta":"archivo");folderSelect($("actionFolder"),isFolder?target:"");$("actionFolder").value=parentPath(target);}
   if(mode==="delete"){title.textContent="Eliminar "+(isFolder?"carpeta":"archivo");message.textContent="Se eliminará "+target+(isFolder?" y todos sus archivos y subcarpetas.":"")+". Esta acción no se puede deshacer.";}
+  if(mode==="reset"){title.textContent="Restablecer proyecto";message.textContent="Se reemplazarán todos los archivos y carpetas de este proyecto por los iniciales. No se puede deshacer.";confirm.textContent="Restablecer";confirm.classList.add("danger");}
   if(mode==="project-new"){title.textContent="Nuevo proyecto";input.placeholder="Nombre del proyecto";}
   if(mode==="project-rename"){title.textContent="Renombrar proyecto";input.value=projectCatalog.find(p=>p.id===target)?.name||"";}
   if(mode==="project-delete"){title.textContent="Eliminar proyecto";message.textContent="Se borrará definitivamente el proyecto «"+(projectCatalog.find(p=>p.id===target)?.name||"")+"» y todos sus archivos locales.";}
@@ -341,6 +343,8 @@ async function confirmAction(){
   moveEntry(target,$("actionFolder").value);
  }else if(mode==="delete"){
   removeEntry(target,folder);
+ }else if(mode==="reset"){
+  files={...starter};folders=new Set();collapsed.clear();active="";Object.values(models).forEach(m=>m.dispose());models={};openFile("index.html");save();updatePreview();
  }else if(mode==="project-new"){
   const id="project-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7);
   projectCatalog.push({id,name:value});await switchProject(id);
@@ -387,7 +391,7 @@ function renderProjects(){
 function openProjectsDialog(){renderProjects();$("projectsDialog").classList.add("open");$("projectsDialog").setAttribute("aria-hidden","false");}
 function closeProjectsDialog(){$("projectsDialog").classList.remove("open");$("projectsDialog").setAttribute("aria-hidden","true");}
 function formatCurrent(){if(!editor)return;editor.getAction("editor.action.formatDocument")?.run();}
-function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mi-proyecto.zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
+function downloadZip(){if(!window.JSZip)return toast("No se pudo cargar el módulo ZIP");const zip=new JSZip();Object.entries(files).forEach(([name,content])=>zip.file(name,content));zip.generateAsync({type:"blob"}).then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(projectName.replace(/[^a-z0-9_-]+/gi,"-")||"mi-proyecto")+".zip";a.click();URL.revokeObjectURL(a.href);toast("Proyecto descargado");});}
 function loadSettings(){
  try{const saved=JSON.parse(localStorage.getItem("webdev-editor-settings-v1")||"null");if(saved&&typeof saved==="object")settings={...settings,...saved};}catch(e){}
  settings.fontSize=Math.max(10,Math.min(26,Number(settings.fontSize)||13));
@@ -483,12 +487,17 @@ async function init(){
   const first=files["index.html"]!==undefined?"index.html":Object.keys(files)[0];if(first)openFile(first);else renderTree();applySettings();updatePreview();
  });
  initControls();
- $("newFileBtn").addEventListener("click",createFile);$("newFileSmall").addEventListener("click",createFile);$("createFileConfirm").addEventListener("click",confirmCreateFile);$("cancelFile").addEventListener("click",closeFileDialog);$("cancelFile2").addEventListener("click",closeFileDialog);$("fileDialog").addEventListener("click",e=>{if(e.target===$("fileDialog"))closeFileDialog();});$("newFileName").addEventListener("keydown",e=>{if(e.key==="Enter")confirmCreateFile();});document.querySelectorAll("[data-ext]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-ext]").forEach(x=>x.classList.toggle("active",x===b));$("newFileName").value="nuevo."+b.dataset.ext;}));$("refreshFiles").addEventListener("click",()=>{if(confirm("¿Restaurar los archivos iniciales? Se perderán los cambios actuales.")){files={...starter};Object.values(models).forEach(m=>m.dispose());models={};openFile("index.html");save();updatePreview();}});
- $("downloadBtn").addEventListener("click",downloadZip);$("formatBtn").addEventListener("click",formatCurrent);$("closeTabBtn").addEventListener("click",()=>toast("Las pestañas se mantienen abiertas para no perder el trabajo."));
- $("runPreview").addEventListener("click",updatePreview);$("openPreviewTab").addEventListener("click",openPreviewTab);$("showPreviewBtn").addEventListener("click",()=>{$("workbench").classList.toggle("preview-open");$("showPreviewBtn").textContent=$("workbench").classList.contains("preview-open")?"‹ Volver al código":"▷ Vista previa";updatePreview();});$("clearConsole").addEventListener("click",()=>$("consoleOutput").textContent="Consola limpia.");
+ $("newFileBtn").addEventListener("click",createFile);$("newFileSmall").addEventListener("click",createFile);$("createFileConfirm").addEventListener("click",confirmCreateFile);$("cancelFile").addEventListener("click",closeFileDialog);$("cancelFile2").addEventListener("click",closeFileDialog);$("fileDialog").addEventListener("click",e=>{if(e.target===$("fileDialog"))closeFileDialog();});$("newFileName").addEventListener("keydown",e=>{if(e.key==="Enter")confirmCreateFile();});document.querySelectorAll("[data-ext]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-ext]").forEach(x=>x.classList.toggle("active",x===b));$("newFileName").value="nuevo."+b.dataset.ext;}));$("refreshFiles").addEventListener("click",()=>showAction("reset"));
+ $("downloadBtn").addEventListener("click",downloadZip);$("formatBtn").addEventListener("click",formatCurrent);$("closeTabBtn").addEventListener("click",()=>{
+  if(!active||!models[active])return;
+  const closing=active;models[closing].dispose();delete models[closing];
+  const next=Object.keys(models).find(name=>files[name]!==undefined);
+  if(next)openFile(next);else{active="";editor.setModel(null);$("activeFileLabel").textContent="Sin archivo";renderTabs();renderTree();}
+ });
+ $("runPreview").addEventListener("click",updatePreview);$("openPreviewTab").addEventListener("click",openPreviewTab);$("showPreviewBtn").addEventListener("click",()=>{$("workbench").classList.remove("explorer-open");$("workbench").classList.toggle("preview-open");$("showPreviewBtn").textContent=$("workbench").classList.contains("preview-open")?"‹ Volver al código":"▷ Vista previa";updatePreview();});$("clearConsole").addEventListener("click",()=>$("consoleOutput").textContent="Consola limpia.");
  $("importBtn").addEventListener("click",()=>$("filePicker").click());$("filePicker").addEventListener("change",async e=>{for(const f of e.target.files){if(f.size>1024*1024){toast(f.name+" supera 1 MB");continue;}files[f.name]=await f.text();if(models[f.name]){models[f.name].dispose();delete models[f.name];}}const first=e.target.files[0];if(first)openFile(first.name);save();renderTree();renderTabs();schedulePreview();e.target.value="";});
  document.querySelectorAll("[data-size]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-size]").forEach(x=>x.classList.toggle("active",x===b));$("livePreview").className=b.dataset.size==="desktop"?"":b.dataset.size;}));
- window.addEventListener("message",e=>{if(!e.data?.webdevEditor)return;const out=$("consoleOutput"),line="["+e.data.type.toUpperCase()+"] "+(e.data.args||[]).join(" ");out.textContent=(out.textContent==="La salida de JavaScript aparecerá aquí."?"":out.textContent+"\n")+line;});
+ window.addEventListener("message",e=>{if(e.source!==$("livePreview").contentWindow||!e.data?.webdevEditor)return;const out=$("consoleOutput"),line="["+e.data.type.toUpperCase()+"] "+(e.data.args||[]).join(" ");out.textContent=(out.textContent==="La salida de JavaScript aparecerá aquí."?"":out.textContent+"\n")+line;});
  window.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="s"){e.preventDefault();saveNow();toast("Proyecto guardado en este dispositivo");}});
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
