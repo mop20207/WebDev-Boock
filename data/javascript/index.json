@@ -1,83 +1,871 @@
 {
-  "language": "JAVASCRIPT",
-  "description": "Índice de contenidos de JavaScript en WebDev Book.",
+  "version": 2,
+  "language": "JavaScript",
+  "description": "Índice sincronizado de categorías y artículos JavaScript.",
+  "articlesFile": "../js-articulos.json",
+  "categoriesSource": "../js-categorias.json",
   "sections": [
     {
       "id": "fundamentos",
       "title": "Fundamentos de JavaScript",
-      "description": "Contenido sobre fundamentos de javascript.",
-      "file": "fundamentos.json",
-      "order": 1
+      "description": "Conocé el lenguaje, cómo se ejecuta y las herramientas básicas para empezar a programar.",
+      "order": 1,
+      "articleCount": 10,
+      "articleIds": [
+        "fundamentos-0",
+        "fundamentos-1",
+        "fundamentos-2",
+        "fundamentos-3",
+        "fundamentos-4",
+        "fundamentos-5",
+        "fundamentos-6",
+        "fundamentos-7",
+        "fundamentos-8",
+        "fundamentos-9"
+      ],
+      "items": [
+        {
+          "id": "fundamentos-0",
+          "title": "Qué es JavaScript y para qué se utiliza"
+        },
+        {
+          "id": "fundamentos-1",
+          "title": "JavaScript y ECMAScript: lenguaje y estándar"
+        },
+        {
+          "id": "fundamentos-2",
+          "title": "Dónde se ejecuta JavaScript: navegador y Node.js"
+        },
+        {
+          "id": "fundamentos-3",
+          "title": "Cómo incluir JavaScript en HTML"
+        },
+        {
+          "id": "fundamentos-4",
+          "title": "La consola del navegador y DevTools"
+        },
+        {
+          "id": "fundamentos-5",
+          "title": "Primer programa: instrucciones y salida"
+        },
+        {
+          "id": "fundamentos-6",
+          "title": "Sintaxis, instrucciones y bloques"
+        },
+        {
+          "id": "fundamentos-7",
+          "title": "Comentarios de una y varias líneas"
+        },
+        {
+          "id": "fundamentos-8",
+          "title": "Errores de sintaxis, ejecución y lógica"
+        },
+        {
+          "id": "fundamentos-9",
+          "title": "Strict mode y buenas prácticas iniciales"
+        }
+      ]
     },
     {
       "id": "variables",
       "title": "Variables y tipos de datos",
-      "description": "Contenido sobre variables y tipos de datos.",
-      "file": "variables.json",
-      "order": 2
+      "description": "Aprendé a almacenar información, reconocer tipos de datos y convertir valores.",
+      "order": 2,
+      "articleCount": 10,
+      "articleIds": [
+        "variables-0",
+        "variables-1",
+        "variables-2",
+        "variables-3",
+        "variables-4",
+        "variables-5",
+        "variables-6",
+        "variables-7",
+        "variables-8",
+        "variables-9"
+      ],
+      "items": [
+        {
+          "id": "variables-0",
+          "title": "Qué es una variable y cómo se declara"
+        },
+        {
+          "id": "variables-1",
+          "title": "let, const y var: diferencias y alcance"
+        },
+        {
+          "id": "variables-2",
+          "title": "Reglas para nombrar identificadores"
+        },
+        {
+          "id": "variables-3",
+          "title": "Tipos primitivos: string, number, boolean, null, undefined, bigint y symbol"
+        },
+        {
+          "id": "variables-4",
+          "title": "typeof y detección de tipos"
+        },
+        {
+          "id": "variables-5",
+          "title": "Conversión explícita: String(), Number() y Boolean()"
+        },
+        {
+          "id": "variables-6",
+          "title": "Coerción y conversión implícita"
+        },
+        {
+          "id": "variables-7",
+          "title": "Template literals e interpolación"
+        },
+        {
+          "id": "variables-8",
+          "title": "Valores truthy y falsy"
+        },
+        {
+          "id": "variables-9",
+          "title": "Mutabilidad, referencias y valores constantes"
+        }
+      ]
     },
     {
       "id": "operadores",
       "title": "Operadores y condiciones",
-      "description": "Contenido sobre operadores y condiciones.",
-      "file": "operadores.json",
-      "order": 3
+      "description": "Construí expresiones, compará valores y hacé que tus programas tomen decisiones.",
+      "order": 3,
+      "articleCount": 11,
+      "articleIds": [
+        "operadores-0",
+        "operadores-1",
+        "operadores-2",
+        "operadores-3",
+        "operadores-4",
+        "operadores-5",
+        "operadores-6",
+        "operadores-7",
+        "operadores-8",
+        "operadores-9",
+        "operadores-10"
+      ],
+      "items": [
+        {
+          "id": "operadores-0",
+          "title": "Operadores aritméticos"
+        },
+        {
+          "id": "operadores-1",
+          "title": "Asignación y asignación compuesta"
+        },
+        {
+          "id": "operadores-2",
+          "title": "Comparación: ==, ===, != y !=="
+        },
+        {
+          "id": "operadores-3",
+          "title": "Operadores relacionales: <, >, <= y >="
+        },
+        {
+          "id": "operadores-4",
+          "title": "Operadores lógicos: &&, || y !"
+        },
+        {
+          "id": "operadores-5",
+          "title": "Precedencia y agrupación con paréntesis"
+        },
+        {
+          "id": "operadores-6",
+          "title": "Operador ternario"
+        },
+        {
+          "id": "operadores-7",
+          "title": "Nullish coalescing (??)"
+        },
+        {
+          "id": "operadores-8",
+          "title": "Optional chaining (?.)"
+        },
+        {
+          "id": "operadores-9",
+          "title": "Condicionales if, else if y else"
+        },
+        {
+          "id": "operadores-10",
+          "title": "switch y agrupación de casos"
+        }
+      ]
+    },
+    {
+      "id": "bucles",
+      "title": "Bucles e iteraciones",
+      "description": "Repetí instrucciones, recorré colecciones y controlá cada ciclo.",
+      "order": 4,
+      "articleCount": 10,
+      "articleIds": [
+        "bucles-0",
+        "bucles-1",
+        "bucles-2",
+        "bucles-3",
+        "bucles-4",
+        "bucles-5",
+        "bucles-6",
+        "bucles-7",
+        "bucles-8",
+        "bucles-9"
+      ],
+      "items": [
+        {
+          "id": "bucles-0",
+          "title": "Qué es una iteración y cuándo utilizarla"
+        },
+        {
+          "id": "bucles-1",
+          "title": "Bucle for"
+        },
+        {
+          "id": "bucles-2",
+          "title": "Bucle while"
+        },
+        {
+          "id": "bucles-3",
+          "title": "Bucle do...while"
+        },
+        {
+          "id": "bucles-4",
+          "title": "break y continue"
+        },
+        {
+          "id": "bucles-5",
+          "title": "Recorrer cadenas y arrays"
+        },
+        {
+          "id": "bucles-6",
+          "title": "for...of: recorrer valores iterables"
+        },
+        {
+          "id": "bucles-7",
+          "title": "for...in: recorrer propiedades enumerables"
+        },
+        {
+          "id": "bucles-8",
+          "title": "Métodos de iteración frente a bucles tradicionales"
+        },
+        {
+          "id": "bucles-9",
+          "title": "Bucles anidados y control de rendimiento"
+        }
+      ]
     },
     {
       "id": "funciones",
       "title": "Funciones",
-      "description": "Contenido sobre funciones.",
-      "file": "funciones.json",
-      "order": 4
+      "description": "Organizá tu código en bloques reutilizables que reciben datos y producen resultados.",
+      "order": 5,
+      "articleCount": 12,
+      "articleIds": [
+        "funciones-0",
+        "funciones-1",
+        "funciones-2",
+        "funciones-3",
+        "funciones-4",
+        "funciones-5",
+        "funciones-6",
+        "funciones-7",
+        "funciones-8",
+        "funciones-9",
+        "funciones-10",
+        "funciones-11"
+      ],
+      "items": [
+        {
+          "id": "funciones-0",
+          "title": "Qué es una función y por qué utilizarla"
+        },
+        {
+          "id": "funciones-1",
+          "title": "Declaración de función (function declaration)"
+        },
+        {
+          "id": "funciones-2",
+          "title": "Expresiones de función"
+        },
+        {
+          "id": "funciones-3",
+          "title": "Parámetros y argumentos"
+        },
+        {
+          "id": "funciones-4",
+          "title": "return y valores de retorno"
+        },
+        {
+          "id": "funciones-5",
+          "title": "Parámetros por defecto"
+        },
+        {
+          "id": "funciones-6",
+          "title": "Funciones flecha (arrow functions)"
+        },
+        {
+          "id": "funciones-7",
+          "title": "Scope global, de función y de bloque"
+        },
+        {
+          "id": "funciones-8",
+          "title": "Hoisting de declaraciones y expresiones"
+        },
+        {
+          "id": "funciones-9",
+          "title": "Closures y alcance léxico"
+        },
+        {
+          "id": "funciones-10",
+          "title": "Callbacks: funciones como argumentos"
+        },
+        {
+          "id": "funciones-11",
+          "title": "Recursividad y funciones puras"
+        }
+      ]
     },
     {
       "id": "arrays-objetos",
       "title": "Arrays y objetos",
-      "description": "Contenido sobre arrays y objetos.",
-      "file": "arrays-objetos.json",
-      "order": 5
+      "description": "Modelá información y trabajá con colecciones y estructuras de datos.",
+      "order": 6,
+      "articleCount": 15,
+      "articleIds": [
+        "arrays-objetos-0",
+        "arrays-objetos-1",
+        "arrays-objetos-2",
+        "arrays-objetos-3",
+        "arrays-objetos-4",
+        "arrays-objetos-5",
+        "arrays-objetos-6",
+        "arrays-objetos-7",
+        "arrays-objetos-8",
+        "arrays-objetos-9",
+        "arrays-objetos-10",
+        "arrays-objetos-11",
+        "arrays-objetos-12",
+        "arrays-objetos-13",
+        "arrays-objetos-14"
+      ],
+      "items": [
+        {
+          "id": "arrays-objetos-0",
+          "title": "Qué es un array y cómo crearlo"
+        },
+        {
+          "id": "arrays-objetos-1",
+          "title": "Índices, length y acceso a elementos"
+        },
+        {
+          "id": "arrays-objetos-2",
+          "title": "Agregar y quitar elementos: push, pop, shift y unshift"
+        },
+        {
+          "id": "arrays-objetos-3",
+          "title": "slice() y splice()"
+        },
+        {
+          "id": "arrays-objetos-4",
+          "title": "Recorrer arrays: forEach()"
+        },
+        {
+          "id": "arrays-objetos-5",
+          "title": "Transformar y filtrar: map() y filter()"
+        },
+        {
+          "id": "arrays-objetos-6",
+          "title": "Buscar elementos: find(), includes() y indexOf()"
+        },
+        {
+          "id": "arrays-objetos-7",
+          "title": "Reducir colecciones con reduce()"
+        },
+        {
+          "id": "arrays-objetos-8",
+          "title": "Ordenar y revertir: sort() y reverse()"
+        },
+        {
+          "id": "arrays-objetos-9",
+          "title": "Qué es un objeto y cómo crearlo"
+        },
+        {
+          "id": "arrays-objetos-10",
+          "title": "Propiedades, métodos y acceso con punto o corchetes"
+        },
+        {
+          "id": "arrays-objetos-11",
+          "title": "Desestructuración de arrays y objetos"
+        },
+        {
+          "id": "arrays-objetos-12",
+          "title": "Spread y rest syntax"
+        },
+        {
+          "id": "arrays-objetos-13",
+          "title": "Object.keys(), values() y entries()"
+        },
+        {
+          "id": "arrays-objetos-14",
+          "title": "Copias superficiales y referencias"
+        }
+      ]
     },
     {
       "id": "dom",
       "title": "DOM",
-      "description": "Contenido sobre dom.",
-      "file": "dom.json",
-      "order": 6
+      "description": "Conectá JavaScript con el documento HTML para consultar y modificar sus elementos.",
+      "order": 7,
+      "articleCount": 13,
+      "articleIds": [
+        "dom-0",
+        "dom-1",
+        "dom-2",
+        "dom-3",
+        "dom-4",
+        "dom-5",
+        "dom-6",
+        "dom-7",
+        "dom-8",
+        "dom-9",
+        "dom-10",
+        "dom-11",
+        "dom-12"
+      ],
+      "items": [
+        {
+          "id": "dom-0",
+          "title": "Qué es el DOM y cómo representa el documento"
+        },
+        {
+          "id": "dom-1",
+          "title": "window y document"
+        },
+        {
+          "id": "dom-2",
+          "title": "Seleccionar elementos: getElementById() y querySelector()"
+        },
+        {
+          "id": "dom-3",
+          "title": "Seleccionar grupos: querySelectorAll()"
+        },
+        {
+          "id": "dom-4",
+          "title": "Leer y modificar textContent e innerHTML"
+        },
+        {
+          "id": "dom-5",
+          "title": "Atributos: getAttribute(), setAttribute() y removeAttribute()"
+        },
+        {
+          "id": "dom-6",
+          "title": "Clases con classList"
+        },
+        {
+          "id": "dom-7",
+          "title": "Crear y agregar elementos: createElement() y append()"
+        },
+        {
+          "id": "dom-8",
+          "title": "Insertar, reemplazar y eliminar nodos"
+        },
+        {
+          "id": "dom-9",
+          "title": "Navegar por padres, hijos y hermanos"
+        },
+        {
+          "id": "dom-10",
+          "title": "Estilos en línea y propiedades CSS"
+        },
+        {
+          "id": "dom-11",
+          "title": "Recorrer el DOM y comprender el árbol"
+        },
+        {
+          "id": "dom-12",
+          "title": "Delegación de eventos en el DOM"
+        }
+      ]
     },
     {
       "id": "eventos",
       "title": "Eventos",
-      "description": "Contenido sobre eventos.",
-      "file": "eventos.json",
-      "order": 7
+      "description": "Respondé a clics, teclas, envíos de formularios y otras acciones del usuario.",
+      "order": 8,
+      "articleCount": 12,
+      "articleIds": [
+        "eventos-0",
+        "eventos-1",
+        "eventos-2",
+        "eventos-3",
+        "eventos-4",
+        "eventos-5",
+        "eventos-6",
+        "eventos-7",
+        "eventos-8",
+        "eventos-9",
+        "eventos-10",
+        "eventos-11"
+      ],
+      "items": [
+        {
+          "id": "eventos-0",
+          "title": "Qué es un evento y cómo se propaga"
+        },
+        {
+          "id": "eventos-1",
+          "title": "addEventListener() y removeEventListener()"
+        },
+        {
+          "id": "eventos-2",
+          "title": "Objeto Event y sus propiedades"
+        },
+        {
+          "id": "eventos-3",
+          "title": "Evento click y botones"
+        },
+        {
+          "id": "eventos-4",
+          "title": "Eventos de teclado: keydown y keyup"
+        },
+        {
+          "id": "eventos-5",
+          "title": "Eventos de formulario: input, change y submit"
+        },
+        {
+          "id": "eventos-6",
+          "title": "preventDefault() y stopPropagation()"
+        },
+        {
+          "id": "eventos-7",
+          "title": "Bubbling y capturing"
+        },
+        {
+          "id": "eventos-8",
+          "title": "Delegación de eventos"
+        },
+        {
+          "id": "eventos-9",
+          "title": "Eventos del mouse y puntero"
+        },
+        {
+          "id": "eventos-10",
+          "title": "Eventos de carga: DOMContentLoaded y load"
+        },
+        {
+          "id": "eventos-11",
+          "title": "Eventos de foco: focus y blur"
+        }
+      ]
     },
     {
       "id": "asincronia",
       "title": "Asincronía",
-      "description": "Contenido sobre asincronía.",
-      "file": "asincronia.json",
-      "order": 8
+      "description": "Entendé cómo JavaScript organiza tareas que terminan en distintos momentos.",
+      "order": 9,
+      "articleCount": 12,
+      "articleIds": [
+        "asincronia-0",
+        "asincronia-1",
+        "asincronia-2",
+        "asincronia-3",
+        "asincronia-4",
+        "asincronia-5",
+        "asincronia-6",
+        "asincronia-7",
+        "asincronia-8",
+        "asincronia-9",
+        "asincronia-10",
+        "asincronia-11"
+      ],
+      "items": [
+        {
+          "id": "asincronia-0",
+          "title": "Código síncrono y asíncrono"
+        },
+        {
+          "id": "asincronia-1",
+          "title": "Call stack y modelo de ejecución"
+        },
+        {
+          "id": "asincronia-2",
+          "title": "setTimeout() y setInterval()"
+        },
+        {
+          "id": "asincronia-3",
+          "title": "Qué es un callback"
+        },
+        {
+          "id": "asincronia-4",
+          "title": "Callback hell y cómo evitarlo"
+        },
+        {
+          "id": "asincronia-5",
+          "title": "Qué es una Promise"
+        },
+        {
+          "id": "asincronia-6",
+          "title": "Estados de una promesa y then(), catch(), finally()"
+        },
+        {
+          "id": "asincronia-7",
+          "title": "Promise.all(), allSettled(), race() y any()"
+        },
+        {
+          "id": "asincronia-8",
+          "title": "async y await"
+        },
+        {
+          "id": "asincronia-9",
+          "title": "Manejo de errores con try...catch"
+        },
+        {
+          "id": "asincronia-10",
+          "title": "Event Loop, tareas y microtareas"
+        },
+        {
+          "id": "asincronia-11",
+          "title": "AbortController y cancelación de operaciones"
+        }
+      ]
     },
     {
-      "id": "fetch-api",
+      "id": "fetch-apis",
       "title": "Fetch y APIs",
-      "description": "Contenido sobre fetch y apis.",
-      "file": "fetch-api.json",
-      "order": 9
+      "description": "Comunicá tu aplicación con servidores, servicios externos y datos en formato JSON.",
+      "order": 10,
+      "articleCount": 13,
+      "articleIds": [
+        "fetch-apis-0",
+        "fetch-apis-1",
+        "fetch-apis-2",
+        "fetch-apis-3",
+        "fetch-apis-4",
+        "fetch-apis-5",
+        "fetch-apis-6",
+        "fetch-apis-7",
+        "fetch-apis-8",
+        "fetch-apis-9",
+        "fetch-apis-10",
+        "fetch-apis-11",
+        "fetch-apis-12"
+      ],
+      "items": [
+        {
+          "id": "fetch-apis-0",
+          "title": "Qué es HTTP y cómo funciona una petición"
+        },
+        {
+          "id": "fetch-apis-1",
+          "title": "Request y Response"
+        },
+        {
+          "id": "fetch-apis-2",
+          "title": "fetch(): realizar una petición"
+        },
+        {
+          "id": "fetch-apis-3",
+          "title": "Métodos HTTP: GET, POST, PUT, PATCH y DELETE"
+        },
+        {
+          "id": "fetch-apis-4",
+          "title": "Encabezados y Content-Type"
+        },
+        {
+          "id": "fetch-apis-5",
+          "title": "Enviar datos JSON con JSON.stringify()"
+        },
+        {
+          "id": "fetch-apis-6",
+          "title": "Leer respuestas con response.json() y response.text()"
+        },
+        {
+          "id": "fetch-apis-7",
+          "title": "Códigos de estado HTTP y response.ok"
+        },
+        {
+          "id": "fetch-apis-8",
+          "title": "Manejo de errores de red y servidor"
+        },
+        {
+          "id": "fetch-apis-9",
+          "title": "FormData y envío de archivos"
+        },
+        {
+          "id": "fetch-apis-10",
+          "title": "CORS: origen, permisos y errores comunes"
+        },
+        {
+          "id": "fetch-apis-11",
+          "title": "Consumo de APIs públicas"
+        },
+        {
+          "id": "fetch-apis-12",
+          "title": "URL, URLSearchParams y parámetros de consulta"
+        }
+      ]
     },
     {
       "id": "almacenamiento",
       "title": "Almacenamiento",
-      "description": "Contenido sobre almacenamiento.",
-      "file": "almacenamiento.json",
-      "order": 10
+      "description": "Guardá información en el navegador y recuperala cuando la aplicación la necesite.",
+      "order": 11,
+      "articleCount": 12,
+      "articleIds": [
+        "almacenamiento-0",
+        "almacenamiento-1",
+        "almacenamiento-2",
+        "almacenamiento-3",
+        "almacenamiento-4",
+        "almacenamiento-5",
+        "almacenamiento-6",
+        "almacenamiento-7",
+        "almacenamiento-8",
+        "almacenamiento-9",
+        "almacenamiento-10",
+        "almacenamiento-11"
+      ],
+      "items": [
+        {
+          "id": "almacenamiento-0",
+          "title": "Almacenamiento del lado del cliente"
+        },
+        {
+          "id": "almacenamiento-1",
+          "title": "localStorage: setItem(), getItem() y removeItem()"
+        },
+        {
+          "id": "almacenamiento-2",
+          "title": "sessionStorage y duración de los datos"
+        },
+        {
+          "id": "almacenamiento-3",
+          "title": "clear() y administración de claves"
+        },
+        {
+          "id": "almacenamiento-4",
+          "title": "Guardar objetos con JSON.stringify()"
+        },
+        {
+          "id": "almacenamiento-5",
+          "title": "Recuperar objetos con JSON.parse()"
+        },
+        {
+          "id": "almacenamiento-6",
+          "title": "Cookies: conceptos y usos"
+        },
+        {
+          "id": "almacenamiento-7",
+          "title": "IndexedDB: bases de datos en el navegador"
+        },
+        {
+          "id": "almacenamiento-8",
+          "title": "Crear una base y manejar versiones"
+        },
+        {
+          "id": "almacenamiento-9",
+          "title": "Object stores, transacciones y claves"
+        },
+        {
+          "id": "almacenamiento-10",
+          "title": "Agregar, consultar, actualizar y eliminar registros"
+        },
+        {
+          "id": "almacenamiento-11",
+          "title": "Cuotas, privacidad y límites del almacenamiento"
+        }
+      ]
     },
     {
-      "id": "retos",
-      "title": "Retos de JavaScript",
-      "description": "Contenido sobre retos de javascript.",
-      "file": "retos.json",
-      "order": 11
+      "id": "apis-navegador",
+      "title": "APIs del navegador y herramientas",
+      "description": "Explorá las capacidades del navegador y herramientas que amplían JavaScript.",
+      "order": 12,
+      "articleCount": 16,
+      "articleIds": [
+        "apis-navegador-0",
+        "apis-navegador-1",
+        "apis-navegador-2",
+        "apis-navegador-3",
+        "apis-navegador-4",
+        "apis-navegador-5",
+        "apis-navegador-6",
+        "apis-navegador-7",
+        "apis-navegador-8",
+        "apis-navegador-9",
+        "apis-navegador-10",
+        "apis-navegador-11",
+        "apis-navegador-12",
+        "apis-navegador-13",
+        "apis-navegador-14",
+        "apis-navegador-15"
+      ],
+      "items": [
+        {
+          "id": "apis-navegador-0",
+          "title": "API Date: fechas y horas"
+        },
+        {
+          "id": "apis-navegador-1",
+          "title": "Intl: formato internacional de números y fechas"
+        },
+        {
+          "id": "apis-navegador-2",
+          "title": "Math y generación de valores aleatorios"
+        },
+        {
+          "id": "apis-navegador-3",
+          "title": "JSON y estructuración de datos"
+        },
+        {
+          "id": "apis-navegador-4",
+          "title": "Timers y requestAnimationFrame()"
+        },
+        {
+          "id": "apis-navegador-5",
+          "title": "matchMedia() y preferencias del dispositivo"
+        },
+        {
+          "id": "apis-navegador-6",
+          "title": "IntersectionObserver y observación de elementos"
+        },
+        {
+          "id": "apis-navegador-7",
+          "title": "MutationObserver y cambios en el DOM"
+        },
+        {
+          "id": "apis-navegador-8",
+          "title": "Visibility API y estado de la pestaña"
+        },
+        {
+          "id": "apis-navegador-9",
+          "title": "Geolocation API y permisos"
+        },
+        {
+          "id": "apis-navegador-10",
+          "title": "Clipboard API y portapapeles"
+        },
+        {
+          "id": "apis-navegador-11",
+          "title": "File API, FileReader, Blob y URL.createObjectURL()"
+        },
+        {
+          "id": "apis-navegador-12",
+          "title": "Drag and Drop API"
+        },
+        {
+          "id": "apis-navegador-13",
+          "title": "Notification API y permisos"
+        },
+        {
+          "id": "apis-navegador-14",
+          "title": "Módulos JavaScript: import y export"
+        },
+        {
+          "id": "apis-navegador-15",
+          "title": "Manejo de errores y debugging con DevTools"
+        }
+      ]
     }
   ]
 }
