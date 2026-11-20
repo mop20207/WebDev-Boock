@@ -1,0 +1,234 @@
+{
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos de JavaScript",
+      "desc": "Conocé el lenguaje, cómo se ejecuta y las herramientas básicas para empezar a programar.",
+      "items": [
+        "Qué es JavaScript y para qué se utiliza",
+        "JavaScript y ECMAScript: lenguaje y estándar",
+        "Dónde se ejecuta JavaScript: navegador y Node.js",
+        "Cómo incluir JavaScript en HTML",
+        "La consola del navegador y DevTools",
+        "Primer programa: instrucciones y salida",
+        "Sintaxis, instrucciones y bloques",
+        "Comentarios de una y varias líneas",
+        "Errores de sintaxis, ejecución y lógica",
+        "Strict mode y buenas prácticas iniciales"
+      ]
+    },
+    {
+      "id": "variables",
+      "title": "Variables y tipos de datos",
+      "desc": "Aprendé a almacenar información, reconocer tipos de datos y convertir valores.",
+      "items": [
+        "Qué es una variable y cómo se declara",
+        "let, const y var: diferencias y alcance",
+        "Reglas para nombrar identificadores",
+        "Tipos primitivos: string, number, boolean, null, undefined, bigint y symbol",
+        "typeof y detección de tipos",
+        "Conversión explícita: String(), Number() y Boolean()",
+        "Coerción y conversión implícita",
+        "Template literals e interpolación",
+        "Valores truthy y falsy",
+        "Mutabilidad, referencias y valores constantes"
+      ]
+    },
+    {
+      "id": "operadores",
+      "title": "Operadores y condiciones",
+      "desc": "Construí expresiones, compará valores y hacé que tus programas tomen decisiones.",
+      "items": [
+        "Operadores aritméticos",
+        "Asignación y asignación compuesta",
+        "Comparación: ==, ===, != y !==",
+        "Operadores relacionales: <, >, <= y >=",
+        "Operadores lógicos: &&, || y !",
+        "Precedencia y agrupación con paréntesis",
+        "Operador ternario",
+        "Nullish coalescing (??)",
+        "Optional chaining (?.)",
+        "Condicionales if, else if y else",
+        "switch y agrupación de casos"
+      ]
+    },
+    {
+      "id": "bucles",
+      "title": "Bucles e iteraciones",
+      "desc": "Repetí instrucciones, recorré colecciones y controlá cada ciclo.",
+      "items": [
+        "Qué es una iteración y cuándo utilizarla",
+        "Bucle for",
+        "Bucle while",
+        "Bucle do...while",
+        "break y continue",
+        "Recorrer cadenas y arrays",
+        "for...of: recorrer valores iterables",
+        "for...in: recorrer propiedades enumerables",
+        "迭 Métodos de iteración frente a bucles tradicionales",
+        "Bucles anidados y control de rendimiento"
+      ]
+    },
+    {
+      "id": "funciones",
+      "title": "Funciones",
+      "desc": "Organizá tu código en bloques reutilizables que reciben datos y producen resultados.",
+      "items": [
+        "Qué es una función y por qué utilizarla",
+        "Declaración de función (function declaration)",
+        "Expresiones de función",
+        "Parámetros y argumentos",
+        "return y valores de retorno",
+        "Parámetros por defecto",
+        "Funciones flecha (arrow functions)",
+        "Scope global, de función y de bloque",
+        "Hoisting de declaraciones y expresiones",
+        "Closures y alcance léxico",
+        "Callbacks: funciones como argumentos",
+        "Recursividad y funciones puras"
+      ]
+    },
+    {
+      "id": "arrays-objetos",
+      "title": "Arrays y objetos",
+      "desc": "Modelá información y trabajá con colecciones y estructuras de datos.",
+      "items": [
+        "Qué es un array y cómo crearlo",
+        "Índices, length y acceso a elementos",
+        "Agregar y quitar elementos: push, pop, shift y unshift",
+        "slice() y splice()",
+        "Recorrer arrays: forEach()",
+        "Transformar y filtrar: map() y filter()",
+        "Buscar elementos: find(), includes() y indexOf()",
+        "Reducir colecciones con reduce()",
+        "Ordenar y revertir: sort() y reverse()",
+        "Qué es un objeto y cómo crearlo",
+        "Propiedades, métodos y acceso con punto o corchetes",
+        "Desestructuración de arrays y objetos",
+        "Spread y rest syntax",
+        "Object.keys(), values() y entries()",
+        "Copias superficiales y referencias"
+      ]
+    },
+    {
+      "id": "dom",
+      "title": "DOM",
+      "desc": "Conectá JavaScript con el documento HTML para consultar y modificar sus elementos.",
+      "items": [
+        "Qué es el DOM y cómo representa el documento",
+        "window y document",
+        "Seleccionar elementos: getElementById() y querySelector()",
+        "Seleccionar grupos: querySelectorAll()",
+        "Leer y modificar textContent e innerHTML",
+        "Atributos: getAttribute(), setAttribute() y removeAttribute()",
+        "Clases con classList",
+        "Crear y agregar elementos: createElement() y append()",
+        "Insertar, reemplazar y eliminar nodos",
+        "Navegar por padres, hijos y hermanos",
+        "Estilos en línea y propiedades CSS",
+        "Recorrer el DOM y comprender el árbol",
+        "Delegación de eventos en el DOM"
+      ]
+    },
+    {
+      "id": "eventos",
+      "title": "Eventos",
+      "desc": "Respondé a clics, teclas, envíos de formularios y otras acciones del usuario.",
+      "items": [
+        "Qué es un evento y cómo se propaga",
+        "addEventListener() y removeEventListener()",
+        "Objeto Event y sus propiedades",
+        "Evento click y botones",
+        "Eventos de teclado: keydown y keyup",
+        "Eventos de formulario: input, change y submit",
+        "preventDefault() y stopPropagation()",
+        "Bubbling y capturing",
+        "Delegación de eventos",
+        "Eventos del mouse y puntero",
+        "Eventos de carga: DOMContentLoaded y load",
+        "Eventos de foco: focus y blur"
+      ]
+    },
+    {
+      "id": "asincronia",
+      "title": "Asincronía",
+      "desc": "Entendé cómo JavaScript organiza tareas que terminan en distintos momentos.",
+      "items": [
+        "Código síncrono y asíncrono",
+        "Call stack y modelo de ejecución",
+        "setTimeout() y setInterval()",
+        "Qué es un callback",
+        "Callback hell y cómo evitarlo",
+        "Qué es una Promise",
+        "Estados de una promesa y then(), catch(), finally()",
+        "Promise.all(), allSettled(), race() y any()",
+        "async y await",
+        "Manejo de errores con try...catch",
+        "Event Loop, tareas y microtareas",
+        "AbortController y cancelación de operaciones"
+      ]
+    },
+    {
+      "id": "fetch-apis",
+      "title": "Fetch y APIs",
+      "desc": "Comunicá tu aplicación con servidores, servicios externos y datos en formato JSON.",
+      "items": [
+        "Qué es HTTP y cómo funciona una petición",
+        "Request y Response",
+        "fetch(): realizar una petición",
+        "Métodos HTTP: GET, POST, PUT, PATCH y DELETE",
+        "Encabezados y Content-Type",
+        "Enviar datos JSON con JSON.stringify()",
+        "Leer respuestas con response.json() y response.text()",
+        "Códigos de estado HTTP y response.ok",
+        "Manejo de errores de red y servidor",
+        "FormData y envío de archivos",
+        "CORS: origen, permisos y errores comunes",
+        "Consumo de APIs públicas",
+        "URL, URLSearchParams y parámetros de consulta"
+      ]
+    },
+    {
+      "id": "almacenamiento",
+      "title": "Almacenamiento",
+      "desc": "Guardá información en el navegador y recuperala cuando la aplicación la necesite.",
+      "items": [
+        "Almacenamiento del lado del cliente",
+        "localStorage: setItem(), getItem() y removeItem()",
+        "sessionStorage y duración de los datos",
+        "clear() y administración de claves",
+        "Guardar objetos con JSON.stringify()",
+        "Recuperar objetos con JSON.parse()",
+        "Cookies: conceptos y usos",
+        "IndexedDB: bases de datos en el navegador",
+        "Crear una base y manejar versiones",
+        "Object stores, transacciones y claves",
+        "Agregar, consultar, actualizar y eliminar registros",
+        "Cuotas, privacidad y límites del almacenamiento"
+      ]
+    },
+    {
+      "id": "apis-navegador",
+      "title": "APIs del navegador y herramientas",
+      "desc": "Explorá las capacidades del navegador y herramientas que amplían JavaScript.",
+      "items": [
+        "API Date: fechas y horas",
+        "Intl: formato internacional de números y fechas",
+        "Math y generación de valores aleatorios",
+        "JSON y estructuración de datos",
+        "Timers y requestAnimationFrame()",
+        "matchMedia() y preferencias del dispositivo",
+        "IntersectionObserver y observación de elementos",
+        "MutationObserver y cambios en el DOM",
+        "Visibility API y estado de la pestaña",
+        "Geolocation API y permisos",
+        "Clipboard API y portapapeles",
+        "File API, FileReader, Blob y URL.createObjectURL()",
+        "Drag and Drop API",
+        "Notification API y permisos",
+        "Módulos JavaScript: import y export",
+        "Manejo de errores y debugging con DevTools"
+      ]
+    }
+  ]
+}
