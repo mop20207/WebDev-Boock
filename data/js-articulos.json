@@ -13730,7 +13730,7 @@
           {
             "title": "Comprobación · probá y compará",
             "description": "Prueba adicional de «Métodos HTTP: GET, POST, PUT, PATCH y DELETE». Anticipá qué ocurrirá antes de ejecutar el código.",
-            "code": "// response.json() consume el cuerpo; guardá el resultado una sola vez.\nconst respuesta = await fetch(\"https://jsonplaceholder.typicode.com/posts/1\");\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst post = await respuesta.json();\nconsole.log(post.title);"
+            "code": "async function ejecutarEjemplo() {\n// response.json() consume el cuerpo; guardá el resultado una sola vez.\nconst respuesta = await fetch(\"https://jsonplaceholder.typicode.com/posts/1\");\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst post = await respuesta.json();\nconsole.log(post.title);\n}\nejecutarEjemplo().catch(console.error);"
           }
         ],
         "lab": {
@@ -13980,7 +13980,7 @@
           {
             "title": "Comprobación · probá y compará",
             "description": "Prueba adicional de «Enviar datos JSON con JSON.stringify()». Anticipá qué ocurrirá antes de ejecutar el código.",
-            "code": "// response.json() consume el cuerpo; guardá el resultado una sola vez.\nconst respuesta = await fetch(\"https://jsonplaceholder.typicode.com/posts/1\");\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst post = await respuesta.json();\nconsole.log(post.title);"
+            "code": "async function ejecutarEjemplo() {\n// response.json() consume el cuerpo; guardá el resultado una sola vez.\nconst respuesta = await fetch(\"https://jsonplaceholder.typicode.com/posts/1\");\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst post = await respuesta.json();\nconsole.log(post.title);\n}\nejecutarEjemplo().catch(console.error);"
           }
         ],
         "lab": {
