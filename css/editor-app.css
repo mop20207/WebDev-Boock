@@ -76,3 +76,8 @@
 .code-workbench{height:var(--editor-vh,100dvh)}
 .workbench{height:calc(var(--editor-vh,100dvh) - 58px)}
 @media(max-width:560px){.workbench{height:calc(var(--editor-vh,100dvh) - 52px)}}
+
+
+.settings-quick{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:15px 0}
+.settings-quick button{border:1px solid #3d5885;background:#1c3151;color:#dce7ff;border-radius:7px;padding:10px 6px;font-size:11px;cursor:pointer}
+.settings-quick button:hover{background:#2a4977}
