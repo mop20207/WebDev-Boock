@@ -16,6 +16,7 @@
   <script defer src="js/search.js"></script>
   <script defer src="js/editor.js"></script>
   <script defer src="js/app.js"></script>
+<script defer src="js/learning-progress.js"></script>
 </head>
 <body data-page="home">
 <div class="app-shell">
@@ -110,7 +111,7 @@
           <div class="eyebrow">SEGUÍ PRACTICANDO</div><h2>Accesos rápidos</h2>
           <div class="quick-grid">
             <a class="quick-tile" href="#languages"><span>⌘</span><b>Ejemplos de código</b><small>Consultá la sintaxis</small><i>→</i></a>
-            <a class="quick-tile" href="#languages"><span>▱</span><b>Lenguajes</b><small>Volvé a los fundamentos</small><i>→</i></a>
+            <a class="quick-tile" href="#favoritos"><span>☆</span><b>Favoritos</b><small>Volvé a tus artículos guardados</small><i>→</i></a>
             <a class="quick-tile" href="pages/html.html"><span>✎</span><b>Aprender</b><small>Explorá los temas</small><i>→</i></a>
             <a class="quick-tile" href="#learning-progress"><span>◴</span><b>Mi progreso</b><small>Revisá tu avance</small><i>→</i></a>
           </div>
@@ -119,6 +120,15 @@
           <div class="progress-panel-icon">♜</div><div class="eyebrow">TU RECORRIDO</div><h2>Todo empieza<br>con el primer paso.</h2>
           <p>Cuando comiences a completar las lecciones, acá vas a poder consultar tu avance.</p>
           <div class="overall-progress"><span>Progreso general</span><b>0 de 3 lenguajes</b></div><div class="progress-track overall-track"><i style="width:0%"></i></div>
+        </div>
+      </section>
+      <section class="favorites-section panel" id="favoritos" aria-labelledby="favoritesHeading">
+        <div class="favorites-heading">
+          <div><div class="eyebrow">TU BIBLIOTECA PERSONAL</div><h2 id="favoritesHeading">Artículos favoritos</h2></div>
+          <span class="favorites-count" id="favoriteCount">0 guardados</span>
+        </div>
+        <div class="favorites-grid" id="favoritesList">
+          <p class="favorites-empty">Todavía no guardaste artículos. Abrí un tema y elegí “Guardar en favoritos” para tenerlo a mano.</p>
         </div>
       </section>
       <footer class="footer"><span>WebDev Book · Aprendé construyendo.</span><span>Versión inicial 0.3</span></footer>
