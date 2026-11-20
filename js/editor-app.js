@@ -277,14 +277,16 @@ function updatePreview(){
    old.replaceWith(script);linkedJs.add(path);
   }
  });
- if(files["style.css"]!==undefined&&!linkedCss.has("style.css")){
-  const style=doc.createElement("style");style.textContent=expandCss("style.css");doc.head.appendChild(style);
+ const fallbackCss=files["style.css"]!==undefined?"style.css":Object.keys(files).find(p=>basename(p)==="style.css");
+ if(fallbackCss&&!linkedCss.has(fallbackCss)){
+  const style=doc.createElement("style");style.textContent=expandCss(fallbackCss);doc.head.appendChild(style);
  }
  const bridge=doc.createElement("script");
  bridge.textContent="const send=(type,args)=>parent.postMessage({webdevEditor:true,type,args:args.map(x=>{try{return typeof x==='object'?JSON.stringify(x):String(x)}catch(e){return String(x)}})},'*');['log','warn','error','info'].forEach(k=>{const old=console[k];console[k]=(...a)=>{send(k,a);old.apply(console,a)}});window.onerror=(m,s,l)=>send('error',[m+' (línea '+l+')']);";
  doc.head.appendChild(bridge);
- if(files["script.js"]!==undefined&&!linkedJs.has("script.js")){
-  const script=doc.createElement("script");script.textContent=files["script.js"];doc.body.appendChild(script);
+ const fallbackJs=files["script.js"]!==undefined?"script.js":Object.keys(files).find(p=>basename(p)==="script.js");
+ if(fallbackJs&&!linkedJs.has(fallbackJs)){
+  const script=doc.createElement("script");script.textContent=files[fallbackJs];doc.body.appendChild(script);
  }
  $("livePreview").srcdoc="<!doctype html>"+doc.documentElement.outerHTML;
  $("previewState").textContent="Actualizada "+new Date().toLocaleTimeString();
