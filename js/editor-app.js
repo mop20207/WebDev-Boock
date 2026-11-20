@@ -304,7 +304,7 @@ function showAction(mode,target="",isFolder=false){
  $("actionFolderRow").style.display=mode==="move"?"grid":"none";
  confirm.classList.toggle("danger",mode==="delete"||mode==="project-delete");
  confirm.textContent=(mode==="delete"||mode==="project-delete")?"Eliminar":"Aceptar";
- message.textContent="";input.value="";
+ message.textContent="";input.value="";input.placeholder="";$("actionInputRow").firstChild.textContent="Nombre";
  if(mode==="choose"){
   title.textContent=(isFolder?"Carpeta: ":"Archivo: ")+basename(target);
   message.innerHTML="<p>¿Qué querés hacer con este elemento?</p>";
@@ -448,6 +448,7 @@ function mobileKey(key,button){
   }
  }else if(key==="{")insertMobileText("{}",true);
  else if(key==="(")insertMobileText("()",true);
+ else if(key==="[")insertMobileText("[]",true);
  else insertMobileText(key);
  modifierCtrl=false;modifierAlt=false;
  document.querySelectorAll('#mobileKeys [aria-pressed]').forEach(b=>b.setAttribute("aria-pressed","false"));
@@ -476,6 +477,8 @@ function initControls(){
  $("themeSetting").addEventListener("change",e=>{settings.theme=e.target.value;applySettings();});
  $("wrapSetting").addEventListener("change",e=>{settings.wrap=e.target.value;applySettings();});
  $("keysSetting").addEventListener("change",e=>{settings.keys=e.target.checked;applySettings();});
+ const syncViewport=()=>{if(window.visualViewport)document.documentElement.style.setProperty("--editor-vh",Math.round(window.visualViewport.height)+"px");};
+ if(window.visualViewport){window.visualViewport.addEventListener("resize",syncViewport);syncViewport();}
  $("mobileKeys").addEventListener("pointerdown",e=>{if(e.target.closest("button"))e.preventDefault();});
  $("mobileKeys").addEventListener("click",e=>{const b=e.target.closest("button[data-key]");if(b)mobileKey(b.dataset.key,b);});
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAction();closeFileDialog();closeProjectsDialog();toggleSettings(false);}});
@@ -501,7 +504,21 @@ async function init(){
   if(next)openFile(next);else{active="";editor.setModel(null);$("activeFileLabel").textContent="Sin archivo";renderTabs();renderTree();}
  });
  $("runPreview").addEventListener("click",updatePreview);$("openPreviewTab").addEventListener("click",openPreviewTab);$("showPreviewBtn").addEventListener("click",()=>{$("workbench").classList.remove("explorer-open");$("workbench").classList.toggle("preview-open");$("showPreviewBtn").textContent=$("workbench").classList.contains("preview-open")?"‹ Volver al código":"▷ Vista previa";updatePreview();});$("clearConsole").addEventListener("click",()=>$("consoleOutput").textContent="Consola limpia.");
- $("importBtn").addEventListener("click",()=>$("filePicker").click());$("filePicker").addEventListener("change",async e=>{for(const f of e.target.files){if(f.size>1024*1024){toast(f.name+" supera 1 MB");continue;}files[f.name]=await f.text();if(models[f.name]){models[f.name].dispose();delete models[f.name];}}const first=e.target.files[0];if(first)openFile(first.name);save();renderTree();renderTabs();schedulePreview();e.target.value="";});
+ $("importBtn").addEventListener("click",()=>$("filePicker").click());
+ $("filePicker").addEventListener("change",async e=>{
+  let first="";
+  for(const file of e.target.files){
+   if(file.size>1024*1024){toast(file.name+" supera 1 MB");continue;}
+   const ext=file.name.includes(".")?"."+file.name.split(".").pop():"";
+   const stem=ext?file.name.slice(0,-ext.length):file.name;
+   let name=file.name,n=2;
+   while(files[name]!==undefined||allFolders().includes(name))name=stem+" ("+(n++)+")"+ext;
+   files[name]=await file.text();
+   if(!first)first=name;
+  }
+  if(first){openFile(first);save();renderTree();renderTabs();schedulePreview();}
+  e.target.value="";
+ });
  document.querySelectorAll("[data-size]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-size]").forEach(x=>x.classList.toggle("active",x===b));$("livePreview").className=b.dataset.size==="desktop"?"":b.dataset.size;}));
  window.addEventListener("message",e=>{if(e.source!==$("livePreview").contentWindow||!e.data?.webdevEditor)return;const out=$("consoleOutput"),line="["+e.data.type.toUpperCase()+"] "+(e.data.args||[]).join(" ");out.textContent=(out.textContent==="La salida de JavaScript aparecerá aquí."?"":out.textContent+"\n")+line;});
  window.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="s"){e.preventDefault();saveNow();toast("Proyecto guardado en este dispositivo");}});
