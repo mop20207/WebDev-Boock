@@ -59,3 +59,24 @@
 .related-list a:hover,.resource-list a:hover{border-color:#e99a70;color:#e99a70;transform:translateY(-2px)}
 .related-list span,.resource-list span{color:#e99a70}
 @media(max-width:560px){.attribute-item{grid-template-columns:1fr;gap:6px}}
+
+
+/* Laboratorio interactivo para practicar HTML dentro de cada artículo. */
+.html-lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:16px}
+.html-lab-editor,.html-lab-preview{display:flex;flex-direction:column;gap:9px;min-width:0}
+.html-lab-editor>label,.html-lab-preview>label{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+#htmlLabCode{width:100%;min-height:260px;resize:vertical;padding:13px;border:1px solid var(--line);border-radius:10px;background:#101827;color:#e7edf8;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2;white-space:pre;overflow:auto}
+#htmlLabCode:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#htmlLabFrame{display:block;width:100%;min-height:260px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.html-lab-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.html-lab-actions button,.html-open-editor{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--text);font-size:10px;font-weight:800;text-decoration:none;cursor:pointer}
+.html-lab-actions button:first-child{background:var(--accent);border-color:var(--accent);color:#fff}
+.html-lab-actions button:focus-visible,.html-open-editor:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#htmlLabStatus{font-size:9px;color:var(--muted)}
+.html-practice-task{margin-top:15px;padding:15px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.html-practice-task>strong{display:block;margin-bottom:7px;font-size:12px}
+.html-practice-task>p,.html-practice-task details p{font-size:11px;line-height:1.65;color:var(--muted)}
+.html-practice-task details{margin:10px 0}
+.html-practice-task summary{font-size:10px;font-weight:800;cursor:pointer}
+.html-open-editor{margin-top:4px}
+@media(max-width:800px){.html-lab-grid{grid-template-columns:1fr}.html-lab-grid #htmlLabCode,.html-lab-grid #htmlLabFrame{min-height:220px}}
