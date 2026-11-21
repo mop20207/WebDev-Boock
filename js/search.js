@@ -261,11 +261,15 @@ document.addEventListener("DOMContentLoaded", () => {
     catalogPromise = Promise.allSettled([
       fetchCatalog("html-articulos.json", "HTML"),
       fetchCatalog("css-articulos.json", "CSS"),
-      fetchCatalog("js-articulos.json", "JavaScript")
+      fetchCatalog("js-articulos.json", "JavaScript"),
+      fetch(new URL("data/tools.json", dataRoot).href, { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error("Herramientas: HTTP " + response.status + " al cargar data/tools.json.");
+        return response.json();
+      })
     ]).then(results => {
       const entries = [];
       catalogWarnings.length = 0;
-      const [htmlResult, cssResult, jsResult] = results;
+      const [htmlResult, cssResult, jsResult, toolsResult] = results;
 
       if (htmlResult.status === "fulfilled") {
         const articles = Array.isArray(htmlResult.value.articles)
@@ -299,6 +303,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       } else {
         catalogWarnings.push("JavaScript: " + jsResult.reason.message);
+      }
+
+      if (toolsResult.status === "fulfilled" && Array.isArray(toolsResult.value.tools)) {
+        toolsResult.value.tools.forEach(tool => {
+          (tool.categories || []).forEach(category => {
+            (category.articles || []).forEach(articleId => {
+              const article = (tool.articles || []).find(item => item.id === articleId);
+              if (!article) return;
+              const href = new URL(
+                "pages/tools-article.html?tool=" + encodeURIComponent(tool.id) + "&id=" + encodeURIComponent(article.id),
+                dataRoot
+              ).href;
+              const searchCategory = tool.title + " · " + category.title;
+              const aliases = tool.title + " " + (tool.shortTitle || "") + " " + category.title +
+                " terminal linux consola shell comandos control de versiones git github npm node paquetes dependencias";
+              entries.push(createEntry("Herramientas", searchCategory, article, href, aliases));
+            });
+          });
+        });
+      } else {
+        catalogWarnings.push("Herramientas: " + (toolsResult.reason?.message || "el catálogo no tiene una estructura válida."));
       }
 
       if (!entries.length) {
@@ -380,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     addOption(languageFilter.select, "", "Todos");
-    ["HTML", "CSS", "JavaScript"].forEach(language => addOption(languageFilter.select, language, language));
+    ["HTML", "CSS", "JavaScript", "Herramientas"].forEach(language => addOption(languageFilter.select, language, language));
     addOption(categoryFilter.select, "", "Todas");
 
     const updateCategoryOptions = () => {
