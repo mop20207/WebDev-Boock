@@ -1,6 +1,6 @@
 {
-  "version": 5,
-  "articleCount": 98,
+  "version": 6,
+  "articleCount": 112,
   "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
   "tools": [
     {
@@ -6128,270 +6128,1653 @@
       "shortTitle": "Astro",
       "symbol": "✦",
       "eyebrow": "FRONTEND / SITIOS WEB",
-      "tagline": "Páginas, componentes, layouts, estilos e islas interactivas.",
-      "description": "Páginas, componentes, layouts, estilos e islas interactivas.",
+      "tagline": "De páginas estáticas a experiencias interactivas, con JavaScript solo donde hace falta.",
+      "description": "Aprendé a crear sitios rápidos y centrados en contenido con páginas, componentes, layouts, islas interactivas, colecciones y despliegue.",
       "level": "Inicial a avanzado",
       "accent": "astro",
       "categories": [
         {
           "id": "fundamentos",
-          "title": "Fundamentos",
-          "description": "Páginas y estructura",
+          "title": "Fundamentos y proyecto",
+          "description": "Conocé Astro, instalalo, creá páginas y organizá la estructura.",
           "icon": "▣",
           "articles": [
             "astro-que-es",
-            "astro-paginas"
+            "astro-instalacion",
+            "astro-paginas",
+            "astro-estructura"
           ]
         },
         {
           "id": "intermedio",
-          "title": "Componentes",
-          "description": "Componentes y layouts",
+          "title": "Componentes y contenido",
+          "description": "Construí componentes, layouts, estilos, scripts, rutas y recursos.",
           "icon": "⇄",
           "articles": [
             "astro-componentes",
-            "astro-layouts"
+            "astro-layouts",
+            "astro-estilos",
+            "astro-scripts",
+            "astro-slots",
+            "astro-assets",
+            "astro-rutas-dinamicas",
+            "astro-markdown"
           ]
         },
         {
           "id": "avanzado",
-          "title": "Interactividad",
-          "description": "Islas y endpoints",
+          "title": "Interactividad y producción",
+          "description": "Trabajá con islas, endpoints, colecciones, APIs, acciones y despliegue.",
           "icon": "⌁",
           "articles": [
             "astro-islas",
-            "astro-endpoints"
+            "astro-endpoints",
+            "astro-content-collections",
+            "astro-fetch",
+            "astro-actions",
+            "astro-integraciones",
+            "astro-transiciones",
+            "astro-deploy"
           ]
         }
       ],
       "articles": [
         {
           "id": "astro-que-es",
-          "title": "¿Qué es Astro?",
+          "title": "¿Qué es Astro y cuándo conviene usarlo?",
           "category": "fundamentos",
-          "summary": "Astro genera HTML y permite añadir JavaScript interactivo solo donde hace falta.",
-          "purpose": "Astro genera HTML y permite añadir JavaScript interactivo solo donde hace falta.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "summary": "Framework web server-first para sitios de contenido, con HTML generado y JavaScript selectivo.",
+          "purpose": "Astro prioriza generar HTML durante el build o en el servidor. Los componentes .astro no se hidratan automáticamente; podés sumar islas interactivas con integraciones de frameworks.",
+          "whenToUse": "Astro prioriza generar HTML durante el build o en el servidor. Los componentes .astro no se hidratan automáticamente; podés sumar islas interactivas con integraciones de frameworks.",
           "syntax": "---\nconst titulo = 'Hola Astro';\n---\n<h1>{titulo}</h1>",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "---\nconst titulo = 'Hola Astro';\n---\n<h1>{titulo}</h1>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Página mínima",
+              "description": "Definí datos en frontmatter y mostralos en la plantilla.",
+              "code": "---\nconst titulo = 'Hola Astro';\nconst descripcion = 'Mi primera página';\n---\n<h1>{titulo}</h1><p>{descripcion}</p>",
+              "explanation": "El frontmatter se ejecuta fuera del navegador. La plantilla genera el HTML que recibirá el visitante."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const titulo = 'Hola Astro';\n---\n<h1>{titulo}</h1>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Expresiones",
+              "description": "Insertá una operación JavaScript con llaves.",
+              "code": "---\nconst precio = 1200;\nconst cantidad = 3;\n---\n<p>Total: {precio * cantidad}</p>",
+              "explanation": "Astro evalúa la expresión durante el renderizado y coloca su resultado en el HTML."
+            },
+            {
+              "title": "Listas",
+              "description": "Generá elementos desde arreglos con map.",
+              "code": "---\nconst lenguajes = ['HTML', 'CSS', 'JavaScript'];\n---\n<ul>{lenguajes.map((item) => <li>{item}</li>)}</ul>",
+              "explanation": "map crea los elementos de la lista. No hace falta estado cliente para contenido fijo."
+            },
+            {
+              "title": "Contenido estático",
+              "description": "No agregues hidratación si la página no necesita interacción.",
+              "code": "---\nconst mensaje = 'Contenido renderizado';\n---\n<main><h1>Guía</h1><p>{mensaje}</p></main>",
+              "explanation": "El contenido se genera como HTML y no necesita descargar un runtime de framework."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Frontmatter",
+              "description": "Bloque entre --- ejecutado en servidor/build."
+            },
+            {
+              "name": "{expresión}",
+              "description": "Inserta el resultado de JavaScript en la plantilla."
+            },
+            {
+              "name": "client:*",
+              "description": "Directivas para hidratar componentes compatibles."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Mantené estático lo que no necesita interacción.",
+            "Separá contenido y componentes.",
+            "Sumá JavaScript solo cuando aporte valor."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Confundir Astro con un lenguaje.",
+            "Pensar que todo componente se ejecuta en navegador.",
+            "Hidratar una página informativa sin necesidad."
           ],
-          "exercise": "Creá una página Astro con título y descripción.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá una presentación con título, descripción y una lista de tecnologías.",
+          "hint": "Definí el arreglo en frontmatter y recorrélo con map. No uses client:* si no necesitás interacción.",
+          "resources": [
+            {
+              "label": "Introducción",
+              "url": "https://docs.astro.build/en/getting-started/"
+            }
+          ],
+          "related": [
+            "astro-instalacion",
+            "astro-paginas",
+            "astro-islas"
+          ]
+        },
+        {
+          "id": "astro-instalacion",
+          "title": "Instalación y creación de un proyecto",
+          "category": "fundamentos",
+          "summary": "Creá un proyecto Astro, instalá dependencias y ejecutá el servidor local.",
+          "purpose": "Astro se instala con npm. create astro inicia un proyecto; los scripts del package.json permiten desarrollar, compilar y previsualizar.",
+          "whenToUse": "Astro se instala con npm. create astro inicia un proyecto; los scripts del package.json permiten desarrollar, compilar y previsualizar.",
+          "syntax": "npm create astro@latest\ncd mi-sitio\nnpm install\nnpm run dev",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Crear proyecto",
+              "description": "Ejecutá el asistente oficial.",
+              "code": "npm create astro@latest",
+              "explanation": "El asistente solicita nombre, plantilla y opciones. Seguí sus indicaciones."
+            },
+            {
+              "title": "Instalar paquetes",
+              "description": "Entrá a la carpeta del proyecto.",
+              "code": "cd mi-sitio\nnpm install",
+              "explanation": "npm instala las dependencias de package.json y actualiza el lockfile."
+            },
+            {
+              "title": "Servidor local",
+              "description": "Ejecutá el script de desarrollo.",
+              "code": "npm run dev",
+              "explanation": "La terminal muestra una URL local, normalmente http://localhost:4321."
+            },
+            {
+              "title": "Compilar y previsualizar",
+              "description": "Generá la salida y revisala localmente.",
+              "code": "npm run build\nnpm run preview",
+              "explanation": "build genera dist. preview sirve esa salida para comprobarla antes del despliegue."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "npm create astro@latest",
+              "description": "Crea un proyecto con el asistente."
+            },
+            {
+              "name": "npm install",
+              "description": "Instala dependencias."
+            },
+            {
+              "name": "npm run dev",
+              "description": "Inicia desarrollo."
+            },
+            {
+              "name": "npm run build",
+              "description": "Genera la salida de producción."
+            },
+            {
+              "name": "npm run preview",
+              "description": "Previsualiza el build."
+            }
+          ],
+          "bestPractices": [
+            "Usá una versión de Node compatible.",
+            "Conservá el lockfile.",
+            "Probá el build antes de publicar."
+          ],
+          "commonMistakes": [
+            "Confundir dev con build.",
+            "Ejecutar npm desde otra carpeta.",
+            "Creer que build correcto garantiza hosting correcto."
+          ],
+          "exercise": "Creá mi-portfolio, modificá su página inicial y generá una compilación.",
+          "hint": "Ejecutá los comandos desde la carpeta del proyecto y revisá sus scripts npm.",
+          "resources": [
+            {
+              "label": "Instalación",
+              "url": "https://docs.astro.build/en/install-and-setup/"
+            }
+          ],
+          "related": [
+            "astro-que-es",
+            "astro-estructura",
+            "astro-deploy"
+          ]
         },
         {
           "id": "astro-paginas",
-          "title": "Rutas y páginas",
+          "title": "Páginas y enrutamiento basado en archivos",
           "category": "fundamentos",
-          "summary": "Astro crea rutas a partir de los archivos colocados dentro de src/pages.",
-          "purpose": "Astro crea rutas a partir de los archivos colocados dentro de src/pages.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "---\n// src/pages/acerca.astro\n---\n<html lang=\"es\"><body><h1>Acerca</h1></body></html>",
+          "summary": "Creá rutas colocando archivos dentro de src/pages y navegá con anchors HTML.",
+          "purpose": "Cada archivo de página en src/pages genera una ruta. index.astro representa la raíz de una carpeta. La navegación estándar usa elementos <a>.",
+          "whenToUse": "Cada archivo de página en src/pages genera una ruta. index.astro representa la raíz de una carpeta. La navegación estándar usa elementos <a>.",
+          "syntax": "src/pages/index.astro → /\nsrc/pages/acerca.astro → /acerca\nsrc/pages/contacto/index.astro → /contacto",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "---\n// src/pages/acerca.astro\n---\n<html lang=\"es\"><body><h1>Acerca</h1></body></html>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Inicio",
+              "description": "index.astro representa la raíz.",
+              "code": "---\n---\n<h1>Inicio</h1><a href='/acerca'>Conocé más</a>",
+              "explanation": "El archivo se guarda en src/pages/index.astro."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "// src/pages/acerca.astro\n---\n<html lang=\"es\"><body><h1>Acerca</h1></body></html>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Ruta anidada",
+              "description": "La carpeta se refleja en la URL.",
+              "code": "---\n---\n<h1>Servicios</h1>",
+              "explanation": "Guardá como src/pages/servicios/index.astro. La ruta será /servicios."
+            },
+            {
+              "title": "Contacto",
+              "description": "Cada archivo compatible crea una ruta.",
+              "code": "---\n---\n<h1>Contacto</h1><p>Escribinos.</p>",
+              "explanation": "Guardá como src/pages/contacto.astro."
+            },
+            {
+              "title": "Navegación",
+              "description": "Conectá páginas con anchors normales.",
+              "code": "<nav><a href='/'>Inicio</a><a href='/servicios'>Servicios</a><a href='/contacto'>Contacto</a></nav>",
+              "explanation": "Astro no necesita un componente Link para la navegación estándar."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "src/pages",
+              "description": "Directorio de páginas y endpoints."
+            },
+            {
+              "name": "index.astro",
+              "description": "Página raíz de un directorio."
+            },
+            {
+              "name": "href",
+              "description": "Atributo HTML para enlazar rutas."
+            },
+            {
+              "name": "404.astro",
+              "description": "Página personalizada para rutas inexistentes."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá nombres que reflejen la estructura.",
+            "Preferí anchors semánticos.",
+            "Creá una página 404 útil."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Guardar páginas fuera de pages esperando rutas.",
+            "Olvidar el significado de index.astro.",
+            "Construir enlaces relativos confusos."
           ],
-          "exercise": "Creá las páginas /contacto y /servicios.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá /, /acerca, /servicios y /contacto, con una navegación compartida.",
+          "hint": "Ubicá archivos en src/pages. Una carpeta con index.astro representa una ruta.",
+          "resources": [
+            {
+              "label": "Routing",
+              "url": "https://docs.astro.build/en/guides/routing/"
+            }
+          ],
+          "related": [
+            "astro-estructura",
+            "astro-layouts",
+            "astro-rutas-dinamicas"
+          ]
+        },
+        {
+          "id": "astro-estructura",
+          "title": "Estructura de carpetas y archivos",
+          "category": "fundamentos",
+          "summary": "Reconocé src, public, pages, components, layouts, assets y configuración.",
+          "purpose": "src contiene código procesado. public contiene archivos copiados sin transformación. La configuración suele estar en astro.config.mjs y las dependencias en package.json.",
+          "whenToUse": "src contiene código procesado. public contiene archivos copiados sin transformación. La configuración suele estar en astro.config.mjs y las dependencias en package.json.",
+          "syntax": "src/pages/\nsrc/components/\nsrc/layouts/\nsrc/styles/\npublic/\nastro.config.mjs\npackage.json",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Componentes",
+              "description": "Guardá piezas compartidas en src/components.",
+              "code": "src/components/\n  Header.astro\n  Footer.astro\n  Tarjeta.astro",
+              "explanation": "Los componentes no crean rutas por sí solos; se importan desde páginas y layouts."
+            },
+            {
+              "title": "Archivos públicos",
+              "description": "public se sirve desde la raíz del sitio.",
+              "code": "public/\n  favicon.svg\n  robots.txt\n  manual.pdf",
+              "explanation": "public/robots.txt se publica como /robots.txt y se copia sin transformación."
+            },
+            {
+              "title": "CSS global",
+              "description": "Mantené estilos compartidos en src/styles.",
+              "code": "src/styles/global.css\nsrc/layouts/Base.astro",
+              "explanation": "El layout puede importar CSS para compartirlo entre páginas."
+            },
+            {
+              "title": "Configuración",
+              "description": "astro.config.mjs centraliza opciones del proyecto.",
+              "code": "import { defineConfig } from 'astro/config';\nexport default defineConfig({ site: 'https://ejemplo.com' });",
+              "explanation": "La configuración define site, base, integraciones y salida."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "src/",
+              "description": "Código fuente procesado por Astro/Vite."
+            },
+            {
+              "name": "public/",
+              "description": "Archivos copiados sin transformación."
+            },
+            {
+              "name": "src/pages/",
+              "description": "Páginas y endpoints."
+            },
+            {
+              "name": "src/components/",
+              "description": "Componentes reutilizables."
+            },
+            {
+              "name": "astro.config.mjs",
+              "description": "Configuración del framework."
+            },
+            {
+              "name": "package.json",
+              "description": "Dependencias y scripts."
+            }
+          ],
+          "bestPractices": [
+            "Separá responsabilidades.",
+            "Usá public para archivos de URL fija.",
+            "Mantené una estructura consistente."
+          ],
+          "commonMistakes": [
+            "Guardar componentes en pages creando rutas involuntarias.",
+            "Importar public como módulo de src.",
+            "Confundir raíz del proyecto con src."
+          ],
+          "exercise": "Organizá Header, Footer, Tarjeta, Base, estilos globales y favicon.",
+          "hint": "Elegí src para recursos procesados y public para archivos servidos directamente.",
+          "resources": [
+            {
+              "label": "Estructura del proyecto",
+              "url": "https://docs.astro.build/en/basics/project-structure/"
+            }
+          ],
+          "related": [
+            "astro-instalacion",
+            "astro-componentes",
+            "astro-assets"
+          ]
         },
         {
           "id": "astro-componentes",
-          "title": "Componentes Astro",
+          "title": "Componentes Astro, props y composición",
           "category": "intermedio",
-          "summary": "Un componente .astro combina frontmatter y plantilla y puede recibir props.",
-          "purpose": "Un componente .astro combina frontmatter y plantilla y puede recibir props.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "---\nconst { nombre = 'Visitante' } = Astro.props;\n---\n<h2>Hola, {nombre}</h2>",
+          "summary": "Construí piezas reutilizables con .astro, recibí props y componé páginas.",
+          "purpose": "Un componente Astro combina frontmatter y plantilla. Recibe atributos mediante Astro.props y renderiza otros componentes. No agrega JavaScript cliente por defecto.",
+          "whenToUse": "Un componente Astro combina frontmatter y plantilla. Recibe atributos mediante Astro.props y renderiza otros componentes. No agrega JavaScript cliente por defecto.",
+          "syntax": "---\nconst { titulo } = Astro.props;\n---\n<h2>{titulo}</h2>",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "---\nconst { nombre = 'Visitante' } = Astro.props;\n---\n<h2>Hola, {nombre}</h2>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Crear componente",
+              "description": "Creá Saludo.astro.",
+              "code": "---\nconst { nombre = 'Visitante' } = Astro.props;\n---\n<p>Hola, {nombre}</p>",
+              "explanation": "Astro.props contiene atributos enviados por el padre; nombre tiene un valor predeterminado."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const { nombre = 'Visitante' } = Astro.props;\n---\n<h2>Hola, {nombre}</h2>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Enviar props",
+              "description": "Importá y enviá atributos.",
+              "code": "---\nimport Saludo from '../components/Saludo.astro';\n---\n<Saludo nombre='Lucía' />",
+              "explanation": "El componente recibe nombre a través de Astro.props."
+            },
+            {
+              "title": "Pasar un arreglo",
+              "description": "Una prop puede contener objetos y arreglos.",
+              "code": "---\nconst cursos = [{id:1,titulo:'HTML'},{id:2,titulo:'CSS'}];\n---\n<ListaCursos cursos={cursos} />",
+              "explanation": "Las llaves permiten pasar valores JavaScript. ListaCursos debe recibir cursos."
+            },
+            {
+              "title": "Componer",
+              "description": "Una página combina componentes independientes.",
+              "code": "---\nimport Header from '../components/Header.astro';\nimport Tarjeta from '../components/Tarjeta.astro';\n---\n<Header /><Tarjeta titulo='Astro' /><Tarjeta titulo='Node.js' />",
+              "explanation": "La página compone piezas sin duplicar su marcado."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Astro.props",
+              "description": "Objeto con atributos recibidos."
+            },
+            {
+              "name": "Props",
+              "description": "Datos que recibe un componente."
+            },
+            {
+              "name": "Import",
+              "description": "Carga otro componente."
+            },
+            {
+              "name": "Composición",
+              "description": "Interfaz construida con piezas pequeñas."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá props para reutilizar.",
+            "Mantené componentes enfocados.",
+            "Definí valores predeterminados."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar importar.",
+            "Enviar cadena cuando se espera arreglo.",
+            "Esperar reactividad cliente en .astro sin hidratar."
           ],
-          "exercise": "Creá un componente Tarjeta que reciba título.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá Tarjeta con título, descripción e imagen. Mostrá tres tarjetas desde un arreglo.",
+          "hint": "Desestructurá Astro.props y pasá arreglos u objetos con llaves.",
+          "resources": [
+            {
+              "label": "Componentes",
+              "url": "https://docs.astro.build/en/basics/astro-components/"
+            }
+          ],
+          "related": [
+            "astro-que-es",
+            "astro-layouts",
+            "astro-slots"
+          ]
         },
         {
           "id": "astro-layouts",
-          "title": "Layouts reutilizables",
+          "title": "Layouts reutilizables y slots",
           "category": "intermedio",
-          "summary": "Los layouts comparten la estructura de varias páginas y usan slot para insertar contenido.",
-          "purpose": "Los layouts comparten la estructura de varias páginas y usan slot para insertar contenido.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "---\nconst { title } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><main><slot /></main></body></html>",
-          "level": "Inicial",
+          "summary": "Compartí estructura HTML, metadatos y navegación entre páginas.",
+          "purpose": "Un layout define estructura común. <slot /> indica dónde insertar contenido hijo. Los layouts pueden recibir props como título y descripción.",
+          "whenToUse": "Un layout define estructura común. <slot /> indica dónde insertar contenido hijo. Los layouts pueden recibir props como título y descripción.",
+          "syntax": "---\nconst { title = 'Mi sitio' } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><slot /></body></html>",
+          "level": "Intermedio",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "---\nconst { title } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><main><slot /></main></body></html>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Layout base",
+              "description": "Creá Base.astro en src/layouts.",
+              "code": "---\nconst { title = 'WebDev Book' } = Astro.props;\n---\n<html lang='es'><head><title>{title}</title></head><body><slot /></body></html>",
+              "explanation": "slot representa el contenido hijo."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const { title } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><main><slot /></main></body></html>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Usar layout",
+              "description": "Importá Base desde una página.",
+              "code": "---\nimport Base from '../layouts/Base.astro';\n---\n<Base title='Inicio'><h1>Bienvenido</h1></Base>",
+              "explanation": "El contenido hijo ocupa el lugar del slot."
+            },
+            {
+              "title": "Slots nombrados",
+              "description": "Definí regiones específicas.",
+              "code": "<header><slot name='header' /></header><main><slot /></main><footer><slot name='footer' /></footer>",
+              "explanation": "El slot sin nombre es predeterminado; los nombrados reciben contenido dirigido."
+            },
+            {
+              "title": "Enviar contenido",
+              "description": "Usá el atributo slot.",
+              "code": "<Base><h1 slot='header'>Mi sitio</h1><p>Contenido</p><small slot='footer'>© 2026</small></Base>",
+              "explanation": "El contenido se inserta en la región correspondiente."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "slot",
+              "description": "Inserta contenido hijo."
+            },
+            {
+              "name": "slot='nombre'",
+              "description": "Dirige contenido a región nombrada."
+            },
+            {
+              "name": "Astro.props",
+              "description": "Datos recibidos por el layout."
+            },
+            {
+              "name": "Layout",
+              "description": "Estructura compartida."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Compartí metadatos comunes.",
+            "Usá slots nombrados si hay regiones distintas.",
+            "Evitá layouts duplicados."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar slot.",
+            "Escribir nombres distintos.",
+            "Confundir layout con CSS."
           ],
-          "exercise": "Creá un layout con encabezado, contenido y pie.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá layout con header, navegación, main y footer y usalo en tres páginas.",
+          "hint": "El layout vive en src/layouts y utiliza slot para recibir contenido.",
+          "resources": [
+            {
+              "label": "Layouts",
+              "url": "https://docs.astro.build/en/basics/layouts/"
+            }
+          ],
+          "related": [
+            "astro-componentes",
+            "astro-estilos",
+            "astro-paginas"
+          ]
+        },
+        {
+          "id": "astro-estilos",
+          "title": "CSS global, scoped y clases dinámicas",
+          "category": "intermedio",
+          "summary": "Aplicá estilos globales y locales, importá CSS y combiná clases condicionales.",
+          "purpose": "Los bloques style de Astro son scoped por defecto. Para reglas compartidas se importa CSS global. class:list combina clases condicionales.",
+          "whenToUse": "Los bloques style de Astro son scoped por defecto. Para reglas compartidas se importa CSS global. class:list combina clases condicionales.",
+          "syntax": "<style>.tarjeta { padding: 1rem; }</style>\n<article class='tarjeta'>Contenido</article>",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Estilo scoped",
+              "description": "El CSS queda limitado al componente.",
+              "code": "<style>.tarjeta { padding: 1rem; border: 1px solid #ccc; }</style><article class='tarjeta'>Contenido</article>",
+              "explanation": "Astro procesa los estilos y limita su alcance."
+            },
+            {
+              "title": "CSS global",
+              "description": "Importá la hoja desde layout o página.",
+              "code": "---\nimport '../styles/global.css';\n---\n<h1>Mi sitio</h1>",
+              "explanation": "La hoja global define tipografía, colores y reglas compartidas."
+            },
+            {
+              "title": "Clases condicionales",
+              "description": "class:list combina cadenas y objetos booleanos.",
+              "code": "---\nconst activo = true;\n---\n<button class:list={['boton', { activo }]}>Guardar</button>",
+              "explanation": "La clase activo se agrega porque su valor es true."
+            },
+            {
+              "title": "Variables CSS",
+              "description": "Reutilizá valores con custom properties.",
+              "code": "<style>.panel { --espacio: 1rem; padding: var(--espacio); }</style><section class='panel'>Panel</section>",
+              "explanation": "Las variables CSS permiten personalizar componentes sin repetir valores."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "<style>",
+              "description": "CSS asociado al componente."
+            },
+            {
+              "name": "Scoped styles",
+              "description": "Estilos limitados al componente."
+            },
+            {
+              "name": "class:list",
+              "description": "Combina clases condicionales."
+            },
+            {
+              "name": "CSS global",
+              "description": "Hoja compartida entre páginas."
+            }
+          ],
+          "bestPractices": [
+            "Usá estilos locales.",
+            "Centralizá tokens de diseño.",
+            "Preferí clases semánticas."
+          ],
+          "commonMistakes": [
+            "Suponer que scoped afecta todos los componentes externos.",
+            "Importar CSS global sin necesidad.",
+            "No comprobar condiciones booleanas."
+          ],
+          "exercise": "Creá tarjeta con estilos scoped, hoja global y botón con clase condicional.",
+          "hint": "Probá <style> en componente y después importá CSS global desde layout.",
+          "resources": [
+            {
+              "label": "Estilos",
+              "url": "https://docs.astro.build/en/guides/styling/"
+            }
+          ],
+          "related": [
+            "astro-layouts",
+            "astro-scripts",
+            "astro-componentes"
+          ]
+        },
+        {
+          "id": "astro-scripts",
+          "title": "Scripts de cliente e interactividad nativa",
+          "category": "intermedio",
+          "summary": "Agregá JavaScript al navegador para manejar eventos y comportamiento interactivo.",
+          "purpose": "Los scripts dentro de <script> se procesan como módulos y se ejecutan en navegador. El frontmatter se ejecuta en servidor/build y no tiene acceso al DOM.",
+          "whenToUse": "Los scripts dentro de <script> se procesan como módulos y se ejecutan en navegador. El frontmatter se ejecuta en servidor/build y no tiene acceso al DOM.",
+          "syntax": "<button id='saludar'>Saludar</button>\n<script>document.querySelector('#saludar')?.addEventListener('click', () => alert('Hola'));</script>",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Escuchar clic",
+              "description": "Registrá un listener.",
+              "code": "<button id='saludar'>Saludar</button><script>document.querySelector('#saludar')?.addEventListener('click', () => alert('Hola Astro'));</script>",
+              "explanation": "El script se ejecuta en navegador. ?. evita operar si el botón no existe."
+            },
+            {
+              "title": "Cambiar texto",
+              "description": "Actualizá el texto de un elemento.",
+              "code": "<p id='mensaje'>Antes</p><button id='cambiar'>Cambiar</button><script>const p=document.querySelector('#mensaje');document.querySelector('#cambiar')?.addEventListener('click',()=>{if(p)p.textContent='¡Funcionó!'});</script>",
+              "explanation": "textContent cambia texto sin interpretar HTML."
+            },
+            {
+              "title": "Importar utilidad",
+              "description": "Un script procesado puede importar módulos locales.",
+              "code": "<script>import { formatearFecha } from '../scripts/fecha.js';document.querySelectorAll('[data-fecha]').forEach(n=>n.textContent=formatearFecha(n.textContent ?? ''));</script>",
+              "explanation": "Las importaciones se resuelven durante la compilación."
+            },
+            {
+              "title": "Navegación de cliente",
+              "description": "ClientRouter requiere reinicializar interacciones tras navegación.",
+              "code": "<script>function iniciar(){document.querySelectorAll('[data-menu]').forEach(b=>b.addEventListener('click',()=>document.body.classList.toggle('menu-abierto')))}document.addEventListener('astro:page-load',iniciar);</script>",
+              "explanation": "astro:page-load permite inicializar luego de cada navegación. Evitá listeners duplicados."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "<script>",
+              "description": "JavaScript para navegador."
+            },
+            {
+              "name": "document",
+              "description": "API del DOM."
+            },
+            {
+              "name": "addEventListener",
+              "description": "Registra listener."
+            },
+            {
+              "name": "astro:page-load",
+              "description": "Evento tras navegación de ClientRouter."
+            }
+          ],
+          "bestPractices": [
+            "Usá JS nativo para interacciones pequeñas.",
+            "Comprobá que elementos existan.",
+            "Considerá el ciclo de vida de navegación."
+          ],
+          "commonMistakes": [
+            "Usar document en frontmatter.",
+            "Esperar reejecución automática de scripts en ClientRouter.",
+            "Registrar listeners duplicados."
+          ],
+          "exercise": "Creá menú desplegable y un control que cambie texto sin recargar.",
+          "hint": "El código que accede a document va en <script>, no en frontmatter.",
+          "resources": [
+            {
+              "label": "Scripts de cliente",
+              "url": "https://docs.astro.build/en/guides/client-side-scripts/"
+            }
+          ],
+          "related": [
+            "astro-islas",
+            "astro-estilos",
+            "astro-transiciones"
+          ]
+        },
+        {
+          "id": "astro-slots",
+          "title": "Slots y composición avanzada",
+          "category": "intermedio",
+          "summary": "Distribuí contenido entre regiones y reutilizá bloques de interfaz.",
+          "purpose": "Los slots permiten que el padre controle contenido del componente receptor. Astro admite slot predeterminado, slots nombrados y Astro.slots.has para comprobar si se proporcionó contenido.",
+          "whenToUse": "Los slots permiten que el padre controle contenido del componente receptor. Astro admite slot predeterminado, slots nombrados y Astro.slots.has para comprobar si se proporcionó contenido.",
+          "syntax": "<section><header><slot name='titulo' /></header><div><slot /></div></section>",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Slot predeterminado",
+              "description": "El contenido hijo ocupa slot sin nombre.",
+              "code": "<article><slot /></article>",
+              "explanation": "El contenido no dirigido a otro slot se inserta en el espacio predeterminado."
+            },
+            {
+              "title": "Slots nombrados",
+              "description": "Separá encabezado y cuerpo.",
+              "code": "<article><header><slot name='encabezado' /></header><div><slot /></div></article>",
+              "explanation": "El padre envía contenido específico al encabezado."
+            },
+            {
+              "title": "Comprobar contenido",
+              "description": "Astro.slots.has detecta si existe el slot.",
+              "code": "---\nconst tieneAcciones = Astro.slots.has('acciones');\n---\n<article><slot />{tieneAcciones && <footer><slot name='acciones' /></footer>}</article>",
+              "explanation": "La condición evita mostrar un pie vacío."
+            },
+            {
+              "title": "Prop más slot",
+              "description": "Combiná datos y contenido compuesto.",
+              "code": "---\nconst { titulo } = Astro.props;\n---\n<section><h2>{titulo}</h2><slot /></section>",
+              "explanation": "Las props manejan datos simples; el slot recibe marcado."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "slot",
+              "description": "Inserta contenido hijo."
+            },
+            {
+              "name": "slot='nombre'",
+              "description": "Dirige contenido a región."
+            },
+            {
+              "name": "Astro.slots.has()",
+              "description": "Comprueba si se proporcionó slot."
+            },
+            {
+              "name": "Astro.slots.render()",
+              "description": "Renderiza un slot programáticamente."
+            }
+          ],
+          "bestPractices": [
+            "Elegí props para valores y slots para contenido.",
+            "Documentá los slots disponibles.",
+            "Hacé opcionales regiones no requeridas."
+          ],
+          "commonMistakes": [
+            "Confundir slot con prop de texto.",
+            "Usar nombres distintos.",
+            "Mostrar contenedores vacíos."
+          ],
+          "exercise": "Creá Panel con título, slot principal y slot opcional acciones.",
+          "hint": "Usá Astro.props para valores y slots para contenido HTML compuesto.",
+          "resources": [
+            {
+              "label": "Slots",
+              "url": "https://docs.astro.build/en/basics/astro-components/#slots"
+            }
+          ],
+          "related": [
+            "astro-componentes",
+            "astro-layouts",
+            "astro-estilos"
+          ]
+        },
+        {
+          "id": "astro-assets",
+          "title": "Imágenes y recursos estáticos",
+          "category": "intermedio",
+          "summary": "Diferenciá imágenes de public y assets importados y utilizá astro:assets.",
+          "purpose": "Astro sirve public sin procesar y permite optimizar imágenes importadas desde src/assets con el componente Image. Las imágenes remotas requieren configuración compatible.",
+          "whenToUse": "Astro sirve public sin procesar y permite optimizar imágenes importadas desde src/assets con el componente Image. Las imágenes remotas requieren configuración compatible.",
+          "syntax": "---\nimport { Image } from 'astro:assets';\nimport portada from '../assets/portada.jpg';\n---\n<Image src={portada} alt='Portada' />",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Imagen pública",
+              "description": "Referenciá un archivo de public.",
+              "code": "<img src='/images/logo.png' alt='Logo del sitio' />",
+              "explanation": "Los archivos públicos se copian directamente y no se optimizan automáticamente."
+            },
+            {
+              "title": "Imagen importada",
+              "description": "Importá desde src/assets.",
+              "code": "---\nimport { Image } from 'astro:assets';\nimport portada from '../assets/portada.jpg';\n---\n<Image src={portada} alt='Portada del libro' />",
+              "explanation": "Image permite generar imágenes optimizadas."
+            },
+            {
+              "title": "Dimensiones",
+              "description": "Ajustá opciones de imagen.",
+              "code": "---\nimport { Image } from 'astro:assets';\nimport foto from '../assets/foto.jpg';\n---\n<Image src={foto} alt='Paisaje' width={800} quality={80} />",
+              "explanation": "Las opciones dependen del servicio de imágenes configurado."
+            },
+            {
+              "title": "Imagen remota",
+              "description": "Configurá orígenes permitidos y servicio compatible.",
+              "code": "---\nimport { Image } from 'astro:assets';\nconst imagen = 'https://images.example.com/foto.jpg';\n---\n<Image src={imagen} alt='Imagen remota' />",
+              "explanation": "No asumas que cualquier URL externa está habilitada."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Image",
+              "description": "Componente astro:assets."
+            },
+            {
+              "name": "src/assets",
+              "description": "Recursos importados y procesables."
+            },
+            {
+              "name": "public/",
+              "description": "Recursos públicos sin transformación."
+            },
+            {
+              "name": "alt",
+              "description": "Texto alternativo de imagen."
+            }
+          ],
+          "bestPractices": [
+            "Escribí alt útil.",
+            "Optimizá dimensiones.",
+            "No importes imágenes enormes para miniaturas."
+          ],
+          "commonMistakes": [
+            "Esperar optimización en public.",
+            "Olvidar alt.",
+            "Suponer cualquier URL remota habilitada."
+          ],
+          "exercise": "Creá una tarjeta de novela con portada importada, alt y dimensiones. Comparala con una imagen en public.",
+          "hint": "public se sirve directamente; src/assets se importa para procesar.",
+          "resources": [
+            {
+              "label": "Imágenes",
+              "url": "https://docs.astro.build/en/guides/images/"
+            }
+          ],
+          "related": [
+            "astro-estructura",
+            "astro-componentes",
+            "astro-deploy"
+          ]
+        },
+        {
+          "id": "astro-rutas-dinamicas",
+          "title": "Rutas dinámicas y getStaticPaths",
+          "category": "intermedio",
+          "summary": "Generá páginas desde parámetros slug o id usando archivos dinámicos.",
+          "purpose": "Los segmentos entre corchetes definen rutas dinámicas. En salida estática, getStaticPaths devuelve parámetros para generar durante build. En SSR la ruta puede resolverse por solicitud.",
+          "whenToUse": "Los segmentos entre corchetes definen rutas dinámicas. En salida estática, getStaticPaths devuelve parámetros para generar durante build. En SSR la ruta puede resolverse por solicitud.",
+          "syntax": "src/pages/blog/[slug].astro\nexport function getStaticPaths() { return [{ params: { slug: 'hola' } }]; }",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Rutas estáticas",
+              "description": "Enumerá los valores que se generan.",
+              "code": "---\nexport function getStaticPaths(){return [{params:{slug:'uno'}},{params:{slug:'dos'}}]}\nconst {slug}=Astro.params;\n---\n<h1>{slug}</h1>",
+              "explanation": "getStaticPaths indica qué páginas crear y Astro.params contiene el valor actual."
+            },
+            {
+              "title": "Pasar props",
+              "description": "getStaticPaths puede devolver datos junto con params.",
+              "code": "---\nexport function getStaticPaths(){return [{params:{id:'1'},props:{titulo:'HTML'}}]}\nconst {titulo}=Astro.props;\n---\n<h1>{titulo}</h1>",
+              "explanation": "params define URL; props entrega datos adicionales."
+            },
+            {
+              "title": "Catch-all",
+              "description": "[...slug] captura varios segmentos.",
+              "code": "---\nexport function getStaticPaths(){return [{params:{slug:'guias/html'}},{params:{slug:'guias/css'}}]}\nconst {slug}=Astro.params;\n---\n<p>{slug}</p>",
+              "explanation": "En salida estática también se enumeran las rutas deseadas."
+            },
+            {
+              "title": "SSR bajo demanda",
+              "description": "Una ruta puede renderizarse por solicitud con adaptador.",
+              "code": "---\nexport const prerender = false;\nconst {id}=Astro.params;\n---\n<h1>Producto {id}</h1>",
+              "explanation": "El adaptador ejecuta la ruta cuando llega una solicitud."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "[slug].astro",
+              "description": "Define parámetro dinámico."
+            },
+            {
+              "name": "getStaticPaths()",
+              "description": "Devuelve rutas estáticas a generar."
+            },
+            {
+              "name": "Astro.params",
+              "description": "Parámetros de URL."
+            },
+            {
+              "name": "Astro.props",
+              "description": "Datos enviados desde getStaticPaths."
+            },
+            {
+              "name": "prerender",
+              "description": "Configura prerenderizado según modo."
+            }
+          ],
+          "bestPractices": [
+            "Usá IDs estables.",
+            "Validá que el recurso exista.",
+            "Diferenciá SSG y SSR."
+          ],
+          "commonMistakes": [
+            "Olvidar getStaticPaths en ruta estática.",
+            "Usar nombres distintos en params.",
+            "Confundir params con props.",
+            "Usar getStaticPaths en SSR bajo demanda."
+          ],
+          "exercise": "Generá páginas para tres novelas en [id].astro con getStaticPaths y props.",
+          "hint": "En modo estático, cada ruta debe aparecer en getStaticPaths.",
+          "resources": [
+            {
+              "label": "Rutas dinámicas",
+              "url": "https://docs.astro.build/en/guides/routing/"
+            }
+          ],
+          "related": [
+            "astro-paginas",
+            "astro-content-collections",
+            "astro-endpoints"
+          ]
+        },
+        {
+          "id": "astro-markdown",
+          "title": "Markdown y contenido MDX",
+          "category": "intermedio",
+          "summary": "Escribí contenido en Markdown y MDX y mostralo como páginas.",
+          "purpose": "Astro convierte Markdown dentro de src/pages en páginas. MDX combina Markdown con componentes JSX y requiere la integración oficial. Para colecciones reutilizables usá Content Layer.",
+          "whenToUse": "Astro convierte Markdown dentro de src/pages en páginas. MDX combina Markdown con componentes JSX y requiere la integración oficial. Para colecciones reutilizables usá Content Layer.",
+          "syntax": "---\ntitle: Mi artículo\n---\n# Hola Markdown\n\nUn párrafo.",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Página Markdown",
+              "description": "Un archivo .md dentro de src/pages crea una ruta.",
+              "code": "---\ntitle: Primer artículo\ndescription: Introducción\n---\n# Primer artículo\n\nContenido del artículo.",
+              "explanation": "El frontmatter YAML contiene metadatos; el resto es Markdown."
+            },
+            {
+              "title": "Listas y títulos",
+              "description": "Markdown expresa estructura sin HTML repetitivo.",
+              "code": "# Tema\n## Subtema\n- Punto uno\n- Punto dos\n**Importante**",
+              "explanation": "Encabezados y listas se convierten en HTML semántico."
+            },
+            {
+              "title": "Layout Markdown",
+              "description": "Un archivo puede declarar layout en frontmatter.",
+              "code": "---\nlayout: ../layouts/Articulo.astro\ntitle: Mi guía\n---\n# Contenido\nTexto de la guía.",
+              "explanation": "El layout recibe metadatos y contenido renderizado."
+            },
+            {
+              "title": "MDX y componentes",
+              "description": "MDX requiere instalar @astrojs/mdx.",
+              "code": "---\nimport Tarjeta from '../components/Tarjeta.astro';\n---\n# Guía\n<Tarjeta titulo='Astro' />",
+              "explanation": "MDX permite importar componentes; configurá primero la integración."
+            }
+          ],
+          "parameters": [
+            {
+              "name": ".md",
+              "description": "Archivo Markdown."
+            },
+            {
+              "name": "Frontmatter",
+              "description": "Metadatos YAML iniciales."
+            },
+            {
+              "name": ".mdx",
+              "description": "Markdown combinado con componentes."
+            },
+            {
+              "name": "@astrojs/mdx",
+              "description": "Integración para MDX."
+            }
+          ],
+          "bestPractices": [
+            "Separá contenido de presentación.",
+            "Usá encabezados jerárquicos.",
+            "Agregá MDX si necesitás componentes en el texto."
+          ],
+          "commonMistakes": [
+            "Suponer que cualquier .md genera página.",
+            "Olvidar instalar MDX.",
+            "Usar componente sin importarlo."
+          ],
+          "exercise": "Escribí dos páginas Markdown y una MDX que importe Tarjeta.",
+          "hint": "Para MDX instalá y configurá @astrojs/mdx.",
+          "resources": [
+            {
+              "label": "Markdown",
+              "url": "https://docs.astro.build/en/guides/markdown-content/"
+            }
+          ],
+          "related": [
+            "astro-content-collections",
+            "astro-layouts",
+            "astro-componentes"
+          ]
         },
         {
           "id": "astro-islas",
-          "title": "Arquitectura de islas",
+          "title": "Arquitectura de islas e hidratación selectiva",
           "category": "avanzado",
-          "summary": "Astro combina contenido estático con componentes interactivos hidratados en el navegador.",
-          "purpose": "Astro combina contenido estático con componentes interactivos hidratados en el navegador.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "---\nimport Contador from '../components/Contador.jsx';\n---\n<h1>Artículo</h1><Contador client:load />",
-          "level": "Inicial",
+          "summary": "Combiná HTML estático con componentes interactivos de React, Vue y otros frameworks.",
+          "purpose": "Las islas se hidratan de forma independiente. El resto de la página puede ser HTML. Para frameworks se instala y configura una integración.",
+          "whenToUse": "Las islas se hidratan de forma independiente. El resto de la página puede ser HTML. Para frameworks se instala y configura una integración.",
+          "syntax": "---\nimport Contador from '../components/Contador.jsx';\n---\n<Contador client:load />",
+          "level": "Avanzado",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "---\nimport Contador from '../components/Contador.jsx';\n---\n<h1>Artículo</h1><Contador client:load />",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Hidratar al cargar",
+              "description": "client:load hidrata al cargar la página.",
+              "code": "---\nimport Contador from '../components/Contador.jsx';\n---\n<Contador client:load />",
+              "explanation": "Requiere integración de React u otro framework compatible."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "import Contador from '../components/Contador.jsx';\n---\n<h1>Artículo</h1><Contador client:load />",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Hidratar al ser visible",
+              "description": "client:visible espera a que entre al viewport.",
+              "code": "<MapaInteractivo client:visible />",
+              "explanation": "Útil para componentes ubicados más abajo."
+            },
+            {
+              "title": "Hidratar en idle",
+              "description": "client:idle espera tiempo libre del navegador.",
+              "code": "<Comentarios client:idle />",
+              "explanation": "Puede retrasar la interactividad; no lo uses para controles prioritarios."
+            },
+            {
+              "title": "Una isla en contenido estático",
+              "description": "Solo el contador necesita JavaScript.",
+              "code": "---\nimport Contador from '../components/Contador.jsx';\n---\n<article><h1>Guía</h1><p>Contenido estático.</p><Contador client:load /></article>",
+              "explanation": "La página no necesita hidratarse entera."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "client:load",
+              "description": "Hidrata al cargar."
+            },
+            {
+              "name": "client:idle",
+              "description": "Hidrata cuando navegador está inactivo."
+            },
+            {
+              "name": "client:visible",
+              "description": "Hidrata al entrar en viewport."
+            },
+            {
+              "name": "client:media",
+              "description": "Hidrata al cumplirse media query."
+            },
+            {
+              "name": "client:only",
+              "description": "Renderiza solo en cliente."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Hidratá solo zonas interactivas.",
+            "Elegí directiva según prioridad.",
+            "Mantené contenido disponible sin JS."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Creer que .astro se hidrata automáticamente.",
+            "Usar client:* en componente Astro nativo.",
+            "Olvidar integración.",
+            "Elegir client:load para todo."
           ],
-          "exercise": "Agregá un contador interactivo a una página estática.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Configurá React o Vue y agregá contador client:load y un componente client:visible.",
+          "hint": "Instalá la integración antes de importar componentes de framework.",
+          "resources": [
+            {
+              "label": "Arquitectura de islas",
+              "url": "https://docs.astro.build/en/concepts/islands/"
+            }
+          ],
+          "related": [
+            "astro-scripts",
+            "astro-integraciones",
+            "astro-endpoints"
+          ]
         },
         {
           "id": "astro-endpoints",
-          "title": "Endpoints JSON",
+          "title": "Endpoints y respuestas HTTP",
           "category": "avanzado",
-          "summary": "Los endpoints dentro de src/pages pueden responder solicitudes HTTP con datos JSON.",
-          "purpose": "Los endpoints dentro de src/pages pueden responder solicitudes HTTP con datos JSON.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "export function GET() {\n return new Response(JSON.stringify({estado:'activo'}), {headers:{'Content-Type':'application/json'}});\n}",
-          "level": "Inicial",
+          "summary": "Creá endpoints dentro de src/pages que respondan JSON, texto y otros formatos.",
+          "purpose": "Los endpoints exportan funciones HTTP como GET o POST y devuelven Response. En modo estático GET puede ejecutarse en build; datos por solicitud requieren renderizado bajo demanda y adaptador.",
+          "whenToUse": "Los endpoints exportan funciones HTTP como GET o POST y devuelven Response. En modo estático GET puede ejecutarse en build; datos por solicitud requieren renderizado bajo demanda y adaptador.",
+          "syntax": "// src/pages/api/estado.json.ts\nexport function GET(){ return Response.json({estado:'activo'}); }",
+          "level": "Avanzado",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "export function GET() {\n return new Response(JSON.stringify({estado:'activo'}), {headers:{'Content-Type':'application/json'}});\n}",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Responder JSON",
+              "description": "Response.json crea respuesta JSON.",
+              "code": "export function GET(){return Response.json({estado:'activo',visitas:10})}",
+              "explanation": "Guardalo como src/pages/api/estado.json.ts para generar /api/estado.json."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "export function GET() {\n return new Response(JSON.stringify({estado:'activo'}), {headers:{'Content-Type':'application/json'}});\n}",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Leer consulta",
+              "description": "Usá url.searchParams.",
+              "code": "export function GET({url}){const q=url.searchParams.get('q') ?? '';return Response.json({q})}",
+              "explanation": "El contexto del endpoint entrega url."
+            },
+            {
+              "title": "Procesar POST",
+              "description": "Leé y validá JSON.",
+              "code": "export async function POST({request}){const data=await request.json();if(typeof data.nombre!=='string'||!data.nombre.trim())return Response.json({error:'Nombre obligatorio'},{status:400});return Response.json({recibido:data.nombre},{status:201})}",
+              "explanation": "request.json es asíncrono y los datos deben validarse."
+            },
+            {
+              "title": "Estado HTTP",
+              "description": "Response controla código y encabezados.",
+              "code": "export function GET(){return new Response('No disponible',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}})}",
+              "explanation": "Elegí códigos que describan el resultado."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "GET",
+              "description": "Maneja solicitudes GET."
+            },
+            {
+              "name": "POST",
+              "description": "Maneja solicitudes POST."
+            },
+            {
+              "name": "request",
+              "description": "Objeto Request."
+            },
+            {
+              "name": "url.searchParams",
+              "description": "Parámetros de consulta."
+            },
+            {
+              "name": "Response.json()",
+              "description": "Crea respuesta JSON."
+            },
+            {
+              "name": "prerender=false",
+              "description": "Desactiva generación estática de una ruta."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Validá cuerpo y parámetros.",
+            "Usá códigos HTTP adecuados.",
+            "No expongas secretos."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Creer que endpoint estático responde datos nuevos por solicitud.",
+            "No esperar request.json.",
+            "No validar entradas.",
+            "Olvidar adaptador SSR."
           ],
-          "exercise": "Creá un endpoint GET /api/productos.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá /api/productos.json con GET y POST, validá datos y devolvé 400 o 201 según resultado.",
+          "hint": "Para datos variables por solicitud configurá SSR y un adaptador.",
+          "resources": [
+            {
+              "label": "Endpoints",
+              "url": "https://docs.astro.build/en/guides/endpoints/"
+            }
+          ],
+          "related": [
+            "astro-fetch",
+            "astro-rutas-dinamicas"
+          ]
+        },
+        {
+          "id": "astro-content-collections",
+          "title": "Content Layer y colecciones de contenido",
+          "category": "avanzado",
+          "summary": "Definí colecciones tipadas con loaders para Markdown, JSON y fuentes externas.",
+          "purpose": "La API moderna declara colecciones en src/content.config.ts con defineCollection y loader como glob() o file(). Podés validar datos con Zod y consultar mediante getCollection/getEntry. En Astro actual evitá ejemplos legacy sin loader.",
+          "whenToUse": "La API moderna declara colecciones en src/content.config.ts con defineCollection y loader como glob() o file(). Podés validar datos con Zod y consultar mediante getCollection/getEntry. En Astro actual evitá ejemplos legacy sin loader.",
+          "syntax": "import { defineCollection } from 'astro:content';\nimport { glob } from 'astro/loaders';\nimport { z } from 'astro/zod';\nconst blog=defineCollection({loader:glob({pattern:'**/*.md',base:'./src/content/blog'}),schema:z.object({title:z.string()})});\nexport const collections={blog};",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Definir colección",
+              "description": "Configurá src/content.config.ts.",
+              "code": "import { defineCollection } from 'astro:content';\nimport { glob } from 'astro/loaders';\nimport { z } from 'astro/zod';\nconst blog=defineCollection({loader:glob({pattern:'**/*.md',base:'./src/content/blog'}),schema:z.object({title:z.string(),draft:z.boolean().default(false)})});\nexport const collections={blog};",
+              "explanation": "glob carga Markdown y schema valida metadatos. Las colecciones actuales requieren loader."
+            },
+            {
+              "title": "Consultar entradas",
+              "description": "getCollection devuelve elementos.",
+              "code": "---\nimport { getCollection } from 'astro:content';\nconst posts=await getCollection('blog');\n---\n<ul>{posts.map(post=><li>{post.data.title}</li>)}</ul>",
+              "explanation": "Los datos del frontmatter están en post.data."
+            },
+            {
+              "title": "Renderizar entrada",
+              "description": "Importá render desde astro:content.",
+              "code": "---\nimport { getEntry, render } from 'astro:content';\nconst post=await getEntry('blog','primer-post');\nconst {Content}=await render(post);\n---\n<h1>{post.data.title}</h1><Content />",
+              "explanation": "La API actual usa render(entry), no entry.render() ni el slug legacy."
+            },
+            {
+              "title": "Loader file",
+              "description": "Cargá entradas desde un JSON.",
+              "code": "import { defineCollection } from 'astro:content';\nimport { file } from 'astro/loaders';\nimport { z } from 'astro/zod';\nconst productos=defineCollection({loader:file('src/data/productos.json'),schema:z.object({nombre:z.string(),precio:z.number()})});\nexport const collections={productos};",
+              "explanation": "El archivo debe coincidir con el formato esperado por loader y schema."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "defineCollection",
+              "description": "Define colección."
+            },
+            {
+              "name": "glob()",
+              "description": "Loader para archivos locales."
+            },
+            {
+              "name": "file()",
+              "description": "Loader para un archivo de datos."
+            },
+            {
+              "name": "schema",
+              "description": "Esquema de validación."
+            },
+            {
+              "name": "getCollection()",
+              "description": "Consulta entradas."
+            },
+            {
+              "name": "getEntry()",
+              "description": "Consulta una entrada."
+            },
+            {
+              "name": "render(entry)",
+              "description": "Prepara el contenido para renderizar."
+            }
+          ],
+          "bestPractices": [
+            "Definí schemas.",
+            "Usá IDs estables.",
+            "Migrá colecciones legacy."
+          ],
+          "commonMistakes": [
+            "Usar colección antigua sin loader.",
+            "Ubicar config en src/content/config.ts.",
+            "Usar entry.render() o entry.slug.",
+            "No validar contenido."
+          ],
+          "exercise": "Definí colección blog con glob, validá title y pubDate y generá listado y detalle.",
+          "hint": "Usá src/content.config.ts y la API Content Layer actual.",
+          "resources": [
+            {
+              "label": "Content Layer",
+              "url": "https://docs.astro.build/en/guides/content-collections/"
+            }
+          ],
+          "related": [
+            "astro-markdown",
+            "astro-rutas-dinamicas",
+            "astro-fetch"
+          ]
+        },
+        {
+          "id": "astro-fetch",
+          "title": "Obtener datos desde APIs externas",
+          "category": "avanzado",
+          "summary": "Consultá servicios externos con fetch durante render o compilación.",
+          "purpose": "En salida estática, fetch del frontmatter se ejecuta durante build; en SSR puede ejecutarse por solicitud. Comprobá response.ok, manejá errores y validá datos.",
+          "whenToUse": "En salida estática, fetch del frontmatter se ejecuta durante build; en SSR puede ejecutarse por solicitud. Comprobá response.ok, manejá errores y validá datos.",
+          "syntax": "---\nconst response=await fetch('https://api.example.com/items');\nif(!response.ok) throw new Error('Falló API');\nconst items=await response.json();\n---",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Obtener JSON",
+              "description": "Usá fetch y response.json.",
+              "code": "---\nconst response=await fetch('https://api.example.com/posts');\nif(!response.ok) throw new Error('Error HTTP');\nconst posts=await response.json();\n---\n<p>{posts.length}</p>",
+              "explanation": "Comprobá response.ok antes de analizar el cuerpo."
+            },
+            {
+              "title": "Mostrar listado",
+              "description": "Recorré datos recibidos.",
+              "code": "---\nconst response=await fetch('https://api.example.com/posts');\nif(!response.ok) throw new Error('Error HTTP');\nconst posts=await response.json();\n---\n<ul>{posts.map(post=><li>{post.title}</li>)}</ul>",
+              "explanation": "Validá la forma de datos antes de usarlos."
+            },
+            {
+              "title": "Manejar fallos",
+              "description": "try/catch captura errores de red y parseo.",
+              "code": "---\nlet posts=[]; let error='';\ntry { const res=await fetch('https://api.example.com/posts'); if(!res.ok) throw new Error(`HTTP ${res.status}`); posts=await res.json(); }\ncatch(e){error=e instanceof Error?e.message:'Error'}\n---\n{error?<p role='alert'>{error}</p>:<p>{posts.length} posts</p>}",
+              "explanation": "El catch permite mostrar una alternativa cuando falla la API."
+            },
+            {
+              "title": "Solicitudes paralelas",
+              "description": "Promise.all inicia solicitudes independientes.",
+              "code": "---\nconst [a,b]=await Promise.all([fetch('/api/posts'),fetch('/api/users')]);\nif(!a.ok||!b.ok) throw new Error('Falló solicitud');\nconst [posts,users]=await Promise.all([a.json(),b.json()]);\n---\n<p>{posts.length} posts · {users.length} usuarios</p>",
+              "explanation": "Promise.all rechaza si una promesa falla."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fetch(url)",
+              "description": "Realiza solicitud HTTP."
+            },
+            {
+              "name": "response.ok",
+              "description": "Indica estado 200–299."
+            },
+            {
+              "name": "response.json()",
+              "description": "Analiza JSON."
+            },
+            {
+              "name": "Promise.all()",
+              "description": "Espera varias promesas."
+            },
+            {
+              "name": "try/catch",
+              "description": "Gestiona errores."
+            }
+          ],
+          "bestPractices": [
+            "Validá datos externos.",
+            "No supongas que 200 garantiza formato esperado.",
+            "Elegí estático o SSR según frecuencia de cambio."
+          ],
+          "commonMistakes": [
+            "Olvidar response.ok.",
+            "Confundir error HTTP y red.",
+            "Creer que fetch de build se repite por visita.",
+            "Exponer claves privadas al navegador."
+          ],
+          "exercise": "Consultá una API, mostrá listado y estado de error. Compará build estático y SSR.",
+          "hint": "El momento de ejecución depende del modo de renderizado.",
+          "resources": [
+            {
+              "label": "Data fetching",
+              "url": "https://docs.astro.build/en/guides/data-fetching/"
+            }
+          ],
+          "related": [
+            "astro-content-collections",
+            "astro-endpoints",
+            "astro-deploy"
+          ]
+        },
+        {
+          "id": "astro-actions",
+          "title": "Actions y formularios con validación",
+          "category": "avanzado",
+          "summary": "Definí funciones de servidor tipadas para procesar formularios.",
+          "purpose": "Astro Actions se definen en src/actions/index.ts con defineAction. Validan entradas y ejecutan lógica del servidor. Son endpoints públicos y requieren validar autorización.",
+          "whenToUse": "Astro Actions se definen en src/actions/index.ts con defineAction. Validan entradas y ejecutan lógica del servidor. Son endpoints públicos y requieren validar autorización.",
+          "syntax": "import { defineAction } from 'astro:actions';\nimport { z } from 'astro/zod';\nexport const server={saludar:defineAction({input:z.object({nombre:z.string()}),handler:async({nombre})=>`Hola ${nombre}`})};",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Definir action",
+              "description": "Guardá acciones en src/actions/index.ts.",
+              "code": "import { defineAction } from 'astro:actions';\nimport { z } from 'astro/zod';\nexport const server={saludar:defineAction({input:z.object({nombre:z.string().min(1)}),handler:async({nombre})=>`Hola, ${nombre}`})};",
+              "explanation": "defineAction declara esquema de entrada y handler servidor."
+            },
+            {
+              "title": "Invocar desde cliente",
+              "description": "Importá actions desde astro:actions.",
+              "code": "<script>\nimport { actions } from 'astro:actions';\nconst result=await actions.saludar({nombre:'Mara'});\nif(result.error) console.error(result.error); else console.log(result.data);\n</script>",
+              "explanation": "El resultado permite distinguir error y data."
+            },
+            {
+              "title": "Formulario",
+              "description": "accept form configura datos de formulario.",
+              "code": "contacto: defineAction({accept:'form',input:z.object({email:z.string().email(),mensaje:z.string().min(5)}),handler:async({email})=>({recibido:true,email})})",
+              "explanation": "El esquema valida email y mensaje antes del procesamiento."
+            },
+            {
+              "title": "Validar servidor",
+              "description": "No confíes solo en validación HTML.",
+              "code": "const entrada=z.object({cantidad:z.number().int().min(1).max(20),productoId:z.string().min(1)});",
+              "explanation": "El servidor debe validar porque el cliente puede modificar solicitudes."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "defineAction()",
+              "description": "Define función servidor."
+            },
+            {
+              "name": "input",
+              "description": "Esquema de entrada."
+            },
+            {
+              "name": "handler",
+              "description": "Lógica de servidor."
+            },
+            {
+              "name": "accept: form",
+              "description": "Recibe datos de formulario."
+            },
+            {
+              "name": "actions.nombre()",
+              "description": "Invoca una action."
+            }
+          ],
+          "bestPractices": [
+            "Validá y autorizá en servidor.",
+            "No incluyas secretos en cliente.",
+            "No filtres información interna."
+          ],
+          "commonMistakes": [
+            "Confiar solo en HTML.",
+            "Exponer action sin permisos.",
+            "Creer que action es función local.",
+            "No manejar error/data."
+          ],
+          "exercise": "Creá action de contacto que valide email y mensaje y muestre resultado.",
+          "hint": "Validá y autorizá cada acción en el servidor.",
+          "resources": [
+            {
+              "label": "Actions",
+              "url": "https://docs.astro.build/en/guides/actions/"
+            }
+          ],
+          "related": [
+            "astro-endpoints",
+            "astro-fetch",
+            "astro-deploy"
+          ]
+        },
+        {
+          "id": "astro-integraciones",
+          "title": "Integraciones y configuración",
+          "category": "avanzado",
+          "summary": "Extendé Astro con integraciones oficiales para React, Vue, MDX y otras herramientas.",
+          "purpose": "Las integraciones se configuran en astro.config.mjs mediante defineConfig. Algunas se agregan con astro add; otras requieren instalación y configuración manual.",
+          "whenToUse": "Las integraciones se configuran en astro.config.mjs mediante defineConfig. Algunas se agregan con astro add; otras requieren instalación y configuración manual.",
+          "syntax": "import { defineConfig } from 'astro/config';\nimport react from '@astrojs/react';\nexport default defineConfig({integrations:[react()]});",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Agregar React",
+              "description": "Usá el asistente de integración.",
+              "code": "npx astro add react",
+              "explanation": "Instala paquetes y modifica astro.config.mjs; revisá los cambios."
+            },
+            {
+              "title": "Agregar Vue",
+              "description": "Instalá la integración oficial.",
+              "code": "npx astro add vue",
+              "explanation": "Luego podés importar .vue y usar client:* si necesitan hidratación."
+            },
+            {
+              "title": "Configurar MDX",
+              "description": "Declar á integración en integrations.",
+              "code": "import { defineConfig } from 'astro/config';\nimport mdx from '@astrojs/mdx';\nexport default defineConfig({integrations:[mdx()]});",
+              "explanation": "El paquete debe estar instalado e importado."
+            },
+            {
+              "title": "Configurar base",
+              "description": "Definí URL y prefijo de despliegue.",
+              "code": "import { defineConfig } from 'astro/config';\nexport default defineConfig({site:'https://ejemplo.com',base:'/documentacion'});",
+              "explanation": "base representa el prefijo si el sitio vive en un subdirectorio."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "integrations",
+              "description": "Arreglo de integraciones."
+            },
+            {
+              "name": "astro add",
+              "description": "Comando para agregar integraciones."
+            },
+            {
+              "name": "site",
+              "description": "URL pública."
+            },
+            {
+              "name": "base",
+              "description": "Prefijo de subdirectorio."
+            },
+            {
+              "name": "defineConfig",
+              "description": "Configura Astro con tipos."
+            }
+          ],
+          "bestPractices": [
+            "Instalá solo lo necesario.",
+            "Verificá compatibilidad de versiones.",
+            "Revisá dependencias."
+          ],
+          "commonMistakes": [
+            "Instalar paquete sin integrarlo.",
+            "Configurar base incorrectamente.",
+            "Copiar configuración vieja."
+          ],
+          "exercise": "Agregá React y MDX y verificá un componente hidratado y una página MDX.",
+          "hint": "Usá npx astro add cuando haya asistente y luego revisá configuración.",
+          "resources": [
+            {
+              "label": "Integraciones",
+              "url": "https://docs.astro.build/en/guides/integrations-guide/"
+            }
+          ],
+          "related": [
+            "astro-instalacion",
+            "astro-islas",
+            "astro-markdown"
+          ]
+        },
+        {
+          "id": "astro-transiciones",
+          "title": "Navegación de cliente y View Transitions",
+          "category": "avanzado",
+          "summary": "Agregá transiciones entre páginas con ClientRouter.",
+          "purpose": "Astro ofrece navegación cliente con ClientRouter desde astro:transitions. En versiones actuales se utiliza ClientRouter; ViewTransitions es el nombre antiguo.",
+          "whenToUse": "Astro ofrece navegación cliente con ClientRouter desde astro:transitions. En versiones actuales se utiliza ClientRouter; ViewTransitions es el nombre antiguo.",
+          "syntax": "---\nimport { ClientRouter } from 'astro:transitions';\n---\n<html><head><ClientRouter /></head><body><slot /></body></html>",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Activar router",
+              "description": "Importá ClientRouter en layout compartido.",
+              "code": "---\nimport { ClientRouter } from 'astro:transitions';\n---\n<html><head><ClientRouter /></head><body><slot /></body></html>",
+              "explanation": "El router gestiona navegación interna de cliente."
+            },
+            {
+              "title": "Nombrar elemento",
+              "description": "transition:name relaciona elementos entre páginas.",
+              "code": "<img src='/images/portada.jpg' alt='Portada' transition:name='portada' />",
+              "explanation": "El mismo nombre en distintas páginas permite animar el cambio."
+            },
+            {
+              "title": "Escuchar navegación",
+              "description": "astro:page-load ocurre al terminar navegación.",
+              "code": "<script>document.addEventListener('astro:page-load',()=>console.log('Página lista'));</script>",
+              "explanation": "Permite inicializar interacciones luego de mostrar contenido."
+            },
+            {
+              "title": "Persistir elemento",
+              "description": "transition:persist conserva un elemento.",
+              "code": "<audio controls transition:persist><source src='/audio/musica.mp3' type='audio/mpeg' /></audio>",
+              "explanation": "Puede mantener estado de reproductor entre páginas."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "ClientRouter",
+              "description": "Router de navegación cliente."
+            },
+            {
+              "name": "transition:name",
+              "description": "Asocia elementos entre páginas."
+            },
+            {
+              "name": "transition:persist",
+              "description": "Conserva elemento durante navegación."
+            },
+            {
+              "name": "astro:page-load",
+              "description": "Evento tras navegación."
+            }
+          ],
+          "bestPractices": [
+            "Probá con y sin soporte del navegador.",
+            "Reinicializá scripts dependientes del DOM.",
+            "No conviertas todo en SPA sin necesidad."
+          ],
+          "commonMistakes": [
+            "Usar API antigua ViewTransitions.",
+            "Suponer que scripts se reejecutan en cada navegación.",
+            "Olvidar fallback."
+          ],
+          "exercise": "Activá ClientRouter y transición entre dos páginas. Comprobá scripts.",
+          "hint": "Usá ClientRouter, no ViewTransitions. Escuchá astro:page-load si hace falta.",
+          "resources": [
+            {
+              "label": "View Transitions",
+              "url": "https://docs.astro.build/en/guides/view-transitions/"
+            }
+          ],
+          "related": [
+            "astro-scripts",
+            "astro-layouts",
+            "astro-deploy"
+          ]
+        },
+        {
+          "id": "astro-deploy",
+          "title": "Build, adaptadores y despliegue",
+          "category": "avanzado",
+          "summary": "Generá salida de producción y elegí entre sitio estático o renderizado bajo demanda.",
+          "purpose": "Astro genera sitios estáticos o ejecuta páginas bajo demanda. La salida estática va a dist; SSR requiere adaptador compatible con la plataforma.",
+          "whenToUse": "Astro genera sitios estáticos o ejecuta páginas bajo demanda. La salida estática va a dist; SSR requiere adaptador compatible con la plataforma.",
+          "syntax": "npm run build\nnpm run preview\n// output: static | server",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Build estático",
+              "description": "Generá los archivos de producción.",
+              "code": "npm run build",
+              "explanation": "Astro crea dist, que puede publicarse en hosting estático."
+            },
+            {
+              "title": "Previsualizar",
+              "description": "Revisá el build localmente.",
+              "code": "npm run preview",
+              "explanation": "Ayuda a detectar errores de rutas y recursos."
+            },
+            {
+              "title": "Configurar SSR",
+              "description": "El modo server requiere adaptador.",
+              "code": "import { defineConfig } from 'astro/config';\nimport node from '@astrojs/node';\nexport default defineConfig({output:'server',adapter:node({mode:'standalone'})});",
+              "explanation": "Requiere instalar @astrojs/node y ejecutar en entorno compatible."
+            },
+            {
+              "title": "Publicar subdirectorio",
+              "description": "base configura prefijo URL.",
+              "code": "import { defineConfig } from 'astro/config';\nexport default defineConfig({site:'https://usuario.github.io',base:'/mi-proyecto'});",
+              "explanation": "Si se publica bajo /mi-proyecto, base debe coincidir."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "output: static",
+              "description": "Genera páginas y recursos estáticos."
+            },
+            {
+              "name": "output: server",
+              "description": "Renderizado bajo demanda."
+            },
+            {
+              "name": "adapter",
+              "description": "Integra Astro con plataforma."
+            },
+            {
+              "name": "dist/",
+              "description": "Salida de producción."
+            },
+            {
+              "name": "base",
+              "description": "Prefijo URL."
+            }
+          ],
+          "bestPractices": [
+            "Probá build.",
+            "Elegí salida según requisitos.",
+            "Configurá site y base."
+          ],
+          "commonMistakes": [
+            "Usar SSR en hosting estático.",
+            "Olvidar base en subdirectorio.",
+            "Confundir preview con producción."
+          ],
+          "exercise": "Compilá un sitio estático y previsualizalo. Investigá un adaptador SSR.",
+          "hint": "Definí primero el hosting. Sitio estático no necesita adaptador servidor.",
+          "resources": [
+            {
+              "label": "Despliegue",
+              "url": "https://docs.astro.build/en/guides/deploy/"
+            }
+          ],
+          "related": [
+            "astro-instalacion",
+            "astro-integraciones",
+            "astro-endpoints"
+          ]
         }
       ]
     },
