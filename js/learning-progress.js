@@ -2,8 +2,8 @@
    Los datos se guardan localmente en el navegador, sin cuenta ni servidor. */
 document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "webdevbook.learning.v1";
-  const TOTALS = { html: 242, css: 106, javascript: 146 };
-  const LANGUAGE_NAMES = { html: "HTML", css: "CSS", javascript: "JavaScript" };
+  const TOTALS = { html: 242, css: 106, javascript: 146, tools: 39 };
+  const LANGUAGE_NAMES = { html: "HTML", css: "CSS", javascript: "JavaScript", tools: "Herramientas" };
 
   const emptyState = () => ({ favorites: [], completed: [], articles: {} });
   const readState = () => {
@@ -112,6 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const articleRoute = (language, id, categoryId, itemIndex) => {
+    if (language === "tools") {
+      const [toolId, articleId] = String(id).split(":");
+      return "pages/tools-article.html?tool=" + encodeURIComponent(toolId) + "&id=" + encodeURIComponent(articleId);
+    }
     if (language === "html") return "pages/articulo.html?lenguaje=html&id=" + encodeURIComponent(id);
     if (language === "css") return "pages/css-articulo.html?tema=" + encodeURIComponent(categoryId) + "&item=" + itemIndex;
     return "pages/js-articulo.html?tema=" + encodeURIComponent(categoryId) + "&item=" + itemIndex;
@@ -119,6 +123,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loadCurrentArticle = async () => {
     const page = document.body.dataset.page;
+
+    // Artículos de Terminal Linux, Git y NPM usan una ruta y un catálogo compartidos.
+    if (page === "tools-article") {
+      const params = new URLSearchParams(window.location.search);
+      const toolId = params.get("tool");
+      const articleId = params.get("id");
+      if (!toolId || !articleId) return;
+
+      try {
+        const response = await fetch("../data/tools.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("No se pudo cargar el catálogo de herramientas.");
+        const database = await response.json();
+        const tool = database.tools?.find(item => item.id === toolId);
+        const article = tool?.articles?.find(item => item.id === articleId);
+        const category = tool?.categories?.find(item => item.id === article?.category);
+        if (!tool || !article) return;
+
+        currentArticle = {
+          key: "tools:" + toolId + ":" + articleId,
+          language: "tools",
+          languageName: LANGUAGE_NAMES.tools,
+          id: toolId + ":" + articleId,
+          title: article.title,
+          category: tool.title + " · " + (category?.title || "Herramientas"),
+          url: articleRoute("tools", toolId + ":" + articleId)
+        };
+        state.articles[currentArticle.key] = currentArticle;
+        createArticleControls();
+        updateInterface();
+      } catch (error) {
+        console.warn("No se pudo cargar el estado del artículo de herramientas.", error);
+      }
+      return;
+    }
+
     const language = page === "articulo" ? "html" : page === "articulo-css" ? "css" : page === "articulo-javascript" ? "javascript" : null;
     if (!language) return;
 
