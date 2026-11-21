@@ -1,0 +1,1862 @@
+{
+  "version": 1,
+  "articleCount": 39,
+  "description": "Contenido didáctico propio de Terminal Linux, Git/GitHub y NPM con referencias oficiales.",
+  "tools": [
+    {
+      "id": "terminal",
+      "title": "Terminal Linux",
+      "shortTitle": "Terminal",
+      "symbol": "$_",
+      "eyebrow": "LINUX / LÍNEA DE COMANDOS",
+      "tagline": "Aprendé a manejar Linux desde la terminal.",
+      "description": "Una guía práctica para navegar por el sistema, organizar archivos, buscar información, administrar paquetes y automatizar tareas.",
+      "level": "Inicial a avanzado",
+      "accent": "terminal",
+      "categories": [
+        {
+          "id": "introduccion",
+          "title": "Introducción",
+          "description": "Conocé qué es una terminal, una shell y cómo consultar ayuda.",
+          "icon": "⌘",
+          "articles": [
+            "terminal-que-es",
+            "terminal-ayuda"
+          ]
+        },
+        {
+          "id": "instalacion",
+          "title": "Instalación y preparación",
+          "description": "Prepará un entorno Linux y reconocé el prompt y las variables de shell.",
+          "icon": "▣",
+          "articles": [
+            "terminal-wsl",
+            "terminal-shell"
+          ]
+        },
+        {
+          "id": "archivos",
+          "title": "Ficheros y carpetas",
+          "description": "Navegá, listá, creá, leé, copiá, mové y eliminá archivos.",
+          "icon": "▤",
+          "articles": [
+            "terminal-pwd-cd",
+            "terminal-ls",
+            "terminal-crear",
+            "terminal-copiar-mover",
+            "terminal-leer"
+          ]
+        },
+        {
+          "id": "manejo",
+          "title": "Manejo de la terminal",
+          "description": "Filtrá información, conectá comandos y aprovechá el historial.",
+          "icon": "⌁",
+          "articles": [
+            "terminal-grep",
+            "terminal-tuberias",
+            "terminal-historial"
+          ]
+        },
+        {
+          "id": "administracion",
+          "title": "Administración",
+          "description": "Administrá paquetes y entendé los permisos elevados.",
+          "icon": "⚙",
+          "articles": [
+            "terminal-apt-sudo"
+          ]
+        },
+        {
+          "id": "seguridad",
+          "title": "Seguridad",
+          "description": "Introducción a reglas básicas de firewall con UFW.",
+          "icon": "◇",
+          "articles": [
+            "terminal-ufw"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "terminal-que-es",
+          "title": "¿Qué es una terminal?",
+          "category": "introduccion",
+          "summary": "Qué es una terminal, qué es una shell y por qué se utiliza para trabajar con un sistema.",
+          "purpose": "La terminal es una interfaz de texto para interactuar con el sistema operativo. La shell interpreta lo que escribís y ejecuta comandos. Es útil para administrar archivos, instalar programas, trabajar con servidores y automatizar tareas.",
+          "syntax": "comando [opciones] [argumentos]",
+          "examples": [
+            {
+              "title": "Conocer tu ubicación",
+              "description": "pwd muestra el directorio de trabajo actual.",
+              "code": "pwd",
+              "explanation": "Devuelve una ruta absoluta, por ejemplo /home/ana/proyectos."
+            },
+            {
+              "title": "Consultar el usuario y el sistema",
+              "description": "Dos comandos sencillos para inspeccionar el entorno.",
+              "code": "whoami\\nuname -s",
+              "explanation": "whoami muestra el usuario actual; uname -s indica el nombre del sistema operativo o núcleo."
+            }
+          ],
+          "exercise": "Abrí una terminal y ejecutá pwd, whoami y uname -a. Anotá qué información devuelve cada uno.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Manual de Bash",
+              "url": "https://www.gnu.org/software/bash/manual/bash.html"
+            }
+          ],
+          "related": [
+            "terminal-ayuda",
+            "terminal-shell"
+          ]
+        },
+        {
+          "id": "terminal-ayuda",
+          "title": "Ayuda y manuales: --help y man",
+          "category": "introduccion",
+          "summary": "Aprendé a consultar las opciones de un comando sin memorizar toda su sintaxis.",
+          "purpose": "La documentación integrada suele estar disponible con --help. En muchos sistemas Linux, man abre páginas de manual y apropos permite buscar manuales por tema.",
+          "syntax": "comando --help\\nman comando\\napropos palabra",
+          "examples": [
+            {
+              "title": "Consultar las opciones de ls",
+              "description": "La opción --help suele mostrar la sintaxis y los argumentos.",
+              "code": "ls --help",
+              "explanation": "La salida depende de la implementación y versión del programa."
+            },
+            {
+              "title": "Abrir un manual",
+              "description": "man permite leer la documentación instalada.",
+              "code": "man ls",
+              "explanation": "Dentro del manual podés buscar con /palabra y salir con q."
+            }
+          ],
+          "exercise": "Buscá ayuda para pwd, ls y grep. Elegí una opción de cada comando y explicá qué hace.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "GNU Coreutils: manual",
+              "url": "https://www.gnu.org/software/coreutils/manual/coreutils.html"
+            }
+          ],
+          "related": [
+            "terminal-que-es",
+            "terminal-grep"
+          ]
+        },
+        {
+          "id": "terminal-wsl",
+          "title": "Instalar Linux con WSL2 en Windows",
+          "category": "instalacion",
+          "summary": "WSL permite ejecutar una distribución Linux integrada en Windows.",
+          "purpose": "WSL (Windows Subsystem for Linux) permite ejecutar herramientas y entornos Linux en Windows. WSL2 utiliza un núcleo Linux dentro de una máquina virtual ligera. Los requisitos dependen de la versión de Windows.",
+          "syntax": "wsl --install\\nwsl --list --online\\nwsl --list --verbose",
+          "examples": [
+            {
+              "title": "Instalar WSL",
+              "description": "En versiones compatibles de Windows, ejecutá el comando desde una terminal con permisos de administrador.",
+              "code": "wsl --install",
+              "explanation": "La instalación puede requerir reiniciar el equipo y crear un usuario Linux."
+            },
+            {
+              "title": "Consultar distribuciones disponibles",
+              "description": "Listá las distribuciones y luego instalá una por su nombre.",
+              "code": "wsl --list --online\\nwsl --install -d Ubuntu",
+              "explanation": "El nombre debe coincidir con el listado disponible en tu equipo."
+            }
+          ],
+          "exercise": "Consultá los requisitos oficiales de WSL para tu versión de Windows antes de instalarlo.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Verificá los requisitos y hacé una copia de seguridad de los datos importantes.",
+            "No confundas los comandos de PowerShell con los que se ejecutan dentro de Linux."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Microsoft: instalar WSL",
+              "url": "https://learn.microsoft.com/es-es/windows/wsl/install"
+            }
+          ],
+          "related": []
+        },
+        {
+          "id": "terminal-shell",
+          "title": "Shell, prompt y comandos básicos",
+          "category": "instalacion",
+          "summary": "Reconocé el intérprete de comandos, el prompt y las variables de entorno más habituales.",
+          "purpose": "La shell es el programa que interpreta las órdenes. Bash, Zsh y Fish son ejemplos. El prompt indica que la shell está lista para recibir un comando; las variables como HOME contienen información del entorno.",
+          "syntax": "echo $SHELL\\necho $HOME\\necho \"Hola\"",
+          "examples": [
+            {
+              "title": "Ver la shell configurada",
+              "description": "La variable SHELL suele indicar la shell de inicio de sesión.",
+              "code": "echo $SHELL",
+              "explanation": "Puede devolver una ruta como /bin/bash o /usr/bin/zsh."
+            },
+            {
+              "title": "Consultar el directorio personal",
+              "description": "HOME contiene la ruta del usuario.",
+              "code": "echo $HOME\\ncd ~",
+              "explanation": "El símbolo ~ es una abreviatura del directorio personal."
+            }
+          ],
+          "exercise": "Identificá tu shell y tu directorio personal con echo $SHELL y echo $HOME.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-que-es",
+            "terminal-pwd-cd"
+          ]
+        },
+        {
+          "id": "terminal-pwd-cd",
+          "title": "Navegar entre carpetas con pwd y cd",
+          "category": "archivos",
+          "summary": "Consultá tu ubicación actual y cambiá de directorio mediante rutas absolutas o relativas.",
+          "purpose": "pwd muestra la carpeta actual. cd cambia el directorio de trabajo. Las rutas relativas se interpretan desde la carpeta actual y las rutas absolutas comienzan desde la raíz del sistema.",
+          "syntax": "pwd\\ncd ruta\\ncd ..\\ncd ~\\ncd -",
+          "examples": [
+            {
+              "title": "Entrar a una carpeta",
+              "description": "Usá cd seguido de la ruta de destino.",
+              "code": "cd ~/Documentos\\npwd",
+              "explanation": "~ representa el directorio personal del usuario."
+            },
+            {
+              "title": "Subir un nivel y volver",
+              "description": ".. representa el directorio padre; cd - vuelve a la ubicación anterior.",
+              "code": "cd ..\\ncd -",
+              "explanation": "Estas formas permiten navegar sin escribir rutas completas."
+            }
+          ],
+          "exercise": "Entrá a una carpeta de práctica, subí un nivel y regresá usando cd -.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-ls",
+            "terminal-crear"
+          ]
+        },
+        {
+          "id": "terminal-ls",
+          "title": "Listar archivos con ls",
+          "category": "archivos",
+          "summary": "Mostrá el contenido de una carpeta y revisá permisos, tamaños y archivos ocultos.",
+          "purpose": "ls lista archivos y directorios. Sus opciones permiten incluir elementos ocultos, mostrar metadatos y presentar tamaños legibles.",
+          "syntax": "ls [opciones] [ruta]",
+          "examples": [
+            {
+              "title": "Listado detallado",
+              "description": "-l presenta permisos, propietario, tamaño y fecha.",
+              "code": "ls -l",
+              "explanation": "Cada fila muestra información adicional de un archivo o directorio."
+            },
+            {
+              "title": "Incluir archivos ocultos",
+              "description": "-a incluye entradas que comienzan con punto; -h hace legibles los tamaños.",
+              "code": "ls -lah ~/proyectos",
+              "explanation": "Las opciones se pueden combinar para consultar más información en una sola orden."
+            }
+          ],
+          "exercise": "Compará ls, ls -l y ls -lah dentro de una carpeta que tenga archivos ocultos.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [
+            {
+              "name": "-a",
+              "description": "Incluye archivos ocultos."
+            },
+            {
+              "name": "-l",
+              "description": "Muestra un listado detallado."
+            },
+            {
+              "name": "-h",
+              "description": "Presenta tamaños en unidades legibles."
+            }
+          ],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-pwd-cd",
+            "terminal-leer"
+          ]
+        },
+        {
+          "id": "terminal-crear",
+          "title": "Crear archivos y carpetas con mkdir y touch",
+          "category": "archivos",
+          "summary": "Creá directorios y archivos vacíos directamente desde la consola.",
+          "purpose": "mkdir crea directorios. touch crea un archivo vacío si no existe o actualiza sus marcas de tiempo si ya existe. La opción -p de mkdir crea directorios intermedios.",
+          "syntax": "mkdir carpeta\\nmkdir -p proyecto/src\\ntouch archivo.txt",
+          "examples": [
+            {
+              "title": "Crear una estructura",
+              "description": "-p crea toda la ruta necesaria.",
+              "code": "mkdir -p proyecto/src proyecto/assets/img",
+              "explanation": "No es necesario crear cada directorio intermedio por separado."
+            },
+            {
+              "title": "Crear archivos de un proyecto",
+              "description": "touch acepta varios nombres de archivo.",
+              "code": "touch index.html styles.css app.js",
+              "explanation": "Los archivos se crean vacíos y luego podés editarlos."
+            }
+          ],
+          "exercise": "Creá una carpeta proyecto con src y assets, y dentro tres archivos index.html, styles.css y app.js.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-pwd-cd",
+            "terminal-copiar-mover"
+          ]
+        },
+        {
+          "id": "terminal-copiar-mover",
+          "title": "Copiar, mover y eliminar con cp, mv y rm",
+          "category": "archivos",
+          "summary": "Organizá archivos copiando, moviendo, renombrando o eliminando elementos.",
+          "purpose": "cp copia archivos o directorios; mv mueve o renombra; rm elimina. Algunas eliminaciones no pasan por la papelera y pueden ser difíciles de recuperar.",
+          "syntax": "cp origen destino\\nmv origen destino\\nrm archivo",
+          "examples": [
+            {
+              "title": "Copiar un archivo",
+              "description": "La copia crea un segundo archivo y conserva el original.",
+              "code": "cp notas.txt respaldo-notas.txt",
+              "explanation": "El nombre del destino puede ser diferente."
+            },
+            {
+              "title": "Mover o renombrar",
+              "description": "mv sirve para cambiar de ubicación o de nombre.",
+              "code": "mv borrador.txt documentos/borrador.txt\\nmv borrador.txt final.txt",
+              "explanation": "La primera orden mueve el archivo; la segunda lo renombra."
+            },
+            {
+              "title": "Eliminar con precaución",
+              "description": "rm elimina el archivo indicado.",
+              "code": "rm archivo-temporal.txt",
+              "explanation": "Revisá la ruta antes de confirmar; rm normalmente no usa la papelera."
+            }
+          ],
+          "exercise": "En una carpeta de prueba copiá un archivo, renombrá la copia y eliminá solo ese duplicado.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Practicá con archivos descartables antes de trabajar con datos importantes.",
+            "Comprobá pwd y ls antes de usar rm.",
+            "Evitá rm -r o -f si no comprendés exactamente el alcance."
+          ],
+          "commonMistakes": [
+            "Pensar que rm mueve los archivos a la papelera.",
+            "Omitir comillas en nombres con espacios.",
+            "Ejecutar rutas relativas desde una carpeta inesperada."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-crear",
+            "terminal-leer"
+          ]
+        },
+        {
+          "id": "terminal-leer",
+          "title": "Leer archivos con cat, less y head",
+          "category": "archivos",
+          "summary": "Inspeccioná archivos de texto desde la terminal sin abrir un editor gráfico.",
+          "purpose": "cat imprime el archivo completo. less permite recorrer contenido extenso. head muestra las primeras líneas y tail las últimas.",
+          "syntax": "cat archivo.txt\\nless archivo.txt\\nhead -n 20 archivo.txt\\ntail -n 20 archivo.txt",
+          "examples": [
+            {
+              "title": "Leer un archivo breve",
+              "description": "cat imprime todo el contenido.",
+              "code": "cat README.md",
+              "explanation": "Es cómodo para archivos cortos."
+            },
+            {
+              "title": "Explorar un registro extenso",
+              "description": "less permite desplazarse y buscar dentro del archivo.",
+              "code": "less /var/log/syslog",
+              "explanation": "Dentro de less podés buscar con /palabra y salir con q."
+            }
+          ],
+          "exercise": "Creá un archivo de varias líneas y compará qué muestran cat, head y tail.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-ls",
+            "terminal-grep"
+          ]
+        },
+        {
+          "id": "terminal-grep",
+          "title": "Buscar texto con grep",
+          "category": "manejo",
+          "summary": "Localizá palabras o patrones dentro de archivos y resultados de otros comandos.",
+          "purpose": "grep busca líneas que coinciden con un patrón. Es una herramienta habitual para revisar registros, código y archivos de configuración.",
+          "syntax": "grep [opciones] patrón archivo",
+          "examples": [
+            {
+              "title": "Buscar una palabra",
+              "description": "Mostrá las líneas que contienen un texto.",
+              "code": "grep \"error\" app.log",
+              "explanation": "La salida contiene las coincidencias encontradas en el archivo."
+            },
+            {
+              "title": "Ignorar mayúsculas y mostrar líneas",
+              "description": "-i ignora mayúsculas y -n muestra números de línea.",
+              "code": "grep -in \"warning\" app.log",
+              "explanation": "Podés usar -r para buscar también en subdirectorios."
+            }
+          ],
+          "exercise": "Creá un archivo de texto y buscá una palabra exacta y luego la misma palabra ignorando mayúsculas.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [
+            {
+              "name": "-i",
+              "description": "Ignora mayúsculas y minúsculas."
+            },
+            {
+              "name": "-n",
+              "description": "Muestra números de línea."
+            },
+            {
+              "name": "-r",
+              "description": "Busca recursivamente."
+            },
+            {
+              "name": "-v",
+              "description": "Muestra líneas que no coinciden."
+            }
+          ],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-leer",
+            "terminal-tuberias"
+          ]
+        },
+        {
+          "id": "terminal-tuberias",
+          "title": "Tuberías y redirecciones",
+          "category": "manejo",
+          "summary": "Conectá la salida de un comando con otro y guardá resultados en archivos.",
+          "purpose": "La tubería | conecta la salida estándar de un proceso con la entrada del siguiente. El operador > crea o reemplaza un archivo; >> agrega contenido al final.",
+          "syntax": "comando1 | comando2\\ncomando > salida.txt\\ncomando >> salida.txt",
+          "examples": [
+            {
+              "title": "Filtrar un listado",
+              "description": "La salida de ls se envía a grep.",
+              "code": "ls -la | grep \".js\"",
+              "explanation": "Se muestran las líneas del listado que contienen .js."
+            },
+            {
+              "title": "Guardar y agregar resultados",
+              "description": "Primero creá un archivo de salida y luego agregá otra línea.",
+              "code": "ls -la > listado.txt\\nwhoami >> listado.txt",
+              "explanation": "> reemplaza el archivo; >> agrega sin borrar el contenido anterior."
+            }
+          ],
+          "exercise": "Guardá el listado de una carpeta en un archivo y filtrá luego las líneas que contengan .html.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Recordá que > reemplaza contenido mientras >> agrega al final.",
+            "Probá por separado los comandos antes de encadenarlos.",
+            "La salida de errores puede redirigirse por separado mediante stderr."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": []
+        },
+        {
+          "id": "terminal-historial",
+          "title": "Historial y alias",
+          "category": "manejo",
+          "summary": "Recuperá comandos anteriores y creá atajos para tareas repetitivas.",
+          "purpose": "history muestra órdenes ejecutadas anteriormente. alias asigna un nombre a un comando o combinación de opciones durante la sesión de shell.",
+          "syntax": "history\\nalias ll='ls -lah'\\nunalias ll",
+          "examples": [
+            {
+              "title": "Consultar las últimas órdenes",
+              "description": "Podés combinar history con tail.",
+              "code": "history | tail -n 10",
+              "explanation": "Se muestran las diez entradas más recientes del historial."
+            },
+            {
+              "title": "Crear un alias",
+              "description": "Un alias simplifica un comando de uso frecuente.",
+              "code": "alias ll='ls -lah'\\nll",
+              "explanation": "Para hacerlo permanente agregalo al archivo de configuración de tu shell, por ejemplo .bashrc."
+            }
+          ],
+          "exercise": "Creá un alias llamado proyectos para entrar a tu carpeta de proyectos y luego eliminalo con unalias.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "terminal-shell",
+            "terminal-tuberias"
+          ]
+        },
+        {
+          "id": "terminal-apt-sudo",
+          "title": "Administrar paquetes y permisos con APT y sudo",
+          "category": "administracion",
+          "summary": "Instalá paquetes y entendé cuándo una operación requiere permisos de administrador.",
+          "purpose": "APT administra paquetes en Debian, Ubuntu y sistemas derivados. sudo permite ejecutar una orden con privilegios elevados, de acuerdo con la política del sistema.",
+          "syntax": "sudo apt update\\napt search paquete\\nsudo apt install paquete\\nsudo apt upgrade",
+          "examples": [
+            {
+              "title": "Actualizar la lista de paquetes",
+              "description": "apt update descarga información actualizada de los repositorios.",
+              "code": "sudo apt update",
+              "explanation": "No actualiza por sí solo todos los programas instalados."
+            },
+            {
+              "title": "Buscar e instalar un paquete",
+              "description": "Buscá un nombre conocido y luego instalalo.",
+              "code": "apt search git\\nsudo apt install git",
+              "explanation": "Revisá la descripción del paquete antes de confirmar la instalación."
+            },
+            {
+              "title": "Consultar permisos",
+              "description": "sudo -l lista órdenes que la cuenta puede ejecutar con sudo.",
+              "code": "sudo -l",
+              "explanation": "El resultado depende de la configuración administrativa del equipo."
+            }
+          ],
+          "exercise": "Buscá un paquete con apt search y revisá sudo -l. No ejecutes órdenes administrativas que no comprendas.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Leé la lista de paquetes antes de confirmar una instalación o eliminación.",
+            "No uses sudo por costumbre.",
+            "Usá repositorios confiables y mantenidos."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Ubuntu: guía de APT",
+              "url": "https://help.ubuntu.com/community/AptGet/Howto"
+            },
+            {
+              "label": "Ubuntu: sudo",
+              "url": "https://help.ubuntu.com/community/RootSudo"
+            }
+          ],
+          "related": []
+        },
+        {
+          "id": "terminal-ufw",
+          "title": "Firewall básico con UFW",
+          "category": "seguridad",
+          "summary": "Consultá y configurá reglas básicas de firewall con UFW.",
+          "purpose": "UFW (Uncomplicated Firewall) facilita administrar reglas de tráfico en sistemas Linux compatibles. Su configuración depende de la distribución y el entorno de red.",
+          "syntax": "sudo ufw status verbose\\nsudo ufw allow 22/tcp\\nsudo ufw enable",
+          "examples": [
+            {
+              "title": "Consultar el estado",
+              "description": "Primero verificá si UFW está instalado y activo.",
+              "code": "sudo ufw status verbose",
+              "explanation": "La salida muestra el estado y las reglas configuradas."
+            },
+            {
+              "title": "Permitir un puerto",
+              "description": "Este ejemplo permite conexiones TCP al puerto 22, utilizado habitualmente por SSH.",
+              "code": "sudo ufw allow 22/tcp",
+              "explanation": "No abras puertos sin saber qué servicio los utiliza y quién necesita acceder."
+            }
+          ],
+          "exercise": "Leé la guía oficial y comprobá el estado de UFW. No actives un firewall en un servidor remoto sin validar antes el acceso administrativo.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Aplicá el principio de mínimo acceso necesario.",
+            "Si administrás un servidor remoto, verificá la regla SSH antes de activar el firewall.",
+            "Revisá las reglas después de cada cambio."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Ubuntu: UFW",
+              "url": "https://help.ubuntu.com/community/UFW"
+            }
+          ],
+          "related": []
+        }
+      ]
+    },
+    {
+      "id": "git",
+      "title": "Git y GitHub",
+      "shortTitle": "Git",
+      "symbol": "⑂",
+      "eyebrow": "CONTROL DE VERSIONES",
+      "tagline": "Registrá cambios y colaborá en proyectos con confianza.",
+      "description": "Aprendé a crear repositorios, guardar versiones, trabajar con ramas y compartir tus proyectos en GitHub.",
+      "level": "Inicial a intermedio",
+      "accent": "git",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Introducción a Git y GitHub",
+          "description": "Comprendé el control de versiones y configurá tu entorno.",
+          "icon": "⑂",
+          "articles": [
+            "git-que-es",
+            "git-config",
+            "git-github"
+          ]
+        },
+        {
+          "id": "primeros-pasos",
+          "title": "Primeros pasos",
+          "description": "Creá repositorios, prepará archivos y consultá el historial.",
+          "icon": "▤",
+          "articles": [
+            "git-init",
+            "git-add-commit",
+            "git-log-diff",
+            "git-remoto"
+          ]
+        },
+        {
+          "id": "ramas",
+          "title": "Ramas y combinación",
+          "description": "Desarrollá cambios separados e integrá ramas.",
+          "icon": "⑃",
+          "articles": [
+            "git-branch",
+            "git-merge"
+          ]
+        },
+        {
+          "id": "colaboracion",
+          "title": "GitHub y colaboración",
+          "description": "Publicá cambios, abrí pull requests y excluí archivos locales.",
+          "icon": "◎",
+          "articles": [
+            "git-push-pull",
+            "git-pull-request",
+            "gitignore"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "git-que-es",
+          "title": "¿Qué es Git?",
+          "category": "fundamentos",
+          "summary": "Conocé el control de versiones y cómo permite conservar el historial de un proyecto.",
+          "purpose": "Git es un sistema de control de versiones distribuido. Registra cambios en un proyecto mediante commits y permite comparar, recuperar o combinar versiones. Git funciona localmente y no necesita GitHub para guardar un historial.",
+          "syntax": "git comando [opciones] [argumentos]",
+          "examples": [
+            {
+              "title": "Comprobar la instalación",
+              "description": "Consultá la versión instalada.",
+              "code": "git --version",
+              "explanation": "Si el comando no existe, instalá Git desde una fuente oficial."
+            },
+            {
+              "title": "Consultar ayuda",
+              "description": "Abrí la ayuda general o la de un comando específico.",
+              "code": "git help\\ngit help commit",
+              "explanation": "La ayuda describe la sintaxis y las opciones disponibles."
+            }
+          ],
+          "exercise": "Explicá qué problema resuelve el control de versiones y por qué puede ser útil recuperar una versión anterior.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Documentación oficial de Git",
+              "url": "https://git-scm.com/doc"
+            }
+          ],
+          "related": [
+            "git-github",
+            "git-config"
+          ]
+        },
+        {
+          "id": "git-config",
+          "title": "Configurar nombre y correo",
+          "category": "fundamentos",
+          "summary": "Definí la identidad que Git guardará en los nuevos commits.",
+          "purpose": "Git asocia cada commit con un nombre y un correo. La configuración puede ser global para el usuario o local para un repositorio específico.",
+          "syntax": "git config --global user.name \"Tu Nombre\"\\ngit config --global user.email \"tu@email.com\"\\ngit config --list",
+          "examples": [
+            {
+              "title": "Configuración global",
+              "description": "Se aplica por defecto a los repositorios del usuario.",
+              "code": "git config --global user.name \"Ana Dev\"\\ngit config --global user.email \"ana@example.com\"",
+              "explanation": "Elegí una identidad adecuada para el historial de tus proyectos."
+            },
+            {
+              "title": "Configuración local",
+              "description": "Dentro del repositorio podés establecer datos diferentes.",
+              "code": "git config user.name \"Proyecto Equipo\"\\ngit config user.email \"equipo@example.com\"",
+              "explanation": "La configuración local tiene prioridad dentro de ese repositorio."
+            }
+          ],
+          "exercise": "Configurá nombre y correo de forma global y comprobá los valores con git config --list.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Git: configuración inicial",
+              "url": "https://git-scm.com/book/es/v2/Primeros-pasos-Configurando-Git"
+            }
+          ],
+          "related": [
+            "git-que-es"
+          ]
+        },
+        {
+          "id": "git-github",
+          "title": "Git y GitHub: diferencias",
+          "category": "fundamentos",
+          "summary": "Diferenciá la herramienta de control de versiones de la plataforma colaborativa.",
+          "purpose": "Git registra versiones de un proyecto en repositorios locales o remotos. GitHub aloja repositorios Git y agrega herramientas para colaborar, revisar cambios, gestionar tareas y automatizar flujos.",
+          "syntax": "Git local → commits\\nGit remote → repositorio remoto\\nGitHub → alojamiento y colaboración",
+          "examples": [
+            {
+              "title": "Guardar una versión local",
+              "description": "Estos comandos funcionan sin publicar el proyecto.",
+              "code": "git init\\ngit add .\\ngit commit -m \"Primer commit\"",
+              "explanation": "El commit se guarda en el repositorio local."
+            },
+            {
+              "title": "Conectar un remoto",
+              "description": "Una URL remota permite sincronizar el repositorio.",
+              "code": "git remote add origin https://github.com/usuario/proyecto.git\\ngit push -u origin main",
+              "explanation": "El nombre origin es convencional, pero puede elegirse otro."
+            }
+          ],
+          "exercise": "Clasificá qué tareas podés realizar solo con Git y cuáles requieren una plataforma de alojamiento como GitHub.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "GitHub: sobre Git y GitHub",
+              "url": "https://docs.github.com/es/get-started/start-your-journey/about-github-and-git"
+            }
+          ],
+          "related": [
+            "git-remoto",
+            "git-push-pull"
+          ]
+        },
+        {
+          "id": "git-init",
+          "title": "Crear un repositorio con git init",
+          "category": "primeros-pasos",
+          "summary": "Inicializá el historial de versiones en una carpeta de proyecto.",
+          "purpose": "git init crea los metadatos internos del repositorio. git status muestra el estado de los archivos y la rama actual.",
+          "syntax": "git init\\ngit status",
+          "examples": [
+            {
+              "title": "Inicializar un proyecto",
+              "description": "Entrá en la carpeta y ejecutá git init.",
+              "code": "cd mi-proyecto\\ngit init",
+              "explanation": "Git crea un directorio oculto .git que contiene la información del repositorio."
+            },
+            {
+              "title": "Revisar el estado",
+              "description": "Consultá los archivos que todavía no están bajo seguimiento.",
+              "code": "git status",
+              "explanation": "Los archivos untracked todavía no se han agregado al control de versiones."
+            }
+          ],
+          "exercise": "Creá una carpeta de prueba, inicializá Git y revisá cómo cambia el estado al agregar un archivo.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-add-commit",
+            "git-log-diff"
+          ]
+        },
+        {
+          "id": "git-add-commit",
+          "title": "Preparar y guardar cambios: add y commit",
+          "category": "primeros-pasos",
+          "summary": "Seleccioná cambios y registrá una versión nueva del proyecto.",
+          "purpose": "git add copia los cambios seleccionados al área de preparación. git commit guarda una instantánea del contenido preparado junto con un mensaje descriptivo.",
+          "syntax": "git add archivo\\ngit add .\\ngit commit -m \"Mensaje\"",
+          "examples": [
+            {
+              "title": "Preparar un archivo",
+              "description": "Agregá un archivo específico al área de preparación.",
+              "code": "git add index.html\\ngit status",
+              "explanation": "El archivo queda preparado para el próximo commit."
+            },
+            {
+              "title": "Crear un commit",
+              "description": "Registrá los cambios preparados.",
+              "code": "git commit -m \"Agrega estructura inicial\"",
+              "explanation": "Cada commit tiene un identificador y forma parte del historial."
+            }
+          ],
+          "exercise": "Creá un archivo, preparalo con git add y guardá un commit. Después modificá el archivo y observá git status.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Revisá git diff --staged antes de confirmar cambios importantes.",
+            "Hacé commits pequeños y coherentes.",
+            "No incluyas contraseñas, tokens ni archivos privados."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-init",
+            "git-log-diff",
+            "gitignore"
+          ]
+        },
+        {
+          "id": "git-log-diff",
+          "title": "Consultar historial y diferencias",
+          "category": "primeros-pasos",
+          "summary": "Revisá commits anteriores y compará cambios del proyecto.",
+          "purpose": "git log muestra el historial de commits. git diff compara cambios no preparados, cambios preparados o referencias diferentes.",
+          "syntax": "git log --oneline\\ngit diff\\ngit diff --staged",
+          "examples": [
+            {
+              "title": "Historial resumido",
+              "description": "Mostrá una línea por commit.",
+              "code": "git log --oneline --decorate",
+              "explanation": "Podés reconocer el identificador abreviado, la rama y el mensaje."
+            },
+            {
+              "title": "Ver cambios preparados",
+              "description": "Compará lo que está listo para incluirse en el commit.",
+              "code": "git diff --staged",
+              "explanation": "git diff sin opciones muestra cambios que aún no están preparados."
+            }
+          ],
+          "exercise": "Realizá dos commits en un proyecto de prueba y compará su historial y diferencias.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-add-commit",
+            "git-merge"
+          ]
+        },
+        {
+          "id": "git-remoto",
+          "title": "Clonar y conectar repositorios remotos",
+          "category": "primeros-pasos",
+          "summary": "Descargá un repositorio o configurá la conexión con un servidor remoto.",
+          "purpose": "git clone crea una copia local de un repositorio remoto. git remote permite consultar, agregar y modificar URLs remotas.",
+          "syntax": "git clone URL\\ngit remote -v\\ngit remote add origin URL",
+          "examples": [
+            {
+              "title": "Clonar un repositorio",
+              "description": "Usá la URL HTTPS o SSH del proyecto.",
+              "code": "git clone https://github.com/usuario/proyecto.git",
+              "explanation": "Git crea una carpeta y descarga el historial y los archivos."
+            },
+            {
+              "title": "Listar remotos",
+              "description": "Consultá las conexiones configuradas en el repositorio.",
+              "code": "git remote -v",
+              "explanation": "El remoto predeterminado suele llamarse origin."
+            }
+          ],
+          "exercise": "Cloná un repositorio público de práctica y ejecutá git remote -v para identificar su origen.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-push-pull",
+            "git-github"
+          ]
+        },
+        {
+          "id": "git-branch",
+          "title": "Crear y cambiar de ramas",
+          "category": "ramas",
+          "summary": "Desarrollá funciones o correcciones en líneas de trabajo separadas.",
+          "purpose": "Una rama es una referencia móvil a un commit. Permite trabajar en cambios aislados y combinarlos después con la rama principal.",
+          "syntax": "git branch\\ngit switch -c nueva-rama\\ngit switch main",
+          "examples": [
+            {
+              "title": "Crear y activar una rama",
+              "description": "switch -c crea la rama y cambia a ella.",
+              "code": "git switch -c feature/buscador",
+              "explanation": "Los commits siguientes avanzan sobre la nueva rama."
+            },
+            {
+              "title": "Listar las ramas",
+              "description": "Consultá las ramas locales.",
+              "code": "git branch",
+              "explanation": "Un asterisco identifica la rama activa."
+            }
+          ],
+          "exercise": "Creá una rama llamada prueba-estilos, realizá un cambio y regresá a main.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Usá nombres descriptivos, por ejemplo feature/buscador o fix/menu-mobile.",
+            "Hacé commits antes de cambiar de rama si tenés cambios importantes.",
+            "Integrá los cambios después de probarlos."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-merge",
+            "git-push-pull"
+          ]
+        },
+        {
+          "id": "git-merge",
+          "title": "Fusionar ramas y resolver conflictos",
+          "category": "ramas",
+          "summary": "Integrá cambios de otra rama y entendé cómo resolver conflictos.",
+          "purpose": "git merge integra los cambios de otra rama en la rama actual. Si los cambios son incompatibles, Git solicita resolverlos manualmente.",
+          "syntax": "git switch main\\ngit merge feature/buscador\\ngit status",
+          "examples": [
+            {
+              "title": "Fusionar una rama",
+              "description": "Primero cambiá a la rama que recibirá los cambios.",
+              "code": "git switch main\\ngit merge feature/buscador",
+              "explanation": "Git crea un commit de fusión cuando el historial lo requiere."
+            },
+            {
+              "title": "Resolver un conflicto",
+              "description": "Editá el archivo, elegí el contenido correcto y prepará la resolución.",
+              "code": "git status\\n# Editar archivo en conflicto\\ngit add archivo-resuelto.js\\ngit commit",
+              "explanation": "Quitá las marcas <<<<<<<, ======= y >>>>>>> al resolver el contenido."
+            }
+          ],
+          "exercise": "En dos ramas de prueba modificá la misma línea de forma diferente y luego intentá fusionarlas.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Leé ambas versiones antes de resolver.",
+            "Probá el proyecto después de resolver el conflicto.",
+            "No elimines marcas sin entender qué cambio representa cada lado."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-branch",
+            "git-log-diff"
+          ]
+        },
+        {
+          "id": "git-push-pull",
+          "title": "Sincronizar cambios con push, pull y fetch",
+          "category": "colaboracion",
+          "summary": "Publicá commits locales y descargá cambios desde el repositorio remoto.",
+          "purpose": "git push envía commits al remoto. git fetch descarga referencias remotas sin integrar automáticamente los cambios. git pull descarga e integra cambios en la rama actual.",
+          "syntax": "git push -u origin main\\ngit fetch origin\\ngit pull origin main",
+          "examples": [
+            {
+              "title": "Publicar una rama",
+              "description": "La opción -u configura el seguimiento de la rama remota.",
+              "code": "git push -u origin main",
+              "explanation": "Después suele ser posible usar git push sin repetir remoto y rama."
+            },
+            {
+              "title": "Traer cambios",
+              "description": "pull descarga e integra los cambios de la rama remota.",
+              "code": "git pull origin main",
+              "explanation": "Si hay cambios incompatibles, puede ser necesario resolver conflictos."
+            }
+          ],
+          "exercise": "En un repositorio de prueba publicá un commit y después descargá cambios realizados en el remoto.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Revisá git status antes de sincronizar.",
+            "Comprendé si el equipo usa merge o rebase.",
+            "No uses push --force en ramas compartidas sin conocer su impacto."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "git-remoto",
+            "git-pull-request"
+          ]
+        },
+        {
+          "id": "git-pull-request",
+          "title": "Colaborar mediante pull requests",
+          "category": "colaboracion",
+          "summary": "Proponé cambios en GitHub para revisarlos antes de integrarlos.",
+          "purpose": "Un pull request permite comparar una rama de trabajo con una rama base, discutir los cambios, ejecutar comprobaciones y aprobar la integración. Es una función de GitHub, no un comando de Git.",
+          "syntax": "git push -u origin feature/nueva-funcion\\n# Abrir Pull Request en GitHub",
+          "examples": [
+            {
+              "title": "Publicar una rama",
+              "description": "Subí al remoto la rama en la que trabajaste.",
+              "code": "git switch -c feature/perfil\\n# realizar cambios y commits\\ngit push -u origin feature/perfil",
+              "explanation": "La rama remota permite comparar el trabajo con main."
+            },
+            {
+              "title": "Configurar la comparación",
+              "description": "En GitHub seleccioná la rama base y la rama que contiene los cambios.",
+              "code": "base: main\\ncompare: feature/perfil",
+              "explanation": "Agregá un título, una descripción y los pasos para probar el cambio."
+            }
+          ],
+          "exercise": "Creá un repositorio de práctica y abrí un pull request desde una rama secundaria hacia main.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "GitHub Docs: pull requests",
+              "url": "https://docs.github.com/es/pull-requests"
+            }
+          ],
+          "related": [
+            "git-push-pull",
+            "git-branch"
+          ]
+        },
+        {
+          "id": "gitignore",
+          "title": "Ignorar archivos con .gitignore",
+          "category": "colaboracion",
+          "summary": "Evitá incluir dependencias generadas, archivos temporales y configuraciones privadas.",
+          "purpose": ".gitignore contiene patrones que indican qué archivos sin seguimiento debe ignorar Git. No deja de seguir automáticamente archivos que ya estaban registrados en el repositorio.",
+          "syntax": "# .gitignore\\nnode_modules/\\n.env\\n*.log\\ndist/",
+          "examples": [
+            {
+              "title": "Ignorar dependencias y archivos locales",
+              "description": "Colocá patrones en el archivo .gitignore de la raíz del repositorio.",
+              "code": "node_modules/\\n.env\\n*.log\\n.DS_Store",
+              "explanation": "Los patrones pueden representar directorios, nombres o extensiones."
+            },
+            {
+              "title": "Consultar archivos ignorados",
+              "description": "La opción --ignored muestra elementos excluidos.",
+              "code": "git status --short --ignored",
+              "explanation": "Si Git ya seguía un archivo, primero hay que quitarlo del índice sin borrar la copia local."
+            }
+          ],
+          "exercise": "Prepará un .gitignore para un proyecto JavaScript que excluya node_modules, .env y archivos de log.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "GitHub: ignorar archivos",
+              "url": "https://docs.github.com/es/get-started/git-basics/ignoring-files"
+            }
+          ],
+          "related": [
+            "npm-node-modules",
+            "git-add-commit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npm",
+      "title": "NPM y paquetes",
+      "shortTitle": "NPM",
+      "symbol": "npm",
+      "eyebrow": "ECOSISTEMA JAVASCRIPT",
+      "tagline": "Administrá paquetes, dependencias y scripts de tus proyectos.",
+      "description": "Aprendé a trabajar con Node.js, NPM, package.json y las herramientas del ecosistema JavaScript.",
+      "level": "Inicial a intermedio",
+      "accent": "npm",
+      "categories": [
+        {
+          "id": "introduccion",
+          "title": "Introducción a NPM",
+          "description": "Conocé el gestor de paquetes y prepará Node.js.",
+          "icon": "⬡",
+          "articles": [
+            "npm-que-es",
+            "npm-node",
+            "npm-pnpm",
+            "npm-global-local",
+            "npm-permisos"
+          ]
+        },
+        {
+          "id": "administracion",
+          "title": "Administración de proyectos",
+          "description": "Creá proyectos, instalá paquetes y mantené las dependencias.",
+          "icon": "▦",
+          "articles": [
+            "npm-init",
+            "npm-install",
+            "npm-package-json",
+            "npm-update",
+            "npm-scripts",
+            "npm-node-modules",
+            "npm-npx",
+            "npm-semver"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "npm-que-es",
+          "title": "¿Qué es NPM?",
+          "category": "introduccion",
+          "summary": "Conocé el gestor de paquetes y su función en el ecosistema de JavaScript.",
+          "purpose": "NPM es una herramienta de línea de comandos y un registro de paquetes. Permite instalar, actualizar, quitar y publicar paquetes; también administra dependencias de un proyecto mediante package.json y archivos de bloqueo.",
+          "syntax": "npm comando [opciones] [paquete]",
+          "examples": [
+            {
+              "title": "Consultar versiones",
+              "description": "Comprobá las versiones de Node.js y NPM.",
+              "code": "node --version\\nnpm --version",
+              "explanation": "Node y NPM tienen ciclos de versión propios aunque habitualmente se distribuyen juntos."
+            },
+            {
+              "title": "Consultar ayuda",
+              "description": "La ayuda puede abrirse para comandos concretos.",
+              "code": "npm help install\\nnpm help scripts",
+              "explanation": "La documentación explica opciones y comportamientos."
+            }
+          ],
+          "exercise": "Verificá las versiones instaladas y explicá qué papel cumple Node.js y cuál cumple NPM.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Documentación oficial de NPM",
+              "url": "https://docs.npmjs.com/"
+            }
+          ],
+          "related": [
+            "npm-node",
+            "npm-package-json"
+          ]
+        },
+        {
+          "id": "npm-node",
+          "title": "Instalar Node.js y administrar versiones",
+          "category": "introduccion",
+          "summary": "Node.js ejecuta JavaScript fuera del navegador y NVM ayuda a cambiar entre versiones.",
+          "purpose": "Node.js es un entorno de ejecución de JavaScript basado en V8. NVM (Node Version Manager) permite instalar y seleccionar distintas versiones en sistemas compatibles. En Windows existen administradores de versiones con comandos propios.",
+          "syntax": "nvm install --lts\\nnvm use --lts\\nnode --version",
+          "examples": [
+            {
+              "title": "Instalar una versión LTS",
+              "description": "En NVM para Unix, --lts instala la versión con soporte prolongado disponible.",
+              "code": "nvm install --lts\\nnvm use --lts",
+              "explanation": "Los comandos pueden variar entre NVM para Unix y herramientas equivalentes para Windows."
+            },
+            {
+              "title": "Comprobar el entorno",
+              "description": "Consultá el runtime y el gestor disponibles.",
+              "code": "node --version\\nnpm --version",
+              "explanation": "Un proyecto puede requerir una versión específica de Node."
+            }
+          ],
+          "exercise": "Consultá qué versión de Node requiere un proyecto y comparala con la versión activa en tu terminal.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Preferí una versión LTS compatible con el proyecto.",
+            "No mezcles comandos de distintas implementaciones de NVM."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "Node.js: descargas",
+              "url": "https://nodejs.org/en/download"
+            },
+            {
+              "label": "NVM para Unix",
+              "url": "https://github.com/nvm-sh/nvm"
+            }
+          ],
+          "related": []
+        },
+        {
+          "id": "npm-pnpm",
+          "title": "NPM y PNPM: gestores de paquetes",
+          "category": "introduccion",
+          "summary": "Compará NPM con PNPM y entendé por qué un proyecto elige un gestor concreto.",
+          "purpose": "NPM viene habitualmente con Node.js. PNPM es una alternativa que utiliza un almacén compartido y enlaces para administrar paquetes. Cada gestor usa su propio archivo de bloqueo y sus convenciones.",
+          "syntax": "npm install\\npnpm install\\npnpm add paquete",
+          "examples": [
+            {
+              "title": "Instalar dependencias con NPM",
+              "description": "NPM utiliza package-lock.json como lockfile habitual.",
+              "code": "npm install",
+              "explanation": "Instala dependencias declaradas en package.json."
+            },
+            {
+              "title": "Instalar con PNPM",
+              "description": "PNPM utiliza pnpm-lock.yaml.",
+              "code": "pnpm install\\npnpm add dayjs",
+              "explanation": "Respetá el gestor configurado por el proyecto y evitá mezclar lockfiles."
+            }
+          ],
+          "exercise": "Identificá qué gestor utiliza un proyecto mirando sus archivos de bloqueo y explicá qué información guardan.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "PNPM: documentación",
+              "url": "https://pnpm.io/"
+            }
+          ],
+          "related": [
+            "npm-install",
+            "npm-package-json"
+          ]
+        },
+        {
+          "id": "npm-global-local",
+          "title": "Dependencias locales y globales",
+          "category": "introduccion",
+          "summary": "Diferenciá los paquetes instalados para un proyecto de las herramientas globales.",
+          "purpose": "Una dependencia local se instala dentro del proyecto y se registra en package.json. Una instalación global permite utilizar una herramienta desde distintas carpetas, pero no queda declarada como dependencia específica del proyecto.",
+          "syntax": "npm install paquete\\nnpm install -g herramienta\\nnpm list -g --depth=0",
+          "examples": [
+            {
+              "title": "Instalar una dependencia local",
+              "description": "La biblioteca queda disponible para el proyecto.",
+              "code": "npm install dayjs",
+              "explanation": "Se registra normalmente en dependencies."
+            },
+            {
+              "title": "Instalar una herramienta global",
+              "description": "Las herramientas CLI pueden instalarse para el usuario o el sistema.",
+              "code": "npm install -g typescript\\ntsc --version",
+              "explanation": "El ejecutable debe estar en una ruta incluida en PATH."
+            }
+          ],
+          "exercise": "Instalá una dependencia local y comprobá cómo aparece en package.json.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "npm-install",
+            "npm-permisos"
+          ]
+        },
+        {
+          "id": "npm-permisos",
+          "title": "Resolver problemas de permisos de NPM",
+          "category": "introduccion",
+          "summary": "Identificá errores de permisos en instalaciones y evitá soluciones inseguras.",
+          "purpose": "Los errores EACCES suelen aparecer cuando una carpeta global no tiene permisos adecuados para el usuario. La solución depende del sistema y de cómo se instaló Node.js; no conviene aplicar permisos amplios de manera indiscriminada.",
+          "syntax": "npm config get prefix\\nnpm config get cache",
+          "examples": [
+            {
+              "title": "Consultar las rutas",
+              "description": "Revisá los directorios que utiliza NPM.",
+              "code": "npm config get prefix\\nnpm config get cache",
+              "explanation": "Las rutas ayudan a detectar qué carpeta está provocando el problema."
+            },
+            {
+              "title": "Preferir una dependencia local",
+              "description": "Muchas herramientas pueden instalarse en el proyecto y ejecutarse mediante npx o scripts.",
+              "code": "npm install -D typescript\\nnpx tsc --version",
+              "explanation": "Esto evita modificar directorios globales en muchos flujos."
+            }
+          ],
+          "exercise": "Ante un error EACCES, guardá el mensaje completo y consultá la guía oficial antes de cambiar permisos.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "No uses chmod 777 como solución general.",
+            "No ejecutes npm install con sudo por costumbre.",
+            "Preferí administrar Node bajo tu usuario cuando sea apropiado."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "NPM: resolver errores EACCES",
+              "url": "https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally/"
+            }
+          ],
+          "related": []
+        },
+        {
+          "id": "npm-init",
+          "title": "Crear un proyecto con npm init",
+          "category": "administracion",
+          "summary": "Inicializá un proyecto y generá el archivo package.json.",
+          "purpose": "npm init permite crear el manifiesto de un proyecto mediante preguntas. La opción -y acepta valores predeterminados y crea el archivo rápidamente.",
+          "syntax": "npm init\\nnpm init -y",
+          "examples": [
+            {
+              "title": "Inicialización interactiva",
+              "description": "NPM pregunta por los metadatos del proyecto.",
+              "code": "mkdir mi-app\\ncd mi-app\\nnpm init",
+              "explanation": "Podés indicar nombre, versión, descripción, punto de entrada y licencia."
+            },
+            {
+              "title": "Inicialización rápida",
+              "description": "-y acepta los valores propuestos.",
+              "code": "npm init -y",
+              "explanation": "Después editá package.json para ajustar los campos."
+            }
+          ],
+          "exercise": "Creá un proyecto nuevo con npm init y completá su nombre, descripción y punto de entrada.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "npm-package-json",
+            "npm-scripts"
+          ]
+        },
+        {
+          "id": "npm-install",
+          "title": "Instalar y quitar paquetes",
+          "category": "administracion",
+          "summary": "Agregá paquetes a un proyecto y mantené registradas sus dependencias.",
+          "purpose": "npm install instala dependencias y puede agregar un paquete nuevo al proyecto. npm uninstall quita el paquete y actualiza los archivos de configuración correspondientes.",
+          "syntax": "npm install paquete\\nnpm install -D paquete\\nnpm uninstall paquete",
+          "examples": [
+            {
+              "title": "Agregar una dependencia",
+              "description": "El paquete queda registrado como dependencia de ejecución.",
+              "code": "npm install dayjs",
+              "explanation": "Se incorpora a dependencies y queda disponible para el código del proyecto."
+            },
+            {
+              "title": "Agregar una herramienta de desarrollo",
+              "description": "-D o --save-dev registra el paquete en devDependencies.",
+              "code": "npm install -D eslint",
+              "explanation": "Estas dependencias se utilizan habitualmente durante el desarrollo y las pruebas."
+            }
+          ],
+          "exercise": "Instalá una biblioteca y una herramienta de desarrollo. Compará cómo aparecen en package.json.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "npm-package-json",
+            "npm-update"
+          ]
+        },
+        {
+          "id": "npm-package-json",
+          "title": "El archivo package.json",
+          "category": "administracion",
+          "summary": "Entendé los metadatos, scripts y dependencias que describen un proyecto.",
+          "purpose": "package.json es el manifiesto principal del proyecto. Contiene información como nombre, versión, scripts y dependencias. Debe ser JSON válido y suele versionarse junto con el archivo de bloqueo.",
+          "syntax": "{\\n  \"name\": \"mi-app\",\\n  \"version\": \"1.0.0\",\\n  \"scripts\": {},\\n  \"dependencies\": {}\\n}",
+          "examples": [
+            {
+              "title": "Ejemplo de manifiesto",
+              "description": "Un proyecto puede declarar scripts y dependencias.",
+              "code": "{\\n  \"name\": \"mi-app\",\\n  \"version\": \"1.0.0\",\\n  \"private\": true,\\n  \"scripts\": { \"start\": \"node app.js\" },\\n  \"dependencies\": { \"dayjs\": \"^1.11.0\" }\\n}",
+              "explanation": "Las claves y cadenas van entre comillas dobles y no se permiten comas finales."
+            },
+            {
+              "title": "Consultar campos",
+              "description": "npm pkg permite leer propiedades del manifiesto.",
+              "code": "npm pkg get name version scripts",
+              "explanation": "Podés consultar uno o varios campos sin abrir el archivo manualmente."
+            }
+          ],
+          "exercise": "Creá un package.json con nombre, versión, un script start y una dependencia.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "NPM: package.json",
+              "url": "https://docs.npmjs.com/cli/configuring-npm/package-json"
+            }
+          ],
+          "related": [
+            "npm-init",
+            "npm-scripts",
+            "npm-semver"
+          ]
+        },
+        {
+          "id": "npm-update",
+          "title": "Actualizar dependencias",
+          "category": "administracion",
+          "summary": "Detectá paquetes desactualizados y aplicá actualizaciones dentro de los rangos configurados.",
+          "purpose": "npm outdated muestra paquetes con versiones nuevas disponibles. npm update actualiza dependencias dentro de los rangos declarados. Las actualizaciones mayores pueden requerir cambios manuales y pruebas.",
+          "syntax": "npm outdated\\nnpm update\\nnpm install paquete@latest",
+          "examples": [
+            {
+              "title": "Consultar paquetes desactualizados",
+              "description": "Mostrá versiones instaladas y versiones disponibles.",
+              "code": "npm outdated",
+              "explanation": "La tabla informa current, wanted y latest."
+            },
+            {
+              "title": "Actualizar dentro del rango",
+              "description": "npm update aplica versiones permitidas por package.json.",
+              "code": "npm update",
+              "explanation": "Para actualizar a una versión mayor se puede requerir cambiar la especificación y revisar incompatibilidades."
+            }
+          ],
+          "exercise": "Ejecutá npm outdated en un proyecto de práctica y explicá las columnas current, wanted y latest.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Leé las notas de versión antes de una actualización mayor.",
+            "Ejecutá pruebas después de actualizar paquetes.",
+            "Hacé un commit antes de cambios amplios en las dependencias."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "npm-package-json",
+            "npm-semver"
+          ]
+        },
+        {
+          "id": "npm-scripts",
+          "title": "Scripts de NPM",
+          "category": "administracion",
+          "summary": "Definí tareas reutilizables para arrancar, probar o construir un proyecto.",
+          "purpose": "Los scripts se declaran en la propiedad scripts de package.json. Se ejecutan con npm run nombre; algunos scripts como start y test tienen comandos abreviados.",
+          "syntax": "npm run nombre\\nnpm run\\nnpm start",
+          "examples": [
+            {
+              "title": "Definir scripts",
+              "description": "Agregá comandos con nombres claros.",
+              "code": "{\\n  \"scripts\": {\\n    \"start\": \"node app.js\",\\n    \"dev\": \"vite\",\\n    \"build\": \"vite build\"\\n  }\\n}",
+              "explanation": "El comando debe estar disponible en el entorno del proyecto."
+            },
+            {
+              "title": "Ejecutar una tarea",
+              "description": "Listá los scripts o ejecutá uno en particular.",
+              "code": "npm run\\nnpm run build",
+              "explanation": "NPM agrega los ejecutables locales de node_modules/.bin al PATH durante la ejecución."
+            }
+          ],
+          "exercise": "Agregá scripts dev, build y test a un proyecto de práctica y ejecutá los que tengan herramientas instaladas.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "npm-package-json",
+            "npm-node-modules"
+          ]
+        },
+        {
+          "id": "npm-node-modules",
+          "title": "node_modules y package-lock.json",
+          "category": "administracion",
+          "summary": "Comprendé dónde se instalan las dependencias y cómo se reproduce el árbol de paquetes.",
+          "purpose": "node_modules contiene las dependencias instaladas. package-lock.json registra el árbol concreto de paquetes para facilitar instalaciones reproducibles. Normalmente node_modules se excluye del repositorio.",
+          "syntax": "npm install\\nnpm ci\\n# .gitignore\\nnode_modules/",
+          "examples": [
+            {
+              "title": "Instalación limpia",
+              "description": "npm ci instala según el lockfile y está pensado para entornos limpios.",
+              "code": "npm ci",
+              "explanation": "Requiere un package-lock compatible y reemplaza node_modules."
+            },
+            {
+              "title": "Ignorar dependencias instaladas",
+              "description": "La carpeta node_modules suele ser generada y no se sube a Git.",
+              "code": "# .gitignore\\nnode_modules/",
+              "explanation": "Otra persona puede recrearla utilizando package.json y el lockfile."
+            }
+          ],
+          "exercise": "Revisá un proyecto con package-lock.json y node_modules. Explicá cuál se comparte y cuál se genera.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "NPM: package-lock.json",
+              "url": "https://docs.npmjs.com/cli/configuring-npm/package-lock-json"
+            }
+          ],
+          "related": [
+            "npm-install",
+            "gitignore"
+          ]
+        },
+        {
+          "id": "npm-npx",
+          "title": "Ejecutar herramientas con npx",
+          "category": "administracion",
+          "summary": "Ejecutá herramientas locales o paquetes sin instalar siempre comandos globales.",
+          "purpose": "npx permite ejecutar binarios disponibles en el proyecto o resolver paquetes desde el registro. Antes de ejecutar una herramienta descargada, comprobá su nombre y origen.",
+          "syntax": "npx comando\\nnpx paquete",
+          "examples": [
+            {
+              "title": "Ejecutar una herramienta local",
+              "description": "Instalá una herramienta de desarrollo y ejecutala con npx.",
+              "code": "npm install -D eslint\\nnpx eslint .",
+              "explanation": "Se utiliza la versión instalada por el proyecto."
+            },
+            {
+              "title": "Iniciar un proyecto",
+              "description": "Algunas herramientas ofrecen comandos de creación mediante npx.",
+              "code": "npx create-vite mi-app",
+              "explanation": "El comando puede descargar un paquete para esa ejecución; verificá siempre el nombre y la fuente."
+            }
+          ],
+          "exercise": "Instalá una herramienta como dependencia de desarrollo y ejecutala mediante npx.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Verificá la identidad del paquete antes de ejecutarlo.",
+            "Evitá ejecutar herramientas desconocidas con permisos elevados."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [],
+          "related": [
+            "npm-install",
+            "npm-scripts"
+          ]
+        },
+        {
+          "id": "npm-semver",
+          "title": "Versionado semántico",
+          "category": "administracion",
+          "summary": "Interpretá MAJOR.MINOR.PATCH y los rangos de versiones usados por las dependencias.",
+          "purpose": "El versionado semántico expresa una versión en tres partes: mayor, menor y parche. En NPM, los rangos indican qué actualizaciones puede aceptar el gestor dentro de package.json.",
+          "syntax": "MAJOR.MINOR.PATCH\\n^1.2.3\\n~1.2.3",
+          "examples": [
+            {
+              "title": "Leer una versión",
+              "description": "En 2.4.1, 2 es la versión mayor, 4 la menor y 1 el parche.",
+              "code": "2.4.1",
+              "explanation": "Los cambios mayores pueden introducir incompatibilidades; los menores agregan funcionalidad compatible y los parches corrigen errores compatibles."
+            },
+            {
+              "title": "Comparar rangos",
+              "description": "^ y ~ permiten diferentes niveles de actualización.",
+              "code": "^1.2.3\\n~1.2.3",
+              "explanation": "^ acepta versiones compatibles dentro del major; ~ permite actualizaciones de parche dentro de la serie minor. Hay matices para 0.x y prereleases."
+            }
+          ],
+          "exercise": "Elegí tres dependencias de un package.json e interpretá qué versiones puede aceptar cada rango.",
+          "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+          "parameters": [],
+          "bestPractices": [
+            "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+            "Leé las opciones antes de combinar parámetros.",
+            "Practicá primero con archivos y repositorios que puedas descartar."
+          ],
+          "commonMistakes": [
+            "Ejecutar el comando desde una ubicación incorrecta.",
+            "Confundir una opción con un argumento.",
+            "No revisar el resultado después de ejecutar la orden."
+          ],
+          "resources": [
+            {
+              "label": "NPM: semver",
+              "url": "https://docs.npmjs.com/cli/v10/using-npm/semver"
+            }
+          ],
+          "related": [
+            "npm-package-json",
+            "npm-update"
+          ]
+        }
+      ]
+    }
+  ]
+}
