@@ -2995,7 +2995,7 @@
             {
               "title": "Emitir un evento desde el componente",
               "description": "Creá un evento con un nombre claro y escuchalo desde el documento.",
-              "code": "class MiSelectorSimple extends HTMLElement {\n  connectedCallback() {\n    this.textContent = 'Elegir azul';\n    this.addEventListener('click', () => {\n      this.dispatchEvent(new CustomEvent('color-seleccionado', {\n        detail: { color: 'azul' },\n        bubbles: true\n      }));\n    });\n  }\n}\n\ncustomElements.define('mi-selector-simple', MiSelectorSimple);\n\ndocument.addEventListener('color-seleccionado', evento => {\n  console.log('Color elegido:', evento.detail.color);\n});\n\n// HTML: <mi-selector-simple></mi-selector-simple>",
+              "code": "class MiSelectorSimple extends HTMLElement {\n  constructor() {\n    super();\n    this.seleccionar = () => {\n      this.dispatchEvent(new CustomEvent('color-seleccionado', {\n        detail: { color: 'azul' },\n        bubbles: true\n      }));\n    };\n  }\n\n  connectedCallback() {\n    this.textContent = 'Elegir azul';\n    this.addEventListener('click', this.seleccionar);\n  }\n\n  disconnectedCallback() {\n    this.removeEventListener('click', this.seleccionar);\n  }\n}\n\ncustomElements.define('mi-selector-simple', MiSelectorSimple);\n\ndocument.addEventListener('color-seleccionado', evento => {\n  console.log('Color elegido:', evento.detail.color);\n});\n\n// HTML: <mi-selector-simple></mi-selector-simple>",
               "explanation": "dispatchEvent envía el evento desde la instancia del componente. detail contiene el dato que el componente quiere comunicar. bubbles: true permite que el evento ascienda desde el elemento hasta sus ancestros, incluido document. Como el evento se dispara en el propio anfitrión y no dentro de su Shadow DOM, no necesita composed para atravesar ese límite."
             },
             {
@@ -3033,7 +3033,7 @@
             "Esperar que preventDefault funcione si el evento no fue creado con cancelable: true.",
             "Acoplar el componente a una función global en lugar de emitir un evento que otros puedan escuchar."
           ],
-          "exercise": "Creá <mi-selector-idioma> con dos botones internos: Español e Inglés. Al pulsar uno, emití idioma-cambiado con detail que incluya el código del idioma y su nombre. El evento debe llegar a document aunque nazca dentro del Shadow DOM. Desde el documento, escuchalo y mostrà en consola el idioma elegido.",
+          "exercise": "Creá <mi-selector-idioma> con dos botones internos: Español e Inglés. Al pulsar uno, emití idioma-cambiado con detail que incluya el código del idioma y su nombre. El evento debe llegar a document aunque nazca dentro del Shadow DOM. Desde el documento, escuchalo y mostrá en consola el idioma elegido.",
           "hint": "Creá los botones dentro de attachShadow. En cada click emití new CustomEvent('idioma-cambiado', { detail: {...}, bubbles: true, composed: true }). Registrá el listener en document y leé evento.detail.",
           "parameters": [
             {
