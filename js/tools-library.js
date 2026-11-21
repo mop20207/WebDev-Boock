@@ -1,5 +1,5 @@
-/* Biblioteca de Terminal Linux, Git y NPM.
-   Las páginas comparten una sola plantilla y leen su contenido desde data/tools.json. */
+/* Biblioteca compartida de herramientas y tecnologías.
+   Las páginas usan una sola plantilla y leen su contenido desde data/tools.json. */
 document.addEventListener("DOMContentLoaded", async () => {
   const page = document.body.dataset.page;
   if (!["tools-index", "tools-category", "tools-article"].includes(page)) return;
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!tool) {
       setText("toolTitle", "Sección no encontrada");
-      setText("toolDescription", "Volvé al inicio y elegí Terminal Linux, Git y GitHub o NPM.");
+      setText("toolDescription", "Volvé al inicio y elegí una herramienta o tecnología disponible.");
       setText("toolsCategoryTitle", "Sección no encontrada");
       setText("toolsCategoryDescription", "No encontramos la sección solicitada.");
       setText("articleTitle", "Artículo no encontrado");
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const syntaxLanguage = ({
         terminal: "bash", git: "bash", npm: "bash",
         react: "javascript", webcomponents: "javascript", vuejs: "xml",
-        nodejs: "javascript", astro: "javascript", phaser: "javascript"
+        nodejs: "javascript", astro: "javascript", phaser: "javascript", typescript: "typescript"
       })[tool.id] || "plaintext";
 
       section = addArticleSection(body, toc, "sintaxis", "Sintaxis y forma de uso");
