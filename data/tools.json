@@ -1,6 +1,6 @@
 {
-  "version": 6,
-  "articleCount": 112,
+  "version": 7,
+  "articleCount": 124,
   "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
   "tools": [
     {
@@ -7784,270 +7784,1639 @@
       "shortTitle": "Phaser",
       "symbol": "🎮",
       "eyebrow": "DESARROLLO DE JUEGOS",
-      "tagline": "Juegos 2D, escenas, sprites, animaciones, controles, físicas y colisiones.",
-      "description": "Juegos 2D, escenas, sprites, animaciones, controles, físicas y colisiones.",
+      "tagline": "Aprendé a desarrollar juegos 2D con Phaser: escenas, sprites, animaciones, entrada, físicas, mapas, cámaras y efectos.",
+      "description": "Aprendé a desarrollar juegos 2D con Phaser: escenas, sprites, animaciones, entrada, físicas, mapas, cámaras y efectos.",
       "level": "Inicial a avanzado",
       "accent": "phaser",
       "categories": [
         {
           "id": "fundamentos",
-          "title": "Fundamentos",
-          "description": "Configuración y escenas",
+          "title": "Fundamentos y estructura",
+          "description": "Prepará un proyecto, configurá Phaser, trabajá con escenas, recursos y Game Objects.",
           "icon": "▣",
           "articles": [
             "phaser-que-es",
-            "phaser-escenas"
+            "phaser-configuracion",
+            "phaser-escenas",
+            "phaser-assets",
+            "phaser-gameobjects",
+            "phaser-sprites"
           ]
         },
         {
           "id": "intermedio",
-          "title": "Sprites",
-          "description": "Recursos y animaciones",
+          "title": "Sprites, movimiento y físicas",
+          "description": "Animá personajes, recibí entrada, controlá movimiento, colisiones y mapas de tiles.",
           "icon": "⇄",
           "articles": [
-            "phaser-assets",
-            "phaser-animaciones"
+            "phaser-animaciones",
+            "phaser-input",
+            "phaser-controles-movimiento",
+            "phaser-fisica",
+            "phaser-colisiones",
+            "phaser-tilemaps"
           ]
         },
         {
           "id": "avanzado",
-          "title": "Interacción",
-          "description": "Controles y colisiones",
+          "title": "Cámaras, efectos y publicación",
+          "description": "Construí experiencias más completas con cámaras, tweens, escala, audio, partículas y depuración.",
           "icon": "⌁",
           "articles": [
-            "phaser-input",
-            "phaser-colisiones"
+            "phaser-cameras",
+            "phaser-tweens",
+            "phaser-scale",
+            "phaser-audio",
+            "phaser-particles",
+            "phaser-deploy-debug"
           ]
         }
       ],
       "articles": [
         {
           "id": "phaser-que-es",
-          "title": "¿Qué es Phaser?",
+          "title": "¿Qué es Phaser y para qué sirve?",
           "category": "fundamentos",
-          "summary": "Phaser es un framework JavaScript para crear juegos 2D que se ejecutan en navegadores.",
-          "purpose": "Phaser es un framework JavaScript para crear juegos 2D que se ejecutan en navegadores.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const config = {type:Phaser.AUTO,width:800,height:600,scene:{create(){this.add.text(100,100,'Hola Phaser');}}};\nconst juego = new Phaser.Game(config);",
+          "summary": "Conocé Phaser como framework para crear juegos 2D con JavaScript en navegadores.",
+          "purpose": "Phaser es un framework para crear juegos 2D que se ejecutan en navegadores web. Proporciona un ciclo de juego, escenas, un cargador de recursos, objetos visuales, animaciones, entrada de teclado y puntero, cámaras, audio y sistemas de físicas. El código del juego se escribe en JavaScript o TypeScript y se renderiza en un canvas administrado por Phaser. Phaser no es un motor 3D general ni reemplaza JavaScript: organiza y proporciona herramientas para construir la lógica del juego.",
+          "whenToUse": "Usalo para juegos 2D de navegador: plataformas, puzzles, arcades, juegos educativos, juegos móviles web y prototipos interactivos. Resulta especialmente útil cuando necesitás sprites, escenas, colisiones y un ciclo de actualización ya resueltos. Para experiencias 3D complejas, buscá un motor con herramientas 3D específicas.",
+          "syntax": "import Phaser from 'phaser';\n\nclass EscenaInicio extends Phaser.Scene {\n  create() {\n    this.add.text(100, 100, 'Hola, Phaser');\n  }\n}\n\nconst juego = new Phaser.Game({\n  type: Phaser.AUTO,\n  width: 800,\n  height: 600,\n  scene: EscenaInicio\n});",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const config = {type:Phaser.AUTO,width:800,height:600,scene:{create(){this.add.text(100,100,'Hola Phaser');}}};\nconst juego = new Phaser.Game(config);",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Crear el primer juego",
+              "description": "Este ejemplo usa módulos y presupone un proyecto creado con una herramienta como Vite y Phaser instalado.",
+              "code": "import Phaser from 'phaser';\n\nclass EscenaInicio extends Phaser.Scene {\n  create() {\n    this.add.text(100, 100, 'Mi primer juego', {\n      fontSize: '32px',\n      color: '#ffffff'\n    });\n  }\n}\n\nconst juego = new Phaser.Game({\n  type: Phaser.AUTO,\n  width: 800,\n  height: 450,\n  backgroundColor: '#182238',\n  scene: EscenaInicio\n});",
+              "explanation": "Phaser.Game inicia el juego a partir de un objeto de configuración. Phaser.AUTO permite elegir el renderizador disponible. EscenaInicio extiende Phaser.Scene y create agrega un objeto Text a la escena. Este fragmento necesita Phaser instalado y un entorno que resuelva importaciones ESM."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const config = {type:Phaser.AUTO,width:800,height:600,scene:{create(){this.add.text(100,100,'Hola Phaser');}}};\nconst juego = new Phaser.Game(config);",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Mostrar formas sin imágenes externas",
+              "description": "Phaser también puede dibujar objetos geométricos básicos para prototipos.",
+              "code": "class EscenaFormas extends Phaser.Scene {\n  create() {\n    // Rectángulo de fondo: x, y, ancho, alto, color.\n    this.add.rectangle(400, 225, 780, 430, 0x172b45);\n\n    // Círculo de ejemplo.\n    this.add.circle(400, 225, 55, 0x59d6b5);\n\n    // Texto dentro del canvas.\n    this.add.text(400, 320, 'Prototipo 2D', {\n      fontSize: '24px',\n      color: '#ffffff'\n    }).setOrigin(0.5);\n  }\n}",
+              "explanation": "rectangle y circle crean objetos geométricos con color numérico hexadecimal. setOrigin(0.5) centra el punto de origen del texto. Es útil para experimentar con posiciones antes de crear o cargar sprites."
+            },
+            {
+              "title": "Comprender el ciclo del juego",
+              "description": "preload, create y update son métodos especiales que Phaser ejecuta en distintos momentos de la escena.",
+              "code": "class EscenaCiclo extends Phaser.Scene {\n  preload() {\n    // En esta etapa se encolan recursos.\n  }\n\n  create() {\n    this.contador = 0;\n    this.etiqueta = this.add.text(20, 20, 'Frames: 0');\n  }\n\n  update(time, delta) {\n    this.contador++;\n    this.etiqueta.setText(`Frames: ${this.contador}`);\n  }\n}",
+              "explanation": "preload se ejecuta al iniciar la carga de la escena. create prepara sus objetos una vez completada la carga. update se invoca durante el ciclo de juego; delta representa el tiempo transcurrido desde el paso anterior, en milisegundos."
+            },
+            {
+              "title": "Diferenciar Phaser del DOM",
+              "description": "La interfaz del juego se dibuja normalmente en un canvas, no como una colección de etiquetas HTML individuales.",
+              "code": "class EscenaCanvas extends Phaser.Scene {\n  create() {\n    const texto = this.add.text(20, 20, 'Dibujado por Phaser');\n    console.log('Objeto Phaser:', texto);\n    console.log('Canvas del juego:', this.game.canvas);\n  }\n}",
+              "explanation": "this.add.text crea un Game Object administrado por Phaser. this.game.canvas permite acceder al elemento canvas que utiliza el juego. Para botones HTML externos podés seguir utilizando DOM normal; para objetos dentro del mundo del juego, utilizá los Game Objects de Phaser."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Phaser.Game(config)",
+              "description": "Crea e inicia una instancia de juego usando el objeto de configuración."
+            },
+            {
+              "name": "Phaser.Scene",
+              "description": "Clase base para crear escenas con su propio ciclo de vida y sistemas."
+            },
+            {
+              "name": "Phaser.AUTO",
+              "description": "Permite elegir automáticamente el renderizador compatible disponible."
+            },
+            {
+              "name": "preload()",
+              "description": "Método de escena utilizado para encolar recursos antes de crear los objetos que los necesitan."
+            },
+            {
+              "name": "create()",
+              "description": "Método de escena para crear y configurar los objetos iniciales."
+            },
+            {
+              "name": "update(time, delta)",
+              "description": "Método llamado durante el ciclo del juego; delta expresa el intervalo entre actualizaciones en milisegundos."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Aprendé primero escenas, objetos, recursos, entrada y ciclo de juego antes de intentar construir un juego grande.",
+            "Separá la lógica del juego en clases o módulos pequeños.",
+            "Usá Phaser para el mundo del juego y DOM para la interfaz externa cuando sea conveniente.",
+            "Mantené una versión concreta de Phaser en el proyecto y consultá la documentación correspondiente."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Confundir Phaser con un lenguaje: se programa con JavaScript o TypeScript.",
+            "Intentar usar this.add fuera de una escena sin disponer de una instancia y sus sistemas.",
+            "Olvidar que Phaser debe estar instalado o cargado antes de crear Phaser.Game.",
+            "Suponer que los fragmentos de escena funcionan por sí solos sin la configuración global y los recursos requeridos."
           ],
-          "exercise": "Creá un juego que muestre un título en pantalla.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un juego de 800 × 450 con una escena llamada EscenaInicio. Dibujá un fondo, un círculo en el centro y un título. Agregá un contador que cambie durante update.",
+          "hint": "Prepará un proyecto con Phaser instalado. Creá una clase que extienda Phaser.Scene y pasala en la propiedad scene de Phaser.Game.",
+          "resources": [
+            {
+              "label": "Phaser — Guía de inicio",
+              "url": "https://docs.phaser.io/phaser/getting-started/intro"
+            },
+            {
+              "label": "Phaser — Crear tu primer juego",
+              "url": "https://docs.phaser.io/phaser/getting-started/making-your-first-phaser-game"
+            },
+            {
+              "label": "Phaser — Game Objects",
+              "url": "https://docs.phaser.io/phaser/concepts/gameobjects"
+            }
+          ]
+        },
+        {
+          "id": "phaser-configuracion",
+          "title": "Instalación y configuración del juego",
+          "category": "fundamentos",
+          "summary": "Prepará un proyecto Phaser, instalá la biblioteca y configurá tamaño, renderizador, escena, escala y físicas.",
+          "purpose": "Un juego Phaser comienza con una instancia de Phaser.Game y un objeto de configuración. La configuración define el renderizador, el tamaño lógico, el elemento contenedor, las escenas, la escala, el color de fondo y los sistemas que necesita el juego. En proyectos actuales es común instalar Phaser mediante npm y utilizar Vite u otra herramienta que admita módulos. La documentación oficial también ofrece una herramienta de creación de proyectos.",
+          "whenToUse": "Este paso se realiza al iniciar cualquier proyecto Phaser. Una configuración sencilla es suficiente para practicar; a medida que el juego crece se agregan escala adaptable, físicas, escenas y opciones de audio.",
+          "syntax": "npm install phaser\n\nimport Phaser from 'phaser';\nconst juego = new Phaser.Game({\n  type: Phaser.AUTO,\n  width: 800,\n  height: 600,\n  scene: MiEscena\n});",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Crear el proyecto e instalar Phaser",
+              "description": "Usá el asistente oficial o instalá Phaser dentro de un proyecto que ya utiliza npm.",
+              "code": "npm create @phaserjs/game@latest\n\n# O, dentro de un proyecto existente:\nnpm install phaser",
+              "explanation": "El asistente create-phaser-game ofrece plantillas oficiales y configura un proyecto inicial. npm install phaser agrega la dependencia al proyecto actual. No ejecutes ambos comandos necesariamente: elegí el flujo que corresponda a tu proyecto."
+            },
+            {
+              "title": "Configurar el canvas y el contenedor",
+              "description": "Definí las dimensiones lógicas y el elemento HTML donde se insertará el canvas.",
+              "code": "import Phaser from 'phaser';\n\nclass Escena extends Phaser.Scene {\n  create() {\n    this.add.text(20, 20, 'Canvas configurado');\n  }\n}\n\nconst juego = new Phaser.Game({\n  type: Phaser.AUTO,\n  parent: 'zona-juego',\n  width: 800,\n  height: 450,\n  backgroundColor: '#101b2d',\n  scene: Escena\n});\n\n// HTML: <div id=\"zona-juego\"></div>",
+              "explanation": "parent indica el contenedor del canvas. width y height definen la resolución lógica inicial. backgroundColor aplica el color de fondo. El elemento con id zona-juego debe existir cuando se inicia el juego."
+            },
+            {
+              "title": "Habilitar Arcade Physics",
+              "description": "Los sistemas de físicas se configuran antes de utilizar this.physics dentro de una escena.",
+              "code": "const config = {\n  type: Phaser.AUTO,\n  width: 800,\n  height: 450,\n  physics: {\n    default: 'arcade',\n    arcade: {\n      gravity: { y: 500 },\n      debug: true\n    }\n  },\n  scene: [EscenaNivel]\n};\n\nconst juego = new Phaser.Game(config);",
+              "explanation": "physics.default habilita Arcade Physics. gravity.y define la aceleración gravitatoria vertical del mundo. debug muestra representaciones de depuración de los cuerpos físicos; desactivalo en una versión normal del juego."
+            },
+            {
+              "title": "Configurar varios sistemas juntos",
+              "description": "Un objeto config puede reunir escala, escenas, físicas y un contenedor.",
+              "code": "const config = {\n  type: Phaser.AUTO,\n  parent: 'juego',\n  width: 960,\n  height: 540,\n  backgroundColor: '#182238',\n  scale: {\n    mode: Phaser.Scale.FIT,\n    autoCenter: Phaser.Scale.CENTER_BOTH\n  },\n  physics: {\n    default: 'arcade',\n    arcade: { gravity: { y: 600 }, debug: false }\n  },\n  scene: [EscenaMenu, EscenaNivel]\n};\n\nconst juego = new Phaser.Game(config);",
+              "explanation": "scale.mode FIT ajusta el canvas al espacio disponible manteniendo la proporción. CENTER_BOTH centra el canvas horizontal y verticalmente. physics habilita Arcade y scene registra las escenas iniciales. Cada clase de escena debe estar importada o definida antes de crear el juego."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "type",
+              "description": "Tipo de renderizador: Phaser.AUTO permite seleccionar entre los renderizadores compatibles."
+            },
+            {
+              "name": "width / height",
+              "description": "Tamaño lógico del juego en píxeles."
+            },
+            {
+              "name": "parent",
+              "description": "ID o elemento HTML que recibe el canvas generado por Phaser."
+            },
+            {
+              "name": "scene",
+              "description": "Una escena o arreglo de escenas que registra el Scene Manager."
+            },
+            {
+              "name": "backgroundColor",
+              "description": "Color de fondo predeterminado del canvas."
+            },
+            {
+              "name": "physics.default",
+              "description": "Sistema de físicas a habilitar, por ejemplo arcade o matter."
+            },
+            {
+              "name": "scale.mode",
+              "description": "Modo de adaptación del canvas, por ejemplo Phaser.Scale.FIT o RESIZE."
+            }
+          ],
+          "bestPractices": [
+            "Usá un tamaño lógico consistente y probá la adaptación en distintos formatos de pantalla.",
+            "Habilitá únicamente los sistemas que el juego necesita.",
+            "Instalá Phaser como dependencia del proyecto y mantené el lockfile.",
+            "Mantené la configuración separada del código de cada escena cuando el proyecto crezca."
+          ],
+          "commonMistakes": [
+            "Crear Phaser.Game antes de importar o definir las clases de escena.",
+            "Indicar un parent cuyo elemento HTML no existe.",
+            "Usar this.physics sin activar un sistema de físicas en la configuración o en la escena.",
+            "Confundir el tamaño lógico del juego con el tamaño CSS final del canvas."
+          ],
+          "exercise": "Creá un proyecto con Phaser instalado. Configurá un juego de 960 × 540 en un contenedor llamado juego, con escala FIT y Arcade Physics. Mostrá un texto dentro de una escena.",
+          "hint": "Instalá Phaser, definí EscenaInicio y después armá el objeto config. Asegurate de que el contenedor HTML exista.",
+          "resources": [
+            {
+              "label": "Phaser — Instalación",
+              "url": "https://docs.phaser.io/phaser/getting-started/installation"
+            },
+            {
+              "label": "Phaser — Configuración del juego",
+              "url": "https://docs.phaser.io/phaser/concepts/game"
+            },
+            {
+              "label": "Phaser — Scale Manager",
+              "url": "https://docs.phaser.io/phaser/concepts/scale-manager"
+            }
+          ]
         },
         {
           "id": "phaser-escenas",
           "title": "Escenas y ciclo de vida",
           "category": "fundamentos",
-          "summary": "preload carga recursos, create prepara objetos y update ejecuta la lógica de la partida.",
-          "purpose": "preload carga recursos, create prepara objetos y update ejecuta la lógica de la partida.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "class Nivel extends Phaser.Scene {\n preload(){ this.load.image('fondo','assets/fondo.png'); }\n create(){ this.add.image(320,240,'fondo'); }\n update(tiempo,delta){ /* actualizar juego */ }\n}",
-          "level": "Inicial",
+          "summary": "Dividí un juego en menú, niveles y pantallas de resultado mediante escenas y sus métodos de ciclo de vida.",
+          "purpose": "Una Scene es la unidad principal para organizar un juego Phaser. Cada escena tiene su lista de objetos visuales, cámara, entrada, cargador y ciclo de actualización. Una escena puede definir init, preload, create y update. El Scene Manager permite iniciar, pausar, detener, dormir, reanudar o cambiar escenas. Un juego puede tener varias escenas activas, por ejemplo una partida y una interfaz superpuesta.",
+          "whenToUse": "Usá escenas para separar pantallas y responsabilidades: menú principal, selección de nivel, partida, pausa, inventario y pantalla de resultado. Evitá resolver todas las pantallas en una única clase enorme.",
+          "syntax": "class Nivel extends Phaser.Scene {\n  constructor() {\n    super('Nivel');\n  }\n  init(datos) {}\n  preload() {}\n  create() {}\n  update(time, delta) {}\n}",
+          "level": "Inicial a intermedio",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "class Nivel extends Phaser.Scene {\n preload(){ this.load.image('fondo','assets/fondo.png'); }\n create(){ this.add.image(320,240,'fondo'); }\n update(tiempo,delta){ /* actualizar juego */ }\n}",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Definir una escena con nombre",
+              "description": "El identificador permite iniciarla desde otra escena.",
+              "code": "class EscenaMenu extends Phaser.Scene {\n  constructor() {\n    super('Menu');\n  }\n  create() {\n    this.add.text(300, 180, 'Menú principal');\n    this.add.text(300, 240, 'Presioná ESPACIO para jugar');\n  }\n}\n\nclass EscenaJuego extends Phaser.Scene {\n  constructor() {\n    super('Juego');\n  }\n  create() {\n    this.add.text(300, 200, 'Partida iniciada');\n  }\n}",
+              "explanation": "super('Menu') y super('Juego') asignan claves a las escenas. Las claves permiten referirse a ellas con this.scene.start('Juego') y otros métodos del Scene Plugin."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": " create(){ this.add.image(320,240,'fondo'); }\n update(tiempo,delta){ /* actualizar juego */ }\n}",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Pasar datos al iniciar otra escena",
+              "description": "El método start puede enviar un objeto de datos a la escena siguiente.",
+              "code": "class EscenaMenu extends Phaser.Scene {\n  constructor() { super('Menu'); }\n  create() {\n    this.input.keyboard.once('keydown-SPACE', () => {\n      this.scene.start('Nivel', { dificultad: 'normal', vidas: 3 });\n    });\n  }\n}\n\nclass EscenaNivel extends Phaser.Scene {\n  constructor() { super('Nivel'); }\n  init(datos) {\n    this.dificultad = datos.dificultad;\n    this.vidas = datos.vidas;\n  }\n  create() {\n    this.add.text(20, 20, `Nivel ${this.dificultad} — Vidas: ${this.vidas}`);\n  }\n}",
+              "explanation": "start detiene la escena actual y arranca la escena destino. El objeto enviado llega al método init de la escena que comienza. Es una forma sencilla de pasar configuración entre pantallas."
+            },
+            {
+              "title": "Pausar y reanudar una escena",
+              "description": "Podés mantener una escena activa pero pausada mientras una escena de pausa muestra su interfaz.",
+              "code": "class EscenaJuego extends Phaser.Scene {\n  constructor() { super('Juego'); }\n  create() {\n    this.add.text(20, 20, 'Partida');\n    this.input.keyboard.once('keydown-ESC', () => {\n      this.scene.launch('Pausa');\n      this.scene.pause();\n    });\n  }\n}\n\nclass EscenaPausa extends Phaser.Scene {\n  constructor() { super('Pausa'); }\n  create() {\n    this.add.text(300, 200, 'PAUSA');\n    this.input.keyboard.once('keydown-ENTER', () => {\n      this.scene.stop();\n      this.scene.resume('Juego');\n    });\n  }\n}",
+              "explanation": "launch inicia otra escena sin detener la escena actual. pause detiene sus actualizaciones. Desde Pausa, stop detiene la pantalla de pausa y resume reactiva Juego. El ejemplo requiere registrar ambas escenas en la configuración."
+            },
+            {
+              "title": "Actualizar objetos con delta",
+              "description": "Usá delta para que el movimiento no dependa directamente de la cantidad de frames por segundo.",
+              "code": "class EscenaMovimiento extends Phaser.Scene {\n  create() {\n    this.caja = this.add.rectangle(50, 150, 40, 40, 0x55ddbb).setOrigin(0.5);\n    this.velocidad = 180; // píxeles por segundo\n  }\n  update(time, delta) {\n    this.caja.x += this.velocidad * (delta / 1000);\n  }\n}",
+              "explanation": "delta llega en milisegundos. Al dividir por 1000 se obtiene el tiempo en segundos. Multiplicar una velocidad expresada en píxeles por segundo por ese tiempo produce un desplazamiento más independiente de la frecuencia de actualización."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "init(data)",
+              "description": "Recibe datos enviados al iniciar la escena y se ejecuta antes de preload."
+            },
+            {
+              "name": "preload()",
+              "description": "Encola los recursos que necesita la escena."
+            },
+            {
+              "name": "create(data)",
+              "description": "Se ejecuta cuando la carga terminó y permite crear objetos iniciales."
+            },
+            {
+              "name": "update(time, delta)",
+              "description": "Se ejecuta durante el ciclo del juego mientras la escena está activa."
+            },
+            {
+              "name": "this.scene.start(key, data)",
+              "description": "Detiene la escena actual e inicia otra con datos opcionales."
+            },
+            {
+              "name": "this.scene.launch(key, data)",
+              "description": "Inicia otra escena sin detener la actual."
+            },
+            {
+              "name": "this.scene.pause() / resume(key)",
+              "description": "Pausa la escena o reanuda una escena pausada."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Dale a cada escena una responsabilidad clara.",
+            "Pasá datos iniciales con init o start en vez de depender de variables globales.",
+            "Usá pause y launch para interfaces superpuestas como pausa o inventario.",
+            "Tené en cuenta qué escenas quedan activas y cuáles se detienen al hacer una transición."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar registrar la escena antes de intentar iniciarla.",
+            "Llamar start cuando lo que necesitás es mantener la escena actual y superponer otra.",
+            "Confundir pausa, sueño y detención: no son el mismo estado.",
+            "Mover objetos sin considerar delta y obtener velocidades diferentes en dispositivos distintos."
           ],
-          "exercise": "Creá una escena que cargue y muestre un fondo.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá tres escenas: Menu, Nivel y Pausa. Desde Menu iniciá Nivel pasando dificultad y vidas. Desde Nivel abrí Pausa con Escape y reanudá con Enter.",
+          "hint": "Definí las tres clases con claves únicas. Registralas en scene del Game Config y utilizá this.scene.start, launch, pause, stop y resume.",
+          "resources": [
+            {
+              "label": "Phaser — Scenes",
+              "url": "https://docs.phaser.io/phaser/concepts/scenes"
+            },
+            {
+              "label": "Phaser — Scene API",
+              "url": "https://docs.phaser.io/api-documentation/class/scene"
+            }
+          ]
         },
         {
           "id": "phaser-assets",
-          "title": "Cargar recursos",
-          "category": "intermedio",
-          "summary": "El cargador de Phaser registra imágenes y sonidos durante preload.",
-          "purpose": "El cargador de Phaser registra imágenes y sonidos durante preload.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "preload(){\n this.load.image('jugador','assets/jugador.png');\n this.load.audio('salto','assets/salto.mp3');\n}",
+          "title": "Cargar imágenes, audio y otros recursos",
+          "category": "fundamentos",
+          "summary": "Utilizá el Loader de Phaser para cargar imágenes, spritesheets, audio y datos antes de crear los objetos.",
+          "purpose": "El Loader encola recursos externos que el juego necesitará: imágenes, hojas de sprites, atlas, audio, archivos JSON y otros formatos. Cada archivo se registra con una clave única que luego se utiliza para crear objetos o recuperar datos. En una escena, preload es el lugar convencional para encolar recursos; create se ejecuta después de completar esa carga.",
+          "whenToUse": "Usá el Loader cuando tu juego necesite imágenes, sprites, sonidos, mapas, fuentes o datos externos. Organizá los recursos por escena: cargá en una escena inicial lo compartido por todo el juego y en cada nivel los recursos específicos de ese nivel.",
+          "syntax": "preload() {\n  this.load.image('fondo', 'assets/fondo.png');\n  this.load.spritesheet('jugador', 'assets/jugador.png', {\n    frameWidth: 32,\n    frameHeight: 48\n  });\n  this.load.audio('salto', 'assets/salto.mp3');\n}",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "preload(){\n this.load.image('jugador','assets/jugador.png');\n this.load.audio('salto','assets/salto.mp3');\n}",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Cargar una imagen",
+              "description": "Usá una clave para recuperar después la textura.",
+              "code": "class EscenaFondo extends Phaser.Scene {\n  preload() {\n    this.load.image('fondo', 'assets/fondo.png');\n  }\n  create() {\n    this.add.image(400, 225, 'fondo');\n  }\n}",
+              "explanation": "load.image encola el archivo bajo la clave fondo. create se ejecuta cuando terminó preload, así que la textura ya está disponible para this.add.image. La ruta es relativa a la configuración base del Loader."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": " this.load.image('jugador','assets/jugador.png');\n this.load.audio('salto','assets/salto.mp3');\n}",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Cargar una spritesheet",
+              "description": "Indicá el tamaño de cada fotograma para que Phaser pueda dividir la imagen.",
+              "code": "preload() {\n  this.load.spritesheet('heroe', 'assets/heroe.png', {\n    frameWidth: 48,\n    frameHeight: 48\n  });\n}\n\ncreate() {\n  this.add.sprite(200, 200, 'heroe', 0);\n}",
+              "explanation": "spritesheet carga una imagen formada por fotogramas regulares. frameWidth y frameHeight definen las dimensiones de cada cuadro. El cuarto argumento de add.sprite selecciona un frame inicial."
+            },
+            {
+              "title": "Cargar sonido y reproducirlo",
+              "description": "La clave usada en preload es la que después recibe el sistema de sonido.",
+              "code": "preload() {\n  this.load.audio('salto', 'assets/salto.ogg');\n}\n\ncreate() {\n  this.input.keyboard.once('keydown-SPACE', () => {\n    this.sound.play('salto', { volume: 0.6 });\n  });\n}",
+              "explanation": "load.audio encola el sonido. sound.play lo reproduce cuando el usuario pulsa espacio. Los navegadores suelen bloquear audio automático hasta que exista una interacción del usuario."
+            },
+            {
+              "title": "Mostrar progreso de carga",
+              "description": "Los eventos del Loader permiten actualizar una barra o mensaje mientras llegan los archivos.",
+              "code": "preload() {\n  const etiqueta = this.add.text(20, 20, 'Cargando: 0%');\n\n  this.load.on('progress', (valor) => {\n    etiqueta.setText(`Cargando: ${Math.round(valor * 100)}%`);\n  });\n\n  this.load.on('complete', () => {\n    etiqueta.setText('Recursos listos');\n  });\n\n  this.load.image('fondo', 'assets/fondo.png');\n  this.load.image('logo', 'assets/logo.png');\n}",
+              "explanation": "progress entrega un valor entre 0 y 1. complete indica que terminó la cola de carga. El texto se agrega desde preload para que pueda mostrar el avance mientras se descargan los recursos."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.load.image(key, url)",
+              "description": "Encola una imagen bajo una clave."
+            },
+            {
+              "name": "this.load.spritesheet(key, url, config)",
+              "description": "Carga una imagen dividida en fotogramas de ancho y alto definidos."
+            },
+            {
+              "name": "this.load.audio(key, url)",
+              "description": "Encola un archivo de audio."
+            },
+            {
+              "name": "this.load.json(key, url)",
+              "description": "Carga datos JSON para recuperarlos desde la caché de datos."
+            },
+            {
+              "name": "this.load.on('progress', callback)",
+              "description": "Escucha el avance de carga, cuyo progreso es un valor entre 0 y 1."
+            },
+            {
+              "name": "this.load.on('complete', callback)",
+              "description": "Escucha cuando terminó la cola de carga de la escena."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá claves únicas y descriptivas para cada recurso.",
+            "Cargá solo los archivos necesarios para la escena actual.",
+            "Agrupá recursos compartidos en una escena de precarga si varios niveles los necesitan.",
+            "Manej á errores de carga y verificá que las rutas respeten mayúsculas y minúsculas."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Intentar crear una imagen antes de terminar de cargar su clave.",
+            "Escribir una ruta relativa incorrecta o con diferencias de mayúsculas.",
+            "Reutilizar la misma clave para recursos distintos.",
+            "Esperar que el audio se reproduzca automáticamente antes de la primera interacción del usuario."
           ],
-          "exercise": "Cargá una imagen y un sonido.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá una escena de precarga que cargue un fondo, un spritesheet de personaje y un efecto de sonido. Mostrá el porcentaje de carga y, al terminar, agregá el fondo y el personaje.",
+          "hint": "Usá preload para encolar los archivos y create para crear los objetos. Escuchá el evento progress para actualizar el porcentaje.",
+          "resources": [
+            {
+              "label": "Phaser — Loader",
+              "url": "https://docs.phaser.io/phaser/concepts/loader"
+            },
+            {
+              "label": "Phaser — Instalación y configuración",
+              "url": "https://docs.phaser.io/phaser/getting-started/installation"
+            }
+          ]
+        },
+        {
+          "id": "phaser-gameobjects",
+          "title": "Game Objects: imágenes, formas y texto",
+          "category": "fundamentos",
+          "summary": "Creá y manipulá los objetos visuales que forman el mundo del juego.",
+          "purpose": "Los Game Objects son las unidades visuales y funcionales que una escena administra en sus listas de visualización y actualización. Phaser ofrece imágenes, sprites, texto, formas, contenedores y otros tipos. Los objetos se agregan a una escena mediante fábricas como this.add.image, this.add.sprite, this.add.text y this.add.rectangle. Comparten propiedades habituales como posición, escala, rotación, alpha, profundidad y origen.",
+          "whenToUse": "Usalos para representar personajes, fondos, plataformas, botones dibujados, puntuaciones, efectos y elementos de interfaz dentro del canvas. Elegí Image para imágenes estáticas y Sprite cuando necesites animaciones de fotogramas.",
+          "syntax": "create() {\n  const fondo = this.add.rectangle(400, 225, 800, 450, 0x182238);\n  const icono = this.add.image(400, 225, 'logo');\n  const titulo = this.add.text(400, 60, 'Mi juego');\n  titulo.setOrigin(0.5);\n}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Crear y posicionar formas",
+              "description": "Las formas sirven para prototipos, fondos y objetos simples.",
+              "code": "create() {\n  this.add.rectangle(400, 225, 800, 450, 0x182238);\n  this.add.circle(200, 180, 40, 0xf1c75b);\n  this.add.triangle(520, 180, 0, 80, 40, 0, 80, 80, 0x59d6b5);\n}",
+              "explanation": "Las fábricas rectangle, circle y triangle crean geometría directamente sin cargar imágenes. Los colores se escriben como números hexadecimales con prefijo 0x."
+            },
+            {
+              "title": "Crear texto y actualizarlo",
+              "description": "Un objeto de texto puede utilizarse para títulos, mensajes y puntuación.",
+              "code": "create() {\n  this.puntos = 0;\n  this.etiqueta = this.add.text(20, 20, 'Puntos: 0', {\n    fontFamily: 'Arial',\n    fontSize: '24px',\n    color: '#ffffff'\n  });\n}\n\nsumarPunto() {\n  this.puntos++;\n  this.etiqueta.setText(`Puntos: ${this.puntos}`);\n}",
+              "explanation": "add.text crea el objeto. setText cambia el texto visible. Actualizar el texto puede provocar que Phaser vuelva a generar su textura interna, por eso no conviene reescribirlo cientos de veces por segundo si no hace falta."
+            },
+            {
+              "title": "Cambiar escala, rotación y transparencia",
+              "description": "Las propiedades comunes permiten animar la presentación de un objeto.",
+              "code": "create() {\n  this.logo = this.add.image(400, 225, 'logo');\n  this.logo.setScale(0.5);\n  this.logo.setAngle(15);\n  this.logo.setAlpha(0.8);\n  this.logo.setDepth(5);\n}",
+              "explanation": "setScale reduce el tamaño relativo a la textura original. setAngle utiliza grados; setRotation usa radianes. setAlpha define la opacidad y setDepth controla el orden de dibujo entre objetos."
+            },
+            {
+              "title": "Agrupar elementos con Container",
+              "description": "Un Container permite mover un conjunto de objetos como una unidad.",
+              "code": "create() {\n  const icono = this.add.circle(0, 0, 18, 0x59d6b5);\n  const texto = this.add.text(30, -12, 'Jugador');\n  this.etiquetaJugador = this.add.container(200, 200, [icono, texto]);\n}\n\nupdate() {\n  this.etiquetaJugador.x += 0.5;\n}",
+              "explanation": "Los objetos dentro del Container usan coordenadas relativas a su contenedor. Al mover etiquetaJugador se desplazan el círculo y el texto juntos. Un Game Object solo puede pertenecer a una escena y a una estructura de contención a la vez."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.add.image(x, y, key)",
+              "description": "Crea una imagen estática con la textura que fue cargada bajo key."
+            },
+            {
+              "name": "this.add.sprite(x, y, key, frame)",
+              "description": "Crea un sprite capaz de reproducir animaciones."
+            },
+            {
+              "name": "this.add.text(x, y, texto, estilo)",
+              "description": "Crea un objeto de texto renderizado dentro del juego."
+            },
+            {
+              "name": "setOrigin(x, y)",
+              "description": "Cambia el punto de origen relativo del Game Object; 0.5, 0.5 suele representar el centro."
+            },
+            {
+              "name": "setDepth(valor)",
+              "description": "Controla el orden de dibujo: valores mayores se dibujan por encima de valores menores."
+            },
+            {
+              "name": "setAlpha(valor)",
+              "description": "Controla la opacidad entre 0 (transparente) y 1 (opaco)."
+            }
+          ],
+          "bestPractices": [
+            "Elegí Image para imágenes estáticas y Sprite cuando necesites animación.",
+            "Usá Container para objetos que deban moverse como una unidad.",
+            "Mantené los objetos visuales separados de la lógica de reglas del juego.",
+            "Evitá actualizar texto o reconstruir objetos en cada frame sin necesidad."
+          ],
+          "commonMistakes": [
+            "Suponer que la posición x,y de una imagen representa su esquina superior izquierda; por defecto el origen suele estar en el centro.",
+            "Usar setRotation con grados cuando espera radianes; setAngle utiliza grados.",
+            "Agregar demasiados objetos temporales sin destruirlos cuando ya no se necesitan.",
+            "Actualizar un texto de forma muy frecuente y afectar el rendimiento."
+          ],
+          "exercise": "Construí una pantalla de juego con un fondo, tres formas geométricas, un título, un contador de puntos y una etiqueta de jugador agrupada en un Container. Cambiá el orden de dibujo con setDepth.",
+          "hint": "Creá los elementos dentro de create. Para agruparlos, pasá un arreglo de Game Objects a this.add.container(x, y, children).",
+          "resources": [
+            {
+              "label": "Phaser — Game Objects",
+              "url": "https://docs.phaser.io/phaser/concepts/gameobjects"
+            },
+            {
+              "label": "Phaser — Text",
+              "url": "https://docs.phaser.io/phaser/concepts/gameobjects/text"
+            }
+          ]
+        },
+        {
+          "id": "phaser-sprites",
+          "title": "Sprites: personajes y hojas de sprites",
+          "category": "fundamentos",
+          "summary": "Representá personajes con sprites, seleccioná fotogramas y cambiá sus propiedades visuales.",
+          "purpose": "Un Sprite es un Game Object pensado para mostrar imágenes estáticas o animadas. Puede recibir entrada, tener un cuerpo físico, utilizar animaciones y cambiar de frame o textura. A diferencia de Image, Sprite incorpora un sistema de animación y suele elegirse para personajes, enemigos y objetos que cambian de fotograma.",
+          "whenToUse": "Usá sprites para personajes, enemigos, objetos animados y cualquier elemento que necesite cambiar de frame. Para fondos o decoraciones fijas, Image suele ser suficiente y tiene una API más sencilla.",
+          "syntax": "preload() {\n  this.load.spritesheet('jugador', 'assets/jugador.png', {\n    frameWidth: 32,\n    frameHeight: 48\n  });\n}\n\ncreate() {\n  this.jugador = this.add.sprite(100, 200, 'jugador', 0);\n}",
+          "level": "Inicial a intermedio",
+          "examples": [
+            {
+              "title": "Mostrar un frame inicial",
+              "description": "Una spritesheet se carga indicando el ancho y alto de cada fotograma.",
+              "code": "preload() {\n  this.load.spritesheet('heroe', 'assets/heroe.png', {\n    frameWidth: 48,\n    frameHeight: 48\n  });\n}\n\ncreate() {\n  this.heroe = this.add.sprite(200, 200, 'heroe', 0);\n}",
+              "explanation": "El cargador divide la imagen en cuadros de 48 × 48. El último argumento de add.sprite selecciona el frame inicial por índice. El archivo heroe.png debe existir en la ruta indicada y contener la hoja de sprites con esa cuadrícula."
+            },
+            {
+              "title": "Cambiar el frame manualmente",
+              "description": "Podés seleccionar un fotograma de una spritesheet sin crear todavía una animación.",
+              "code": "create() {\n  this.heroe = this.add.sprite(300, 200, 'heroe', 0);\n  this.heroe.setFrame(2);\n}\n\nmostrarSiguienteFrame() {\n  this.heroe.setFrame(3);\n}",
+              "explanation": "setFrame cambia el fotograma mostrado. El índice debe existir en la textura cargada. Este mecanismo sirve para pruebas o cambios puntuales; para animaciones continuas es mejor utilizar Animation Manager."
+            },
+            {
+              "title": "Voltear un sprite hacia la izquierda",
+              "description": "Podés reutilizar el mismo dibujo y reflejarlo en el eje horizontal.",
+              "code": "update() {\n  if (this.teclas.left.isDown) {\n    this.heroe.setFlipX(true);\n  }\n  if (this.teclas.right.isDown) {\n    this.heroe.setFlipX(false);\n  }\n}",
+              "explanation": "setFlipX(true) refleja horizontalmente el sprite. Se usa a menudo para evitar duplicar los fotogramas de caminar hacia la izquierda y derecha. El código presupone que this.teclas y this.heroe ya fueron creados."
+            },
+            {
+              "title": "Cambiar textura al cambiar de estado",
+              "description": "Un sprite puede cambiar entre texturas cargadas, por ejemplo para mostrar un daño o una transformación.",
+              "code": "preload() {\n  this.load.image('heroe-normal', 'assets/heroe.png');\n  this.load.image('heroe-danado', 'assets/heroe-danado.png');\n}\n\ncreate() {\n  this.heroe = this.add.sprite(200, 200, 'heroe-normal');\n}\n\nrecibirDanio() {\n  this.heroe.setTexture('heroe-danado');\n}",
+              "explanation": "setTexture sustituye la textura del sprite por otra clave cargada. Si cambiás a imágenes de tamaños distintos, revisá el tamaño visual y el origen del objeto."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.add.sprite(x, y, key, frame)",
+              "description": "Crea un Sprite en la escena con una textura y un frame inicial."
+            },
+            {
+              "name": "load.spritesheet(key, url, { frameWidth, frameHeight })",
+              "description": "Carga una hoja de sprites dividida en fotogramas regulares."
+            },
+            {
+              "name": "setFrame(frame)",
+              "description": "Cambia el frame actual del sprite."
+            },
+            {
+              "name": "setFlipX(valor)",
+              "description": "Refleja horizontalmente el sprite."
+            },
+            {
+              "name": "setFlipY(valor)",
+              "description": "Refleja verticalmente el sprite."
+            },
+            {
+              "name": "setTexture(key)",
+              "description": "Cambia la textura usada por el objeto."
+            }
+          ],
+          "bestPractices": [
+            "Prepará spritesheets con dimensiones y espaciado consistentes.",
+            "Usá una clave descriptiva por textura y no reutilices la misma clave para recursos diferentes.",
+            "Preferí Image para fondos estáticos y Sprite para personajes animados.",
+            "Comprobá el número de frames y sus dimensiones antes de crear animaciones."
+          ],
+          "commonMistakes": [
+            "Indicar un frameWidth o frameHeight que no coincide con la hoja de sprites.",
+            "Intentar cambiar a una clave que no fue cargada.",
+            "Confundir el índice del frame con la posición x,y del sprite.",
+            "Crear sprites para grandes cantidades de decoración estática cuando una imagen puede alcanzar."
+          ],
+          "exercise": "Cargá una hoja de sprites de un personaje. Mostrá el frame inicial, agregá botones o teclas para avanzar entre distintos frames y permití reflejarlo horizontalmente.",
+          "hint": "Usá load.spritesheet, add.sprite, setFrame y setFlipX. Verificá que los índices de frame existan en la imagen.",
+          "resources": [
+            {
+              "label": "Phaser — Sprite Game Object",
+              "url": "https://docs.phaser.io/phaser/concepts/gameobjects/sprite"
+            },
+            {
+              "label": "Phaser — Loader",
+              "url": "https://docs.phaser.io/phaser/concepts/loader"
+            }
+          ]
         },
         {
           "id": "phaser-animaciones",
-          "title": "Animaciones",
+          "title": "Animaciones por fotogramas",
           "category": "intermedio",
-          "summary": "El sistema de animaciones reproduce secuencias de fotogramas de una hoja de sprites.",
-          "purpose": "El sistema de animaciones reproduce secuencias de fotogramas de una hoja de sprites.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "this.anims.create({key:'caminar',frames:this.anims.generateFrameNumbers('jugador',{start:0,end:3}),frameRate:8,repeat:-1});\nthis.jugador.play('caminar');",
-          "level": "Inicial",
+          "summary": "Creá ciclos de animación desde spritesheets y controlá su reproducción.",
+          "purpose": "Phaser permite crear animaciones basadas en fotogramas. Una animación define una clave, la lista de frames, la velocidad de reproducción y cuántas veces se repite. Los sprites reproducen las animaciones mediante play. También podés detenerlas, pausarlas, invertir la reproducción o escuchar eventos de finalización.",
+          "whenToUse": "Usá animaciones para caminar, correr, saltar, atacar, recibir daño, abrir puertas y otras acciones que cambian de imagen a lo largo del tiempo. Prepará los fotogramas en una spritesheet o atlas y asegurate de que estén cargados antes de crear la animación.",
+          "syntax": "this.anims.create({\n  key: 'caminar',\n  frames: this.anims.generateFrameNumbers('heroe', { start: 0, end: 3 }),\n  frameRate: 8,\n  repeat: -1\n});\nthis.heroe.play('caminar');",
+          "level": "Intermedio",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "this.anims.create({key:'caminar',frames:this.anims.generateFrameNumbers('jugador',{start:0,end:3}),frameRate:8,repeat:-1});\nthis.jugador.play('caminar');",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Crear una animación de caminar",
+              "description": "Generá frames desde una spritesheet y reproducilos en el sprite.",
+              "code": "preload() {\n  this.load.spritesheet('heroe', 'assets/heroe.png', {\n    frameWidth: 48,\n    frameHeight: 48\n  });\n}\n\ncreate() {\n  this.heroe = this.add.sprite(200, 250, 'heroe');\n  this.anims.create({\n    key: 'caminar',\n    frames: this.anims.generateFrameNumbers('heroe', { start: 0, end: 5 }),\n    frameRate: 10,\n    repeat: -1\n  });\n  this.heroe.play('caminar');\n}",
+              "explanation": "generateFrameNumbers obtiene los frames indicados de la textura. frameRate establece la velocidad en fotogramas por segundo. repeat: -1 hace que la animación se repita indefinidamente. La spritesheet debe tener por lo menos seis frames."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "this.anims.create({key:'caminar',frames:this.anims.generateFrameNumbers('jugador',{start:0,end:3}),frameRate:8,repeat:-1});\nthis.jugador.play('caminar');",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Crear una animación con frames seleccionados",
+              "description": "También podés definir una secuencia concreta de frames de la textura.",
+              "code": "this.anims.create({\n  key: 'parpadeo',\n  frames: [\n    { key: 'heroe', frame: 0 },\n    { key: 'heroe', frame: 1 },\n    { key: 'heroe', frame: 0 }\n  ],\n  frameRate: 3,\n  repeat: 2\n});\n\nthis.heroe.play('parpadeo');",
+              "explanation": "frames contiene los frames que se reproducirán y en qué orden. repeat: 2 repite la secuencia dos veces después de su primera reproducción. Esta forma es útil para secuencias cortas o cuando los frames no son contiguos."
+            },
+            {
+              "title": "Alternar entre caminar y estar quieto",
+              "description": "Elegí una animación según el estado de movimiento del personaje.",
+              "code": "update() {\n  if (this.teclas.left.isDown || this.teclas.right.isDown) {\n    if (this.heroe.anims.currentAnim?.key !== 'caminar') {\n      this.heroe.play('caminar');\n    }\n  } else {\n    this.heroe.anims.stop();\n    this.heroe.setFrame(0);\n  }\n}",
+              "explanation": "La condición comprueba si hay movimiento. currentAnim.key permite evitar reiniciar la misma animación en cada frame. Cuando no se mueve, se detiene y se fija el frame de reposo. Requiere crear antes this.teclas, this.heroe y la animación caminar."
+            },
+            {
+              "title": "Reaccionar cuando termina una animación",
+              "description": "El evento animationcomplete permite ejecutar una acción después de una secuencia finita.",
+              "code": "this.heroe.on('animationcomplete-ataque', () => {\n  this.heroe.play('reposo');\n});\n\nthis.anims.create({\n  key: 'ataque',\n  frames: this.anims.generateFrameNumbers('heroe', { start: 8, end: 12 }),\n  frameRate: 12,\n  repeat: 0\n});\n\nthis.heroe.play('ataque');",
+              "explanation": "El listener se registra sobre el sprite y espera que finalice la animación con la clave ataque. repeat: 0 indica una sola reproducción. Si la animación se repite indefinidamente, no llegará a un evento de finalización normal."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "anims.create(config)",
+              "description": "Registra una animación con una clave, frames y opciones de reproducción."
+            },
+            {
+              "name": "generateFrameNumbers(key, range)",
+              "description": "Genera referencias a frames numéricos de una spritesheet."
+            },
+            {
+              "name": "frameRate",
+              "description": "Cantidad aproximada de fotogramas reproducidos por segundo."
+            },
+            {
+              "name": "repeat",
+              "description": "Cantidad de repeticiones; -1 indica repetición infinita."
+            },
+            {
+              "name": "sprite.play(key)",
+              "description": "Inicia la animación registrada en el sprite."
+            },
+            {
+              "name": "sprite.anims.stop()",
+              "description": "Detiene la reproducción actual del sprite."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Definí las animaciones una vez y reutilizalas en los sprites que las necesiten.",
+            "Usá nombres de claves que indiquen la acción: caminar, salto, ataque o daño.",
+            "No vuelvas a llamar play cada frame si la animación ya está reproduciéndose.",
+            "Elegí frameRate según el estilo visual y no solo para hacer que el personaje se mueva más rápido."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Crear la animación antes de cargar la textura o con índices de frame fuera de rango.",
+            "Reiniciar la animación en cada update y hacer que nunca avance correctamente.",
+            "Esperar animationcomplete de una animación configurada para repetirse infinitamente.",
+            "Confundir velocidad de animación con velocidad física del personaje."
           ],
-          "exercise": "Creá una animación de cuatro fotogramas.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un personaje con animaciones reposo, caminar y ataque. Usá las flechas para caminar y la tecla X para atacar. Al terminar el ataque, regresá al estado de reposo.",
+          "hint": "Cargá una spritesheet, registrá las tres animaciones con claves distintas y escuchá animationcomplete-ataque para volver a reposo.",
+          "resources": [
+            {
+              "label": "Phaser — Animations",
+              "url": "https://docs.phaser.io/phaser/concepts/animations"
+            },
+            {
+              "label": "Phaser — Sprite",
+              "url": "https://docs.phaser.io/phaser/concepts/gameobjects/sprite"
+            }
+          ]
         },
         {
           "id": "phaser-input",
-          "title": "Controles de teclado",
-          "category": "avanzado",
-          "summary": "createCursorKeys permite leer las flechas y mover personajes durante update.",
-          "purpose": "createCursorKeys permite leer las flechas y mover personajes durante update.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "create(){ this.teclas = this.input.keyboard.createCursorKeys(); }\nupdate(){ if(this.teclas.left.isDown) this.jugador.x -= 3; }",
-          "level": "Inicial",
+          "title": "Entrada: teclado, mouse y pantalla táctil",
+          "category": "intermedio",
+          "summary": "Detectá pulsaciones, clics, toques y acciones sobre Game Objects mediante el sistema unificado de entrada.",
+          "purpose": "Phaser incluye un sistema de entrada que unifica teclado, mouse, puntero táctil y gamepad. Cada escena dispone de un Input Plugin. Los objetos no reciben interacción automáticamente: hay que habilitarlos con setInteractive y luego escuchar eventos como pointerdown, pointerover o pointerup. Para teclado, se pueden crear cursores, registrar teclas individuales o escuchar eventos de pulsación.",
+          "whenToUse": "Usá el sistema de entrada para mover personajes, activar botones del juego, arrastrar objetos, seleccionar elementos y responder a gestos. Para juegos móviles web, el sistema de puntero unificado facilita tratar mouse y touch con los mismos eventos.",
+          "syntax": "create() {\n  this.cursor = this.input.keyboard.createCursorKeys();\n  const boton = this.add.rectangle(400, 250, 180, 60, 0x3277aa);\n  boton.setInteractive();\n  boton.on('pointerdown', () => console.log('Pulsado'));\n}",
+          "level": "Intermedio",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "create(){ this.teclas = this.input.keyboard.createCursorKeys(); }\nupdate(){ if(this.teclas.left.isDown) this.jugador.x -= 3; }",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Leer las teclas de dirección",
+              "description": "createCursorKeys crea controles para las flechas del teclado.",
+              "code": "create() {\n  this.cursor = this.input.keyboard.createCursorKeys();\n}\n\nupdate() {\n  if (this.cursor.left.isDown) console.log('Izquierda');\n  if (this.cursor.right.isDown) console.log('Derecha');\n  if (this.cursor.up.isDown) console.log('Arriba');\n  if (this.cursor.down.isDown) console.log('Abajo');\n}",
+              "explanation": "createCursorKeys devuelve objetos de tecla. isDown indica que la tecla sigue presionada. Este patrón sirve para movimiento continuo durante update."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "create(){ this.teclas = this.input.keyboard.createCursorKeys(); }\nupdate(){ if(this.teclas.left.isDown) this.jugador.x -= 3; }",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Escuchar un botón del juego",
+              "description": "Habilitá la interacción de un Game Object y reaccioná a pointerdown.",
+              "code": "create() {\n  const boton = this.add.rectangle(400, 250, 200, 70, 0x287a65);\n  const texto = this.add.text(400, 250, 'JUGAR').setOrigin(0.5);\n\n  boton.setInteractive();\n  boton.on('pointerdown', () => {\n    texto.setText('¡Vamos!');\n  });\n}",
+              "explanation": "setInteractive habilita el objeto para recibir eventos de puntero. pointerdown se activa con mouse o toque. El texto se actualiza al pulsar."
+            },
+            {
+              "title": "Detectar una tecla específica",
+              "description": "addKey permite obtener el estado de una tecla como espacio o una letra.",
+              "code": "create() {\n  this.saltar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);\n}\n\nupdate() {\n  if (Phaser.Input.Keyboard.JustDown(this.saltar)) {\n    console.log('Salto una vez por pulsación');\n  }\n}",
+              "explanation": "addKey registra una tecla específica. JustDown detecta el instante en que pasa de no presionada a presionada, evitando repetir la acción en cada frame mientras se mantiene pulsada."
+            },
+            {
+              "title": "Arrastrar un objeto",
+              "description": "El sistema de input puede habilitar drag sobre un Game Object.",
+              "code": "create() {\n  const ficha = this.add.rectangle(300, 200, 90, 90, 0xd49a45);\n  ficha.setInteractive();\n  this.input.setDraggable(ficha);\n\n  this.input.on('drag', (pointer, objeto, dragX, dragY) => {\n    objeto.x = dragX;\n    objeto.y = dragY;\n  });\n}",
+              "explanation": "setDraggable habilita el arrastre del objeto interactivo. El evento drag proporciona la posición de arrastre. El callback recibe pointer, objeto y las coordenadas nuevas. Para juegos táctiles, probá también el comportamiento con un dedo."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.input.keyboard.createCursorKeys()",
+              "description": "Crea controles para las cuatro flechas."
+            },
+            {
+              "name": "this.input.keyboard.addKey(keyCode)",
+              "description": "Obtiene un objeto de tecla para consultar su estado."
+            },
+            {
+              "name": "Phaser.Input.Keyboard.JustDown(key)",
+              "description": "Devuelve true en el frame de la pulsación inicial de la tecla."
+            },
+            {
+              "name": "setInteractive()",
+              "description": "Habilita la recepción de eventos de puntero en un Game Object compatible."
+            },
+            {
+              "name": "pointerdown / pointerup",
+              "description": "Eventos de pulsación y liberación del puntero."
+            },
+            {
+              "name": "this.input.setDraggable(objeto)",
+              "description": "Habilita el arrastre de un Game Object interactivo."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá JustDown para acciones puntuales como saltar, confirmar o disparar una vez.",
+            "Usá isDown para acciones continuas como desplazarse mientras la tecla permanece presionada.",
+            "Habilitá interacción solo en los objetos que deban recibirla.",
+            "Probá los controles con teclado, mouse y pantalla táctil cuando el juego esté pensado para móviles."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar setInteractive y esperar eventos de clic en un objeto normal.",
+            "Usar JustDown para movimiento continuo y obtener una sola acción por pulsación.",
+            "Registrar listeners repetidamente dentro de update.",
+            "Diseñar controles que funcionan con mouse pero no se pueden utilizar cómodamente con touch."
           ],
-          "exercise": "Mové un personaje con las flechas.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá una escena con un personaje y dos botones dibujados: uno para cambiar su color y otro para reiniciar su posición. Hacé que el personaje también pueda moverse con las flechas y que los botones respondan al toque.",
+          "hint": "Usá createCursorKeys para el teclado. Para los botones, agregá formas, llamá setInteractive y escuchá pointerdown.",
+          "resources": [
+            {
+              "label": "Phaser — Input",
+              "url": "https://docs.phaser.io/phaser/concepts/input"
+            },
+            {
+              "label": "Phaser — Keyboard API",
+              "url": "https://docs.phaser.io/api-documentation/namespace/input-keyboard"
+            }
+          ]
+        },
+        {
+          "id": "phaser-controles-movimiento",
+          "title": "Movimiento de personajes y delta time",
+          "category": "intermedio",
+          "summary": "Mové personajes con teclado o puntero y mantené una velocidad coherente entre distintas frecuencias de actualización.",
+          "purpose": "El movimiento de un juego puede actualizarse en cada llamada a update, pero desplazar un personaje una cantidad fija de píxeles por frame genera velocidades distintas según el rendimiento del dispositivo. Usar delta, el tiempo transcurrido desde el frame anterior, permite expresar la velocidad en píxeles por segundo. En juegos con físicas, el movimiento se controla habitualmente mediante velocidad, aceleración y cuerpos de Arcade Physics.",
+          "whenToUse": "Usá movimiento manual con delta para elementos simples o prototipos sin colisiones físicas. Cuando el personaje deba chocar, caer, rebotar o interactuar con plataformas, utilizá cuerpos físicos y sus propiedades de velocidad.",
+          "syntax": "update(time, delta) {\n  const velocidad = 180; // píxeles por segundo\n  if (this.cursor.right.isDown) {\n    this.jugador.x += velocidad * (delta / 1000);\n  }\n}",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Mover un objeto con delta",
+              "description": "La velocidad se expresa en píxeles por segundo y se multiplica por el tiempo transcurrido.",
+              "code": "create() {\n  this.caja = this.add.rectangle(50, 200, 40, 40, 0x58d6b0);\n  this.velocidad = 200;\n}\n\nupdate(time, delta) {\n  this.caja.x += this.velocidad * (delta / 1000);\n}",
+              "explanation": "delta está expresado en milisegundos. Dividir por 1000 produce segundos. Si el dispositivo procesa 30 o 60 frames por segundo, la distancia recorrida por segundo se mantiene aproximadamente igual."
+            },
+            {
+              "title": "Mover en cuatro direcciones",
+              "description": "Aplicá una velocidad en horizontal y vertical según las teclas presionadas.",
+              "code": "create() {\n  this.jugador = this.add.rectangle(400, 225, 40, 40, 0x59d6b5);\n  this.cursor = this.input.keyboard.createCursorKeys();\n  this.velocidad = 220;\n}\n\nupdate(time, delta) {\n  const paso = this.velocidad * delta / 1000;\n  if (this.cursor.left.isDown) this.jugador.x -= paso;\n  if (this.cursor.right.isDown) this.jugador.x += paso;\n  if (this.cursor.up.isDown) this.jugador.y -= paso;\n  if (this.cursor.down.isDown) this.jugador.y += paso;\n}",
+              "explanation": "paso representa la distancia que se puede recorrer durante el frame actual. El ejemplo permite movimiento diagonal; si querés la misma velocidad en todas las direcciones, normalizá el vector para evitar que la diagonal sea más rápida."
+            },
+            {
+              "title": "Limitar el movimiento al área de juego",
+              "description": "Restringí la posición del personaje a los límites del área visible.",
+              "code": "update(time, delta) {\n  const paso = this.velocidad * delta / 1000;\n  if (this.cursor.left.isDown) this.jugador.x -= paso;\n  if (this.cursor.right.isDown) this.jugador.x += paso;\n\n  const mitad = this.jugador.width / 2;\n  this.jugador.x = Phaser.Math.Clamp(\n    this.jugador.x,\n    mitad,\n    this.scale.width - mitad\n  );\n}",
+              "explanation": "Phaser.Math.Clamp restringe un valor entre un mínimo y un máximo. Se usa la mitad del ancho del objeto para evitar que su centro llegue a un borde dejando parte del objeto fuera de pantalla."
+            },
+            {
+              "title": "Normalizar el movimiento diagonal",
+              "description": "Evitá que el personaje avance más rápido cuando se pulsan dos direcciones a la vez.",
+              "code": "update(time, delta) {\n  let dx = 0;\n  let dy = 0;\n  if (this.cursor.left.isDown) dx--;\n  if (this.cursor.right.isDown) dx++;\n  if (this.cursor.up.isDown) dy--;\n  if (this.cursor.down.isDown) dy++;\n\n  const longitud = Math.hypot(dx, dy) || 1;\n  const paso = this.velocidad * delta / 1000;\n  this.jugador.x += (dx / longitud) * paso;\n  this.jugador.y += (dy / longitud) * paso;\n}",
+              "explanation": "Math.hypot calcula la longitud del vector. Al dividir dx y dy por esa longitud, se obtiene una dirección normalizada. El || 1 evita dividir por cero cuando no se presiona ninguna tecla."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "delta",
+              "description": "Tiempo en milisegundos transcurrido desde el frame anterior."
+            },
+            {
+              "name": "velocidad",
+              "description": "En este ejemplo, distancia recorrida por segundo."
+            },
+            {
+              "name": "Phaser.Math.Clamp(valor, min, max)",
+              "description": "Limita un valor a un intervalo."
+            },
+            {
+              "name": "Math.hypot(x, y)",
+              "description": "Calcula la longitud de un vector bidimensional."
+            },
+            {
+              "name": "setVelocity(x, y)",
+              "description": "En un cuerpo Arcade, define velocidad horizontal y vertical."
+            },
+            {
+              "name": "body.setAcceleration(x, y)",
+              "description": "En un cuerpo Arcade, aplica aceleración en los ejes."
+            }
+          ],
+          "bestPractices": [
+            "Expresá velocidades manuales en unidades por segundo y multiplicá por delta / 1000.",
+            "Normalizá el vector si la velocidad diagonal no debe superar la horizontal o vertical.",
+            "Separá el movimiento de entrada y el movimiento de físicas según el tipo de juego.",
+            "Limitá el movimiento a los bordes o límites del mundo cuando corresponda."
+          ],
+          "commonMistakes": [
+            "Mover 3 píxeles por frame y obtener distintas velocidades en equipos diferentes.",
+            "Permitir movimiento diagonal más rápido sin haberlo decidido.",
+            "Dividir por la longitud de un vector igual a cero.",
+            "Mezclar movimiento manual y cuerpos físicos sobre el mismo personaje sin entender cómo se actualizan."
+          ],
+          "exercise": "Creá un personaje que se mueva con las cuatro flechas a 220 píxeles por segundo, que no salga de la pantalla y que mantenga una velocidad diagonal igual a la horizontal.",
+          "hint": "Usá delta, Math.hypot y Phaser.Math.Clamp. Este ejemplo puede utilizar una forma geométrica para concentrarse primero en la lógica de movimiento.",
+          "resources": [
+            {
+              "label": "Phaser — Scene update",
+              "url": "https://docs.phaser.io/api-documentation/class/scene"
+            },
+            {
+              "label": "Phaser — Input",
+              "url": "https://docs.phaser.io/phaser/concepts/input"
+            }
+          ]
+        },
+        {
+          "id": "phaser-fisica",
+          "title": "Arcade Physics: gravedad, velocidad y cuerpos",
+          "category": "intermedio",
+          "summary": "Agregá cuerpos físicos a personajes y objetos para simular gravedad, aceleración, rebotes y límites.",
+          "purpose": "Arcade Physics es un sistema de físicas ligero integrado en Phaser, adecuado para juegos arcade, plataformas y experiencias 2D sencillas. Trabaja principalmente con cuerpos rectangulares y circulares. Primero hay que habilitarlo en la configuración o en la escena; luego se agregan cuerpos físicos a los Game Objects que realmente lo necesitan. No todos los objetos visuales requieren físicas.",
+          "whenToUse": "Usalo para juegos de plataformas, movimiento desde arriba, objetos que caen, proyectiles y colisiones simples. Para cuerpos rígidos, articulaciones y simulaciones más complejas, evaluá Matter Physics. Arcade es rápido y sencillo, pero tiene límites en la estabilidad de múltiples cuerpos en contacto.",
+          "syntax": "const config = {\n  physics: {\n    default: 'arcade',\n    arcade: { gravity: { y: 500 }, debug: false }\n  },\n  scene: Nivel\n};",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Crear un sprite con cuerpo físico",
+              "description": "physics.add.sprite crea un sprite que participa en Arcade Physics.",
+              "code": "create() {\n  this.jugador = this.physics.add.sprite(100, 100, 'heroe');\n  this.jugador.setBounce(0.2);\n  this.jugador.setCollideWorldBounds(true);\n}",
+              "explanation": "physics.add.sprite crea el Game Object y su cuerpo dinámico. setBounce configura el rebote y setCollideWorldBounds evita que el cuerpo atraviese los límites del mundo. La textura heroe debe estar cargada."
+            },
+            {
+              "title": "Aplicar velocidad",
+              "description": "La velocidad controla el desplazamiento del cuerpo físico.",
+              "code": "create() {\n  this.bola = this.physics.add.image(100, 100, 'bola');\n  this.bola.setVelocity(180, -120);\n}\n\n// La simulación de Arcade Physics actualiza el cuerpo.",
+              "explanation": "setVelocity recibe velocidad horizontal y vertical. El signo negativo en y indica movimiento hacia arriba en el sistema de coordenadas habitual de pantalla."
+            },
+            {
+              "title": "Activar gravedad para un objeto",
+              "description": "La gravedad puede configurarse globalmente o ajustarse en cuerpos individuales.",
+              "code": "create() {\n  this.jugador = this.physics.add.sprite(100, 80, 'heroe');\n  this.jugador.body.setAllowGravity(true);\n  this.jugador.body.setGravityY(250);\n}",
+              "explanation": "setGravityY agrega gravedad vertical propia al cuerpo. Si el mundo ya tiene gravedad global, la aceleración del cuerpo se suma a la configuración correspondiente. El valor debe ajustarse según la escala del juego."
+            },
+            {
+              "title": "Crear una plataforma estática",
+              "description": "Los cuerpos estáticos no se desplazan por efecto de la simulación y sirven para suelo o paredes.",
+              "code": "create() {\n  this.plataformas = this.physics.add.staticGroup();\n  this.plataformas.create(400, 430, 'suelo');\n  this.plataformas.create(150, 300, 'suelo');\n\n  this.jugador = this.physics.add.sprite(100, 200, 'heroe');\n  this.physics.add.collider(this.jugador, this.plataformas);\n}",
+              "explanation": "staticGroup crea un grupo de cuerpos estáticos. collider establece la relación física entre jugador y plataformas. Los recursos suelo y heroe deben haberse cargado en preload."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "physics.default: 'arcade'",
+              "description": "Activa el sistema Arcade Physics para las escenas correspondientes."
+            },
+            {
+              "name": "physics.arcade.gravity",
+              "description": "Define la gravedad global, por ejemplo { y: 500 }."
+            },
+            {
+              "name": "physics.add.sprite(x, y, key)",
+              "description": "Crea un sprite con un cuerpo dinámico Arcade."
+            },
+            {
+              "name": "physics.add.staticGroup()",
+              "description": "Crea un grupo para objetos con cuerpos estáticos."
+            },
+            {
+              "name": "setVelocity(x, y)",
+              "description": "Establece la velocidad de un cuerpo."
+            },
+            {
+              "name": "setBounce(valor)",
+              "description": "Configura el rebote de un cuerpo."
+            },
+            {
+              "name": "setCollideWorldBounds(true)",
+              "description": "Hace que el cuerpo colisione con los límites del mundo."
+            }
+          ],
+          "bestPractices": [
+            "Habilitá físicas solamente para los objetos que deban colisionar o moverse mediante el motor.",
+            "Usá cuerpos estáticos para suelo y plataformas inmóviles.",
+            "Separá la velocidad y la lógica de controles del renderizado visual.",
+            "Activá debug durante el desarrollo para verificar la posición y tamaño de los cuerpos."
+          ],
+          "commonMistakes": [
+            "Usar this.physics sin habilitar Arcade Physics.",
+            "Pensar que crear un Image o Sprite normal lo convierte automáticamente en cuerpo físico.",
+            "Olvidar llamar collider para resolver la interacción entre dos cuerpos.",
+            "Usar Arcade para simulaciones que requieren cuerpos y restricciones más complejas."
+          ],
+          "exercise": "Creá un personaje con gravedad, tres plataformas estáticas y límites del mundo. Permití que el personaje se mueva y no atraviese el suelo.",
+          "hint": "Activá Arcade en config, creá el jugador con physics.add.sprite, las plataformas con staticGroup y conectalos con physics.add.collider.",
+          "resources": [
+            {
+              "label": "Phaser — Arcade Physics",
+              "url": "https://docs.phaser.io/phaser/concepts/physics/arcade"
+            },
+            {
+              "label": "Phaser — Física",
+              "url": "https://docs.phaser.io/phaser/concepts/physics"
+            },
+            {
+              "label": "Phaser — ArcadePhysics API",
+              "url": "https://docs.phaser.io/api-documentation/class/physics-arcade-arcadephysics"
+            }
+          ]
         },
         {
           "id": "phaser-colisiones",
-          "title": "Colisiones y overlaps",
-          "category": "avanzado",
-          "summary": "collider gestiona colisiones físicas y overlap detecta superposiciones para recoger objetos.",
-          "purpose": "collider gestiona colisiones físicas y overlap detecta superposiciones para recoger objetos.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "this.physics.add.collider(this.jugador, plataformas);\nthis.physics.add.overlap(this.jugador, monedas, (jugador, moneda) => moneda.destroy());",
-          "level": "Inicial",
+          "title": "Colisiones y detección de overlaps",
+          "category": "intermedio",
+          "summary": "Separá cuerpos que chocan y detectá cuando un personaje recoge, toca o atraviesa un objeto.",
+          "purpose": "En Arcade Physics hay dos operaciones muy utilizadas para detectar interacciones. collider administra colisiones físicas y separación entre cuerpos; overlap detecta que dos cuerpos se superponen y ejecuta una función, sin resolver la separación física de la misma manera. Ambas pueden recibir objetos individuales, grupos o combinaciones compatibles.",
+          "whenToUse": "Usá collider para jugador y plataformas, enemigos y paredes o bolas que rebotan. Usá overlap para recoger monedas, activar zonas, detectar un power-up o disparar una acción al tocar un objeto.",
+          "syntax": "this.physics.add.collider(jugador, plataformas);\n\nthis.physics.add.overlap(jugador, monedas, (jugador, moneda) => {\n  moneda.destroy();\n});",
+          "level": "Intermedio",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "this.physics.add.collider(this.jugador, plataformas);\nthis.physics.add.overlap(this.jugador, monedas, (jugador, moneda) => moneda.destroy());",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Colisionar con plataformas",
+              "description": "El jugador se separa del suelo en vez de atravesarlo.",
+              "code": "create() {\n  this.jugador = this.physics.add.sprite(100, 100, 'heroe');\n  this.plataformas = this.physics.add.staticGroup();\n  this.plataformas.create(400, 430, 'suelo');\n\n  this.physics.add.collider(this.jugador, this.plataformas);\n}",
+              "explanation": "collider recibe dos objetos compatibles con físicas. El motor resuelve la colisión según los cuerpos involucrados. El ejemplo presupone que heroe y suelo fueron cargados antes de crear los objetos."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "this.physics.add.collider(this.jugador, plataformas);\nthis.physics.add.overlap(this.jugador, monedas, (jugador, moneda) => moneda.destroy());",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Recoger monedas con overlap",
+              "description": "La superposición ejecuta una función para sumar puntos y eliminar la moneda.",
+              "code": "create() {\n  this.puntos = 0;\n  this.textoPuntos = this.add.text(20, 20, 'Puntos: 0');\n  this.jugador = this.physics.add.sprite(100, 100, 'heroe');\n  this.monedas = this.physics.add.staticGroup();\n  this.monedas.create(220, 150, 'moneda');\n\n  this.physics.add.overlap(this.jugador, this.monedas, (jugador, moneda) => {\n    moneda.destroy();\n    this.puntos += 1;\n    this.textoPuntos.setText(`Puntos: ${this.puntos}`);\n  });\n}",
+              "explanation": "overlap detecta el contacto entre el cuerpo del jugador y los elementos del grupo. moneda.destroy elimina el objeto recogido. El texto se actualiza con el nuevo puntaje. En este ejemplo se usa un grupo estático para las monedas."
+            },
+            {
+              "title": "Usar un proceso condicional en la colisión",
+              "description": "El callback process permite decidir si una colisión debe procesarse.",
+              "code": "this.physics.add.collider(\n  this.jugador,\n  this.enemigos,\n  () => {\n    this.vidas--;\n  },\n  (jugador, enemigo) => {\n    return !jugador.invulnerable;\n  }\n);",
+              "explanation": "El tercer argumento es el callback de colisión. El cuarto argumento process puede devolver false para ignorar esa interacción en ese paso. El ejemplo presupone que los cuerpos existen y que invulnerable y vidas están definidos."
+            },
+            {
+              "title": "Colisiones entre grupos",
+              "description": "Los grupos permiten aplicar una sola configuración a varios objetos.",
+              "code": "create() {\n  this.balas = this.physics.add.group();\n  this.enemigos = this.physics.add.group();\n\n  this.physics.add.overlap(this.balas, this.enemigos, (bala, enemigo) => {\n    bala.destroy();\n    enemigo.destroy();\n  });\n}",
+              "explanation": "overlap puede recibir grupos. Cuando una bala se superpone con un enemigo, se eliminan ambos Game Objects. En un juego real también podrías aumentar el puntaje o reproducir un efecto."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "physics.add.collider(a, b, callback, process)",
+              "description": "Crea un collider para resolver las colisiones entre cuerpos."
+            },
+            {
+              "name": "physics.add.overlap(a, b, callback, process)",
+              "description": "Detecta superposiciones y ejecuta un callback sin la separación física estándar."
+            },
+            {
+              "name": "callback(objetoA, objetoB)",
+              "description": "Función ejecutada al producirse la colisión o superposición."
+            },
+            {
+              "name": "process(objetoA, objetoB)",
+              "description": "Función opcional que permite aceptar o rechazar la interacción."
+            },
+            {
+              "name": "destroy()",
+              "description": "Elimina el Game Object y sus recursos asociados del juego."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá collider para superficies y obstáculos que deben separar cuerpos.",
+            "Usá overlap para recolección, zonas y activadores que no necesitan separación.",
+            "Destruí o desactivá los objetos consumidos para que no sigan provocando callbacks.",
+            "Mantené los callbacks pequeños y delegá las reglas de juego a funciones específicas."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Confundir collider con overlap y obtener una respuesta física inesperada.",
+            "Crear un collider entre objetos que no tienen cuerpos físicos configurados.",
+            "Olvidar destruir o desactivar un objeto que se recoge y contabilizarlo varias veces.",
+            "Devolver un valor incorrecto desde el callback process y anular colisiones sin querer."
           ],
-          "exercise": "Creá monedas que desaparezcan al tocarlas.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí una escena en la que el personaje pueda recoger monedas, chocar con paredes y perder una vida al tocar un enemigo. Mostrá el puntaje y las vidas en pantalla.",
+          "hint": "Usá collider para las paredes y overlap para monedas y enemigos. En cada callback actualizá el estado y eliminá o desactivá el objeto correspondiente.",
+          "resources": [
+            {
+              "label": "Phaser — Arcade Physics",
+              "url": "https://docs.phaser.io/phaser/concepts/physics/arcade"
+            },
+            {
+              "label": "Phaser — Collider API",
+              "url": "https://docs.phaser.io/api-documentation/class/physics-arcade-collider"
+            }
+          ]
+        },
+        {
+          "id": "phaser-cameras",
+          "title": "Cámaras: seguir al jugador y recorrer el mundo",
+          "category": "avanzado",
+          "summary": "Controlá qué parte del mundo se ve con cámaras, seguimiento, límites, zoom y desplazamiento.",
+          "purpose": "Una cámara controla qué región del mundo de una escena se representa en el viewport del juego. Phaser crea una cámara principal por escena. Podés hacer que siga un Game Object, limitar su recorrido con bounds, cambiar el zoom o crear cámaras adicionales. La cámara controla la vista, no mueve físicamente los Game Objects del mundo.",
+          "whenToUse": "Usá cámaras cuando el nivel sea más grande que el canvas, cuando el jugador deba explorar el mapa o cuando quieras efectos de zoom, pantallas divididas o interfaces superpuestas.",
+          "syntax": "create() {\n  this.jugador = this.add.rectangle(100, 200, 32, 32, 0x55d6b5);\n  this.cameras.main.setBounds(0, 0, 2000, 600);\n  this.cameras.main.startFollow(this.jugador);\n}",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Hacer que la cámara siga al jugador",
+              "description": "startFollow mantiene el objeto dentro de la vista mientras se desplaza por el mundo.",
+              "code": "create() {\n  this.jugador = this.add.rectangle(100, 200, 32, 32, 0x55d6b5);\n  this.cameras.main.startFollow(this.jugador);\n}",
+              "explanation": "startFollow recibe un Game Object o un objeto con coordenadas. La cámara desplaza su viewport para mantener el objetivo a la vista. Este ejemplo necesita lógica de movimiento para que el jugador se desplace."
+            },
+            {
+              "title": "Definir los límites de la cámara",
+              "description": "Evitá que la cámara muestre regiones fuera del mapa.",
+              "code": "create() {\n  this.mapa = this.add.rectangle(1000, 300, 2000, 600, 0x253b58);\n  this.jugador = this.add.rectangle(100, 200, 32, 32, 0x55d6b5);\n\n  this.cameras.main.setBounds(0, 0, 2000, 600);\n  this.cameras.main.startFollow(this.jugador, true, 0.08, 0.08);\n}",
+              "explanation": "setBounds define el rectángulo máximo al que puede desplazarse la cámara. startFollow recibe parámetros opcionales para suavizar el seguimiento mediante interpolación. El mapa es más ancho que la vista, así que la cámara puede recorrerlo."
+            },
+            {
+              "title": "Aplicar zoom y desplazamiento",
+              "description": "La cámara puede acercarse a un objeto o desplazarse a una coordenada.",
+              "code": "create() {\n  this.jugador = this.add.circle(450, 250, 20, 0xf1c75b);\n  this.cameras.main.setZoom(1.5);\n  this.cameras.main.centerOn(this.jugador.x, this.jugador.y);\n}",
+              "explanation": "setZoom(1.5) acerca la vista. centerOn centra la cámara en las coordenadas del jugador. Un zoom de 1 representa el tamaño normal; valores mayores acercan la imagen."
+            },
+            {
+              "title": "Excluir elementos de interfaz del movimiento de cámara",
+              "description": "Los elementos fijados al viewport permanecen en pantalla aunque la cámara recorra el mundo.",
+              "code": "create() {\n  this.jugador = this.add.circle(100, 200, 20, 0x55d6b5);\n  this.etiqueta = this.add.text(20, 20, 'VIDAS: 3');\n\n  this.cameras.main.setBounds(0, 0, 2400, 600);\n  this.cameras.main.startFollow(this.jugador);\n  this.etiqueta.setScrollFactor(0);\n}",
+              "explanation": "setScrollFactor(0) hace que la etiqueta no se desplace con el mundo y permanezca en coordenadas de pantalla. Es una técnica habitual para HUDs y puntuaciones."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "cameras.main",
+              "description": "Referencia a la cámara principal de la escena."
+            },
+            {
+              "name": "startFollow(target, roundPixels, lerpX, lerpY)",
+              "description": "Hace que la cámara siga un objeto o punto."
+            },
+            {
+              "name": "setBounds(x, y, width, height)",
+              "description": "Limita el área por la que puede desplazarse la cámara."
+            },
+            {
+              "name": "setZoom(valor)",
+              "description": "Modifica el nivel de zoom."
+            },
+            {
+              "name": "centerOn(x, y)",
+              "description": "Centra la cámara en las coordenadas indicadas."
+            },
+            {
+              "name": "setScrollFactor(x, y)",
+              "description": "Define cuánto se desplaza un objeto respecto al scroll de la cámara; 0 lo deja fijo al viewport."
+            }
+          ],
+          "bestPractices": [
+            "Definí bounds según las dimensiones reales del mundo, no solo del canvas.",
+            "Usá interpolación para que el seguimiento sea suave cuando convenga.",
+            "Fijá los elementos del HUD con setScrollFactor(0).",
+            "Evitá zooms extremos que dificulten la lectura o la navegación."
+          ],
+          "commonMistakes": [
+            "Confundir el movimiento de la cámara con el movimiento del jugador.",
+            "Olvidar los bounds y mostrar espacios vacíos fuera del mapa.",
+            "Aplicar setScrollFactor(0) a objetos del mundo que sí deberían desplazarse.",
+            "Usar una segunda cámara sin configurar qué objetos debe mostrar."
+          ],
+          "exercise": "Creá un nivel de 2400 × 600 con un jugador que se pueda mover horizontalmente. Hacé que la cámara lo siga, no salga de los límites del nivel y mantenga un contador fijo en pantalla.",
+          "hint": "Usá cameras.main.setBounds, startFollow y setScrollFactor(0) en el objeto de interfaz.",
+          "resources": [
+            {
+              "label": "Phaser — Cameras",
+              "url": "https://docs.phaser.io/phaser/concepts/cameras"
+            },
+            {
+              "label": "Phaser — Camera API",
+              "url": "https://docs.phaser.io/api-documentation/class/cameras-scene2d-camera"
+            }
+          ]
+        },
+        {
+          "id": "phaser-tweens",
+          "title": "Tweens: animar propiedades de objetos",
+          "category": "avanzado",
+          "summary": "Creá transiciones suaves de posición, escala, alpha y otras propiedades sin programar cada frame manualmente.",
+          "purpose": "Un Tween interpola propiedades de un objeto durante un período de tiempo. Phaser incluye un Tween Manager por escena, accesible mediante this.tweens. Los tweens pueden modificar posición, escala, rotación, alpha, volumen y propiedades de objetos JavaScript. También admiten retrasos, repeticiones, yoyo y callbacks.",
+          "whenToUse": "Usá tweens para animar interfaces, botones, transiciones de pantalla, objetos que flotan, efectos de aparición y cambios visuales. Para un personaje controlado por físicas, normalmente utilizá el sistema de físicas para el movimiento y reservá tweens para efectos puntuales.",
+          "syntax": "this.tweens.add({\n  targets: this.logo,\n  y: 200,\n  duration: 800,\n  ease: 'Sine.easeInOut',\n  yoyo: true,\n  repeat: -1\n});",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Mover un objeto suavemente",
+              "description": "El tween modifica la posición del objeto durante una duración determinada.",
+              "code": "create() {\n  const caja = this.add.rectangle(100, 200, 50, 50, 0x55d6b5);\n  this.tweens.add({\n    targets: caja,\n    x: 700,\n    duration: 1200,\n    ease: 'Sine.easeInOut'\n  });\n}",
+              "explanation": "targets indica el objeto que será animado. x es la propiedad destino. duration expresa la duración en milisegundos. ease define cómo acelera o desacelera la transición."
+            },
+            {
+              "title": "Crear una animación de ida y vuelta",
+              "description": "yoyo invierte la transición cuando llega al valor final.",
+              "code": "this.tweens.add({\n  targets: this.logo,\n  y: 180,\n  duration: 700,\n  yoyo: true,\n  repeat: -1,\n  ease: 'Quad.easeInOut'\n});",
+              "explanation": "yoyo: true hace que el objeto vuelva al valor inicial. repeat: -1 repite indefinidamente el ciclo. Es útil para crear objetos que flotan o botones que pulsan suavemente."
+            },
+            {
+              "title": "Cambiar transparencia para aparecer y desaparecer",
+              "description": "Animá alpha entre cero y uno para producir un efecto de aparición.",
+              "code": "const aviso = this.add.text(400, 200, 'Nivel completado').setOrigin(0.5);\naviso.setAlpha(0);\n\nthis.tweens.add({\n  targets: aviso,\n  alpha: 1,\n  duration: 500,\n  hold: 1500,\n  yoyo: true,\n  onComplete: () => aviso.destroy()\n});",
+              "explanation": "El texto comienza transparente. El tween cambia alpha a 1, espera el tiempo hold y vuelve al valor inicial por yoyo. onComplete se ejecuta cuando termina y destruye el mensaje."
+            },
+            {
+              "title": "Animar más de un objeto",
+              "description": "El parámetro targets admite un arreglo de objetos.",
+              "code": "const estrellaA = this.add.star(200, 200, 5, 10, 24, 0xffd05c);\nconst estrellaB = this.add.star(400, 200, 5, 10, 24, 0x5ccef0);\n\nthis.tweens.add({\n  targets: [estrellaA, estrellaB],\n  angle: 360,\n  scale: 1.4,\n  duration: 1800,\n  repeat: -1\n});",
+              "explanation": "Los dos objetos reciben los valores destino para angle y scale. Los tweens permiten animar varias propiedades y varios objetos con una misma configuración, siempre que esas propiedades estén disponibles en los objetivos."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.tweens.add(config)",
+              "description": "Crea y añade un tween al administrador de la escena."
+            },
+            {
+              "name": "targets",
+              "description": "Uno o varios objetos cuyas propiedades serán animadas."
+            },
+            {
+              "name": "duration",
+              "description": "Duración de la transición en milisegundos."
+            },
+            {
+              "name": "ease",
+              "description": "Curva de interpolación que determina cómo cambia la velocidad de la transición."
+            },
+            {
+              "name": "yoyo",
+              "description": "Hace que el tween vuelva hacia los valores iniciales después de alcanzar el destino."
+            },
+            {
+              "name": "repeat",
+              "description": "Cantidad de repeticiones; -1 indica repetición indefinida."
+            },
+            {
+              "name": "onComplete",
+              "description": "Callback ejecutado cuando el tween termina su reproducción completa."
+            }
+          ],
+          "bestPractices": [
+            "Usá tweens para cambios visuales y transiciones; no sustituyas el motor de físicas para mover personajes con colisiones.",
+            "Mantené duraciones coherentes y evitá animaciones que distraigan de la jugabilidad.",
+            "Detené o eliminá tweens cuando el objeto objetivo ya no exista.",
+            "Usá callbacks para coordinar el final de una transición con la lógica del juego."
+          ],
+          "commonMistakes": [
+            "Indicar una propiedad que el objeto no tiene o que no se puede interpolar como esperás.",
+            "Confundir repeat con yoyo: repeat repite y yoyo invierte la dirección.",
+            "Crear un tween nuevo en cada update y acumular animaciones.",
+            "Destruir el objeto antes de que termine el tween que debía animarlo."
+          ],
+          "exercise": "Creá un mensaje de victoria que aparezca con alpha, se agrande suavemente y desaparezca. Agregá un segundo tween que haga flotar una estrella continuamente.",
+          "hint": "Usá this.tweens.add con targets, alpha, scale, duration, yoyo, repeat y onComplete.",
+          "resources": [
+            {
+              "label": "Phaser — Tweens",
+              "url": "https://docs.phaser.io/phaser/concepts/tweens"
+            },
+            {
+              "label": "Phaser — Tween Manager API",
+              "url": "https://docs.phaser.io/api-documentation/class/tweens-tweenmanager"
+            }
+          ]
+        },
+        {
+          "id": "phaser-scale",
+          "title": "Diseño adaptable: Scale Manager",
+          "category": "avanzado",
+          "summary": "Adaptá el canvas a distintas pantallas con modos FIT, RESIZE y centrado automático.",
+          "purpose": "El Scale Manager controla cómo el canvas ocupa el espacio de su contenedor. El juego mantiene un tamaño lógico y el modo de escala determina cómo se adapta al área disponible. FIT conserva la relación de aspecto y ajusta el canvas dentro del contenedor; RESIZE modifica el tamaño visible del juego para cubrir el contenedor; EXPAND combina el ajuste del área visible con el escalado. El CSS del contenedor también influye en el resultado.",
+          "whenToUse": "Configurá el Scale Manager cuando el juego deba ejecutarse en pantallas de escritorio, tablets y móviles. Para mantener las proporciones de un juego clásico, FIT suele ser un buen punto de partida. RESIZE puede servir cuando la lógica del juego está preparada para adaptarse a dimensiones cambiantes.",
+          "syntax": "scale: {\n  mode: Phaser.Scale.FIT,\n  autoCenter: Phaser.Scale.CENTER_BOTH,\n  width: 800,\n  height: 450\n}",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Ajustar el canvas sin deformar proporciones",
+              "description": "FIT encaja el juego en el espacio disponible y conserva la relación de aspecto.",
+              "code": "const config = {\n  type: Phaser.AUTO,\n  parent: 'zona-juego',\n  width: 800,\n  height: 450,\n  scale: {\n    mode: Phaser.Scale.FIT,\n    autoCenter: Phaser.Scale.CENTER_BOTH\n  },\n  scene: EscenaInicio\n};",
+              "explanation": "FIT escala el canvas para que quepa dentro del contenedor sin estirarlo. Puede dejar bandas vacías si la proporción del contenedor es diferente. CENTER_BOTH lo centra."
+            },
+            {
+              "title": "Utilizar RESIZE",
+              "description": "RESIZE adapta el tamaño de juego al contenedor, por lo que la escena debe estar preparada para recibir nuevas dimensiones.",
+              "code": "const config = {\n  type: Phaser.AUTO,\n  parent: 'zona-juego',\n  scale: {\n    mode: Phaser.Scale.RESIZE,\n    width: 800,\n    height: 450\n  },\n  scene: EscenaInicio\n};",
+              "explanation": "RESIZE cambia el área de juego para ocupar el contenedor. En este modo conviene reaccionar al cambio de tamaño y ubicar los elementos en función de this.scale.width y this.scale.height."
+            },
+            {
+              "title": "Colocar elementos según el tamaño actual",
+              "description": "Usá las dimensiones que expone la escena en vez de asumir un tamaño fijo.",
+              "code": "create() {\n  const centroX = this.scale.width / 2;\n  const centroY = this.scale.height / 2;\n  this.titulo = this.add.text(centroX, centroY, 'Juego adaptable');\n  this.titulo.setOrigin(0.5);\n\n  this.scale.on('resize', (gameSize) => {\n    this.titulo.setPosition(gameSize.width / 2, gameSize.height / 2);\n  });\n}",
+              "explanation": "this.scale.width y height representan el tamaño disponible para la escena. El evento resize permite reposicionar elementos cuando cambia el canvas. Para proyectos más complejos, organizá el diseño adaptable en una función propia."
+            },
+            {
+              "title": "Definir tamaños mínimos y máximos",
+              "description": "Podés establecer límites para el área de escala en la configuración.",
+              "code": "scale: {\n  parent: 'zona-juego',\n  mode: Phaser.Scale.FIT,\n  autoCenter: Phaser.Scale.CENTER_BOTH,\n  width: 960,\n  height: 540,\n  min: { width: 320, height: 180 },\n  max: { width: 1600, height: 900 }\n}",
+              "explanation": "min y max limitan las dimensiones permitidas del área de juego en la configuración de escala. También debés preparar el CSS del contenedor para que tenga dimensiones reales y no colapse a cero."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Phaser.Scale.FIT",
+              "description": "Escala para encajar el juego dentro del contenedor manteniendo la proporción."
+            },
+            {
+              "name": "Phaser.Scale.RESIZE",
+              "description": "Ajusta el tamaño del juego al contenedor disponible."
+            },
+            {
+              "name": "Phaser.Scale.EXPAND",
+              "description": "Combina el ajuste del área visible con el escalado para utilizar el espacio disponible."
+            },
+            {
+              "name": "Phaser.Scale.CENTER_BOTH",
+              "description": "Centra horizontal y verticalmente el canvas en el contenedor."
+            },
+            {
+              "name": "this.scale.width / height",
+              "description": "Dimensiones actuales del área de juego."
+            },
+            {
+              "name": "resize",
+              "description": "Evento que permite reaccionar a cambios del tamaño del contenedor."
+            }
+          ],
+          "bestPractices": [
+            "Definí las dimensiones lógicas según el diseño del juego y no según el tamaño de un teléfono específico.",
+            "Usá FIT cuando sea más importante conservar proporciones que llenar todo el contenedor.",
+            "Asegurate de que el contenedor tenga width y height válidos en CSS.",
+            "Probá la interfaz en orientación vertical y horizontal si el juego debe admitir ambas."
+          ],
+          "commonMistakes": [
+            "Suponer que Scale Manager corrige automáticamente la distribución de todos los objetos.",
+            "Usar RESIZE sin adaptar posiciones y tamaños al nuevo ancho y alto.",
+            "Olvidar definir tamaño para el contenedor y terminar con un canvas colapsado.",
+            "Estirar el juego y deformar sprites cuando la relación de aspecto no coincide."
+          ],
+          "exercise": "Prepará una pantalla de 800 × 450 que se adapte con FIT y se centre dentro de un contenedor responsive. El título y los botones deben reposicionarse cuando cambie el tamaño.",
+          "hint": "Configurá scale.mode y autoCenter. Escuchá resize y calculá las posiciones desde gameSize.width y gameSize.height.",
+          "resources": [
+            {
+              "label": "Phaser — Scale Manager",
+              "url": "https://docs.phaser.io/phaser/concepts/scale-manager"
+            },
+            {
+              "label": "Phaser — ScaleManager API",
+              "url": "https://docs.phaser.io/api-documentation/class/scale-scalemanager"
+            }
+          ]
+        },
+        {
+          "id": "phaser-audio",
+          "title": "Audio: efectos y música",
+          "category": "avanzado",
+          "summary": "Cargá sonidos, reproducí efectos, configurá volumen y administrá música en bucle.",
+          "purpose": "Phaser incluye un Sound Manager que administra el audio del juego. Los recursos se cargan con el Loader y se reproducen desde la escena con this.sound. Podés reproducir efectos breves, crear instancias de sonido para música de fondo, configurar volumen, bucle, velocidad y detener la reproducción. Los navegadores suelen bloquear la reproducción automática hasta que el usuario interactúa con la página.",
+          "whenToUse": "Usá audio para música de fondo, efectos de salto, disparo, colisión, selección de botones y sonidos ambientales. Organizá la música y los efectos de forma que puedas controlar volumen, pausa y finalización de escenas.",
+          "syntax": "preload() {\n  this.load.audio('salto', 'assets/salto.ogg');\n}\n\ncreate() {\n  this.input.keyboard.once('keydown-SPACE', () => {\n    this.sound.play('salto', { volume: 0.7 });\n  });\n}",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Reproducir un efecto al pulsar",
+              "description": "Iniciá el audio a partir de una interacción del usuario.",
+              "code": "preload() {\n  this.load.audio('seleccion', 'assets/seleccion.ogg');\n}\n\ncreate() {\n  this.input.keyboard.once('keydown-SPACE', () => {\n    this.sound.play('seleccion', { volume: 0.6 });\n  });\n}",
+              "explanation": "load.audio registra el archivo. sound.play lo reproduce al pulsar espacio. La interacción del usuario ayuda a desbloquear el audio en navegadores que aplican políticas de autoplay."
+            },
+            {
+              "title": "Crear música en bucle",
+              "description": "Una instancia de sonido permite controlar la música durante el juego.",
+              "code": "preload() {\n  this.load.audio('musica', 'assets/musica.ogg');\n}\n\ncreate() {\n  this.musica = this.sound.add('musica', {\n    volume: 0.35,\n    loop: true\n  });\n\n  this.input.once('pointerdown', () => {\n    this.musica.play();\n  });\n}",
+              "explanation": "sound.add crea una instancia que se puede conservar en this.musica. loop mantiene la reproducción en bucle. El inicio se vincula al primer toque o clic para respetar las políticas de audio del navegador."
+            },
+            {
+              "title": "Pausar y reanudar música",
+              "description": "Conservá la instancia de sonido para gestionar su reproducción.",
+              "code": "// Después de crear this.musica:\nthis.musica.pause();\n\n// Para continuar desde donde quedó:\nthis.musica.resume();\n\n// Para detenerla completamente:\nthis.musica.stop();",
+              "explanation": "pause suspende la reproducción y conserva su posición. resume continúa. stop finaliza la reproducción; si querés volver a empezar, llamá play. Estos métodos se aplican sobre la instancia de sonido."
+            },
+            {
+              "title": "Controlar volumen y velocidad",
+              "description": "Ajustá parámetros de una instancia en tiempo de ejecución.",
+              "code": "this.musica.setVolume(0.2);\nthis.musica.setRate(0.9);\nthis.musica.setMute(false);",
+              "explanation": "setVolume define el volumen relativo, habitualmente entre 0 y 1. setRate modifica la velocidad de reproducción. setMute activa o desactiva el silencio. Probá valores moderados para no distorsionar ni incomodar al jugador."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.load.audio(key, url)",
+              "description": "Encola un archivo de audio bajo una clave."
+            },
+            {
+              "name": "this.sound.play(key, config)",
+              "description": "Reproduce el sonido cargado con una configuración opcional."
+            },
+            {
+              "name": "this.sound.add(key, config)",
+              "description": "Crea una instancia de sonido que puede administrarse durante la partida."
+            },
+            {
+              "name": "volume",
+              "description": "Volumen relativo de reproducción."
+            },
+            {
+              "name": "loop",
+              "description": "Indica si el sonido debe repetirse al finalizar."
+            },
+            {
+              "name": "pause() / resume() / stop()",
+              "description": "Pausa, reanuda o detiene una instancia de sonido."
+            }
+          ],
+          "bestPractices": [
+            "Iniciá música y sonidos después de una interacción del usuario para evitar bloqueos de autoplay.",
+            "Separá música de fondo y efectos para controlar sus volúmenes de forma independiente.",
+            "Detené sonidos en bucle cuando ya no sean necesarios.",
+            "Ofrecé una opción de silencio o control de volumen en juegos largos."
+          ],
+          "commonMistakes": [
+            "Esperar que el navegador permita autoplay con audio al cargar la página.",
+            "Reproducir música en bucle y olvidarse de detenerla al salir de la escena apropiada.",
+            "Cargar un audio en una clave y reproducir una clave diferente.",
+            "Utilizar archivos de audio enormes sin optimizar formato, duración ni tamaño."
+          ],
+          "exercise": "Agregá música de fondo en bucle y tres efectos: seleccionar, saltar y recoger moneda. La música debe comenzar tras el primer clic y existir un control para silenciarla.",
+          "hint": "Usá load.audio, sound.add, sound.play y setMute. Conservá una referencia a la instancia de música.",
+          "resources": [
+            {
+              "label": "Phaser — Audio",
+              "url": "https://docs.phaser.io/phaser/concepts/audio"
+            },
+            {
+              "label": "Phaser — Sound Manager API",
+              "url": "https://docs.phaser.io/api-documentation/class/sound-soundmanager"
+            }
+          ]
+        },
+        {
+          "id": "phaser-particles",
+          "title": "Partículas y efectos visuales",
+          "category": "avanzado",
+          "summary": "Creá emisores de partículas para humo, chispas, polvo, explosiones y efectos de movimiento.",
+          "purpose": "Un Particle Emitter controla un conjunto de partículas que aparecen, se desplazan y desaparecen según una configuración. En versiones modernas de Phaser, this.add.particles(x, y, texture, config) devuelve un emisor que se agrega a la lista de objetos de la escena. Las propiedades del emisor pueden ser valores fijos, rangos o funciones, lo que permite variar velocidad, escala, ángulo, alpha y duración.",
+          "whenToUse": "Usá partículas para explosiones, polvo al caminar, chispas, magia, lluvia, humo y otros efectos. Limitá la cantidad de partículas activas y evitá usar un sistema de partículas complejo para cada objeto pequeño del juego.",
+          "syntax": "const emisor = this.add.particles(400, 300, 'particula', {\n  speed: 100,\n  scale: { start: 1, end: 0 },\n  lifespan: 600,\n  blendMode: 'ADD'\n});",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Crear un efecto de partículas",
+              "description": "Cargá una textura pequeña y creá un emisor.",
+              "code": "preload() {\n  this.load.image('particula', 'assets/particula.png');\n}\n\ncreate() {\n  this.emisor = this.add.particles(400, 250, 'particula', {\n    speed: 100,\n    scale: { start: 0.8, end: 0 },\n    lifespan: 700,\n    quantity: 2,\n    frequency: 80\n  });\n}",
+              "explanation": "this.add.particles recibe posición, clave de textura y configuración. speed controla la velocidad inicial; scale cambia el tamaño durante la vida; lifespan define la duración en milisegundos; frequency controla el intervalo de emisión en este patrón continuo."
+            },
+            {
+              "title": "Variar la dirección de las partículas",
+              "description": "Usá rangos para producir direcciones distintas en cada emisión.",
+              "code": "this.add.particles(400, 400, 'chispa', {\n  angle: { min: 220, max: 320 },\n  speed: { min: 60, max: 180 },\n  scale: { start: 0.7, end: 0 },\n  lifespan: 900,\n  quantity: 12,\n  emitting: false\n}).explode(12);",
+              "explanation": "Los rangos min y max generan valores variables. emitting: false evita que el emisor dispare continuamente. explode(12) crea una ráfaga de doce partículas. La textura chispa debe existir en la caché."
+            },
+            {
+              "title": "Seguir a un personaje",
+              "description": "Un emisor puede acompañar a un Game Object mientras se desplaza.",
+              "code": "create() {\n  this.jugador = this.add.circle(200, 200, 20, 0x55d6b5);\n  this.emisor = this.add.particles(0, 0, 'polvo', {\n    speed: 30,\n    scale: { start: 0.5, end: 0 },\n    lifespan: 300,\n    frequency: 60\n  });\n  this.emisor.startFollow(this.jugador);\n}",
+              "explanation": "startFollow vincula la emisión con la posición del objeto seguido. El resultado puede servir como polvo o rastro de movimiento. Ajustá frecuencia y lifespan para limitar el costo visual."
+            },
+            {
+              "title": "Detener y destruir un emisor",
+              "description": "Administrá los efectos cuando termine la acción que los necesita.",
+              "code": "this.emisor.stop();\n\n// Cuando ya no se necesite el efecto:\nthis.emisor.destroy();",
+              "explanation": "stop detiene la emisión de nuevas partículas, aunque las existentes pueden terminar su ciclo. destroy elimina el Game Object y libera sus recursos asociados. Elegí el momento adecuado para no dejar efectos innecesarios en memoria."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "this.add.particles(x, y, key, config)",
+              "description": "Crea un Particle Emitter usando una textura cargada."
+            },
+            {
+              "name": "speed",
+              "description": "Velocidad inicial de las partículas; puede ser un número o un rango."
+            },
+            {
+              "name": "lifespan",
+              "description": "Tiempo de vida de cada partícula, en milisegundos."
+            },
+            {
+              "name": "scale",
+              "description": "Escala inicial y final a lo largo de la vida de la partícula."
+            },
+            {
+              "name": "frequency",
+              "description": "Intervalo entre emisiones continuas, cuando se usa un emisor continuo."
+            },
+            {
+              "name": "explode(quantity)",
+              "description": "Emite una cantidad de partículas en una ráfaga."
+            },
+            {
+              "name": "startFollow(objeto)",
+              "description": "Hace que el emisor siga a un Game Object."
+            }
+          ],
+          "bestPractices": [
+            "Reutilizá texturas pequeñas y optimizadas para partículas.",
+            "Limitá lifespan, frequency y quantity para controlar rendimiento.",
+            "Detené o destruí emisores cuando el efecto ya no se necesite.",
+            "Usá ráfagas para impactos puntuales y emisión continua para humo o rastros."
+          ],
+          "commonMistakes": [
+            "Olvidar cargar la textura de partículas.",
+            "Emitir una cantidad ilimitada sin controlar frecuencia y duración.",
+            "Mantener emisores activos en escenas que ya no se muestran.",
+            "Aplicar efectos demasiado intensos que ocultan al jugador o interfieren con la lectura del juego."
+          ],
+          "exercise": "Creá un efecto de polvo que siga al personaje y una explosión breve cuando recoja una moneda. Detené o destruí los emisores cuando terminen los efectos.",
+          "hint": "Utilizá un emisor continuo con startFollow y otro con emitting: false junto con explode().",
+          "resources": [
+            {
+              "label": "Phaser — Particles",
+              "url": "https://docs.phaser.io/phaser/concepts/gameobjects/particles"
+            },
+            {
+              "label": "Phaser — Particle Emitter API",
+              "url": "https://docs.phaser.io/api-documentation/class/gameobjects-particles-particleemitter"
+            }
+          ]
+        },
+        {
+          "id": "phaser-tilemaps",
+          "title": "Tilemaps: construir niveles con mapas de tiles",
+          "category": "intermedio",
+          "summary": "Importá mapas de Tiled, creá capas y definí colisiones sobre los tiles del escenario.",
+          "purpose": "Un Tilemap contiene datos del mapa y sus tilesets; no es por sí mismo el objeto que dibuja el nivel. Las capas creadas con createLayer representan los tiles visualmente. Phaser puede leer mapas JSON exportados desde Tiled, datos CSV o arreglos 2D. Los tiles pueden tener propiedades personalizadas y las capas pueden definir colisiones.",
+          "whenToUse": "Usá tilemaps para niveles grandes compuestos por cuadrículas: plataformas, mapas top-down, mazmorras, puzzles y escenarios con paredes o suelo repetido. Prepará el mapa con Tiled y exportalo a JSON para un flujo de trabajo visual más cómodo.",
+          "syntax": "preload() {\n  this.load.image('tiles', 'assets/tiles.png');\n  this.load.tilemapTiledJSON('nivel', 'assets/nivel.json');\n}\n\ncreate() {\n  const mapa = this.make.tilemap({ key: 'nivel' });\n  const tileset = mapa.addTilesetImage('tileset', 'tiles');\n  const suelo = mapa.createLayer('Suelo', tileset, 0, 0);\n}",
+          "level": "Intermedio a avanzado",
+          "examples": [
+            {
+              "title": "Cargar un mapa JSON de Tiled",
+              "description": "En preload se carga el JSON del mapa y la imagen del tileset.",
+              "code": "preload() {\n  this.load.tilemapTiledJSON('nivel', 'assets/nivel.json');\n  this.load.image('tiles', 'assets/tiles.png');\n}",
+              "explanation": "tilemapTiledJSON carga el archivo JSON exportado desde Tiled. load.image carga la imagen que corresponde al tileset. El nombre del tileset usado en addTilesetImage debe coincidir con la referencia configurada en el mapa."
+            },
+            {
+              "title": "Crear el mapa y una capa",
+              "description": "Construí el objeto Tilemap y creá una capa visible.",
+              "code": "create() {\n  const mapa = this.make.tilemap({ key: 'nivel' });\n  const tileset = mapa.addTilesetImage('Terreno', 'tiles');\n  const suelo = mapa.createLayer('Suelo', tileset, 0, 0);\n  const decoracion = mapa.createLayer('Decoracion', tileset, 0, 0);\n\n  decoracion.setDepth(2);\n}",
+              "explanation": "make.tilemap recupera los datos del mapa. addTilesetImage conecta el nombre del tileset de Tiled con la clave de textura cargada. createLayer genera las capas visuales por nombre; los nombres deben coincidir con los del archivo exportado."
+            },
+            {
+              "title": "Habilitar colisiones por propiedad",
+              "description": "Usá propiedades personalizadas de Tiled para marcar tiles sólidos.",
+              "code": "create() {\n  const mapa = this.make.tilemap({ key: 'nivel' });\n  const tileset = mapa.addTilesetImage('Terreno', 'tiles');\n  this.suelo = mapa.createLayer('Suelo', tileset, 0, 0);\n\n  this.suelo.setCollisionByProperty({ colisiona: true });\n  this.jugador = this.physics.add.sprite(100, 100, 'heroe');\n  this.physics.add.collider(this.jugador, this.suelo);\n}",
+              "explanation": "En Tiled asigná la propiedad booleana colisiona=true a los tiles sólidos. setCollisionByProperty activa las colisiones de los tiles con esa propiedad. Luego collider conecta el jugador físico con la capa."
+            },
+            {
+              "title": "Consultar un tile en una coordenada",
+              "description": "Convertí una posición del mundo en un tile y consultá sus propiedades.",
+              "code": "const mundoX = this.jugador.x;\nconst mundoY = this.jugador.y;\nconst tile = this.suelo.getTileAtWorldXY(mundoX, mundoY);\n\nif (tile) {\n  console.log('Índice de tile:', tile.index);\n  console.log('Propiedades:', tile.properties);\n}",
+              "explanation": "getTileAtWorldXY busca el tile de la capa en una coordenada del mundo. La propiedad index identifica el tile y properties contiene propiedades personalizadas, si fueron definidas en Tiled."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "load.tilemapTiledJSON(key, url)",
+              "description": "Carga datos de un mapa exportado desde Tiled en formato JSON."
+            },
+            {
+              "name": "make.tilemap({ key })",
+              "description": "Crea un objeto Tilemap a partir de los datos cargados."
+            },
+            {
+              "name": "addTilesetImage(nombreTiled, claveTextura)",
+              "description": "Conecta un tileset del mapa con una textura cargada."
+            },
+            {
+              "name": "createLayer(nombre, tileset, x, y)",
+              "description": "Crea una capa visual a partir de los datos del mapa."
+            },
+            {
+              "name": "setCollisionByProperty(propiedades)",
+              "description": "Activa colisión en tiles cuyas propiedades coinciden."
+            },
+            {
+              "name": "getTileAtWorldXY(x, y)",
+              "description": "Obtiene el tile ubicado en una coordenada del mundo."
+            }
+          ],
+          "bestPractices": [
+            "Organizá el mapa en capas: suelo, decoración, obstáculos y elementos de juego.",
+            "Definí propiedades de colisión en Tiled para no codificar índices rígidos.",
+            "Cargá el JSON y las imágenes antes de crear el mapa.",
+            "Probá la escala de tiles y el origen del mapa en relación con los cuerpos físicos."
+          ],
+          "commonMistakes": [
+            "Confundir el objeto Tilemap con las capas que realmente se dibujan.",
+            "Usar un nombre de tileset o de capa que no coincide con el archivo Tiled.",
+            "Olvidar cargar la imagen del tileset.",
+            "Activar colisiones sin definir propiedades o índices correctos en Tiled."
+          ],
+          "exercise": "Creá en Tiled un mapa sencillo con capas Suelo y Decoracion. Marcá paredes con la propiedad colisiona=true. Cargá el mapa en Phaser y hacé que un personaje con Arcade Physics no atraviese las paredes.",
+          "hint": "Exportá el mapa en JSON. Cargá el JSON y la imagen del tileset; creá la capa Suelo, llamá setCollisionByProperty y agregá collider entre jugador y capa.",
+          "resources": [
+            {
+              "label": "Phaser — Tilemap API",
+              "url": "https://docs.phaser.io/api-documentation/class/tilemaps-tilemap"
+            },
+            {
+              "label": "Phaser — Loader: tilemapTiledJSON",
+              "url": "https://docs.phaser.io/api-documentation/class/loader-loaderplugin"
+            },
+            {
+              "label": "Tiled Map Editor",
+              "url": "https://www.mapeditor.org/"
+            }
+          ]
+        },
+        {
+          "id": "phaser-deploy-debug",
+          "title": "Depuración, rendimiento y publicación",
+          "category": "avanzado",
+          "summary": "Diagnosticá errores, inspeccioná cuerpos físicos y prepará el build de un juego web.",
+          "purpose": "Un juego debe probarse desde temprano en el navegador y en los dispositivos donde se utilizará. Phaser ofrece opciones de depuración de físicas, eventos del Loader, consola del navegador y herramientas de inspección de JavaScript. Para publicar, el proyecto se compila con la herramienta utilizada, por ejemplo Vite, y se sirve desde un hosting estático o un servidor compatible. Las rutas de recursos deben funcionar en la ubicación final y los archivos deben optimizarse.",
+          "whenToUse": "Usá herramientas de depuración durante cada etapa, especialmente cuando un recurso no carga, una colisión no funciona o el juego pierde rendimiento. Prepará un build de producción y probalo en la ruta y dispositivo de destino antes de publicarlo.",
+          "syntax": "npm run build\nnpm run preview",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Activar debug de Arcade Physics",
+              "description": "Mostrá la geometría de los cuerpos para detectar tamaños o posiciones incorrectas.",
+              "code": "const config = {\n  physics: {\n    default: 'arcade',\n    arcade: {\n      debug: true\n    }\n  },\n  scene: Nivel\n};",
+              "explanation": "debug: true permite visualizar información de los cuerpos físicos durante el desarrollo. Desactivalo para la publicación normal y revisá que las cajas coincidan con los sprites."
+            },
+            {
+              "title": "Registrar errores de carga",
+              "description": "Escuchá el evento file load error del Loader para identificar recursos ausentes.",
+              "code": "preload() {\n  this.load.on('loaderror', (archivo) => {\n    console.error('No se pudo cargar:', archivo.key, archivo.src);\n  });\n\n  this.load.image('fondo', 'assets/fondo.png');\n}",
+              "explanation": "loaderror se emite si un archivo de la cola de carga falla. El objeto de archivo permite consultar su clave y URL. Revisá la ruta, nombre y disponibilidad del recurso."
+            },
+            {
+              "title": "Medir tiempo y evitar trabajo innecesario",
+              "description": "Actualizá solo los elementos que cambiaron y utilizá el delta en operaciones de movimiento.",
+              "code": "update(time, delta) {\n  const paso = this.velocidad * delta / 1000;\n  if (this.moviendose) {\n    this.jugador.x += paso;\n  }\n\n  if (this.puntosCambio) {\n    this.etiquetaPuntos.setText(`Puntos: ${this.puntos}`);\n    this.puntosCambio = false;\n  }\n}",
+              "explanation": "El movimiento depende de delta. La etiqueta se actualiza solo cuando cambia el puntaje, evitando recrear su textura en todos los frames. Este patrón ayuda a reducir trabajo innecesario."
+            },
+            {
+              "title": "Preparar el build de producción",
+              "description": "Con un proyecto Vite, generá y previsualizá los archivos optimizados.",
+              "code": "npm run build\nnpm run preview",
+              "explanation": "build crea la versión optimizada dentro de la carpeta configurada por la herramienta. preview sirve esa versión localmente para comprobarla antes de publicarla. Los comandos exactos dependen del package.json de tu proyecto."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "physics.arcade.debug",
+              "description": "Activa la representación visual de depuración de cuerpos Arcade."
+            },
+            {
+              "name": "loaderror",
+              "description": "Evento del Loader que informa que un recurso no pudo cargarse."
+            },
+            {
+              "name": "console.error()",
+              "description": "Registra información de error en las herramientas de desarrollo."
+            },
+            {
+              "name": "npm run build",
+              "description": "Ejecuta el script build definido en package.json."
+            },
+            {
+              "name": "npm run preview",
+              "description": "Ejecuta el script preview si el proyecto lo define, por ejemplo para revisar el build de Vite."
+            },
+            {
+              "name": "source maps",
+              "description": "Archivos que ayudan a relacionar código compilado con el código fuente original durante la depuración."
+            }
+          ],
+          "bestPractices": [
+            "Probá el build de producción, no solamente el servidor de desarrollo.",
+            "Comprimí imágenes, audio y spritesheets según sus necesidades.",
+            "Revisá errores de carga, rutas relativas, mayúsculas y minúsculas.",
+            "Probá en teléfonos reales y medí el rendimiento con herramientas del navegador.",
+            "No dejes debug activado ni el inspector remoto expuesto en producción."
+          ],
+          "commonMistakes": [
+            "Confiar solo en el servidor de desarrollo y no comprobar el build final.",
+            "Publicar recursos fuera de la carpeta o ruta configurada.",
+            "Ignorar errores del Loader y asumir que la textura está disponible.",
+            "Dejar logs y depuración excesiva en la versión publicada."
+          ],
+          "exercise": "Prepará un pequeño juego con fondo, jugador, movimiento y colisiones. Activá debug mientras desarrollás, registrá los errores de carga y generá un build de producción. Verificá que las imágenes y sonidos sigan funcionando desde la carpeta publicada.",
+          "hint": "Usá los eventos del Loader para errores, activá Arcade debug, ejecutá npm run build y probá el resultado con npm run preview.",
+          "resources": [
+            {
+              "label": "Phaser — Getting Started",
+              "url": "https://docs.phaser.io/phaser/getting-started/intro"
+            },
+            {
+              "label": "Phaser — Debugging",
+              "url": "https://docs.phaser.io/phaser/getting-started/debugging"
+            },
+            {
+              "label": "Vite — Build for Production",
+              "url": "https://vite.dev/guide/build.html"
+            }
+          ]
         }
       ]
     }
