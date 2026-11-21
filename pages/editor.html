@@ -10,6 +10,11 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/emmet-monaco-es@5.7.0/dist/emmet-monaco.min.js"></script>
 <script defer src="../js/editor-app.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/icon.svg">
+  <link rel="stylesheet" href="../css/pwa.css">
+  <script defer src="../js/pwa.js"></script>
 </head>
 <body class="code-workbench">
 <header class="workbench-top"><a class="workbench-brand" href="../index.html"><span>&lt;/&gt;</span> WebDev<span>Book</span></a><button id="projectPicker" class="project-picker" title="Administrar proyectos">▤ <strong id="projectName">Mi proyecto</strong> ▾</button><div class="workbench-project"><i></i><small id="saveStatus">Cargando almacenamiento…</small></div><div class="workbench-actions"><button id="toggleExplorer" class="explorer-toggle" title="Mostrar explorador">☰</button><button id="newFileBtn">＋ Archivo</button><button id="importBtn">↑ Importar</button><button id="showPreviewBtn" class="mobile-preview-btn">▷ Vista previa</button><button id="downloadBtn" class="primary-action">↓ Descargar ZIP</button><a href="../index.html" class="exit-editor">Salir</a></div><input id="filePicker" type="file" multiple hidden></header>
