@@ -398,12 +398,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     updateCategoryOptions();
-    languageFilter.select.addEventListener("change", () => {
-      categoryFilter.select.value = "";
-      updateCategoryOptions();
-      renderFilteredResults();
-    });
-    categoryFilter.select.addEventListener("change", renderFilteredResults);
 
     const list = document.createElement("div");
     list.className = "search-results-list";
@@ -478,6 +472,15 @@ document.addEventListener("DOMContentLoaded", () => {
         ? "Se muestran 8 de " + filtered.length + " · ↑ ↓ para recorrer · Enter para abrir · Esc para cerrar"
         : "↑ ↓ para recorrer · Enter para abrir · Esc para cerrar";
     };
+
+    // Registrar los eventos después de inicializar renderFilteredResults.
+    // Evita el error temporal de inicialización (TDZ) al construir el panel.
+    languageFilter.select.addEventListener("change", () => {
+      categoryFilter.select.value = "";
+      updateCategoryOptions();
+      renderFilteredResults();
+    });
+    categoryFilter.select.addEventListener("change", renderFilteredResults);
 
     filters.append(languageFilter.label, categoryFilter.label);
     if (catalogWarnings.length) {
