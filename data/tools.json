@@ -11131,7 +11131,7 @@
               "title": "Configuración de base para Node ESM",
               "description": "Compilá archivos de src y emití JavaScript en dist.",
               "code": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2022\",\n    \"module\": \"NodeNext\",\n    \"moduleResolution\": \"NodeNext\",\n    \"rootDir\": \"./src\",\n    \"outDir\": \"./dist\",\n    \"strict\": true,\n    \"esModuleInterop\": true,\n    \"skipLibCheck\": true\n  },\n  \"include\": [\"src/**/*.ts\"],\n  \"exclude\": [\"node_modules\", \"dist\"]\n}",
-              "explanation": "Es una configuración ilustrativa para un proyecto Node ESM, no una receta universal. module y moduleResolution deben coincidir con el entorno de ejecución."
+              "explanation": "Es una configuración ilustrativa para un proyecto Node ESM, no una receta universal. module y moduleResolution deben coincidir con el entorno de ejecución. Para que NodeNext trate los archivos como módulos ESM, configurá también \"type\": \"module\" en package.json (o elegí conscientemente el sistema CommonJS)."
             },
             {
               "title": "Configuración sin emisión",
