@@ -165,3 +165,17 @@ body.light .search-filter select{color:#17243b;background:#f5f7fb;border-color:#
 .complete-action.is-active{color:#289d78}
 .learning-action-status{color:var(--muted);font-size:10px;line-height:1.5}
 @media(max-width:600px){.article-learning-actions{gap:7px}.learning-action{font-size:10px;min-height:34px;padding:0 10px}.learning-action-status{flex-basis:100%}}
+
+/* Navegación compartida: Terminal, Git y NPM aparecen en todas las secciones. */
+.main-nav{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#344766 transparent}
+.main-nav .nav-divider{height:1px;background:var(--line);margin:9px 8px}
+.terminal-nav-icon{color:#71c9aa!important;font-family:ui-monospace,monospace;font-weight:700}
+.git-nav-icon{color:#b49aff!important;font-weight:700}
+.npm-nav-icon{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:#513632;color:#ffb49c!important;font-size:14px!important;font-weight:800}
+.sidebar .nav-link[data-tool-link]{min-height:43px}
+.sidebar .nav-link[data-tool-link].active{background:#24375d;color:#fff;box-shadow:inset 3px 0 #7192ff}
+@media(max-width:760px){
+ .sidebar{padding-bottom:14px}
+ .main-nav{flex:1;min-height:0;padding-bottom:8px}
+ .sidebar-bottom{flex-shrink:0}
+}
