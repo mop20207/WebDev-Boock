@@ -7561,7 +7561,7 @@
             },
             {
               "title": "Configurar MDX",
-              "description": "Declar á integración en integrations.",
+              "description": "Declará integración en integrations.",
               "code": "import { defineConfig } from 'astro/config';\nimport mdx from '@astrojs/mdx';\nexport default defineConfig({integrations:[mdx()]});",
               "explanation": "El paquete debe estar instalado e importado."
             },
