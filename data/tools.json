@@ -16007,7 +16007,7 @@
           ],
           "related": [
             "express-body-parsing",
-            "express-server-security"
+            "express-authentication"
           ]
         },
         {
@@ -16320,7 +16320,7 @@
             }
           ],
           "related": [
-            "express-server-security",
+            "express-authentication",
             "express-cors"
           ]
         },
@@ -16448,7 +16448,7 @@
           ],
           "related": [
             "express-cookies-sessions",
-            "express-server-security"
+            "express-authentication"
           ]
         },
         {
@@ -16707,7 +16707,7 @@
           ],
           "related": [
             "express-static-files",
-            "express-server-security"
+            "express-authentication"
           ]
         },
         {
