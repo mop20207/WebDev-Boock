@@ -1,4 +1,4 @@
-/* Estilos de la biblioteca Terminal Linux, Git y NPM. */
+/* Estilos de la biblioteca compartida de herramientas y tecnologías. */
 .tools-content{max-width:1250px;padding-top:34px}
 .tools-back-link{display:inline-flex;align-items:center;margin-bottom:20px;color:var(--muted);font-size:12px;font-weight:600}
 .tools-back-link:hover{color:var(--text)}
@@ -36,6 +36,7 @@
 .tools-accent-terminal .tools-category-icon{background:#203a3b;color:#7ad3b3}
 .tools-accent-git .tools-category-icon{background:#362d4e;color:#c1a9ff}
 .tools-accent-npm .tools-category-icon{background:#49302d;color:#ffad92}
+.tools-accent-typescript .tools-category-icon{background:#263e62;color:#9fc5ff}
 .tools-reference-note{margin-top:20px;padding:17px 20px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}
 .tools-reference-note strong{font-size:12px}
 .tools-reference-note p{color:var(--muted);font-size:12px;line-height:1.7;margin:5px 0 0}
