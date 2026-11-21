@@ -1,0 +1,14 @@
+/* Instalación PWA: aparece solo cuando Android/navegador ofrece instalar la aplicación. */
+.pwa-install-cta{
+ position:fixed;left:16px;bottom:18px;z-index:35;
+ display:inline-flex;align-items:center;justify-content:center;gap:8px;
+ min-height:46px;padding:0 17px;border:1px solid #8ba8ff66;border-radius:14px;
+ background:linear-gradient(120deg,#668cff,#426be5);color:#fff;
+ box-shadow:0 10px 30px #172d6b55;font:700 12px "DM Sans",sans-serif;
+ cursor:pointer;transition:transform .18s,filter .18s;
+}
+.pwa-install-cta:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.pwa-install-cta:focus-visible{outline:3px solid #9cb5ff;outline-offset:3px}
+.pwa-install-cta[hidden]{display:none}
+@media(max-width:760px){.pwa-install-cta{left:12px;bottom:14px;min-height:43px;padding:0 13px;font-size:11px}}
+@media(display-mode:standalone){.pwa-install-cta{display:none}}
