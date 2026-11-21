@@ -1,6 +1,6 @@
 {
-  "version": 11,
-  "articleCount": 211,
+  "version": 12,
+  "articleCount": 217,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -14860,6 +14860,20 @@
             "express-req-res",
             "express-route-params-query"
           ]
+        },
+        {
+          "id": "routing-middleware",
+          "title": "Routers y middleware",
+          "description": "Separá rutas por módulos y entendé cómo una solicitud atraviesa la pila de middleware.",
+          "icon": "↪",
+          "articles": [
+            "express-routers",
+            "express-middleware",
+            "express-built-in-middleware",
+            "express-custom-middleware",
+            "express-static-files",
+            "express-route-patterns-v5"
+          ]
         }
       ],
       "articles": [
@@ -15255,6 +15269,409 @@
           "related": [
             "express-routes-basics",
             "express-validation"
+          ]
+        },
+        {
+          "id": "express-routers",
+          "title": "Express Router y organización de rutas",
+          "category": "routing-middleware",
+          "summary": "Dividí endpoints por recurso o área usando instancias independientes de Router.",
+          "purpose": "express.Router crea un router modular que funciona como una mini-aplicación con rutas y middleware propios. Después se monta en la aplicación con app.use. Permite separar archivos por recursos y aplicar prefijos comunes como /api/novelas.",
+          "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+          "syntax": "const router = express.Router();\nrouter.get(\"/\", listar);\napp.use(\"/api/novelas\", router);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Crear un router",
+              "description": "Separá las rutas de novelas en un archivo.",
+              "code": "// routes/novelas.js\nimport { Router } from \"express\";\nexport const novelasRouter = Router();\nnovelasRouter.get(\"/\", listarNovelas);\nnovelasRouter.get(\"/:id\", obtenerNovela);",
+              "explanation": "Router define paths relativos al punto de montaje. El archivo puede importarse desde app.js."
+            },
+            {
+              "title": "Montar el router",
+              "description": "La aplicación agrega un prefijo a todas las rutas.",
+              "code": "app.use(\"/api/novelas\", novelasRouter);\n// GET /api/novelas\n// GET /api/novelas/42",
+              "explanation": "No repitas el prefijo en cada ruta del router."
+            }
+          ],
+          "exercise": "Separá rutas de novelas y usuarios en dos routers y montá ambos bajo /api.",
+          "hint": "El router declara paths relativos; app.use define el prefijo final.",
+          "parameters": [
+            {
+              "name": "express.Router()",
+              "description": "Crea una instancia modular de Router."
+            },
+            {
+              "name": "router.get() / router.post()",
+              "description": "Registra rutas para métodos HTTP."
+            },
+            {
+              "name": "app.use(path, router)",
+              "description": "Monta un router debajo de un prefijo."
+            },
+            {
+              "name": "mergeParams",
+              "description": "Permite que un router hijo herede parámetros del router padre."
+            }
+          ],
+          "bestPractices": [
+            "Separá rutas por recurso o dominio.",
+            "Mantené controladores fuera del router cuando crezcan."
+          ],
+          "commonMistakes": [
+            "Duplicar el prefijo en cada ruta y al montar Router.",
+            "Olvidar exportar o importar el router.",
+            "Esperar que un router hijo herede parámetros sin configurar mergeParams."
+          ],
+          "resources": [
+            {
+              "label": "Express Router",
+              "url": "https://expressjs.com/en/guide/routing.html#express-router"
+            }
+          ],
+          "related": [
+            "express-routes-basics",
+            "express-middleware"
+          ]
+        },
+        {
+          "id": "express-middleware",
+          "title": "Cómo funciona el middleware y el ciclo de solicitud",
+          "category": "routing-middleware",
+          "summary": "Entendé cómo Express ejecuta funciones intermedias antes, durante y después de una ruta.",
+          "purpose": "Un middleware es una función con acceso a req, res y next. Puede ejecutar lógica, agregar propiedades, modificar la respuesta, finalizar el ciclo o pasar el control. Si no responde ni llama a next, la solicitud queda pendiente. El orden de registro importa.",
+          "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+          "syntax": "(req, res, next) => { /* trabajo */ next(); }",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Pasar al siguiente middleware",
+              "description": "next continúa el flujo de la pila.",
+              "code": "app.use((req, res, next) => {\n  console.log(req.method, req.path);\n  next();\n});\napp.get(\"/\", (_req, res) => res.send(\"Inicio\"));",
+              "explanation": "El middleware registra la solicitud y entrega el control al siguiente handler."
+            },
+            {
+              "title": "Finalizar la respuesta",
+              "description": "Un middleware puede responder y detener la cadena.",
+              "code": "app.use(\"/mantenimiento\", (_req, res) => {\n  res.status(503).send(\"Servicio temporalmente no disponible\");\n});",
+              "explanation": "Después de enviar la respuesta no llames next sin motivo; podrías iniciar otra respuesta."
+            },
+            {
+              "title": "Modificar req",
+              "description": "Una capa puede compartir datos con handlers posteriores.",
+              "code": "app.use((req, _res, next) => {\n  req.inicio = Date.now(); // extender Request en TypeScript\n  next();\n});",
+              "explanation": "El siguiente middleware puede leer el dato agregado. En TypeScript extendé los tipos de Request."
+            }
+          ],
+          "exercise": "Escribí tres capas: registro, agregado de hora de inicio y ruta final que responda el tiempo transcurrido.",
+          "hint": "Cada middleware debe responder o pasar el control con next.",
+          "parameters": [
+            {
+              "name": "req",
+              "description": "Solicitud HTTP entrante."
+            },
+            {
+              "name": "res",
+              "description": "Objeto que construye y envía la respuesta."
+            },
+            {
+              "name": "next()",
+              "description": "Pasa el control al siguiente middleware."
+            },
+            {
+              "name": "next(err)",
+              "description": "Transfiere el flujo al middleware de errores."
+            }
+          ],
+          "bestPractices": [
+            "Registrá middleware en el orden necesario.",
+            "No llames next después de finalizar la respuesta."
+          ],
+          "commonMistakes": [
+            "Olvidar next y dejar solicitudes pendientes.",
+            "Responder y continuar ejecutando otros handlers.",
+            "Confundir next() con next(err)."
+          ],
+          "resources": [
+            {
+              "label": "Using middleware",
+              "url": "https://expressjs.com/en/guide/using-middleware.html"
+            }
+          ],
+          "related": [
+            "express-custom-middleware",
+            "express-error-handling"
+          ]
+        },
+        {
+          "id": "express-built-in-middleware",
+          "title": "Middleware integrado: json, urlencoded y static",
+          "category": "routing-middleware",
+          "summary": "Usá el middleware incorporado para parsear cuerpos y servir archivos.",
+          "purpose": "Express incluye express.json para cuerpos JSON, express.urlencoded para formularios URL-encoded y express.static para recursos públicos. Los parsers deben registrarse antes de las rutas que leen req.body.",
+          "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+          "syntax": "app.use(express.json());\napp.use(express.urlencoded({ extended: false }));\napp.use(express.static(\"public\"));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Parsear JSON",
+              "description": "El middleware crea req.body a partir de un cuerpo JSON válido.",
+              "code": "app.use(express.json());\napp.post(\"/api/novelas\", (req, res) => {\n  const { titulo } = req.body;\n  res.status(201).json({ titulo });\n});",
+              "explanation": "El parser debe ejecutarse antes de la ruta y el cliente debe enviar Content-Type application/json."
+            },
+            {
+              "title": "Parsear formularios",
+              "description": "express.urlencoded procesa formularios codificados.",
+              "code": "app.use(express.urlencoded({ extended: false }));\napp.post(\"/contacto\", (req, res) => {\n  res.send(`Recibido: ${req.body.nombre}`);\n});",
+              "explanation": "En Express 5, extended tiene false como valor predeterminado. Declararlo explícitamente deja clara la intención."
+            },
+            {
+              "title": "Servir public",
+              "description": "Los archivos pueden solicitarse desde la raíz.",
+              "code": "app.use(express.static(\"public\"));\n// public/logo.svg → GET /logo.svg",
+              "explanation": "La carpeta del sistema no aparece en la URL."
+            }
+          ],
+          "exercise": "Configurá parsers JSON y URL-encoded y un directorio estático. Probá un POST JSON, un formulario y una imagen.",
+          "hint": "El orden importa: primero los parsers y luego las rutas que leen req.body.",
+          "parameters": [
+            {
+              "name": "express.json(options)",
+              "description": "Parsea cuerpos entrantes con Content-Type JSON."
+            },
+            {
+              "name": "express.urlencoded(options)",
+              "description": "Parsea cuerpos de formularios URL-encoded."
+            },
+            {
+              "name": "express.static(root, options)",
+              "description": "Sirve archivos desde una carpeta."
+            },
+            {
+              "name": "limit",
+              "description": "Limita el tamaño del cuerpo aceptado por el parser."
+            }
+          ],
+          "bestPractices": [
+            "Configurá límites razonables.",
+            "No uses parsers que no necesitás.",
+            "Registrá los parsers antes de las rutas."
+          ],
+          "commonMistakes": [
+            "Leer req.body antes de instalar un parser.",
+            "Asumir que req.body siempre es un objeto: en Express 5 puede ser undefined.",
+            "Publicar carpetas que contienen archivos privados."
+          ],
+          "resources": [
+            {
+              "label": "Built-in middleware",
+              "url": "https://expressjs.com/en/guide/using-middleware.html#middleware.built-in"
+            },
+            {
+              "label": "express.json API",
+              "url": "https://expressjs.com/en/5x/api.html#express.json"
+            }
+          ],
+          "related": [
+            "express-body-parsing",
+            "express-static-files"
+          ]
+        },
+        {
+          "id": "express-custom-middleware",
+          "title": "Crear middleware propio y reutilizable",
+          "category": "routing-middleware",
+          "summary": "Escribí funciones intermedias para registrar solicitudes, validar headers y proteger rutas.",
+          "purpose": "El middleware personalizado encapsula una tarea transversal. Puede registrarse en la aplicación, un router o una ruta. Para personalizar su comportamiento, podés crear una función que reciba opciones y devuelva otra función middleware.",
+          "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+          "syntax": "(req, res, next) => { /* verificar */ next(); }",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Verificar un header",
+              "description": "Rechazá solicitudes que no presentan una clave válida.",
+              "code": "function requiereClave(req, res, next) {\n  if (req.get(\"x-api-key\") !== process.env.API_KEY) {\n    return res.status(401).json({ error: \"Clave inválida\" });\n  }\n  next();\n}\napp.get(\"/api/privado\", requiereClave, controlador);",
+              "explanation": "El return evita continuar después de responder. En producción, gestioná claves con un sistema adecuado."
+            },
+            {
+              "title": "Middleware configurable",
+              "description": "Una factory devuelve una función que conserva sus opciones.",
+              "code": "function permitirRol(rolRequerido) {\n  return (req, res, next) => {\n    if (req.usuario?.rol !== rolRequerido) return res.status(403).json({ error: \"Permiso insuficiente\" });\n    next();\n  };\n}\napp.delete(\"/api/usuarios/:id\", permitirRol(\"admin\"), borrarUsuario);",
+              "explanation": "La factory sirve para distintos permisos. req.usuario debe establecerse antes mediante autenticación."
+            }
+          ],
+          "exercise": "Creá un middleware factory permitirRol y aplicalo a una ruta de eliminación exclusiva para administradores.",
+          "hint": "Separá autenticación (quién sos) de autorización (qué podés hacer).",
+          "parameters": [
+            {
+              "name": "app.use(fn)",
+              "description": "Registra middleware en toda la aplicación o un prefijo."
+            },
+            {
+              "name": "router.use(fn)",
+              "description": "Registra middleware dentro de un router."
+            },
+            {
+              "name": "next()",
+              "description": "Transfiere el control a la siguiente capa."
+            }
+          ],
+          "bestPractices": [
+            "Documentá qué propiedades agrega a req.",
+            "No confíes en roles enviados por el cliente.",
+            "Mantené cada middleware enfocado."
+          ],
+          "commonMistakes": [
+            "No llamar next después de responder.",
+            "Usar req.usuario antes de que se establezca.",
+            "Repetir validaciones en controladores distintos."
+          ],
+          "resources": [
+            {
+              "label": "Writing middleware",
+              "url": "https://expressjs.com/en/guide/writing-middleware.html"
+            },
+            {
+              "label": "Using middleware",
+              "url": "https://expressjs.com/en/guide/using-middleware.html"
+            }
+          ],
+          "related": [
+            "express-middleware",
+            "express-authentication"
+          ]
+        },
+        {
+          "id": "express-static-files",
+          "title": "Archivos estáticos y rutas de recursos",
+          "category": "routing-middleware",
+          "summary": "Serví imágenes, CSS, JavaScript y documentos públicos desde una carpeta controlada.",
+          "purpose": "express.static entrega archivos desde un directorio. Puede montarse en raíz o bajo un prefijo y admite opciones como maxAge, etag, dotfiles e index. En Express 5, dotfiles tiene ignore como valor predeterminado.",
+          "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+          "syntax": "app.use(\"/assets\", express.static(\"public\"));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Montar una carpeta",
+              "description": "Un prefijo separa los recursos de otras rutas.",
+              "code": "app.use(\"/assets\", express.static(\"public\"));\n// public/logo.svg → /assets/logo.svg",
+              "explanation": "El path público incluye /assets aunque la carpeta del sistema se llame public."
+            },
+            {
+              "title": "Configurar caché y dotfiles",
+              "description": "Definí cómo se sirven los archivos y cuánto tiempo pueden cachearse.",
+              "code": "app.use(express.static(\"public\", {\n  maxAge: \"1d\",\n  dotfiles: \"ignore\",\n  index: \"index.html\"\n}));",
+              "explanation": "No habilites dotfiles indiscriminadamente. Si necesitás servir /.well-known, configurá ese caso explícitamente."
+            }
+          ],
+          "exercise": "Serví public/images bajo /assets/images, configurá caché y explicá por qué no publicarías una carpeta privada.",
+          "hint": "El directorio estático debe contener solo recursos públicos. No apuntes express.static a la raíz del proyecto.",
+          "parameters": [
+            {
+              "name": "express.static(root, options)",
+              "description": "Middleware que busca y envía archivos desde root."
+            },
+            {
+              "name": "maxAge",
+              "description": "Configura Cache-Control para recursos estáticos."
+            },
+            {
+              "name": "dotfiles",
+              "description": "Controla cómo se sirven archivos y directorios ocultos."
+            }
+          ],
+          "bestPractices": [
+            "Serví una carpeta dedicada a archivos públicos.",
+            "No expongas .env, backups ni datos privados.",
+            "Configurá maxAge según el versionado de assets."
+          ],
+          "commonMistakes": [
+            "Apuntar express.static a la raíz del proyecto.",
+            "Habilitar dotfiles: allow sin necesitarlo.",
+            "Creer que public aparece literalmente en la URL."
+          ],
+          "resources": [
+            {
+              "label": "Serving static files",
+              "url": "https://expressjs.com/en/starter/static-files.html"
+            },
+            {
+              "label": "express.static API",
+              "url": "https://expressjs.com/en/5x/api.html#express.static"
+            }
+          ],
+          "related": [
+            "express-built-in-middleware",
+            "express-file-uploads"
+          ]
+        },
+        {
+          "id": "express-route-patterns-v5",
+          "title": "Patrones de rutas y cambios de sintaxis en Express 5",
+          "category": "routing-middleware",
+          "summary": "Aprendé comodines con nombre y segmentos opcionales usando la sintaxis vigente.",
+          "purpose": "Express 5 utiliza la sintaxis actualizada de path-to-regexp. Los comodines deben tener nombre: /*splat captura segmentos excepto la raíz y /{*splat} también coincide con /. Los segmentos opcionales usan llaves en lugar del modificador ? de versiones anteriores.",
+          "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+          "syntax": "app.get(\"/*splat\", handler);\napp.get(\"/{*splat}\", handler);\napp.get(\"/:file{.:ext}\", handler);",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Wildcard nombrado",
+              "description": "El comodín necesita un identificador.",
+              "code": "app.get(\"/*splat\", (req, res) => {\n  res.json({ partes: req.params.splat });\n});\n// GET /docs/api → [\"docs\", \"api\"]",
+              "explanation": "En Express 5, el wildcard captura segmentos como un array. /*splat no coincide con /."
+            },
+            {
+              "title": "Incluir la raíz",
+              "description": "La variante entre llaves permite incluir la ruta raíz.",
+              "code": "app.get(\"/{*splat}\", (req, res) => {\n  res.json({ ruta: req.params.splat ?? [] });\n});",
+              "explanation": "La propiedad puede no existir para la raíz, por eso se maneja un valor alternativo."
+            },
+            {
+              "title": "Extensión opcional",
+              "description": "Las llaves reemplazan la sintaxis antigua con ?.",
+              "code": "app.get(\"/:archivo{.:extension}\", (req, res) => {\n  res.json({ archivo: req.params.archivo, extension: req.params.extension });\n});",
+              "explanation": "La ruta acepta /manual y /manual.pdf. La propiedad extension puede estar ausente."
+            }
+          ],
+          "exercise": "Reescribí tres patrones antiguos: /*, /:file.:ext? y un patrón con corchetes. Usá sintaxis Express 5.",
+          "hint": "No copies /* de Express 4. Usá /*splat o /{*splat} según si necesitás cubrir la raíz.",
+          "parameters": [
+            {
+              "name": "/*splat",
+              "description": "Wildcard nombrado que captura uno o más segmentos, pero no la raíz."
+            },
+            {
+              "name": "/{*splat}",
+              "description": "Wildcard opcional que también coincide con la raíz."
+            },
+            {
+              "name": "/:file{.:ext}",
+              "description": "Sintaxis moderna para un segmento opcional."
+            }
+          ],
+          "bestPractices": [
+            "Probá tanto la raíz como paths anidados.",
+            "Consultá la guía de migración cuando actualices rutas."
+          ],
+          "commonMistakes": [
+            "Dejar un wildcard sin nombre.",
+            "Esperar un string cuando Express 5 devuelve un array.",
+            "Usar ? o regexp embebidas con sintaxis antigua."
+          ],
+          "resources": [
+            {
+              "label": "Upgrade to Express 5 — path syntax",
+              "url": "https://expressjs.com/en/guide/migrating-5.html#path-syntax"
+            },
+            {
+              "label": "Routing",
+              "url": "https://expressjs.com/en/guide/routing.html"
+            }
+          ],
+          "related": [
+            "express-routes-basics",
+            "express-404-handler"
           ]
         }
       ]
