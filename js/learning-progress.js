@@ -2,7 +2,7 @@
    Los datos se guardan localmente en el navegador, sin cuenta ni servidor. */
 document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "webdevbook.learning.v1";
-  const TOTALS = { html: 242, css: 106, javascript: 146, tools: 39 };
+  const TOTALS = { html: 242, css: 106, javascript: 146, tools: 41 };
   const LANGUAGE_NAMES = { html: "HTML", css: "CSS", javascript: "JavaScript", tools: "Herramientas" };
 
   const emptyState = () => ({ favorites: [], completed: [], articles: {} });
