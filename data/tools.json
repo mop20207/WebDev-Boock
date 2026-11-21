@@ -1,6 +1,6 @@
 {
-  "version": 10,
-  "articleCount": 205,
+  "version": 11,
+  "articleCount": 211,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -14831,6 +14831,430 @@
             "nextjs-route-handlers",
             "nextjs-pages-router-comparison",
             "nextjs-pages-router-data-fetching"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "express",
+      "title": "Express.js",
+      "shortTitle": "Express",
+      "symbol": "EX",
+      "eyebrow": "EXPRESS.JS / SERVIDOR NODE.JS",
+      "tagline": "Construí servidores y APIs con JavaScript y Node.js.",
+      "description": "Aprendé Express 5 desde las primeras rutas hasta middleware, APIs REST, autenticación, manejo de errores, pruebas y despliegue. Este recorrido se centra en los cambios de Express 5 y explica patrones heredados de Express 4.",
+      "level": "Inicial a avanzado",
+      "accent": "express",
+      "syntaxLanguage": "javascript",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos y servidor",
+          "description": "Entendé el rol de Express, prepará el servidor HTTP y construí tus primeras rutas.",
+          "icon": "E",
+          "articles": [
+            "express-que-es",
+            "express-installation",
+            "express-app-listen",
+            "express-routes-basics",
+            "express-req-res",
+            "express-route-params-query"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "express-que-es",
+          "title": "¿Qué es Express.js y para qué sirve?",
+          "category": "fundamentos",
+          "summary": "Conocé Express como framework web minimalista para Node.js y el papel que cumple en aplicaciones y APIs.",
+          "purpose": "Express simplifica el manejo de solicitudes HTTP en Node.js. Ofrece rutas, middleware y utilidades para construir respuestas. No incorpora por defecto una base de datos, un sistema de autenticación ni una arquitectura obligatoria: se integra con las herramientas que el proyecto necesite.",
+          "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+          "syntax": "cliente HTTP → Express → middleware → ruta → respuesta",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Servidor mínimo",
+              "description": "Una aplicación Express recibe una solicitud y devuelve una respuesta.",
+              "code": "import express from \"express\";\n\nconst app = express();\napp.get(\"/\", (req, res) => {\n  res.send(\"Hola desde Express\");\n});\napp.listen(3000);",
+              "explanation": "express() crea la aplicación; app.get define una ruta GET; res.send termina la solicitud con una respuesta."
+            },
+            {
+              "title": "API JSON",
+              "description": "Express también puede responder datos.",
+              "code": "app.get(\"/api/estado\", (_req, res) => {\n  res.json({ estado: \"ok\", servicio: \"catalogo\" });\n});",
+              "explanation": "res.json serializa el objeto y configura el tipo de contenido apropiado. El cliente puede consumirlo con fetch."
+            }
+          ],
+          "exercise": "Explicá qué resuelve Express y qué sigue siendo responsabilidad del proyecto: base de datos, autenticación y validación.",
+          "hint": "Express coordina el ciclo HTTP y el middleware. No es una base de datos ni un framework full-stack con todas las funciones incorporadas.",
+          "parameters": [
+            {
+              "name": "express()",
+              "description": "Crea una instancia de aplicación Express."
+            },
+            {
+              "name": "app.get(path, handler)",
+              "description": "Registra un handler para solicitudes GET."
+            },
+            {
+              "name": "app.listen(port)",
+              "description": "Inicia el servidor HTTP."
+            }
+          ],
+          "bestPractices": [
+            "Separá transporte HTTP, reglas de negocio y acceso a datos.",
+            "Elegí dependencias según las necesidades reales."
+          ],
+          "commonMistakes": [
+            "Creer que Express trae un ORM o autenticación completa.",
+            "Confundir Express con Node.js: Express se ejecuta sobre Node."
+          ],
+          "resources": [
+            {
+              "label": "Express — guía de inicio",
+              "url": "https://expressjs.com/en/starter/installing.html"
+            },
+            {
+              "label": "Express 5 API",
+              "url": "https://expressjs.com/en/5x/api.html"
+            }
+          ],
+          "related": [
+            "express-installation",
+            "express-app-listen"
+          ]
+        },
+        {
+          "id": "express-installation",
+          "title": "Instalación y creación del proyecto",
+          "category": "fundamentos",
+          "summary": "Prepará Node.js, npm e instalá Express 5 en un proyecto nuevo.",
+          "purpose": "Express 5 se instala como dependencia de Node.js y requiere Node 18 o superior. En un proyecto ESM se puede usar import; en CommonJS se puede usar require. Declarar el modo de módulos en package.json evita mezclar sintaxis sin control.",
+          "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+          "syntax": "mkdir api-catalogo\ncd api-catalogo\nnpm init -y\nnpm install express@5",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Crear el paquete",
+              "description": "Inicializá package.json e instalá Express 5.",
+              "code": "mkdir api-catalogo\ncd api-catalogo\nnpm init -y\nnpm install express@5",
+              "explanation": "npm init -y crea el manifiesto; npm install agrega Express a dependencies y actualiza el lockfile."
+            },
+            {
+              "title": "Configurar ESM",
+              "description": "Indicá que los archivos .js usan módulos ES.",
+              "code": "{\n  \"type\": \"module\",\n  \"scripts\": { \"start\": \"node src/server.js\", \"dev\": \"node --watch src/server.js\" }\n}\n\n// src/server.js\nimport express from \"express\";\nconst app = express();",
+              "explanation": "El package.json declara ESM. node --watch reinicia el proceso al detectar cambios en versiones actuales de Node."
+            }
+          ],
+          "exercise": "Creá un proyecto api-novelas, instalá Express 5, configurá ESM y agregá scripts start y dev.",
+          "hint": "Express 5 requiere Node 18 o superior. Ejecutá los comandos desde la carpeta que contiene package.json.",
+          "parameters": [
+            {
+              "name": "npm init -y",
+              "description": "Crea package.json con valores predeterminados."
+            },
+            {
+              "name": "npm install express@5",
+              "description": "Instala Express de la línea 5.x."
+            },
+            {
+              "name": "type: module",
+              "description": "Interpreta archivos .js como módulos ES."
+            }
+          ],
+          "bestPractices": [
+            "Conservá el lockfile en el repositorio.",
+            "Usá una versión de Node soportada en desarrollo y producción."
+          ],
+          "commonMistakes": [
+            "Ejecutar npm install fuera del directorio del proyecto.",
+            "Mezclar import y require sin configurar interop.",
+            "Asumir que ejemplos de Express 4 son idénticos a Express 5."
+          ],
+          "resources": [
+            {
+              "label": "Installing Express",
+              "url": "https://expressjs.com/en/starter/installing.html"
+            },
+            {
+              "label": "Express 5 API — requisitos",
+              "url": "https://expressjs.com/en/5x/api.html"
+            }
+          ],
+          "related": [
+            "express-que-es",
+            "express-app-listen"
+          ]
+        },
+        {
+          "id": "express-app-listen",
+          "title": "Crear la aplicación y poner el servidor a escuchar",
+          "category": "fundamentos",
+          "summary": "Construí la instancia app, configurá un puerto y separá la aplicación del arranque del proceso.",
+          "purpose": "express() crea el objeto que configura rutas y middleware. app.listen inicia el servidor HTTP y devuelve un objeto Server. En proyectos reales conviene exportar app por separado y reservar listen para el archivo que inicia el proceso, así las pruebas pueden importar la app sin abrir un puerto.",
+          "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+          "syntax": "const app = express();\nconst server = app.listen(port, callback);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Escuchar en un puerto",
+              "description": "Usá la variable de entorno PORT con un valor local alternativo.",
+              "code": "import express from \"express\";\nconst app = express();\nconst port = Number(process.env.PORT) || 3000;\napp.get(\"/\", (_req, res) => res.send(\"API activa\"));\napp.listen(port, () => console.log(`Servidor en ${port}`));",
+              "explanation": "El proveedor puede asignar PORT. Number convierte el valor de texto en un número."
+            },
+            {
+              "title": "Separar app y server",
+              "description": "Exportá la app para reutilizarla en pruebas.",
+              "code": "// app.js\nimport express from \"express\";\nexport const app = express();\napp.get(\"/health\", (_req, res) => res.json({ ok: true }));\n\n// server.js\nimport { app } from \"./app.js\";\napp.listen(Number(process.env.PORT) || 3000);",
+              "explanation": "Importar app no inicia un servidor. Solo server.js abre el puerto."
+            }
+          ],
+          "exercise": "Separá src/app.js y src/server.js. Hacé que app.js declare GET /health y server.js sea el único archivo que abre el puerto.",
+          "hint": "Una app configura el comportamiento; el servidor HTTP la ejecuta y escucha conexiones.",
+          "parameters": [
+            {
+              "name": "express()",
+              "description": "Crea la aplicación Express."
+            },
+            {
+              "name": "app.listen(port, callback)",
+              "description": "Crea e inicia el servidor HTTP."
+            },
+            {
+              "name": "process.env.PORT",
+              "description": "Variable del entorno de ejecución que indica el puerto."
+            }
+          ],
+          "bestPractices": [
+            "Separá app de server para facilitar las pruebas.",
+            "No codifiques un puerto fijo en producción."
+          ],
+          "commonMistakes": [
+            "Ejecutar app.listen al importar un módulo de rutas.",
+            "No convertir ni validar el valor de PORT.",
+            "Confundir app con el objeto Server devuelto por listen."
+          ],
+          "resources": [
+            {
+              "label": "Express application",
+              "url": "https://expressjs.com/en/5x/api.html#app"
+            }
+          ],
+          "related": [
+            "express-installation",
+            "express-testing-supertest"
+          ]
+        },
+        {
+          "id": "express-routes-basics",
+          "title": "Primeras rutas y métodos HTTP",
+          "category": "fundamentos",
+          "summary": "Definí endpoints usando GET, POST, PUT, PATCH y DELETE.",
+          "purpose": "Una ruta Express combina método HTTP, path y uno o más handlers. El método expresa la intención: GET consulta, POST crea o inicia una operación, PUT reemplaza, PATCH modifica parcialmente y DELETE solicita eliminar. La ruta debe responder o pasar el control para que el cliente no quede esperando.",
+          "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+          "syntax": "app.get(path, handler)\napp.post(path, handler)\napp.patch(path, handler)\napp.delete(path, handler)",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "GET y POST",
+              "description": "GET devuelve información y POST recibe una nueva entidad.",
+              "code": "app.get(\"/api/novelas\", (_req, res) => {\n  res.json([{ id: 1, titulo: \"Overlord\" }]);\n});\napp.post(\"/api/novelas\", (_req, res) => {\n  res.status(201).json({ mensaje: \"Creada\" });\n});",
+              "explanation": "GET consulta una colección. POST suele crear un recurso y responde 201 Created cuando se completa."
+            },
+            {
+              "title": "PUT, PATCH y DELETE",
+              "description": "Separá reemplazo, cambio parcial y eliminación.",
+              "code": "app.put(\"/api/novelas/:id\", actualizarCompleta);\napp.patch(\"/api/novelas/:id\", actualizarParcial);\napp.delete(\"/api/novelas/:id\", eliminarNovela);",
+              "explanation": "PUT representa reemplazo; PATCH una modificación parcial; DELETE solicita eliminar el recurso."
+            }
+          ],
+          "exercise": "Diseñá las rutas CRUD de /api/novelas e indicá qué método usarías en cada operación.",
+          "hint": "Una API se diseña alrededor de recursos. No conviertas todas las acciones en GET.",
+          "parameters": [
+            {
+              "name": "app.METHOD(path, handlers)",
+              "description": "Registra una ruta para un método HTTP específico."
+            },
+            {
+              "name": "GET",
+              "description": "Solicita una representación del recurso."
+            },
+            {
+              "name": "POST",
+              "description": "Envía datos para crear un recurso o iniciar una operación."
+            },
+            {
+              "name": "PUT / PATCH / DELETE",
+              "description": "Reemplaza, modifica parcialmente o elimina un recurso."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres de rutas predecibles.",
+            "Respondé con códigos HTTP coherentes.",
+            "Documentá el formato de entrada y salida."
+          ],
+          "commonMistakes": [
+            "Usar GET para crear o borrar datos.",
+            "Responder siempre 200 después de crear un recurso.",
+            "Mezclar reglas de negocio y consultas dentro del router."
+          ],
+          "resources": [
+            {
+              "label": "Routing",
+              "url": "https://expressjs.com/en/guide/routing.html"
+            },
+            {
+              "label": "Express 5 API — routing",
+              "url": "https://expressjs.com/en/5x/api.html#app.METHOD"
+            }
+          ],
+          "related": [
+            "express-req-res",
+            "express-rest-crud-api"
+          ]
+        },
+        {
+          "id": "express-req-res",
+          "title": "Request y Response: leer solicitudes y responder",
+          "category": "fundamentos",
+          "summary": "Conocé req y res, sus propiedades y cómo construir respuestas HTTP.",
+          "purpose": "req representa la solicitud entrante; res construye la respuesta. req contiene datos de ruta, query, headers y body si un parser lo procesó. res permite establecer estado, headers y enviar texto, HTML o JSON. Cada solicitud debe terminar una sola vez con una respuesta o continuar al siguiente middleware.",
+          "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+          "syntax": "(req, res) => {\n  res.status(200).json({ ok: true });\n}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Leer encabezados",
+              "description": "Los headers aportan información sobre la solicitud.",
+              "code": "app.get(\"/api/info\", (req, res) => {\n  const agente = req.get(\"user-agent\") ?? \"desconocido\";\n  res.status(200).json({ agente });\n});",
+              "explanation": "req.get consulta un encabezado. El valor puede no estar presente."
+            },
+            {
+              "title": "Elegir la respuesta",
+              "description": "Respondé JSON, texto o redirigí a otra URL.",
+              "code": "app.get(\"/texto\", (_req, res) => res.type(\"text/plain\").send(\"Hola\"));\napp.get(\"/json\", (_req, res) => res.json({ mensaje: \"Hola\" }));\napp.get(\"/mover\", (_req, res) => res.redirect(302, \"/json\"));",
+              "explanation": "type define Content-Type; json serializa datos; redirect envía un status de redirección."
+            }
+          ],
+          "exercise": "Creá /api/perfil que lea un header opcional y devuelva JSON con status 200. Agregá otra ruta que responda texto plano.",
+          "hint": "req contiene la información entrante; res construye y finaliza la respuesta.",
+          "parameters": [
+            {
+              "name": "req.params",
+              "description": "Parámetros capturados en el path."
+            },
+            {
+              "name": "req.query",
+              "description": "Parámetros de búsqueda de la URL."
+            },
+            {
+              "name": "req.body",
+              "description": "Cuerpo procesado por el parser correspondiente."
+            },
+            {
+              "name": "req.get(name)",
+              "description": "Obtiene un header HTTP."
+            },
+            {
+              "name": "res.status(code)",
+              "description": "Establece el código HTTP."
+            },
+            {
+              "name": "res.json(data)",
+              "description": "Envía JSON."
+            },
+            {
+              "name": "res.send(body)",
+              "description": "Envía el cuerpo de la respuesta."
+            }
+          ],
+          "bestPractices": [
+            "Validá la entrada antes de utilizarla.",
+            "Finalizá cada camino con respuesta o next, no accidentalmente con ambos."
+          ],
+          "commonMistakes": [
+            "Leer req.body sin parser.",
+            "Enviar dos respuestas para la misma solicitud.",
+            "Continuar ejecutando código después de enviar una respuesta."
+          ],
+          "resources": [
+            {
+              "label": "Request object",
+              "url": "https://expressjs.com/en/5x/api.html#req"
+            },
+            {
+              "label": "Response object",
+              "url": "https://expressjs.com/en/5x/api.html#res"
+            }
+          ],
+          "related": [
+            "express-body-parsing",
+            "express-route-params-query"
+          ]
+        },
+        {
+          "id": "express-route-params-query",
+          "title": "Parámetros de ruta y query strings",
+          "category": "fundamentos",
+          "summary": "Leé identificadores como /novelas/12 y filtros como ?genero=fantasia.",
+          "purpose": "Express separa parámetros del path en req.params y parámetros de búsqueda en req.query. Los valores deben validarse y convertirse antes de utilizarlos en reglas de negocio o consultas. En Express 5, req.query es un getter de solo lectura y el parser predeterminado es simple.",
+          "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+          "syntax": "app.get(\"/novelas/:id\", (req, res) => {\n  const { id } = req.params;\n  const pagina = req.query.pagina;\n});",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Parámetro de ruta",
+              "description": "El segmento :id se captura en req.params.",
+              "code": "app.get(\"/api/novelas/:id\", (req, res) => {\n  res.json({ id: req.params.id });\n});\n// GET /api/novelas/42",
+              "explanation": "Los parámetros de ruta llegan como cadenas. Convertí y validá el ID."
+            },
+            {
+              "title": "Query string",
+              "description": "La URL puede incluir filtros y paginación.",
+              "code": "app.get(\"/api/novelas\", (req, res) => {\n  const genero = req.query.genero ?? \"todos\";\n  const pagina = Number(req.query.pagina ?? 1);\n  if (!Number.isInteger(pagina) || pagina < 1) return res.status(400).json({ error: \"Página inválida\" });\n  res.json({ genero, pagina });\n});",
+              "explanation": "Convertí números explícitamente y comprobá rangos antes de consultar datos."
+            }
+          ],
+          "exercise": "Creá /api/novelas/:id y /api/novelas?genero=...&pagina=.... Validá que pagina sea un entero positivo.",
+          "hint": "req.params corresponde al path; req.query a la parte después de ?. No modifiques req.query.",
+          "parameters": [
+            {
+              "name": "req.params",
+              "description": "Parámetros definidos en el patrón de ruta."
+            },
+            {
+              "name": "req.query",
+              "description": "Valores derivados de la query string."
+            },
+            {
+              "name": "Number(value)",
+              "description": "Conversión explícita; comprobá que el resultado sea válido."
+            }
+          ],
+          "bestPractices": [
+            "Validá tipo, rango y formato de cada parámetro.",
+            "Usá consultas parametrizadas para SQL."
+          ],
+          "commonMistakes": [
+            "Tratar IDs como números sin convertirlos.",
+            "Suponer que req.query siempre es una cadena simple.",
+            "Intentar mutar req.query en Express 5."
+          ],
+          "resources": [
+            {
+              "label": "Request object — params y query",
+              "url": "https://expressjs.com/en/5x/api.html#req.params"
+            },
+            {
+              "label": "Routing",
+              "url": "https://expressjs.com/en/guide/routing.html"
+            }
+          ],
+          "related": [
+            "express-routes-basics",
+            "express-validation"
           ]
         }
       ]
