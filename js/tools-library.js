@@ -56,14 +56,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     toc.append(makeLink(title, "#" + id));
     return section;
   };
-  const addCode = (parent, code, caption = "EJEMPLO DE CÓDIGO") => {
+  const addCode = (parent, code, caption = "EJEMPLO DE CÓDIGO", language = "plaintext") => {
     const wrapper = node("div", "tools-code-example");
     wrapper.append(node("span", "tools-code-caption", caption));
     const pre = node("pre");
-    const codeNode = node("code", "", code || "");
+    const codeNode = node("code", "language-" + language, code || "");
     pre.append(codeNode);
     wrapper.append(pre);
     parent.append(wrapper);
+    // Highlight.js colorea el código cuando está disponible; el texto sigue
+    // siendo legible si la CDN no responde.
+    if (window.hljs) window.hljs.highlightElement(codeNode);
   };
   const addResourceLinks = (parent, resources) => {
     if (!Array.isArray(resources) || !resources.length) return;
@@ -196,8 +199,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       section.append(node("p", "", article.purpose));
       if (article.whenToUse) section.append(node("h3", "", "Cuándo utilizarlo"), node("p", "", article.whenToUse));
 
+      const syntaxLanguage = ({
+        terminal: "bash", git: "bash", npm: "bash",
+        react: "javascript", webcomponents: "javascript", vuejs: "xml",
+        nodejs: "javascript", astro: "javascript", phaser: "javascript"
+      })[tool.id] || "plaintext";
+
       section = addArticleSection(body, toc, "sintaxis", "Sintaxis y forma de uso");
-      addCode(section, article.syntax, tool.title.toUpperCase() + " / SINTAXIS");
+      addCode(section, article.syntax, tool.title.toUpperCase() + " / SINTAXIS", syntaxLanguage);
 
       if (article.parameters?.length) {
         section = addArticleSection(body, toc, "parametros", "Opciones y parámetros");
@@ -214,7 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       (article.examples || []).forEach((example, index) => {
         const card = node("div", "tools-example-card");
         card.append(node("h3", "", (index + 1) + ". " + example.title), node("p", "", example.description));
-        addCode(card, example.code, tool.title.toUpperCase() + " / EJEMPLO " + (index + 1));
+        addCode(card, example.code, tool.title.toUpperCase() + " / EJEMPLO " + (index + 1), syntaxLanguage);
         card.append(node("p", "tools-example-explanation", example.explanation || ""));
         section.append(card);
       });
@@ -238,8 +247,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         section = addArticleSection(body, toc, "relacionados", "Artículos relacionados");
         const related = node("div", "tools-related-list");
         article.related.forEach(id => {
-          const item = tool.articles.find(entry => entry.id === id);
-          if (item) related.append(makeLink(item.title + " ↗", urlFor("tools-article.html", {tool: tool.id, id: item.id})));
+          // Las relaciones pueden apuntar a otra tecnología (por ejemplo,
+          // Git ↔ NPM). Resolverlas en toda la biblioteca evita enlaces perdidos.
+          const relatedTool = database.tools.find(candidate =>
+            candidate.articles.some(entry => entry.id === id)
+          );
+          const item = relatedTool?.articles.find(entry => entry.id === id);
+          if (item && relatedTool) {
+            related.append(makeLink(item.title + " ↗", urlFor("tools-article.html", {tool: relatedTool.id, id: item.id})));
+          }
         });
         section.append(related);
       }
