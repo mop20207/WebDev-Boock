@@ -125,3 +125,60 @@
 .tools-progress-track i{display:block;width:0;height:100%;border-radius:8px;background:linear-gradient(90deg,#6289ff,#71c9b0);transition:width .25s}
 .tools-home-card .tools-home-cta{display:block;margin-top:auto;padding-top:13px;color:#b5c9f2;font-size:11px}
 .favorite-tools{background:#24443f!important;color:#91dfc6!important}
+
+/* Selector de artículos: control visual propio, legible y cómodo en pantallas táctiles. */
+.tools-article-navigation{
+ display:grid;grid-template-columns:minmax(0,1fr);gap:13px;
+ margin:22px 0 30px;padding:17px 18px;
+ border:1px solid var(--line);border-radius:15px;
+ background:linear-gradient(135deg,var(--surface),var(--surface-2));
+ box-shadow:0 8px 24px #00000012;
+}
+.tools-jump-heading{display:flex;align-items:center;gap:12px}
+.tools-jump-icon{display:grid;place-items:center;flex:0 0 40px;height:40px;border:1px solid #46618d;border-radius:12px;background:#203657;color:#b6ccf5;font-size:20px}
+.tools-jump-eyebrow{display:block;margin-bottom:2px;color:#8097bf;font-size:9px;font-weight:800;letter-spacing:1.25px}
+.tools-article-navigation .article-jump-label{display:block;margin:0;color:var(--text);font:700 15px "Space Grotesk",sans-serif;letter-spacing:-.2px}
+.tools-select-wrap{position:relative;width:100%;min-width:0}
+.tools-article-navigation .article-jump{
+ display:block;width:100%;min-width:0;max-width:100%;height:49px;
+ appearance:none;-webkit-appearance:none;
+ padding:0 46px 0 14px;border:1px solid #405675;border-radius:10px;
+ outline:none;background:#101c30;color:#e5edfb;
+ font:500 13px "DM Sans",sans-serif;line-height:1.3;
+ white-space:nowrap;text-overflow:ellipsis;overflow:hidden;
+ box-shadow:inset 0 1px 2px #0003;cursor:pointer;
+}
+.tools-article-navigation .article-jump:focus{border-color:#7799ed;box-shadow:0 0 0 3px #668cff2b}
+.tools-select-chevron{position:absolute;right:15px;top:50%;transform:translateY(-55%);pointer-events:none;color:#a9bee5;font-size:20px}
+.tools-article-navigation .article-step-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
+.tools-article-navigation .article-step-links a{
+ display:block;min-width:0;padding:10px 12px;border:1px solid var(--line);
+ border-radius:9px;background:var(--surface-2);color:var(--text);
+ font-size:11px;font-weight:700;line-height:1.45;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;
+}
+.tools-article-navigation .article-step-links a:hover{border-color:#6988c5;background:#1d2e49}
+.tools-article-navigation .article-step-links a[hidden]{display:none}
+body.light .tools-article-section p,
+body.light .tools-detail-list{color:#465875}
+body.light .tools-example-explanation{background:#edf3ff;color:#344b70!important}
+body.light .tools-parameter{background:#fff}
+body.light .tools-parameter p{color:#465875}
+body.light .tools-article-navigation{background:linear-gradient(135deg,#fff,#f1f5ff);box-shadow:0 8px 24px #30476a0d}
+body.light .tools-article-navigation .article-jump{background:#fff;color:#24334c;border-color:#cbd6e7;box-shadow:inset 0 1px 2px #172b4d0a}
+body.light .tools-select-chevron{color:#526b91}
+body.light .tools-article-navigation .article-step-links a{background:#fff;color:#344967;border-color:#d7e0ed}
+body.light .tools-article-navigation .article-step-links a:hover{background:#edf3ff;border-color:#9ab0d8}
+body.light .tools-article-body .tools-article-section{border-color:#dce4ef}
+body.light .tools-article-hero{border-color:#dce4ef}
+body.light .tools-related-list a,body.light .tools-resource-list a{background:#fff;color:#35517b;border-color:#d7e0ed}
+body.light .tools-hint{background:#edf3ff;color:#3d567e;border-color:#cbd8ef}
+body.light .tools-category-card,body.light .tools-topic-link{background:#fff}
+body.light .tools-category-copy p,body.light .tools-topic-copy p{color:#5e6f89}
+body.light .tools-reference-note{background:#fff}
+@media(max-width:680px){
+ .tools-article-navigation{padding:14px;gap:11px}
+ .tools-article-navigation .article-jump{height:48px;font-size:12px}
+ .tools-article-navigation .article-step-links{grid-template-columns:1fr}
+ .tools-article-navigation .article-step-links a{text-align:left}
+}
