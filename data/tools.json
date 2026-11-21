@@ -1,7 +1,7 @@
 {
-  "version": 1,
-  "articleCount": 41,
-  "description": "Contenido didáctico propio de Terminal Linux, Git/GitHub y NPM con referencias oficiales.",
+  "version": 2,
+  "articleCount": 77,
+  "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
   "tools": [
     {
       "id": "terminal",
@@ -1959,6 +1959,1644 @@
             "npm-package-json",
             "npm-update"
           ]
+        }
+      ]
+    },
+    {
+      "id": "react",
+      "title": "React",
+      "shortTitle": "React",
+      "symbol": "⚛",
+      "eyebrow": "FRONTEND / INTERFACES",
+      "tagline": "Componentes, JSX, props, estado y Hooks.",
+      "description": "Componentes, JSX, props, estado y Hooks.",
+      "level": "Inicial a avanzado",
+      "accent": "react",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos",
+          "description": "Componentes y sintaxis JSX",
+          "icon": "▣",
+          "articles": [
+            "react-que-es",
+            "react-jsx"
+          ]
+        },
+        {
+          "id": "intermedio",
+          "title": "Props y estado",
+          "description": "Datos y eventos",
+          "icon": "⇄",
+          "articles": [
+            "react-props",
+            "react-state"
+          ]
+        },
+        {
+          "id": "avanzado",
+          "title": "Hooks",
+          "description": "Efectos y contexto",
+          "icon": "⌁",
+          "articles": [
+            "react-useeffect",
+            "react-usecontext"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "react-que-es",
+          "title": "¿Qué es React?",
+          "category": "fundamentos",
+          "summary": "React construye interfaces mediante componentes y actualiza la vista cuando cambian los datos.",
+          "purpose": "React construye interfaces mediante componentes y actualiza la vista cuando cambian los datos.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "function App() { return <h1>Hola, React</h1>; }",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "function App() { return <h1>Hola, React</h1>; }",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "function App() { return <h1>Hola, React</h1>; }",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un componente App que muestre un título.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "react-jsx",
+          "title": "JSX e interpolación",
+          "category": "fundamentos",
+          "summary": "JSX permite describir elementos de interfaz dentro de JavaScript. Las expresiones se escriben entre llaves.",
+          "purpose": "JSX permite describir elementos de interfaz dentro de JavaScript. Las expresiones se escriben entre llaves.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const nombre = 'Lucía';\nfunction App() { return <h1>Hola, {nombre}</h1>; }",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const nombre = 'Lucía';\nfunction App() { return <h1>Hola, {nombre}</h1>; }",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const nombre = 'Lucía';\nfunction App() { return <h1>Hola, {nombre}</h1>; }",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Mostrá un nombre y una frase mediante interpolación.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "react-props",
+          "title": "Props",
+          "category": "intermedio",
+          "summary": "Las props son datos de entrada de solo lectura que el componente padre envía al hijo.",
+          "purpose": "Las props son datos de entrada de solo lectura que el componente padre envía al hijo.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "function Perfil({ nombre }) { return <p>Hola, {nombre}</p>; }\n<Perfil nombre=\"Ana\" />",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "function Perfil({ nombre }) { return <p>Hola, {nombre}</p>; }\n<Perfil nombre=\"Ana\" />",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "function Perfil({ nombre }) { return <p>Hola, {nombre}</p>; }\n<Perfil nombre=\"Ana\" />",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una tarjeta que reciba nombre y ciudad.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "react-state",
+          "title": "Estado con useState",
+          "category": "intermedio",
+          "summary": "useState conserva un valor entre renderizados y ofrece una función para actualizarlo.",
+          "purpose": "useState conserva un valor entre renderizados y ofrece una función para actualizarlo.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const [total, setTotal] = useState(0);\n<button onClick={() => setTotal(v => v + 1)}>{total}</button>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const [total, setTotal] = useState(0);\n<button onClick={() => setTotal(v => v + 1)}>{total}</button>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const [total, setTotal] = useState(0);\n<button onClick={() => setTotal(v => v + 1)}>{total}</button>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Construí un contador con botones para sumar y restar.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "react-useeffect",
+          "title": "useEffect",
+          "category": "avanzado",
+          "summary": "useEffect sincroniza un componente con sistemas externos y permite limpiar temporizadores o suscripciones.",
+          "purpose": "useEffect sincroniza un componente con sistemas externos y permite limpiar temporizadores o suscripciones.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "useEffect(() => {\n const id = setInterval(() => console.log('tic'), 1000);\n return () => clearInterval(id);\n}, []);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "useEffect(() => {\n const id = setInterval(() => console.log('tic'), 1000);\n return () => clearInterval(id);\n}, []);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": " const id = setInterval(() => console.log('tic'), 1000);\n return () => clearInterval(id);\n}, []);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un temporizador y limpiá el intervalo al desmontar.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "react-usecontext",
+          "title": "useContext",
+          "category": "avanzado",
+          "summary": "Context comparte un valor con componentes descendientes sin pasar props por cada nivel.",
+          "purpose": "Context comparte un valor con componentes descendientes sin pasar props por cada nivel.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const Tema = createContext('claro');\nfunction Etiqueta() { const tema = useContext(Tema); return <p>{tema}</p>; }",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const Tema = createContext('claro');\nfunction Etiqueta() { const tema = useContext(Tema); return <p>{tema}</p>; }",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const Tema = createContext('claro');\nfunction Etiqueta() { const tema = useContext(Tema); return <p>{tema}</p>; }",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Compartí el tema visual entre dos componentes.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        }
+      ]
+    },
+    {
+      "id": "webcomponents",
+      "title": "Web Components",
+      "shortTitle": "Web Components",
+      "symbol": "◇",
+      "eyebrow": "FRONTEND / ESTÁNDARES WEB",
+      "tagline": "Custom Elements, Shadow DOM, templates, slots y eventos.",
+      "description": "Custom Elements, Shadow DOM, templates, slots y eventos.",
+      "level": "Inicial a avanzado",
+      "accent": "webcomponents",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos",
+          "description": "Elementos personalizados",
+          "icon": "▣",
+          "articles": [
+            "wc-que-son",
+            "wc-ciclo-vida"
+          ]
+        },
+        {
+          "id": "intermedio",
+          "title": "Encapsulación",
+          "description": "Shadow DOM y templates",
+          "icon": "⇄",
+          "articles": [
+            "wc-shadow-dom",
+            "wc-templates"
+          ]
+        },
+        {
+          "id": "avanzado",
+          "title": "Composición",
+          "description": "Slots y eventos",
+          "icon": "⌁",
+          "articles": [
+            "wc-slots",
+            "wc-eventos"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "wc-que-son",
+          "title": "¿Qué son los Web Components?",
+          "category": "fundamentos",
+          "summary": "Son estándares del navegador para crear elementos personalizados, reutilizables y encapsulados.",
+          "purpose": "Son estándares del navegador para crear elementos personalizados, reutilizables y encapsulados.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Web Components. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "class Saludo extends HTMLElement { connectedCallback() { this.textContent = 'Hola'; } }\ncustomElements.define('mi-saludo', Saludo);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "class Saludo extends HTMLElement { connectedCallback() { this.textContent = 'Hola'; } }\ncustomElements.define('mi-saludo', Saludo);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "class Saludo extends HTMLElement { connectedCallback() { this.textContent = 'Hola'; } }\ncustomElements.define('mi-saludo', Saludo);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Registrá una etiqueta <mi-tarjeta> que muestre un título.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "wc-ciclo-vida",
+          "title": "Ciclo de vida",
+          "category": "fundamentos",
+          "summary": "Los callbacks permiten reaccionar a la conexión, desconexión y cambios de atributos del elemento.",
+          "purpose": "Los callbacks permiten reaccionar a la conexión, desconexión y cambios de atributos del elemento.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Web Components. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "class Caja extends HTMLElement { connectedCallback() { this.textContent = 'Conectado'; } disconnectedCallback() { console.log('Retirado'); } }\ncustomElements.define('mi-caja', Caja);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "class Caja extends HTMLElement { connectedCallback() { this.textContent = 'Conectado'; } disconnectedCallback() { console.log('Retirado'); } }\ncustomElements.define('mi-caja', Caja);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "class Caja extends HTMLElement { connectedCallback() { this.textContent = 'Conectado'; } disconnectedCallback() { console.log('Retirado'); } }\ncustomElements.define('mi-caja', Caja);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Mostrá un mensaje cuando el elemento se conecta.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "wc-shadow-dom",
+          "title": "Shadow DOM",
+          "category": "intermedio",
+          "summary": "attachShadow crea una raíz encapsulada para aislar estructura y estilos del componente.",
+          "purpose": "attachShadow crea una raíz encapsulada para aislar estructura y estilos del componente.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Web Components. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const root = this.attachShadow({mode:'open'});\nroot.innerHTML = '<style>p{color:teal}</style><p>Aislado</p>';",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const root = this.attachShadow({mode:'open'});\nroot.innerHTML = '<style>p{color:teal}</style><p>Aislado</p>';",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const root = this.attachShadow({mode:'open'});\nroot.innerHTML = '<style>p{color:teal}</style><p>Aislado</p>';",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una tarjeta cuyos estilos no afecten al documento externo.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "wc-templates",
+          "title": "HTML Templates",
+          "category": "intermedio",
+          "summary": "template almacena fragmentos inertes que pueden clonarse y completarse antes de insertarlos.",
+          "purpose": "template almacena fragmentos inertes que pueden clonarse y completarse antes de insertarlos.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Web Components. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const copia = document.querySelector('#plantilla').content.cloneNode(true);\ncopia.querySelector('h2').textContent = 'Producto';\ndocument.body.append(copia);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const copia = document.querySelector('#plantilla').content.cloneNode(true);\ncopia.querySelector('h2').textContent = 'Producto';\ndocument.body.append(copia);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const copia = document.querySelector('#plantilla').content.cloneNode(true);\ncopia.querySelector('h2').textContent = 'Producto';\ndocument.body.append(copia);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá dos tarjetas clonando una plantilla.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "wc-slots",
+          "title": "Slots",
+          "category": "avanzado",
+          "summary": "Los slots permiten insertar contenido proporcionado por quien utiliza el componente.",
+          "purpose": "Los slots permiten insertar contenido proporcionado por quien utiliza el componente.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Web Components. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "// Shadow DOM:\nroot.innerHTML = '<article><slot name=\"titulo\"></slot><slot></slot></article>';\n// HTML: <mi-panel><h2 slot=\"titulo\">Perfil</h2></mi-panel>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "// Shadow DOM:\nroot.innerHTML = '<article><slot name=\"titulo\"></slot><slot></slot></article>';\n// HTML: <mi-panel><h2 slot=\"titulo\">Perfil</h2></mi-panel>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "// Shadow DOM:\nroot.innerHTML = '<article><slot name=\"titulo\"></slot><slot></slot></article>';\n// HTML: <mi-panel><h2 slot=\"titulo\">Perfil</h2></mi-panel>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un panel con slots para título y descripción.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "wc-eventos",
+          "title": "Eventos personalizados",
+          "category": "avanzado",
+          "summary": "CustomEvent comunica acciones y datos desde un componente hacia la página anfitriona.",
+          "purpose": "CustomEvent comunica acciones y datos desde un componente hacia la página anfitriona.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Web Components. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "this.dispatchEvent(new CustomEvent('seleccion', { detail:{valor:'azul'}, bubbles:true, composed:true }));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "this.dispatchEvent(new CustomEvent('seleccion', { detail:{valor:'azul'}, bubbles:true, composed:true }));",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "this.dispatchEvent(new CustomEvent('seleccion', { detail:{valor:'azul'}, bubbles:true, composed:true }));",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Emití un evento al pulsar un botón interno.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        }
+      ]
+    },
+    {
+      "id": "vuejs",
+      "title": "Vue.js",
+      "shortTitle": "Vue.js",
+      "symbol": "V",
+      "eyebrow": "FRONTEND / INTERFACES",
+      "tagline": "Plantillas, directivas, reactividad, componentes y Composition API.",
+      "description": "Plantillas, directivas, reactividad, componentes y Composition API.",
+      "level": "Inicial a avanzado",
+      "accent": "vuejs",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos",
+          "description": "Plantillas y directivas",
+          "icon": "▣",
+          "articles": [
+            "vue-que-es",
+            "vue-directivas"
+          ]
+        },
+        {
+          "id": "intermedio",
+          "title": "Reactividad",
+          "description": "Estado y valores derivados",
+          "icon": "⇄",
+          "articles": [
+            "vue-ref",
+            "vue-computed"
+          ]
+        },
+        {
+          "id": "avanzado",
+          "title": "Componentes",
+          "description": "Props y eventos",
+          "icon": "⌁",
+          "articles": [
+            "vue-componentes",
+            "vue-props"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "vue-que-es",
+          "title": "¿Qué es Vue.js?",
+          "category": "fundamentos",
+          "summary": "Vue es un framework progresivo para crear interfaces mediante componentes y reactividad.",
+          "purpose": "Vue es un framework progresivo para crear interfaces mediante componentes y reactividad.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "createApp({ data: () => ({ mensaje:'Hola, Vue' }), template:'<h1>{{ mensaje }}</h1>' }).mount('#app');",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "createApp({ data: () => ({ mensaje:'Hola, Vue' }), template:'<h1>{{ mensaje }}</h1>' }).mount('#app');",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "createApp({ data: () => ({ mensaje:'Hola, Vue' }), template:'<h1>{{ mensaje }}</h1>' }).mount('#app');",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una aplicación que muestre tu nombre.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "vue-directivas",
+          "title": "Directivas esenciales",
+          "category": "fundamentos",
+          "summary": "v-if, v-for, v-bind y v-on controlan condiciones, listas, atributos y eventos.",
+          "purpose": "v-if, v-for, v-bind y v-on controlan condiciones, listas, atributos y eventos.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "<p v-if=\"visible\">Visible</p>\n<li v-for=\"tarea in tareas\" :key=\"tarea\">{{ tarea }}</li>\n<button @click=\"visible = !visible\">Alternar</button>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "<p v-if=\"visible\">Visible</p>\n<li v-for=\"tarea in tareas\" :key=\"tarea\">{{ tarea }}</li>\n<button @click=\"visible = !visible\">Alternar</button>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "<p v-if=\"visible\">Visible</p>\n<li v-for=\"tarea in tareas\" :key=\"tarea\">{{ tarea }}</li>\n<button @click=\"visible = !visible\">Alternar</button>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una lista que pueda ocultarse con un botón.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "vue-ref",
+          "title": "ref: valores reactivos",
+          "category": "intermedio",
+          "summary": "ref crea una referencia reactiva; en JavaScript se lee y modifica mediante .value.",
+          "purpose": "ref crea una referencia reactiva; en JavaScript se lee y modifica mediante .value.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const contador = ref(0);\ncontador.value++;",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const contador = ref(0);\ncontador.value++;",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const contador = ref(0);\ncontador.value++;",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Construí un contador con ref.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "vue-computed",
+          "title": "Propiedades computadas",
+          "category": "intermedio",
+          "summary": "computed calcula un valor derivado y lo almacena en caché hasta que cambian sus dependencias.",
+          "purpose": "computed calcula un valor derivado y lo almacena en caché hasta que cambian sus dependencias.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const precio = ref(100);\nconst total = computed(() => precio.value * 1.21);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const precio = ref(100);\nconst total = computed(() => precio.value * 1.21);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const precio = ref(100);\nconst total = computed(() => precio.value * 1.21);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Calculá un precio final con impuesto.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "vue-componentes",
+          "title": "Crear componentes",
+          "category": "avanzado",
+          "summary": "Los archivos .vue separan lógica, plantilla y estilos para construir piezas reutilizables.",
+          "purpose": "Los archivos .vue separan lógica, plantilla y estilos para construir piezas reutilizables.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "<script setup>\\nconst mensaje = 'Hola';\\n</script>\\n<template><p>{{ mensaje }}</p></template>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "<script setup>\\nconst mensaje = 'Hola';\\n</script>\\n<template><p>{{ mensaje }}</p></template>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "<script setup>\\nconst mensaje = 'Hola';\\n</script>\\n<template><p>{{ mensaje }}</p></template>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un componente Encabezado.vue.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "vue-props",
+          "title": "Props",
+          "category": "avanzado",
+          "summary": "defineProps declara los datos de entrada que recibe un componente hijo.",
+          "purpose": "defineProps declara los datos de entrada que recibe un componente hijo.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const props = defineProps({ nombre: {type:String, required:true} });\n// En template: {{ props.nombre }}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const props = defineProps({ nombre: {type:String, required:true} });\n// En template: {{ props.nombre }}",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const props = defineProps({ nombre: {type:String, required:true} });\n// En template: {{ props.nombre }}",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una tarjeta que reciba nombre y profesión.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        }
+      ]
+    },
+    {
+      "id": "nodejs",
+      "title": "Node.js",
+      "shortTitle": "Node.js",
+      "symbol": "⬢",
+      "eyebrow": "BACKEND / JAVASCRIPT",
+      "tagline": "JavaScript en el servidor, módulos, archivos, procesos, servidores y APIs.",
+      "description": "JavaScript en el servidor, módulos, archivos, procesos, servidores y APIs.",
+      "level": "Inicial a avanzado",
+      "accent": "nodejs",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos",
+          "description": "Runtime y módulos",
+          "icon": "▣",
+          "articles": [
+            "node-que-es",
+            "node-modulos"
+          ]
+        },
+        {
+          "id": "intermedio",
+          "title": "APIs del sistema",
+          "description": "Archivos y rutas",
+          "icon": "⇄",
+          "articles": [
+            "node-fs",
+            "node-path"
+          ]
+        },
+        {
+          "id": "avanzado",
+          "title": "Servidores",
+          "description": "HTTP y APIs",
+          "icon": "⌁",
+          "articles": [
+            "node-http",
+            "node-api-rest"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "node-que-es",
+          "title": "¿Qué es Node.js?",
+          "category": "fundamentos",
+          "summary": "Node.js es un entorno de ejecución basado en V8 que permite ejecutar JavaScript fuera del navegador.",
+          "purpose": "Node.js es un entorno de ejecución basado en V8 que permite ejecutar JavaScript fuera del navegador.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "console.log('Hola desde Node');\nconsole.log(process.version);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "console.log('Hola desde Node');\nconsole.log(process.version);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "console.log('Hola desde Node');\nconsole.log(process.version);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un archivo que muestre un saludo y la versión de Node.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "node-modulos",
+          "title": "Módulos import y export",
+          "category": "fundamentos",
+          "summary": "Los módulos dividen el programa en archivos que exportan e importan funciones y valores.",
+          "purpose": "Los módulos dividen el programa en archivos que exportan e importan funciones y valores.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "// calculos.js\nexport const sumar = (a,b) => a+b;\n// app.js\nimport { sumar } from './calculos.js';\nconsole.log(sumar(4,6));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "// calculos.js\nexport const sumar = (a,b) => a+b;\n// app.js\nimport { sumar } from './calculos.js';\nconsole.log(sumar(4,6));",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "// app.js\nimport { sumar } from './calculos.js';\nconsole.log(sumar(4,6));",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Separá una calculadora en dos archivos.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "node-fs",
+          "title": "Sistema de archivos fs",
+          "category": "intermedio",
+          "summary": "fs permite leer y escribir archivos; fs/promises ofrece operaciones basadas en promesas.",
+          "purpose": "fs permite leer y escribir archivos; fs/promises ofrece operaciones basadas en promesas.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "import { readFile, writeFile } from 'node:fs/promises';\nawait writeFile('nota.txt','Hola');\nconsole.log(await readFile('nota.txt','utf8'));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "import { readFile, writeFile } from 'node:fs/promises';\nawait writeFile('nota.txt','Hola');\nconsole.log(await readFile('nota.txt','utf8'));",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "import { readFile, writeFile } from 'node:fs/promises';\nawait writeFile('nota.txt','Hola');\nconsole.log(await readFile('nota.txt','utf8'));",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un archivo y luego leé su contenido.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "node-path",
+          "title": "Rutas con path",
+          "category": "intermedio",
+          "summary": "path construye y analiza rutas de forma compatible con cada sistema operativo.",
+          "purpose": "path construye y analiza rutas de forma compatible con cada sistema operativo.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "import path from 'node:path';\nconst archivo = path.join('public','img','logo.png');\nconsole.log(path.basename(archivo), path.extname(archivo));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "import path from 'node:path';\nconst archivo = path.join('public','img','logo.png');\nconsole.log(path.basename(archivo), path.extname(archivo));",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "import path from 'node:path';\nconst archivo = path.join('public','img','logo.png');\nconsole.log(path.basename(archivo), path.extname(archivo));",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Construí una ruta y extraé su nombre y extensión.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "node-http",
+          "title": "Crear un servidor HTTP",
+          "category": "avanzado",
+          "summary": "http.createServer recibe solicitudes y permite construir respuestas HTTP.",
+          "purpose": "http.createServer recibe solicitudes y permite construir respuestas HTTP.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "import { createServer } from 'node:http';\ncreateServer((req,res) => { res.writeHead(200); res.end('Hola'); }).listen(3000);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "import { createServer } from 'node:http';\ncreateServer((req,res) => { res.writeHead(200); res.end('Hola'); }).listen(3000);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "import { createServer } from 'node:http';\ncreateServer((req,res) => { res.writeHead(200); res.end('Hola'); }).listen(3000);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un servidor que responda en localhost:3000.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "node-api-rest",
+          "title": "Primera API REST",
+          "category": "avanzado",
+          "summary": "Una API organiza recursos mediante rutas, métodos HTTP, respuestas JSON y códigos de estado.",
+          "purpose": "Una API organiza recursos mediante rutas, métodos HTTP, respuestas JSON y códigos de estado.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "createServer((req,res) => {\n res.writeHead(200, {'Content-Type':'application/json'});\n res.end(JSON.stringify({estado:'activo'}));\n}).listen(3000);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "createServer((req,res) => {\n res.writeHead(200, {'Content-Type':'application/json'});\n res.end(JSON.stringify({estado:'activo'}));\n}).listen(3000);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": " res.writeHead(200, {'Content-Type':'application/json'});\n res.end(JSON.stringify({estado:'activo'}));\n}).listen(3000);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una ruta GET que devuelva una lista JSON.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        }
+      ]
+    },
+    {
+      "id": "astro",
+      "title": "Astro",
+      "shortTitle": "Astro",
+      "symbol": "✦",
+      "eyebrow": "FRONTEND / SITIOS WEB",
+      "tagline": "Páginas, componentes, layouts, estilos e islas interactivas.",
+      "description": "Páginas, componentes, layouts, estilos e islas interactivas.",
+      "level": "Inicial a avanzado",
+      "accent": "astro",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos",
+          "description": "Páginas y estructura",
+          "icon": "▣",
+          "articles": [
+            "astro-que-es",
+            "astro-paginas"
+          ]
+        },
+        {
+          "id": "intermedio",
+          "title": "Componentes",
+          "description": "Componentes y layouts",
+          "icon": "⇄",
+          "articles": [
+            "astro-componentes",
+            "astro-layouts"
+          ]
+        },
+        {
+          "id": "avanzado",
+          "title": "Interactividad",
+          "description": "Islas y endpoints",
+          "icon": "⌁",
+          "articles": [
+            "astro-islas",
+            "astro-endpoints"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "astro-que-es",
+          "title": "¿Qué es Astro?",
+          "category": "fundamentos",
+          "summary": "Astro genera HTML y permite añadir JavaScript interactivo solo donde hace falta.",
+          "purpose": "Astro genera HTML y permite añadir JavaScript interactivo solo donde hace falta.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "---\nconst titulo = 'Hola Astro';\n---\n<h1>{titulo}</h1>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "---\nconst titulo = 'Hola Astro';\n---\n<h1>{titulo}</h1>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const titulo = 'Hola Astro';\n---\n<h1>{titulo}</h1>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una página Astro con título y descripción.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "astro-paginas",
+          "title": "Rutas y páginas",
+          "category": "fundamentos",
+          "summary": "Astro crea rutas a partir de los archivos colocados dentro de src/pages.",
+          "purpose": "Astro crea rutas a partir de los archivos colocados dentro de src/pages.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "---\n// src/pages/acerca.astro\n---\n<html lang=\"es\"><body><h1>Acerca</h1></body></html>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "---\n// src/pages/acerca.astro\n---\n<html lang=\"es\"><body><h1>Acerca</h1></body></html>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "// src/pages/acerca.astro\n---\n<html lang=\"es\"><body><h1>Acerca</h1></body></html>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá las páginas /contacto y /servicios.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "astro-componentes",
+          "title": "Componentes Astro",
+          "category": "intermedio",
+          "summary": "Un componente .astro combina frontmatter y plantilla y puede recibir props.",
+          "purpose": "Un componente .astro combina frontmatter y plantilla y puede recibir props.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "---\nconst { nombre = 'Visitante' } = Astro.props;\n---\n<h2>Hola, {nombre}</h2>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "---\nconst { nombre = 'Visitante' } = Astro.props;\n---\n<h2>Hola, {nombre}</h2>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const { nombre = 'Visitante' } = Astro.props;\n---\n<h2>Hola, {nombre}</h2>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un componente Tarjeta que reciba título.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "astro-layouts",
+          "title": "Layouts reutilizables",
+          "category": "intermedio",
+          "summary": "Los layouts comparten la estructura de varias páginas y usan slot para insertar contenido.",
+          "purpose": "Los layouts comparten la estructura de varias páginas y usan slot para insertar contenido.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "---\nconst { title } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><main><slot /></main></body></html>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "---\nconst { title } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><main><slot /></main></body></html>",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const { title } = Astro.props;\n---\n<html><head><title>{title}</title></head><body><main><slot /></main></body></html>",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un layout con encabezado, contenido y pie.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "astro-islas",
+          "title": "Arquitectura de islas",
+          "category": "avanzado",
+          "summary": "Astro combina contenido estático con componentes interactivos hidratados en el navegador.",
+          "purpose": "Astro combina contenido estático con componentes interactivos hidratados en el navegador.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "---\nimport Contador from '../components/Contador.jsx';\n---\n<h1>Artículo</h1><Contador client:load />",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "---\nimport Contador from '../components/Contador.jsx';\n---\n<h1>Artículo</h1><Contador client:load />",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "import Contador from '../components/Contador.jsx';\n---\n<h1>Artículo</h1><Contador client:load />",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Agregá un contador interactivo a una página estática.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "astro-endpoints",
+          "title": "Endpoints JSON",
+          "category": "avanzado",
+          "summary": "Los endpoints dentro de src/pages pueden responder solicitudes HTTP con datos JSON.",
+          "purpose": "Los endpoints dentro de src/pages pueden responder solicitudes HTTP con datos JSON.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Astro. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "export function GET() {\n return new Response(JSON.stringify({estado:'activo'}), {headers:{'Content-Type':'application/json'}});\n}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "export function GET() {\n return new Response(JSON.stringify({estado:'activo'}), {headers:{'Content-Type':'application/json'}});\n}",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "export function GET() {\n return new Response(JSON.stringify({estado:'activo'}), {headers:{'Content-Type':'application/json'}});\n}",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un endpoint GET /api/productos.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        }
+      ]
+    },
+    {
+      "id": "phaser",
+      "title": "Phaser",
+      "shortTitle": "Phaser",
+      "symbol": "🎮",
+      "eyebrow": "DESARROLLO DE JUEGOS",
+      "tagline": "Juegos 2D, escenas, sprites, animaciones, controles, físicas y colisiones.",
+      "description": "Juegos 2D, escenas, sprites, animaciones, controles, físicas y colisiones.",
+      "level": "Inicial a avanzado",
+      "accent": "phaser",
+      "categories": [
+        {
+          "id": "fundamentos",
+          "title": "Fundamentos",
+          "description": "Configuración y escenas",
+          "icon": "▣",
+          "articles": [
+            "phaser-que-es",
+            "phaser-escenas"
+          ]
+        },
+        {
+          "id": "intermedio",
+          "title": "Sprites",
+          "description": "Recursos y animaciones",
+          "icon": "⇄",
+          "articles": [
+            "phaser-assets",
+            "phaser-animaciones"
+          ]
+        },
+        {
+          "id": "avanzado",
+          "title": "Interacción",
+          "description": "Controles y colisiones",
+          "icon": "⌁",
+          "articles": [
+            "phaser-input",
+            "phaser-colisiones"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "phaser-que-es",
+          "title": "¿Qué es Phaser?",
+          "category": "fundamentos",
+          "summary": "Phaser es un framework JavaScript para crear juegos 2D que se ejecutan en navegadores.",
+          "purpose": "Phaser es un framework JavaScript para crear juegos 2D que se ejecutan en navegadores.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "const config = {type:Phaser.AUTO,width:800,height:600,scene:{create(){this.add.text(100,100,'Hola Phaser');}}};\nconst juego = new Phaser.Game(config);",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "const config = {type:Phaser.AUTO,width:800,height:600,scene:{create(){this.add.text(100,100,'Hola Phaser');}}};\nconst juego = new Phaser.Game(config);",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "const config = {type:Phaser.AUTO,width:800,height:600,scene:{create(){this.add.text(100,100,'Hola Phaser');}}};\nconst juego = new Phaser.Game(config);",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá un juego que muestre un título en pantalla.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "phaser-escenas",
+          "title": "Escenas y ciclo de vida",
+          "category": "fundamentos",
+          "summary": "preload carga recursos, create prepara objetos y update ejecuta la lógica de la partida.",
+          "purpose": "preload carga recursos, create prepara objetos y update ejecuta la lógica de la partida.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "class Nivel extends Phaser.Scene {\n preload(){ this.load.image('fondo','assets/fondo.png'); }\n create(){ this.add.image(320,240,'fondo'); }\n update(tiempo,delta){ /* actualizar juego */ }\n}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "class Nivel extends Phaser.Scene {\n preload(){ this.load.image('fondo','assets/fondo.png'); }\n create(){ this.add.image(320,240,'fondo'); }\n update(tiempo,delta){ /* actualizar juego */ }\n}",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": " create(){ this.add.image(320,240,'fondo'); }\n update(tiempo,delta){ /* actualizar juego */ }\n}",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una escena que cargue y muestre un fondo.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "phaser-assets",
+          "title": "Cargar recursos",
+          "category": "intermedio",
+          "summary": "El cargador de Phaser registra imágenes y sonidos durante preload.",
+          "purpose": "El cargador de Phaser registra imágenes y sonidos durante preload.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "preload(){\n this.load.image('jugador','assets/jugador.png');\n this.load.audio('salto','assets/salto.mp3');\n}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "preload(){\n this.load.image('jugador','assets/jugador.png');\n this.load.audio('salto','assets/salto.mp3');\n}",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": " this.load.image('jugador','assets/jugador.png');\n this.load.audio('salto','assets/salto.mp3');\n}",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Cargá una imagen y un sonido.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "phaser-animaciones",
+          "title": "Animaciones",
+          "category": "intermedio",
+          "summary": "El sistema de animaciones reproduce secuencias de fotogramas de una hoja de sprites.",
+          "purpose": "El sistema de animaciones reproduce secuencias de fotogramas de una hoja de sprites.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "this.anims.create({key:'caminar',frames:this.anims.generateFrameNumbers('jugador',{start:0,end:3}),frameRate:8,repeat:-1});\nthis.jugador.play('caminar');",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "this.anims.create({key:'caminar',frames:this.anims.generateFrameNumbers('jugador',{start:0,end:3}),frameRate:8,repeat:-1});\nthis.jugador.play('caminar');",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "this.anims.create({key:'caminar',frames:this.anims.generateFrameNumbers('jugador',{start:0,end:3}),frameRate:8,repeat:-1});\nthis.jugador.play('caminar');",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá una animación de cuatro fotogramas.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "phaser-input",
+          "title": "Controles de teclado",
+          "category": "avanzado",
+          "summary": "createCursorKeys permite leer las flechas y mover personajes durante update.",
+          "purpose": "createCursorKeys permite leer las flechas y mover personajes durante update.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "create(){ this.teclas = this.input.keyboard.createCursorKeys(); }\nupdate(){ if(this.teclas.left.isDown) this.jugador.x -= 3; }",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "create(){ this.teclas = this.input.keyboard.createCursorKeys(); }\nupdate(){ if(this.teclas.left.isDown) this.jugador.x -= 3; }",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "create(){ this.teclas = this.input.keyboard.createCursorKeys(); }\nupdate(){ if(this.teclas.left.isDown) this.jugador.x -= 3; }",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Mové un personaje con las flechas.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
+        },
+        {
+          "id": "phaser-colisiones",
+          "title": "Colisiones y overlaps",
+          "category": "avanzado",
+          "summary": "collider gestiona colisiones físicas y overlap detecta superposiciones para recoger objetos.",
+          "purpose": "collider gestiona colisiones físicas y overlap detecta superposiciones para recoger objetos.",
+          "whenToUse": "Este concepto se utiliza al construir proyectos con Phaser. Practicá primero en un ejemplo pequeño y aislado.",
+          "syntax": "this.physics.add.collider(this.jugador, plataformas);\nthis.physics.add.overlap(this.jugador, monedas, (jugador, moneda) => moneda.destroy());",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Ejemplo práctico",
+              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
+              "code": "this.physics.add.collider(this.jugador, plataformas);\nthis.physics.add.overlap(this.jugador, monedas, (jugador, moneda) => moneda.destroy());",
+              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+            },
+            {
+              "title": "Prueba guiada",
+              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
+              "code": "this.physics.add.collider(this.jugador, plataformas);\nthis.physics.add.overlap(this.jugador, monedas, (jugador, moneda) => moneda.destroy());",
+              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres descriptivos y separá responsabilidades.",
+            "Probá los cambios de forma incremental.",
+            "Consultá la documentación oficial para verificar compatibilidad."
+          ],
+          "commonMistakes": [
+            "Copiar el ejemplo sin comprender sus dependencias.",
+            "Confundir un fragmento didáctico con un proyecto completo.",
+            "No revisar los mensajes de error."
+          ],
+          "exercise": "Creá monedas que desaparezcan al tocarlas.",
+          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
+          "parameters": [],
+          "resources": []
         }
       ]
     }
