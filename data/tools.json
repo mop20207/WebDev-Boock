@@ -1,6 +1,6 @@
 {
-  "version": 12,
-  "articleCount": 217,
+  "version": 13,
+  "articleCount": 223,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -14874,6 +14874,20 @@
             "express-static-files",
             "express-route-patterns-v5"
           ]
+        },
+        {
+          "id": "apis-data",
+          "title": "APIs y manejo de datos",
+          "description": "Construí endpoints REST, procesá JSON y formularios, validá entradas e integrá otros servicios.",
+          "icon": "{ }",
+          "articles": [
+            "express-rest-crud-api",
+            "express-body-parsing",
+            "express-async-handlers",
+            "express-validation",
+            "express-cors",
+            "express-file-uploads"
+          ]
         }
       ],
       "articles": [
@@ -15672,6 +15686,407 @@
           "related": [
             "express-routes-basics",
             "express-404-handler"
+          ]
+        },
+        {
+          "id": "express-rest-crud-api",
+          "title": "Diseñar una API REST y operaciones CRUD",
+          "category": "apis-data",
+          "summary": "Organizá una API alrededor de recursos y construí operaciones de listar, crear, consultar, modificar y borrar.",
+          "purpose": "Una API REST utiliza recursos identificables por URL y métodos HTTP para expresar operaciones. Express facilita crear rutas, respuestas JSON y middleware compartidos. Una API consistente documenta parámetros, status, errores y paginación.",
+          "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+          "syntax": "GET /api/novelas\nPOST /api/novelas\nGET /api/novelas/:id\nPATCH /api/novelas/:id\nDELETE /api/novelas/:id",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Listar y consultar",
+              "description": "Las rutas de colección y detalle tienen responsabilidades distintas.",
+              "code": "app.get(\"/api/novelas\", async (_req, res) => {\n  res.json(await servicio.listar());\n});\napp.get(\"/api/novelas/:id\", async (req, res) => {\n  const novela = await servicio.buscar(req.params.id);\n  if (!novela) return res.status(404).json({ error: \"No encontrada\" });\n  res.json(novela);\n});",
+              "explanation": "La colección devuelve varios recursos. El detalle devuelve uno o 404 cuando no existe."
+            },
+            {
+              "title": "Crear un recurso",
+              "description": "POST suele responder 201 y puede indicar la URL del nuevo recurso.",
+              "code": "app.post(\"/api/novelas\", async (req, res) => {\n  const nueva = await servicio.crear(req.body);\n  res.status(201).location(`/api/novelas/${nueva.id}`).json(nueva);\n});",
+              "explanation": "201 Created indica que se creó un recurso; Location puede señalar su URL."
+            }
+          ],
+          "exercise": "Diseñá una API CRUD de novelas con rutas, métodos, códigos HTTP y un formato uniforme de error.",
+          "hint": "Separá router, controlador y servicio de datos. Express no valida ni persiste automáticamente lo que recibe.",
+          "parameters": [
+            {
+              "name": "GET collection",
+              "description": "Lista recursos, normalmente con filtros y paginación."
+            },
+            {
+              "name": "GET item",
+              "description": "Obtiene un recurso por identificador."
+            },
+            {
+              "name": "POST",
+              "description": "Crea un recurso."
+            },
+            {
+              "name": "PATCH",
+              "description": "Actualiza campos de un recurso."
+            },
+            {
+              "name": "DELETE",
+              "description": "Elimina un recurso."
+            }
+          ],
+          "bestPractices": [
+            "Usá paginación para colecciones grandes.",
+            "Definí formato uniforme de respuestas y errores.",
+            "No filtres datos privados en respuestas públicas."
+          ],
+          "commonMistakes": [
+            "Responder 200 sin indicar correctamente la creación.",
+            "Devolver todos los registros sin límite.",
+            "Mezclar reglas de negocio y consultas en el router."
+          ],
+          "resources": [
+            {
+              "label": "Routing",
+              "url": "https://expressjs.com/en/guide/routing.html"
+            },
+            {
+              "label": "Response API",
+              "url": "https://expressjs.com/en/5x/api.html#res"
+            }
+          ],
+          "related": [
+            "express-routes-basics",
+            "express-validation"
+          ]
+        },
+        {
+          "id": "express-body-parsing",
+          "title": "Procesamiento de JSON, formularios y cuerpos HTTP",
+          "category": "apis-data",
+          "summary": "Leé datos enviados en el body y reconocé los límites de cada parser.",
+          "purpose": "Express ofrece parsers integrados para JSON y formularios URL-encoded. req.body existe cuando un middleware compatible procesó el Content-Type. En Express 5, si no se parseó el cuerpo, req.body es undefined. Para multipart/form-data necesitás un middleware dedicado.",
+          "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+          "syntax": "app.use(express.json());\napp.use(express.urlencoded({ extended: false }));",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "JSON enviado por fetch",
+              "description": "El cliente debe declarar Content-Type y serializar el objeto.",
+              "code": "fetch(\"/api/novelas\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({ titulo: \"Overlord\" })\n});\n\n// Servidor\napp.use(express.json());",
+              "explanation": "El parser detecta application/json y coloca el objeto en req.body."
+            },
+            {
+              "title": "Formulario URL-encoded",
+              "description": "El parser procesa datos de formularios tradicionales.",
+              "code": "app.use(express.urlencoded({ extended: false }));\napp.post(\"/contacto\", (req, res) => {\n  const nombre = req.body?.nombre;\n  res.json({ recibido: Boolean(nombre) });\n});",
+              "explanation": "En Express 5, extended tiene false como valor predeterminado. Explicitarlo deja clara la intención."
+            }
+          ],
+          "exercise": "Probá un POST JSON y un POST de formulario. Después enviá una solicitud sin body y manejá req.body undefined.",
+          "hint": "El Content-Type debe coincidir con el parser registrado antes de la ruta.",
+          "parameters": [
+            {
+              "name": "express.json(options)",
+              "description": "Parser de application/json."
+            },
+            {
+              "name": "express.urlencoded(options)",
+              "description": "Parser de application/x-www-form-urlencoded."
+            },
+            {
+              "name": "req.body",
+              "description": "Valor parseado; puede ser undefined si no se procesó un cuerpo."
+            },
+            {
+              "name": "limit",
+              "description": "Tamaño máximo aceptado por el parser."
+            }
+          ],
+          "bestPractices": [
+            "Comprobá que body exista y tenga la forma esperada.",
+            "Configurá un límite de tamaño razonable."
+          ],
+          "commonMistakes": [
+            "Leer req.body antes de registrar el parser.",
+            "Asumir que req.body siempre es un objeto vacío en Express 5.",
+            "Enviar JSON sin el Content-Type apropiado."
+          ],
+          "resources": [
+            {
+              "label": "Express 5 — req.body",
+              "url": "https://expressjs.com/en/guide/migrating-5.html#req.body"
+            },
+            {
+              "label": "express.json API",
+              "url": "https://expressjs.com/en/5x/api.html#express.json"
+            }
+          ],
+          "related": [
+            "express-built-in-middleware",
+            "express-file-uploads"
+          ]
+        },
+        {
+          "id": "express-async-handlers",
+          "title": "Handlers asíncronos y promesas en Express 5",
+          "category": "apis-data",
+          "summary": "Usá async/await y entendé cómo Express 5 propaga errores rechazados.",
+          "purpose": "Express 5 reenvía automáticamente al middleware de errores los rechazos de promesas y errores arrojados por handlers y middleware que devuelven una Promise. Las APIs basadas en callbacks que no devuelven promesas siguen necesitando next(err) o manejo explícito.",
+          "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+          "syntax": "app.get(\"/\", async (req, res) => {\n  const data = await obtenerDatos();\n  res.json(data);\n});",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Handler async",
+              "description": "Express 5 detecta una promesa rechazada y pasa el error al siguiente handler de errores.",
+              "code": "app.get(\"/api/novelas\", async (_req, res) => {\n  const novelas = await db.novela.findMany();\n  res.json(novelas);\n});",
+              "explanation": "Si la consulta rechaza, Express 5 llama a next(error) automáticamente."
+            },
+            {
+              "title": "Callback tradicional",
+              "description": "Una función basada en callback debe transferir errores explícitamente.",
+              "code": "app.get(\"/archivo\", (req, res, next) => {\n  leerArchivo((error, contenido) => {\n    if (error) return next(error);\n    res.type(\"text/plain\").send(contenido);\n  });\n});",
+              "explanation": "Express no puede detectar un error que ocurre dentro de una API callback si no lo transferís a next."
+            }
+          ],
+          "exercise": "Escribí una ruta async que consulte un servicio y responda 404 cuando el recurso no exista. Comparala con una callback API.",
+          "hint": "Express 5 propaga rechazos de promesas devueltas. Los callbacks tradicionales necesitan manejo explícito.",
+          "parameters": [
+            {
+              "name": "async handler",
+              "description": "Función que devuelve una Promise y puede utilizar await."
+            },
+            {
+              "name": "next(error)",
+              "description": "Envía el error al middleware de errores."
+            },
+            {
+              "name": "Promise rejection",
+              "description": "Rechazo de promesa que Express 5 puede reenviar automáticamente desde un handler."
+            }
+          ],
+          "bestPractices": [
+            "Separá errores de negocio esperados de fallos inesperados.",
+            "En callbacks, transferí el error explícitamente."
+          ],
+          "commonMistakes": [
+            "Mantener wrappers innecesarios de Express 4 sin saber qué resuelven.",
+            "Olvidar next(err) en callbacks.",
+            "Capturar errores y no responder ni reenviarlos."
+          ],
+          "resources": [
+            {
+              "label": "Error Handling — async errors",
+              "url": "https://expressjs.com/en/guide/error-handling.html"
+            },
+            {
+              "label": "Upgrade to Express 5",
+              "url": "https://expressjs.com/en/guide/migrating-5.html"
+            }
+          ],
+          "related": [
+            "express-error-handling",
+            "express-rest-crud-api"
+          ]
+        },
+        {
+          "id": "express-validation",
+          "title": "Validación y normalización de entradas",
+          "category": "apis-data",
+          "summary": "Validá parámetros, query y body antes de pasar datos a la lógica de negocio.",
+          "purpose": "Express no valida datos entrantes automáticamente. Una API debe comprobar tipos, rangos y estructura. Una biblioteca de esquemas como Zod valida datos en runtime e infiere tipos TypeScript; también son posibles comprobaciones manuales para casos pequeños.",
+          "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+          "syntax": "const result = schema.safeParse(req.body);\nif (!result.success) return res.status(400).json({ error: \"Datos inválidos\" });",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Validación manual",
+              "description": "Comprobá valores básicos antes de continuar.",
+              "code": "app.post(\"/api/novelas\", (req, res, next) => {\n  const titulo = req.body?.titulo;\n  if (typeof titulo !== \"string\" || !titulo.trim()) {\n    return res.status(400).json({ error: \"El título es obligatorio\" });\n  }\n  next();\n}, crearNovela);",
+              "explanation": "La comprobación revisa existencia y tipo. Para esquemas grandes conviene una biblioteca."
+            },
+            {
+              "title": "Validar con Zod",
+              "description": "El esquema aporta reglas runtime y tipos inferidos.",
+              "code": "import { z } from \"zod\";\nconst Schema = z.object({ titulo: z.string().trim().min(1).max(120) });\nconst parsed = Schema.safeParse(req.body);\nif (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });\nconst datos = parsed.data;",
+              "explanation": "safeParse evita una excepción para errores normales de validación. Usá parsed.data solo cuando success sea true."
+            }
+          ],
+          "exercise": "Definí un esquema de novela con título obligatorio, género y número de volúmenes. Devolvé 400 ante datos inválidos.",
+          "hint": "Validá datos en runtime aunque declares un tipo TypeScript para el mismo objeto.",
+          "parameters": [
+            {
+              "name": "safeParse(value)",
+              "description": "Valida y devuelve success junto con data o errores."
+            },
+            {
+              "name": "z.object(shape)",
+              "description": "Define un esquema de objeto."
+            },
+            {
+              "name": "z.string().min().max()",
+              "description": "Reglas de longitud para cadenas."
+            }
+          ],
+          "bestPractices": [
+            "Normalizá strings cuando corresponda.",
+            "Devolvé mensajes útiles sin detalles internos.",
+            "Validá en servidor aunque también valides en frontend."
+          ],
+          "commonMistakes": [
+            "Confiar solo en la validación del formulario frontend.",
+            "Usar body sin comprobar tipos y tamaños.",
+            "Confundir tipos TypeScript con validación runtime."
+          ],
+          "resources": [
+            {
+              "label": "Zod",
+              "url": "https://zod.dev/"
+            },
+            {
+              "label": "Express middleware guide",
+              "url": "https://expressjs.com/en/guide/using-middleware.html"
+            }
+          ],
+          "related": [
+            "express-body-parsing",
+            "express-server-security"
+          ]
+        },
+        {
+          "id": "express-cors",
+          "title": "CORS y solicitudes entre distintos orígenes",
+          "category": "apis-data",
+          "summary": "Configurá qué orígenes pueden leer respuestas de tu API desde navegadores.",
+          "purpose": "CORS es un mecanismo del navegador basado en encabezados HTTP. Express no lo habilita automáticamente; el paquete cors puede agregar los encabezados apropiados. CORS no reemplaza autenticación ni impide que clientes no navegadores llamen a la API.",
+          "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+          "syntax": "import cors from \"cors\";\napp.use(cors({ origin: \"https://app.example.com\" }));",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Permitir un origen",
+              "description": "El middleware autoriza un origen concreto.",
+              "code": "import cors from \"cors\";\napp.use(cors({ origin: \"http://localhost:5173\" }));",
+              "explanation": "El navegador permite que ese frontend lea la respuesta. No es necesario permitir todos los orígenes."
+            },
+            {
+              "title": "Allowlist y credenciales",
+              "description": "Podés decidir dinámicamente qué orígenes aceptás.",
+              "code": "const permitidos = new Set([\"https://app.example.com\", \"https://admin.example.com\"]);\napp.use(cors({\n  origin(origin, callback) {\n    if (!origin || permitidos.has(origin)) return callback(null, true);\n    callback(new Error(\"Origen no permitido\"));\n  },\n  credentials: true\n}));",
+              "explanation": "Con credenciales, no combines Allow-Credentials con un origen comodín *. La política debe ser explícita."
+            }
+          ],
+          "exercise": "Configurá una API local para localhost:5173 y luego definí una allowlist para producción.",
+          "hint": "CORS controla qué respuesta puede leer el navegador. No autentica al usuario ni protege contra curl.",
+          "parameters": [
+            {
+              "name": "cors(options)",
+              "description": "Middleware que configura encabezados CORS."
+            },
+            {
+              "name": "origin",
+              "description": "Origen o función para determinar qué origen se permite."
+            },
+            {
+              "name": "credentials",
+              "description": "Permite solicitudes del navegador que incluyen credenciales cuando se configura adecuadamente."
+            },
+            {
+              "name": "preflight",
+              "description": "Solicitud OPTIONS previa que puede enviar el navegador."
+            }
+          ],
+          "bestPractices": [
+            "Usá orígenes explícitos en producción.",
+            "Configurá métodos y headers solo cuando hagan falta."
+          ],
+          "commonMistakes": [
+            "Creer que CORS protege una API de clientes no navegador.",
+            "Combinar origin * con credenciales.",
+            "Confundir CORS con autenticación."
+          ],
+          "resources": [
+            {
+              "label": "Express CORS middleware",
+              "url": "https://expressjs.com/en/resources/middleware/cors.html"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "express-cookies-sessions",
+            "express-authentication"
+          ]
+        },
+        {
+          "id": "express-file-uploads",
+          "title": "Subida de archivos y multipart/form-data",
+          "category": "apis-data",
+          "summary": "Recibí archivos desde formularios y controlá tamaño, tipo y almacenamiento.",
+          "purpose": "express.json y express.urlencoded no procesan multipart/form-data. Para archivos se utiliza un middleware específico como Multer. Los archivos deben validarse, almacenarse con nombres controlados y no confiar en el MIME declarado por el cliente como única comprobación.",
+          "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+          "syntax": "import multer from \"multer\";\nconst upload = multer({ dest: \"uploads/\" });",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Subir un archivo",
+              "description": "Multer coloca los datos procesados en req.file.",
+              "code": "import multer from \"multer\";\nconst upload = multer({ dest: \"uploads/\", limits: { fileSize: 2 * 1024 * 1024 } });\napp.post(\"/api/portadas\", upload.single(\"portada\"), (req, res) => {\n  if (!req.file) return res.status(400).json({ error: \"Falta el archivo\" });\n  res.status(201).json({ archivo: req.file.filename });\n});",
+              "explanation": "El input debe llamarse portada. El límite restringe a 2 MB; todavía se debe verificar contenido y extensión."
+            },
+            {
+              "title": "Múltiples archivos",
+              "description": "Aceptá varios archivos con un máximo explícito.",
+              "code": "app.post(\"/api/imagenes\", upload.array(\"imagenes\", 4), (req, res) => {\n  const archivos = req.files ?? [];\n  res.status(201).json({ cantidad: archivos.length });\n});",
+              "explanation": "El límite controla la cantidad recibida. No guardes nombres proporcionados por el navegador sin normalizarlos."
+            }
+          ],
+          "exercise": "Creá un endpoint que acepte una portada de hasta 2 MB. Documentá validación de MIME real, extensión, tamaño y almacenamiento.",
+          "hint": "Multer procesa multipart/form-data. El nombre del input coincide con upload.single o upload.array.",
+          "parameters": [
+            {
+              "name": "upload.single(field)",
+              "description": "Procesa un archivo en un campo."
+            },
+            {
+              "name": "upload.array(field, maxCount)",
+              "description": "Procesa varios archivos del mismo campo con máximo."
+            },
+            {
+              "name": "req.file",
+              "description": "Metadatos del archivo procesado."
+            },
+            {
+              "name": "limits.fileSize",
+              "description": "Límite de bytes para cada archivo."
+            }
+          ],
+          "bestPractices": [
+            "Generá nombres de archivo en el servidor.",
+            "Comprobá contenido real y tamaño.",
+            "Almacená archivos privados fuera de rutas estáticas."
+          ],
+          "commonMistakes": [
+            "Suponer que express.json procesa archivos multipart.",
+            "Aceptar archivos sin validar contenido.",
+            "Usar el nombre original como ruta de guardado y permitir path traversal."
+          ],
+          "resources": [
+            {
+              "label": "Multer documentation",
+              "url": "https://github.com/expressjs/multer"
+            },
+            {
+              "label": "Express resources — middleware",
+              "url": "https://expressjs.com/en/resources/middleware.html"
+            }
+          ],
+          "related": [
+            "express-body-parsing",
+            "express-static-files"
           ]
         }
       ]
