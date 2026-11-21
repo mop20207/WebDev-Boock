@@ -28,6 +28,80 @@ document.addEventListener("DOMContentLoaded", () => {
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 
+  // Equivalencias español ↔ inglés para buscar el mismo artículo
+  // aunque la persona escriba el término en otro idioma.
+  const termAliases = {
+    function: ["funcion", "funciones"],
+    functions: ["funcion", "funciones"],
+    funcion: ["function", "functions"],
+    funciones: ["function", "functions"],
+    method: ["metodo", "metodos"],
+    methods: ["metodo", "metodos"],
+    metodo: ["method", "methods"],
+    metodos: ["method", "methods"],
+    property: ["propiedad", "propiedades"],
+    properties: ["propiedad", "propiedades"],
+    propiedad: ["property", "properties"],
+    propiedades: ["property", "properties"],
+    tag: ["etiqueta", "etiquetas", "element"],
+    tags: ["etiqueta", "etiquetas", "element"],
+    etiqueta: ["tag", "tags", "element"],
+    etiquetas: ["tag", "tags", "element"],
+    element: ["elemento", "elementos", "tag"],
+    elements: ["elemento", "elementos", "tag"],
+    elemento: ["element", "elements", "tag"],
+    elementos: ["element", "elements", "tag"],
+    attribute: ["atributo", "atributos"],
+    attributes: ["atributo", "atributos"],
+    atributo: ["attribute", "attributes"],
+    atributos: ["attribute", "attributes"],
+    selector: ["selector", "selectores"],
+    selectors: ["selectores"],
+    selectores: ["selectors"],
+    variable: ["variable", "variables"],
+    variables: ["variable"],
+    loop: ["bucle", "bucles", "iteracion", "iteraciones"],
+    loops: ["bucle", "bucles", "iteracion", "iteraciones"],
+    bucle: ["loop", "loops", "iteracion"],
+    bucles: ["loop", "loops", "iteraciones"],
+    array: ["arreglo", "arrays", "arreglos", "matriz"],
+    arrays: ["arreglo", "arreglos", "array"],
+    object: ["objeto", "objetos"],
+    objects: ["objeto", "objetos"],
+    objeto: ["object", "objects"],
+    objetos: ["object", "objects"],
+    event: ["evento", "eventos"],
+    events: ["evento", "eventos"],
+    evento: ["event", "events"],
+    eventos: ["event", "events"],
+    string: ["cadena", "cadenas", "texto"],
+    strings: ["cadena", "cadenas", "texto"],
+    cadena: ["string", "strings"],
+    cadenas: ["string", "strings"],
+    class: ["clase", "clases"],
+    classes: ["clase", "clases"],
+    clase: ["class", "classes"],
+    clases: ["class", "classes"],
+    async: ["asincrono", "asincronia", "asynchronous"],
+    asynchronous: ["asincrono", "asincronia", "async"],
+    asincrono: ["async", "asynchronous"],
+    asincronia: ["async", "asynchronous"],
+    promise: ["promesa", "promesas"],
+    promises: ["promesa", "promesas"],
+    promesa: ["promise", "promises"],
+    promesas: ["promise", "promises"],
+    fetch: ["solicitud", "peticion", "requests"],
+    request: ["solicitud", "peticion", "requests"],
+    requests: ["solicitud", "peticion", "request"],
+    solicitud: ["request", "requests", "fetch"],
+    peticion: ["request", "requests", "fetch"],
+    storage: ["almacenamiento", "localstorage", "sessionstorage"],
+    almacenamiento: ["storage", "localstorage", "sessionstorage"],
+    loop: ["bucle", "bucles"]
+  };
+
+  const equivalents = term => [term, ...(termAliases[term] || [])];
+
   const collectText = (value, output = []) => {
     if (typeof value === "string" || typeof value === "number") {
       output.push(String(value));
@@ -302,27 +376,36 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!terms.length) return [];
 
     return catalog.map(entry => {
-      const matchesTerm = term =>
-        entry.searchWords.has(term) ||
-        (term.length >= 3 && entry.titleWords.some(word => word.startsWith(term))) ||
-        (term.length >= 3 && entry.categoryWords.some(word => word.startsWith(term)));
+      const matchesTerm = term => {
+        const options = equivalents(term);
+        return options.some(option =>
+          entry.searchWords.has(option) ||
+          (option.length >= 3 && entry.titleWords.some(word => word.startsWith(option))) ||
+          (option.length >= 3 && entry.categoryWords.some(word => word.startsWith(option)))
+        );
+      };
       if (!terms.every(matchesTerm)) return null;
 
       let score = 0;
       const joined = terms.join(" ");
+      const titleHasAllTerms = terms.every(term =>
+        equivalents(term).some(option => entry.titleWords.includes(option))
+      );
 
       if (entry.titleSearch === joined) score += 160;
       else if (entry.titleSearch.startsWith(joined)) score += 120;
       else if (entry.titleSearch.includes(joined)) score += 95;
+      if (titleHasAllTerms) score += 90;
 
       terms.forEach(term => {
-        if (entry.titleWords.includes(term)) score += 36;
-        else if (entry.titleWords.some(word => word.startsWith(term))) score += 24;
-        if (entry.idSearch.split(" ").includes(term)) score += 24;
-        if (entry.summaryWords.includes(term)) score += 18;
-        if (entry.categoryWords.includes(term)) score += 14;
+        const options = equivalents(term);
+        if (options.some(option => entry.titleWords.includes(option))) score += 36;
+        else if (options.some(option => entry.titleWords.some(word => word.startsWith(option)))) score += 24;
+        if (options.some(option => entry.idSearch.split(" ").includes(option))) score += 24;
+        if (options.some(option => entry.summaryWords.includes(option))) score += 18;
+        if (options.some(option => entry.categoryWords.includes(option))) score += 14;
+        if (options.some(option => entry.searchWords.has(option))) score += 5;
         if (entry.language.toLowerCase().includes(term)) score += 12;
-        if (entry.searchWords.has(term)) score += 5;
       });
 
       return { entry, score };
