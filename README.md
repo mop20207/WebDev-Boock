@@ -1,15 +1,17 @@
 # WebDev Book
 
-Biblioteca interactiva y responsive para aprender desarrollo web y herramientas de trabajo con proyectos.
+Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y tecnologías mediante explicaciones, ejemplos comentados y prácticas.
 
 ## Contenido
 
 - **HTML, CSS y JavaScript:** fundamentos, elementos, propiedades, métodos y prácticas.
-- **Terminal Linux:** introducción, preparación del entorno, ficheros y carpetas, manejo de la terminal, multimedia, administración y seguridad.
-- **Git y GitHub:** fundamentos, primeros pasos, ramas, combinación de cambios y colaboración.
-- **NPM y paquetes:** Node.js, gestores de paquetes, dependencias, package.json, scripts y versionado.
+- **Herramientas:** Terminal Linux, Git/GitHub y NPM.
+- **Frontend:** React, Web Components, Vue.js y Astro.
+- **Backend y entorno:** Node.js.
+- **Desarrollo de juegos:** Phaser.
+- **Tipado estático:** TypeScript, desde los fundamentos hasta genéricos, módulos, configuración e integración con DOM, React y Node.js.
 
-El catálogo inicial de herramientas incluye **41 artículos**: 16 de Terminal Linux, 12 de Git/GitHub y 13 de NPM.
+El catálogo de herramientas y tecnologías contiene **161 artículos**. TypeScript incorpora 37 artículos distribuidos en siete categorías.
 
 ## Estructura del proyecto
 
@@ -45,15 +47,15 @@ WebDev-Boock/
     └── images/
 ```
 
-## Cómo se organizan las nuevas herramientas
+## Cómo se organizan las tecnologías
 
-Las tres herramientas comparten una plantilla de páginas y un catálogo JSON:
+Las tecnologías comparten una plantilla de páginas y un catálogo JSON:
 
-1. La página de cada herramienta muestra sus categorías.
+1. La página de cada tecnología muestra sus categorías.
 2. Cada categoría lista los artículos que contiene.
-3. Cada artículo tiene una página individual con explicación, sintaxis, ejemplos comentados, buenas prácticas, errores frecuentes, ejercicios y referencias oficiales.
+3. Cada artículo tiene una página individual con explicación, sintaxis, ejemplos comentados, buenas prácticas, errores frecuentes, una práctica y documentación de referencia.
 
-Las nuevas páginas también se integran con el buscador global, los favoritos y el progreso local del navegador.
+Las páginas se integran con el buscador global, los favoritos y el progreso local del navegador. Los ejemplos utilizan resaltado de sintaxis cuando la biblioteca está disponible.
 
 ## Desarrollo
 
