@@ -1,0 +1,35 @@
+{
+  "id": "/WebDev-Boock/",
+  "name": "WebDev Book — Biblioteca de desarrollo",
+  "short_name": "WebDev Book",
+  "description": "Aprendé HTML, CSS, JavaScript, Terminal Linux, Git y NPM con explicaciones y prácticas.",
+  "lang": "es-AR",
+  "start_url": "/WebDev-Boock/",
+  "scope": "/WebDev-Boock/",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#080d18",
+  "theme_color": "#080d18",
+  "categories": [
+    "education",
+    "developer"
+  ],
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
