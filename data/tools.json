@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "articleCount": 77,
+  "version": 4,
+  "articleCount": 86,
   "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
   "tools": [
     {
@@ -3099,263 +3099,1325 @@
       "categories": [
         {
           "id": "fundamentos",
-          "title": "Fundamentos",
-          "description": "Plantillas y directivas",
+          "title": "Fundamentos de Vue",
+          "description": "Conocé el framework, las plantillas, directivas y renderizado de listas.",
           "icon": "▣",
           "articles": [
             "vue-que-es",
-            "vue-directivas"
+            "vue-template",
+            "vue-directivas",
+            "vue-listas"
           ]
         },
         {
           "id": "intermedio",
-          "title": "Reactividad",
-          "description": "Estado y valores derivados",
+          "title": "Reactividad y formularios",
+          "description": "Manej á estado, valores derivados, watchers y entradas de usuario.",
           "icon": "⇄",
           "articles": [
             "vue-ref",
-            "vue-computed"
+            "vue-reactive",
+            "vue-computed",
+            "vue-watchers",
+            "vue-forms"
           ]
         },
         {
           "id": "avanzado",
-          "title": "Componentes",
-          "description": "Props y eventos",
+          "title": "Componentes y lógica reutilizable",
+          "description": "Comunicá componentes, componé contenido y reutilizá lógica con la Composition API.",
           "icon": "⌁",
           "articles": [
             "vue-componentes",
-            "vue-props"
+            "vue-props",
+            "vue-emits",
+            "vue-slots",
+            "vue-lifecycle",
+            "vue-composables"
           ]
         }
       ],
       "articles": [
         {
           "id": "vue-que-es",
-          "title": "¿Qué es Vue.js?",
+          "title": "¿Qué es Vue.js y cómo funciona?",
           "category": "fundamentos",
-          "summary": "Vue es un framework progresivo para crear interfaces mediante componentes y reactividad.",
-          "purpose": "Vue es un framework progresivo para crear interfaces mediante componentes y reactividad.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "createApp({ data: () => ({ mensaje:'Hola, Vue' }), template:'<h1>{{ mensaje }}</h1>' }).mount('#app');",
+          "summary": "Comprendé Vue 3, el renderizado declarativo, la reactividad y las dos formas principales de escribir componentes.",
+          "purpose": "Vue.js es un framework progresivo de JavaScript para construir interfaces de usuario. Su idea central es describir en una plantilla qué debe mostrarse a partir de datos y dejar que el sistema reactivo actualice la vista cuando esos datos cambian. Vue puede añadirse a una página existente de forma gradual o utilizarse con herramientas de proyecto para construir aplicaciones completas. En Vue 3 podés escribir componentes mediante Options API o Composition API; ambas utilizan el mismo sistema de reactividad.",
+          "whenToUse": "Elegí Vue cuando necesitás interfaces interactivas, componentes reutilizables y estado que cambia con la interacción del usuario. Para una aplicación Vue 3 moderna, el flujo habitual es crear el proyecto con create-vue (basado en Vite) y escribir componentes Single-File Component (.vue) con <script setup>. Para una página pequeña también puede usarse Vue desde un CDN.",
+          "syntax": "import { createApp, ref } from 'vue';\n\nconst App = {\n  setup() {\n    const mensaje = ref('Hola, Vue 3');\n    return { mensaje };\n  },\n  template: '<h1>{{ mensaje }}</h1>'\n};\n\ncreateApp(App).mount('#app');",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "createApp({ data: () => ({ mensaje:'Hola, Vue' }), template:'<h1>{{ mensaje }}</h1>' }).mount('#app');",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Montar la primera aplicación",
+              "description": "Conectá una instancia Vue a un contenedor HTML y mostrale un mensaje reactivo.",
+              "code": "<!-- HTML: <div id=\"app\"></div> -->\n<script type=\"module\">\nimport { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';\n\nconst App = {\n  setup() {\n    const mensaje = ref('Estoy aprendiendo Vue');\n    return { mensaje };\n  },\n  template: '<h1>{{ mensaje }}</h1>'\n};\n\ncreateApp(App).mount('#app');\n</script>",
+              "explanation": "El contenedor #app es el punto de montaje. createApp crea la aplicación; mount la conecta al documento. setup devuelve el ref para que esté disponible en la plantilla. Este ejemplo usa el build ESM del CDN para una prueba pequeña; en aplicaciones reales conviene crear un proyecto y gestionar dependencias con herramientas como Vite."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "createApp({ data: () => ({ mensaje:'Hola, Vue' }), template:'<h1>{{ mensaje }}</h1>' }).mount('#app');",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Comparar Options API y Composition API",
+              "description": "Vue permite organizar la lógica de ambas formas. Este ejemplo muestra Options API, que sigue siendo válida y útil para aprender la estructura de un componente.",
+              "code": "import { createApp } from 'vue';\n\nconst App = {\n  data() {\n    return { contador: 0 };\n  },\n  methods: {\n    incrementar() {\n      this.contador++;\n    }\n  },\n  template: '<button @click=\"incrementar\">Total: {{ contador }}</button>'\n};\n\ncreateApp(App).mount('#app');",
+              "explanation": "data devuelve el estado reactivo. methods contiene funciones asociadas a la instancia y this.contador accede al estado. La plantilla conecta el botón con incrementar mediante @click. En Options API, evitá definir methods con arrow functions cuando necesites this, porque no reciben el enlace automático de Vue."
+            },
+            {
+              "title": "Crear un proyecto Vue 3 con Vite",
+              "description": "Para una aplicación real, create-vue prepara una estructura de proyecto y permite elegir opciones iniciales.",
+              "code": "# Terminal\nnpm create vue@latest\ncd mi-proyecto\nnpm install\nnpm run dev",
+              "explanation": "npm create vue@latest inicia el asistente oficial de creación. El nombre de carpeta depende de lo que elijas. npm install instala las dependencias declaradas y npm run dev inicia el servidor de desarrollo. El proyecto generado usa Vite y Single-File Components; las opciones del asistente pueden cambiar con el tiempo."
+            },
+            {
+              "title": "Un componente con <script setup>",
+              "description": "En un archivo .vue, <script setup> permite declarar la lógica de forma directa y usar sus bindings en la plantilla.",
+              "code": "<!-- Contador.vue -->\n<script setup>\nimport { ref } from 'vue';\n\nconst contador = ref(0);\nfunction incrementar() {\n  contador.value++;\n}\n</script>\n\n<template>\n  <button @click=\"incrementar\">Pulsaciones: {{ contador }}</button>\n</template>",
+              "explanation": "El componente importa ref, crea estado reactivo y define una función. En JavaScript se usa contador.value; en la plantilla Vue desenvuelve el ref, por eso se escribe {{ contador }}. La función se utiliza como manejador de @click."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Aprendé las ideas comunes de Vue antes de memorizar APIs: plantilla declarativa, reactividad y composición de componentes.",
+            "Para una aplicación nueva con componentes .vue, utilizá el flujo recomendado create-vue + Vite.",
+            "Elegí Options API o Composition API conscientemente; no mezcles estilos sin una razón clara dentro del mismo componente.",
+            "No confundas un ejemplo con CDN con el flujo de desarrollo de una aplicación completa."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Esperar que el navegador interprete archivos .vue sin un compilador o herramienta de desarrollo.",
+            "Olvidar que el elemento usado en mount debe existir en el HTML.",
+            "Acceder a ref.value dentro de la plantilla; allí normalmente se escribe el nombre del ref directamente.",
+            "Creer que Vue obliga a usar exclusivamente Composition API: Options API sigue siendo compatible."
           ],
-          "exercise": "Creá una aplicación que muestre tu nombre.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un proyecto Vue 3 con create-vue. Dentro de App.vue mostrá un título, una descripción y un contador que aumente al pulsar un botón. Separá el contador en un componente hijo y pasale el título mediante una prop.",
+          "hint": "Primero creá el proyecto con npm create vue@latest. Después importá el componente hijo desde App.vue. Para el contador usá ref(0) y un método que incremente contador.value.",
+          "parameters": [
+            {
+              "name": "createApp(componenteRaiz)",
+              "description": "Crea una nueva instancia de aplicación Vue a partir del componente raíz."
+            },
+            {
+              "name": "mount(elemento)",
+              "description": "Conecta la aplicación con un elemento del documento. El elemento suele tener id=\"app\"."
+            },
+            {
+              "name": "ref(valorInicial)",
+              "description": "Crea una referencia reactiva. En JavaScript se accede a su valor con .value; en la plantilla se desenvuelve automáticamente en los casos habituales."
+            },
+            {
+              "name": "setup()",
+              "description": "Opción de Composition API que prepara datos, funciones y lógica que estarán disponibles para el componente. En proyectos con compilación suele simplificarse con <script setup>."
+            },
+            {
+              "name": "template",
+              "description": "Describe el marcado que el componente renderiza. En componentes de un solo archivo suele escribirse en un bloque <template>."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Introducción oficial",
+              "url": "https://vuejs.org/guide/introduction.html"
+            },
+            {
+              "label": "Vue — Quick Start",
+              "url": "https://vuejs.org/guide/quick-start.html"
+            },
+            {
+              "label": "Vue — Comparación de API styles",
+              "url": "https://vuejs.org/guide/introduction.html#api-styles"
+            }
+          ]
+        },
+        {
+          "id": "vue-template",
+          "title": "Plantillas de Vue: interpolación y atributos",
+          "category": "fundamentos",
+          "summary": "Dominá la interpolación, expresiones, v-bind, atributos dinámicos y el uso seguro de contenido HTML.",
+          "purpose": "Las plantillas de Vue extienden HTML con una sintaxis declarativa. La interpolación con {{ }} muestra valores como texto; v-bind (o su abreviatura :) enlaza atributos y propiedades; las expresiones JavaScript permiten calcular contenido. Las plantillas se compilan a funciones de renderizado y Vue actualiza las partes reactivas cuando cambian sus dependencias.",
+          "whenToUse": "Usá la sintaxis de plantillas para conectar datos del componente con el marcado. Es la forma habitual de mostrar valores, clases, atributos, imágenes y contenido condicional. Para lógica compleja, mové el cálculo a funciones o propiedades computadas en lugar de llenar la plantilla de expresiones largas.",
+          "syntax": "<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('Lucía');\nconst perfil = ref('/imagenes/perfil.jpg');\nconst activo = ref(true);\n</script>\n\n<template>\n  <h1>Hola, {{ nombre }}</h1>\n  <img :src=\"perfil\" alt=\"Foto de perfil\">\n  <p>{{ activo ? 'Cuenta activa' : 'Cuenta pausada' }}</p>\n</template>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Interpolar variables y expresiones",
+              "description": "Mostrá valores y pequeños cálculos dentro de la plantilla.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('Lucía');\nconst precio = ref(12000);\n</script>\n\n<template>\n  <h2>Hola, {{ nombre }}</h2>\n  <p>Precio: {{ precio }}</p>\n  <p>Precio con descuento: {{ precio * 0.9 }}</p>\n</template>",
+              "explanation": "Las dobles llaves muestran el resultado como texto. La expresión precio * 0.9 se evalúa en JavaScript. En las plantillas de Vue, los refs de nivel superior se desenvuelven automáticamente, por eso no se usa precio.value."
+            },
+            {
+              "title": "Enlazar atributos con v-bind",
+              "description": "Conectá una variable con src, href, disabled o una clase CSS.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst imagen = ref('/imagenes/logo.png');\nconst enlace = ref('https://vuejs.org');\nconst bloqueado = ref(false);\n</script>\n\n<template>\n  <img :src=\"imagen\" alt=\"Logo\">\n  <a :href=\"enlace\">Documentación de Vue</a>\n  <button :disabled=\"bloqueado\">Continuar</button>\n</template>",
+              "explanation": "El prefijo : es la abreviatura de v-bind. El valor de la variable se asigna a la propiedad o atributo correspondiente. Si bloqueado cambia a true, el botón queda deshabilitado. Usá URLs y rutas válidas para los recursos."
+            },
+            {
+              "title": "Clases y estilos dinámicos",
+              "description": "Aplicá clases según el estado de un componente.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst seleccionado = ref(false);\nconst color = ref('teal');\n</script>\n\n<template>\n  <button\n    :class=\"{ activo: seleccionado }\"\n    :style=\"{ borderColor: color }\"\n    @click=\"seleccionado = !seleccionado\"\n  >\n    {{ seleccionado ? 'Seleccionado' : 'Seleccionar' }}\n  </button>\n</template>",
+              "explanation": "La forma de objeto en :class agrega la clase activo cuando seleccionado es verdadero. :style enlaza propiedades CSS; en este caso borderColor. @click cambia el estado y la plantilla se actualiza."
+            },
+            {
+              "title": "v-html y el riesgo de contenido no confiable",
+              "description": "Vue puede insertar HTML explícito, pero debe hacerse únicamente cuando el contenido es confiable y está sanitizado.",
+              "code": "<script setup>\nconst texto = '<strong>Importante</strong>';\nconst contenidoConfiable = '<p>Texto preparado por el sitio.</p>';\n</script>\n\n<template>\n  <p>{{ texto }}</p>\n  <div v-html=\"contenidoConfiable\"></div>\n</template>",
+              "explanation": "La interpolación {{ texto }} muestra las etiquetas como texto. v-html interpreta la cadena como HTML. Nunca uses v-html directamente con contenido enviado por usuarios o fuentes no confiables: puede abrir una vía de inyección de scripts. Para contenido enriquecido externo se necesita una estrategia de sanitización confiable."
+            }
+          ],
+          "bestPractices": [
+            "Mantené las expresiones de plantilla simples; trasladá cálculos extensos a computed o funciones.",
+            "Usá :class y :style cuando la presentación dependa del estado.",
+            "Preferí interpolación de texto para mostrar entradas de usuario.",
+            "Usá v-html solo cuando el HTML sea confiable y haya sido sanitizado con una biblioteca adecuada."
+          ],
+          "commonMistakes": [
+            "Escribir v-bind:src con una cadena literal cuando se necesita enlazar una variable; para una expresión usá :src=\"imagen\".",
+            "Creer que {{ }} interpreta etiquetas HTML: la interpolación escapa el contenido.",
+            "Insertar texto proporcionado por usuarios mediante v-html sin sanitización.",
+            "Colocar instrucciones completas como if o for dentro de una interpolación: las plantillas esperan expresiones."
+          ],
+          "exercise": "Construí una tarjeta de perfil con nombre, imagen, URL de portfolio y estado. El nombre y la URL deben venir de variables reactivas. Usá :src, :href, :class y una expresión para mostrar si el perfil está activo.",
+          "hint": "Definí los datos dentro de <script setup>. En la plantilla, usá :src=\"foto\", :href=\"portfolio\" y :class=\"{ activo: activo }\".",
+          "parameters": [
+            {
+              "name": "{{ expresión }}",
+              "description": "Interpolación de texto. Evalúa una expresión JavaScript y muestra su resultado como texto."
+            },
+            {
+              "name": "v-bind:atributo / :atributo",
+              "description": "Enlaza un atributo o propiedad del elemento al valor de una expresión reactiva. La forma abreviada es :."
+            },
+            {
+              "name": "v-on:evento / @evento",
+              "description": "Registra un listener para un evento. La abreviatura es @."
+            },
+            {
+              "name": "v-html",
+              "description": "Inserta HTML sin escaparlo. No lo uses con contenido no confiable porque puede introducir vulnerabilidades XSS."
+            },
+            {
+              "name": "v-text",
+              "description": "Actualiza el textContent del elemento. Es una alternativa declarativa a la interpolación cuando el contenido completo viene de una expresión."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Sintaxis de plantillas",
+              "url": "https://vuejs.org/guide/essentials/template-syntax.html"
+            },
+            {
+              "label": "Vue — Enlace de clases y estilos",
+              "url": "https://vuejs.org/guide/essentials/class-and-style.html"
+            }
+          ]
         },
         {
           "id": "vue-directivas",
-          "title": "Directivas esenciales",
+          "title": "Directivas de Vue: v-if, v-show, v-bind y v-on",
           "category": "fundamentos",
-          "summary": "v-if, v-for, v-bind y v-on controlan condiciones, listas, atributos y eventos.",
-          "purpose": "v-if, v-for, v-bind y v-on controlan condiciones, listas, atributos y eventos.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "<p v-if=\"visible\">Visible</p>\n<li v-for=\"tarea in tareas\" :key=\"tarea\">{{ tarea }}</li>\n<button @click=\"visible = !visible\">Alternar</button>",
+          "summary": "Controlá la presencia de elementos, atributos, clases y eventos con las directivas esenciales.",
+          "purpose": "Las directivas son atributos especiales con prefijo v- que Vue procesa para enlazar el DOM con el estado del componente. v-if crea o elimina condicionalmente un bloque; v-show cambia su visibilidad mediante CSS; v-bind enlaza atributos; v-on registra eventos. Las abreviaturas más utilizadas son :, @ y el modificador de evento con punto.",
+          "whenToUse": "Usá v-if cuando el contenido deba crearse o eliminarse según una condición. Usá v-show cuando el elemento se deba mostrar y ocultar con frecuencia y convenga conservarlo en el DOM. Utilizá v-bind y v-on para conectar estado e interacciones con los elementos HTML.",
+          "syntax": "<template>\n  <p v-if=\"cargando\">Cargando...</p>\n  <p v-else-if=\"error\">Ocurrió un error</p>\n  <p v-else>Contenido listo</p>\n\n  <button v-show=\"puedeGuardar\" @click=\"guardar\">Guardar</button>\n</template>",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "<p v-if=\"visible\">Visible</p>\n<li v-for=\"tarea in tareas\" :key=\"tarea\">{{ tarea }}</li>\n<button @click=\"visible = !visible\">Alternar</button>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Condiciones con v-if y v-else",
+              "description": "Mostrá uno de varios estados de una interfaz.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst cargando = ref(false);\nconst usuario = ref({ nombre: 'Ana' });\n</script>\n\n<template>\n  <p v-if=\"cargando\">Cargando...</p>\n  <p v-else-if=\"usuario\">Hola, {{ usuario.nombre }}</p>\n  <p v-else>No hay usuario.</p>\n</template>",
+              "explanation": "Vue evalúa las condiciones en orden. Cuando cargando es false, comprueba usuario. El primer bloque cuya condición sea verdadera se renderiza. v-else debe estar inmediatamente después de la cadena condicional."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "<p v-if=\"visible\">Visible</p>\n<li v-for=\"tarea in tareas\" :key=\"tarea\">{{ tarea }}</li>\n<button @click=\"visible = !visible\">Alternar</button>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Elegir entre v-if y v-show",
+              "description": "Compará la creación y eliminación del nodo con el cambio de display.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst abierto = ref(false);\n</script>\n\n<template>\n  <button @click=\"abierto = !abierto\">Alternar</button>\n  <section v-if=\"abierto\">Se crea y se elimina del DOM.</section>\n  <section v-show=\"abierto\">Permanece y cambia display.</section>\n</template>",
+              "explanation": "v-if realiza una alternancia real: crea o destruye el bloque y ejecuta los ciclos de vida correspondientes. v-show mantiene el elemento y cambia display. Para alternancias muy frecuentes puede convenir v-show; para condiciones que rara vez se activan, v-if suele ser apropiado."
+            },
+            {
+              "title": "Modificadores de eventos",
+              "description": "Evitá escribir código repetitivo para acciones comunes del navegador.",
+              "code": "<template>\n  <form @submit.prevent=\"enviar\">\n    <input v-model=\"nombre\" placeholder=\"Tu nombre\">\n    <button type=\"submit\">Enviar</button>\n  </form>\n  <a href=\"/ayuda\" @click.stop=\"registrarClick\">Ayuda</a>\n</template>",
+              "explanation": "@submit.prevent llama a enviar sin que el navegador recargue la página por el envío tradicional del formulario. @click.stop detiene la propagación del evento. Los modificadores permiten expresar esta intención en la plantilla."
+            },
+            {
+              "title": "Clases y atributos con condición",
+              "description": "Aplicá una clase y un atributo booleano a partir del estado.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst valido = ref(false);\n</script>\n\n<template>\n  <input :class=\"{ error: !valido }\" :aria-invalid=\"!valido\">\n  <button :disabled=\"!valido\">Continuar</button>\n</template>",
+              "explanation": "La forma objeto de :class agrega error cuando valido es falso. aria-invalid comunica el estado del campo a tecnologías de asistencia. disabled recibe un booleano y deshabilita el botón cuando el formulario no es válido."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá v-if para condiciones que pueden no necesitar existir en el DOM y v-show para alternancias frecuentes.",
+            "Mantené v-else y v-else-if junto al bloque v-if al que pertenecen.",
+            "Elegí modificadores de eventos claros como .prevent o .stop en lugar de repetir lógica en cada método.",
+            "Proporcioná estados visibles de carga, error y contenido vacío."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Usar v-show en elementos que no deberían existir por razones de seguridad o privacidad: ocultar con CSS no elimina los datos del DOM.",
+            "Colocar contenido entre v-if y v-else, rompiendo la cadena condicional.",
+            "Confundir @click=\"accion\" con @click=\"accion()\"; ambos pueden ser válidos, pero el segundo ejecuta la expresión y puede necesitar argumentos.",
+            "Usar v-if y v-for en el mismo elemento para filtrar: v-if tiene mayor prioridad y no accede al alias del v-for en ese nodo."
           ],
-          "exercise": "Creá una lista que pueda ocultarse con un botón.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un panel de inicio de sesión con estados: cargando, error y sesión iniciada. Usá v-if/v-else-if/v-else para los mensajes, v-show para alternar un panel de ayuda y @submit.prevent para manejar el formulario.",
+          "hint": "Creá dos refs: estado y ayudaAbierta. En el formulario usá @submit.prevent=\"iniciarSesion\". Cambiá el estado desde la función para probar cada mensaje.",
+          "parameters": [
+            {
+              "name": "v-if / v-else-if / v-else",
+              "description": "Renderizan condicionalmente un bloque. v-else-if y v-else deben aparecer junto al bloque condicional correspondiente."
+            },
+            {
+              "name": "v-show",
+              "description": "Alterna la propiedad CSS display. El nodo permanece en el DOM aunque esté oculto."
+            },
+            {
+              "name": "v-bind / :",
+              "description": "Enlaza una expresión a un atributo, propiedad DOM, class o style."
+            },
+            {
+              "name": "v-on / @",
+              "description": "Registra un listener de evento, por ejemplo @click o @input."
+            },
+            {
+              "name": ".prevent / .stop / .once",
+              "description": "Modificadores de eventos: evitan la acción predeterminada, detienen la propagación o registran el listener para una sola ejecución."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Renderizado condicional",
+              "url": "https://vuejs.org/guide/essentials/conditional.html"
+            },
+            {
+              "label": "Vue — Manejo de eventos",
+              "url": "https://vuejs.org/guide/essentials/event-handling.html"
+            }
+          ]
+        },
+        {
+          "id": "vue-listas",
+          "title": "Listas con v-for y claves key",
+          "category": "fundamentos",
+          "summary": "Renderizá arreglos y objetos, utilizá keys estables y filtrá colecciones con propiedades computadas.",
+          "purpose": "La directiva v-for repite una plantilla a partir de un arreglo, un objeto o un rango numérico. Durante la actualización, Vue utiliza una estrategia eficiente para reconciliar los nodos. Cuando los elementos tienen identidad o estado propio, conviene asignar una key única y primitiva para que Vue pueda reconocer cada elemento aunque cambie el orden.",
+          "whenToUse": "Usá v-for para catálogos, menús, listas de tareas, tablas y colecciones dinámicas. Cuando necesites filtrar u ordenar los registros, prepará una propiedad computada y recorré el resultado. Evitá combinar v-if y v-for en el mismo nodo; trasladá la condición a un contenedor o a una lista derivada.",
+          "syntax": "<script setup>\nimport { ref, computed } from 'vue';\nconst tareas = ref([\n  { id: 1, nombre: 'Estudiar Vue', hecha: false },\n  { id: 2, nombre: 'Practicar v-for', hecha: true }\n]);\nconst pendientes = computed(() => tareas.value.filter(tarea => !tarea.hecha));\n</script>\n\n<template>\n  <li v-for=\"tarea in pendientes\" :key=\"tarea.id\">\n    {{ tarea.nombre }}\n  </li>\n</template>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Recorrer un arreglo de objetos",
+              "description": "Mostrá cada producto y usá su identificador como key.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst productos = ref([\n  { id: 10, nombre: 'Teclado', precio: 25000 },\n  { id: 11, nombre: 'Mouse', precio: 12000 },\n  { id: 12, nombre: 'Monitor', precio: 180000 }\n]);\n</script>\n\n<template>\n  <article v-for=\"producto in productos\" :key=\"producto.id\">\n    <h3>{{ producto.nombre }}</h3>\n    <p>Precio: {{ producto.precio }}</p>\n  </article>\n</template>",
+              "explanation": "v-for recorre el arreglo productos. En cada iteración, producto representa el objeto actual. :key utiliza id, un identificador estable que permite a Vue mantener la identidad de cada nodo cuando la lista cambia."
+            },
+            {
+              "title": "Recorrer un objeto e incluir el índice",
+              "description": "v-for también puede recorrer las propiedades de un objeto.",
+              "code": "<script setup>\nconst perfil = {\n  nombre: 'Lucía',\n  ciudad: 'Corrientes',\n  profesion: 'Desarrolladora'\n};\n</script>\n\n<template>\n  <ul>\n    <li v-for=\"(valor, clave, indice) in perfil\" :key=\"clave\">\n      {{ indice + 1 }}. {{ clave }}: {{ valor }}\n    </li>\n  </ul>\n</template>",
+              "explanation": "Al iterar un objeto, Vue permite obtener el valor, la clave y el índice. La key utiliza la clave del objeto, que identifica cada propiedad. El orden de iteración sigue el comportamiento de Object.values/Object.keys de JavaScript."
+            },
+            {
+              "title": "Filtrar con computed en lugar de v-if junto a v-for",
+              "description": "Prepará una colección filtrada y luego renderizá el resultado.",
+              "code": "<script setup>\nimport { ref, computed } from 'vue';\nconst tareas = ref([\n  { id: 1, nombre: 'Leer', hecha: false },\n  { id: 2, nombre: 'Practicar', hecha: true },\n  { id: 3, nombre: 'Repasar', hecha: false }\n]);\nconst pendientes = computed(() => tareas.value.filter(tarea => !tarea.hecha));\n</script>\n\n<template>\n  <li v-for=\"tarea in pendientes\" :key=\"tarea.id\">\n    {{ tarea.nombre }}\n  </li>\n</template>",
+              "explanation": "computed produce un nuevo arreglo con filter. La plantilla recorre ese resultado directamente. Esto evita poner v-if en el mismo nodo que v-for, una combinación que puede resultar confusa porque v-if se evalúa antes que el alias de v-for."
+            },
+            {
+              "title": "Renderizar componentes en una lista",
+              "description": "Los datos de cada fila deben enviarse explícitamente al componente hijo mediante props.",
+              "code": "<!-- TareaItem.vue -->\n<script setup>\ndefineProps({ tarea: { type: Object, required: true } });\n</script>\n<template><li>{{ tarea.nombre }}</li></template>\n\n<!-- En el componente padre -->\n<template>\n  <ul>\n    <TareaItem v-for=\"tarea in tareas\" :key=\"tarea.id\" :tarea=\"tarea\" />\n  </ul>\n</template>",
+              "explanation": "v-for crea una instancia de TareaItem por cada tarea. :key se coloca en el componente que se repite. :tarea=\"tarea\" pasa el dato al hijo; Vue no inyecta automáticamente el alias del bucle como prop."
+            }
+          ],
+          "bestPractices": [
+            "Usá una key estable y única, preferentemente el id del registro.",
+            "Utilizá computed para filtrar y ordenar colecciones en vez de mezclar v-if y v-for en el mismo nodo.",
+            "Cuando recorras componentes, pasá explícitamente los datos mediante props.",
+            "Si necesitás ordenar, evitá modificar el arreglo de origen por accidente: trabajá sobre una copia."
+          ],
+          "commonMistakes": [
+            "Usar el índice como key en listas que se insertan, eliminan o reordenan.",
+            "Repetir una key para varios elementos hermanos.",
+            "Esperar que un componente repetido reciba automáticamente el objeto del bucle sin declararlo como prop.",
+            "Colocar v-if y v-for juntos y referirse al alias del bucle desde el v-if del mismo elemento.",
+            "Usar objetos como key; Vue espera valores primitivos."
+          ],
+          "exercise": "Construí un catálogo de libros con id, título, autor y leído. Mostrá los libros con v-for y :key. Agregá un filtro para mostrar todos, leídos o pendientes usando computed. Después extraé cada libro a un componente LibroItem y pasale el objeto mediante una prop.",
+          "hint": "Usá un ref para el arreglo y otro para el filtro. Creá una computed que devuelva la lista visible. En cada resultado usá :key=\"libro.id\".",
+          "parameters": [
+            {
+              "name": "v-for=\"item in items\"",
+              "description": "Recorre una colección y expone cada elemento bajo el alias item."
+            },
+            {
+              "name": "(item, index) in items",
+              "description": "Permite obtener también el índice de la posición actual."
+            },
+            {
+              "name": ":key",
+              "description": "Identificador único y estable entre los hermanos de la lista. Debe ser un string o número, no un objeto."
+            },
+            {
+              "name": "v-for en objetos",
+              "description": "Puede recorrer los valores de las propiedades; también admite alias para valor, clave e índice."
+            },
+            {
+              "name": "v-for en componentes",
+              "description": "Renderiza instancias del componente. Los datos no se pasan automáticamente: envialos mediante props."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Renderizado de listas",
+              "url": "https://vuejs.org/guide/essentials/list.html"
+            },
+            {
+              "label": "Vue — Renderizado condicional",
+              "url": "https://vuejs.org/guide/essentials/conditional.html"
+            }
+          ]
         },
         {
           "id": "vue-ref",
-          "title": "ref: valores reactivos",
+          "title": "ref(): crear estado reactivo",
           "category": "intermedio",
-          "summary": "ref crea una referencia reactiva; en JavaScript se lee y modifica mediante .value.",
-          "purpose": "ref crea una referencia reactiva; en JavaScript se lee y modifica mediante .value.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const contador = ref(0);\ncontador.value++;",
+          "summary": "Creá y actualizá valores reactivos primitivos, objetos y arreglos mediante referencias ref.",
+          "purpose": "ref() recibe un valor y devuelve un objeto de referencia con la propiedad .value. Vue rastrea las lecturas y escrituras de esa propiedad para saber qué componentes o efectos dependen de ella. Los refs pueden contener números, cadenas, booleanos, objetos y arreglos. Cuando un ref contiene un objeto, su valor se vuelve profundamente reactivo de forma predeterminada. En la plantilla, los refs de nivel superior se desenvuelven automáticamente en el uso habitual.",
+          "whenToUse": "Usá ref como opción habitual para declarar estado en Composition API. Es especialmente cómodo para valores primitivos y también puede contener objetos o arreglos. Si necesitás reemplazar completamente un valor, ref permite asignar una nueva referencia mediante .value. Para agrupar varias propiedades de un objeto también existe reactive().",
+          "syntax": "import { ref } from 'vue';\n\nconst contador = ref(0);\ncontador.value++;\n\nconst usuario = ref({ nombre: 'Ana' });\nusuario.value.nombre = 'Lucía';",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const contador = ref(0);\ncontador.value++;",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Contador con ref",
+              "description": "Creá un contador y actualizá su valor desde un evento.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst contador = ref(0);\n\nfunction incrementar() {\n  contador.value++;\n}\n</script>\n\n<template>\n  <p>Total: {{ contador }}</p>\n  <button @click=\"incrementar\">Sumar</button>\n</template>",
+              "explanation": "ref(0) crea el estado inicial. En la función JavaScript se utiliza contador.value para cambiarlo. En la plantilla se escribe {{ contador }} porque Vue desenvuelve automáticamente el ref. Cada cambio reactivo provoca que la parte dependiente de la vista se actualice."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const contador = ref(0);\ncontador.value++;",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Cambiar y reemplazar el valor de un ref",
+              "description": "Un ref puede recibir un nuevo valor completo, no solamente mutaciones internas.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('Ana');\nconst nombres = ref(['Ana', 'Luis']);\n\nfunction cambiarTodo() {\n  nombre.value = 'Lucía';\n  nombres.value = ['Lucía', 'Mateo'];\n}\n</script>\n\n<template>\n  <p>{{ nombre }}</p>\n  <p>{{ nombres.join(', ') }}</p>\n  <button @click=\"cambiarTodo\">Reemplazar datos</button>\n</template>",
+              "explanation": "La asignación a .value reemplaza el valor contenido por el ref. Esto también sirve para arreglos completos. Vue detecta el cambio de referencia y actualiza la vista."
+            },
+            {
+              "title": "Ref con un objeto anidado",
+              "description": "Los objetos dentro de un ref son reactivos de forma profunda por defecto.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst usuario = ref({\n  nombre: 'Ana',\n  perfil: { ciudad: 'Corrientes' }\n});\n\nfunction cambiarCiudad() {\n  usuario.value.perfil.ciudad = 'Resistencia';\n}\n</script>\n\n<template>\n  <p>{{ usuario.nombre }} — {{ usuario.perfil.ciudad }}</p>\n  <button @click=\"cambiarCiudad\">Cambiar ciudad</button>\n</template>",
+              "explanation": "El ref envuelve el objeto y Vue convierte los objetos anidados en proxies reactivos al accederlos. En JavaScript se utiliza usuario.value; en la plantilla se desenvuelve el ref superior y se accede a las propiedades."
+            },
+            {
+              "title": "Esperar a que el DOM se actualice con nextTick",
+              "description": "Las actualizaciones del DOM se agrupan y no se aplican inmediatamente después de modificar un ref.",
+              "code": "<script setup>\nimport { ref, nextTick } from 'vue';\nconst mensaje = ref('Antes');\nconst parrafo = ref(null);\n\nasync function actualizar() {\n  mensaje.value = 'Después';\n  await nextTick();\n  console.log(parrafo.value.textContent);\n}\n</script>\n\n<template>\n  <p ref=\"parrafo\">{{ mensaje }}</p>\n  <button @click=\"actualizar\">Actualizar y leer DOM</button>\n</template>",
+              "explanation": "mensaje.value cambia inmediatamente en el estado, pero Vue programa la actualización del DOM. await nextTick espera ese ciclo y permite leer el texto ya actualizado a través del template ref parrafo."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Utilizá .value en JavaScript y el nombre del ref directamente en la plantilla.",
+            "Preferí ref para estado que puede ser reemplazado completamente o para valores primitivos.",
+            "Usá nextTick solo cuando realmente necesites esperar al DOM actualizado; no lo agregues a cada cambio de estado.",
+            "No confundas un ref con una variable JavaScript común: la referencia permite a Vue rastrear dependencias."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar .value al leer o modificar un ref desde JavaScript.",
+            "Intentar escribir contador.value directamente en el template cuando el ref ya está desenvuelto en ese contexto.",
+            "Esperar que el DOM cambie de forma síncrona antes de que Vue complete el ciclo de actualización.",
+            "Suponer que ref solo sirve para números o cadenas; también puede contener objetos y arreglos."
           ],
-          "exercise": "Construí un contador con ref.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí una ficha de usuario con nombre, ciudad y una lista de tres habilidades dentro de un ref. Agregá botones para cambiar la ciudad, agregar una habilidad y reemplazar el usuario completo. Mostrá los datos en la plantilla.",
+          "hint": "Declarà usuario = ref({ nombre, ciudad, habilidades: [] }). En JavaScript accedé con usuario.value. Para agregar a la lista usá usuario.value.habilidades.push('Vue').",
+          "parameters": [
+            {
+              "name": "ref(valorInicial)",
+              "description": "Crea una referencia reactiva y almacena el valor inicial en .value."
+            },
+            {
+              "name": ".value",
+              "description": "Propiedad usada en JavaScript para leer y actualizar el valor del ref."
+            },
+            {
+              "name": "isRef(valor)",
+              "description": "API que permite comprobar si un valor es una referencia ref."
+            },
+            {
+              "name": "unref(valor)",
+              "description": "Devuelve valor.value si recibe un ref; en caso contrario devuelve el valor sin cambios."
+            },
+            {
+              "name": "nextTick()",
+              "description": "Espera a que Vue termine de aplicar las actualizaciones del DOM que quedaron pendientes después de un cambio reactivo."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Fundamentos de reactividad",
+              "url": "https://vuejs.org/guide/essentials/reactivity-fundamentals.html"
+            },
+            {
+              "label": "Vue — API ref",
+              "url": "https://vuejs.org/api/reactivity-core.html#ref"
+            },
+            {
+              "label": "Vue — nextTick",
+              "url": "https://vuejs.org/api/general.html#nexttick"
+            }
+          ]
+        },
+        {
+          "id": "vue-reactive",
+          "title": "reactive(): objetos reactivos y proxies",
+          "category": "intermedio",
+          "summary": "Agrupá estado en objetos reactivos y aprendé a evitar la pérdida de reactividad al desestructurar propiedades.",
+          "purpose": "reactive() recibe un objeto y devuelve un Proxy reactivo. Vue intercepta lecturas y escrituras sobre el proxy para rastrear dependencias y provocar actualizaciones. La conversión es profunda: los objetos anidados también se vuelven reactivos al accederse. A diferencia de ref(), reactive trabaja con objetos, arreglos y colecciones; no es una envoltura para valores primitivos.",
+          "whenToUse": "Usá reactive cuando un conjunto de propiedades forme un objeto de estado coherente, como filtros, datos de un formulario o configuración de una vista. Elegí ref cuando necesites reemplazar el valor completo con frecuencia o cuando trabajes con primitivos. No desestructures directamente propiedades reactivas si necesitás conservar su conexión; podés usar toRefs o acceder a través del objeto.",
+          "syntax": "import { reactive } from 'vue';\n\nconst formulario = reactive({\n  nombre: '',\n  correo: '',\n  enviado: false\n});\n\nformulario.nombre = 'Ana';",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Crear un objeto reactivo",
+              "description": "Agrupá en un objeto los datos relacionados de un formulario.",
+              "code": "<script setup>\nimport { reactive } from 'vue';\nconst usuario = reactive({\n  nombre: 'Ana',\n  ciudad: 'Corrientes',\n  activo: true\n});\n\nfunction cambiarCiudad() {\n  usuario.ciudad = 'Resistencia';\n}\n</script>\n\n<template>\n  <p>{{ usuario.nombre }} — {{ usuario.ciudad }}</p>\n  <button @click=\"cambiarCiudad\">Cambiar ciudad</button>\n</template>",
+              "explanation": "reactive devuelve un Proxy y las propiedades se leen y modifican directamente, sin .value. La asignación usuario.ciudad actualiza el estado y la plantilla que depende de esa propiedad."
+            },
+            {
+              "title": "Reactividad profunda en objetos anidados",
+              "description": "Las propiedades internas de un objeto reactivo también se rastrean.",
+              "code": "<script setup>\nimport { reactive } from 'vue';\nconst carrito = reactive({\n  cliente: { nombre: 'Marta' },\n  productos: [{ id: 1, nombre: 'Teclado', cantidad: 1 }]\n});\n\nfunction agregarUnidad() {\n  carrito.productos[0].cantidad++;\n}\n</script>\n\n<template>\n  <p>{{ carrito.cliente.nombre }}</p>\n  <p>{{ carrito.productos[0].cantidad }}</p>\n  <button @click=\"agregarUnidad\">Sumar unidad</button>\n</template>",
+              "explanation": "La conversión es profunda. Vue también rastrea cambios en cliente.nombre y en la cantidad del producto. Se modifica el proxy reactivo, no una copia independiente del objeto."
+            },
+            {
+              "title": "La desestructuración puede perder la conexión",
+              "description": "Al extraer una propiedad primitiva de un proxy, la variable local deja de pasar por el getter reactivo del objeto.",
+              "code": "<script setup>\nimport { reactive, toRefs } from 'vue';\nconst estado = reactive({ contador: 0, nombre: 'Ana' });\n\n// No usar si necesitás conservar reactividad:\n// const { contador } = estado;\n\n// Forma reactiva:\nconst { contador, nombre } = toRefs(estado);\n</script>\n\n<template>\n  <p>{{ contador }} — {{ nombre }}</p>\n  <button @click=\"estado.contador++\">Sumar</button>\n</template>",
+              "explanation": "const { contador } = estado obtiene el valor actual de la propiedad y crea una variable local desconectada de las futuras lecturas del proxy. toRefs crea refs vinculados a cada propiedad; por eso contador y nombre siguen conectados a estado. También podés evitar desestructurar y utilizar estado.contador."
+            },
+            {
+              "title": "Comparar reactive y ref",
+              "description": "Los dos crean estado reactivo, pero su forma de acceso y reemplazo es distinta.",
+              "code": "<script setup>\nimport { ref, reactive } from 'vue';\nconst contador = ref(0);\nconst usuario = reactive({ nombre: 'Ana' });\n\nfunction reiniciar() {\n  contador.value = 0;\n  usuario.nombre = 'Invitado';\n}\n</script>\n\n<template>\n  <p>{{ contador }} — {{ usuario.nombre }}</p>\n  <button @click=\"reiniciar\">Reiniciar</button>\n</template>",
+              "explanation": "ref envuelve cualquier valor y se lee/modifica con .value en JavaScript. reactive devuelve un proxy de un objeto y sus propiedades se usan directamente. Esta diferencia es importante al elegir la forma de estado de un componente."
+            }
+          ],
+          "bestPractices": [
+            "Usá reactive para agrupar campos que forman un objeto de estado coherente.",
+            "Conservá la referencia al proxy: si necesitás reemplazar por completo el objeto, considerá ref en lugar de reasignar la variable reactive.",
+            "Si desestructurás propiedades y necesitás conservar reactividad, utilizá toRefs o toRef.",
+            "Modificá el proxy, no el objeto original que existía antes de llamar a reactive."
+          ],
+          "commonMistakes": [
+            "Intentar usar reactive(0) para un valor primitivo; reactive está pensado para objetos.",
+            "Desestructurar propiedades primitivas y esperar que sigan reaccionando a cambios del objeto.",
+            "Reasignar la variable que contiene el proxy como si fuera un ref.",
+            "Modificar una referencia al objeto original en vez de usar el proxy reactivo."
+          ],
+          "exercise": "Creá un estado reactivo para un pedido con cliente, dirección y una lista de productos. Permití cambiar la dirección y aumentar la cantidad de un producto. Después extraé una propiedad con toRef y mostrá que continúa sincronizada.",
+          "hint": "Usá const pedido = reactive({...}). Para conservar una propiedad individual, escribí const direccion = toRef(pedido, 'direccion') y utilizá direccion.value en JavaScript.",
+          "parameters": [
+            {
+              "name": "reactive(objeto)",
+              "description": "Devuelve un Proxy reactivo del objeto. Solo admite tipos de objeto, como objetos, arreglos, Map y Set."
+            },
+            {
+              "name": "toRefs(objetoReactivo)",
+              "description": "Convierte las propiedades enumerables de un objeto reactivo en refs vinculados a sus propiedades originales."
+            },
+            {
+              "name": "toRef(objeto, clave)",
+              "description": "Crea un ref que se vincula a una propiedad específica del objeto de origen."
+            },
+            {
+              "name": "isReactive(valor)",
+              "description": "Permite comprobar si un objeto es un proxy reactivo."
+            },
+            {
+              "name": "toRaw(proxy)",
+              "description": "Devuelve el objeto original detrás del proxy. Es una API avanzada; no se recomienda usar el objeto original para modificar estado reactivo."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Fundamentos de reactividad",
+              "url": "https://vuejs.org/guide/essentials/reactivity-fundamentals.html#reactive"
+            },
+            {
+              "label": "Vue — toRefs y toRef",
+              "url": "https://vuejs.org/api/reactivity-utilities.html#torefs"
+            },
+            {
+              "label": "Vue — Reactividad en profundidad",
+              "url": "https://vuejs.org/guide/extras/reactivity-in-depth.html"
+            }
+          ]
         },
         {
           "id": "vue-computed",
-          "title": "Propiedades computadas",
+          "title": "computed(): propiedades computadas",
           "category": "intermedio",
-          "summary": "computed calcula un valor derivado y lo almacena en caché hasta que cambian sus dependencias.",
-          "purpose": "computed calcula un valor derivado y lo almacena en caché hasta que cambian sus dependencias.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const precio = ref(100);\nconst total = computed(() => precio.value * 1.21);",
+          "summary": "Calculá valores derivados con caché reactiva y distinguí computed de métodos y watchers.",
+          "purpose": "computed() recibe una función getter y devuelve un ref de solo lectura cuyo valor se calcula a partir de dependencias reactivas. Vue almacena el resultado en caché y lo vuelve a calcular cuando alguna dependencia cambia. También es posible crear un computed escribible mediante un getter y un setter. El getter debe ser una operación pura: no debe modificar otros estados, realizar solicitudes de red ni manipular el DOM.",
+          "whenToUse": "Usá propiedades computadas para totales, filtros, nombres completos, estados derivados y cualquier valor que se pueda obtener de otros datos reactivos. Utilizá watch cuando necesites ejecutar un efecto secundario al cambiar una fuente. Una función normal o método resulta apropiado cuando querés ejecutar una operación cada vez que la invocás y no necesitás caché.",
+          "syntax": "import { ref, computed } from 'vue';\n\nconst precio = ref(100);\nconst cantidad = ref(3);\nconst total = computed(() => precio.value * cantidad.value);",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const precio = ref(100);\nconst total = computed(() => precio.value * 1.21);",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Calcular un total",
+              "description": "Calculá el importe a partir de precio y cantidad.",
+              "code": "<script setup>\nimport { ref, computed } from 'vue';\nconst precio = ref(15000);\nconst cantidad = ref(2);\nconst total = computed(() => precio.value * cantidad.value);\n</script>\n\n<template>\n  <p>Precio: {{ precio }}</p>\n  <p>Cantidad: {{ cantidad }}</p>\n  <strong>Total: {{ total }}</strong>\n  <button @click=\"cantidad++\">Agregar unidad</button>\n</template>",
+              "explanation": "total depende de precio y cantidad. Vue registra esas lecturas y calcula el resultado. Mientras ninguna dependencia cambie, reutiliza el valor almacenado. Al aumentar cantidad, el resultado se recalcula."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const precio = ref(100);\nconst total = computed(() => precio.value * 1.21);",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Filtrar una lista con computed",
+              "description": "Usá un valor derivado para mantener separada la lista original del resultado filtrado.",
+              "code": "<script setup>\nimport { ref, computed } from 'vue';\nconst consulta = ref('');\nconst novelas = ref(['Overlord', 'Re:Zero', 'Goblin Slayer']);\nconst resultados = computed(() => {\n  return novelas.value.filter(novela =>\n    novela.toLowerCase().includes(consulta.value.toLowerCase())\n  );\n});\n</script>\n\n<template>\n  <input v-model=\"consulta\" placeholder=\"Buscar novela\">\n  <p v-for=\"novela in resultados\" :key=\"novela\">{{ novela }}</p>\n</template>",
+              "explanation": "resultados se vuelve a calcular cuando cambian novelas o consulta. filter devuelve un arreglo nuevo, pero no modifica la lista original. La plantilla consume el resultado computado."
+            },
+            {
+              "title": "computed frente a un método",
+              "description": "Ambas opciones pueden producir el mismo texto, pero solo computed almacena el resultado según las dependencias.",
+              "code": "<script setup>\nimport { ref, computed } from 'vue';\nconst libros = ref(['A', 'B', 'C']);\n\nconst cantidadComputada = computed(() => libros.value.length);\nfunction cantidadMetodo() {\n  return libros.value.length;\n}\n</script>\n\n<template>\n  <p>Computed: {{ cantidadComputada }}</p>\n  <p>Método: {{ cantidadMetodo() }}</p>\n</template>",
+              "explanation": "El método se ejecuta cuando la plantilla lo evalúa durante un render. El computed guarda su resultado y solo lo vuelve a calcular cuando sus dependencias reactivas cambian. Para cálculos derivados que se consultan varias veces, computed suele ser más adecuado."
+            },
+            {
+              "title": "Crear un computed escribible",
+              "description": "Definí un getter para leer un valor derivado y un setter para actualizar las fuentes originales.",
+              "code": "<script setup>\nimport { ref, computed } from 'vue';\nconst nombre = ref('Ana');\nconst apellido = ref('Pérez');\n\nconst nombreCompleto = computed({\n  get() {\n    return nombre.value + ' ' + apellido.value;\n  },\n  set(nuevoValor) {\n    const partes = nuevoValor.split(' ');\n    nombre.value = partes.shift() || '';\n    apellido.value = partes.join(' ');\n  }\n});\n</script>\n\n<template>\n  <input v-model=\"nombreCompleto\">\n  <p>Nombre: {{ nombre }} | Apellido: {{ apellido }}</p>\n</template>",
+              "explanation": "Al asignar un valor a nombreCompleto, Vue llama al setter. El setter separa el texto y actualiza las refs originales. Este patrón es útil para adaptar un valor derivado a un input, aunque hay que definir cómo se interpretan entradas más complejas."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Mantené los getters puros: deben calcular y devolver un resultado sin mutar estado ni ejecutar efectos secundarios.",
+            "Tratà el resultado computado como un valor derivado de solo lectura, salvo que hayas definido un setter intencionalmente.",
+            "Usá computed para datos que dependen de otras fuentes reactivas y watch para acciones externas ante cambios.",
+            "Si ordenás una lista, trabajá sobre una copia para no mutar el estado de origen."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Usar computed para realizar solicitudes HTTP o modificar otros refs.",
+            "Esperar que computed se actualice por Date.now() aunque no haya dependencias reactivas: no tiene nada que rastrear.",
+            "Modificar directamente un valor computado de solo lectura.",
+            "Usar un método para un cálculo costoso que se repite en varias partes, sin evaluar la caché de computed."
           ],
-          "exercise": "Calculá un precio final con impuesto.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí un carrito con productos, precio y cantidad. Calculá el subtotal de cada producto, el total general y el número de artículos. Añadí una búsqueda y un filtro por categoría usando propiedades computadas.",
+          "hint": "Usá computed para totalGeneral, cantidadItems y productosFiltrados. No guardes esos mismos resultados como refs separados si pueden calcularse desde el arreglo original.",
+          "parameters": [
+            {
+              "name": "computed(getter)",
+              "description": "Crea un ref computado de solo lectura. getter devuelve el valor derivado."
+            },
+            {
+              "name": "computed({ get, set })",
+              "description": "Crea un computed escribible. get calcula el valor; set interpreta el nuevo valor y actualiza las fuentes reactivas."
+            },
+            {
+              "name": ".value",
+              "description": "Propiedad para leer el resultado computado desde JavaScript. En la plantilla se desenvuelve automáticamente."
+            },
+            {
+              "name": "caché reactiva",
+              "description": "El getter no se vuelve a ejecutar mientras sus dependencias reactivas no cambien. Una llamada a un método no tiene esta caché automática."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Propiedades computadas",
+              "url": "https://vuejs.org/guide/essentials/computed.html"
+            },
+            {
+              "label": "Vue — API computed",
+              "url": "https://vuejs.org/api/reactivity-core.html#computed"
+            }
+          ]
+        },
+        {
+          "id": "vue-watchers",
+          "title": "watch y watchEffect: observar cambios",
+          "category": "intermedio",
+          "summary": "Ejecutá efectos secundarios cuando cambian fuentes reactivas y limpiá solicitudes o suscripciones anteriores.",
+          "purpose": "watch() observa una o más fuentes reactivas explícitas y ejecuta un callback cuando cambian. Permite acceder al valor nuevo y anterior, además de opciones como immediate y deep. watchEffect() ejecuta inmediatamente un efecto y registra automáticamente las dependencias reactivas que se leen durante su ejecución síncrona. Los watchers sirven para efectos secundarios, no para calcular valores derivados que se resuelven mejor con computed.",
+          "whenToUse": "Usá watch cuando querés reaccionar a una fuente específica, como un término de búsqueda o un identificador. Usá watchEffect cuando las dependencias sean claras por las lecturas realizadas dentro del efecto. Si un watcher inicia una solicitud, un temporizador o una suscripción, registrá una limpieza para invalidar o cancelar el trabajo anterior.",
+          "syntax": "import { ref, watch } from 'vue';\n\nconst busqueda = ref('');\nwatch(busqueda, (nuevoValor, valorAnterior) => {\n  console.log('Cambió:', valorAnterior, '→', nuevoValor);\n});",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Observar un ref concreto",
+              "description": "watch recibe el valor nuevo y el anterior de una fuente explícita.",
+              "code": "<script setup>\nimport { ref, watch } from 'vue';\nconst busqueda = ref('');\n\nwatch(busqueda, (nuevoValor, valorAnterior) => {\n  console.log('Antes:', valorAnterior);\n  console.log('Ahora:', nuevoValor);\n});\n</script>\n\n<template>\n  <input v-model=\"busqueda\" placeholder=\"Escribí para observar\">\n</template>",
+              "explanation": "watch recibe el ref como primera fuente. Cada cambio de busqueda produce el callback con el nuevo y anterior valor. El watcher es perezoso por defecto: no se ejecuta hasta que la fuente cambia."
+            },
+            {
+              "title": "Observar varios valores y ejecutar inmediatamente",
+              "description": "Se puede observar un arreglo de fuentes y activar el callback al iniciar.",
+              "code": "<script setup>\nimport { ref, watch } from 'vue';\nconst ancho = ref(800);\nconst alto = ref(600);\n\nwatch(\n  [ancho, alto],\n  ([nuevoAncho, nuevoAlto], [anteriorAncho, anteriorAlto]) => {\n    console.log('Tamaño:', nuevoAncho, nuevoAlto);\n  },\n  { immediate: true }\n);\n</script>",
+              "explanation": "El primer argumento contiene dos fuentes. El callback recibe arreglos de valores nuevos y anteriores. immediate: true ejecuta el callback durante la configuración inicial con los valores disponibles; luego vuelve a ejecutarse al cambiar una de las fuentes."
+            },
+            {
+              "title": "watchEffect registra dependencias automáticamente",
+              "description": "El efecto se vuelve a ejecutar cuando cambia una dependencia reactiva que leyó durante la ejecución síncrona.",
+              "code": "<script setup>\nimport { ref, watchEffect } from 'vue';\nconst nombre = ref('Ana');\nconst ciudad = ref('Corrientes');\n\nwatchEffect(() => {\n  console.log(`${nombre.value} vive en ${ciudad.value}`);\n});\n</script>",
+              "explanation": "watchEffect se ejecuta inmediatamente. Al leer nombre.value y ciudad.value, registra ambas dependencias. Cuando cambia una de ellas, vuelve a ejecutarse. A diferencia de watch, no se declara explícitamente la lista de fuentes."
+            },
+            {
+              "title": "Cancelar una solicitud anterior con limpieza",
+              "description": "Evitá que una respuesta vieja se procese después de que cambie el identificador observado.",
+              "code": "<script setup>\nimport { ref, watch } from 'vue';\nconst usuarioId = ref(1);\nconst usuario = ref(null);\nconst error = ref('');\n\nwatch(usuarioId, async (id, anterior, onCleanup) => {\n  const controller = new AbortController();\n  onCleanup(() => controller.abort());\n  error.value = '';\n  try {\n    const respuesta = await fetch(\n      `https://jsonplaceholder.typicode.com/users/${id}`,\n      { signal: controller.signal }\n    );\n    if (!respuesta.ok) throw new Error('No se pudo cargar el usuario');\n    usuario.value = await respuesta.json();\n  } catch (e) {\n    if (e.name !== 'AbortError') error.value = e.message;\n  }\n}, { immediate: true });\n</script>",
+              "explanation": "Cada ejecución crea un AbortController. onCleanup registra una función que cancela esa solicitud antes de que el watcher vuelva a ejecutarse o se detenga. Así no se mantiene trabajo obsoleto cuando cambia usuarioId. El manejo de AbortError evita mostrar como fallo una cancelación esperada."
+            }
+          ],
+          "bestPractices": [
+            "Observá la fuente más específica posible; no uses deep: true si alcanza con observar una propiedad concreta.",
+            "Usá computed para valores derivados y watch/watchEffect para efectos secundarios.",
+            "Registrá la limpieza de listeners, temporizadores y solicitudes que puedan quedar obsoletos.",
+            "Recordá que watchEffect solo rastrea automáticamente las dependencias leídas antes del primer await en un callback asíncrono.",
+            "Evitá efectos profundos innecesarios sobre objetos grandes."
+          ],
+          "commonMistakes": [
+            "Pasar el valor actual en vez de la fuente: watch(busqueda.value, ...) no observa el ref; usá watch(busqueda, ...).",
+            "Usar watch para mantener dos estados duplicados que podrían resolverse con computed.",
+            "No cancelar una solicitud anterior y permitir que una respuesta vieja sobrescriba datos más recientes.",
+            "Activar deep: true sin considerar el costo ni comprender que oldValue y newValue pueden referirse al mismo objeto en cambios anidados."
+          ],
+          "exercise": "Construí un buscador de usuarios. Cuando cambie el texto, esperá 400 ms antes de consultar una API de prueba. Si el usuario sigue escribiendo, cancelá el trabajo anterior. Mostrá estados de cargando, error y resultados.",
+          "hint": "Usá watch sobre el ref de búsqueda. Registrá un temporizador y cancelalo mediante onCleanup. Para la solicitud podés utilizar AbortController y otro onCleanup.",
+          "parameters": [
+            {
+              "name": "watch(source, callback, options)",
+              "description": "Observa un ref, un getter, un objeto reactivo o un arreglo de fuentes. Ejecuta callback cuando la fuente cambia."
+            },
+            {
+              "name": "newValue / oldValue",
+              "description": "Valores nuevo y anterior entregados al callback de watch cuando corresponde."
+            },
+            {
+              "name": "immediate: true",
+              "description": "Ejecuta el callback inmediatamente al crear el watcher, además de las ejecuciones posteriores por cambios."
+            },
+            {
+              "name": "deep: true",
+              "description": "Observa cambios anidados en un objeto. Puede ser costoso con estructuras grandes y el valor anterior puede ser la misma referencia del objeto mutado."
+            },
+            {
+              "name": "watchEffect(effect)",
+              "description": "Ejecuta el efecto inmediatamente y rastrea las dependencias reactivas leídas durante su ejecución síncrona."
+            },
+            {
+              "name": "onCleanup",
+              "description": "Función registrada desde el callback de watch para limpiar el efecto anterior antes de volver a ejecutarlo o al detener el watcher."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Watchers",
+              "url": "https://vuejs.org/guide/essentials/watchers.html"
+            },
+            {
+              "label": "Vue — API watch",
+              "url": "https://vuejs.org/api/reactivity-core.html#watch"
+            },
+            {
+              "label": "Vue — API watchEffect",
+              "url": "https://vuejs.org/api/reactivity-core.html#watcheffect"
+            }
+          ]
+        },
+        {
+          "id": "vue-forms",
+          "title": "Formularios con v-model",
+          "category": "intermedio",
+          "summary": "Sincronizá inputs, checkboxes, radios, selects y componentes personalizados con el estado de Vue.",
+          "purpose": "v-model simplifica la sincronización bidireccional entre controles de formulario y datos reactivos. En un input de texto se basa principalmente en value e input; en checkbox y radio usa checked y change; en select utiliza value y change. También admite modificadores como .lazy, .number y .trim. En componentes, v-model se implementa mediante un contrato de prop y evento o mediante defineModel en versiones compatibles.",
+          "whenToUse": "Usá v-model para campos de texto, áreas de texto, opciones de selección y controles que deban mantenerse sincronizados con el estado. Combiná el binding con validaciones y mensajes accesibles. Recordá que el valor inicial debe definirse en JavaScript y no depender de atributos HTML value, checked o selected.",
+          "syntax": "<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('');\nconst acepta = ref(false);\n</script>\n\n<template>\n  <input v-model.trim=\"nombre\" placeholder=\"Nombre\">\n  <label><input type=\"checkbox\" v-model=\"acepta\"> Acepto las condiciones</label>\n</template>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Input de texto y textarea",
+              "description": "Mantené el contenido de los campos sincronizado con refs.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('');\nconst biografia = ref('');\n</script>\n\n<template>\n  <label>Nombre\n    <input v-model.trim=\"nombre\">\n  </label>\n  <label>Biografía\n    <textarea v-model=\"biografia\"></textarea>\n  </label>\n  <p>Hola, {{ nombre || 'visitante' }}</p>\n  <p>{{ biografia }}</p>\n</template>",
+              "explanation": "v-model.trim sincroniza el texto y elimina espacios exteriores. El textarea usa v-model de la misma forma. Los refs se muestran en la plantilla sin .value."
+            },
+            {
+              "title": "Checkbox: booleano y grupo",
+              "description": "Una casilla controla un booleano; un grupo con el mismo modelo puede administrar un arreglo de opciones.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst acepta = ref(false);\nconst intereses = ref([]);\n</script>\n\n<template>\n  <label><input type=\"checkbox\" v-model=\"acepta\"> Acepto las condiciones</label>\n  <label><input type=\"checkbox\" v-model=\"intereses\" value=\"html\"> HTML</label>\n  <label><input type=\"checkbox\" v-model=\"intereses\" value=\"css\"> CSS</label>\n  <label><input type=\"checkbox\" v-model=\"intereses\" value=\"js\"> JavaScript</label>\n  <p>Acepta: {{ acepta }}</p>\n  <p>Intereses: {{ intereses.join(', ') }}</p>\n</template>",
+              "explanation": "Cuando v-model se enlaza a una sola casilla, el valor suele ser booleano. Cuando varias casillas comparten un modelo que empieza como arreglo, Vue agrega o quita sus valores según estén marcadas."
+            },
+            {
+              "title": "Radio y select",
+              "description": "Los controles de opciones pueden sincronizarse con una cadena o con valores dinámicos.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst nivel = ref('inicial');\nconst lenguaje = ref('js');\n</script>\n\n<template>\n  <label><input type=\"radio\" value=\"inicial\" v-model=\"nivel\"> Inicial</label>\n  <label><input type=\"radio\" value=\"avanzado\" v-model=\"nivel\"> Avanzado</label>\n  <select v-model=\"lenguaje\">\n    <option value=\"html\">HTML</option>\n    <option value=\"css\">CSS</option>\n    <option value=\"js\">JavaScript</option>\n  </select>\n  <p>{{ nivel }} — {{ lenguaje }}</p>\n</template>",
+              "explanation": "Los radio con el mismo modelo forman un grupo de selección única. select sincroniza el value de la opción elegida. Los valores iniciales se definen en refs, no en el atributo selected del HTML."
+            },
+            {
+              "title": "Modificadores .number, .lazy y .trim",
+              "description": "Elegí cuándo actualizar y cómo normalizar el valor de entrada.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst edad = ref(0);\nconst codigo = ref('');\nconst comentario = ref('');\n</script>\n\n<template>\n  <input type=\"number\" v-model.number=\"edad\">\n  <input v-model.trim=\"codigo\" placeholder=\"Código sin espacios exteriores\">\n  <textarea v-model.lazy=\"comentario\"></textarea>\n  <p>Edad: {{ edad }} / Código: {{ codigo }}</p>\n</template>",
+              "explanation": "number intenta convertir la entrada a número; si el campo queda vacío puede devolver una cadena vacía. trim elimina espacios al principio y al final. lazy actualiza el modelo al cambiar el campo, no en cada pulsación. Un input type=number ya aplica automáticamente el modificador number en el comportamiento documentado de Vue."
+            }
+          ],
+          "bestPractices": [
+            "Usá label asociado a cada control para mejorar accesibilidad.",
+            "Definí el estado inicial de los campos en refs o reactive.",
+            "Mostrá errores de validación junto al campo y no dependas solamente del color.",
+            "Elegí los tipos de campo correctos: email, number, checkbox, radio y select.",
+            "Para formularios complejos, separá validación, presentación y envío."
+          ],
+          "commonMistakes": [
+            "Esperar que v-model tome el atributo HTML value o checked inicial como fuente del estado; Vue ignora esos atributos para el modelo.",
+            "Usar el mismo ref booleano para varias casillas cuando se necesita un arreglo de selecciones.",
+            "Suponer que .number siempre devuelve un número; una entrada no convertible puede permanecer como string.",
+            "Confundir .lazy con validación; solo cambia el momento de sincronización.",
+            "Olvidar prevenir el envío tradicional del formulario si se maneja con JavaScript: utilizá @submit.prevent."
+          ],
+          "exercise": "Creá un formulario de registro con nombre, correo, edad, nivel de experiencia, lenguajes de interés y aceptación de condiciones. Aplicá trim y number donde corresponda. Mostrá un resumen en vivo y deshabilitá el botón de envío hasta que los campos obligatorios estén completos.",
+          "hint": "Usá ref para cada campo. Para lenguajes de interés usá un arreglo asociado a varias casillas. Calculá si el formulario es válido con computed.",
+          "parameters": [
+            {
+              "name": "v-model",
+              "description": "Sincroniza el valor del control con una propiedad reactiva del componente."
+            },
+            {
+              "name": ".trim",
+              "description": "Elimina espacios en blanco al principio y al final del texto ingresado."
+            },
+            {
+              "name": ".number",
+              "description": "Intenta convertir la entrada a número mediante parseFloat; si no se puede convertir, conserva el valor original."
+            },
+            {
+              "name": ".lazy",
+              "description": "Actualiza el modelo después del evento change en lugar de hacerlo con cada input."
+            },
+            {
+              "name": "checkbox",
+              "description": "Puede enlazarse a un booleano o a un arreglo de valores cuando hay un grupo de casillas."
+            },
+            {
+              "name": "select",
+              "description": "Enlaza la opción seleccionada; también permite valores no string mediante :value."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Enlace de entradas de formularios",
+              "url": "https://vuejs.org/guide/essentials/forms.html"
+            },
+            {
+              "label": "Vue — v-model en componentes",
+              "url": "https://vuejs.org/guide/components/v-model.html"
+            }
+          ]
         },
         {
           "id": "vue-componentes",
-          "title": "Crear componentes",
+          "title": "Componentes y Single-File Components (.vue)",
           "category": "avanzado",
-          "summary": "Los archivos .vue separan lógica, plantilla y estilos para construir piezas reutilizables.",
-          "purpose": "Los archivos .vue separan lógica, plantilla y estilos para construir piezas reutilizables.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "<script setup>\\nconst mensaje = 'Hola';\\n</script>\\n<template><p>{{ mensaje }}</p></template>",
+          "summary": "Organizá interfaces en archivos .vue, usá script setup, templates, estilos y componentes reutilizables.",
+          "purpose": "Un componente Vue encapsula una parte de la interfaz, su lógica y, si corresponde, sus estilos. Un Single-File Component (SFC) usa la extensión .vue y suele organizarse con bloques <script>, <template> y <style>. <script setup> es una sintaxis de compilación que reduce código repetitivo en la Composition API. Los componentes se importan y utilizan como elementos personalizados de la plantilla.",
+          "whenToUse": "Separá la interfaz en componentes cuando una pieza visual tenga una responsabilidad reconocible, se repita o tenga estado y comportamiento propios. Por ejemplo: encabezado, tarjeta, formulario, botón, modal o navegación. Evitá crear un componente por cada etiqueta simple si eso hace más difícil entender la estructura.",
+          "syntax": "<!-- Saludo.vue -->\n<script setup>\nconst mensaje = 'Hola desde Vue';\n</script>\n\n<template>\n  <section class=\"saludo\">\n    <h2>{{ mensaje }}</h2>\n  </section>\n</template>\n\n<style scoped>\n.saludo { padding: 1rem; }\n</style>",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "<script setup>\\nconst mensaje = 'Hola';\\n</script>\\n<template><p>{{ mensaje }}</p></template>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Estructura de un archivo .vue",
+              "description": "Un SFC reúne lógica, marcado y estilos en un único archivo de componente.",
+              "code": "<!-- Encabezado.vue -->\n<script setup>\nconst titulo = 'Mi biblioteca';\nconst subtitulo = 'Aprendé construyendo';\n</script>\n\n<template>\n  <header>\n    <h1>{{ titulo }}</h1>\n    <p>{{ subtitulo }}</p>\n  </header>\n</template>\n\n<style scoped>\nheader { padding: 1rem; }\nh1 { margin: 0; }\n</style>",
+              "explanation": "El bloque script setup declara los datos disponibles en la plantilla. template describe la estructura. style scoped limita las reglas al componente. El compilador de Vue procesa el archivo .vue; no se abre directamente como un HTML independiente sin herramientas."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "<script setup>\\nconst mensaje = 'Hola';\\n</script>\\n<template><p>{{ mensaje }}</p></template>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Importar y reutilizar un componente",
+              "description": "Importá una tarjeta desde otro archivo y utilizala varias veces.",
+              "code": "<!-- Tarjeta.vue -->\n<script setup>\ndefineProps({ titulo: String });\n</script>\n<template><article><h2>{{ titulo }}</h2></article></template>\n\n<!-- App.vue -->\n<script setup>\nimport Tarjeta from './components/Tarjeta.vue';\n</script>\n<template>\n  <Tarjeta titulo=\"React\" />\n  <Tarjeta titulo=\"Vue\" />\n</template>",
+              "explanation": "El import crea una referencia al componente. En script setup, los componentes importados quedan disponibles en la plantilla y se pueden usar con PascalCase. Cada instancia recibe un valor diferente para la prop titulo."
+            },
+            {
+              "title": "Separar lógica en funciones",
+              "description": "Las funciones del script setup se pueden utilizar desde la plantilla y organizar por responsabilidad.",
+              "code": "<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('');\nconst saludo = ref('');\n\nfunction saludar() {\n  saludo.value = nombre.value.trim()\n    ? `Hola, ${nombre.value.trim()}`\n    : 'Escribí tu nombre';\n}\n</script>\n\n<template>\n  <input v-model=\"nombre\" placeholder=\"Nombre\">\n  <button @click=\"saludar\">Saludar</button>\n  <p>{{ saludo }}</p>\n</template>",
+              "explanation": "La lógica queda en una función saludar. La plantilla solo conecta controles y datos. Las funciones declaradas en el nivel superior de script setup se exponen automáticamente a la plantilla."
+            },
+            {
+              "title": "Estilos scoped y globales",
+              "description": "Compará estilos encapsulados del SFC con una hoja de estilos global.",
+              "code": "<!-- Tarjeta.vue -->\n<template><article class=\"tarjeta\">Contenido</article></template>\n<style scoped>\n.tarjeta { border: 1px solid #789; padding: 1rem; }\n</style>\n\n<!-- En el punto de entrada de la aplicación -->\n<!-- import './assets/main.css' -->",
+              "explanation": "scoped hace que las reglas se apliquen a los elementos del componente mediante atributos de alcance generados durante la compilación. Los estilos globales se importan aparte y pueden afectar a toda la aplicación. scoped no equivale a Shadow DOM: los componentes siguen formando parte del DOM normal."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Mantené componentes pequeños y con responsabilidades definidas.",
+            "Usá nombres de archivo y componentes descriptivos, normalmente en PascalCase para los componentes.",
+            "Separá estructuras de presentación, estado y lógica reutilizable cuando el componente crezca.",
+            "Utilizá scoped para estilos locales y hojas globales para tokens, resets y utilidades compartidas.",
+            "Importá explícitamente los componentes locales para que la relación entre archivos sea clara."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Abrir un archivo .vue directamente esperando que el navegador lo procese sin compilación.",
+            "Olvidar importar un componente antes de utilizarlo en la plantilla cuando se usa un entorno modular.",
+            "Confundir style scoped con Shadow DOM: el primero limita selectores en compilación, no crea una raíz DOM aislada.",
+            "Dejar toda una aplicación dentro de un único componente enorme.",
+            "Olvidar que las variables del script setup quedan disponibles en la plantilla sin un return."
           ],
-          "exercise": "Creá un componente Encabezado.vue.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá una pequeña página de catálogo con App.vue, Encabezado.vue, TarjetaProducto.vue y Pie.vue. TarjetaProducto debe recibir título y descripción como props. Usá estilos scoped para cada tarjeta y una hoja global para el fondo y la tipografía.",
+          "hint": "Creá cada archivo dentro de src/components. Importá los tres componentes en App.vue y usalos en la plantilla. El compilador Vite procesará los archivos .vue.",
+          "parameters": [
+            {
+              "name": "<script setup>",
+              "description": "Sintaxis de compilación para Composition API. Las variables y funciones superiores quedan disponibles en la plantilla sin retornarlas manualmente."
+            },
+            {
+              "name": "<template>",
+              "description": "Contiene el marcado que renderiza el componente."
+            },
+            {
+              "name": "<style scoped>",
+              "description": "Limita los selectores CSS del bloque al componente mediante atributos generados durante la compilación; no es Shadow DOM."
+            },
+            {
+              "name": "import MiComponente from './MiComponente.vue'",
+              "description": "Importa un SFC para utilizarlo como componente dentro de otro."
+            },
+            {
+              "name": "defineOptions()",
+              "description": "Macro disponible en versiones recientes de Vue para declarar opciones del componente desde script setup; verificá compatibilidad con la versión del proyecto."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Componentes básicos",
+              "url": "https://vuejs.org/guide/essentials/component-basics.html"
+            },
+            {
+              "label": "Vue — Single-File Components",
+              "url": "https://vuejs.org/guide/scaling-up/sfc.html"
+            },
+            {
+              "label": "Vue — <script setup>",
+              "url": "https://vuejs.org/api/sfc-script-setup.html"
+            }
+          ]
         },
         {
           "id": "vue-props",
-          "title": "Props",
+          "title": "Props: enviar datos al componente hijo",
           "category": "avanzado",
-          "summary": "defineProps declara los datos de entrada que recibe un componente hijo.",
-          "purpose": "defineProps declara los datos de entrada que recibe un componente hijo.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Vue.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const props = defineProps({ nombre: {type:String, required:true} });\n// En template: {{ props.nombre }}",
+          "summary": "Declarà props, validá tipos, asigná valores por defecto y respetá el flujo de datos unidireccional.",
+          "purpose": "Las props son los datos de entrada que un componente recibe desde su padre. Vue requiere declararlas para reconocer qué atributos pertenecen al componente y cuáles pueden heredarse como atributos fallthrough. El flujo es unidireccional: el padre actualiza las props y el hijo recibe los nuevos valores. El hijo no debe mutarlas directamente; para proponer un cambio puede emitir un evento.",
+          "whenToUse": "Usá props para configurar tarjetas, botones, filas, diálogos y otros componentes reutilizables. Declaralas con defineProps en <script setup> o con la opción props. Elegí tipos, required y default según las necesidades del componente. Cuando el hijo necesite solicitar un cambio, comunicá la intención mediante emits.",
+          "syntax": "<script setup>\nconst props = defineProps({\n  nombre: { type: String, required: true },\n  edad: { type: Number, default: 0 },\n  activo: { type: Boolean, default: true }\n});\n</script>\n\n<template>\n  <p>{{ props.nombre }} — {{ props.edad }}</p>\n</template>",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const props = defineProps({ nombre: {type:String, required:true} });\n// En template: {{ props.nombre }}",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Declarar props con tipo y obligatoriedad",
+              "description": "El padre envía valores y el hijo los utiliza para presentar datos.",
+              "code": "<!-- Perfil.vue -->\n<script setup>\nconst props = defineProps({\n  nombre: { type: String, required: true },\n  profesion: { type: String, default: 'Sin profesión' }\n});\n</script>\n\n<template>\n  <article>\n    <h2>{{ props.nombre }}</h2>\n    <p>{{ props.profesion }}</p>\n  </article>\n</template>\n\n<!-- Uso: <Perfil nombre=\"Ana\" profesion=\"Diseñadora\" /> -->",
+              "explanation": "defineProps declara dos props. nombre es obligatorio; profesion usa un valor predeterminado cuando el padre no la envía. En script setup la macro se transforma durante la compilación y el objeto props está disponible en el script y en la plantilla."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const props = defineProps({ nombre: {type:String, required:true} });\n// En template: {{ props.nombre }}",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Pasar valores dinámicos",
+              "description": "El padre puede enviar expresiones, números, booleanos y objetos mediante v-bind.",
+              "code": "<!-- Tarjeta.vue -->\n<script setup>\nconst props = defineProps({ puntos: Number, destacado: Boolean });\n</script>\n<template><p>{{ props.puntos }} puntos</p><strong v-if=\"props.destacado\">Destacado</strong></template>\n\n<!-- En el padre -->\n<script setup>\nimport Tarjeta from './Tarjeta.vue';\nconst total = 125;\nconst favorito = true;\n</script>\n<template><Tarjeta :puntos=\"total\" :destacado=\"favorito\" /></template>",
+              "explanation": ":puntos enlaza la variable numérica; sin los dos puntos, puntos=\"total\" enviaría la cadena literal 'total'. Las props booleanas pueden enviarse mediante una expresión booleana. El hijo solo consume los valores."
+            },
+            {
+              "title": "Flujo unidireccional: no modificar props",
+              "description": "Las props son de solo lectura. Para solicitar un cambio, el hijo emite un evento al padre.",
+              "code": "<!-- Hijo.vue -->\n<script setup>\nconst props = defineProps({ valor: Number });\nconst emit = defineEmits(['incrementar']);\n</script>\n<template>\n  <button @click=\"emit('incrementar')\">Valor: {{ props.valor }} — sumar</button>\n</template>\n\n<!-- Padre.vue -->\n<script setup>\nimport { ref } from 'vue';\nimport Hijo from './Hijo.vue';\nconst total = ref(0);\n</script>\n<template><Hijo :valor=\"total\" @incrementar=\"total++\" /></template>",
+              "explanation": "El hijo recibe valor como prop y no modifica props.valor. Cuando el usuario pulsa el botón, emite incrementar. El padre escucha el evento y actualiza su propio ref total; el nuevo valor vuelve a fluir hacia el hijo como prop."
+            },
+            {
+              "title": "Valores predeterminados para objetos y arreglos",
+              "description": "Cuando una prop Array u Object necesita un valor predeterminado en la declaración de opciones, utilizá una función que devuelva una instancia nueva.",
+              "code": "<script>\nexport default {\n  props: {\n    etiquetas: {\n      type: Array,\n      default: () => []\n    },\n    configuracion: {\n      type: Object,\n      default: () => ({ tema: 'claro' })\n    }\n  }\n};\n</script>",
+              "explanation": "La función default se ejecuta para producir un valor nuevo por instancia. Esto evita que varias instancias compartan accidentalmente el mismo arreglo u objeto predeterminado. En el formato de objeto de defineProps dentro de script setup se aplican las mismas reglas de declaración."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Declarà explícitamente las props y su tipo cuando el componente tenga una API que deba ser clara.",
+            "Mantené el flujo de datos unidireccional: el padre es responsable del estado recibido.",
+            "Usá eventos para comunicar al padre una intención de cambio.",
+            "Para props opcionales, elegí valores predeterminados adecuados; para Array y Object usá fábricas que devuelvan instancias nuevas.",
+            "No desestructures props si necesitás compatibilidad de reactividad entre distintas versiones de Vue; acceder a props.nombre es explícito y seguro."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Modificar props directamente desde el hijo.",
+            "Pasar una variable como texto literal por olvidar el prefijo : en v-bind.",
+            "Suponer que una prop es reactiva si se desestructura de forma que se pierde su conexión en versiones anteriores a la transformación de props destructuradas de Vue 3.5.",
+            "Compartir el mismo objeto o arreglo como valor predeterminado de varias instancias.",
+            "Creer que required valida el contenido de negocio completo: es una comprobación de presencia y tipo en desarrollo, no una validación de formulario."
           ],
-          "exercise": "Creá una tarjeta que reciba nombre y profesión.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá TarjetaProducto.vue con props nombre, precio, imagen, disponible y etiquetas. Validá sus tipos y definí valores predeterminados para imagen y etiquetas. El padre debe renderizar tres productos diferentes y escuchar un evento que solicite agregar el producto al carrito.",
+          "hint": "Usá defineProps con un objeto de opciones. No modifiques props desde el hijo: definí un evento agregar y emitilo con el identificador del producto.",
+          "parameters": [
+            {
+              "name": "defineProps()",
+              "description": "Macro de compilación que declara las props del componente en <script setup>. No necesita importarse desde vue."
+            },
+            {
+              "name": "type",
+              "description": "Tipo esperado de la prop, como String, Number, Boolean, Array, Object o una función constructora."
+            },
+            {
+              "name": "required",
+              "description": "Si es true, Vue genera una advertencia de desarrollo cuando la prop obligatoria no se proporciona."
+            },
+            {
+              "name": "default",
+              "description": "Valor usado cuando la prop no se proporciona o se recibe como undefined. Para Array y Object, la opción de objeto tradicional requiere una función que devuelva el valor."
+            },
+            {
+              "name": "props.nombre",
+              "description": "Accede a una prop. El objeto props es de solo lectura desde el componente hijo."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Props",
+              "url": "https://vuejs.org/guide/components/props.html"
+            },
+            {
+              "label": "Vue — Atributos fallthrough",
+              "url": "https://vuejs.org/guide/components/attrs.html"
+            }
+          ]
+        },
+        {
+          "id": "vue-emits",
+          "title": "Eventos de componentes con defineEmits",
+          "category": "avanzado",
+          "summary": "Declarà los eventos que emite un hijo, enviá payloads y conectá acciones con el componente padre.",
+          "purpose": "Los componentes Vue pueden emitir eventos personalizados para notificar al padre que ocurrió una acción. En <script setup>, defineEmits declara los eventos y devuelve una función emit que se utiliza dentro del script. El padre escucha esos eventos mediante directivas como @guardar. Declarar eventos también documenta la API del componente y permite que Vue distinga listeners de eventos de los atributos que pueden heredarse.",
+          "whenToUse": "Usá emits cuando el hijo necesite comunicar acciones como seleccionar, guardar, eliminar, cerrar o modificar un valor. Mantené el estado principal en el padre cuando corresponda; el hijo informa lo que ocurrió y el padre decide cómo actualizar los datos.",
+          "syntax": "<script setup>\nconst emit = defineEmits(['seleccionar']);\n\nfunction elegir() {\n  emit('seleccionar', { id: 7, nombre: 'Vue' });\n}\n</script>\n\n<template>\n  <button @click=\"elegir\">Elegir Vue</button>\n</template>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Emitir un evento desde el hijo",
+              "description": "El hijo informa al padre qué elemento seleccionó.",
+              "code": "<!-- Selector.vue -->\n<script setup>\nconst emit = defineEmits(['seleccionar']);\nfunction elegir() {\n  emit('seleccionar', { id: 12, nombre: 'Vue.js' });\n}\n</script>\n<template><button @click=\"elegir\">Elegir</button></template>\n\n<!-- Padre.vue -->\n<template><Selector @seleccionar=\"recibirSeleccion\" /></template>\n<script setup>\nfunction recibirSeleccion(datos) {\n  console.log(datos.id, datos.nombre);\n}\n</script>",
+              "explanation": "defineEmits declara el evento seleccionar. emit envía el objeto de datos. En el padre, @seleccionar conecta el evento con recibirSeleccion. El padre no necesita conocer cómo el hijo implementó el botón."
+            },
+            {
+              "title": "Validar el payload de un evento",
+              "description": "La forma de objeto permite agregar una función que compruebe los datos enviados.",
+              "code": "<script setup>\nconst emit = defineEmits({\n  guardar: (payload) => {\n    return payload && typeof payload.id === 'number';\n  }\n});\n\nfunction guardarRegistro() {\n  emit('guardar', { id: 20, nombre: 'Registro' });\n}\n</script>\n<template><button @click=\"guardarRegistro\">Guardar</button></template>",
+              "explanation": "El validador retorna true o false para indicar si el payload cumple la condición. Esta validación ayuda durante el desarrollo y genera advertencias si no coincide; no reemplaza la validación de seguridad o de datos en un servidor."
+            },
+            {
+              "title": "Emitir distintos eventos",
+              "description": "Un componente puede declarar varios eventos para acciones diferentes.",
+              "code": "<script setup>\nconst emit = defineEmits(['cerrar', 'confirmar']);\n</script>\n<template>\n  <button @click=\"emit('cerrar')\">Cancelar</button>\n  <button @click=\"emit('confirmar', { aprobado: true })\">Confirmar</button>\n</template>\n\n<!-- Padre: <Dialogo @cerrar=\"cerrar\" @confirmar=\"guardar\" /> -->",
+              "explanation": "Los nombres de eventos forman parte de la API pública del componente. cerrar no necesita payload; confirmar envía un objeto. El componente padre puede escuchar ambos eventos y controlar la navegación o el estado."
+            },
+            {
+              "title": "Crear un v-model en un componente",
+              "description": "El contrato clásico de v-model utiliza la prop modelValue y el evento update:modelValue.",
+              "code": "<!-- CampoTexto.vue -->\n<script setup>\nconst props = defineProps({ modelValue: String });\nconst emit = defineEmits(['update:modelValue']);\n</script>\n<template>\n  <input\n    :value=\"props.modelValue\"\n    @input=\"emit('update:modelValue', $event.target.value)\"\n  >\n</template>\n\n<!-- Padre.vue -->\n<script setup>\nimport { ref } from 'vue';\nconst nombre = ref('Ana');\n</script>\n<template><CampoTexto v-model=\"nombre\" /></template>",
+              "explanation": "En el componente hijo, modelValue recibe el valor actual. Cuando cambia el input, el hijo emite update:modelValue con el nuevo texto. El padre puede usar v-model para conectar automáticamente la prop y el evento. En Vue 3.4+ también existe la macro defineModel para simplificar este patrón."
+            }
+          ],
+          "bestPractices": [
+            "Declarà todos los eventos públicos con defineEmits para documentar la API y evitar ambigüedades.",
+            "Elegí nombres de eventos que describan lo ocurrido, como guardar, seleccionar o cerrar.",
+            "Enviá payloads claros y pequeños; evitá pasar estructuras innecesariamente grandes.",
+            "Dejá que el padre gestione el estado que comparte con otros componentes.",
+            "Usá el contrato update:modelValue o defineModel cuando el componente deba soportar v-model."
+          ],
+          "commonMistakes": [
+            "Intentar acceder a $emit dentro de script setup sin utilizar defineEmits; la macro devuelve la función emit.",
+            "Olvidar declarar el evento y esperar que el listener del padre se comporte como un evento de componente declarado.",
+            "Emitir un dato distinto al formato que espera el padre.",
+            "Modificar una prop en lugar de emitir la intención de cambio.",
+            "Confundir eventos de componentes Vue con eventos DOM nativos que burbujean por el documento."
+          ],
+          "exercise": "Creá un componente SelectorLenguaje.vue que muestre tres botones. Al pulsar uno, emití seleccionar con el id y nombre del lenguaje. En el padre guardá el lenguaje seleccionado y mostralo en pantalla. Como extensión, convertí el selector en un componente controlado con v-model.",
+          "hint": "Declarà const emit = defineEmits(['seleccionar']). En cada botón llamá emit('seleccionar', { id: ..., nombre: ... }). En el padre escuchá @seleccionar y actualizá un ref.",
+          "parameters": [
+            {
+              "name": "defineEmits(['evento'])",
+              "description": "Declara los nombres de los eventos que el componente puede emitir y devuelve una función para emitirlos."
+            },
+            {
+              "name": "emit(nombre, payload)",
+              "description": "Emite el evento con el nombre indicado y opcionalmente datos adicionales."
+            },
+            {
+              "name": "@evento",
+              "description": "Listener utilizado en el componente padre para reaccionar al evento emitido por el hijo."
+            },
+            {
+              "name": "defineEmits({ evento: validador })",
+              "description": "Forma de objeto que permite validar el payload del evento en desarrollo."
+            },
+            {
+              "name": "update:modelValue",
+              "description": "Nombre de evento convencional para implementar el contrato de v-model en un componente personalizado con prop modelValue."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Eventos de componentes",
+              "url": "https://vuejs.org/guide/components/events.html"
+            },
+            {
+              "label": "Vue — v-model en componentes",
+              "url": "https://vuejs.org/guide/components/v-model.html"
+            }
+          ]
+        },
+        {
+          "id": "vue-slots",
+          "title": "Slots: componer contenido entre componentes",
+          "category": "avanzado",
+          "summary": "Usá slots predeterminados, nombrados y scoped slots para que el padre controle el contenido de un componente hijo.",
+          "purpose": "Los slots permiten que un componente reciba contenido de plantilla desde su padre y lo inserte en una ubicación definida. Un slot sin nombre es el slot predeterminado. Los slots nombrados permiten distribuir contenido en regiones como header, contenido y footer. Los scoped slots permiten que el hijo exponga datos al contenido que el padre proporciona.",
+          "whenToUse": "Usá slots cuando el componente deba controlar la estructura y el padre deba decidir el contenido. Son útiles para layouts, paneles, tarjetas, modales, tablas y componentes de lista. Si necesitás entregar datos internos del hijo al contenido del padre, usá scoped slots.",
+          "syntax": "<!-- Panel.vue -->\n<template>\n  <section class=\"panel\">\n    <header><slot name=\"titulo\">Título</slot></header>\n    <main><slot>Contenido predeterminado</slot></main>\n  </section>\n</template>\n\n<!-- Uso -->\n<Panel>\n  <template #titulo><h2>Mi perfil</h2></template>\n  <p>Descripción del perfil.</p>\n</Panel>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Slot predeterminado con contenido de respaldo",
+              "description": "Permití que el padre inserte un contenido y ofrecé un texto alternativo si no envía nada.",
+              "code": "<!-- Panel.vue -->\n<template>\n  <section class=\"panel\">\n    <slot>Este panel todavía no tiene contenido.</slot>\n  </section>\n</template>\n\n<!-- Padre.vue -->\n<template>\n  <Panel>\n    <p>Contenido enviado desde el padre.</p>\n  </Panel>\n  <Panel />\n</template>",
+              "explanation": "El primer Panel recibe un párrafo en su slot predeterminado. El segundo no recibe contenido, por lo que se muestra el contenido de respaldo escrito dentro del slot. El slot permite reutilizar la estructura sin acoplarla a un texto fijo."
+            },
+            {
+              "title": "Slots nombrados",
+              "description": "Distribuí título, contenido y acciones en regiones diferentes del mismo componente.",
+              "code": "<!-- Tarjeta.vue -->\n<template>\n  <article class=\"tarjeta\">\n    <header><slot name=\"titulo\">Sin título</slot></header>\n    <main><slot /></main>\n    <footer><slot name=\"acciones\" /></footer>\n  </article>\n</template>\n\n<!-- Uso -->\n<template>\n  <Tarjeta>\n    <template #titulo><h2>Vue.js</h2></template>\n    <p>Framework progresivo.</p>\n    <template #acciones><button>Ver más</button></template>\n  </Tarjeta>\n</template>",
+              "explanation": "#titulo envía contenido al slot cuyo name es titulo. El párrafo va al slot default porque no tiene nombre. #acciones completa la región de acciones. Los nombres deben coincidir exactamente."
+            },
+            {
+              "title": "Scoped slots: recibir datos del hijo",
+              "description": "El hijo puede exponer datos del propio componente para que el padre decida cómo representarlos.",
+              "code": "<!-- ListaUsuarios.vue -->\n<script setup>\nconst usuarios = [\n  { id: 1, nombre: 'Ana' },\n  { id: 2, nombre: 'Luis' }\n];\n</script>\n<template>\n  <ul>\n    <li v-for=\"usuario in usuarios\" :key=\"usuario.id\">\n      <slot name=\"usuario\" :item=\"usuario\">\n        {{ usuario.nombre }}\n      </slot>\n    </li>\n  </ul>\n</template>\n\n<!-- Padre.vue -->\n<ListaUsuarios>\n  <template #usuario=\"{ item }\">\n    <strong>{{ item.nombre }}</strong> — ID {{ item.id }}\n  </template>\n</ListaUsuarios>",
+              "explanation": "El componente hijo pasa item al outlet del slot. El padre recibe ese objeto mediante el argumento de v-slot y decide cómo mostrarlo. Si no se proporciona el slot usuario, se utiliza el contenido de respaldo."
+            },
+            {
+              "title": "Comprobar si existe contenido para un slot",
+              "description": "En una plantilla se puede usar $slots para decidir si mostrar un contenedor.",
+              "code": "<!-- PanelOpcional.vue -->\n<template>\n  <section>\n    <header v-if=\"$slots.header\"><slot name=\"header\" /></header>\n    <main><slot /></main>\n    <footer v-if=\"$slots.footer\"><slot name=\"footer\" /></footer>\n  </section>\n</template>",
+              "explanation": "$slots permite comprobar si el padre proporcionó un slot. Así evitás renderizar un header o footer vacío cuando no se envía ese contenido. El contenido del slot sigue siendo responsabilidad del padre."
+            }
+          ],
+          "bestPractices": [
+            "Usá slots para composición visual, no para compartir estado complejo que debería manejarse con props, eventos o un store.",
+            "Nombrá las regiones de forma semántica: header, acciones, contenido o footer.",
+            "Incluí contenido de respaldo cuando el componente necesite una presentación útil si el padre no envía nada.",
+            "Utilizá scoped slots cuando el hijo deba exponer datos a la plantilla del padre.",
+            "Documentá los slots disponibles y los datos que cada uno expone."
+          ],
+          "commonMistakes": [
+            "Escribir un nombre de slot diferente entre el name del hijo y el #nombre del padre.",
+            "Creer que el contenido del slot tiene acceso automático a variables internas del componente hijo; el alcance pertenece al padre.",
+            "Olvidar usar template #nombre cuando se envía contenido a un slot nombrado.",
+            "Confundir slots de Vue con slots de Web Components; son mecanismos distintos aunque compartan el nombre."
+          ],
+          "exercise": "Creá BaseLayout.vue con tres slots: header, default y footer. Después creá una página que envíe título y navegación al header, contenido principal al default y enlaces al footer. Como extensión, construí una lista que exponga un objeto mediante un scoped slot.",
+          "hint": "En BaseLayout declarà <slot name=\"header\">, <slot /> y <slot name=\"footer\">. Desde el padre usá <template #header> y <template #footer>.",
+          "parameters": [
+            {
+              "name": "<slot>",
+              "description": "Punto de inserción para contenido que el componente recibe desde su padre."
+            },
+            {
+              "name": "name",
+              "description": "Identifica un slot nombrado. Si no se proporciona, el slot se considera default."
+            },
+            {
+              "name": "#nombre / v-slot:nombre",
+              "description": "Sintaxis abreviada y completa para enviar un fragmento al slot nombrado."
+            },
+            {
+              "name": "slot props",
+              "description": "Atributos que el componente hijo pasa al slot para exponer datos a la plantilla del padre."
+            },
+            {
+              "name": "$slots",
+              "description": "Objeto disponible en el contexto del componente para consultar slots; en Composition API se accede con useSlots cuando se necesita lógica de renderizado."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Slots",
+              "url": "https://vuejs.org/guide/components/slots.html"
+            },
+            {
+              "label": "Vue — Componentes básicos",
+              "url": "https://vuejs.org/guide/essentials/component-basics.html#content-distribution-with-slots"
+            }
+          ]
+        },
+        {
+          "id": "vue-lifecycle",
+          "title": "Ciclo de vida y hooks de Vue",
+          "category": "avanzado",
+          "summary": "Entendé cuándo se crea, monta, actualiza y desmonta un componente y dónde registrar efectos del DOM.",
+          "purpose": "Cada instancia de componente Vue atraviesa etapas como creación, montaje en el DOM, actualización y desmontaje. La Composition API ofrece hooks como onMounted, onUpdated y onUnmounted para ejecutar código en esos momentos. En Options API existen opciones equivalentes como mounted, updated y unmounted. Los hooks deben registrarse de forma síncrona durante setup o <script setup> para asociarse con la instancia activa.",
+          "whenToUse": "Utilizá onMounted para tareas que necesitan que el DOM del componente ya exista, como registrar un listener del navegador o inicializar una biblioteca DOM. Usá onUnmounted para limpiar listeners, intervalos y conexiones. Reservá onUpdated para casos donde necesites reaccionar a una actualización del DOM; no lo uses para cambiar continuamente el estado que provocó esa actualización.",
+          "syntax": "<script setup>\nimport { onMounted, onUnmounted } from 'vue';\n\nonMounted(() => {\n  console.log('El componente ya está montado');\n});\n\nonUnmounted(() => {\n  console.log('El componente se desmontó');\n});\n</script>",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Acceder al DOM después del montaje",
+              "description": "onMounted permite ejecutar código cuando el elemento ya está en el documento.",
+              "code": "<script setup>\nimport { ref, onMounted } from 'vue';\nconst titulo = ref(null);\n\nonMounted(() => {\n  titulo.value.focus?.();\n});\n</script>\n\n<template>\n  <input ref=\"titulo\" placeholder=\"El foco llega al montar\">\n</template>",
+              "explanation": "El atributo ref de la plantilla conecta el input con la referencia titulo. Antes del montaje, titulo.value todavía no contiene el elemento. onMounted se ejecuta después de crear y montar el DOM, por eso es el momento adecuado para acceder al nodo."
+            },
+            {
+              "title": "Limpiar un temporizador al desmontar",
+              "description": "Evitá que el intervalo continúe ejecutándose cuando el componente ya no está visible.",
+              "code": "<script setup>\nimport { ref, onMounted, onUnmounted } from 'vue';\nconst segundos = ref(0);\nlet intervalo;\n\nonMounted(() => {\n  intervalo = setInterval(() => segundos.value++, 1000);\n});\n\nonUnmounted(() => {\n  clearInterval(intervalo);\n});\n</script>\n\n<template><p>Tiempo: {{ segundos }}</p></template>",
+              "explanation": "onMounted inicia el intervalo. La variable intervalo conserva su identificador. onUnmounted llama a clearInterval para detenerlo y evitar que el temporizador siga consumiendo recursos después de retirar el componente."
+            },
+            {
+              "title": "Escuchar y retirar un evento del navegador",
+              "description": "Registrá un listener en el montaje y eliminá la misma función al desmontar.",
+              "code": "<script setup>\nimport { ref, onMounted, onUnmounted } from 'vue';\nconst ancho = ref(0);\n\nfunction actualizar() {\n  ancho.value = window.innerWidth;\n}\n\nonMounted(() => {\n  actualizar();\n  window.addEventListener('resize', actualizar);\n});\n\nonUnmounted(() => {\n  window.removeEventListener('resize', actualizar);\n});\n</script>\n\n<template><p>Ancho de ventana: {{ ancho }} px</p></template>",
+              "explanation": "window solo existe en el navegador, no en un entorno de renderizado del lado del servidor. Al acceder dentro de onMounted, el código se ejecuta en el navegador después del montaje. removeEventListener recibe la misma función actualizar para retirar exactamente ese listener."
+            },
+            {
+              "title": "Distinguir actualización y desmontaje",
+              "description": "onUpdated se ejecuta después de que Vue actualiza el DOM; onUnmounted se ejecuta cuando la instancia se retira.",
+              "code": "<script setup>\nimport { ref, onUpdated, onUnmounted } from 'vue';\nconst nombre = ref('Ana');\n\nonUpdated(() => {\n  console.log('DOM actualizado para:', nombre.value);\n});\n\nonUnmounted(() => {\n  console.log('Componente retirado');\n});\n</script>\n\n<template>\n  <input v-model=\"nombre\">\n  <p>Hola, {{ nombre }}</p>\n</template>",
+              "explanation": "Cada cambio de nombre provoca una actualización de la plantilla y luego onUpdated registra el valor. onUnmounted se ejecuta al retirar la instancia. Evitá modificar el mismo estado de manera incondicional dentro de onUpdated, porque puede provocar ciclos de actualización."
+            }
+          ],
+          "bestPractices": [
+            "Registrá lifecycle hooks de forma síncrona en setup o script setup.",
+            "Usá onMounted para acceder a elementos del DOM y APIs que solo existen en el navegador.",
+            "Limpiá listeners, temporizadores, observers y conexiones en onUnmounted.",
+            "No uses onUpdated como mecanismo general para sincronizar estado; preferí reactividad declarativa o watchers.",
+            "Si la aplicación usa SSR, evitá acceder a window o document durante la fase de setup en el servidor."
+          ],
+          "commonMistakes": [
+            "Intentar consultar una template ref antes de onMounted y encontrar null.",
+            "Crear un setInterval sin cancelarlo al desmontar.",
+            "Agregar un listener en onMounted y no retirarlo en onUnmounted.",
+            "Registrar onMounted dentro de un setTimeout y esperar que Vue lo vincule a la instancia activa.",
+            "Cambiar estado en onUpdated sin condición y crear un ciclo de actualizaciones."
+          ],
+          "exercise": "Construí un componente que muestre el ancho de la ventana y un contador de segundos desde que se montó. Registrá resize y setInterval al montar. Retirá ambos recursos al desmontar el componente y comprobá que ya no se ejecuten.",
+          "hint": "Usá dos refs, una función actualizarAncho, una variable para el intervalo, onMounted para iniciar y onUnmounted para limpiar.",
+          "parameters": [
+            {
+              "name": "onBeforeMount()",
+              "description": "Registra un callback antes de que el componente esté montado y su DOM inicial se inserte."
+            },
+            {
+              "name": "onMounted(callback)",
+              "description": "Registra un callback después de que el componente haya montado su DOM. Es un lugar habitual para efectos que necesitan acceso al navegador."
+            },
+            {
+              "name": "onUpdated(callback)",
+              "description": "Se ejecuta después de que el DOM del componente se haya actualizado por un cambio reactivo."
+            },
+            {
+              "name": "onUnmounted(callback)",
+              "description": "Se ejecuta después de desmontar el componente; es adecuado para limpiar listeners, temporizadores y conexiones."
+            },
+            {
+              "name": "onBeforeUnmount(callback)",
+              "description": "Se ejecuta justo antes de que la instancia se desmonte."
+            },
+            {
+              "name": "nextTick()",
+              "description": "Espera a que el DOM termine de aplicar actualizaciones pendientes provocadas por cambios reactivos."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Hooks del ciclo de vida",
+              "url": "https://vuejs.org/guide/essentials/lifecycle.html"
+            },
+            {
+              "label": "Vue — Referencias de plantilla",
+              "url": "https://vuejs.org/guide/essentials/template-refs.html"
+            },
+            {
+              "label": "Vue — API de ciclo de vida",
+              "url": "https://vuejs.org/api/composition-api-lifecycle.html"
+            }
+          ]
+        },
+        {
+          "id": "vue-composables",
+          "title": "Composables: reutilizar lógica con Composition API",
+          "category": "avanzado",
+          "summary": "Extraé estado y lógica reutilizable en funciones use... que aprovechan reactividad y lifecycle hooks.",
+          "purpose": "Un composable es una función JavaScript que utiliza APIs de Composition API para encapsular y reutilizar lógica con estado. Por convención, su nombre suele empezar por use, por ejemplo useMouse o useFetch. Puede crear refs, computeds y watchers, registrar efectos y devolver valores reactivos y funciones. A diferencia de un componente, un composable reutiliza lógica; no define por sí mismo una estructura visual.",
+          "whenToUse": "Usá composables cuando varios componentes necesiten la misma lógica reactiva, como escuchar la posición del mouse, leer el tamaño de la ventana, acceder a almacenamiento local o cargar datos. Si querés reutilizar presentación y estructura visual, creá un componente. Si querés reutilizar lógica con estado, un composable suele ser más directo.",
+          "syntax": "// useContador.js\nimport { ref } from 'vue';\n\nexport function useContador(inicial = 0) {\n  const valor = ref(inicial);\n  function incrementar() {\n    valor.value++;\n  }\n  return { valor, incrementar };\n}",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Crear un composable contador",
+              "description": "Extraé una lógica de estado que puede utilizar más de un componente.",
+              "code": "// useContador.js\nimport { ref } from 'vue';\n\nexport function useContador(inicial = 0) {\n  const valor = ref(inicial);\n  function incrementar() {\n    valor.value++;\n  }\n  function reiniciar() {\n    valor.value = inicial;\n  }\n  return { valor, incrementar, reiniciar };\n}\n\n// En un componente .vue:\n// const { valor, incrementar } = useContador(10);",
+              "explanation": "useContador crea su propio ref y dos funciones. Devuelve las referencias para que el componente las use en la plantilla. Cada llamada crea su propio estado; si se necesita un estado compartido entre varias instancias, hay que diseñar explícitamente dónde se almacena."
+            },
+            {
+              "title": "Reutilizar lógica de mouse con limpieza",
+              "description": "Encapsulá el seguimiento de coordenadas y la administración del listener.",
+              "code": "// useMouse.js\nimport { ref, onMounted, onUnmounted } from 'vue';\n\nexport function useMouse() {\n  const x = ref(0);\n  const y = ref(0);\n\n  function actualizar(evento) {\n    x.value = evento.pageX;\n    y.value = evento.pageY;\n  }\n\n  onMounted(() => window.addEventListener('mousemove', actualizar));\n  onUnmounted(() => window.removeEventListener('mousemove', actualizar));\n\n  return { x, y };\n}\n\n// MousePosition.vue\n// const { x, y } = useMouse();",
+              "explanation": "El composable devuelve x e y como refs. Registra el listener al montar el componente que lo consume y lo retira al desmontar. De esta forma el componente no necesita conocer cómo se administra el evento del navegador."
+            },
+            {
+              "title": "Usar un composable desde un componente",
+              "description": "Invocá el composable en el nivel superior del script setup y utilizá sus datos en la plantilla.",
+              "code": "<script setup>\nimport { useMouse } from './useMouse.js';\nconst { x, y } = useMouse();\n</script>\n\n<template>\n  <p>Mouse X: {{ x }}</p>\n  <p>Mouse Y: {{ y }}</p>\n</template>",
+              "explanation": "El composable se importa como una función normal y se llama durante setup. Sus refs quedan disponibles para la plantilla. No lo llames dentro de un manejador de clic ni de un bucle: los hooks internos deben registrarse mientras existe una instancia activa."
+            },
+            {
+              "title": "Composable que recibe una entrada reactiva",
+              "description": "Si un composable recibe un valor que podría cambiar, definí cómo normalizar y observar esa entrada.",
+              "code": "// useTitulo.js\nimport { computed, toValue } from 'vue';\n\nexport function useTitulo(origen) {\n  const titulo = computed(() => `Sección: ${toValue(origen)}`);\n  return { titulo };\n}\n\n// En <script setup>:\n// const nombre = ref('Vue');\n// const { titulo } = useTitulo(() => nombre.value);",
+              "explanation": "toValue normaliza valores, refs y getters en Vue 3.3+. Se pasa un getter para que el composable lea el valor actual de nombre al recalcular el computed. Si se pasara nombre.value directamente, se entregaría solamente el valor que tenía al llamar a la función, no una conexión reactiva con la variable."
+            }
+          ],
+          "bestPractices": [
+            "Nombrá los composables con el prefijo use y una responsabilidad clara.",
+            "Devolvé refs o computeds para que el consumidor conserve la conexión reactiva al desestructurar el resultado.",
+            "Registrá efectos del DOM en onMounted y limpialos con onUnmounted, especialmente si la aplicación puede usar SSR.",
+            "Llamá composables de forma síncrona en setup o script setup, no dentro de callbacks arbitrarios.",
+            "Reutilizá lógica con composables y presentación con componentes; son responsabilidades distintas."
+          ],
+          "commonMistakes": [
+            "Llamar un composable dentro de un evento, un bucle o una condición arbitraria cuando necesita registrar lifecycle hooks.",
+            "Devolver valores primitivos desestructurados cuando el consumidor necesita mantener reactividad.",
+            "Agregar listeners o intervalos y no limpiarlos cuando se desmonta el componente.",
+            "Asumir que dos llamadas al mismo composable comparten estado automáticamente; por defecto cada llamada crea su propia instancia de estado.",
+            "Usar un composable para devolver una estructura visual completa en lugar de extraer esa interfaz a un componente."
+          ],
+          "exercise": "Creá useWindowSize.js que exponga refs ancho y alto, los actualice al cambiar el tamaño de la ventana y limpie su listener al desmontar. Utilizalo desde dos componentes diferentes. Como extensión, creá useContador con incremento, decremento y reinicio.",
+          "hint": "Dentro del composable creá refs, una función de actualización, registrá resize con onMounted, retiralo con onUnmounted y devolvé { ancho, alto }. Invocalo desde el nivel superior de <script setup>.",
+          "parameters": [
+            {
+              "name": "useNombre()",
+              "description": "Convención de nombrado: un composable normalmente comienza con use para identificar que encapsula lógica reutilizable de Composition API."
+            },
+            {
+              "name": "return",
+              "description": "Devuelve refs, computeds y funciones que el componente consumidor podrá utilizar."
+            },
+            {
+              "name": "onMounted / onUnmounted",
+              "description": "Hooks que un composable puede registrar para iniciar y limpiar efectos asociados al ciclo de vida del componente que lo invoca."
+            },
+            {
+              "name": "setup / script setup",
+              "description": "Contextos donde se deben invocar composables de forma síncrona para que Vue pueda asociar watchers y lifecycle hooks a la instancia activa."
+            },
+            {
+              "name": "toValue()",
+              "description": "API de Vue 3.3+ que normaliza un valor, un ref o un getter; puede ser útil para recibir entradas reactivas flexibles."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Vue — Composables",
+              "url": "https://vuejs.org/guide/reusability/composables.html"
+            },
+            {
+              "label": "Vue — Composition API FAQ",
+              "url": "https://vuejs.org/guide/extras/composition-api-faq.html"
+            },
+            {
+              "label": "Vue — toValue",
+              "url": "https://vuejs.org/api/reactivity-utilities.html#tovalue"
+            }
+          ]
         }
       ]
     },
