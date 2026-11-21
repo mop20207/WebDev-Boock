@@ -1,6 +1,6 @@
 {
-  "version": 4,
-  "articleCount": 86,
+  "version": 5,
+  "articleCount": 98,
   "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
   "tools": [
     {
@@ -4434,263 +4434,1691 @@
       "categories": [
         {
           "id": "fundamentos",
-          "title": "Fundamentos",
-          "description": "Runtime y módulos",
+          "title": "Fundamentos y entorno",
+          "description": "Conocé el runtime, prepará el proyecto, organizá módulos y administrá paquetes.",
           "icon": "▣",
           "articles": [
             "node-que-es",
-            "node-modulos"
+            "node-instalacion",
+            "node-modulos",
+            "node-npm"
           ]
         },
         {
           "id": "intermedio",
-          "title": "APIs del sistema",
-          "description": "Archivos y rutas",
+          "title": "Runtime y APIs del sistema",
+          "description": "Trabajá con procesos, configuración, rutas, archivos, asincronía, eventos y datos.",
           "icon": "⇄",
           "articles": [
+            "node-process",
+            "node-env",
+            "node-path",
             "node-fs",
-            "node-path"
+            "node-async",
+            "node-events",
+            "node-buffer",
+            "node-streams",
+            "node-url"
           ]
         },
         {
           "id": "avanzado",
-          "title": "Servidores",
-          "description": "HTTP y APIs",
+          "title": "Backend, calidad y depuración",
+          "description": "Construí servidores y APIs, manejá errores, probá el código y depurá aplicaciones.",
           "icon": "⌁",
           "articles": [
             "node-http",
-            "node-api-rest"
+            "node-api-rest",
+            "node-errores",
+            "node-testing",
+            "node-debugging"
           ]
         }
       ],
       "articles": [
         {
           "id": "node-que-es",
-          "title": "¿Qué es Node.js?",
+          "title": "¿Qué es Node.js y cómo funciona?",
           "category": "fundamentos",
-          "summary": "Node.js es un entorno de ejecución basado en V8 que permite ejecutar JavaScript fuera del navegador.",
-          "purpose": "Node.js es un entorno de ejecución basado en V8 que permite ejecutar JavaScript fuera del navegador.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "console.log('Hola desde Node');\nconsole.log(process.version);",
+          "summary": "Conocé Node.js como entorno de ejecución de JavaScript, sus usos y las diferencias con el navegador.",
+          "purpose": "Node.js es un entorno de ejecución que permite ejecutar JavaScript fuera del navegador. Utiliza el motor V8 y ofrece APIs propias para trabajar con archivos, procesos, red, servidores y otras tareas del sistema. Su modelo de I/O asíncrona y basado en eventos permite atender operaciones sin bloquear innecesariamente el hilo principal. Node.js no es un lenguaje ni un framework: es el entorno donde se ejecuta el código.",
+          "whenToUse": "Se utiliza para crear servidores, APIs, herramientas de consola, automatizaciones, procesos de construcción y aplicaciones de red. También permite reutilizar JavaScript entre frontend y backend, aunque el navegador y Node.js no comparten todas sus APIs.",
+          "syntax": "node archivo.js\nnode --watch archivo.js\nconsole.log('Hola desde Node.js');",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "console.log('Hola desde Node');\nconsole.log(process.version);",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Ejecutar JavaScript fuera del navegador",
+              "description": "Guardá este archivo como app.js y ejecutalo con node app.js.",
+              "code": "console.log(\"Hola desde Node.js\");\nconsole.log(\"Este código se ejecuta en el entorno de Node.\");",
+              "explanation": "Node lee el archivo y ejecuta sus instrucciones. No necesitás abrir una página HTML ni un navegador."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "console.log('Hola desde Node');\nconsole.log(process.version);",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Consultar información del runtime",
+              "description": "El objeto process permite consultar datos del proceso actual.",
+              "code": "import process from \"node:process\";\n\nconsole.log(\"Versión:\", process.version);\nconsole.log(\"Sistema:\", process.platform);\nconsole.log(\"PID:\", process.pid);",
+              "explanation": "process.version informa la versión de Node, process.platform identifica la plataforma y process.pid muestra el identificador del proceso."
+            },
+            {
+              "title": "Diferenciar Node del navegador",
+              "description": "Node no proporciona automáticamente objetos propios del navegador como window o document.",
+              "code": "console.log(typeof window);   // \"undefined\" en Node.js\nconsole.log(typeof document); // \"undefined\" en Node.js\nconsole.log(typeof process);  // \"object\"",
+              "explanation": "typeof permite comprobar si una variable global está disponible sin provocar un ReferenceError. Node tiene sus propias APIs y globales."
+            },
+            {
+              "title": "Observar la ejecución síncrona y una tarea programada",
+              "description": "El código actual termina antes de ejecutarse el callback del temporizador.",
+              "code": "console.log(\"1. Inicio\");\n\nsetTimeout(() => {\n  console.log(\"3. Callback del temporizador\");\n}, 0);\n\nconsole.log(\"2. Fin del código síncrono\");",
+              "explanation": "El resultado habitual es Inicio, Fin del código síncrono y luego Callback. Un retardo de cero milisegundos no significa que el callback se ejecute inmediatamente."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Elegí una versión de Node con soporte vigente para tus proyectos y verificá qué versión requiere cada dependencia.",
+            "Separá el código específico del navegador del código que necesita APIs de Node.",
+            "Preferí operaciones asíncronas para tareas de entrada y salida que puedan tardar.",
+            "Consultá la documentación oficial cuando uses una API integrada."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Pensar que Node.js es un lenguaje de programación o un framework.",
+            "Intentar usar document o window en un archivo ejecutado directamente con Node.",
+            "Suponer que una operación asíncrona siempre termina antes que la siguiente instrucción.",
+            "Confundir Node.js con npm: Node ejecuta JavaScript y npm administra paquetes."
           ],
-          "exercise": "Creá un archivo que muestre un saludo y la versión de Node.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá app.js para mostrar un saludo, la versión de Node y el sistema operativo. Después programá un setTimeout que muestre un mensaje y observá el orden de salida.",
+          "hint": "Importá process desde node:process y compará las instrucciones que se ejecutan directamente con el callback del temporizador.",
+          "parameters": [
+            {
+              "name": "node archivo.js",
+              "description": "Ejecuta el archivo JavaScript indicado."
+            },
+            {
+              "name": "--watch",
+              "description": "Reinicia el proceso cuando detecta cambios en los archivos observados."
+            },
+            {
+              "name": "process.version",
+              "description": "Propiedad que contiene la versión del runtime."
+            },
+            {
+              "name": "process.platform",
+              "description": "Propiedad que identifica la plataforma del sistema operativo."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: introducción oficial",
+              "url": "https://nodejs.org/learn/getting-started/introduction-to-nodejs"
+            },
+            {
+              "label": "Node.js: documentación de APIs",
+              "url": "https://nodejs.org/api/"
+            }
+          ],
+          "related": [
+            "node-instalacion",
+            "node-process",
+            "node-modulos"
+          ]
+        },
+        {
+          "id": "node-instalacion",
+          "title": "Instalación, terminal y REPL",
+          "category": "fundamentos",
+          "summary": "Instalá Node.js, comprobá las versiones y ejecutá archivos o instrucciones desde la terminal.",
+          "purpose": "Para desarrollar con Node.js necesitás instalar el runtime. La instalación habitual también incluye npm. Después podés ejecutar archivos .js desde una terminal o abrir el REPL, un entorno interactivo donde escribís expresiones y ves sus resultados inmediatamente.",
+          "whenToUse": "Este paso se realiza al preparar una computadora o un entorno de desarrollo. En equipos con varios proyectos puede convenir un administrador de versiones para cambiar de versión de Node sin alterar manualmente la instalación.",
+          "syntax": "node --version\nnpm --version\nnode app.js\nnode",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Comprobar la versión de Node",
+              "description": "Consultá si Node está instalado y disponible en el PATH.",
+              "code": "node --version",
+              "explanation": "El comando imprime una versión, por ejemplo v26.x.x. El número exacto cambia con las actualizaciones."
+            },
+            {
+              "title": "Comprobar npm",
+              "description": "npm se instala habitualmente junto con Node.js.",
+              "code": "npm --version",
+              "explanation": "Este comando muestra la versión de npm. Si la terminal indica que no reconoce el comando, revisá la instalación y la variable PATH."
+            },
+            {
+              "title": "Ejecutar un archivo JavaScript",
+              "description": "Creá app.js y ejecutalo desde la carpeta donde está guardado.",
+              "code": "// app.js\nconst usuario = \"Alicia\";\nconsole.log(\"Bienvenida, \" + usuario);",
+              "explanation": "En la terminal ejecutá node app.js. Node ejecuta el archivo y muestra la salida en esa misma terminal."
+            },
+            {
+              "title": "Probar expresiones en el REPL",
+              "description": "Ejecutá node sin indicar un archivo para abrir la consola interactiva.",
+              "code": "> 10 + 5\n15\n> const nombre = \"Alicia\"\nundefined\n> nombre.toUpperCase()\n'ALICIA'\n> .exit",
+              "explanation": "El símbolo > representa el prompt del REPL, no forma parte del código. Escribí .exit para salir; también podés usar Ctrl+C dos veces."
+            }
+          ],
+          "bestPractices": [
+            "Descargá Node desde el sitio oficial y elegí una versión con soporte vigente.",
+            "Comprobá node --version y npm --version después de instalar.",
+            "Abrí la terminal en la carpeta correcta antes de ejecutar un archivo.",
+            "Usá el REPL para probar expresiones pequeñas, no como sustituto de la estructura de un proyecto."
+          ],
+          "commonMistakes": [
+            "Escribir node app.js desde una carpeta donde ese archivo no existe.",
+            "Confundir el prompt del REPL con código JavaScript que debe guardarse en un archivo.",
+            "Tener varias instalaciones y ejecutar una versión distinta de la esperada.",
+            "Descargar instaladores desde sitios no oficiales."
+          ],
+          "exercise": "Comprobá las versiones de Node y npm, creá un archivo app.js que muestre tu nombre y ejecutalo. Después abrí el REPL y probá tres operaciones de JavaScript.",
+          "hint": "Usá node --version, npm --version y node app.js. Para el REPL, ejecutá solamente node.",
+          "parameters": [
+            {
+              "name": "--version o -v",
+              "description": "Muestra la versión instalada de Node o npm."
+            },
+            {
+              "name": "node archivo.js",
+              "description": "Ejecuta un archivo JavaScript."
+            },
+            {
+              "name": "node",
+              "description": "Sin archivo, abre el REPL interactivo."
+            },
+            {
+              "name": ".exit",
+              "description": "Comando interno del REPL para salir."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Descargar Node.js",
+              "url": "https://nodejs.org/en/download/"
+            },
+            {
+              "label": "Node.js: guía para comenzar",
+              "url": "https://nodejs.org/learn/getting-started"
+            }
+          ],
+          "related": [
+            "node-que-es",
+            "node-npm",
+            "node-modulos"
+          ]
         },
         {
           "id": "node-modulos",
-          "title": "Módulos import y export",
+          "title": "Módulos: import, export y CommonJS",
           "category": "fundamentos",
-          "summary": "Los módulos dividen el programa en archivos que exportan e importan funciones y valores.",
-          "purpose": "Los módulos dividen el programa en archivos que exportan e importan funciones y valores.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "// calculos.js\nexport const sumar = (a,b) => a+b;\n// app.js\nimport { sumar } from './calculos.js';\nconsole.log(sumar(4,6));",
+          "summary": "Dividí el programa en archivos reutilizables y entendé los sistemas ECMAScript Modules y CommonJS.",
+          "purpose": "Los módulos permiten separar el código en archivos con responsabilidades concretas. Node.js admite ECMAScript Modules (ESM), que utilizan import y export, y CommonJS, que utiliza require y module.exports. Para usar ESM en archivos .js, podés declarar \"type\": \"module\" en el package.json más cercano; también podés usar .mjs. Para CommonJS se puede usar .cjs o \"type\": \"commonjs\".",
+          "whenToUse": "Usá módulos cuando un proyecto empieza a crecer, cuando querés reutilizar funciones o cuando necesitás organizar servicios, rutas y utilidades en archivos separados. En los ejemplos modernos de esta biblioteca se prioriza ESM.",
+          "syntax": "export function sumar(a, b) { return a + b; }\nimport { sumar } from './calculadora.js';\n\n// package.json\n{ \"type\": \"module\" }",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "// calculos.js\nexport const sumar = (a,b) => a+b;\n// app.js\nimport { sumar } from './calculos.js';\nconsole.log(sumar(4,6));",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Exportar e importar una función",
+              "description": "Creá dos archivos: calculadora.js y app.js.",
+              "code": "// calculadora.js\nexport function sumar(a, b) {\n  return a + b;\n}\n\n// app.js\nimport { sumar } from \"./calculadora.js\";\nconsole.log(sumar(8, 4)); // 12",
+              "explanation": "La palabra export hace disponible la función. import la incorpora desde la ruta relativa, que debe incluir la extensión del archivo en este caso."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "// app.js\nimport { sumar } from './calculos.js';\nconsole.log(sumar(4,6));",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Exportación por defecto",
+              "description": "Un módulo puede ofrecer un valor principal mediante export default.",
+              "code": "// saludo.js\nexport default function saludar(nombre) {\n  return \"Hola, \" + nombre;\n}\n\n// app.js\nimport saludar from \"./saludo.js\";\nconsole.log(saludar(\"Mara\"));",
+              "explanation": "La importación por defecto no utiliza llaves y puede asignarle un nombre local distinto al declarado en el archivo original."
+            },
+            {
+              "title": "Importar un módulo integrado de Node",
+              "description": "Los módulos integrados se pueden importar mediante el prefijo node:.",
+              "code": "import { join } from \"node:path\";\n\nconst ruta = join(\"public\", \"imagenes\", \"logo.png\");\nconsole.log(ruta);",
+              "explanation": "node:path es parte de Node.js y no requiere npm install. El prefijo node: deja explícito que se trata de una API integrada."
+            },
+            {
+              "title": "Reconocer CommonJS",
+              "description": "Este ejemplo usa la extensión .cjs para indicar CommonJS incluso si el package.json declara type module.",
+              "code": "// calculadora.cjs\nfunction restar(a, b) {\n  return a - b;\n}\nmodule.exports = { restar };\n\n// app.cjs\nconst { restar } = require(\"./calculadora.cjs\");\nconsole.log(restar(9, 2)); // 7",
+              "explanation": "require carga el módulo y module.exports define qué valores expone. No mezcles sin entender los sistemas: la sintaxis y algunas reglas de carga son diferentes."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Elegí un sistema de módulos principal para cada proyecto y mantené una convención consistente.",
+            "En ESM, usá rutas relativas explícitas con su extensión cuando corresponda.",
+            "Exportá solo lo que otros módulos realmente necesitan.",
+            "Separá los módulos por responsabilidad y evitá ciclos de importación innecesarios."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Usar import en un archivo CommonJS sin la configuración o extensión adecuada.",
+            "Olvidar la extensión en una ruta relativa ESM cuando el resolvedor la exige.",
+            "Confundir export default con exportaciones nombradas.",
+            "Intentar usar require y module.exports como si fueran equivalentes directos de import y export."
           ],
-          "exercise": "Separá una calculadora en dos archivos.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un módulo operaciones.js que exporte sumar, restar y multiplicar. Importá esas funciones desde app.js y ejecutá una prueba para cada una.",
+          "hint": "Agregá \"type\": \"module\" al package.json o utilizá archivos .mjs. En las exportaciones nombradas, los nombres entre llaves deben coincidir.",
+          "parameters": [
+            {
+              "name": "export",
+              "description": "Expone una función, variable o clase desde un módulo ESM."
+            },
+            {
+              "name": "export default",
+              "description": "Define la exportación por defecto del módulo."
+            },
+            {
+              "name": "import",
+              "description": "Carga valores exportados desde otro módulo ESM."
+            },
+            {
+              "name": "require()",
+              "description": "Carga módulos mediante CommonJS."
+            },
+            {
+              "name": "module.exports",
+              "description": "Define el valor que CommonJS expone a otros módulos."
+            },
+            {
+              "name": "\"type\": \"module\"",
+              "description": "Indica que los archivos .js del paquete se interpretan como ESM."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: módulos ECMAScript",
+              "url": "https://nodejs.org/api/esm.html"
+            },
+            {
+              "label": "Node.js: módulos CommonJS",
+              "url": "https://nodejs.org/api/modules.html"
+            },
+            {
+              "label": "Node.js: paquetes y package.json",
+              "url": "https://nodejs.org/api/packages.html"
+            }
+          ],
+          "related": [
+            "node-que-es",
+            "node-npm",
+            "node-fs"
+          ]
         },
         {
-          "id": "node-fs",
-          "title": "Sistema de archivos fs",
-          "category": "intermedio",
-          "summary": "fs permite leer y escribir archivos; fs/promises ofrece operaciones basadas en promesas.",
-          "purpose": "fs permite leer y escribir archivos; fs/promises ofrece operaciones basadas en promesas.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "import { readFile, writeFile } from 'node:fs/promises';\nawait writeFile('nota.txt','Hola');\nconsole.log(await readFile('nota.txt','utf8'));",
+          "id": "node-npm",
+          "title": "NPM, package.json y dependencias",
+          "category": "fundamentos",
+          "summary": "Creá un proyecto, instalá paquetes y organizá scripts y dependencias con npm.",
+          "purpose": "npm es el administrador de paquetes habitual del ecosistema Node.js. Permite crear el package.json, instalar dependencias, guardar rangos de versiones y ejecutar scripts definidos por el proyecto. package.json describe el paquete y package-lock.json registra el árbol concreto de dependencias para favorecer instalaciones reproducibles.",
+          "whenToUse": "Se utiliza desde el inicio de un proyecto que necesita configuración, scripts o paquetes externos. Las dependencias de producción se declaran en dependencies y las herramientas de desarrollo suelen guardarse en devDependencies.",
+          "syntax": "npm init -y\nnpm install nombre-paquete\nnpm install -D herramienta\nnpm run nombre-script",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "import { readFile, writeFile } from 'node:fs/promises';\nawait writeFile('nota.txt','Hola');\nconsole.log(await readFile('nota.txt','utf8'));",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Crear package.json",
+              "description": "Iniciá un proyecto npm desde la carpeta que querés utilizar.",
+              "code": "npm init -y",
+              "explanation": "La opción -y acepta los valores predeterminados y crea package.json. También podés ejecutar npm init sin -y para responder las preguntas."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "import { readFile, writeFile } from 'node:fs/promises';\nawait writeFile('nota.txt','Hola');\nconsole.log(await readFile('nota.txt','utf8'));",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Instalar una dependencia",
+              "description": "Instalá una biblioteca externa y guardala en dependencies.",
+              "code": "npm install dayjs",
+              "explanation": "npm descarga el paquete y sus dependencias, actualiza package.json y genera o actualiza package-lock.json. El paquete queda disponible en node_modules."
+            },
+            {
+              "title": "Instalar una herramienta de desarrollo",
+              "description": "Las herramientas usadas durante el desarrollo suelen declararse como devDependencies.",
+              "code": "npm install --save-dev eslint",
+              "explanation": "La opción --save-dev, abreviada -D, registra el paquete en devDependencies. No significa que sea una dependencia de la aplicación en producción."
+            },
+            {
+              "title": "Definir y ejecutar scripts",
+              "description": "Agregá scripts al package.json y ejecutalos con npm run.",
+              "code": "{\n  \"type\": \"module\",\n  \"scripts\": {\n    \"start\": \"node src/app.js\",\n    \"dev\": \"node --watch src/app.js\",\n    \"test\": \"node --test\"\n  }\n}\n\nnpm run dev",
+              "explanation": "El contenido JSON se guarda en package.json; la última línea se ejecuta en la terminal. npm run dev ejecuta el comando definido en el script dev."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Conservá package-lock.json en el repositorio de una aplicación para reproducir las instalaciones.",
+            "Usá npm ci en entornos automatizados cuando quieras instalar exactamente desde el lockfile.",
+            "Revisá qué paquete y versión estás instalando antes de agregarlo al proyecto.",
+            "Guardá las herramientas de desarrollo en devDependencies cuando corresponda."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Ejecutar npm install fuera de la carpeta del proyecto.",
+            "Eliminar package-lock.json sin entender el impacto sobre las versiones resueltas.",
+            "Subir node_modules al repositorio en lugar de reconstruirlo con npm install o npm ci.",
+            "Confundir un script definido en package.json con un comando global del sistema."
           ],
-          "exercise": "Creá un archivo y luego leé su contenido.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un proyecto llamado practica-node, agregá el campo type: module y configurá scripts start, dev y test. Instalá una dependencia pequeña y comprobá cómo cambian package.json y package-lock.json.",
+          "hint": "Empezá con npm init -y, después editá package.json y ejecutá npm run dev. Para eliminar un paquete usá npm uninstall nombre-paquete.",
+          "parameters": [
+            {
+              "name": "npm init -y",
+              "description": "Crea package.json aceptando los valores predeterminados."
+            },
+            {
+              "name": "npm install paquete",
+              "description": "Instala una dependencia y la registra en dependencies."
+            },
+            {
+              "name": "npm install -D paquete",
+              "description": "Instala y registra una dependencia de desarrollo."
+            },
+            {
+              "name": "npm uninstall paquete",
+              "description": "Desinstala un paquete y actualiza los archivos del proyecto."
+            },
+            {
+              "name": "npm ci",
+              "description": "Instala desde el lockfile de forma limpia; requiere que coincida con package.json."
+            },
+            {
+              "name": "npm run script",
+              "description": "Ejecuta el script indicado en package.json."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Documentación oficial de npm",
+              "url": "https://docs.npmjs.com/"
+            },
+            {
+              "label": "npm init",
+              "url": "https://docs.npmjs.com/cli/v11/commands/npm-init/"
+            },
+            {
+              "label": "npm install",
+              "url": "https://docs.npmjs.com/cli/v11/commands/npm-install/"
+            },
+            {
+              "label": "npm scripts",
+              "url": "https://docs.npmjs.com/cli/v11/using-npm/scripts/"
+            }
+          ],
+          "related": [
+            "node-instalacion",
+            "node-modulos",
+            "node-testing"
+          ]
+        },
+        {
+          "id": "node-process",
+          "title": "El objeto process y los argumentos",
+          "category": "intermedio",
+          "summary": "Inspeccioná el proceso de Node, leé argumentos de terminal y controlá el código de salida.",
+          "purpose": "process es un objeto global que proporciona información y control sobre el proceso actual de Node.js. Permite acceder a argumentos, variables de entorno, directorio de trabajo, versión, plataforma, identificador del proceso y código de salida. Es útil para crear herramientas de consola y configurar aplicaciones.",
+          "whenToUse": "Usalo cuando un script necesita recibir datos desde la terminal, conocer desde qué carpeta se ejecuta o informar si terminó correctamente. Para configurar secretos y opciones del entorno, consultá también el artículo sobre variables de entorno.",
+          "syntax": "process.argv\nprocess.cwd()\nprocess.version\nprocess.exitCode = 1",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Leer argumentos de la terminal",
+              "description": "process.argv contiene el ejecutable, el archivo y los argumentos adicionales.",
+              "code": "// app.js\nconst nombre = process.argv[2] ?? \"invitado\";\nconsole.log(\"Hola, \" + nombre);",
+              "explanation": "Ejecutá node app.js Lucía. El valor adicional aparece en process.argv[2]; los dos primeros índices corresponden al ejecutable y al archivo."
+            },
+            {
+              "title": "Consultar directorio y ejecutable",
+              "description": "Distinguí la carpeta actual del archivo binario que ejecuta Node.",
+              "code": "import process from \"node:process\";\n\nconsole.log(\"Carpeta actual:\", process.cwd());\nconsole.log(\"Ejecutable:\", process.execPath);",
+              "explanation": "process.cwd() devuelve el directorio de trabajo desde el que se inició el comando. process.execPath informa la ruta del ejecutable de Node."
+            },
+            {
+              "title": "Consultar datos del proceso",
+              "description": "Obtené valores útiles para diagnóstico.",
+              "code": "console.log({\n  pid: process.pid,\n  version: process.version,\n  platform: process.platform,\n  arch: process.arch\n});",
+              "explanation": "pid identifica el proceso; version, platform y arch describen la versión y la plataforma donde se está ejecutando."
+            },
+            {
+              "title": "Indicar un resultado de error",
+              "description": "Asigná un código de salida distinto de cero si una validación falla.",
+              "code": "const archivo = process.argv[2];\n\nif (!archivo) {\n  console.error(\"Uso: node app.js <archivo>\");\n  process.exitCode = 1;\n} else {\n  console.log(\"Archivo solicitado:\", archivo);\n}",
+              "explanation": "process.exitCode permite indicar el resultado final del proceso sin forzar una terminación inmediata. El código 0 suele representar éxito y un valor distinto de cero indica error."
+            }
+          ],
+          "bestPractices": [
+            "Validá los argumentos antes de usarlos.",
+            "Preferí process.exitCode para indicar fallos y permitir que el proceso finalice ordenadamente.",
+            "No supongas que process.cwd() coincide con la carpeta donde está ubicado el archivo.",
+            "No guardes secretos directamente en el código fuente."
+          ],
+          "commonMistakes": [
+            "Leer el argumento equivocado de process.argv.",
+            "Confundir process.cwd() con la ubicación del archivo JavaScript.",
+            "Usar process.exit() inmediatamente y cortar tareas pendientes de entrada/salida.",
+            "Suponer que todos los valores de process.env o process.argv ya tienen el tipo esperado."
+          ],
+          "exercise": "Creá una herramienta de consola que reciba un nombre y una edad como argumentos. Validá que ambos existan y mostrá un mensaje; cuando falte un dato, escribí una ayuda y asigná process.exitCode = 1.",
+          "hint": "Los argumentos comienzan en el índice 2. Convertí la edad con Number() y verificá que sea un número válido.",
+          "parameters": [
+            {
+              "name": "process.argv",
+              "description": "Arreglo de argumentos con los que se inició el proceso."
+            },
+            {
+              "name": "process.cwd()",
+              "description": "Devuelve el directorio de trabajo actual."
+            },
+            {
+              "name": "process.execPath",
+              "description": "Ruta absoluta del ejecutable de Node."
+            },
+            {
+              "name": "process.version",
+              "description": "Versión del runtime."
+            },
+            {
+              "name": "process.env",
+              "description": "Objeto que contiene las variables de entorno del proceso."
+            },
+            {
+              "name": "process.exitCode",
+              "description": "Código que se devolverá cuando el proceso termine."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: process",
+              "url": "https://nodejs.org/api/process.html"
+            },
+            {
+              "label": "Node.js: línea de comandos",
+              "url": "https://nodejs.org/api/cli.html"
+            }
+          ],
+          "related": [
+            "node-env",
+            "node-instalacion",
+            "node-errores"
+          ]
+        },
+        {
+          "id": "node-env",
+          "title": "Variables de entorno y configuración",
+          "category": "intermedio",
+          "summary": "Configurá puertos y opciones por entorno sin escribir secretos directamente en el código.",
+          "purpose": "Las variables de entorno permiten entregar configuración a un proceso desde el sistema o desde un archivo de entorno. Node las expone mediante process.env. Sus valores se reciben como cadenas, por lo que conviene convertirlos y validarlos cuando se espera un número u otro tipo. Los archivos .env pueden cargarse mediante la opción --env-file en versiones compatibles de Node.",
+          "whenToUse": "Son útiles para configurar puertos, modos de ejecución, rutas y credenciales. Los secretos deben mantenerse fuera del repositorio y no deben imprimirse en logs ni enviarse al frontend.",
+          "syntax": "process.env.PORT\nnode --env-file=.env app.js\nconst port = Number(process.env.PORT ?? 3000);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Leer una variable de entorno",
+              "description": "Consultá una variable y definí un valor alternativo.",
+              "code": "const entorno = process.env.NODE_ENV ?? \"development\";\nconsole.log(\"Entorno:\", entorno);",
+              "explanation": "El operador ?? utiliza el valor de la derecha solo cuando la variable es null o undefined. Las variables de entorno se leen como cadenas."
+            },
+            {
+              "title": "Convertir y validar un puerto",
+              "description": "No uses directamente una cadena cuando necesitás operar con un número.",
+              "code": "const port = Number(process.env.PORT ?? 3000);\n\nif (!Number.isInteger(port) || port < 1 || port > 65535) {\n  throw new Error(\"PORT debe ser un puerto válido\");\n}\n\nconsole.log(\"Puerto:\", port);",
+              "explanation": "Number convierte el valor a número. La validación evita iniciar el servidor con un puerto fuera del rango permitido."
+            },
+            {
+              "title": "Cargar un archivo .env",
+              "description": "Creá un archivo .env en la raíz del proyecto.",
+              "code": "# .env\nPORT=4000\nNODE_ENV=development\nAPI_KEY=reemplazar_por_un_secreto",
+              "explanation": "El contenido se guarda en un archivo .env. En una versión compatible de Node, ejecutá node --env-file=.env app.js para cargar sus valores al proceso."
+            },
+            {
+              "title": "Evitar subir secretos al repositorio",
+              "description": "Ignorá el archivo real y compartí solo una plantilla sin credenciales.",
+              "code": "# .gitignore\n.env\n\n# .env.example\nPORT=3000\nNODE_ENV=development\nAPI_KEY=",
+              "explanation": "El archivo .env contiene valores reales y no debe subirse al repositorio. .env.example documenta los nombres de las variables sin incluir secretos."
+            }
+          ],
+          "bestPractices": [
+            "Convertí y validá explícitamente los valores que deban ser números, booleanos o listas.",
+            "Mantené los secretos fuera del código fuente y del control de versiones.",
+            "Proporcioná un archivo .env.example con los nombres de variables requeridos.",
+            "Usá valores predeterminados razonables solo cuando la aplicación pueda funcionar con ellos."
+          ],
+          "commonMistakes": [
+            "Tratar process.env.PORT como un número sin convertirlo.",
+            "Subir .env al repositorio con claves o contraseñas reales.",
+            "Confiar en que una variable exista sin validarla.",
+            "Exponer variables privadas en respuestas HTTP o en código que llega al navegador."
+          ],
+          "exercise": "Configurá PORT y NODE_ENV mediante un archivo .env. En app.js convertí PORT a número, validalo y mostrá el entorno actual sin imprimir ninguna clave privada.",
+          "hint": "Agregá .env al .gitignore y ejecutá node --env-file=.env app.js. Recordá que process.env.PORT es una cadena.",
+          "parameters": [
+            {
+              "name": "process.env",
+              "description": "Objeto que permite leer y modificar las variables del entorno del proceso."
+            },
+            {
+              "name": "??",
+              "description": "Operador de coalescencia nula para elegir un valor alternativo."
+            },
+            {
+              "name": "--env-file=.env",
+              "description": "Carga variables desde el archivo indicado en versiones de Node que admiten esta opción."
+            },
+            {
+              "name": "NODE_ENV",
+              "description": "Convención frecuente para distinguir entornos como development y production; Node no la establece automáticamente para todas las aplicaciones."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: variables de entorno",
+              "url": "https://nodejs.org/api/environment_variables.html"
+            },
+            {
+              "label": "Node.js: opciones de línea de comandos",
+              "url": "https://nodejs.org/api/cli.html"
+            }
+          ],
+          "related": [
+            "node-process",
+            "node-http",
+            "node-errores"
+          ]
         },
         {
           "id": "node-path",
-          "title": "Rutas con path",
+          "title": "Rutas y directorios con node:path",
           "category": "intermedio",
-          "summary": "path construye y analiza rutas de forma compatible con cada sistema operativo.",
-          "purpose": "path construye y analiza rutas de forma compatible con cada sistema operativo.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "import path from 'node:path';\nconst archivo = path.join('public','img','logo.png');\nconsole.log(path.basename(archivo), path.extname(archivo));",
-          "level": "Inicial",
+          "summary": "Construí y analizá rutas sin depender manualmente de las barras de Windows o Linux.",
+          "purpose": "El módulo node:path ofrece funciones para unir, resolver y analizar rutas de archivos. Las rutas tienen diferencias entre Windows y sistemas POSIX, por eso conviene usar path.join, path.resolve y otras utilidades en vez de concatenar separadores manualmente. join normaliza segmentos; resolve construye una ruta absoluta usando el directorio actual cuando es necesario.",
+          "whenToUse": "Usalo al leer archivos, crear carpetas, localizar recursos o construir rutas para APIs del sistema de archivos. También ayuda a separar el nombre, el directorio y la extensión de un archivo.",
+          "syntax": "import path from 'node:path';\npath.join('public', 'img', 'logo.png');\npath.resolve('datos', 'usuarios.json');",
+          "level": "Intermedio",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "import path from 'node:path';\nconst archivo = path.join('public','img','logo.png');\nconsole.log(path.basename(archivo), path.extname(archivo));",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Unir segmentos de ruta",
+              "description": "path.join concatena segmentos utilizando el separador adecuado para la plataforma.",
+              "code": "import path from \"node:path\";\n\nconst imagen = path.join(\"public\", \"img\", \"logo.png\");\nconsole.log(imagen);",
+              "explanation": "No necesitás decidir si el separador es / o \\\\. Node selecciona el separador correspondiente al sistema."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "import path from 'node:path';\nconst archivo = path.join('public','img','logo.png');\nconsole.log(path.basename(archivo), path.extname(archivo));",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Resolver una ruta absoluta",
+              "description": "path.resolve combina segmentos y devuelve una ruta absoluta.",
+              "code": "import path from \"node:path\";\n\nconst archivo = path.resolve(\"data\", \"usuarios.json\");\nconsole.log(archivo);",
+              "explanation": "La ruta se resuelve tomando como referencia el directorio de trabajo actual, salvo que se proporcione un segmento absoluto."
+            },
+            {
+              "title": "Extraer partes de un archivo",
+              "description": "Obtené el directorio, el nombre base y la extensión.",
+              "code": "import path from \"node:path\";\n\nconst archivo = \"/proyecto/public/logo.svg\";\nconsole.log(path.dirname(archivo));  // /proyecto/public\nconsole.log(path.basename(archivo)); // logo.svg\nconsole.log(path.extname(archivo));  // .svg",
+              "explanation": "dirname devuelve el directorio; basename, el último segmento; extname, la extensión final, incluido el punto."
+            },
+            {
+              "title": "Obtener la carpeta del módulo ESM",
+              "description": "import.meta.url identifica la URL del módulo actual; fileURLToPath la convierte en una ruta del sistema.",
+              "code": "import path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst archivoActual = fileURLToPath(import.meta.url);\nconst carpetaActual = path.dirname(archivoActual);\nconsole.log(carpetaActual);",
+              "explanation": "Este patrón evita depender de process.cwd() cuando necesitás construir una ruta relativa al archivo del módulo. Es útil en scripts que pueden ejecutarse desde distintas carpetas."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Construí rutas con path.join o path.resolve en lugar de concatenar barras manualmente.",
+            "Tené presente que process.cwd() es la carpeta de ejecución, no necesariamente la del módulo.",
+            "Validá las rutas recibidas desde usuarios antes de permitir acceso a archivos.",
+            "Usá path.win32 o path.posix solo cuando necesites interpretar explícitamente el formato de otra plataforma."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Escribir rutas con separadores de un sistema operativo y asumir que funcionarán igual en todos.",
+            "Confundir join con resolve: resolve produce una ruta absoluta.",
+            "Suponer que extname siempre devuelve una extensión; para nombres sin extensión devuelve una cadena vacía.",
+            "Permitir que un nombre recibido por una API salga de la carpeta autorizada sin validación."
           ],
-          "exercise": "Construí una ruta y extraé su nombre y extensión.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un script que construya la ruta a data/productos.json, compruebe su extensión y muestre el nombre y la carpeta. Probalo desde otra ubicación de terminal.",
+          "hint": "Compará path.join con path.resolve y recordá que process.cwd() puede variar según dónde ejecutes node.",
+          "parameters": [
+            {
+              "name": "path.join(...segments)",
+              "description": "Une segmentos y normaliza el resultado."
+            },
+            {
+              "name": "path.resolve(...segments)",
+              "description": "Resuelve los segmentos en una ruta absoluta."
+            },
+            {
+              "name": "path.basename(path)",
+              "description": "Devuelve el último segmento de la ruta."
+            },
+            {
+              "name": "path.dirname(path)",
+              "description": "Devuelve la carpeta que contiene la ruta."
+            },
+            {
+              "name": "path.extname(path)",
+              "description": "Devuelve la extensión final del nombre."
+            },
+            {
+              "name": "path.sep",
+              "description": "Separador de segmentos propio de la plataforma."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: módulo path",
+              "url": "https://nodejs.org/api/path.html"
+            },
+            {
+              "label": "Node.js: módulo URL",
+              "url": "https://nodejs.org/api/url.html"
+            }
+          ],
+          "related": [
+            "node-fs",
+            "node-process",
+            "node-url"
+          ]
+        },
+        {
+          "id": "node-fs",
+          "title": "Sistema de archivos con node:fs",
+          "category": "intermedio",
+          "summary": "Leé, escribí, modificá y recorré archivos y carpetas usando la API de promesas.",
+          "purpose": "El módulo node:fs permite interactuar con el sistema de archivos. Para código asíncrono moderno podés importar funciones desde node:fs/promises y utilizar await. Las operaciones pueden fallar por permisos, rutas inexistentes u otras condiciones del sistema, por lo que es importante manejar los errores.",
+          "whenToUse": "Se utiliza para leer configuraciones, guardar datos, generar archivos, recorrer carpetas y construir herramientas locales. Para archivos pequeños, readFile y writeFile son cómodos; para archivos grandes, considerá streams.",
+          "syntax": "import { readFile, writeFile } from 'node:fs/promises';\nconst texto = await readFile('nota.txt', 'utf8');\nawait writeFile('salida.txt', texto);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Leer un archivo de texto",
+              "description": "readFile devuelve una promesa y puede convertir el contenido a texto si indicás una codificación.",
+              "code": "import { readFile } from \"node:fs/promises\";\n\nconst contenido = await readFile(\"nota.txt\", \"utf8\");\nconsole.log(contenido);",
+              "explanation": "El segundo argumento utf8 hace que el resultado sea una cadena. Sin codificación, readFile devuelve un Buffer."
+            },
+            {
+              "title": "Crear y escribir un archivo",
+              "description": "writeFile crea el archivo si no existe y reemplaza su contenido si ya existe.",
+              "code": "import { writeFile } from \"node:fs/promises\";\n\nawait writeFile(\"salida.txt\", \"Primera línea\\n\", \"utf8\");\nconsole.log(\"Archivo guardado\");",
+              "explanation": "La operación es asíncrona y devuelve una promesa. No continúes suponiendo que el archivo ya está escrito hasta que el await termine."
+            },
+            {
+              "title": "Crear carpetas y agregar contenido",
+              "description": "mkdir con recursive permite crear directorios intermedios; appendFile agrega contenido al final.",
+              "code": "import { mkdir, appendFile } from \"node:fs/promises\";\n\nawait mkdir(\"datos/registros\", { recursive: true });\nawait appendFile(\"datos/registros/app.log\", \"Inicio de aplicación\\n\");",
+              "explanation": "recursive: true evita fallar si la ruta intermedia todavía no existe. appendFile agrega la nueva línea sin reemplazar el contenido previo."
+            },
+            {
+              "title": "Listar archivos y consultar sus datos",
+              "description": "readdir y stat permiten inspeccionar el contenido de una carpeta.",
+              "code": "import { readdir, stat } from \"node:fs/promises\";\n\nconst nombres = await readdir(\"public\");\nconsole.log(nombres);\n\nconst datos = await stat(\"public/logo.png\");\nconsole.log(\"Es archivo:\", datos.isFile());\nconsole.log(\"Bytes:\", datos.size);",
+              "explanation": "readdir devuelve los nombres de los elementos. stat permite consultar metadatos como tamaño y tipo."
+            }
+          ],
+          "bestPractices": [
+            "Preferí node:fs/promises y await para operaciones asíncronas habituales.",
+            "Especificá la codificación, como utf8, cuando quieras leer texto.",
+            "Manej á los errores de lectura y escritura, especialmente cuando trabajes con rutas externas.",
+            "Usá streams en vez de cargar archivos enormes completos en memoria.",
+            "No aceptes rutas arbitrarias de usuarios sin limitar el acceso a un directorio permitido."
+          ],
+          "commonMistakes": [
+            "Olvidar await y usar una promesa como si fuera el contenido del archivo.",
+            "No indicar utf8 y sorprenderse al recibir un Buffer.",
+            "Suponer que readFile crea un archivo inexistente.",
+            "Usar funciones síncronas en operaciones frecuentes de un servidor y bloquear el event loop."
+          ],
+          "exercise": "Creá la carpeta datos, escribí un archivo usuarios.txt, agregale una segunda línea, leelo y mostrá su contenido. Finalmente listá los archivos de la carpeta.",
+          "hint": "Importá mkdir, writeFile, appendFile, readFile y readdir desde node:fs/promises. Ejecutá las operaciones en una función async.",
+          "parameters": [
+            {
+              "name": "readFile(ruta, 'utf8')",
+              "description": "Lee el contenido y lo devuelve como texto."
+            },
+            {
+              "name": "writeFile(ruta, contenido)",
+              "description": "Crea o reemplaza el archivo."
+            },
+            {
+              "name": "appendFile(ruta, contenido)",
+              "description": "Agrega contenido al final del archivo."
+            },
+            {
+              "name": "mkdir(ruta, { recursive: true })",
+              "description": "Crea una carpeta y las carpetas intermedias necesarias."
+            },
+            {
+              "name": "readdir(ruta)",
+              "description": "Devuelve los nombres de los elementos de un directorio."
+            },
+            {
+              "name": "stat(ruta)",
+              "description": "Devuelve metadatos del archivo o directorio."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: sistema de archivos",
+              "url": "https://nodejs.org/api/fs.html"
+            },
+            {
+              "label": "Node.js: fs/promises",
+              "url": "https://nodejs.org/api/fs.html#promises-api"
+            }
+          ],
+          "related": [
+            "node-path",
+            "node-async",
+            "node-streams",
+            "node-errores"
+          ]
+        },
+        {
+          "id": "node-async",
+          "title": "Asincronía: Promise, async y await",
+          "category": "intermedio",
+          "summary": "Organizá operaciones asíncronas y manejá promesas sin bloquear innecesariamente el flujo del programa.",
+          "purpose": "Muchas operaciones de Node, como leer archivos o comunicarse con una API, tardan un tiempo que no conviene resolver bloqueando el hilo principal. Una Promise representa el resultado futuro de una operación. async declara una función que devuelve una promesa y await permite esperar su resultado dentro de una función async o en contextos donde el top-level await está habilitado.",
+          "whenToUse": "Usá async y await al trabajar con APIs basadas en promesas. Elegí entre ejecuciones secuenciales y paralelas según si una operación depende del resultado de otra. En todos los casos, prepará el manejo de rechazos y errores.",
+          "syntax": "async function cargar() {\n  const resultado = await operacionAsincrona();\n  return resultado;\n}",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Crear una función async",
+              "description": "Una función async siempre devuelve una Promise.",
+              "code": "async function obtenerMensaje() {\n  return \"Listo\";\n}\n\nconst resultado = await obtenerMensaje();\nconsole.log(resultado);",
+              "explanation": "Aunque la función devuelve una cadena, al declararla async el resultado se envuelve en una Promise y puede esperarse con await."
+            },
+            {
+              "title": "Esperar una operación antes de continuar",
+              "description": "Usá await cuando la siguiente instrucción necesita el resultado anterior.",
+              "code": "import { readFile } from \"node:fs/promises\";\n\nconst texto = await readFile(\"nota.txt\", \"utf8\");\nconsole.log(\"Contenido:\", texto);\nconsole.log(\"Lectura finalizada\");",
+              "explanation": "El segundo console.log se ejecuta después de que la promesa de readFile se resuelve. El resto del proceso puede atender otras tareas mientras espera."
+            },
+            {
+              "title": "Ejecutar tareas independientes en paralelo",
+              "description": "Promise.all permite esperar varias operaciones que no dependen entre sí.",
+              "code": "import { readFile } from \"node:fs/promises\";\n\nconst [usuarios, productos] = await Promise.all([\n  readFile(\"usuarios.json\", \"utf8\"),\n  readFile(\"productos.json\", \"utf8\")\n]);\n\nconsole.log(usuarios);\nconsole.log(productos);",
+              "explanation": "Promise.all inicia ambas operaciones y se resuelve cuando todas terminan. Si una promesa rechaza, Promise.all también rechaza."
+            },
+            {
+              "title": "Capturar errores de una promesa",
+              "description": "try/catch permite manejar el rechazo producido por await.",
+              "code": "import { readFile } from \"node:fs/promises\";\n\ntry {\n  const texto = await readFile(\"inexistente.txt\", \"utf8\");\n  console.log(texto);\n} catch (error) {\n  console.error(\"No se pudo leer el archivo:\", error.message);\n}",
+              "explanation": "Un rechazo esperado se transforma en una excepción al usar await y puede manejarse con catch. No ignores los errores silenciosamente."
+            }
+          ],
+          "bestPractices": [
+            "Usá await para expresar claramente las dependencias entre operaciones.",
+            "Ejecutá en paralelo con Promise.all solo las tareas que sean independientes.",
+            "Capturá los errores en el nivel donde puedas tomar una decisión útil.",
+            "Evitá mezclar callbacks, eventos y promesas sin una razón clara."
+          ],
+          "commonMistakes": [
+            "Olvidar await y acceder a propiedades de una Promise.",
+            "Esperar secuencialmente operaciones que podrían ejecutarse en paralelo.",
+            "Usar Promise.all cuando necesitás que todas las tareas continúen aunque alguna falle; para ese caso evaluá Promise.allSettled.",
+            "No capturar los rechazos de promesas."
+          ],
+          "exercise": "Leé dos archivos JSON en paralelo con Promise.all, convertí su contenido con JSON.parse y mostrá la cantidad de elementos de cada uno. Agregá un try/catch para manejar archivos inexistentes o JSON inválido.",
+          "hint": "Poné los dos readFile dentro de un arreglo de Promise.all. Después convertí cada cadena con JSON.parse dentro del bloque try.",
+          "parameters": [
+            {
+              "name": "Promise",
+              "description": "Representa el resultado futuro de una operación asíncrona."
+            },
+            {
+              "name": "async",
+              "description": "Declara una función que devuelve una Promise."
+            },
+            {
+              "name": "await",
+              "description": "Espera la resolución o el rechazo de una Promise dentro de un contexto permitido."
+            },
+            {
+              "name": "Promise.all([...])",
+              "description": "Espera todas las promesas y rechaza si alguna falla."
+            },
+            {
+              "name": "Promise.allSettled([...])",
+              "description": "Espera a que todas terminen y devuelve el estado individual de cada una."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: guía de asincronía",
+              "url": "https://nodejs.org/en/learn/asynchronous-work/overview-of-blocking-vs-non-blocking"
+            },
+            {
+              "label": "MDN: async function",
+              "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function"
+            },
+            {
+              "label": "MDN: Promise",
+              "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise"
+            }
+          ],
+          "related": [
+            "node-fs",
+            "node-events",
+            "node-errores"
+          ]
+        },
+        {
+          "id": "node-events",
+          "title": "Eventos y EventEmitter",
+          "category": "intermedio",
+          "summary": "Creá emisores de eventos y conectá funciones que reaccionan cuando ocurre una acción.",
+          "purpose": "Node.js utiliza un modelo basado en eventos en muchas de sus APIs. EventEmitter permite registrar funciones oyentes (listeners) para nombres de eventos y emitirlos cuando ocurre algo. Los listeners de un EventEmitter se ejecutan sincrónicamente en el orden en que fueron registrados, salvo que el propio listener programe trabajo asíncrono.",
+          "whenToUse": "Se utiliza cuando distintas partes de una aplicación necesitan reaccionar a un suceso sin llamarse directamente. También ayuda a entender servidores, streams y otras APIs de Node que emiten eventos.",
+          "syntax": "import { EventEmitter } from 'node:events';\nconst emisor = new EventEmitter();\nemisor.on('mensaje', callback);\nemisor.emit('mensaje', datos);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Crear un emisor y escuchar un evento",
+              "description": "Registrá un listener y emití el evento con datos.",
+              "code": "import { EventEmitter } from \"node:events\";\n\nconst emisor = new EventEmitter();\nemisor.on(\"saludo\", (nombre) => {\n  console.log(\"Hola, \" + nombre);\n});\n\nemisor.emit(\"saludo\", \"Mara\");",
+              "explanation": "on registra la función que se ejecutará cuando se emita saludo. emit dispara el evento y entrega los argumentos al listener."
+            },
+            {
+              "title": "Escuchar un evento una sola vez",
+              "description": "once elimina automáticamente el listener después de la primera emisión.",
+              "code": "import { EventEmitter } from \"node:events\";\n\nconst emisor = new EventEmitter();\nemisor.once(\"conectado\", () => {\n  console.log(\"Primera conexión recibida\");\n});\n\nemisor.emit(\"conectado\");\nemisor.emit(\"conectado\");",
+              "explanation": "El mensaje se muestra una sola vez. Usá once cuando una acción deba responder únicamente al primer evento."
+            },
+            {
+              "title": "Quitar un listener",
+              "description": "Podés guardar la referencia de una función para registrar y quitar el mismo listener.",
+              "code": "import { EventEmitter } from \"node:events\";\n\nconst emisor = new EventEmitter();\nfunction registrar() {\n  console.log(\"Nuevo registro\");\n}\n\nemisor.on(\"registro\", registrar);\nemisor.emit(\"registro\");\nemisor.off(\"registro\", registrar);\nemisor.emit(\"registro\");",
+              "explanation": "off elimina el listener indicado. Para quitarlo necesitás la misma referencia de función que utilizaste al registrarlo."
+            },
+            {
+              "title": "Manejar el evento especial error",
+              "description": "Si un EventEmitter emite error sin un listener adecuado, Node puede tratarlo como una excepción.",
+              "code": "import { EventEmitter } from \"node:events\";\n\nconst emisor = new EventEmitter();\nemisor.on(\"error\", (error) => {\n  console.error(\"Error del emisor:\", error.message);\n});\n\nemisor.emit(\"error\", new Error(\"Fallo de prueba\"));",
+              "explanation": "Registrá un manejador de error cuando trabajes con emisores que puedan emitir ese evento. No confundas este mecanismo con un try/catch para errores que ocurren en otro momento."
+            }
+          ],
+          "bestPractices": [
+            "Usá nombres de eventos claros y documentá qué argumentos reciben.",
+            "Registrá listeners una sola vez cuando corresponda y quitá los que ya no se necesitan.",
+            "Manejá el evento error en emisores que puedan producirlo.",
+            "Evitá crear una red de eventos tan extensa que resulte difícil seguir el flujo."
+          ],
+          "commonMistakes": [
+            "Llamar emit con un nombre distinto al que escucha el listener.",
+            "Suponer que on ejecuta el callback inmediatamente al registrarlo.",
+            "Intentar quitar un listener pasando una función anónima diferente.",
+            "Emitir error sin un listener que lo gestione."
+          ],
+          "exercise": "Creá un EventEmitter que gestione eventos usuario:creado y usuario:eliminado. Registrá un listener para cada evento y enviá un objeto con el id y el nombre del usuario.",
+          "hint": "Usá on para registrar los listeners y emit para enviar los datos. Probá una variante con once para una notificación que deba mostrarse una sola vez.",
+          "parameters": [
+            {
+              "name": "new EventEmitter()",
+              "description": "Crea un emisor de eventos."
+            },
+            {
+              "name": "on(nombre, listener)",
+              "description": "Registra una función que se ejecuta cada vez que se emite ese evento."
+            },
+            {
+              "name": "once(nombre, listener)",
+              "description": "Registra una función que se ejecuta una sola vez."
+            },
+            {
+              "name": "emit(nombre, ...args)",
+              "description": "Emite el evento y pasa argumentos a sus listeners."
+            },
+            {
+              "name": "off(nombre, listener)",
+              "description": "Elimina el listener indicado."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: Events",
+              "url": "https://nodejs.org/api/events.html"
+            }
+          ],
+          "related": [
+            "node-async",
+            "node-streams",
+            "node-errores"
+          ]
+        },
+        {
+          "id": "node-buffer",
+          "title": "Buffer y datos binarios",
+          "category": "intermedio",
+          "summary": "Representá secuencias de bytes y convertí datos entre texto y formatos binarios.",
+          "purpose": "Buffer es una clase de Node.js para trabajar con secuencias de bytes. Se utiliza al procesar archivos, datos de red, imágenes, audio y otros contenidos binarios. Los buffers no son cadenas de texto: para convertirlos a texto se debe indicar una codificación, y para crear un buffer desde una cadena se puede usar Buffer.from.",
+          "whenToUse": "Usalo cuando una API devuelve bytes, cuando procesás archivos o cuando necesitás codificar o decodificar datos. Para leer archivos grandes, preferí streams y trabajá con los fragmentos que van llegando.",
+          "syntax": "import { Buffer } from 'node:buffer';\nconst datos = Buffer.from('Hola', 'utf8');\nconsole.log(datos.toString('hex'));",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Convertir texto en Buffer",
+              "description": "Buffer.from transforma una cadena en bytes usando una codificación.",
+              "code": "import { Buffer } from \"node:buffer\";\n\nconst datos = Buffer.from(\"Hola\", \"utf8\");\nconsole.log(datos);\nconsole.log(datos.toString(\"utf8\"));",
+              "explanation": "Buffer.from crea un buffer con los bytes del texto. toString vuelve a convertirlos a una cadena usando la codificación indicada."
+            },
+            {
+              "title": "Reservar un buffer inicializado",
+              "description": "Buffer.alloc crea un buffer de tamaño definido y lo inicializa con ceros por defecto.",
+              "code": "import { Buffer } from \"node:buffer\";\n\nconst espacio = Buffer.alloc(4);\nespacio[0] = 65;\nespacio[1] = 66;\nconsole.log(espacio);\nconsole.log(espacio.toString(\"utf8\"));",
+              "explanation": "El buffer tiene cuatro bytes. Los valores 65 y 66 representan A y B en UTF-8/ASCII compatible; las posiciones restantes permanecen en cero."
+            },
+            {
+              "title": "Medir caracteres y bytes",
+              "description": "Una cadena puede ocupar más bytes que caracteres cuando utiliza caracteres multibyte.",
+              "code": "import { Buffer } from \"node:buffer\";\n\nconst texto = \"á\";\nconsole.log(texto.length); // 1 unidad UTF-16\nconsole.log(Buffer.byteLength(texto, \"utf8\")); // 2 bytes",
+              "explanation": "length de una cadena de JavaScript cuenta unidades UTF-16, mientras Buffer.byteLength calcula los bytes necesarios en la codificación indicada."
+            },
+            {
+              "title": "Codificar y recuperar Base64",
+              "description": "Base64 representa bytes mediante una cadena de texto; no cifra ni protege el contenido.",
+              "code": "import { Buffer } from \"node:buffer\";\n\nconst original = \"Datos de ejemplo\";\nconst codificado = Buffer.from(original, \"utf8\").toString(\"base64\");\nconst recuperado = Buffer.from(codificado, \"base64\").toString(\"utf8\");\n\nconsole.log(codificado);\nconsole.log(recuperado);",
+              "explanation": "La primera conversión transforma texto a bytes y luego a Base64. La segunda hace el camino inverso. Base64 es codificación, no cifrado."
+            }
+          ],
+          "bestPractices": [
+            "Indicá explícitamente la codificación al convertir entre Buffer y texto.",
+            "Preferí Buffer.alloc cuando necesites memoria inicializada.",
+            "Evitá exponer datos binarios como si fueran cadenas UTF-8 sin comprobar la codificación.",
+            "No confundas Base64 con cifrado ni lo utilices como mecanismo de protección de secretos."
+          ],
+          "commonMistakes": [
+            "Suponer que Buffer.length representa cantidad de caracteres.",
+            "Convertir bytes a texto usando una codificación incorrecta.",
+            "Usar Buffer.allocUnsafe sin comprender que la memoria no se inicializa.",
+            "Creer que una cadena Base64 mantiene la información secreta."
+          ],
+          "exercise": "Creá un Buffer desde una frase que incluya acentos, mostrá sus bytes en hexadecimal, codificalo en Base64 y recuperá la frase original.",
+          "hint": "Usá Buffer.from(texto, 'utf8'), toString('hex') y toString('base64'). Después decodificá con Buffer.from(cadena, 'base64').",
+          "parameters": [
+            {
+              "name": "Buffer.from(valor, encoding)",
+              "description": "Crea un buffer a partir de una cadena, arreglo o fuente compatible."
+            },
+            {
+              "name": "Buffer.alloc(size)",
+              "description": "Crea un buffer de tamaño determinado inicializado con ceros."
+            },
+            {
+              "name": "buffer.toString(encoding)",
+              "description": "Convierte los bytes del buffer a una cadena usando la codificación elegida."
+            },
+            {
+              "name": "Buffer.byteLength(texto, encoding)",
+              "description": "Calcula cuántos bytes ocupa una cadena en una codificación."
+            },
+            {
+              "name": "buffer.length",
+              "description": "Indica la cantidad de bytes del buffer."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: Buffer",
+              "url": "https://nodejs.org/api/buffer.html"
+            }
+          ],
+          "related": [
+            "node-fs",
+            "node-streams",
+            "node-http"
+          ]
+        },
+        {
+          "id": "node-streams",
+          "title": "Streams: procesar datos por fragmentos",
+          "category": "intermedio",
+          "summary": "Leé y escribí datos progresivamente para trabajar con archivos grandes y flujos de información.",
+          "purpose": "Un stream es una interfaz para procesar datos de forma progresiva. Node ofrece streams legibles (Readable), escribibles (Writable), dúplex (Duplex) y de transformación (Transform). En lugar de cargar todo el contenido en memoria, un stream trabaja con fragmentos. pipeline ayuda a conectar etapas y propagar errores y finalización.",
+          "whenToUse": "Usá streams para archivos grandes, transferencias de red, compresión o transformaciones de datos. Para un archivo de texto pequeño, readFile puede ser más simple; para grandes volúmenes, un stream suele ser más adecuado.",
+          "syntax": "import { createReadStream, createWriteStream } from 'node:fs';\nimport { pipeline } from 'node:stream/promises';\nawait pipeline(lectura, escritura);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Leer un archivo por fragmentos",
+              "description": "createReadStream emite fragmentos conforme avanza la lectura.",
+              "code": "import { createReadStream } from \"node:fs\";\n\nconst lectura = createReadStream(\"video.bin\");\nlectura.on(\"data\", (fragmento) => {\n  console.log(\"Bytes recibidos:\", fragmento.length);\n});\nlectura.on(\"end\", () => console.log(\"Lectura terminada\"));\nlectura.on(\"error\", (error) => console.error(error.message));",
+              "explanation": "El evento data se dispara con fragmentos, no necesariamente con el archivo completo. El tamaño y la cantidad de fragmentos dependen del flujo y del entorno."
+            },
+            {
+              "title": "Copiar un archivo usando pipeline",
+              "description": "Conectá una fuente legible con un destino escribible.",
+              "code": "import { createReadStream, createWriteStream } from \"node:fs\";\nimport { pipeline } from \"node:stream/promises\";\n\nawait pipeline(\n  createReadStream(\"origen.bin\"),\n  createWriteStream(\"copia.bin\")\n);\n\nconsole.log(\"Copia finalizada\");",
+              "explanation": "pipeline devuelve una promesa en node:stream/promises. Se resuelve cuando el flujo termina y rechaza si ocurre un error durante la transferencia."
+            },
+            {
+              "title": "Procesar cada línea como fragmento de texto",
+              "description": "Configurá la codificación del stream para recibir cadenas en vez de Buffer.",
+              "code": "import { createReadStream } from \"node:fs\";\n\nconst lectura = createReadStream(\"registro.txt\", { encoding: \"utf8\" });\nlectura.on(\"data\", (fragmento) => {\n  console.log(\"Fragmento:\", fragmento);\n});",
+              "explanation": "El evento data puede entregar una parte de una línea o varias líneas. No asumas que cada fragmento coincide con una línea completa."
+            },
+            {
+              "title": "Entender una transformación",
+              "description": "Un Transform stream puede modificar los datos mientras pasan por el flujo.",
+              "code": "import { Transform } from \"node:stream\";\n\nconst mayusculas = new Transform({\n  transform(fragmento, encoding, callback) {\n    callback(null, fragmento.toString().toUpperCase());\n  }\n});\n\nmayusculas.on(\"data\", (dato) => console.log(dato.toString()));\nmayusculas.write(\"hola \");\nmayusculas.write(\"node\");\nmayusculas.end();",
+              "explanation": "Transform recibe fragmentos y entrega el resultado al siguiente stream. callback(null, dato) indica que el fragmento transformado está listo."
+            }
+          ],
+          "bestPractices": [
+            "Usá pipeline para conectar flujos y propagar errores de manera más segura.",
+            "No mezcles varios estilos de consumo de un mismo Readable sin comprender sus efectos.",
+            "Permití que el mecanismo de backpressure regule la velocidad entre productor y consumidor.",
+            "Cerrá o finalizá los streams cuando corresponda y manejá sus errores."
+          ],
+          "commonMistakes": [
+            "Suponer que un evento data contiene el archivo completo o una línea entera.",
+            "Olvidar manejar errores del stream.",
+            "Usar readFile con archivos enormes cuando el consumo progresivo sería más adecuado.",
+            "Ignorar el backpressure y acumular datos sin límite en memoria."
+          ],
+          "exercise": "Copiá un archivo grande con pipeline. Luego creá una transformación que convierta el texto a mayúsculas y guardá el resultado en otro archivo.",
+          "hint": "Importá createReadStream y createWriteStream desde node:fs y pipeline desde node:stream/promises. Para transformar, conectá un objeto Transform entre ambos.",
+          "parameters": [
+            {
+              "name": "Readable",
+              "description": "Stream desde el que se leen datos."
+            },
+            {
+              "name": "Writable",
+              "description": "Stream al que se escriben datos."
+            },
+            {
+              "name": "Duplex",
+              "description": "Stream que permite leer y escribir."
+            },
+            {
+              "name": "Transform",
+              "description": "Stream que transforma los fragmentos que atraviesan el flujo."
+            },
+            {
+              "name": "pipeline(...streams)",
+              "description": "Conecta streams, gestiona la finalización y propaga errores."
+            },
+            {
+              "name": "backpressure",
+              "description": "Mecanismo que evita que un productor envíe datos mucho más rápido de lo que el consumidor puede procesar."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: Streams",
+              "url": "https://nodejs.org/api/stream.html"
+            },
+            {
+              "label": "Node.js: sistema de archivos",
+              "url": "https://nodejs.org/api/fs.html"
+            }
+          ],
+          "related": [
+            "node-fs",
+            "node-buffer",
+            "node-events",
+            "node-errores"
+          ]
+        },
+        {
+          "id": "node-url",
+          "title": "URL y parámetros de consulta",
+          "category": "intermedio",
+          "summary": "Analizá direcciones, rutas y parámetros de consulta con URL y URLSearchParams.",
+          "purpose": "La clase URL permite analizar y construir direcciones siguiendo el estándar WHATWG. URLSearchParams facilita leer, agregar, modificar y eliminar parámetros de consulta. En un servidor, req.url suele contener una ruta relativa, por lo que se puede crear una URL indicando una base local para analizar pathname y searchParams.",
+          "whenToUse": "Usalo al procesar rutas HTTP, filtros, búsquedas, paginación y enlaces. Es más seguro y claro que separar manualmente la cadena de consulta con operaciones de texto.",
+          "syntax": "const url = new URL('https://ejemplo.com/buscar?q=node');\nurl.pathname\nurl.searchParams.get('q');",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Analizar una dirección completa",
+              "description": "Creá un objeto URL y consultá sus partes.",
+              "code": "const direccion = new URL(\"https://ejemplo.com/articulos?id=25\");\n\nconsole.log(direccion.hostname);\nconsole.log(direccion.pathname);\nconsole.log(direccion.search);",
+              "explanation": "hostname devuelve el dominio, pathname la ruta y search la cadena de consulta con el signo de interrogación."
+            },
+            {
+              "title": "Leer parámetros de consulta",
+              "description": "URLSearchParams permite buscar valores por nombre.",
+              "code": "const url = new URL(\"https://ejemplo.com/buscar?q=node&pagina=2\");\n\nconst termino = url.searchParams.get(\"q\");\nconst pagina = Number(url.searchParams.get(\"pagina\"));\nconsole.log(termino, pagina);",
+              "explanation": "get devuelve el valor como cadena o null si no existe. Convertí y validá los datos antes de usarlos como números."
+            },
+            {
+              "title": "Modificar parámetros",
+              "description": "set reemplaza el valor de una clave y append agrega otra aparición.",
+              "code": "const url = new URL(\"https://ejemplo.com/productos\");\nurl.searchParams.set(\"orden\", \"precio\");\nurl.searchParams.append(\"etiqueta\", \"oferta\");\nurl.searchParams.append(\"etiqueta\", \"nuevo\");\n\nconsole.log(url.href);",
+              "explanation": "set deja un solo valor para esa clave; append permite repetirla. Esto sirve para filtros múltiples."
+            },
+            {
+              "title": "Analizar la URL de una solicitud",
+              "description": "Usá una base para convertir req.url, que normalmente es una ruta relativa, en un objeto URL.",
+              "code": "import { createServer } from \"node:http\";\n\nconst server = createServer((req, res) => {\n  const url = new URL(req.url ?? \"/\", \"http://localhost\");\n  res.end(\"Ruta: \" + url.pathname + \" | búsqueda: \" + (url.searchParams.get(\"q\") ?? \"\"));\n});\n\nserver.listen(3000);",
+              "explanation": "La base http://localhost permite interpretar rutas como /buscar?q=node. Para construir una API, validá los parámetros antes de consultar datos."
+            }
+          ],
+          "bestPractices": [
+            "Usá URL y URLSearchParams en lugar de dividir manualmente las cadenas de consulta.",
+            "Validá los parámetros antes de convertirlos o utilizarlos en búsquedas.",
+            "Recordá que get devuelve una cadena o null.",
+            "Usá una base explícita al convertir rutas relativas en objetos URL."
+          ],
+          "commonMistakes": [
+            "Crear new URL con una ruta relativa sin proporcionar una base.",
+            "Suponer que un parámetro existe y convertir null directamente a un número.",
+            "Usar set cuando necesitás conservar varios valores con la misma clave.",
+            "Confiar en los parámetros recibidos sin validarlos."
+          ],
+          "exercise": "Creá un servidor que lea /buscar?q=javascript&pagina=3 y responda con el término y el número de página. Validá que pagina sea un entero positivo.",
+          "hint": "Construí new URL(req.url, 'http://localhost') y usá url.searchParams.get('q') y url.searchParams.get('pagina').",
+          "parameters": [
+            {
+              "name": "new URL(direccion, base)",
+              "description": "Crea un objeto URL a partir de una dirección absoluta o relativa con una base."
+            },
+            {
+              "name": "url.hostname",
+              "description": "Obtiene el nombre del host."
+            },
+            {
+              "name": "url.pathname",
+              "description": "Obtiene la ruta de la dirección."
+            },
+            {
+              "name": "url.searchParams.get(clave)",
+              "description": "Lee el primer valor de un parámetro."
+            },
+            {
+              "name": "url.searchParams.set(clave, valor)",
+              "description": "Establece el valor de una clave y reemplaza los anteriores."
+            },
+            {
+              "name": "url.searchParams.append(clave, valor)",
+              "description": "Agrega otro valor para la clave indicada."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: URL",
+              "url": "https://nodejs.org/api/url.html"
+            },
+            {
+              "label": "MDN: URL",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/URL"
+            },
+            {
+              "label": "MDN: URLSearchParams",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/URLSearchParams"
+            }
+          ],
+          "related": [
+            "node-path",
+            "node-http",
+            "node-api-rest"
+          ]
         },
         {
           "id": "node-http",
-          "title": "Crear un servidor HTTP",
+          "title": "Crear un servidor HTTP nativo",
           "category": "avanzado",
-          "summary": "http.createServer recibe solicitudes y permite construir respuestas HTTP.",
-          "purpose": "http.createServer recibe solicitudes y permite construir respuestas HTTP.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "import { createServer } from 'node:http';\ncreateServer((req,res) => { res.writeHead(200); res.end('Hola'); }).listen(3000);",
-          "level": "Inicial",
+          "summary": "Construí un servidor con node:http y entendé las solicitudes, respuestas, encabezados y puertos.",
+          "purpose": "El módulo node:http permite crear servidores HTTP sin instalar un framework. createServer recibe una función que se ejecuta por cada solicitud y entrega dos objetos: request, que contiene información del cliente, y response, que permite construir la respuesta. El servidor debe establecer el estado y los encabezados necesarios y finalizar cada respuesta.",
+          "whenToUse": "Es útil para comprender cómo funciona el backend antes de utilizar frameworks. También sirve para herramientas pequeñas, servidores sencillos y APIs donde quieras controlar directamente el protocolo HTTP.",
+          "syntax": "import { createServer } from 'node:http';\nconst server = createServer((req, res) => {\n  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });\n  res.end('Hola');\n});\nserver.listen(3000);",
+          "level": "Avanzado",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "import { createServer } from 'node:http';\ncreateServer((req,res) => { res.writeHead(200); res.end('Hola'); }).listen(3000);",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Crear un servidor mínimo",
+              "description": "Guardá el código como server.js y ejecutalo con node server.js.",
+              "code": "import { createServer } from \"node:http\";\n\nconst server = createServer((req, res) => {\n  res.statusCode = 200;\n  res.setHeader(\"Content-Type\", \"text/plain; charset=utf-8\");\n  res.end(\"Hola desde mi servidor\");\n});\n\nserver.listen(3000, \"127.0.0.1\", () => {\n  console.log(\"Servidor en http://127.0.0.1:3000\");\n});",
+              "explanation": "createServer prepara el servidor. listen inicia la escucha en el puerto elegido. Abrí la dirección en el navegador para realizar una solicitud GET."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "import { createServer } from 'node:http';\ncreateServer((req,res) => { res.writeHead(200); res.end('Hola'); }).listen(3000);",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Responder JSON con encabezados correctos",
+              "description": "Cuando enviás JSON, declaralo en Content-Type.",
+              "code": "import { createServer } from \"node:http\";\n\nconst server = createServer((req, res) => {\n  const datos = { estado: \"activo\", usuarios: 12 };\n  res.writeHead(200, {\n    \"Content-Type\": \"application/json; charset=utf-8\"\n  });\n  res.end(JSON.stringify(datos));\n});\n\nserver.listen(3000);",
+              "explanation": "JSON.stringify convierte el objeto a texto JSON. El navegador o cliente puede interpretar la respuesta gracias al encabezado Content-Type."
+            },
+            {
+              "title": "Diferenciar método y ruta",
+              "description": "La solicitud incluye el método HTTP y una URL que podés analizar.",
+              "code": "import { createServer } from \"node:http\";\n\nconst server = createServer((req, res) => {\n  const url = new URL(req.url ?? \"/\", \"http://localhost\");\n\n  if (req.method === \"GET\" && url.pathname === \"/estado\") {\n    res.writeHead(200, { \"Content-Type\": \"text/plain\" });\n    res.end(\"Servidor funcionando\");\n    return;\n  }\n\n  res.writeHead(404, { \"Content-Type\": \"text/plain\" });\n  res.end(\"Ruta no encontrada\");\n});\n\nserver.listen(3000);",
+              "explanation": "req.method permite distinguir GET, POST y otros métodos. pathname contiene solamente la ruta, sin los parámetros de consulta."
+            },
+            {
+              "title": "Controlar el cierre del servidor",
+              "description": "El objeto Server permite detener la escucha de forma ordenada.",
+              "code": "import { createServer } from \"node:http\";\n\nconst server = createServer((req, res) => {\n  res.end(\"OK\");\n});\n\nserver.listen(3000, () => {\n  console.log(\"Listo\");\n  setTimeout(() => {\n    server.close(() => console.log(\"Servidor detenido\"));\n  }, 5000);\n});",
+              "explanation": "close deja de aceptar nuevas conexiones y llama al callback cuando el servidor terminó de cerrarse. En una aplicación real el cierre puede coordinarse con señales del sistema."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Respondé todas las solicitudes y finalizá cada respuesta con end.",
+            "Indicá Content-Type y códigos de estado coherentes con el resultado.",
+            "Separá el análisis de rutas del procesamiento de datos cuando el servidor crezca.",
+            "No expongas el servidor a todas las interfaces de red si solo necesitás probarlo localmente.",
+            "Validá las entradas y manejá errores antes de enviar información al cliente."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar res.end y dejar la solicitud abierta.",
+            "Responder un objeto directamente sin convertirlo a JSON.",
+            "No establecer Content-Type cuando el formato de la respuesta lo requiere.",
+            "Intentar iniciar dos servidores diferentes en el mismo puerto.",
+            "Confundir req.url completa con pathname."
           ],
-          "exercise": "Creá un servidor que responda en localhost:3000.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un servidor en localhost:3000 con las rutas GET /, GET /estado y cualquier otra ruta que responda 404. Devolvé JSON en /estado y texto simple en /.",
+          "hint": "Usá createServer, new URL(req.url, 'http://localhost'), req.method, url.pathname y res.writeHead.",
+          "parameters": [
+            {
+              "name": "createServer(handler)",
+              "description": "Crea un servidor HTTP y recibe una función para procesar solicitudes."
+            },
+            {
+              "name": "req.method",
+              "description": "Método HTTP enviado por el cliente."
+            },
+            {
+              "name": "req.url",
+              "description": "Ruta y consulta solicitadas por el cliente."
+            },
+            {
+              "name": "res.writeHead(status, headers)",
+              "description": "Establece el código de estado y los encabezados de la respuesta."
+            },
+            {
+              "name": "res.setHeader(nombre, valor)",
+              "description": "Establece un encabezado de respuesta."
+            },
+            {
+              "name": "res.end(contenido)",
+              "description": "Finaliza la respuesta y opcionalmente envía contenido."
+            },
+            {
+              "name": "server.listen(port, host, callback)",
+              "description": "Inicia la escucha de solicitudes."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: HTTP",
+              "url": "https://nodejs.org/api/http.html"
+            },
+            {
+              "label": "Node.js: introducción a Node",
+              "url": "https://nodejs.org/learn/getting-started/introduction-to-nodejs"
+            }
+          ],
+          "related": [
+            "node-url",
+            "node-api-rest",
+            "node-env",
+            "node-errores"
+          ]
         },
         {
           "id": "node-api-rest",
-          "title": "Primera API REST",
+          "title": "Crear una API REST con Node.js",
           "category": "avanzado",
-          "summary": "Una API organiza recursos mediante rutas, métodos HTTP, respuestas JSON y códigos de estado.",
-          "purpose": "Una API organiza recursos mediante rutas, métodos HTTP, respuestas JSON y códigos de estado.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con Node.js. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "createServer((req,res) => {\n res.writeHead(200, {'Content-Type':'application/json'});\n res.end(JSON.stringify({estado:'activo'}));\n}).listen(3000);",
-          "level": "Inicial",
+          "summary": "Organizá recursos mediante rutas, métodos HTTP, respuestas JSON y códigos de estado.",
+          "purpose": "Una API REST expone recursos a través de rutas y métodos HTTP. Una API sencilla puede permitir listar recursos con GET, crear recursos con POST, consultar un elemento por identificador y responder con códigos de estado como 200, 201, 400 y 404. Node.js no impone una arquitectura REST: hay que organizar las rutas, validar los datos y definir las respuestas.",
+          "whenToUse": "Este enfoque sirve para conectar una aplicación frontend con un backend, permitir operaciones CRUD y entender qué hace un framework como Express o Fastify por debajo. Los ejemplos usan almacenamiento en memoria y no reemplazan una base de datos.",
+          "syntax": "GET    /api/tareas\nGET    /api/tareas/:id\nPOST   /api/tareas\nPATCH  /api/tareas/:id\nDELETE /api/tareas/:id",
+          "level": "Avanzado",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "createServer((req,res) => {\n res.writeHead(200, {'Content-Type':'application/json'});\n res.end(JSON.stringify({estado:'activo'}));\n}).listen(3000);",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Crear un endpoint GET para listar recursos",
+              "description": "Este servidor responde una colección JSON desde memoria.",
+              "code": "import { createServer } from \"node:http\";\n\nconst tareas = [\n  { id: 1, titulo: \"Estudiar Node\", completada: false },\n  { id: 2, titulo: \"Practicar HTTP\", completada: true }\n];\n\nconst server = createServer((req, res) => {\n  const url = new URL(req.url ?? \"/\", \"http://localhost\");\n  if (req.method === \"GET\" && url.pathname === \"/api/tareas\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify(tareas));\n    return;\n  }\n  res.writeHead(404, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Ruta no encontrada\" }));\n});\n\nserver.listen(3000);",
+              "explanation": "La ruta GET /api/tareas devuelve una lista serializada como JSON. Los datos están en memoria y se pierden cuando el proceso termina."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": " res.writeHead(200, {'Content-Type':'application/json'});\n res.end(JSON.stringify({estado:'activo'}));\n}).listen(3000);",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Consultar un recurso por ID",
+              "description": "Usá una expresión regular para extraer el identificador de la ruta.",
+              "code": "const url = new URL(req.url ?? \"/\", \"http://localhost\");\nconst coincidencia = url.pathname.match(/^\\/api\\/tareas\\/(\\d+)$/);\n\nif (req.method === \"GET\" && coincidencia) {\n  const id = Number(coincidencia[1]);\n  const tarea = tareas.find(item => item.id === id);\n\n  if (!tarea) {\n    res.writeHead(404, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify({ error: \"Tarea no encontrada\" }));\n    return;\n  }\n\n  res.writeHead(200, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify(tarea));\n}",
+              "explanation": "La expresión regular reconoce una ruta con un ID numérico. find busca el recurso; si no existe, la API responde 404 en vez de devolver un valor indefinido."
+            },
+            {
+              "title": "Recibir datos mediante POST",
+              "description": "Leé el cuerpo de la solicitud, convertí el JSON y validá los campos antes de guardar.",
+              "code": "if (req.method === \"POST\" && url.pathname === \"/api/tareas\") {\n  try {\n    const fragmentos = [];\n    for await (const fragmento of req) fragmentos.push(fragmento);\n    const entrada = JSON.parse(Buffer.concat(fragmentos).toString(\"utf8\"));\n\n    if (typeof entrada.titulo !== \"string\" || !entrada.titulo.trim()) {\n      res.writeHead(400, { \"Content-Type\": \"application/json\" });\n      res.end(JSON.stringify({ error: \"El título es obligatorio\" }));\n      return;\n    }\n\n    const nueva = { id: Date.now(), titulo: entrada.titulo.trim(), completada: false };\n    tareas.push(nueva);\n    res.writeHead(201, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify(nueva));\n  } catch {\n    res.writeHead(400, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify({ error: \"JSON inválido\" }));\n  }\n}",
+              "explanation": "El cuerpo llega como un stream de fragmentos. JSON.parse puede fallar si el cliente envía contenido inválido. En producción también hay que limitar el tamaño del cuerpo, validar el Content-Type y definir una estrategia de IDs."
+            },
+            {
+              "title": "Diferenciar métodos y responder 405",
+              "description": "Cuando una ruta existe pero no admite el método solicitado, respondé Method Not Allowed.",
+              "code": "if (url.pathname === \"/api/tareas\" && req.method !== \"GET\" && req.method !== \"POST\") {\n  res.writeHead(405, {\n    \"Content-Type\": \"application/json\",\n    \"Allow\": \"GET, POST\"\n  });\n  res.end(JSON.stringify({ error: \"Método no permitido\" }));\n  return;\n}",
+              "explanation": "El código 405 indica que el método no está permitido para esa ruta. El encabezado Allow informa qué métodos acepta el recurso."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Mantené rutas, métodos y recursos consistentes.",
+            "Validá el cuerpo, los parámetros y los tipos recibidos antes de guardar datos.",
+            "Usá códigos de estado HTTP adecuados y mensajes de error útiles.",
+            "Limitá el tamaño del cuerpo de las solicitudes y manejá JSON inválido.",
+            "Usá una base de datos para persistencia; los arreglos en memoria son solo didácticos.",
+            "No devuelvas detalles internos, contraseñas ni trazas de errores al cliente."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Devolver siempre 200 incluso cuando el recurso no existe o la entrada es inválida.",
+            "No esperar a que termine de recibirse el cuerpo de una solicitud POST.",
+            "Intentar analizar JSON sin capturar errores de formato.",
+            "Confundir una ruta que no existe (404) con un método no permitido (405).",
+            "Creer que un arreglo en memoria guarda datos después de reiniciar el servidor."
           ],
-          "exercise": "Creá una ruta GET que devuelva una lista JSON.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Ampliá la API de tareas para permitir GET /api/tareas, GET /api/tareas/:id y POST /api/tareas. Validá el título, asigná un ID y devolvé 201 al crear. Agregá respuestas 400 y 404.",
+          "hint": "Usá for await...of para leer el cuerpo, Buffer.concat para unir fragmentos y JSON.parse dentro de try/catch. No olvides establecer Content-Type: application/json.",
+          "parameters": [
+            {
+              "name": "GET",
+              "description": "Solicita la representación de uno o varios recursos."
+            },
+            {
+              "name": "POST",
+              "description": "Envía datos para crear o procesar un recurso."
+            },
+            {
+              "name": "PATCH",
+              "description": "Solicita modificar parcialmente un recurso."
+            },
+            {
+              "name": "201 Created",
+              "description": "Código habitual cuando se crea un recurso correctamente."
+            },
+            {
+              "name": "400 Bad Request",
+              "description": "Indica que la solicitud no pudo procesarse por datos inválidos."
+            },
+            {
+              "name": "404 Not Found",
+              "description": "Indica que la ruta o el recurso solicitado no existe."
+            },
+            {
+              "name": "405 Method Not Allowed",
+              "description": "Indica que la ruta no admite el método HTTP utilizado."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: HTTP",
+              "url": "https://nodejs.org/api/http.html"
+            },
+            {
+              "label": "MDN: métodos HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Methods"
+            },
+            {
+              "label": "MDN: códigos de estado HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Status"
+            }
+          ],
+          "related": [
+            "node-http",
+            "node-url",
+            "node-fs",
+            "node-errores"
+          ]
+        },
+        {
+          "id": "node-errores",
+          "title": "Manejo de errores y excepciones",
+          "category": "avanzado",
+          "summary": "Detectá fallos, diferenciá tipos de errores y evitá que una promesa rechazada pase inadvertida.",
+          "purpose": "Node.js puede producir errores propios de JavaScript, errores del sistema operativo, errores de red y errores generados por la aplicación. Los errores síncronos suelen capturarse con try/catch. Las promesas rechazadas deben esperarse o manejarse con catch. Algunas APIs basadas en eventos comunican fallos a través de un evento error, por lo que hay que revisar el mecanismo específico de cada API.",
+          "whenToUse": "Usá manejo de errores cada vez que una operación pueda fallar: leer archivos, analizar JSON, validar entradas, conectarse a una API o escribir datos. En un servidor, registrá detalles útiles en el backend y devolvé al cliente mensajes seguros.",
+          "syntax": "try {\n  // operación que puede fallar\n} catch (error) {\n  console.error(error.message);\n}",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Capturar una excepción",
+              "description": "try/catch evita que un error esperado detenga el resto del flujo sin tratamiento.",
+              "code": "try {\n  const datos = JSON.parse(\"{ formato incorrecto }\");\n  console.log(datos);\n} catch (error) {\n  console.error(\"No se pudo analizar el JSON:\", error.message);\n}",
+              "explanation": "JSON.parse lanza una excepción si la cadena no es JSON válido. El bloque catch recibe el objeto de error."
+            },
+            {
+              "title": "Manejar el rechazo de una operación asíncrona",
+              "description": "Colocá await dentro del bloque try para capturar el rechazo.",
+              "code": "import { readFile } from \"node:fs/promises\";\n\ntry {\n  const contenido = await readFile(\"no-existe.txt\", \"utf8\");\n  console.log(contenido);\n} catch (error) {\n  console.error(\"Código:\", error.code);\n  console.error(\"Mensaje:\", error.message);\n}",
+              "explanation": "Las APIs de promesas pueden rechazar por causas como ENOENT. error.code permite diferenciar ciertos errores del sistema."
+            },
+            {
+              "title": "Validar datos y lanzar un error propio",
+              "description": "Usá errores claros cuando los argumentos de una función no cumplen los requisitos.",
+              "code": "function calcularDescuento(precio, porcentaje) {\n  if (!Number.isFinite(precio) || precio < 0) {\n    throw new TypeError(\"El precio debe ser un número no negativo\");\n  }\n  if (!Number.isFinite(porcentaje) || porcentaje < 0 || porcentaje > 100) {\n    throw new RangeError(\"El porcentaje debe estar entre 0 y 100\");\n  }\n  return precio - precio * porcentaje / 100;\n}\n\nconsole.log(calcularDescuento(100, 15));",
+              "explanation": "TypeError es apropiado cuando un valor no tiene el tipo esperado. RangeError puede describir un valor fuera del rango permitido."
+            },
+            {
+              "title": "Asignar un código de salida cuando falla una tarea",
+              "description": "Registrá el error y marcá el proceso como fallido sin finalizarlo abruptamente.",
+              "code": "async function ejecutar() {\n  try {\n    await tareaPrincipal();\n  } catch (error) {\n    console.error(\"La tarea falló:\", error.message);\n    process.exitCode = 1;\n  }\n}\n\nasync function tareaPrincipal() {\n  throw new Error(\"Fallo de ejemplo\");\n}\n\nawait ejecutar();",
+              "explanation": "process.exitCode indica que el proceso debe terminar con error cuando ya no quede trabajo pendiente. Es preferible a terminar inmediatamente con process.exit() en muchos casos."
+            }
+          ],
+          "bestPractices": [
+            "Capturá errores donde puedas recuperarte, agregar contexto o responder adecuadamente.",
+            "Conservá el objeto de error en los logs del servidor, pero no expongas detalles internos al cliente.",
+            "Distinguí errores esperados de validación, errores del sistema y fallos inesperados.",
+            "Manej á los rechazos de promesas y el evento error en streams o emisores que puedan producirlo.",
+            "Usá códigos de salida distintos de cero cuando una herramienta de consola termine con error."
+          ],
+          "commonMistakes": [
+            "Usar try/catch alrededor de una llamada asíncrona sin await ni catch.",
+            "Ignorar un error y continuar como si la operación hubiera salido bien.",
+            "Responder al usuario con stack traces, rutas privadas o información sensible.",
+            "Usar process.exit() para ocultar un error en vez de cerrar recursos ordenadamente.",
+            "Suponer que try/catch captura automáticamente errores emitidos más tarde por un evento."
+          ],
+          "exercise": "Creá una función que lea un JSON desde un archivo, lo convierta en objeto y valide que contenga una propiedad nombre. Manejá por separado un archivo inexistente y un JSON inválido.",
+          "hint": "Usá try/catch, examiná error.code para identificar ENOENT y ejecutá JSON.parse dentro del mismo bloque. No devuelvas el stack trace como respuesta pública.",
+          "parameters": [
+            {
+              "name": "try",
+              "description": "Contiene instrucciones que pueden producir una excepción."
+            },
+            {
+              "name": "catch(error)",
+              "description": "Recibe y permite procesar una excepción."
+            },
+            {
+              "name": "throw",
+              "description": "Lanza un error o una excepción."
+            },
+            {
+              "name": "error.message",
+              "description": "Mensaje asociado al error."
+            },
+            {
+              "name": "error.code",
+              "description": "Código que algunas APIs de Node agregan para identificar el tipo de fallo."
+            },
+            {
+              "name": "process.exitCode",
+              "description": "Código de salida que se utiliza cuando el proceso termina."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: manejo de errores",
+              "url": "https://nodejs.org/api/errors.html"
+            },
+            {
+              "label": "Node.js: process",
+              "url": "https://nodejs.org/api/process.html"
+            }
+          ],
+          "related": [
+            "node-async",
+            "node-fs",
+            "node-events",
+            "node-http"
+          ]
+        },
+        {
+          "id": "node-testing",
+          "title": "Pruebas automáticas con node:test",
+          "category": "avanzado",
+          "summary": "Escribí pruebas para funciones y comprobá resultados usando el test runner integrado de Node.",
+          "purpose": "Node incluye un ejecutor de pruebas integrado mediante el módulo node:test. Se combina con node:assert/strict para verificar resultados esperados. Las pruebas pueden ser síncronas o asíncronas y permiten detectar regresiones sin instalar obligatoriamente un framework externo.",
+          "whenToUse": "Usalo cuando una función tenga reglas importantes, cuando cambies lógica existente o cuando quieras comprobar que un módulo continúa funcionando después de una modificación. Las pruebas también sirven como documentación ejecutable del comportamiento esperado.",
+          "syntax": "import test from 'node:test';\nimport assert from 'node:assert/strict';\n\ntest('la suma funciona', () => {\n  assert.equal(2 + 3, 5);\n});\n\n// Ejecutar: node --test",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Probar una función sencilla",
+              "description": "Separá la lógica de la función y escribí una prueba con node:test.",
+              "code": "// calculadora.js\nexport function sumar(a, b) {\n  return a + b;\n}\n\n// calculadora.test.js\nimport test from \"node:test\";\nimport assert from \"node:assert/strict\";\nimport { sumar } from \"./calculadora.js\";\n\ntest(\"sumar agrega dos números\", () => {\n  assert.equal(sumar(2, 3), 5);\n});",
+              "explanation": "El test se considera correcto si la aserción no lanza un error. Guardá el segundo bloque en calculadora.test.js."
+            },
+            {
+              "title": "Comprobar varios casos",
+              "description": "Usá pruebas separadas para describir escenarios distintos.",
+              "code": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\nimport { sumar } from \"./calculadora.js\";\n\ntest(\"suma números positivos\", () => assert.equal(sumar(2, 4), 6));\ntest(\"suma con cero\", () => assert.equal(sumar(7, 0), 7));\ntest(\"suma números negativos\", () => assert.equal(sumar(-2, -3), -5));",
+              "explanation": "Cada test tiene un nombre que identifica el comportamiento comprobado. Si una prueba falla, el reporte ayuda a ubicar el caso."
+            },
+            {
+              "title": "Probar una función asíncrona",
+              "description": "El test runner espera la promesa devuelta por la función de prueba.",
+              "code": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\n\nasync function obtenerUsuario() {\n  return { id: 1, nombre: \"Mara\" };\n}\n\ntest(\"obtiene el usuario\", async () => {\n  const usuario = await obtenerUsuario();\n  assert.equal(usuario.nombre, \"Mara\");\n});",
+              "explanation": "Al declarar el callback async, el ejecutor espera su promesa. Un rechazo o una aserción fallida marca el test como fallido."
+            },
+            {
+              "title": "Comprobar que una función lanza un error",
+              "description": "assert.throws verifica una excepción síncrona.",
+              "code": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\n\nfunction dividir(a, b) {\n  if (b === 0) throw new Error(\"No se puede dividir por cero\");\n  return a / b;\n}\n\ntest(\"rechaza la división por cero\", () => {\n  assert.throws(() => dividir(8, 0), /dividir por cero/);\n});",
+              "explanation": "assert.throws recibe una función y comprueba que lance una excepción. Para promesas rechazadas existe assert.rejects."
+            }
+          ],
+          "bestPractices": [
+            "Escribí pruebas pequeñas que verifiquen un comportamiento concreto.",
+            "Usá nombres que expliquen el escenario y el resultado esperado.",
+            "Probá casos normales, límites y entradas inválidas.",
+            "Mantené las pruebas independientes y evitá que dependan del orden de ejecución.",
+            "Ejecutá las pruebas antes de integrar cambios importantes."
+          ],
+          "commonMistakes": [
+            "Escribir una prueba que no contiene ninguna aserción.",
+            "No esperar una promesa dentro de un test asíncrono.",
+            "Hacer que una prueba dependa de datos modificados por otra.",
+            "Comprobar solo el caso exitoso e ignorar límites y errores."
+          ],
+          "exercise": "Creá una función para calcular el precio final con descuento y escribí pruebas para un precio normal, descuento cero, descuento del 100 % y porcentajes inválidos.",
+          "hint": "Importá test desde node:test y assert desde node:assert/strict. Ejecutá el conjunto con node --test.",
+          "parameters": [
+            {
+              "name": "node:test",
+              "description": "Módulo integrado que proporciona el test runner."
+            },
+            {
+              "name": "test(nombre, callback)",
+              "description": "Declara un caso de prueba."
+            },
+            {
+              "name": "node:assert/strict",
+              "description": "Proporciona aserciones estrictas para comparar resultados."
+            },
+            {
+              "name": "assert.equal(actual, esperado)",
+              "description": "Comprueba igualdad estricta entre los valores."
+            },
+            {
+              "name": "assert.throws(fn)",
+              "description": "Comprueba que una función síncrona lance una excepción."
+            },
+            {
+              "name": "node --test",
+              "description": "Busca y ejecuta los archivos de prueba reconocidos por el runner."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: test runner",
+              "url": "https://nodejs.org/api/test.html"
+            },
+            {
+              "label": "Node.js: assert",
+              "url": "https://nodejs.org/api/assert.html"
+            }
+          ],
+          "related": [
+            "node-npm",
+            "node-errores",
+            "node-modulos"
+          ]
+        },
+        {
+          "id": "node-debugging",
+          "title": "Depuración y modo watch",
+          "category": "avanzado",
+          "summary": "Inspeccioná variables, pausá la ejecución y reiniciá el proceso cuando cambie el código.",
+          "purpose": "Depurar consiste en observar la ejecución para entender por qué el programa se comporta de determinada manera. Node ofrece herramientas como el inspector de V8, la instrucción debugger y el modo --watch. El inspector puede conectarse con Chrome DevTools u otras herramientas compatibles para usar breakpoints, revisar variables y avanzar paso a paso.",
+          "whenToUse": "Usá depuración cuando un resultado no coincida con lo esperado, cuando necesites seguir el valor de una variable o cuando quieras detectar dónde se produce un error. El modo watch resulta útil durante el desarrollo para reiniciar automáticamente el proceso al modificar archivos.",
+          "syntax": "node --watch app.js\nnode --inspect app.js\nnode --inspect-brk app.js",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Reiniciar al guardar cambios",
+              "description": "Ejecutá el archivo con el modo watch durante el desarrollo.",
+              "code": "node --watch app.js",
+              "explanation": "Node vuelve a ejecutar el proceso cuando detecta cambios en los archivos observados. Es una alternativa integrada para casos sencillos, sin instalar un paquete adicional."
+            },
+            {
+              "title": "Iniciar el inspector",
+              "description": "Habilitá el protocolo de inspección de V8.",
+              "code": "node --inspect app.js",
+              "explanation": "El proceso se inicia y muestra una dirección de depuración local, habitualmente en el puerto 9229. Conectá DevTools o un depurador compatible."
+            },
+            {
+              "title": "Detenerse en la primera línea",
+              "description": "Usá --inspect-brk para esperar al depurador y detener la ejecución al comienzo.",
+              "code": "node --inspect-brk app.js",
+              "explanation": "Esta opción es útil cuando necesitás observar la inicialización antes de que el programa avance. No expongas el puerto del inspector a redes no confiables."
+            },
+            {
+              "title": "Usar un breakpoint desde el código",
+              "description": "La instrucción debugger pausa la ejecución cuando hay un inspector conectado.",
+              "code": "const productos = [120, 250, 80];\nlet total = 0;\n\nfor (const precio of productos) {\n  debugger;\n  total += precio;\n}\n\nconsole.log(\"Total:\", total);",
+              "explanation": "Con el depurador conectado, la ejecución se detiene en debugger. Podés revisar precio y total, avanzar una instrucción y observar cómo cambian."
+            }
+          ],
+          "bestPractices": [
+            "Usá breakpoints para inspeccionar el flujo en lugar de agregar logs en todos lados.",
+            "Quitá o desactivá instrucciones debugger antes de publicar.",
+            "Usá --watch para desarrollo, pero definí una estrategia apropiada para producción.",
+            "Mantené el inspector limitado a conexiones locales y no lo expongas a redes públicas."
+          ],
+          "commonMistakes": [
+            "Esperar que debugger pause el programa cuando no hay un inspector conectado.",
+            "Confundir --inspect con --inspect-brk: el segundo detiene la ejecución al inicio.",
+            "Dejar el puerto del inspector accesible desde una red no confiable.",
+            "Usar logs sin contexto y no observar los valores en el momento en que cambian."
+          ],
+          "exercise": "Creá una función que calcule el total de un arreglo de precios. Ejecutala con --inspect-brk, conectá un depurador y avanzá paso a paso para observar cómo cambia el acumulador.",
+          "hint": "Colocá debugger dentro del bucle y revisá total antes y después de cada suma. Para reiniciar al modificar el archivo, probá node --watch app.js.",
+          "parameters": [
+            {
+              "name": "--watch",
+              "description": "Reinicia la aplicación cuando cambian los archivos observados."
+            },
+            {
+              "name": "--inspect",
+              "description": "Activa el inspector de V8 para depuración."
+            },
+            {
+              "name": "--inspect-brk",
+              "description": "Activa el inspector y pausa la ejecución al inicio."
+            },
+            {
+              "name": "debugger",
+              "description": "Instrucción que crea un punto de pausa si hay un depurador conectado."
+            },
+            {
+              "name": "console.table()",
+              "description": "Muestra datos tabulares en la consola."
+            },
+            {
+              "name": "console.trace()",
+              "description": "Imprime una traza de llamadas desde el punto actual."
+            }
+          ],
+          "resources": [
+            {
+              "label": "Node.js: depuración",
+              "url": "https://nodejs.org/learn/getting-started/debugging"
+            },
+            {
+              "label": "Node.js: debugger",
+              "url": "https://nodejs.org/api/debugger.html"
+            },
+            {
+              "label": "Node.js: opciones CLI",
+              "url": "https://nodejs.org/api/cli.html"
+            }
+          ],
+          "related": [
+            "node-instalacion",
+            "node-process",
+            "node-testing"
+          ]
         }
       ]
     },
