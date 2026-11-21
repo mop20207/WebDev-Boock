@@ -1,6 +1,6 @@
 {
-  "version": 15,
-  "articleCount": 235,
+  "version": 16,
+  "articleCount": 241,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -14916,6 +14916,20 @@
             "express-server-logging",
             "express-trust-proxy"
           ]
+        },
+        {
+          "id": "typescript-testing",
+          "title": "TypeScript, pruebas y calidad",
+          "description": "Tipá handlers, probá endpoints y documentá contratos para mantener una API confiable.",
+          "icon": "✓",
+          "articles": [
+            "express-typescript",
+            "express-typescript-middleware",
+            "express-testing-supertest",
+            "express-testing-integration",
+            "express-openapi-docs",
+            "express-graceful-shutdown"
+          ]
         }
       ],
       "articles": [
@@ -16874,6 +16888,402 @@
           "related": [
             "express-cookies-sessions",
             "express-rate-limiting"
+          ]
+        },
+        {
+          "id": "express-typescript",
+          "title": "Configurar Express con TypeScript",
+          "category": "typescript-testing",
+          "summary": "Prepará un servidor Express tipado y comprendé cómo TypeScript se integra con Node.",
+          "purpose": "Express se puede utilizar con TypeScript mediante los tipos publicados por el proyecto DefinitelyTyped. En proyectos actuales conviene definir el modo de módulos, el objetivo de compilación y los scripts de desarrollo/build con coherencia. Los tipos ayudan durante el desarrollo, pero los datos HTTP todavía necesitan validación en runtime.",
+          "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+          "syntax": "npm install express\nnpm install -D typescript @types/node @types/express\nnpx tsc --init",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Instalar tipos",
+              "description": "Los tipos de Express y Node suelen agregarse como dependencias de desarrollo.",
+              "code": "npm install express\nnpm install -D typescript @types/node @types/express\nnpx tsc --init",
+              "explanation": "@types/express aporta interfaces para Request, Response y Router; @types/node tipa APIs del runtime."
+            },
+            {
+              "title": "Servidor TypeScript",
+              "description": "Tipá la aplicación y sus handlers.",
+              "code": "import express, { type Express, type Request, type Response } from \"express\";\n\nconst app: Express = express();\napp.get(\"/\", (_req: Request, res: Response) => {\n  res.json({ ok: true });\n});\n\nexport { app };",
+              "explanation": "Express puede integrarse con TypeScript sin modificar su ciclo HTTP. Elegí un runner/compilador que coincida con la versión de Node."
+            }
+          ],
+          "exercise": "Configurá un proyecto Express con TypeScript, un script de desarrollo y un build que genere JavaScript en dist.",
+          "hint": "Instalá @types/express y @types/node. Separá el directorio de fuentes del resultado compilado.",
+          "parameters": [
+            {
+              "name": "@types/express",
+              "description": "Declaraciones TypeScript para la API de Express."
+            },
+            {
+              "name": "@types/node",
+              "description": "Declaraciones de tipo para APIs de Node.js."
+            },
+            {
+              "name": "tsconfig.json",
+              "description": "Configuración del compilador TypeScript."
+            },
+            {
+              "name": "strict",
+              "description": "Activa controles estrictos de tipos."
+            }
+          ],
+          "bestPractices": [
+            "Usá strict y tratá los datos de red como unknown o tipos validados.",
+            "Mantené fuentes y salida compilada en directorios separados.",
+            "Usá imports type para elementos que solo se necesitan al compilar."
+          ],
+          "commonMistakes": [
+            "Creer que TypeScript valida req.body en runtime.",
+            "No instalar los tipos de Node.",
+            "Mezclar módulos ESM y CommonJS sin configurar Node y TypeScript de forma compatible."
+          ],
+          "resources": [
+            {
+              "label": "Express 5 — TypeScript API",
+              "url": "https://expressjs.com/en/5x/api.html"
+            },
+            {
+              "label": "TypeScript documentation",
+              "url": "https://www.typescriptlang.org/docs/"
+            }
+          ],
+          "related": [
+            "express-typescript-middleware",
+            "express-testing-supertest"
+          ]
+        },
+        {
+          "id": "express-typescript-middleware",
+          "title": "Tipar Request, Response y middleware personalizados",
+          "category": "typescript-testing",
+          "summary": "Usá genéricos de Express para definir params, body, query y respuestas.",
+          "purpose": "Los tipos Request y RequestHandler de @types/express aceptan parámetros genéricos para describir la forma de los datos. Esto mejora el autocompletado y detecta errores de uso, pero no reemplaza la validación de los valores que llegan desde HTTP.",
+          "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+          "syntax": "Request<Params, ResBody, ReqBody, ReqQuery>",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Tipar el body",
+              "description": "Definí la estructura esperada que el handler utiliza después de validarla.",
+              "code": "import type { Request, Response } from \"express\";\n\ntype CrearNovelaBody = { titulo: string; volumenes: number };\n\napp.post(\"/api/novelas\", (req: Request<{}, {}, CrearNovelaBody>, res: Response) => {\n  res.status(201).json({ titulo: req.body.titulo });\n});",
+              "explanation": "El tipo describe lo que el código espera; antes de confiar en el cuerpo real, ejecutá una validación runtime."
+            },
+            {
+              "title": "Tipar parámetros y respuesta",
+              "description": "Podés establecer nombres para el ID y el objeto que devuelve la ruta.",
+              "code": "import type { RequestHandler } from \"express\";\n\ntype Params = { id: string };\ntype Novela = { id: string; titulo: string };\nconst obtener: RequestHandler<Params, Novela | { error: string }> = async (req, res) => {\n  res.json({ id: req.params.id, titulo: \"Overlord\" });\n};",
+              "explanation": "RequestHandler tipa parámetros, respuesta, body, query y locals. El ejemplo muestra el contrato del handler."
+            }
+          ],
+          "exercise": "Tipá una ruta PATCH /api/novelas/:id con body parcial y response JSON. Agregá validación real para la entrada.",
+          "hint": "Request usa el orden de genéricos Params, ResBody, ReqBody, ReqQuery y Locals.",
+          "parameters": [
+            {
+              "name": "Request<P, ResBody, ReqBody, ReqQuery, Locals>",
+              "description": "Tipo de solicitud parametrizado por path, respuesta, body, query y locals."
+            },
+            {
+              "name": "Response<ResBody, Locals>",
+              "description": "Tipo de respuesta con cuerpo y datos locales."
+            },
+            {
+              "name": "RequestHandler<P, ResBody, ReqBody, ReqQuery, Locals>",
+              "description": "Tipo para handlers y middleware Express."
+            }
+          ],
+          "bestPractices": [
+            "Tipá las estructuras de dominio en módulos compartidos.",
+            "Validá en runtime antes de asumir que req.body cumple el tipo.",
+            "Evitá any para resolver errores de tipos."
+          ],
+          "commonMistakes": [
+            "Creer que el genérico Request valida el JSON entrante.",
+            "Usar el orden equivocado de parámetros genéricos.",
+            "Ampliar globalmente Request para propiedades que podrían ser locales a una sola ruta."
+          ],
+          "resources": [
+            {
+              "label": "Express 5 API — TypeScript",
+              "url": "https://expressjs.com/en/5x/api.html"
+            },
+            {
+              "label": "TypeScript — Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            }
+          ],
+          "related": [
+            "express-typescript",
+            "express-validation"
+          ]
+        },
+        {
+          "id": "express-testing-supertest",
+          "title": "Pruebas HTTP con Supertest",
+          "category": "typescript-testing",
+          "summary": "Probá endpoints sin tener que iniciar manualmente un puerto de red.",
+          "purpose": "Supertest permite enviar solicitudes HTTP a una app Express y comprobar status, headers y body. Si app se exporta separada de app.listen, las pruebas pueden importar la aplicación y dejar que Supertest gestione el servidor temporal. Combinado con Vitest o Jest permite ejecutar pruebas repetibles.",
+          "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+          "syntax": "import request from \"supertest\";\nawait request(app).get(\"/health\").expect(200);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Primera prueba",
+              "description": "Supertest comprueba el status y el contenido de respuesta.",
+              "code": "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport { app } from \"../src/app.js\";\n\ndescribe(\"GET /health\", () => {\n  it(\"devuelve estado ok\", async () => {\n    const response = await request(app).get(\"/health\").expect(200);\n    expect(response.body).toEqual({ ok: true });\n  });\n});",
+              "explanation": "La prueba importa app sin ejecutar listen. Supertest abre el servidor temporal necesario."
+            },
+            {
+              "title": "Probar un POST JSON",
+              "description": "El método send permite enviar un objeto como cuerpo.",
+              "code": "const response = await request(app)\n  .post(\"/api/novelas\")\n  .send({ titulo: \"Overlord\" })\n  .expect(\"Content-Type\", /json/)\n  .expect(201);\n\nexpect(response.body.titulo).toBe(\"Overlord\");",
+              "explanation": "send serializa el objeto en la solicitud. La prueba puede comprobar status, headers y datos devueltos."
+            }
+          ],
+          "exercise": "Escribí pruebas para GET /api/novelas y POST /api/novelas, incluyendo un caso inválido.",
+          "hint": "Exportá app sin app.listen desde el módulo de aplicación. Usá el runner para agrupar y ejecutar pruebas.",
+          "parameters": [
+            {
+              "name": "request(app)",
+              "description": "Construye un cliente de pruebas para una aplicación o servidor HTTP."
+            },
+            {
+              "name": ".get() / .post()",
+              "description": "Seleccionan el método HTTP de la solicitud."
+            },
+            {
+              "name": ".send(data)",
+              "description": "Envía datos en el cuerpo de la solicitud."
+            },
+            {
+              "name": ".expect(status)",
+              "description": "Comprueba el status HTTP esperado."
+            }
+          ],
+          "bestPractices": [
+            "Probá status y contratos de respuesta.",
+            "Aislá los datos de pruebas para evitar contaminación entre casos.",
+            "Cubrí tanto entradas válidas como inválidas."
+          ],
+          "commonMistakes": [
+            "Importar un archivo que llama app.listen y abrir un puerto en cada prueba.",
+            "Probar solo el status y no el cuerpo cuando el contrato importa.",
+            "Depender de la base de datos de producción durante pruebas."
+          ],
+          "resources": [
+            {
+              "label": "Supertest",
+              "url": "https://github.com/ladjs/supertest"
+            },
+            {
+              "label": "Vitest",
+              "url": "https://vitest.dev/"
+            }
+          ],
+          "related": [
+            "express-app-listen",
+            "express-testing-integration"
+          ]
+        },
+        {
+          "id": "express-testing-integration",
+          "title": "Pruebas de integración, mocks y entorno de test",
+          "category": "typescript-testing",
+          "summary": "Probá routers y servicios combinados usando datos controlados y dependencias sustituidas.",
+          "purpose": "Las pruebas de integración comprueban que varias partes funcionan juntas: rutas, middleware, servicios y acceso a datos. Conviene usar una base de pruebas aislada, limpiar datos entre casos y simular únicamente servicios externos difíciles de controlar. Los tests no deben depender de datos personales ni del entorno de producción.",
+          "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+          "syntax": "beforeEach(prepararDatos);\nafterEach(limpiarDatos);",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Preparar datos por prueba",
+              "description": "Los hooks permiten inicializar un entorno limpio.",
+              "code": "import { beforeEach, afterEach } from \"vitest\";\n\nbeforeEach(async () => {\n  await testDb.novela.deleteMany();\n  await testDb.novela.create({ data: { titulo: \"Overlord\" } });\n});\nafterEach(async () => {\n  await testDb.$disconnect();\n});",
+              "explanation": "El ejemplo ilustra el aislamiento. Adaptá las operaciones al driver o ORM elegido y administrá el ciclo de vida de la conexión."
+            },
+            {
+              "title": "Sustituir un servicio externo",
+              "description": "Un mock evita depender de un proveedor real en cada ejecución.",
+              "code": "import { vi } from \"vitest\";\nvi.mock(\"../src/services/cotizacion.js\", () => ({\n  obtenerCotizacion: vi.fn().mockResolvedValue({ moneda: \"USD\", valor: 1200 })\n}));",
+              "explanation": "El mock controla el resultado y permite probar cómo responde la ruta ante un proveedor estable o ante fallos definidos."
+            }
+          ],
+          "exercise": "Diseñá una prueba de integración que cree un recurso, lo consulte y después lo elimine. Usá una base de test aislada.",
+          "hint": "La base de test no debe compartir credenciales ni registros con producción.",
+          "parameters": [
+            {
+              "name": "beforeEach",
+              "description": "Hook que se ejecuta antes de cada prueba."
+            },
+            {
+              "name": "afterEach",
+              "description": "Hook que se ejecuta después de cada prueba."
+            },
+            {
+              "name": "vi.mock()",
+              "description": "Sustituye un módulo con una implementación simulada en Vitest."
+            }
+          ],
+          "bestPractices": [
+            "Aislá datos de prueba de producción.",
+            "Restaurá mocks y conexiones al terminar.",
+            "Evitá que el orden de ejecución cambie el resultado."
+          ],
+          "commonMistakes": [
+            "Ejecutar pruebas destructivas contra la base real.",
+            "Compartir registros entre pruebas sin limpiar.",
+            "Mockear todas las partes y terminar sin probar la integración real."
+          ],
+          "resources": [
+            {
+              "label": "Vitest mocking",
+              "url": "https://vitest.dev/guide/mocking.html"
+            },
+            {
+              "label": "Supertest",
+              "url": "https://github.com/ladjs/supertest"
+            }
+          ],
+          "related": [
+            "express-testing-supertest",
+            "express-database-integration"
+          ]
+        },
+        {
+          "id": "express-openapi-docs",
+          "title": "Documentar la API con OpenAPI y Swagger UI",
+          "category": "typescript-testing",
+          "summary": "Publicá un contrato legible de endpoints, parámetros, esquemas y respuestas.",
+          "purpose": "OpenAPI es una especificación para describir APIs HTTP. Puede documentar rutas, parámetros, cuerpos, autenticación y respuestas. Swagger UI permite explorar esa documentación desde una interfaz. La documentación debe mantenerse sincronizada con el comportamiento real y no reemplaza la validación de entrada.",
+          "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+          "syntax": "app.use(\"/docs\", swaggerUi.serve, swaggerUi.setup(openapiSpec));",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Definir un documento mínimo",
+              "description": "OpenAPI describe rutas y respuestas mediante un objeto estructurado.",
+              "code": "const openapiSpec = {\n  openapi: \"3.1.0\",\n  info: { title: \"API de novelas\", version: \"1.0.0\" },\n  paths: {\n    \"/api/novelas\": {\n      get: {\n        summary: \"Listar novelas\",\n        responses: { \"200\": { description: \"Colección de novelas\" } }\n      }\n    }\n  }\n};",
+              "explanation": "El objeto contiene metadatos y un path con su operación. Para contratos completos agregá schemas y respuestas detalladas."
+            },
+            {
+              "title": "Publicar Swagger UI",
+              "description": "El paquete swagger-ui-express sirve la interfaz del documento.",
+              "code": "import swaggerUi from \"swagger-ui-express\";\napp.use(\"/docs\", swaggerUi.serve, swaggerUi.setup(openapiSpec));",
+              "explanation": "La ruta /docs presenta la documentación interactiva. En producción evaluá si debe ser pública o protegida."
+            }
+          ],
+          "exercise": "Documentá GET y POST /api/novelas con parámetros, esquema JSON y respuestas 200, 201, 400 y 404.",
+          "hint": "Separá el contrato OpenAPI de la implementación del controlador y mantenelo versionado.",
+          "parameters": [
+            {
+              "name": "openapi",
+              "description": "Versión de la especificación OpenAPI utilizada."
+            },
+            {
+              "name": "paths",
+              "description": "Mapa de rutas y métodos disponibles."
+            },
+            {
+              "name": "responses",
+              "description": "Respuestas HTTP documentadas para cada operación."
+            },
+            {
+              "name": "swaggerUi.setup(spec)",
+              "description": "Configura la interfaz Swagger UI para el documento."
+            }
+          ],
+          "bestPractices": [
+            "Documentá errores y autenticación, no solo el caso exitoso.",
+            "Versioná el contrato junto a los cambios de rutas.",
+            "Comprobá que las respuestas documentadas coincidan con los tests."
+          ],
+          "commonMistakes": [
+            "Publicar documentación que quedó desactualizada.",
+            "Documentar 200 para una ruta que devuelve 201.",
+            "Exponer endpoints internos en documentación pública."
+          ],
+          "resources": [
+            {
+              "label": "OpenAPI Specification",
+              "url": "https://spec.openapis.org/oas/latest.html"
+            },
+            {
+              "label": "swagger-ui-express",
+              "url": "https://github.com/scottie1984/swagger-ui-express"
+            }
+          ],
+          "related": [
+            "express-rest-crud-api",
+            "express-testing-supertest"
+          ]
+        },
+        {
+          "id": "express-graceful-shutdown",
+          "title": "Cierre ordenado y señales del proceso",
+          "category": "typescript-testing",
+          "summary": "Cerrá el servidor y sus recursos cuando Node recibe SIGTERM o SIGINT.",
+          "purpose": "Un apagado ordenado deja de aceptar conexiones nuevas, permite finalizar solicitudes activas y cierra recursos como pools de base de datos. Node ofrece eventos de proceso; el objeto Server de http.Server expone close. En producción, el cierre debe tener un límite de tiempo para evitar procesos bloqueados indefinidamente.",
+          "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+          "syntax": "process.on(\"SIGTERM\", () => server.close(callback));",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Cerrar el servidor",
+              "description": "El evento de señal permite iniciar el cierre.",
+              "code": "const server = app.listen(port);\n\nfunction cerrar(signal) {\n  console.log(`Recibida señal ${signal}`);\n  server.close(error => {\n    if (error) {\n      console.error(error);\n      process.exitCode = 1;\n    }\n  });\n}\nprocess.on(\"SIGTERM\", () => cerrar(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => cerrar(\"SIGINT\"));",
+              "explanation": "server.close deja de aceptar nuevas conexiones y ejecuta el callback al terminar el cierre del servidor."
+            },
+            {
+              "title": "Cerrar dependencias",
+              "description": "Además del HTTP, liberá pools y recursos propios.",
+              "code": "async function cerrar(signal) {\n  console.log(`Cerrando por ${signal}`);\n  server.close(async error => {\n    try {\n      await db.disconnect();\n      process.exitCode = error ? 1 : 0;\n    } catch (closeError) {\n      console.error(closeError);\n      process.exitCode = 1;\n    }\n  });\n}",
+              "explanation": "Adaptá disconnect al driver real. También conviene agregar un timeout máximo y registrar los recursos que no cerraron."
+            }
+          ],
+          "exercise": "Implementá SIGTERM y SIGINT, cerrá el servidor y desconectá la base de datos sin finalizar el proceso antes de tiempo.",
+          "hint": "El apagado debe coordinar servidor, conexiones, tareas y recursos antes de que termine el proceso.",
+          "parameters": [
+            {
+              "name": "process.on(\"SIGTERM\")",
+              "description": "Escucha la señal usada frecuentemente por plataformas y contenedores para solicitar apagado."
+            },
+            {
+              "name": "server.close(callback)",
+              "description": "Deja de aceptar conexiones nuevas y llama al callback al cerrar el servidor."
+            },
+            {
+              "name": "process.exitCode",
+              "description": "Establece el código de salida del proceso sin terminarlo de forma inmediata."
+            }
+          ],
+          "bestPractices": [
+            "Usá un timeout de apagado como última protección.",
+            "Cerrá la base de datos y otros recursos después de dejar de aceptar requests.",
+            "Hacé que el cierre sea idempotente para evitar ejecutarlo varias veces."
+          ],
+          "commonMistakes": [
+            "Llamar process.exit inmediatamente y cortar respuestas activas.",
+            "Olvidar cerrar pools de base de datos.",
+            "No poner límite de tiempo a un recurso que nunca termina de cerrarse."
+          ],
+          "resources": [
+            {
+              "label": "Node.js process signals",
+              "url": "https://nodejs.org/api/process.html#signal-events"
+            },
+            {
+              "label": "Node.js HTTP server close",
+              "url": "https://nodejs.org/api/http.html#serverclosecallback"
+            }
+          ],
+          "related": [
+            "express-app-listen",
+            "express-deployment"
           ]
         }
       ]
