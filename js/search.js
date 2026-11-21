@@ -18,8 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
   input.setAttribute("aria-controls", panel.id);
   input.setAttribute("aria-expanded", "false");
 
-  const inPages = window.location.pathname.includes("/pages/");
-  const basePath = inPages ? "../" : "./";
+  // Resolver la raíz desde la ubicación real de este archivo evita errores
+  // cuando GitHub Pages publica el proyecto dentro de una subcarpeta.
+  const searchScript = [...document.scripts].find(script => {
+    try { return new URL(script.src, document.baseURI).pathname.endsWith("/js/search.js"); }
+    catch { return false; }
+  });
+  const dataRoot = searchScript
+    ? new URL("../", new URL(searchScript.src, document.baseURI))
+    : new URL(window.location.pathname.includes("/pages/") ? "../" : "./", document.baseURI);
+  const catalogWarnings = [];
   const normalize = value => String(value ?? "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -237,41 +245,65 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadCatalog = async () => {
     if (catalogPromise) return catalogPromise;
 
-    catalogPromise = Promise.all([
-      fetch(basePath + "data/html-articulos.json").then(response => {
-        if (!response.ok) throw new Error("No se pudo cargar el catálogo HTML.");
-        return response.json();
-      }),
-      fetch(basePath + "data/css-articulos.json").then(response => {
-        if (!response.ok) throw new Error("No se pudo cargar el catálogo CSS.");
-        return response.json();
-      }),
-      fetch(basePath + "data/js-articulos.json").then(response => {
-        if (!response.ok) throw new Error("No se pudo cargar el catálogo JavaScript.");
-        return response.json();
-      })
-    ]).then(([htmlDb, cssDb, jsDb]) => {
+    const fetchCatalog = async (fileName, language) => {
+      const url = new URL("data/" + fileName, dataRoot);
+      const response = await fetch(url.href, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(language + ": HTTP " + response.status + " al cargar " + url.pathname);
+      }
+      const data = await response.json();
+      if (!data || !data.articles) {
+        throw new Error(language + ": el archivo no contiene la estructura de artículos esperada.");
+      }
+      return data;
+    };
+
+    catalogPromise = Promise.allSettled([
+      fetchCatalog("html-articulos.json", "HTML"),
+      fetchCatalog("css-articulos.json", "CSS"),
+      fetchCatalog("js-articulos.json", "JavaScript")
+    ]).then(results => {
       const entries = [];
+      catalogWarnings.length = 0;
+      const [htmlResult, cssResult, jsResult] = results;
 
-      Object.values(htmlDb.articles || {}).forEach(article => {
-        const href = "pages/articulo.html?lenguaje=html&id=" + encodeURIComponent(article.id);
-        entries.push(createEntry("HTML", article.categoryTitle, article, basePath + href, "html5 etiquetas elementos atributos marcado"));
-      });
+      if (htmlResult.status === "fulfilled") {
+        const articles = Array.isArray(htmlResult.value.articles)
+          ? htmlResult.value.articles
+          : Object.values(htmlResult.value.articles || {});
+        articles.forEach(article => {
+          const href = new URL("pages/articulo.html?lenguaje=html&id=" + encodeURIComponent(article.id), dataRoot).href;
+          entries.push(createEntry("HTML", article.categoryTitle, article, href, "html5 etiquetas elementos atributos marcado"));
+        });
+      } else {
+        catalogWarnings.push("HTML: " + htmlResult.reason.message);
+      }
 
-      (cssDb.articles || []).forEach(article => {
-        const categoryId = article.categoryId;
-        const itemIndex = Number(article.id.slice((categoryId + "-").length));
-        const href = "pages/css-articulo.html?tema=" + encodeURIComponent(categoryId) + "&item=" + itemIndex;
-        entries.push(createEntry("CSS", article.categoryTitle, article, basePath + href, "css estilos hojas de estilo propiedades selectores"));
-      });
+      if (cssResult.status === "fulfilled") {
+        cssResult.value.articles.forEach(article => {
+          const categoryId = article.categoryId;
+          const itemIndex = Number(String(article.id).slice((categoryId + "-").length));
+          const href = new URL("pages/css-articulo.html?tema=" + encodeURIComponent(categoryId) + "&item=" + itemIndex, dataRoot).href;
+          entries.push(createEntry("CSS", article.categoryTitle, article, href, "css estilos hojas de estilo propiedades selectores"));
+        });
+      } else {
+        catalogWarnings.push("CSS: " + cssResult.reason.message);
+      }
 
-      (jsDb.articles || []).forEach(article => {
-        const categoryId = article.categoryId;
-        const itemIndex = Number(article.id.slice((categoryId + "-").length));
-        const href = "pages/js-articulo.html?tema=" + encodeURIComponent(categoryId) + "&item=" + itemIndex;
-        entries.push(createEntry("JavaScript", article.categoryTitle, article, basePath + href, "javascript js ecmascript lenguaje programación métodos funciones"));
-      });
+      if (jsResult.status === "fulfilled") {
+        jsResult.value.articles.forEach(article => {
+          const categoryId = article.categoryId;
+          const itemIndex = Number(String(article.id).slice((categoryId + "-").length));
+          const href = new URL("pages/js-articulo.html?tema=" + encodeURIComponent(categoryId) + "&item=" + itemIndex, dataRoot).href;
+          entries.push(createEntry("JavaScript", article.categoryTitle, article, href, "javascript js ecmascript lenguaje programación métodos funciones"));
+        });
+      } else {
+        catalogWarnings.push("JavaScript: " + jsResult.reason.message);
+      }
 
+      if (!entries.length) {
+        throw new Error(catalogWarnings.join(" | ") || "No se pudo cargar ningún catálogo.");
+      }
       catalog = entries;
       return catalog;
     }).catch(error => {
@@ -448,6 +480,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     filters.append(languageFilter.label, categoryFilter.label);
+    if (catalogWarnings.length) {
+      const warning = document.createElement("p");
+      warning.className = "search-empty-state";
+      warning.textContent = "Algunos artículos no pudieron cargarse: " + catalogWarnings.join(" · ");
+      panel.append(warning);
+    }
     panel.append(heading, filters, list, footer);
     panel.hidden = false;
     input.setAttribute("aria-expanded", "true");
