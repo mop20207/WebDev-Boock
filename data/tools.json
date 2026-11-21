@@ -1,6 +1,6 @@
 {
-  "version": 14,
-  "articleCount": 229,
+  "version": 15,
+  "articleCount": 235,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -14902,6 +14902,20 @@
             "express-authentication",
             "express-cookies-sessions"
           ]
+        },
+        {
+          "id": "data-capabilities",
+          "title": "Datos y capacidades del servidor",
+          "description": "Conectá persistencia, serví archivos y organizá funciones avanzadas de una aplicación Express.",
+          "icon": "▦",
+          "articles": [
+            "express-database-integration",
+            "express-template-engines",
+            "express-file-downloads",
+            "express-subapps-mounts",
+            "express-server-logging",
+            "express-trust-proxy"
+          ]
         }
       ],
       "articles": [
@@ -16483,6 +16497,383 @@
           "related": [
             "express-authentication",
             "express-cors"
+          ]
+        },
+        {
+          "id": "express-database-integration",
+          "title": "Conectar Express con una base de datos",
+          "category": "data-capabilities",
+          "summary": "Separá el acceso a datos del transporte HTTP e integrá un driver u ORM.",
+          "purpose": "Express no incorpora una base de datos. La aplicación importa un driver u ORM para conectar con PostgreSQL, MySQL, SQLite, MongoDB u otro motor. Conviene encapsular consultas en una capa de acceso a datos y mantener las rutas independientes de los detalles del motor.",
+          "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+          "syntax": "ruta → servicio → repositorio/ORM → base de datos",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Separar un servicio",
+              "description": "El router delega la consulta a una función reutilizable.",
+              "code": "// services/novelas.js\nimport { db } from \"../lib/db.js\";\nexport async function listarNovelas() {\n  return db.novela.findMany({ orderBy: { titulo: \"asc\" } });\n}\n\n// routes/novelas.js\nrouter.get(\"/\", async (_req, res) => res.json(await listarNovelas()));",
+              "explanation": "La consulta vive en el servicio. El router se ocupa de HTTP y puede cambiar sin reescribir la consulta."
+            },
+            {
+              "title": "Manejar un registro inexistente",
+              "description": "El servicio puede devolver null y el controlador decide el status.",
+              "code": "const novela = await repositorio.buscarPorId(req.params.id);\nif (!novela) return res.status(404).json({ error: \"No encontrada\" });\nres.json(novela);",
+              "explanation": "Un resultado inexistente no tiene por qué ser una excepción técnica. La ruta lo traduce a 404."
+            }
+          ],
+          "exercise": "Organizá un backend de novelas con router, controlador, servicio y repositorio. Indicá dónde ubicarías las consultas SQL.",
+          "hint": "Express atiende HTTP. El driver u ORM maneja persistencia; mantené esa dependencia detrás de una capa.",
+          "parameters": [
+            {
+              "name": "Pool",
+              "description": "Conjunto de conexiones reutilizables a una base de datos."
+            },
+            {
+              "name": "ORM",
+              "description": "Herramienta que representa tablas o colecciones y ofrece operaciones de persistencia."
+            },
+            {
+              "name": "Repositorio",
+              "description": "Módulo que encapsula consultas y operaciones de datos."
+            }
+          ],
+          "bestPractices": [
+            "Usá consultas parametrizadas para evitar SQL injection.",
+            "Gestioná conexiones y transacciones correctamente.",
+            "No abras una conexión manual por request si el driver ofrece un pool."
+          ],
+          "commonMistakes": [
+            "Concatenar SQL con datos del usuario.",
+            "Poner consultas completas dentro de las rutas.",
+            "Exponer credenciales de base de datos al frontend."
+          ],
+          "resources": [
+            {
+              "label": "Express — Database integration",
+              "url": "https://expressjs.com/en/guide/database-integration.html"
+            }
+          ],
+          "related": [
+            "express-rest-crud-api",
+            "express-environment-config"
+          ]
+        },
+        {
+          "id": "express-template-engines",
+          "title": "Plantillas y renderizado de vistas",
+          "category": "data-capabilities",
+          "summary": "Generá páginas HTML dinámicas desde el servidor con un motor de plantillas.",
+          "purpose": "Express puede integrar motores de vistas como Pug, EJS o Handlebars. app.set(\"view engine\", ...) define el motor y res.render renderiza una plantilla con los datos que recibe. La elección del motor es externa y requiere instalar un paquete.",
+          "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+          "syntax": "app.set(\"view engine\", \"ejs\");\nres.render(\"inicio\", { titulo: \"Catálogo\" });",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Configurar EJS",
+              "description": "Instalá el motor y declaralo en Express.",
+              "code": "npm install ejs\n\napp.set(\"view engine\", \"ejs\");\napp.set(\"views\", \"./views\");\napp.get(\"/\", (_req, res) => res.render(\"inicio\", { titulo: \"Novelas\" }));",
+              "explanation": "Express busca views/inicio.ejs y le pasa los datos como variables."
+            },
+            {
+              "title": "Renderizar plantilla",
+              "description": "EJS permite interpolar variables escapadas.",
+              "code": "<!-- views/inicio.ejs -->\n<h1><%= titulo %></h1>\n<p>Bienvenido al catálogo.</p>",
+              "explanation": "<%= escapa el valor al mostrarlo. No uses salida sin escapar para texto controlado por usuarios."
+            }
+          ],
+          "exercise": "Creá una página de inicio con EJS que reciba un título y una lista de novelas.",
+          "hint": "Configurá view engine y la carpeta views; después res.render usa el nombre de plantilla sin extensión.",
+          "parameters": [
+            {
+              "name": "app.set(\"view engine\", engine)",
+              "description": "Define el motor de plantillas."
+            },
+            {
+              "name": "app.set(\"views\", path)",
+              "description": "Define la carpeta de vistas."
+            },
+            {
+              "name": "res.render(view, locals)",
+              "description": "Renderiza una plantilla con variables."
+            }
+          ],
+          "bestPractices": [
+            "Usá escape automático para contenido de usuario.",
+            "Mantené las vistas separadas de las consultas a datos."
+          ],
+          "commonMistakes": [
+            "Olvidar instalar el motor elegido.",
+            "Configurar una carpeta de vistas incorrecta.",
+            "Insertar HTML no escapado proveniente de usuarios."
+          ],
+          "resources": [
+            {
+              "label": "Using template engines",
+              "url": "https://expressjs.com/en/guide/using-template-engines.html"
+            }
+          ],
+          "related": [
+            "express-routes-basics",
+            "express-static-files"
+          ]
+        },
+        {
+          "id": "express-file-downloads",
+          "title": "Enviar y descargar archivos",
+          "category": "data-capabilities",
+          "summary": "Respondé con archivos mediante sendFile, download y tipos de contenido adecuados.",
+          "purpose": "Express ofrece res.sendFile para enviar un archivo y res.download para iniciar una descarga. Las rutas deben resolverse con cuidado para no permitir que un usuario elija archivos fuera del directorio autorizado. sendFile admite opciones como root para restringir resolución.",
+          "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+          "syntax": "res.sendFile(path, options, callback);\nres.download(path, filename);",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Enviar archivo fijo",
+              "description": "sendFile permite servir un documento conocido.",
+              "code": "import path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\nconst __dirname = path.dirname(fileURLToPath(import.meta.url));\napp.get(\"/manual\", (_req, res, next) => {\n  res.sendFile(\"manual.pdf\", { root: path.join(__dirname, \"files\") }, error => {\n    if (error) next(error);\n  });\n});",
+              "explanation": "La opción root acota la ruta. El callback permite transferir errores si el envío falla."
+            },
+            {
+              "title": "Descargar con nombre",
+              "description": "download indica al navegador que el archivo se descargue.",
+              "code": "app.get(\"/descargas/reporte\", (_req, res, next) => {\n  res.download(\"./private/reporte.pdf\", \"mi-reporte.pdf\", error => {\n    if (error) next(error);\n  });\n});",
+              "explanation": "El archivo debe ser conocido y autorizado. No construyas rutas del sistema con texto arbitrario del usuario."
+            }
+          ],
+          "exercise": "Implementá una descarga protegida para un reporte solicitado por ID y verificá autorización antes de enviar el archivo.",
+          "hint": "No tomes una ruta absoluta desde req.query. Usá IDs y rutas resueltas por el servidor.",
+          "parameters": [
+            {
+              "name": "res.sendFile(path, options)",
+              "description": "Envía un archivo como respuesta."
+            },
+            {
+              "name": "res.download(path, filename)",
+              "description": "Envía un archivo con disposición de descarga."
+            },
+            {
+              "name": "root",
+              "description": "Directorio raíz permitido para resolver un path relativo."
+            }
+          ],
+          "bestPractices": [
+            "Restringí la selección de archivos mediante IDs autorizados.",
+            "Manej á el callback de error del envío.",
+            "Verificá permisos antes de enviar archivos privados."
+          ],
+          "commonMistakes": [
+            "Permitir ../ en un path de usuario.",
+            "Servir una carpeta privada con express.static.",
+            "Asumir que la descarga se completó solo porque se llamó res.download."
+          ],
+          "resources": [
+            {
+              "label": "Response API — sendFile",
+              "url": "https://expressjs.com/en/5x/api.html#res.sendFile"
+            },
+            {
+              "label": "Response API — download",
+              "url": "https://expressjs.com/en/5x/api.html#res.download"
+            }
+          ],
+          "related": [
+            "express-static-files",
+            "express-server-security"
+          ]
+        },
+        {
+          "id": "express-subapps-mounts",
+          "title": "Montar routers, subaplicaciones y prefijos",
+          "category": "data-capabilities",
+          "summary": "Organizá áreas de una aplicación y montá routers o subaplicaciones bajo un path.",
+          "purpose": "app.use puede montar middleware, routers o una instancia Express debajo de un path. req.baseUrl, req.path y req.originalUrl permiten distinguir ruta de montaje, path interno y URL original. Los prefijos ayudan a aislar versiones de API y áreas del producto.",
+          "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+          "syntax": "app.use(\"/api/v1\", apiV1);\napp.use(\"/admin\", adminApp);",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Versionar una API",
+              "description": "Montá routers diferentes según la versión.",
+              "code": "import { Router } from \"express\";\nconst v1 = Router();\nconst v2 = Router();\nv1.get(\"/novelas\", listarV1);\nv2.get(\"/novelas\", listarV2);\napp.use(\"/api/v1\", v1);\napp.use(\"/api/v2\", v2);",
+              "explanation": "Cada router mantiene paths relativos; el montaje determina la URL pública."
+            },
+            {
+              "title": "Inspeccionar el montaje",
+              "description": "Las propiedades de request muestran el contexto.",
+              "code": "app.use(\"/admin\", (req, res) => {\n  res.json({ baseUrl: req.baseUrl, path: req.path, originalUrl: req.originalUrl });\n});",
+              "explanation": "Para GET /admin/usuarios, baseUrl indica /admin y originalUrl conserva /admin/usuarios."
+            }
+          ],
+          "exercise": "Montá v1 y v2 de una API y compará baseUrl, path y originalUrl.",
+          "hint": "El router usa paths relativos; el path público combina el prefijo y la ruta interna.",
+          "parameters": [
+            {
+              "name": "app.use(path, middleware)",
+              "description": "Monta middleware, router o aplicación en un prefijo."
+            },
+            {
+              "name": "req.baseUrl",
+              "description": "Path donde fue montado el router actual."
+            },
+            {
+              "name": "req.path",
+              "description": "Path de la URL sin query string."
+            },
+            {
+              "name": "req.originalUrl",
+              "description": "URL original recibida por la aplicación."
+            }
+          ],
+          "bestPractices": [
+            "Versioná APIs cuando los contratos deban convivir.",
+            "Aislá rutas administrativas y públicas."
+          ],
+          "commonMistakes": [
+            "Repetir el prefijo dentro de cada ruta.",
+            "Confundir req.path con req.originalUrl.",
+            "Montar un handler general antes del router y capturar sus rutas."
+          ],
+          "resources": [
+            {
+              "label": "Application API — app.use",
+              "url": "https://expressjs.com/en/5x/api.html#app.use"
+            },
+            {
+              "label": "Request API",
+              "url": "https://expressjs.com/en/5x/api.html#req"
+            }
+          ],
+          "related": [
+            "express-routers",
+            "express-project-architecture"
+          ]
+        },
+        {
+          "id": "express-server-logging",
+          "title": "Registro de solicitudes y niveles de log",
+          "category": "data-capabilities",
+          "summary": "Registrá actividad HTTP y errores con mensajes estructurados y útiles para producción.",
+          "purpose": "El logging permite observar solicitudes, fallos y operaciones importantes. Un middleware puede registrar método, path, status y duración; paquetes como Morgan ofrecen logging HTTP y Pino o Winston pueden estructurar eventos. No registres contraseñas, tokens ni cuerpos sensibles sin necesidad y protección estrictas.",
+          "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+          "syntax": "(req, res, next) => { /* medir y registrar */ next(); }",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Medir duración",
+              "description": "Usá el evento finish para registrar cuánto tardó una solicitud.",
+              "code": "app.use((req, res, next) => {\n  const inicio = process.hrtime.bigint();\n  res.on(\"finish\", () => {\n    const ms = Number(process.hrtime.bigint() - inicio) / 1e6;\n    console.log({ method: req.method, path: req.path, status: res.statusCode, ms });\n  });\n  next();\n});",
+              "explanation": "finish se dispara cuando terminó de enviarse la respuesta. process.hrtime.bigint mide intervalos con alta resolución."
+            },
+            {
+              "title": "Usar Morgan",
+              "description": "Morgan ofrece formatos predefinidos para logging HTTP.",
+              "code": "import morgan from \"morgan\";\napp.use(morgan(\"combined\"));",
+              "explanation": "Morgan registra datos HTTP habituales. En producción podés enviar la salida a un sistema centralizado."
+            }
+          ],
+          "exercise": "Registrá método, path, código de respuesta y duración. Asegurate de no imprimir Authorization ni cookies.",
+          "hint": "El logging HTTP debe ejecutarse antes de las rutas.",
+          "parameters": [
+            {
+              "name": "res.on(\"finish\", callback)",
+              "description": "Evento para registrar una respuesta ya finalizada."
+            },
+            {
+              "name": "process.hrtime.bigint()",
+              "description": "Reloj monotónico de alta resolución."
+            },
+            {
+              "name": "morgan(format)",
+              "description": "Middleware de registro HTTP."
+            }
+          ],
+          "bestPractices": [
+            "Usá logs estructurados y niveles adecuados.",
+            "Ocultá tokens, cookies y datos personales.",
+            "Agregá un identificador de solicitud."
+          ],
+          "commonMistakes": [
+            "Registrar todos los headers y filtrar credenciales después.",
+            "Usar logs sin estructura en producción.",
+            "Imprimir detalles sensibles de negocio."
+          ],
+          "resources": [
+            {
+              "label": "Morgan middleware",
+              "url": "https://expressjs.com/en/resources/middleware/morgan.html"
+            }
+          ],
+          "related": [
+            "express-error-handling",
+            "express-graceful-shutdown"
+          ]
+        },
+        {
+          "id": "express-trust-proxy",
+          "title": "Proxy inverso y configuración de trust proxy",
+          "category": "data-capabilities",
+          "summary": "Entendé cómo Express interpreta IP y protocolo detrás de un proxy.",
+          "purpose": "Detrás de un balanceador o proxy TLS, la conexión directa a Node puede provenir del proxy y no del cliente. trust proxy controla cuánto confía Express en encabezados como X-Forwarded-For y X-Forwarded-Proto. Una configuración demasiado amplia puede permitir que el cliente falsifique IP o protocolo.",
+          "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+          "syntax": "app.set(\"trust proxy\", 1);",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Confiar en un proxy conocido",
+              "description": "Configurá el número de saltos solo si la topología es estable.",
+              "code": "app.set(\"trust proxy\", 1);\napp.get(\"/debug/ip\", (req, res) => {\n  res.json({ ip: req.ip, secure: req.secure });\n});",
+              "explanation": "El valor 1 confía en un salto. La cifra correcta depende de la infraestructura real."
+            },
+            {
+              "title": "No confiar indiscriminadamente",
+              "description": "La confianza abierta solo es segura si el proxy limpia y controla los headers.",
+              "code": "// No copies esto sin revisar tu infraestructura:\napp.set(\"trust proxy\", true);\n// Preferí una configuración explícita de IP/subred o saltos conocidos.",
+              "explanation": "Con true, Express puede aceptar encabezados reenviados desde un origen no confiable si la red no está protegida."
+            }
+          ],
+          "exercise": "Dibujá cliente → proxy → Express y elegí una configuración trust proxy para tu entorno.",
+          "hint": "No elijas el número de saltos por intuición. Consultá la infraestructura y asegurá que el proxy gestione los headers.",
+          "parameters": [
+            {
+              "name": "app.set(\"trust proxy\", value)",
+              "description": "Configura qué proxies y encabezados reenviados considera confiables."
+            },
+            {
+              "name": "req.ip",
+              "description": "IP del cliente inferida según trust proxy."
+            },
+            {
+              "name": "req.secure",
+              "description": "Indica si la solicitud se considera HTTPS."
+            },
+            {
+              "name": "X-Forwarded-For",
+              "description": "Header que puede contener la cadena de IPs reenviadas."
+            }
+          ],
+          "bestPractices": [
+            "Configurá trust proxy según proveedor y topología.",
+            "Asegurá que el proxy controle los encabezados entrantes."
+          ],
+          "commonMistakes": [
+            "Activar trust proxy true sin verificar el proxy.",
+            "Usar req.ip como confiable con una cadena mal configurada.",
+            "Olvidar que afecta cookies secure y rate limiting."
+          ],
+          "resources": [
+            {
+              "label": "Express behind proxies",
+              "url": "https://expressjs.com/en/guide/behind-proxies.html"
+            },
+            {
+              "label": "Application API — trust proxy",
+              "url": "https://expressjs.com/en/5x/api.html#trust.proxy"
+            }
+          ],
+          "related": [
+            "express-cookies-sessions",
+            "express-rate-limiting"
           ]
         }
       ]
