@@ -38,6 +38,7 @@
 .tools-accent-npm .tools-category-icon{background:#49302d;color:#ffad92}
 .tools-accent-typescript .tools-category-icon{background:#263e62;color:#9fc5ff}
 .tools-accent-nextjs .tools-category-icon{background:#252b3a;color:#f1f3f8}
+.tools-accent-express .tools-category-icon{background:#29323d;color:#b6d1e7}
 .tools-reference-note{margin-top:20px;padding:17px 20px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}
 .tools-reference-note strong{font-size:12px}
 .tools-reference-note p{color:var(--muted);font-size:12px;line-height:1.7;margin:5px 0 0}
