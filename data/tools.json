@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "articleCount": 77,
   "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
   "tools": [
@@ -1975,9 +1975,9 @@
       "categories": [
         {
           "id": "fundamentos",
-          "title": "Fundamentos",
-          "description": "Componentes y sintaxis JSX",
-          "icon": "▣",
+          "title": "Fundamentos de React",
+          "description": "Componentes, JSX, renderizado y composición de interfaces.",
+          "icon": "⚛",
           "articles": [
             "react-que-es",
             "react-jsx"
@@ -1986,7 +1986,7 @@
         {
           "id": "intermedio",
           "title": "Props y estado",
-          "description": "Datos y eventos",
+          "description": "Pasaje de datos, interacciones y actualización de la interfaz.",
           "icon": "⇄",
           "articles": [
             "react-props",
@@ -1995,8 +1995,8 @@
         },
         {
           "id": "avanzado",
-          "title": "Hooks",
-          "description": "Efectos y contexto",
+          "title": "Hooks y contexto",
+          "description": "Efectos, sincronización y estado compartido entre componentes.",
           "icon": "⌁",
           "articles": [
             "react-useeffect",
@@ -2007,231 +2007,474 @@
       "articles": [
         {
           "id": "react-que-es",
-          "title": "¿Qué es React?",
+          "title": "¿Qué es React y cómo funciona?",
           "category": "fundamentos",
-          "summary": "React construye interfaces mediante componentes y actualiza la vista cuando cambian los datos.",
-          "purpose": "React construye interfaces mediante componentes y actualiza la vista cuando cambian los datos.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "function App() { return <h1>Hola, React</h1>; }",
+          "summary": "Comprendé React, el renderizado declarativo, los componentes y el flujo básico de una aplicación.",
+          "purpose": "React es una biblioteca de JavaScript para construir interfaces a partir de componentes. En lugar de modificar manualmente cada nodo del DOM, describís qué debe mostrar cada componente según sus props, estado y contexto. Cuando esos datos cambian, React vuelve a calcular la interfaz y actualiza el DOM necesario.",
+          "whenToUse": "Utilizá React cuando una interfaz tenga partes reutilizables, datos que cambian, formularios, navegación o interacciones que sería difícil mantener con manipulaciones manuales del DOM. Para una página completamente estática, HTML y CSS pueden ser suficientes.",
+          "syntax": "import { createRoot } from 'react-dom/client';\n\nfunction App() {\n  return <h1>Mi primera aplicación</h1>;\n}\n\nconst root = createRoot(document.getElementById('root'));\nroot.render(<App />);",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "function App() { return <h1>Hola, React</h1>; }",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Una aplicación mínima",
+              "description": "Este es el punto de entrada de una aplicación React moderna con un elemento root.",
+              "code": "import { createRoot } from 'react-dom/client';\n\nfunction App() {\n  return <main>\n    <h1>WebDev Book</h1>\n    <p>Estoy aprendiendo React.</p>\n  </main>;\n}\n\ncreateRoot(document.getElementById('root')).render(<App />);",
+              "explanation": "1. createRoot conecta React con el elemento #root.\n2. App devuelve una estructura JSX.\n3. render(<App />) le pide a React que muestre el componente.\n4. <App /> crea un elemento React; no se llama App() manualmente."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "function App() { return <h1>Hola, React</h1>; }",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Separar la interfaz en componentes",
+              "description": "Una página puede componerse de piezas pequeñas con responsabilidades claras.",
+              "code": "function Encabezado() {\n  return <header><h1>Mi biblioteca</h1></header>;\n}\n\nfunction Tarjeta() {\n  return <article><h2>React</h2><p>Biblioteca de interfaces.</p></article>;\n}\n\nfunction App() {\n  return <main>\n    <Encabezado />\n    <Tarjeta />\n    <Tarjeta />\n  </main>;\n}",
+              "explanation": "Encabezado y Tarjeta son componentes reutilizables. App los combina como elementos JSX. React mantiene un árbol de componentes y cada Tarjeta puede evolucionar de forma independiente."
+            },
+            {
+              "title": "Mostrar datos con una expresión",
+              "description": "Las llaves permiten insertar el resultado de una expresión JavaScript en JSX.",
+              "code": "const usuario = { nombre: 'Lucía', ciudad: 'Corrientes' };\n\nfunction Perfil() {\n  return <section>\n    <h2>{usuario.nombre}</h2>\n    <p>Vive en {usuario.ciudad}</p>\n    <p>Próximo año tendrá {25 + 1} años.</p>\n  </section>;\n}",
+              "explanation": "Dentro de JSX, {usuario.nombre} y {usuario.ciudad} son expresiones JavaScript. No se escriben comillas alrededor de las llaves. El cálculo 25 + 1 se evalúa antes de mostrar el resultado."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Dividí la interfaz en componentes pequeños que representen una parte reconocible de la UI.",
+            "Mantené los componentes puros: con las mismas props, estado y contexto deberían describir el mismo resultado.",
+            "Dejá que React gestione el DOM; evitá modificar manualmente nodos que React controla.",
+            "Usá una herramienta de proyecto compatible con JSX, como Vite, en lugar de esperar que el navegador interprete JSX directamente."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Escribir <app /> en minúscula: React lo interpreta como una etiqueta HTML, no como un componente propio.",
+            "Llamar App() directamente en vez de usar <App />.",
+            "Creer que JSX es HTML literal: requiere transformación y tiene diferencias como className y el cierre de etiquetas.",
+            "Intentar importar createRoot desde react; se importa desde react-dom/client."
           ],
-          "exercise": "Creá un componente App que muestre un título.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí una página con App, Encabezado, Presentacion y Pie. Presentacion debe mostrar un nombre y una descripción almacenados en variables. Reutilizá al menos un componente dos veces.",
+          "hint": "Empezá creando un elemento con id=\"root\" en el HTML. Después definí los componentes y montá <App /> con createRoot.",
+          "parameters": [
+            {
+              "name": "createRoot(contenedor)",
+              "description": "Crea la raíz de React asociada a un elemento del DOM. El contenedor suele ser un div con id=\"root\"."
+            },
+            {
+              "name": "root.render(elemento)",
+              "description": "Indica qué elemento de React debe mostrarse dentro de esa raíz."
+            },
+            {
+              "name": "App",
+              "description": "Componente funcional. Su nombre comienza con mayúscula para distinguirlo de las etiquetas HTML."
+            }
+          ],
+          "resources": [
+            {
+              "label": "React — Quick Start (documentación oficial)",
+              "url": "https://react.dev/learn"
+            },
+            {
+              "label": "React — Tu primera aplicación",
+              "url": "https://react.dev/learn"
+            }
+          ]
         },
         {
           "id": "react-jsx",
-          "title": "JSX e interpolación",
+          "title": "JSX: escribir marcado dentro de JavaScript",
           "category": "fundamentos",
-          "summary": "JSX permite describir elementos de interfaz dentro de JavaScript. Las expresiones se escriben entre llaves.",
-          "purpose": "JSX permite describir elementos de interfaz dentro de JavaScript. Las expresiones se escriben entre llaves.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const nombre = 'Lucía';\nfunction App() { return <h1>Hola, {nombre}</h1>; }",
+          "summary": "Aprendé expresiones, atributos, fragmentos, listas y renderizado condicional con JSX.",
+          "purpose": "JSX es una extensión de sintaxis que permite describir estructuras de interfaz dentro de JavaScript. No es HTML interpretado directamente por el navegador: las herramientas del proyecto lo transforman en llamadas que React puede procesar. JSX permite combinar marcado y expresiones, pero mantiene reglas propias.",
+          "whenToUse": "Usá JSX para describir el contenido visual de tus componentes. Es la forma habitual de escribir interfaces React porque permite ver la estructura de la UI junto con los datos y condiciones que la controlan.",
+          "syntax": "const nombre = 'Lucía';\nconst activo = true;\n\nfunction Perfil() {\n  return (\n    <section className=\"perfil\">\n      <h2>Hola, {nombre}</h2>\n      <p>{activo ? 'Cuenta activa' : 'Cuenta pausada'}</p>\n    </section>\n  );\n}",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const nombre = 'Lucía';\nfunction App() { return <h1>Hola, {nombre}</h1>; }",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Expresiones y atributos",
+              "description": "Insertá variables, operaciones y clases CSS en el marcado.",
+              "code": "const producto = { nombre: 'Teclado', precio: 35000 };\n\nfunction Producto() {\n  return <article className=\"producto\">\n    <h2>{producto.nombre}</h2>\n    <p>Precio: ${producto.precio}</p>\n    <p>Con IVA: ${producto.precio * 1.21}</p>\n  </article>;\n}",
+              "explanation": "Las llaves abren una expresión JavaScript. className asigna la clase CSS. Las expresiones producto.precio y producto.precio * 1.21 se evalúan y muestran como texto."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const nombre = 'Lucía';\nfunction App() { return <h1>Hola, {nombre}</h1>; }",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Condiciones con && y ternario",
+              "description": "Mostrá contenido diferente según el valor de una variable.",
+              "code": "function EstadoCuenta({ conectado, mensajes }) {\n  return <section>\n    <h2>{conectado ? 'En línea' : 'Desconectado'}</h2>\n    {mensajes.length > 0 && <p>Tenés {mensajes.length} mensajes.</p>}\n  </section>;\n}",
+              "explanation": "El operador ternario elige entre dos expresiones. El operador && muestra el párrafo solo cuando mensajes.length > 0. Atención: si el lado izquierdo de && es 0, React puede mostrar el número 0; para evitarlo usá una comparación explícita."
+            },
+            {
+              "title": "Listas con map y key",
+              "description": "Transformá un arreglo de datos en una lista de elementos React.",
+              "code": "const lenguajes = [\n  { id: 1, nombre: 'HTML' },\n  { id: 2, nombre: 'CSS' },\n  { id: 3, nombre: 'JavaScript' }\n];\n\nfunction Lista() {\n  return <ul>\n    {lenguajes.map(lenguaje =>\n      <li key={lenguaje.id}>{lenguaje.nombre}</li>\n    )}\n  </ul>;\n}",
+              "explanation": "map devuelve un elemento por cada dato. key debe ser estable y único entre los hermanos de esa lista; permite a React identificar qué elemento cambió, se agregó o se quitó. Evitá usar el índice como key si la lista puede reordenarse."
+            },
+            {
+              "title": "Fragmentos y etiquetas",
+              "description": "Devolvé varios elementos sin agregar un contenedor innecesario al DOM.",
+              "code": "function Encabezado() {\n  return (\n    <>\n      <h1>Mi sitio</h1>\n      <p>Aprendé desarrollo web.</p>\n      <img src=\"logo.png\" alt=\"Logotipo\" />\n    </>\n  );\n}",
+              "explanation": "El fragmento <>...</> agrupa varios elementos sin crear un div adicional. Las etiquetas deben cerrarse y los atributos siguen las convenciones de JSX."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá paréntesis y saltos de línea para mantener legible el JSX complejo.",
+            "Extraé condiciones o cálculos extensos a variables o funciones antes del return.",
+            "En listas, asigná keys estables tomadas de los datos.",
+            "Usá alt descriptivo en imágenes informativas y labels asociados a campos de formulario."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Usar class en lugar de className.",
+            "Dejar etiquetas sin cerrar o devolver hermanos sin un contenedor o fragmento.",
+            "Escribir if directamente dentro de llaves JSX; usá una expresión ternaria o calculá el resultado antes del return.",
+            "Usar el índice como key en listas que pueden cambiar de orden.",
+            "Escribir onClick={accion()} cuando querés pasar la función para que React la ejecute al hacer clic."
           ],
-          "exercise": "Mostrá un nombre y una frase mediante interpolación.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un catálogo con cuatro objetos que tengan id, nombre, precio y disponible. Mostrá cada producto con map, su precio y un mensaje condicional si está disponible. Aplicá una clase CSS a cada tarjeta.",
+          "hint": "Prepará primero el arreglo. Después usá map dentro de <ul> o un contenedor y colocá key={producto.id} en el elemento raíz de cada resultado.",
+          "parameters": [
+            {
+              "name": "{expresión}",
+              "description": "Inserta el resultado de una expresión JavaScript dentro del contenido JSX. No admite instrucciones como if o for directamente."
+            },
+            {
+              "name": "className",
+              "description": "Atributo utilizado para asignar clases CSS. En JSX se escribe className en lugar de class."
+            },
+            {
+              "name": "htmlFor",
+              "description": "Atributo equivalente a for en etiquetas label."
+            },
+            {
+              "name": "key",
+              "description": "Identificador estable que React utiliza al renderizar listas de elementos."
+            }
+          ],
+          "resources": [
+            {
+              "label": "React — Escribir marcado con JSX",
+              "url": "https://react.dev/learn/writing-markup-with-jsx"
+            },
+            {
+              "label": "React — Renderizar listas",
+              "url": "https://react.dev/learn/rendering-lists"
+            },
+            {
+              "label": "React — Renderizado condicional",
+              "url": "https://react.dev/learn/conditional-rendering"
+            }
+          ]
         },
         {
           "id": "react-props",
-          "title": "Props",
+          "title": "Props: pasar información entre componentes",
           "category": "intermedio",
-          "summary": "Las props son datos de entrada de solo lectura que el componente padre envía al hijo.",
-          "purpose": "Las props son datos de entrada de solo lectura que el componente padre envía al hijo.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "function Perfil({ nombre }) { return <p>Hola, {nombre}</p>; }\n<Perfil nombre=\"Ana\" />",
+          "summary": "Dominá props, desestructuración, valores predeterminados, children y composición.",
+          "purpose": "Las props son los datos que un componente recibe desde su padre. Permiten que una misma estructura visual se reutilice con distintos valores. Las props son de solo lectura: el componente hijo no debe modificarlas; si necesita cambiar información, puede recibir una función como prop y avisar al padre.",
+          "whenToUse": "Usá props cuando un componente hijo necesite mostrar datos que pertenecen a un componente superior: nombre de usuario, título de una tarjeta, precio, imagen, configuración o una función de interacción.",
+          "syntax": "function Saludo({ nombre, ciudad = 'Sin ciudad' }) {\n  return <p>Hola, {nombre}. Ciudad: {ciudad}.</p>;\n}\n\nfunction App() {\n  return <Saludo nombre=\"Ana\" ciudad=\"Corrientes\" />;\n}",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "function Perfil({ nombre }) { return <p>Hola, {nombre}</p>; }\n<Perfil nombre=\"Ana\" />",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Enviar diferentes datos",
+              "description": "El mismo componente Perfil puede representar personas distintas.",
+              "code": "function Perfil({ nombre, profesion, ciudad }) {\n  return <article>\n    <h2>{nombre}</h2>\n    <p>{profesion}</p>\n    <small>{ciudad}</small>\n  </article>;\n}\n\nfunction App() {\n  return <>\n    <Perfil nombre=\"Ana\" profesion=\"Diseñadora\" ciudad=\"Corrientes\" />\n    <Perfil nombre=\"Luis\" profesion=\"Desarrollador\" ciudad=\"Resistencia\" />\n  </>;\n}",
+              "explanation": "Cada uso de Perfil recibe su propio conjunto de props. La estructura del componente no cambia; cambian los datos que recibe. Por eso las props favorecen la reutilización."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "function Perfil({ nombre }) { return <p>Hola, {nombre}</p>; }\n<Perfil nombre=\"Ana\" />",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Desestructuración y valores por defecto",
+              "description": "Definí valores predeterminados para que el componente también funcione si faltan algunos datos.",
+              "code": "function Tarjeta({ titulo, descripcion = 'Sin descripción', destacado = false }) {\n  return <article className={destacado ? 'tarjeta destacada' : 'tarjeta'}>\n    <h2>{titulo}</h2>\n    <p>{descripcion}</p>\n  </article>;\n}\n\n<Tarjeta titulo=\"React\" />\n<Tarjeta titulo=\"Vue\" descripcion=\"Framework progresivo\" destacado />",
+              "explanation": "La desestructuración obtiene propiedades del objeto props. Los valores por defecto se aplican cuando una prop es undefined. destacado es una prop booleana: al escribir destacado sin valor JSX le asigna true."
+            },
+            {
+              "title": "children y composición",
+              "description": "Permití que el componente reciba contenido entre sus etiquetas.",
+              "code": "function Panel({ titulo, children }) {\n  return <section className=\"panel\">\n    <h2>{titulo}</h2>\n    <div className=\"panel-contenido\">{children}</div>\n  </section>;\n}\n\nfunction App() {\n  return <Panel titulo=\"Aviso\">\n    <p>Recordá guardar tus cambios.</p>\n    <button>Entendido</button>\n  </Panel>;\n}",
+              "explanation": "El contenido escrito entre <Panel> y </Panel> llega a través de children. Así Panel controla el marco visual, mientras el padre decide qué contenido insertar."
+            },
+            {
+              "title": "El hijo avisa al padre mediante una función",
+              "description": "Las props también pueden transportar funciones para comunicar una acción hacia arriba.",
+              "code": "function BotonEliminar({ onEliminar }) {\n  return <button onClick={onEliminar}>Eliminar</button>;\n}\n\nfunction App() {\n  function eliminar() {\n    alert('El padre recibió la acción');\n  }\n  return <BotonEliminar onEliminar={eliminar} />;\n}",
+              "explanation": "App define la función y la pasa como prop. BotonEliminar no necesita conocer cómo se implementa la eliminación: solo ejecuta la función recibida cuando ocurre el clic."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Nombrá las props según el dato o comportamiento que representan.",
+            "Usá valores por defecto cuando una prop sea opcional.",
+            "Mantené las props inmutables; no reasignes ni modifiques el objeto recibido.",
+            "Preferí composición con children cuando el padre debe controlar el contenido interno."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Intentar modificar props dentro del componente hijo.",
+            "Confundir una prop de función con la ejecución de esa función: onClick={onEliminar} pasa la función; onClick={onEliminar()} la ejecuta durante el render.",
+            "Olvidar que las props booleanas pueden escribirse como destacado para enviar true.",
+            "Creer que children es una palabra reservada del lenguaje; es una prop convencional que React utiliza para el contenido anidado."
           ],
-          "exercise": "Creá una tarjeta que reciba nombre y ciudad.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí una tarjeta de novela que reciba título, autor, imagen, descripción y estado de lectura. Creá tres tarjetas distintas. Hacé que el contenido interno de una tarjeta se pueda personalizar mediante children.",
+          "hint": "Primero definí TarjetaNovela({ titulo, autor, ... }). Después creá tres usos en App y comprobá que cambiar una prop no modifica las demás tarjetas.",
+          "parameters": [
+            {
+              "name": "props",
+              "description": "Objeto que contiene los valores enviados por el componente padre."
+            },
+            {
+              "name": "nombre",
+              "description": "Prop personalizada del ejemplo. Se recibe mediante desestructuración."
+            },
+            {
+              "name": "ciudad = 'Sin ciudad'",
+              "description": "Valor predeterminado utilizado cuando el padre no proporciona ciudad o la envía como undefined."
+            },
+            {
+              "name": "children",
+              "description": "Prop especial que contiene el contenido colocado entre la etiqueta de apertura y cierre del componente."
+            }
+          ],
+          "resources": [
+            {
+              "label": "React — Pasar props a un componente",
+              "url": "https://react.dev/learn/passing-props-to-a-component"
+            },
+            {
+              "label": "React — Pasar JSX como children",
+              "url": "https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children"
+            }
+          ]
         },
         {
           "id": "react-state",
           "title": "Estado con useState",
           "category": "intermedio",
-          "summary": "useState conserva un valor entre renderizados y ofrece una función para actualizarlo.",
-          "purpose": "useState conserva un valor entre renderizados y ofrece una función para actualizarlo.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const [total, setTotal] = useState(0);\n<button onClick={() => setTotal(v => v + 1)}>{total}</button>",
+          "summary": "Aprendé a crear, actualizar y organizar estado con useState sin mutar objetos ni arreglos.",
+          "purpose": "El estado es información que un componente necesita recordar entre renderizados. useState devuelve el valor actual y una función setter. Cuando llamás al setter, React programa un nuevo renderizado con el siguiente valor. No se modifica directamente la variable de estado.",
+          "whenToUse": "Usá estado para datos que cambian por interacción o durante la vida del componente: contadores, campos de formularios, filtros, pestañas seleccionadas, elementos marcados y paneles desplegables. Si un valor puede calcularse a partir de props u otro estado, normalmente no hace falta duplicarlo en estado.",
+          "syntax": "import { useState } from 'react';\n\nfunction Contador() {\n  const [contador, setContador] = useState(0);\n  return <button onClick={() => setContador(actual => actual + 1)}>\n    Pulsaciones: {contador}\n  </button>;\n}",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const [total, setTotal] = useState(0);\n<button onClick={() => setTotal(v => v + 1)}>{total}</button>",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Contador básico",
+              "description": "Actualizá un número a partir de eventos del usuario.",
+              "code": "import { useState } from 'react';\n\nfunction Contador() {\n  const [numero, setNumero] = useState(0);\n  return <div>\n    <p>Valor: {numero}</p>\n    <button onClick={() => setNumero(numero + 1)}>Sumar</button>\n    <button onClick={() => setNumero(0)}>Reiniciar</button>\n  </div>;\n}",
+              "explanation": "useState(0) inicializa numero en cero. setNumero solicita un nuevo valor y React vuelve a renderizar el componente. La variable numero corresponde al renderizado actual; no se transforma en una variable mutable común."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const [total, setTotal] = useState(0);\n<button onClick={() => setTotal(v => v + 1)}>{total}</button>",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Actualizaciones basadas en el valor anterior",
+              "description": "Cuando una actualización depende del estado anterior, usá la forma funcional del setter.",
+              "code": "function ContadorRapido() {\n  const [numero, setNumero] = useState(0);\n  function sumarTres() {\n    setNumero(actual => actual + 1);\n    setNumero(actual => actual + 1);\n    setNumero(actual => actual + 1);\n  }\n  return <button onClick={sumarTres}>Sumar tres: {numero}</button>;\n}",
+              "explanation": "React procesa las funciones actualizadoras en orden: cada una recibe el resultado pendiente de la anterior. Por eso el contador aumenta tres unidades. Si escribieras tres veces setNumero(numero + 1), las tres usarían el mismo valor capturado en ese render."
+            },
+            {
+              "title": "Actualizar un objeto sin mutarlo",
+              "description": "Creá un objeto nuevo usando el operador spread para conservar las propiedades que no cambian.",
+              "code": "function Perfil() {\n  const [usuario, setUsuario] = useState({ nombre: 'Ana', ciudad: 'Corrientes' });\n  function cambiarCiudad() {\n    setUsuario(actual => ({ ...actual, ciudad: 'Resistencia' }));\n  }\n  return <div>\n    <p>{usuario.nombre} — {usuario.ciudad}</p>\n    <button onClick={cambiarCiudad}>Cambiar ciudad</button>\n  </div>;\n}",
+              "explanation": "El spread ...actual copia las propiedades del objeto anterior. Luego ciudad se sobrescribe. No hagas usuario.ciudad = 'Resistencia': mutar el objeto existente puede impedir que React detecte correctamente el cambio."
+            },
+            {
+              "title": "Actualizar un arreglo",
+              "description": "Agregá elementos creando un nuevo arreglo en lugar de modificar el original.",
+              "code": "function ListaTareas() {\n  const [tareas, setTareas] = useState(['Leer']);\n  function agregar() {\n    setTareas(actuales => [...actuales, 'Practicar']);\n  }\n  return <div>\n    <ul>{tareas.map((tarea, i) => <li key={i}>{tarea}</li>)}</ul>\n    <button onClick={agregar}>Agregar tarea</button>\n  </div>;\n}",
+              "explanation": "El spread crea un arreglo nuevo con los elementos anteriores y el nuevo. Para listas que pueden reordenarse o eliminar elementos, conviene usar identificadores estables en key en vez del índice."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Usá la forma funcional del setter cuando el nuevo estado depende del anterior.",
+            "Reemplazá objetos y arreglos; no los mutés directamente.",
+            "Mantené el estado mínimo necesario y calculá los valores derivados durante el renderizado.",
+            "Separá estados que cambian por razones distintas, pero evitá fragmentarlos sin necesidad.",
+            "Recordá que el setter solicita una actualización: leer la variable inmediatamente después todavía devuelve el valor del render actual."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Escribir contador++ o modificar directamente el estado.",
+            "Esperar que setContador cambie la variable de forma inmediata dentro de la misma función.",
+            "Usar setContador(contador + 1) repetidas veces cuando todas las actualizaciones dependen del valor anterior.",
+            "Guardar en estado un total que se puede calcular a partir de otros estados y mantenerlo sincronizado manualmente.",
+            "Mutar un objeto o arreglo y pasar la misma referencia al setter."
           ],
-          "exercise": "Construí un contador con botones para sumar y restar.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí una lista de compras. Cada elemento debe tener id, nombre y cantidad. Permití agregar un producto, aumentar su cantidad y eliminarlo. Todas las actualizaciones deben crear nuevos arreglos y objetos.",
+          "hint": "Usá useState([]). Para agregar: setItems(prev => [...prev, nuevo]). Para actualizar: prev.map(...). Para eliminar: prev.filter(...).",
+          "parameters": [
+            {
+              "name": "initialState",
+              "description": "Valor inicial utilizado durante el primer renderizado. Puede ser un número, texto, booleano, arreglo, objeto o una función inicializadora."
+            },
+            {
+              "name": "state",
+              "description": "Valor actual del estado para el renderizado en curso."
+            },
+            {
+              "name": "setState(nextState)",
+              "description": "Solicita reemplazar el estado por un valor nuevo o por el resultado de una función actualizadora. No devuelve el nuevo estado."
+            },
+            {
+              "name": "updater(previousState)",
+              "description": "Función que recibe el estado pendiente anterior y devuelve el siguiente estado. Es útil cuando el nuevo valor depende del anterior."
+            }
+          ],
+          "resources": [
+            {
+              "label": "React — Referencia de useState",
+              "url": "https://react.dev/reference/react/useState"
+            },
+            {
+              "label": "React — Actualizar objetos en estado",
+              "url": "https://react.dev/learn/updating-objects-in-state"
+            },
+            {
+              "label": "React — Actualizar arreglos en estado",
+              "url": "https://react.dev/learn/updating-arrays-in-state"
+            }
+          ]
         },
         {
           "id": "react-useeffect",
-          "title": "useEffect",
+          "title": "useEffect: sincronizar con sistemas externos",
           "category": "avanzado",
-          "summary": "useEffect sincroniza un componente con sistemas externos y permite limpiar temporizadores o suscripciones.",
-          "purpose": "useEffect sincroniza un componente con sistemas externos y permite limpiar temporizadores o suscripciones.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "useEffect(() => {\n const id = setInterval(() => console.log('tic'), 1000);\n return () => clearInterval(id);\n}, []);",
+          "summary": "Comprendé efectos, dependencias, limpieza, temporizadores y solicitudes de datos.",
+          "purpose": "useEffect permite sincronizar un componente con un sistema externo después de que React actualiza la pantalla. Un efecto puede iniciar una suscripción, un temporizador o una conexión; si devuelve una función, esa función limpia el efecto anterior. No se debe usar como mecanismo automático para calcular valores que ya pueden derivarse durante el renderizado.",
+          "whenToUse": "Usá useEffect para sincronizar con APIs del navegador, temporizadores, suscripciones, conexiones o bibliotecas externas. Para responder a un clic, ejecutá la acción en el manejador del evento. Para calcular un valor a partir de props o estado, calculalo directamente o evaluá useMemo si realmente necesitás memorizarlo.",
+          "syntax": "import { useEffect } from 'react';\n\nuseEffect(() => {\n  const id = setInterval(() => console.log('tic'), 1000);\n  return () => clearInterval(id);\n}, []);",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "useEffect(() => {\n const id = setInterval(() => console.log('tic'), 1000);\n return () => clearInterval(id);\n}, []);",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Temporizador con limpieza",
+              "description": "Iniciá un intervalo al montar el componente y cancelalo cuando se desmonte.",
+              "code": "import { useEffect, useState } from 'react';\n\nfunction Reloj() {\n  const [segundos, setSegundos] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => {\n      setSegundos(actual => actual + 1);\n    }, 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <p>Tiempo: {segundos} segundos</p>;\n}",
+              "explanation": "El efecto crea el intervalo. El setter funcional evita depender del valor capturado de segundos. La función de limpieza cancela el intervalo para que no siga ejecutándose después de desmontar Reloj."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": " const id = setInterval(() => console.log('tic'), 1000);\n return () => clearInterval(id);\n}, []);",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Efecto que depende de un valor",
+              "description": "Cuando cambia la ciudad, actualizá el título de la pestaña del navegador.",
+              "code": "import { useEffect, useState } from 'react';\n\nfunction Ciudad() {\n  const [ciudad, setCiudad] = useState('Corrientes');\n  useEffect(() => {\n    document.title = `Clima de ${ciudad}`;\n  }, [ciudad]);\n  return <button onClick={() => setCiudad('Resistencia')}>\n    Ciudad: {ciudad}\n  </button>;\n}",
+              "explanation": "ciudad se lee dentro del efecto, por eso aparece en el arreglo de dependencias. Al cambiar, React vuelve a ejecutar el efecto con el valor actualizado."
+            },
+            {
+              "title": "Suscribirse a un evento del navegador",
+              "description": "Registrá un listener y eliminá exactamente el mismo listener durante la limpieza.",
+              "code": "import { useEffect, useState } from 'react';\n\nfunction AnchoVentana() {\n  const [ancho, setAncho] = useState(window.innerWidth);\n  useEffect(() => {\n    function actualizar() { setAncho(window.innerWidth); }\n    window.addEventListener('resize', actualizar);\n    return () => window.removeEventListener('resize', actualizar);\n  }, []);\n  return <p>Ancho: {ancho}px</p>;\n}",
+              "explanation": "addEventListener conecta el componente con el evento resize. removeEventListener retira la misma función durante la limpieza. En aplicaciones renderizadas también en servidor, el acceso inicial a window debe protegerse porque window no existe allí."
+            },
+            {
+              "title": "Solicitar datos y evitar respuestas obsoletas",
+              "description": "Realizá una solicitud al cambiar el identificador y evitá que una respuesta anterior actualice el estado después de limpiar el efecto.",
+              "code": "import { useEffect, useState } from 'react';\n\nfunction Usuario({ id }) {\n  const [usuario, setUsuario] = useState(null);\n  useEffect(() => {\n    let ignorar = false;\n    async function cargar() {\n      const respuesta = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);\n      if (!respuesta.ok) throw new Error('No se pudo cargar el usuario');\n      const datos = await respuesta.json();\n      if (!ignorar) setUsuario(datos);\n    }\n    cargar().catch(console.error);\n    return () => { ignorar = true; };\n  }, [id]);\n  return <p>{usuario ? usuario.name : 'Cargando...'}</p>;\n}",
+              "explanation": "id es una dependencia porque determina qué usuario se solicita. La variable ignorar se activa durante la limpieza para impedir que una respuesta vieja actualice el estado. En proyectos reales conviene gestionar también errores y estados de carga; para datos complejos considerá una biblioteca de consulta o el mecanismo de carga del framework."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Incluí todas las dependencias reactivas que el efecto utiliza; no ocultes dependencias para forzar un comportamiento.",
+            "Devolvé una limpieza para intervalos, listeners, conexiones y suscripciones.",
+            "Preferí ejecutar una acción directamente en el evento que la provoca, en lugar de observar un estado para deducir que ocurrió.",
+            "No uses un efecto para calcular valores derivados que pueden calcularse durante el renderizado.",
+            "Probá los efectos en Strict Mode y asegurate de que la limpieza haga seguro repetir el ciclo."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Usar [] aunque el efecto lee props o estado que pueden cambiar.",
+            "Crear un intervalo o listener sin eliminarlo durante la limpieza.",
+            "Suprimir dependencias para evitar que el efecto se repita: esto puede dejar cierres obsoletos.",
+            "Usar useEffect para copiar un valor derivado a otro estado sin necesidad.",
+            "Olvidar comprobar response.ok en una solicitud fetch."
           ],
-          "exercise": "Creá un temporizador y limpiá el intervalo al desmontar.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Creá un componente que reciba una ciudad, actualice document.title cuando cambie y escuche el evento resize. Mostrá el ancho de la ventana y limpiá el listener al desmontar. Después agregá una solicitud de datos con estado de carga y error.",
+          "hint": "Separá las responsabilidades: un efecto para el título, otro para resize y otro para la solicitud. Cada efecto debe declarar sus dependencias y su limpieza cuando corresponda.",
+          "parameters": [
+            {
+              "name": "setup",
+              "description": "Función que React ejecuta después del renderizado. Puede devolver una función de limpieza."
+            },
+            {
+              "name": "dependencies",
+              "description": "Arreglo opcional de valores reactivos leídos por el efecto. React compara cada dependencia con el render anterior mediante Object.is."
+            },
+            {
+              "name": "[]",
+              "description": "Arreglo vacío: el efecto no depende de props o estado reactivos. Se ejecuta al montar y su limpieza se ejecuta al desmontar; en desarrollo Strict Mode puede ejecutarse un ciclo adicional para detectar errores."
+            },
+            {
+              "name": "cleanup",
+              "description": "Función devuelta por setup. Se ejecuta antes de repetir el efecto con nuevas dependencias y al desmontar el componente."
+            }
+          ],
+          "resources": [
+            {
+              "label": "React — Referencia de useEffect",
+              "url": "https://react.dev/reference/react/useEffect"
+            },
+            {
+              "label": "React — Sincronizar con efectos",
+              "url": "https://react.dev/learn/synchronizing-with-effects"
+            },
+            {
+              "label": "React — You might not need an Effect",
+              "url": "https://react.dev/learn/you-might-not-need-an-effect"
+            }
+          ]
         },
         {
           "id": "react-usecontext",
-          "title": "useContext",
+          "title": "useContext: compartir información entre componentes",
           "category": "avanzado",
-          "summary": "Context comparte un valor con componentes descendientes sin pasar props por cada nivel.",
-          "purpose": "Context comparte un valor con componentes descendientes sin pasar props por cada nivel.",
-          "whenToUse": "Este concepto se utiliza al construir proyectos con React. Practicá primero en un ejemplo pequeño y aislado.",
-          "syntax": "const Tema = createContext('claro');\nfunction Etiqueta() { const tema = useContext(Tema); return <p>{tema}</p>; }",
+          "summary": "Aprendé a crear contextos, ofrecer valores con Provider y leerlos desde componentes descendientes.",
+          "purpose": "Context permite que un componente comparta información con componentes descendientes sin pasarla manualmente por cada nivel de props. Se crea un contexto con createContext, se ofrece un valor mediante su Provider y los componentes consumidores lo leen con useContext. Cuando el valor del proveedor cambia, los consumidores que lo utilizan se actualizan.",
+          "whenToUse": "Usá Context para información que necesitan muchos componentes de distintas ramas, como tema visual, idioma o datos de sesión. No es necesario convertir todos los estados en contextos: para datos locales, props y estado local suelen ser más simples.",
+          "syntax": "import { createContext, useContext } from 'react';\n\nconst TemaContext = createContext('claro');\n\nfunction Etiqueta() {\n  const tema = useContext(TemaContext);\n  return <p>Tema actual: {tema}</p>;\n}\n\nfunction App() {\n  return <TemaContext.Provider value=\"oscuro\">\n    <Etiqueta />\n  </TemaContext.Provider>;\n}",
           "level": "Inicial",
           "examples": [
             {
-              "title": "Ejemplo práctico",
-              "description": "Observá la estructura y probá el código en el entorno correspondiente.",
-              "code": "const Tema = createContext('claro');\nfunction Etiqueta() { const tema = useContext(Tema); return <p>{tema}</p>; }",
-              "explanation": "Leé cada instrucción en orden. Identificá qué crea el elemento o dato, qué operación realiza y qué resultado produce."
+              "title": "Contexto de tema",
+              "description": "Compartí el tema visual con componentes que no reciben props directamente desde App.",
+              "code": "import { createContext, useContext } from 'react';\n\nconst TemaContext = createContext('claro');\n\nfunction Boton() {\n  const tema = useContext(TemaContext);\n  return <button className={`boton-${tema}`}>Guardar</button>;\n}\n\nfunction App() {\n  return <TemaContext.Provider value=\"oscuro\">\n    <Boton />\n  </TemaContext.Provider>;\n}",
+              "explanation": "TemaContext define el contexto. App ofrece el valor oscuro. Boton lee el proveedor más cercano con useContext y utiliza ese valor para construir una clase CSS."
             },
             {
-              "title": "Prueba guiada",
-              "description": "Modificá un nombre o valor y volvé a ejecutar el ejemplo.",
-              "code": "const Tema = createContext('claro');\nfunction Etiqueta() { const tema = useContext(Tema); return <p>{tema}</p>; }",
-              "explanation": "Compará el resultado original con el modificado. Este segundo ensayo ayuda a reconocer qué parte del código controla el comportamiento."
+              "title": "Contexto con estado dinámico",
+              "description": "El proveedor puede compartir un estado y una función para cambiarlo.",
+              "code": "import { createContext, useContext, useState } from 'react';\n\nconst IdiomaContext = createContext(null);\n\nfunction CambiarIdioma() {\n  const { idioma, setIdioma } = useContext(IdiomaContext);\n  return <button onClick={() => setIdioma(idioma === 'es' ? 'en' : 'es')}>\n    Idioma: {idioma}\n  </button>;\n}\n\nfunction App() {\n  const [idioma, setIdioma] = useState('es');\n  return <IdiomaContext.Provider value={{ idioma, setIdioma }}>\n    <CambiarIdioma />\n  </IdiomaContext.Provider>;\n}",
+              "explanation": "App mantiene el estado y lo comparte como un objeto. Cambiar idioma actualiza el estado del proveedor y los consumidores que leen ese contexto reciben el nuevo valor. En aplicaciones mayores suele convenir separar contextos si valores distintos cambian con frecuencias diferentes."
+            },
+            {
+              "title": "Crear un Hook personalizado para el contexto",
+              "description": "Centralizá la lectura del contexto y mostrá un error claro si falta el proveedor.",
+              "code": "const SesionContext = createContext(null);\n\nfunction useSesion() {\n  const sesion = useContext(SesionContext);\n  if (sesion === null) {\n    throw new Error('useSesion debe utilizarse dentro de SesionProvider');\n  }\n  return sesion;\n}\n\nfunction UsuarioActual() {\n  const { nombre } = useSesion();\n  return <p>Conectado: {nombre}</p>;\n}",
+              "explanation": "El Hook personalizado useSesion encapsula el acceso al contexto. Si el componente se renderiza fuera del proveedor, el error indica qué falta. El Hook debe llamarse desde un componente o desde otro Hook personalizado."
             }
           ],
           "bestPractices": [
-            "Usá nombres descriptivos y separá responsabilidades.",
-            "Probá los cambios de forma incremental.",
-            "Consultá la documentación oficial para verificar compatibilidad."
+            "Colocá el proveedor tan alto como necesiten sus consumidores, pero no más alto sin motivo.",
+            "Usá Context para datos compartidos, no para reemplazar automáticamente todas las props.",
+            "Separá contextos que representan responsabilidades diferentes.",
+            "Considerá memorizar objetos de valor del proveedor si su recreación provoca renderizados innecesarios, después de medir el problema.",
+            "Creá un Hook personalizado para centralizar el acceso y validar la presencia del proveedor cuando sea apropiado."
           ],
           "commonMistakes": [
-            "Copiar el ejemplo sin comprender sus dependencias.",
-            "Confundir un fragmento didáctico con un proyecto completo.",
-            "No revisar los mensajes de error."
+            "Olvidar la prop value del Provider.",
+            "Esperar que useContext encuentre un Provider que aparece debajo del componente consumidor: el proveedor debe estar por encima.",
+            "Creer que cambiar una propiedad interna de un objeto mutado notifica a React; reemplazá el valor con una referencia nueva.",
+            "Usar Context para estados locales que solo necesita un componente.",
+            "Olvidar que el valor predeterminado se usa únicamente cuando no hay proveedor coincidente."
           ],
-          "exercise": "Compartí el tema visual entre dos componentes.",
-          "hint": "Reproducí el ejemplo, cambiá un dato y agregá una variante propia.",
-          "parameters": [],
-          "resources": []
+          "exercise": "Construí un contexto de idioma con valores es y en. Creá un proveedor que mantenga el idioma en useState y dos componentes descendientes: uno que muestre un saludo traducido y otro que permita cambiar el idioma.",
+          "hint": "Creá IdiomaContext fuera de los componentes. Después creá IdiomaProvider, envolvé los componentes y usá useContext para leer idioma y setIdioma.",
+          "parameters": [
+            {
+              "name": "createContext(defaultValue)",
+              "description": "Crea un objeto de contexto. defaultValue se utiliza cuando un componente consumidor no tiene un proveedor correspondiente por encima."
+            },
+            {
+              "name": "<Context.Provider value={...}>",
+              "description": "Ofrece un valor a los componentes descendientes. El valor debe pasarse mediante la prop value."
+            },
+            {
+              "name": "useContext(Context)",
+              "description": "Lee el valor del proveedor más cercano situado por encima del componente que llama al Hook."
+            },
+            {
+              "name": "value",
+              "description": "Dato compartido. Si cambia según Object.is, los consumidores que leen ese contexto se vuelven a renderizar."
+            }
+          ],
+          "resources": [
+            {
+              "label": "React — Referencia de useContext",
+              "url": "https://react.dev/reference/react/useContext"
+            },
+            {
+              "label": "React — Pasar datos profundamente con Context",
+              "url": "https://react.dev/learn/passing-data-deeply-with-context"
+            }
+          ]
         }
       ]
     },
