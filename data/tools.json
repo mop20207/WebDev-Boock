@@ -1,6 +1,6 @@
 {
-  "version": 8,
-  "articleCount": 160,
+  "version": 9,
+  "articleCount": 161,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -9447,14 +9447,15 @@
         {
           "id": "tipos-basicos",
           "title": "Tipos básicos y colecciones",
-          "description": "Trabajá con tipos primitivos, inferencia, arrays, tuplas, uniones y tipos especiales.",
+          "description": "Trabajá con tipos primitivos, inferencia, arrays, tuplas, uniones, enums y tipos especiales.",
           "icon": "◇",
           "articles": [
             "ts-tipos-primitivos",
             "ts-inferencia",
             "ts-any-unknown-never",
             "ts-arrays-tuplas",
-            "ts-uniones-literales"
+            "ts-uniones-literales",
+            "ts-enums"
           ]
         },
         {
@@ -10778,8 +10779,8 @@
             {
               "title": "Record y ReturnType",
               "description": "Creá un mapa exhaustivo y extraé el retorno de una función.",
-              "code": "type Estado = \"borrador\" | \"publicado\" | \"archivado\";\nconst etiquetas: Record<Estado, string> = {\n  borrador: \"En edición\", publicado: \"Visible\", archivado: \"Oculto\"\n};\n\nfunction crearUsuario() { return { id: 1, nombre: \"Sol\" }; }\ntype NuevoUsuario = ReturnType<typeof crearUsuario>;",
-              "explanation": "Record exige una clave para cada estado. ReturnType obtiene el tipo devuelto sin duplicar su estructura."
+              "code": "type Estado = \"borrador\" | \"publicado\" | \"archivado\";\nconst etiquetas: Record<Estado, string> = {\n  borrador: \"En edición\", publicado: \"Visible\", archivado: \"Oculto\"\n};\n\nfunction crearUsuario(nombre: string) { return { id: 1, nombre }; }\ntype ParametrosCrear = Parameters<typeof crearUsuario>;\ntype NuevoUsuario = ReturnType<typeof crearUsuario>;\ntype UsuarioResuelto = Awaited<Promise<Promise<NuevoUsuario>>>;\ntype ValorNoNulo = NonNullable<string | null | undefined>;\ntype SoloTexto = Extract<string | number | boolean, string>;\ntype SinBooleano = Exclude<string | number | boolean, boolean>;",
+              "explanation": "Record exige una etiqueta para cada estado. Parameters obtiene la tupla de parámetros y ReturnType el tipo devuelto. Awaited resuelve tipos de promesas anidadas; NonNullable elimina null y undefined; Extract conserva miembros compatibles y Exclude elimina los indicados. Estas utilidades transforman tipos estáticos, no ejecutan conversiones ni filtran objetos."
             }
           ],
           "exercise": "Modelá una ficha de producto, ProductoPublico que exponga solo nombre y precio, y ProductoActualizacion con campos editables opcionales.",
@@ -10830,8 +10831,8 @@
             {
               "title": "Conditional type distributivo",
               "description": "Una unión se evalúa por cada miembro cuando T es un parámetro desnudo.",
-              "code": "type NoNulos<T> = T extends null | undefined ? never : T;\ntype Entrada = string | number | null;\ntype Salida = NoNulos<Entrada>; // string | number",
-              "explanation": "La distribución evalúa cada miembro de la unión y descarta null. Encerrar T entre corchetes cambia ese comportamiento."
+              "code": "type NoNulos<T> = T extends null | undefined ? never : T;\ntype Entrada = string | number | null;\ntype Salida = NoNulos<Entrada>; // string | number\n\ntype Elemento<T> = T extends readonly (infer U)[] ? U : T;\ntype Letras = Elemento<readonly string[]>; // string\ntype Numero = Elemento<number>; // number",
+              "explanation": "La distribución evalúa cada miembro de la unión y descarta null. infer permite capturar el tipo de elemento de un array. Si T no es un array, este ejemplo devuelve T sin modificarlo."
             }
           ],
           "exercise": "Construí SoloLectura<T> basado en mapped types y ExtraerArray<T> que devuelva el tipo de elemento si T es un array.",
@@ -11457,6 +11458,62 @@
             "ts-dom-events",
             "ts-modulos-import-export",
             "ts-tsconfig"
+          ]
+        },
+        {
+          "id": "ts-enums",
+          "title": "Enums y alternativas con uniones literales",
+          "category": "tipos-basicos",
+          "summary": "Representá conjuntos de valores relacionados y compará enums con uniones de strings y objetos const.",
+          "purpose": "Un enum define un conjunto de constantes con nombre. A diferencia de los tipos y las interfaces, un enum normal genera un objeto JavaScript en runtime. Puede ser útil cuando querés un conjunto centralizado de constantes o interoperar con una API existente. Para estados y opciones simples, una unión de strings literales suele ser más directa y no genera un objeto adicional.",
+          "syntax": "enum Estado { Pendiente, Pagado, Enviado }\ntype EstadoSimple = \"pendiente\" | \"pagado\" | \"enviado\";",
+          "examples": [
+            {
+              "title": "Enum numérico",
+              "description": "Los valores numéricos se asignan automáticamente desde cero si no se especifican.",
+              "code": "enum Direccion {\n  Arriba,\n  Abajo,\n  Izquierda,\n  Derecha\n}\n\nconst movimiento = Direccion.Derecha;\nconsole.log(movimiento); // 3",
+              "explanation": "Direccion.Derecha vale 3 porque los miembros anteriores recibieron 0, 1 y 2. Los enums numéricos generan también una asignación inversa en el objeto emitido. No asumas valores numéricos sin revisarlos si se guardarán en una base de datos o viajarán por una API."
+            },
+            {
+              "title": "Enum de strings",
+              "description": "Asigná valores explícitos y legibles, útiles para persistencia o comunicación.",
+              "code": "enum EstadoPedido {\n  Pendiente = \"pendiente\",\n  Pagado = \"pagado\",\n  Enviado = \"enviado\"\n}\n\nfunction actualizarEstado(estado: EstadoPedido) {\n  console.log(\"Estado: \" + estado);\n}\n\nactualizarEstado(EstadoPedido.Pagado);",
+              "explanation": "Los enums de string no tienen valores automáticos: cada miembro debe inicializarse. Los valores son legibles al serializar, aunque el enum sigue generando un objeto en JavaScript."
+            },
+            {
+              "title": "Alternativa moderna con unión literal y objeto const",
+              "description": "Elegí una unión si solo necesitás restringir un valor, sin generar un enum.",
+              "code": "type Estado = \"pendiente\" | \"pagado\" | \"enviado\";\n\nconst ESTADOS = {\n  Pendiente: \"pendiente\",\n  Pagado: \"pagado\",\n  Enviado: \"enviado\"\n} as const;\n\ntype EstadoDesdeObjeto = typeof ESTADOS[keyof typeof ESTADOS];\n\nfunction guardar(estado: Estado) {\n  console.log(estado);\n}\n\nguardar(ESTADOS.Pagado);",
+              "explanation": "La unión describe las alternativas sin crear un objeto JavaScript. El objeto as const es útil cuando también necesitás nombres constantes accesibles en runtime. No existe una única elección correcta: mantené el estilo consistente y considerá la interoperabilidad."
+            }
+          ],
+          "exercise": "Modelá el estado de una descarga de tres maneras: con enum, con una unión de strings y con un objeto as const. Compará el JavaScript generado y decidí qué opción usarías para una API.",
+          "hint": "No elijas enum solo porque existe. Preguntate si necesitás un objeto disponible en runtime o si una unión literal es suficiente.",
+          "parameters": [],
+          "bestPractices": [
+            "Preferí uniones de strings literales para estados simples cuando no necesitás un objeto enum en runtime.",
+            "Si usás enums numéricos, no dependas de valores automáticos para datos persistidos o compartidos con otros sistemas.",
+            "Usá enums de strings cuando la API existente ya define ese contrato o cuando el proyecto adopta ese patrón de forma consistente."
+          ],
+          "commonMistakes": [
+            "Creer que enum es solamente una anotación de tipo: un enum normal también genera JavaScript.",
+            "Suponer que los miembros de un enum numérico tienen valores estables si se reordenan.",
+            "Usar as const sin comprender que conserva literales y readonly en el análisis de tipos."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Enums",
+              "url": "https://www.typescriptlang.org/docs/handbook/enums.html"
+            },
+            {
+              "label": "Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            }
+          ],
+          "related": [
+            "ts-uniones-literales",
+            "ts-type-alias",
+            "ts-tipos-objetos"
           ]
         }
       ]
