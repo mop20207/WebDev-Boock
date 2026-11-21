@@ -5139,7 +5139,7 @@
           "bestPractices": [
             "Preferí node:fs/promises y await para operaciones asíncronas habituales.",
             "Especificá la codificación, como utf8, cuando quieras leer texto.",
-            "Manej á los errores de lectura y escritura, especialmente cuando trabajes con rutas externas.",
+            "Manejá los errores de lectura y escritura, especialmente cuando trabajes con rutas externas.",
             "Usá streams en vez de cargar archivos enormes completos en memoria.",
             "No aceptes rutas arbitrarias de usuarios sin limitar el acceso a un directorio permitido."
           ],
@@ -5754,19 +5754,19 @@
             },
             {
               "title": "Consultar un recurso por ID",
-              "description": "Usá una expresión regular para extraer el identificador de la ruta.",
+              "description": "Fragmento para agregar dentro del callback de createServer del ejemplo anterior, después de crear la variable url.",
               "code": "const url = new URL(req.url ?? \"/\", \"http://localhost\");\nconst coincidencia = url.pathname.match(/^\\/api\\/tareas\\/(\\d+)$/);\n\nif (req.method === \"GET\" && coincidencia) {\n  const id = Number(coincidencia[1]);\n  const tarea = tareas.find(item => item.id === id);\n\n  if (!tarea) {\n    res.writeHead(404, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify({ error: \"Tarea no encontrada\" }));\n    return;\n  }\n\n  res.writeHead(200, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify(tarea));\n}",
               "explanation": "La expresión regular reconoce una ruta con un ID numérico. find busca el recurso; si no existe, la API responde 404 en vez de devolver un valor indefinido."
             },
             {
               "title": "Recibir datos mediante POST",
-              "description": "Leé el cuerpo de la solicitud, convertí el JSON y validá los campos antes de guardar.",
+              "description": "Fragmento para agregar dentro del callback de createServer. Requiere las variables req, res, url y el arreglo tareas del ejemplo de la API.",
               "code": "if (req.method === \"POST\" && url.pathname === \"/api/tareas\") {\n  try {\n    const fragmentos = [];\n    for await (const fragmento of req) fragmentos.push(fragmento);\n    const entrada = JSON.parse(Buffer.concat(fragmentos).toString(\"utf8\"));\n\n    if (typeof entrada.titulo !== \"string\" || !entrada.titulo.trim()) {\n      res.writeHead(400, { \"Content-Type\": \"application/json\" });\n      res.end(JSON.stringify({ error: \"El título es obligatorio\" }));\n      return;\n    }\n\n    const nueva = { id: Date.now(), titulo: entrada.titulo.trim(), completada: false };\n    tareas.push(nueva);\n    res.writeHead(201, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify(nueva));\n  } catch {\n    res.writeHead(400, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify({ error: \"JSON inválido\" }));\n  }\n}",
               "explanation": "El cuerpo llega como un stream de fragmentos. JSON.parse puede fallar si el cliente envía contenido inválido. En producción también hay que limitar el tamaño del cuerpo, validar el Content-Type y definir una estrategia de IDs."
             },
             {
               "title": "Diferenciar métodos y responder 405",
-              "description": "Cuando una ruta existe pero no admite el método solicitado, respondé Method Not Allowed.",
+              "description": "Fragmento de control de métodos para integrar en el callback del servidor después de analizar la URL.",
               "code": "if (url.pathname === \"/api/tareas\" && req.method !== \"GET\" && req.method !== \"POST\") {\n  res.writeHead(405, {\n    \"Content-Type\": \"application/json\",\n    \"Allow\": \"GET, POST\"\n  });\n  res.end(JSON.stringify({ error: \"Método no permitido\" }));\n  return;\n}",
               "explanation": "El código 405 indica que el método no está permitido para esa ruta. El encabezado Allow informa qué métodos acepta el recurso."
             }
@@ -5878,7 +5878,7 @@
             "Capturá errores donde puedas recuperarte, agregar contexto o responder adecuadamente.",
             "Conservá el objeto de error en los logs del servidor, pero no expongas detalles internos al cliente.",
             "Distinguí errores esperados de validación, errores del sistema y fallos inesperados.",
-            "Manej á los rechazos de promesas y el evento error en streams o emisores que puedan producirlo.",
+            "Manejá los rechazos de promesas y el evento error en streams o emisores que puedan producirlo.",
             "Usá códigos de salida distintos de cero cuando una herramienta de consola termine con error."
           ],
           "commonMistakes": [
