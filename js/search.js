@@ -555,8 +555,9 @@ document.addEventListener("DOMContentLoaded", () => {
       await loadCatalog();
       renderResults(searchCatalog(query));
     } catch (error) {
-      console.error(error);
-      renderMessage("No se pudieron cargar los artículos. Revisá tu conexión e intentá nuevamente.");
+      console.error("[WebDev Book] Error del buscador:", error);
+      const detail = error && error.message ? error.message : String(error);
+      renderMessage("No se pudieron cargar los artículos. Detalle: " + detail + " · Ruta base: " + dataRoot.href);
     }
   };
 
