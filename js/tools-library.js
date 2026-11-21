@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       setText("toolArticleCount", tool.articles.length + (tool.articles.length === 1 ? " artículos" : " artículos"));
       setText("toolCategoryCount", tool.categories.length + (tool.categories.length === 1 ? " categoría" : " categorías"));
       setText("toolsCategorySummary", tool.categories.length + " categorías · " + tool.articles.length + " artículos");
-      setText("toolCommand", tool.id === "terminal" ? "terminal" : tool.id === "git" ? "git" : "npm");
+      setText("toolCommand", tool.id === "terminal" ? "terminal" : tool.id === "git" ? "git" : tool.id === "nextjs" ? "next dev" : "npm");
 
       const grid = document.getElementById("toolsCategoryGrid");
       if (grid) {
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const syntaxLanguage = ({
         terminal: "bash", git: "bash", npm: "bash",
         react: "javascript", webcomponents: "javascript", vuejs: "xml",
-        nodejs: "javascript", astro: "javascript", phaser: "javascript", typescript: "typescript"
+        nodejs: "javascript", astro: "javascript", phaser: "javascript", typescript: "typescript", nextjs: "typescript"
       })[tool.id] || "plaintext";
 
       section = addArticleSection(body, toc, "sintaxis", "Sintaxis y forma de uso");
