@@ -277,6 +277,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (label) label.textContent = count + " de " + total + " artículos";
     });
 
+    // Progreso independiente de cada biblioteca nueva.
+    document.querySelectorAll(".tools-home-card[data-tool]").forEach(card => {
+      const toolId = card.dataset.tool;
+      const total = Number(card.dataset.total) || 0;
+      const count = state.completed.filter(key => key.startsWith("tools:" + toolId + ":")).length;
+      const percent = total ? Math.round(count / total * 100) : 0;
+      const label = card.querySelector(".tools-home-progress > span");
+      const value = card.querySelector(".tools-home-progress > b");
+      const bar = card.querySelector(".tools-progress-track i");
+      if (label) label.textContent = count + " de " + total + " artículos";
+      if (value) value.textContent = percent + "%";
+      if (bar) bar.style.width = percent + "%";
+    });
+
     const completed = state.completed.length;
     const totalArticles = Object.values(TOTALS).reduce((sum, value) => sum + value, 0);
     const overallPercent = totalArticles ? Math.round(completed / totalArticles * 100) : 0;
