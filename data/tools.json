@@ -3112,7 +3112,7 @@
         {
           "id": "intermedio",
           "title": "Reactividad y formularios",
-          "description": "Manej á estado, valores derivados, watchers y entradas de usuario.",
+          "description": "Manejá estado, valores derivados, watchers y entradas de usuario.",
           "icon": "⇄",
           "articles": [
             "vue-ref",
