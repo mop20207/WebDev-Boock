@@ -1,7 +1,7 @@
 {
-  "version": 7,
-  "articleCount": 124,
-  "description": "Biblioteca didáctica de Terminal Linux, Git/GitHub, NPM y tecnologías frontend, backend y desarrollo de juegos.",
+  "version": 9,
+  "articleCount": 161,
+  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
       "id": "terminal",
@@ -9416,6 +9416,2104 @@
               "label": "Vite — Build for Production",
               "url": "https://vite.dev/guide/build.html"
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "typescript",
+      "title": "TypeScript",
+      "shortTitle": "TS",
+      "symbol": "TS",
+      "eyebrow": "JAVASCRIPT / TIPADO ESTÁTICO",
+      "tagline": "Escribí JavaScript con tipos claros y herramientas más seguras.",
+      "description": "Aprendé TypeScript desde sus fundamentos hasta genéricos, configuración e integración con el DOM, React y Node.js. Cada tema incluye ejemplos comentados, errores frecuentes y prácticas.",
+      "level": "Inicial a avanzado",
+      "accent": "typescript",
+      "syntaxLanguage": "typescript",
+      "categories": [
+        {
+          "id": "introduccion",
+          "title": "Fundamentos y entorno",
+          "description": "Conocé qué es TypeScript, cómo se relaciona con JavaScript y cómo preparar tu primer proyecto.",
+          "icon": "TS",
+          "articles": [
+            "ts-que-es-typescript",
+            "ts-diferencias-javascript",
+            "ts-checking-static-runtime",
+            "ts-instalacion-primer-proyecto"
+          ]
+        },
+        {
+          "id": "tipos-basicos",
+          "title": "Tipos básicos y colecciones",
+          "description": "Trabajá con tipos primitivos, inferencia, arrays, tuplas, uniones, enums y tipos especiales.",
+          "icon": "◇",
+          "articles": [
+            "ts-tipos-primitivos",
+            "ts-inferencia",
+            "ts-any-unknown-never",
+            "ts-arrays-tuplas",
+            "ts-uniones-literales",
+            "ts-enums"
+          ]
+        },
+        {
+          "id": "objetos-funciones",
+          "title": "Objetos, interfaces y funciones",
+          "description": "Modelá datos y contratos reutilizables; tipá funciones, callbacks y distintas firmas.",
+          "icon": "{}",
+          "articles": [
+            "ts-tipos-objetos",
+            "ts-type-alias",
+            "ts-interfaces",
+            "ts-funciones-tipadas",
+            "ts-parametros-overloads"
+          ]
+        },
+        {
+          "id": "control-tipos",
+          "title": "Control de flujo y seguridad de tipos",
+          "description": "Estrechá tipos, validá valores, tratá la ausencia de datos y modelá estados.",
+          "icon": "↳",
+          "articles": [
+            "ts-narrowing",
+            "ts-type-guards",
+            "ts-uniones-discriminadas",
+            "ts-null-undefined",
+            "ts-assertions-satisfies"
+          ]
+        },
+        {
+          "id": "generics",
+          "title": "Genéricos y manipulación de tipos",
+          "description": "Construí código reutilizable y derivá tipos con keyof, utility types y operaciones avanzadas.",
+          "icon": "<>",
+          "articles": [
+            "ts-generics-funciones",
+            "ts-generics-constraints",
+            "ts-generics-interfaces-classes",
+            "ts-keyof-typeof-indexed",
+            "ts-utility-types",
+            "ts-mapped-conditional-types"
+          ]
+        },
+        {
+          "id": "clases-modulos",
+          "title": "Clases, módulos y declaraciones",
+          "description": "Organizá aplicaciones, aplicá programación orientada a objetos e integrá bibliotecas JavaScript.",
+          "icon": "▣",
+          "articles": [
+            "ts-clases",
+            "ts-modificadores",
+            "ts-clases-abstractas",
+            "ts-modulos-import-export",
+            "ts-declaration-files"
+          ]
+        },
+        {
+          "id": "config-integracion",
+          "title": "Configuración e integración",
+          "description": "Configurá tsc, migrá JavaScript y aplicá TypeScript al DOM, APIs, React y Node.js.",
+          "icon": "⚙",
+          "articles": [
+            "ts-tsconfig",
+            "ts-cli-compilation",
+            "ts-js-migration",
+            "ts-dom-events",
+            "ts-async-api",
+            "ts-react-node"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "ts-que-es-typescript",
+          "title": "¿Qué es TypeScript y qué problema resuelve?",
+          "category": "introduccion",
+          "summary": "Conocé qué agrega TypeScript sobre JavaScript, qué beneficios aporta y qué no hace por sí solo.",
+          "purpose": "TypeScript agrega sintaxis para describir tipos y un verificador estático que analiza el programa antes de ejecutarlo. El código se transforma en JavaScript; el navegador y Node.js no ejecutan las anotaciones de tipo ni validan automáticamente los datos.",
+          "syntax": "archivo.ts → comprobación de tipos → JavaScript",
+          "examples": [
+            {
+              "title": "El riesgo de un dato sin contrato",
+              "description": "Una propiedad puede no tener el tipo que la función espera.",
+              "code": "function saludar(usuario) {\n  return usuario.nombre.toUpperCase();\n}\n\nsaludar({ nombre: 25 }); // Error al ejecutar",
+              "explanation": "JavaScript permite ese llamado. El fallo aparece cuando el programa intenta usar toUpperCase sobre un número."
+            },
+            {
+              "title": "Describir el contrato",
+              "description": "El compilador puede detectar la incompatibilidad antes de ejecutar.",
+              "code": "type Usuario = { nombre: string };\n\nfunction saludar(usuario: Usuario): string {\n  return \"Hola, \" + usuario.nombre.toUpperCase();\n}\n\nsaludar({ nombre: \"Ana\" });\n// saludar({ nombre: 25 }); // Error de tipos",
+              "explanation": "Usuario establece que nombre debe ser string. TypeScript rechaza el segundo llamado, pero la salida generada sigue siendo JavaScript común."
+            },
+            {
+              "title": "Los tipos no validan un JSON",
+              "description": "Un dato externo necesita una comprobación en runtime.",
+              "code": "const dato: unknown = JSON.parse(\"{\\\"nombre\\\":42}\");\n\nif (typeof dato === \"object\" && dato !== null &&\n    \"nombre\" in dato && typeof dato.nombre === \"string\") {\n  console.log(dato.nombre.toUpperCase());\n}",
+              "explanation": "La anotación unknown obliga a revisar el contenido. Los tipos ayudan durante el desarrollo; no convierten una respuesta JSON en un objeto seguro."
+            }
+          ],
+          "exercise": "Explicá con tus palabras qué detecta TypeScript antes de ejecutar y qué problemas todavía necesitan validación durante la ejecución.",
+          "hint": "Pensá en TypeScript como un verificador estático, no como una capa automática de seguridad para todos los datos.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: introducción a TypeScript",
+              "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+            }
+          ],
+          "related": [
+            "ts-diferencias-javascript",
+            "ts-checking-static-runtime"
+          ]
+        },
+        {
+          "id": "ts-diferencias-javascript",
+          "title": "TypeScript y JavaScript: diferencias y relación",
+          "category": "introduccion",
+          "summary": "Compará ambos lenguajes y reconocé qué sintaxis agrega TypeScript y qué comportamiento sigue siendo JavaScript.",
+          "purpose": "TypeScript amplía JavaScript con anotaciones, inferencia y herramientas de análisis. La lógica, los arrays, las promesas, el DOM y las APIs siguen las reglas de JavaScript. Aprender TypeScript se apoya en los conocimientos de JavaScript, no los reemplaza.",
+          "syntax": "JavaScript: const total = precio * cantidad;\nTypeScript: const total: number = precio * cantidad;",
+          "examples": [
+            {
+              "title": "La operación en JavaScript",
+              "description": "El lenguaje no exige que los argumentos sean números.",
+              "code": "function calcularTotal(precio, cantidad) {\n  return precio * cantidad;\n}\n\nconsole.log(calcularTotal(100, 3));",
+              "explanation": "La función funciona con los valores correctos, pero no documenta el tipo esperado para cada argumento."
+            },
+            {
+              "title": "La operación con tipos",
+              "description": "La firma expresa el contrato de entrada y salida.",
+              "code": "function calcularTotal(precio: number, cantidad: number): number {\n  return precio * cantidad;\n}\n\ncalcularTotal(100, 3);\n// calcularTotal(\"cien\", 3); // Error",
+              "explanation": "TypeScript detecta el argumento incompatible durante la comprobación estática. No cambia la operación matemática."
+            },
+            {
+              "title": "La anotación desaparece",
+              "description": "El JavaScript generado no contiene la anotación de tipo.",
+              "code": "// TypeScript\nconst mensaje: string = \"Hola\";\n\n// JavaScript equivalente\nconst mensaje = \"Hola\";",
+              "explanation": "El navegador no necesita entender : string. El compilador elimina esa sintaxis antes de entregar JavaScript."
+            }
+          ],
+          "exercise": "Elegí una función JavaScript que ya conozcas y agregale tipos a sus parámetros y retorno sin cambiar su lógica.",
+          "hint": "No necesitás aprender una versión diferente de cada método de JavaScript: la mayoría de las APIs siguen siendo las mismas.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "TypeScript para programadores JavaScript",
+              "url": "https://www.typescriptlang.org/docs/handbook/typescript-for-js-programmers.html"
+            },
+            {
+              "label": "Handbook oficial",
+              "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+            }
+          ],
+          "related": [
+            "ts-que-es-typescript",
+            "ts-instalacion-primer-proyecto"
+          ]
+        },
+        {
+          "id": "ts-checking-static-runtime",
+          "title": "Comprobación estática, compilación y ejecución",
+          "category": "introduccion",
+          "summary": "Separá el trabajo del editor, el compilador TypeScript y el motor que ejecuta JavaScript.",
+          "purpose": "La comprobación estática analiza los tipos sin ejecutar el programa. La emisión genera archivos JavaScript cuando está habilitada. Finalmente, el entorno ejecuta ese JavaScript. Es posible pedir solo comprobación mediante noEmit o compilar y emitir archivos.",
+          "syntax": "npx tsc --noEmit\nnpx tsc",
+          "examples": [
+            {
+              "title": "Detectar un error sin ejecutar el archivo",
+              "description": "El compilador comprueba la asignación.",
+              "code": "const edad: number = 25;\n// const edadTexto: number = \"veinticinco\";\n\nconsole.log(edad);",
+              "explanation": "Al descomentar la segunda asignación, tsc informa el error aunque no ejecutemos el programa."
+            },
+            {
+              "title": "Comprobar sin emitir",
+              "description": "La comprobación puede ejecutarse sin escribir JavaScript.",
+              "code": "npx tsc --noEmit",
+              "explanation": "Esta opción resulta útil en proyectos donde otra herramienta realiza la transformación."
+            },
+            {
+              "title": "Generar JavaScript",
+              "description": "La carpeta de salida depende de tsconfig.json.",
+              "code": "npx tsc\n# Revisá la carpeta definida en outDir",
+              "explanation": "Una compilación correcta no demuestra que la lógica completa funcione. Todavía pueden existir errores de lógica, datos o red."
+            }
+          ],
+          "exercise": "En un proyecto de práctica provocá un error de tipo, ejecutá npx tsc --noEmit y registrá el mensaje. Después corregilo.",
+          "hint": "Distinguir las etapas evita pensar que una compilación exitosa equivale a probar todas las rutas del programa.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: conceptos básicos",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
+            },
+            {
+              "label": "Opciones de tsc",
+              "url": "https://www.typescriptlang.org/docs/handbook/compiler-options.html"
+            }
+          ],
+          "related": [
+            "ts-que-es-typescript",
+            "ts-cli-compilation"
+          ]
+        },
+        {
+          "id": "ts-instalacion-primer-proyecto",
+          "title": "Instalar TypeScript y preparar el primer proyecto",
+          "category": "introduccion",
+          "summary": "Instalá el compilador como dependencia local, creá un archivo .ts y comprobá tu primer programa.",
+          "purpose": "La instalación local mantiene una versión de TypeScript asociada al proyecto y evita depender de una versión global diferente en cada equipo. NPM ya fue estudiado en la Parte 1; acá lo usamos para preparar el entorno de TypeScript.",
+          "syntax": "npm init -y\nnpm install --save-dev typescript\nnpx tsc --init",
+          "examples": [
+            {
+              "title": "Crear un proyecto e instalar TypeScript",
+              "description": "Los comandos se ejecutan desde una carpeta nueva.",
+              "code": "mkdir practica-typescript\ncd practica-typescript\nnpm init -y\nnpm install --save-dev typescript",
+              "explanation": "npm init -y crea package.json. TypeScript se instala como dependencia de desarrollo porque el navegador no necesita el compilador para ejecutar el JavaScript generado."
+            },
+            {
+              "title": "Crear configuración y código fuente",
+              "description": "El archivo tsconfig.json define el comportamiento del compilador.",
+              "code": "npx tsc --init\nmkdir src\nprintf 'const saludo: string = \"Hola, TypeScript\";\\nconsole.log(saludo);\\n' > src/index.ts",
+              "explanation": "tsc --init crea una configuración inicial. Conviene revisar sus opciones antes de asumir que todos los valores son adecuados para cualquier proyecto."
+            },
+            {
+              "title": "Comprobar el proyecto",
+              "description": "Ejecutá la versión local del compilador.",
+              "code": "npx tsc --noEmit",
+              "explanation": "npx utiliza el paquete instalado en el proyecto. Si aparece un error, revisá primero el archivo y la opción que lo provocan."
+            }
+          ],
+          "exercise": "Creá el proyecto en una carpeta nueva, agregá src/index.ts con dos variables tipadas y ejecutá npx tsc --noEmit.",
+          "hint": "No es necesario instalar tsc globalmente para cada proyecto. La dependencia local hace que el entorno sea reproducible.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Instalación oficial de TypeScript",
+              "url": "https://www.typescriptlang.org/download/"
+            },
+            {
+              "label": "Documentación de package.json",
+              "url": "https://docs.npmjs.com/cli/v11/configuring-npm/package-json"
+            }
+          ],
+          "related": [
+            "ts-diferencias-javascript",
+            "ts-tsconfig"
+          ]
+        },
+        {
+          "id": "ts-tipos-primitivos",
+          "title": "Tipos primitivos: string, number, boolean y más",
+          "category": "tipos-basicos",
+          "summary": "Usá tipos primitivos para describir texto, números, booleanos y otros valores fundamentales.",
+          "purpose": "Los tipos primitivos más habituales son string, number y boolean. También existen bigint, symbol, null y undefined. En TypeScript se escriben en minúscula; String y Number representan objetos envoltorio y no son la opción normal para anotar valores primitivos.",
+          "syntax": "let nombre: string;\nlet cantidad: number;\nlet activo: boolean;",
+          "examples": [
+            {
+              "title": "Texto, números y booleanos",
+              "description": "Anotá los tipos básicos de una aplicación.",
+              "code": "let nombre: string = \"Lucía\";\nlet visitas: number = 120;\nlet suscripto: boolean = true;\n\nconsole.log(nombre, visitas, suscripto);",
+              "explanation": "string representa texto, number números enteros o decimales y boolean true o false."
+            },
+            {
+              "title": "Otros tipos primitivos",
+              "description": "BigInt y Symbol resuelven necesidades más específicas.",
+              "code": "const identificador: bigint = 9007199254740993n;\nconst clave: symbol = Symbol(\"clave interna\");\nconst ausente: null = null;\nconst sinDato: undefined = undefined;",
+              "explanation": "bigint representa enteros grandes y se escribe con el sufijo n. symbol crea identificadores únicos. null y undefined son valores distintos."
+            }
+          ],
+          "exercise": "Declarà variables para nombre, precio, disponible, un identificador grande y un valor ausente. Elegí un tipo adecuado para cada una.",
+          "hint": "Usá los nombres primitivos en minúscula. Evitá String, Number y Boolean salvo que realmente quieras referirte a sus objetos envoltorio.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: tipos básicos",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
+            }
+          ],
+          "related": [
+            "ts-inferencia",
+            "ts-null-undefined"
+          ]
+        },
+        {
+          "id": "ts-inferencia",
+          "title": "Inferencia de tipos y tipado contextual",
+          "category": "tipos-basicos",
+          "summary": "Aprendé cuándo TypeScript deduce un tipo y cuándo conviene escribir una anotación explícita.",
+          "purpose": "TypeScript infiere tipos desde los valores iniciales, retornos de funciones y contextos de uso. Una anotación es útil cuando define un contrato público, cuando el valor inicial no aporta suficiente información o cuando mejora la lectura.",
+          "syntax": "const nombre = \"Mara\"; // string inferido\nconst edades: number[] = [18, 25];",
+          "examples": [
+            {
+              "title": "Inferencia desde un valor",
+              "description": "El tipo se deduce al inicializar la variable.",
+              "code": "let puntos = 10;\npuntos = 15;\n// puntos = \"quince\"; // Error: string no es number",
+              "explanation": "TypeScript infiere number. Agregar : number sería correcto, pero redundante en este caso."
+            },
+            {
+              "title": "Inferencia del retorno",
+              "description": "El compilador deduce el tipo a partir de return.",
+              "code": "function sumar(a: number, b: number) {\n  return a + b;\n}\n\nconst resultado = sumar(4, 6); // number",
+              "explanation": "Los parámetros describen las entradas y el compilador deduce que el retorno es number."
+            },
+            {
+              "title": "Tipado contextual en callbacks",
+              "description": "El tipo del parámetro se deduce por el método que recibe la función.",
+              "code": "const nombres = [\"Ana\", \"Leo\", \"Sol\"];\n\nconst iniciales = nombres.map(nombre => nombre[0]);\n// nombre se infiere como string",
+              "explanation": "map conoce el tipo de los elementos del array y proporciona esa información al callback."
+            }
+          ],
+          "exercise": "Escribí una función que recibe un precio y devuelve el precio con IVA. Dejá que TypeScript infiera el retorno y observá qué tipo deduce.",
+          "hint": "No agregues anotaciones por obligación. Usalas cuando aclaren contratos o resuelvan una ambigüedad.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: inferencia de tipos",
+              "url": "https://www.typescriptlang.org/docs/handbook/type-inference.html"
+            },
+            {
+              "label": "Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            }
+          ],
+          "related": [
+            "ts-tipos-primitivos",
+            "ts-funciones-tipadas"
+          ]
+        },
+        {
+          "id": "ts-any-unknown-never",
+          "title": "any, unknown y never: tres tipos especiales",
+          "category": "tipos-basicos",
+          "summary": "Diferenciá el escape any, el valor seguro unknown y el tipo imposible never.",
+          "purpose": "any desactiva gran parte de la comprobación. unknown representa un valor que todavía no fue comprobado y exige estrecharlo antes de usarlo. never representa un valor que no puede ocurrir o una función que no termina normalmente.",
+          "syntax": "let flexible: any;\nlet seguro: unknown;\nfunction fallar(mensaje: string): never { throw new Error(mensaje); }",
+          "examples": [
+            {
+              "title": "any deja pasar operaciones desconocidas",
+              "description": "El compilador no puede proteger una cadena de operaciones sobre any.",
+              "code": "let dato: any = \"texto\";\ndato.noExiste().metodoInesperado();",
+              "explanation": "any desactiva comprobaciones. Evitalo como tipo general de datos externos."
+            },
+            {
+              "title": "unknown exige comprobaciones",
+              "description": "Comprobá el tipo antes de llamar métodos específicos.",
+              "code": "function mostrarMayusculas(valor: unknown): void {\n  if (typeof valor === \"string\") {\n    console.log(valor.toUpperCase());\n  }\n}\n\nmostrarMayusculas(\"hola\");\nmostrarMayusculas(42);",
+              "explanation": "Dentro del if, valor se estrecha a string. Antes de esa comprobación sigue siendo unknown."
+            },
+            {
+              "title": "never representa un flujo que no vuelve",
+              "description": "Una función que siempre lanza un error no devuelve un valor.",
+              "code": "function fallar(mensaje: string): never {\n  throw new Error(mensaje);\n}\n\nfunction obtenerNombre(nombre?: string): string {\n  if (!nombre) fallar(\"Falta el nombre\");\n  return nombre.toUpperCase();\n}",
+              "explanation": "La llamada a fallar termina el flujo. never también ayuda a comprobar casos exhaustivos de una unión."
+            }
+          ],
+          "exercise": "Tomá un valor unknown y escribí una función que acepte solo strings y números. Rechazá cualquier otro caso.",
+          "hint": "Cuando recibas datos desde JSON, localStorage o una API, preferí unknown y validá su contenido.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: tipos básicos",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
+            },
+            {
+              "label": "Handbook: narrowing",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+            }
+          ],
+          "related": [
+            "ts-narrowing",
+            "ts-type-guards",
+            "ts-uniones-discriminadas"
+          ]
+        },
+        {
+          "id": "ts-arrays-tuplas",
+          "title": "Arrays y tuplas: colecciones con tipos definidos",
+          "category": "tipos-basicos",
+          "summary": "Definí colecciones homogéneas con arrays y estructuras de posiciones fijas con tuplas.",
+          "purpose": "Un array describe una secuencia de elementos de un tipo o de una unión de tipos. Una tupla describe una cantidad y un orden conocidos de posiciones, cada una con su propio tipo. Las tuplas son útiles para pares o retornos compactos; no reemplazan objetos con campos nombrados cuando estos mejoran la claridad.",
+          "syntax": "const precios: number[] = [10, 20];\nconst coordenada: [number, number] = [4, 8];",
+          "examples": [
+            {
+              "title": "Array de números",
+              "description": "Los elementos deben respetar el tipo indicado.",
+              "code": "const precios: number[] = [1200, 2500, 3400];\nprecios.push(4100);\n// precios.push(\"gratis\"); // Error\n\nconst total = precios.reduce((suma, precio) => suma + precio, 0);",
+              "explanation": "number[] y Array<number> son dos formas equivalentes de declarar un array numérico."
+            },
+            {
+              "title": "Array de objetos",
+              "description": "Cada elemento cumple un contrato reutilizable.",
+              "code": "type Producto = { id: number; nombre: string; precio: number };\n\nconst catalogo: Producto[] = [\n  { id: 1, nombre: \"Teclado\", precio: 18000 },\n  { id: 2, nombre: \"Mouse\", precio: 9000 }\n];\n\nconst nombres = catalogo.map(producto => producto.nombre);",
+              "explanation": "map recibe un Producto y el acceso a nombre queda autocompletado y comprobado."
+            },
+            {
+              "title": "Tupla con posiciones nombradas",
+              "description": "Cada posición tiene su propio tipo y significado.",
+              "code": "type RespuestaHttp = [codigo: number, mensaje: string];\n\nconst respuesta: RespuestaHttp = [200, \"OK\"];\nconst [codigo, mensaje] = respuesta;\n// const invalida: RespuestaHttp = [\"OK\", 200];",
+              "explanation": "Los nombres mejoran la lectura, pero el orden sigue importando."
+            }
+          ],
+          "exercise": "Creá un array de tareas tipadas y una tupla [código HTTP, mensaje]. Probá asignar valores con tipos incorrectos.",
+          "hint": "Usá readonly cuando no quieras que el consumidor modifique la colección mediante esa referencia.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Everyday Types: arrays",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            },
+            {
+              "label": "Object Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            }
+          ],
+          "related": [
+            "ts-tipos-objetos",
+            "ts-uniones-literales"
+          ]
+        },
+        {
+          "id": "ts-uniones-literales",
+          "title": "Uniones, intersecciones y tipos literales",
+          "category": "tipos-basicos",
+          "summary": "Combiná alternativas con |, reuní requisitos con & y restringí valores mediante literales.",
+          "purpose": "Una unión permite que un valor pertenezca a uno de varios tipos. Una intersección combina los requisitos de varios tipos. Los literales limitan una variable a valores exactos, algo útil para estados, opciones y configuraciones.",
+          "syntax": "type Estado = \"pendiente\" | \"en-proceso\" | \"completada\";\ntype ConAuditoria = Usuario & { creadoEn: Date };",
+          "examples": [
+            {
+              "title": "Unión de tipos",
+              "description": "El valor puede ser un número o un texto.",
+              "code": "function mostrarId(id: number | string): string {\n  return \"ID: \" + id;\n}\n\nmostrarId(25);\nmostrarId(\"usr-25\");",
+              "explanation": "La unión permite ambas alternativas. Para usar métodos exclusivos de una de ellas hay que estrechar el tipo."
+            },
+            {
+              "title": "Unión de literales",
+              "description": "Solo se aceptan los estados declarados.",
+              "code": "type Estado = \"pendiente\" | \"en-proceso\" | \"completada\";\n\nlet estado: Estado = \"pendiente\";\nestado = \"completada\";\n// estado = \"cancelada\"; // Error",
+              "explanation": "El editor puede sugerir las alternativas disponibles y el compilador rechaza cualquier otro valor."
+            },
+            {
+              "title": "Intersección de tipos",
+              "description": "Combiná propiedades de dos contratos.",
+              "code": "type Persona = { nombre: string };\ntype Contacto = { email: string };\ntype Usuario = Persona & Contacto;\n\nconst usuario: Usuario = { nombre: \"Mía\", email: \"mia@example.com\" };",
+              "explanation": "Usuario tiene que cumplir ambos tipos. Si propiedades con el mismo nombre tienen tipos incompatibles, la intersección puede resultar imposible."
+            }
+          ],
+          "exercise": "Modelá el estado de una descarga con una unión de al menos cuatro estados y creá una función que reciba solo esos valores.",
+          "hint": "Uniones describen alternativas; intersecciones combinan requisitos. No son operadores para sumar o mezclar objetos en runtime.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            },
+            {
+              "label": "Object Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            }
+          ],
+          "related": [
+            "ts-any-unknown-never",
+            "ts-tipos-objetos",
+            "ts-uniones-discriminadas"
+          ]
+        },
+        {
+          "id": "ts-tipos-objetos",
+          "title": "Tipos de objetos, propiedades opcionales y readonly",
+          "category": "objetos-funciones",
+          "summary": "Describí estructuras de objetos y controlá qué propiedades son obligatorias, opcionales o de solo lectura.",
+          "purpose": "Los tipos de objeto definen qué propiedades tiene un valor y qué tipo corresponde a cada una. ? marca una propiedad opcional; readonly impide reasignarla a través de esa referencia. Las firmas de índice permiten propiedades dinámicas, pero deben usarse cuando el modelo realmente lo necesita.",
+          "syntax": "type Usuario = { id: number; nombre: string; email?: string; readonly creadoEn: Date };",
+          "examples": [
+            {
+              "title": "Propiedad opcional",
+              "description": "email puede no estar presente y se debe comprobar antes de usarlo.",
+              "code": "type Usuario = { id: number; nombre: string; email?: string };\n\nconst usuario: Usuario = { id: 1, nombre: \"Nora\" };\nif (usuario.email) console.log(usuario.email.toLowerCase());",
+              "explanation": "Al leer una propiedad opcional, el valor puede ser undefined."
+            },
+            {
+              "title": "Propiedad readonly",
+              "description": "El identificador no se reasigna después de crear el objeto.",
+              "code": "type Documento = { readonly id: string; titulo: string };\n\nconst doc: Documento = { id: \"doc-1\", titulo: \"Notas\" };\ndoc.titulo = \"Notas revisadas\";\n// doc.id = \"doc-2\"; // Error",
+              "explanation": "readonly limita la reasignación desde esa referencia. No congela profundamente el objeto."
+            },
+            {
+              "title": "Firma de índice",
+              "description": "Aceptá claves dinámicas cuando el diseño lo requiera.",
+              "code": "type Puntajes = { [materia: string]: number };\n\nconst puntajes: Puntajes = { matematica: 9, historia: 8 };\npuntajes[\"biologia\"] = 10;",
+              "explanation": "La firma indica que las claves son strings y sus valores números. Si conocés las propiedades permitidas, preferí un objeto con campos explícitos."
+            }
+          ],
+          "exercise": "Definí un tipo Perfil con id inmutable, nombre obligatorio, biografía opcional y lista de etiquetas. Creá dos objetos válidos.",
+          "hint": "Una propiedad opcional no es lo mismo que una propiedad obligatoria cuyo valor puede ser undefined.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Object Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            }
+          ],
+          "related": [
+            "ts-type-alias",
+            "ts-interfaces",
+            "ts-null-undefined"
+          ]
+        },
+        {
+          "id": "ts-type-alias",
+          "title": "Type aliases: nombres para tipos reutilizables",
+          "category": "objetos-funciones",
+          "summary": "Agrupá estructuras, uniones y firmas de funciones bajo nombres reutilizables mediante type.",
+          "purpose": "Un alias permite nombrar cualquier tipo: un objeto, una unión, una tupla, una función o una combinación. No crea una clase ni transforma el valor. Sirve para mejorar la legibilidad y centralizar contratos.",
+          "syntax": "type Identificador = string | number;\ntype Producto = { id: Identificador; nombre: string };",
+          "examples": [
+            {
+              "title": "Alias de un objeto",
+              "description": "Reutilizá la forma de Producto en varias funciones.",
+              "code": "type Producto = { id: number; nombre: string; precio: number };\n\nfunction crearEtiqueta(producto: Producto): string {\n  return producto.nombre + \": $\" + producto.precio;\n}",
+              "explanation": "El nombre Producto concentra el contrato y evita repetir la estructura."
+            },
+            {
+              "title": "Alias para una unión",
+              "description": "Representá un estado válido con opciones controladas.",
+              "code": "type EstadoPedido = \"nuevo\" | \"pagado\" | \"enviado\" | \"entregado\";\n\nfunction actualizarEstado(estado: EstadoPedido) {\n  console.log(\"Nuevo estado: \" + estado);\n}\n\nactualizarEstado(\"enviado\");",
+              "explanation": "Un alias puede nombrar una unión de literales y restringir los valores permitidos."
+            },
+            {
+              "title": "Alias de una función",
+              "description": "Documentá la forma de un callback que vas a reutilizar.",
+              "code": "type Validador = (valor: string) => boolean;\n\nconst noVacio: Validador = valor => valor.trim().length > 0;\nconst correoSimple: Validador = valor => valor.includes(\"@\");",
+              "explanation": "El alias expresa los parámetros y el tipo de retorno de los callbacks."
+            }
+          ],
+          "exercise": "Creá alias para Dirección, Cliente y EstadoCliente. Usalos en una función que reciba un cliente y devuelva su nombre y ciudad.",
+          "hint": "Elegí nombres de dominio claros. Evitá alias crípticos que agregan una capa de lectura innecesaria.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Object Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            }
+          ],
+          "related": [
+            "ts-tipos-objetos",
+            "ts-interfaces",
+            "ts-uniones-literales"
+          ]
+        },
+        {
+          "id": "ts-interfaces",
+          "title": "Interfaces: contratos para objetos y extensiones",
+          "category": "objetos-funciones",
+          "summary": "Definí contratos de objetos con interface y extendé estructuras sin duplicar propiedades.",
+          "purpose": "Una interface describe la forma que debe cumplir un objeto. Puede extender una o varias interfaces y es habitual en APIs públicas y modelos extensibles. Los alias type son más flexibles para uniones y tipos compuestos; elegí según el modelo y las convenciones del proyecto.",
+          "syntax": "interface Usuario { id: number; nombre: string }\ninterface Administrador extends Usuario { permisos: string[] }",
+          "examples": [
+            {
+              "title": "Definir una interfaz",
+              "description": "El objeto debe incluir las propiedades obligatorias.",
+              "code": "interface Usuario {\n  id: number;\n  nombre: string;\n  activo: boolean;\n}\n\nconst usuario: Usuario = { id: 7, nombre: \"Luz\", activo: true };",
+              "explanation": "La interfaz funciona como contrato estático. No crea un constructor ni valida un objeto recibido por JSON."
+            },
+            {
+              "title": "Extender otra interfaz",
+              "description": "Reutilizá propiedades y agregá las específicas.",
+              "code": "interface Usuario { id: number; nombre: string }\ninterface Administrador extends Usuario { permisos: string[] }\n\nconst admin: Administrador = {\n  id: 1, nombre: \"Ivo\", permisos: [\"usuarios:leer\", \"usuarios:editar\"]\n};",
+              "explanation": "Administrador hereda la estructura de Usuario y agrega permisos."
+            },
+            {
+              "title": "Implementar una interfaz",
+              "description": "Una clase declara que cumple un contrato.",
+              "code": "interface Guardable { guardar(): void }\n\nclass Borrador implements Guardable {\n  guardar() { console.log(\"Borrador guardado\"); }\n}",
+              "explanation": "implements hace que el compilador compruebe la estructura de la clase. No inserta código ni crea una implementación desde la interfaz."
+            }
+          ],
+          "exercise": "Definí una interfaz Publicacion y otra PublicacionDestacada que la extienda. Creá un objeto válido y comprobá qué ocurre al eliminar una propiedad.",
+          "hint": "No uses interface o type como si fueran validadores de datos: ambos describen contratos durante el desarrollo.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Object Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            }
+          ],
+          "related": [
+            "ts-type-alias",
+            "ts-tipos-objetos",
+            "ts-clases-abstractas"
+          ]
+        },
+        {
+          "id": "ts-funciones-tipadas",
+          "title": "Funciones tipadas: parámetros, retornos y callbacks",
+          "category": "objetos-funciones",
+          "summary": "Especificá qué recibe una función, qué devuelve y qué forma deben respetar sus callbacks.",
+          "purpose": "TypeScript permite anotar parámetros y retorno, además de representar firmas reutilizables. El retorno puede inferirse, pero explicitarlo en funciones públicas puede documentar el contrato y detectar cambios accidentales.",
+          "syntax": "(producto: Producto, cantidad: number) => number",
+          "examples": [
+            {
+              "title": "Parámetros y retorno",
+              "description": "Definí entradas y salida de una operación.",
+              "code": "function calcularSubtotal(precio: number, cantidad: number): number {\n  return precio * cantidad;\n}\n\nconst subtotal = calcularSubtotal(2500, 3);",
+              "explanation": "Los dos parámetros y el retorno son number. Si la función intenta devolver un string, el compilador marca el error."
+            },
+            {
+              "title": "Callback con firma definida",
+              "description": "El filtro recibe un string y devuelve un boolean.",
+              "code": "type Filtro = (texto: string) => boolean;\n\nfunction filtrarNombres(nombres: string[], filtro: Filtro): string[] {\n  return nombres.filter(filtro);\n}\n\nconst largos = filtrarNombres([\"Ana\", \"Santiago\"], nombre => nombre.length > 4);",
+              "explanation": "El callback se comprueba según la firma Filtro. Su parámetro se infiere como string."
+            },
+            {
+              "title": "Tipo de función reutilizable",
+              "description": "Una variable puede almacenar cualquier función compatible.",
+              "code": "type Operacion = (a: number, b: number) => number;\n\nconst sumar: Operacion = (a, b) => a + b;\nconst multiplicar: Operacion = (a, b) => a * b;\nconst ejecutar = (op: Operacion) => op(4, 5);\n\nconsole.log(ejecutar(multiplicar));",
+              "explanation": "Operacion describe la forma de la función, no su nombre. Las dos funciones cumplen la firma."
+            }
+          ],
+          "exercise": "Escribí aplicarDescuento que reciba precio, porcentaje y un callback que informe el precio final. Tipá parámetros y retorno.",
+          "hint": "No es obligatorio repetir un retorno inferible en cada función privada. Anotá especialmente los contratos que utiliza el resto del programa.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: More on Functions",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+            }
+          ],
+          "related": [
+            "ts-inferencia",
+            "ts-parametros-overloads",
+            "ts-generics-funciones"
+          ]
+        },
+        {
+          "id": "ts-parametros-overloads",
+          "title": "Parámetros opcionales, rest y sobrecargas",
+          "category": "objetos-funciones",
+          "summary": "Modelá funciones que reciben distintos números de argumentos o varias formas válidas de entrada.",
+          "purpose": "El signo ? marca un parámetro opcional; los valores predeterminados se usan cuando el argumento es undefined; rest agrupa una cantidad variable de argumentos. Las sobrecargas describen distintas firmas públicas que comparten una implementación.",
+          "syntax": "function presentar(nombre: string, apellido?: string): string;\nfunction sumar(...valores: number[]): number;",
+          "examples": [
+            {
+              "title": "Parámetro opcional",
+              "description": "El argumento puede omitirse y debe comprobarse antes de usarlo.",
+              "code": "function presentar(nombre: string, apellido?: string): string {\n  return apellido ? nombre + \" \" + apellido : nombre;\n}\n\npresentar(\"Mora\");\npresentar(\"Mora\", \"Díaz\");",
+              "explanation": "Los parámetros opcionales se colocan después de los obligatorios. apellido puede ser undefined."
+            },
+            {
+              "title": "Valor predeterminado y rest",
+              "description": "Combiná un argumento de configuración con una lista variable.",
+              "code": "function crearSaludo(nombre: string, idioma = \"es\") {\n  return idioma === \"es\" ? \"Hola, \" + nombre : \"Hello, \" + nombre;\n}\n\nfunction sumar(...valores: number[]): number {\n  return valores.reduce((total, valor) => total + valor, 0);\n}\n\nsumar(2, 4, 6);",
+              "explanation": "idioma usa es si no se proporciona un valor. Rest reúne los argumentos en un array numérico."
+            },
+            {
+              "title": "Sobrecargas",
+              "description": "Declaraciones públicas distintas desembocan en una implementación común.",
+              "code": "function convertir(valor: number): string;\nfunction convertir(valor: Date): string;\nfunction convertir(valor: number | Date): string {\n  if (valor instanceof Date) return valor.toISOString();\n  return valor.toFixed(2);\n}\n\nconvertir(12.5);\nconvertir(new Date());",
+              "explanation": "Los consumidores ven las dos firmas sobrecargadas. La implementación debe contemplar ambos casos."
+            }
+          ],
+          "exercise": "Construí formatearPrecio con moneda opcional y promedio con cualquier cantidad de números. Agregá una sobrecarga que acepte también un array.",
+          "hint": "Para casos simples, una unión suele ser más sencilla que varias sobrecargas.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: More on Functions",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+            }
+          ],
+          "related": [
+            "ts-funciones-tipadas",
+            "ts-uniones-literales"
+          ]
+        },
+        {
+          "id": "ts-narrowing",
+          "title": "Narrowing: estrechar un tipo paso a paso",
+          "category": "control-tipos",
+          "summary": "Reducí una unión a una alternativa concreta mediante comprobaciones que TypeScript reconoce.",
+          "purpose": "Narrowing es el proceso por el que TypeScript usa el flujo del programa para inferir que una variable tiene un tipo más específico. Reconoce typeof, igualdad, in, instanceof, retornos tempranos y otras comprobaciones.",
+          "syntax": "if (typeof valor === \"string\") { /* valor: string */ }",
+          "examples": [
+            {
+              "title": "Estrechar con typeof",
+              "description": "Separá el comportamiento de string y number.",
+              "code": "function duplicar(valor: string | number): string | number {\n  if (typeof valor === \"string\") return valor.repeat(2);\n  return valor * 2;\n}\n\nduplicar(\"ja\");\nduplicar(5);",
+              "explanation": "En el primer bloque valor es string; en el resto del flujo TypeScript sabe que es number."
+            },
+            {
+              "title": "Estrechar con in",
+              "description": "Comprobá qué propiedad distingue a cada objeto.",
+              "code": "type Ave = { volar: () => void };\ntype Pez = { nadar: () => void };\n\nfunction mover(animal: Ave | Pez) {\n  if (\"volar\" in animal) animal.volar();\n  else animal.nadar();\n}",
+              "explanation": "in permite diferenciar estructuras por una propiedad. Elegí un discriminador confiable."
+            },
+            {
+              "title": "Retorno temprano",
+              "description": "Descartá un tipo antes de llegar a la lógica principal.",
+              "code": "function longitud(valor: string | string[] | null): number {\n  if (valor === null) return 0;\n  if (typeof valor === \"string\") return valor.length;\n  return valor.length;\n}",
+              "explanation": "Después del primer retorno, valor ya no puede ser null. La segunda comprobación separa string de string[]."
+            }
+          ],
+          "exercise": "Escribí mostrarDato que reciba string | number | Date | null y devuelva una descripción según el tipo.",
+          "hint": "No fuerces un tipo con as cuando podés realizar una comprobación real que permita estrecharlo.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Narrowing",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+            }
+          ],
+          "related": [
+            "ts-any-unknown-never",
+            "ts-type-guards",
+            "ts-uniones-discriminadas"
+          ]
+        },
+        {
+          "id": "ts-type-guards",
+          "title": "Type guards: predicados y validaciones reutilizables",
+          "category": "control-tipos",
+          "summary": "Creá funciones que comprueben un valor y comuniquen al compilador qué tipo tiene cuando la comprobación resulta verdadera.",
+          "purpose": "Además de las comprobaciones incorporadas, TypeScript permite definir predicados con la sintaxis valor is Tipo. La función debe realizar una comprobación real y devolver un boolean. Un predicado incorrecto puede engañar al compilador, por lo que su implementación debe ser rigurosa.",
+          "syntax": "function esUsuario(valor: unknown): valor is Usuario { /* validar */ }",
+          "examples": [
+            {
+              "title": "Predicado de texto",
+              "description": "Comprobá el tipo y el contenido antes de usar métodos de string.",
+              "code": "function esTextoNoVacio(valor: unknown): valor is string {\n  return typeof valor === \"string\" && valor.trim().length > 0;\n}\n\nfunction mostrar(valor: unknown) {\n  if (esTextoNoVacio(valor)) console.log(valor.toUpperCase());\n}",
+              "explanation": "Cuando la función devuelve true, TypeScript trata valor como string dentro del bloque."
+            },
+            {
+              "title": "Validar la forma de un objeto",
+              "description": "Comprobá las propiedades antes de afirmar que el dato es Usuario.",
+              "code": "type Usuario = { id: number; nombre: string };\n\nfunction esUsuario(valor: unknown): valor is Usuario {\n  if (typeof valor !== \"object\" || valor === null) return false;\n  if (!(\"id\" in valor) || !(\"nombre\" in valor)) return false;\n  return typeof valor.id === \"number\" && typeof valor.nombre === \"string\";\n}",
+              "explanation": "El predicado revisa cada propiedad requerida. Para esquemas profundos conviene una biblioteca de validación en runtime."
+            },
+            {
+              "title": "Validar arrays",
+              "description": "Asegurate de comprobar todos los elementos.",
+              "code": "function esArrayDeNumeros(valor: unknown): valor is number[] {\n  return Array.isArray(valor) && valor.every(item => typeof item === \"number\");\n}\n\nconst entrada: unknown = [2, 4, 6];\nif (esArrayDeNumeros(entrada)) {\n  console.log(entrada.reduce((total, n) => total + n, 0));\n}",
+              "explanation": "Array.isArray comprueba que sea un array y every verifica cada elemento."
+            }
+          ],
+          "exercise": "Implementá esProducto(valor: unknown): valor is Producto y comprobá id, nombre y precio con datos correctos e incorrectos.",
+          "hint": "Una anotación is no realiza validación por sí misma: la función debe comprobar las condiciones que declara.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Narrowing y predicados",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+            }
+          ],
+          "related": [
+            "ts-narrowing",
+            "ts-any-unknown-never",
+            "ts-async-api"
+          ]
+        },
+        {
+          "id": "ts-uniones-discriminadas",
+          "title": "Uniones discriminadas y comprobación exhaustiva",
+          "category": "control-tipos",
+          "summary": "Modelá estados y variantes de objetos con una propiedad discriminadora y comprobá que todos los casos estén cubiertos.",
+          "purpose": "Una unión discriminada agrupa tipos de objeto que comparten una propiedad con valores literales distintos. Al revisar esa propiedad, TypeScript estrecha el objeto a una variante. never permite detectar si quedó un caso sin contemplar.",
+          "syntax": "type Resultado =\n | { estado: \"exito\"; datos: string[] }\n | { estado: \"error\"; mensaje: string };",
+          "examples": [
+            {
+              "title": "Modelar estados",
+              "description": "Cada variante contiene solo los datos que necesita.",
+              "code": "type Resultado =\n  | { estado: \"cargando\" }\n  | { estado: \"exito\"; datos: string[] }\n  | { estado: \"error\"; mensaje: string };\n\nfunction renderizar(resultado: Resultado): string {\n  switch (resultado.estado) {\n    case \"cargando\": return \"Cargando...\";\n    case \"exito\": return resultado.datos.join(\", \");\n    case \"error\": return resultado.mensaje;\n  }\n}",
+              "explanation": "estado distingue las variantes. Dentro de cada case están disponibles solo las propiedades correspondientes a ese estado."
+            },
+            {
+              "title": "Detectar casos no cubiertos",
+              "description": "never permite detectar cuando se agrega una variante y no se maneja.",
+              "code": "function imposible(valor: never): never {\n  throw new Error(\"Estado no contemplado: \" + valor);\n}\n\nfunction describir(resultado: Resultado): string {\n  switch (resultado.estado) {\n    case \"cargando\": return \"Esperando\";\n    case \"exito\": return \"Hay \" + resultado.datos.length + \" elementos\";\n    case \"error\": return resultado.mensaje;\n    default: return imposible(resultado);\n  }\n}",
+              "explanation": "Si agregás una nueva variante y olvidás tratarla, el valor del default deja de ser never y el compilador señala el problema."
+            },
+            {
+              "title": "Unión para acciones",
+              "description": "Cada acción puede transportar datos diferentes.",
+              "code": "type Accion =\n  | { tipo: \"agregar\"; texto: string }\n  | { tipo: \"completar\"; id: number }\n  | { tipo: \"limpiar\" };\n\nfunction ejecutar(accion: Accion) {\n  if (accion.tipo === \"agregar\") return accion.texto.trim();\n  if (accion.tipo === \"completar\") return accion.id;\n  return \"Se limpiaron las tareas\";\n}",
+              "explanation": "La unión evita crear un objeto con muchas propiedades opcionales que podrían ser incompatibles entre sí."
+            }
+          ],
+          "exercise": "Creá estados idle, downloading, success y error para una descarga. Hacé una función exhaustiva y observá el error al agregar una variante que no manejás.",
+          "hint": "Usá un discriminador claro como kind, type o status y valores literales diferentes.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Narrowing",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+            }
+          ],
+          "related": [
+            "ts-uniones-literales",
+            "ts-narrowing",
+            "ts-any-unknown-never"
+          ]
+        },
+        {
+          "id": "ts-null-undefined",
+          "title": "null, undefined y strictNullChecks",
+          "category": "control-tipos",
+          "summary": "Tratà la ausencia de datos explícitamente y evitá asumir que una búsqueda o una propiedad siempre existe.",
+          "purpose": "Con strictNullChecks, null y undefined son tipos distintos. Una operación como Array.find puede no encontrar un elemento y devolver undefined. La configuración obliga a comprobar la ausencia antes de usar un valor.",
+          "syntax": "const usuario = usuarios.find(item => item.id === buscado);\nif (usuario) console.log(usuario.nombre);",
+          "examples": [
+            {
+              "title": "Comprobar el resultado de find",
+              "description": "La búsqueda puede no encontrar coincidencias.",
+              "code": "type Usuario = { id: number; nombre: string };\nconst usuarios: Usuario[] = [{ id: 1, nombre: \"Ana\" }];\n\nconst encontrado = usuarios.find(usuario => usuario.id === 9);\nif (encontrado) console.log(encontrado.nombre);\nelse console.log(\"No existe el usuario\");",
+              "explanation": "La comprobación garantiza que encontrado no es undefined antes de acceder a nombre."
+            },
+            {
+              "title": "Optional chaining y nullish coalescing",
+              "description": "Accedé de forma segura y ofrecé un valor alternativo solo ante null o undefined.",
+              "code": "type Perfil = { direccion?: { ciudad?: string } };\nconst perfil: Perfil = {};\n\nconst ciudad = perfil.direccion?.ciudad ?? \"Ciudad no informada\";\nconsole.log(ciudad);",
+              "explanation": "?. detiene el acceso si encuentra ausencia. ?? conserva valores como 0 y cadena vacía, a diferencia de ||."
+            },
+            {
+              "title": "Diferenciar null de undefined",
+              "description": "Un campo omitido no es igual a uno que se declaró vacío.",
+              "code": "type Configuracion = { tema: \"claro\" | \"oscuro\" | null };\nconst explicita: Configuracion = { tema: null };\nconst omitida: { tema?: \"claro\" | \"oscuro\" } = {};\n\nconsole.log(explicita.tema); // null\nconsole.log(omitida.tema);   // undefined",
+              "explanation": "null puede expresar que el valor fue borrado intencionalmente. undefined puede indicar que la propiedad no fue informada."
+            }
+          ],
+          "exercise": "Habilitá strictNullChecks y escribí una búsqueda que devuelva Usuario | undefined. Mostrá un caso encontrado y otro ausente.",
+          "hint": "No uses el operador ! para silenciar una posible ausencia salvo que tengas una garantía real y documentada.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "TSConfig: strictNullChecks",
+              "url": "https://www.typescriptlang.org/tsconfig/strictNullChecks.html"
+            },
+            {
+              "label": "Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            }
+          ],
+          "related": [
+            "ts-tipos-objetos",
+            "ts-narrowing",
+            "ts-tsconfig"
+          ]
+        },
+        {
+          "id": "ts-assertions-satisfies",
+          "title": "Type assertions y satisfies: afirmar sin convertir",
+          "category": "control-tipos",
+          "summary": "Entendé cuándo as cambia la interpretación estática y cuándo satisfies comprueba un contrato conservando el tipo inferido.",
+          "purpose": "Una aserción as indica al compilador cómo debe tratar un valor, pero no convierte ni valida ese valor. satisfies comprueba que una expresión cumpla un contrato sin reemplazar por completo su tipo inferido. Es preferible validar datos externos antes que confiar en una aserción.",
+          "syntax": "const config = { tema: \"oscuro\" } satisfies Configuracion;",
+          "examples": [
+            {
+              "title": "Comprobar un elemento DOM",
+              "description": "La comprobación real es más segura que asumir su tipo.",
+              "code": "const titulo = document.querySelector(\"#titulo\");\n\nif (titulo instanceof HTMLHeadingElement) {\n  titulo.textContent = \"Título actualizado\";\n}",
+              "explanation": "instanceof comprueba el elemento real y estrecha su tipo. El selector todavía puede devolver null."
+            },
+            {
+              "title": "Una aserción no convierte el valor",
+              "description": "El tipo declarado no cambia el dato que existe durante la ejecución.",
+              "code": "const entrada: unknown = \"123\";\nconst numero = entrada as number;\n\nconsole.log(typeof numero); // string\n// numero.toFixed(2); // Error en runtime",
+              "explanation": "as cambia lo que cree el compilador, no el valor. Para convertir usá Number y comprobá el resultado."
+            },
+            {
+              "title": "satisfies verifica una configuración",
+              "description": "El objeto cumple un contrato y conserva literales inferidos.",
+              "code": "type Config = { tema: \"claro\" | \"oscuro\"; animaciones: boolean };\n\nconst config = {\n  tema: \"oscuro\",\n  animaciones: true\n} satisfies Config;",
+              "explanation": "satisfies detecta propiedades faltantes o incompatibles sin convertir config en el tipo Config completo."
+            }
+          ],
+          "exercise": "Creá un objeto de rutas que cumpla Record<string, string> con satisfies. Agregá un valor numérico y observá el error.",
+          "hint": "No uses as unknown as Tipo como atajo habitual. Si un dato viene del exterior, preferí validarlo.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            },
+            {
+              "label": "Type Compatibility",
+              "url": "https://www.typescriptlang.org/docs/handbook/type-compatibility.html"
+            }
+          ],
+          "related": [
+            "ts-narrowing",
+            "ts-type-guards",
+            "ts-tipos-objetos"
+          ]
+        },
+        {
+          "id": "ts-generics-funciones",
+          "title": "Genéricos: funciones que conservan el tipo recibido",
+          "category": "generics",
+          "summary": "Creá funciones reutilizables que trabajan con distintos tipos sin perder la información concreta de cada valor.",
+          "purpose": "Un parámetro de tipo como T representa un tipo que se decide al llamar a la función o al inferirlo desde sus argumentos. A diferencia de any, un genérico conserva la relación entre el tipo de entrada y el de salida.",
+          "syntax": "function identidad<T>(valor: T): T { return valor; }",
+          "examples": [
+            {
+              "title": "Función identidad",
+              "description": "T se infiere desde el argumento y se conserva en el retorno.",
+              "code": "function identidad<T>(valor: T): T {\n  return valor;\n}\n\nconst texto = identidad(\"hola\"); // string\nconst numero = identidad(42);     // number",
+              "explanation": "No hace falta escribir el tipo al llamar la función cuando el compilador puede inferirlo."
+            },
+            {
+              "title": "Primer elemento de un array",
+              "description": "El tipo de salida depende del tipo de los elementos.",
+              "code": "function primero<T>(valores: T[]): T | undefined {\n  return valores[0];\n}\n\nconst primerNombre = primero([\"Ana\", \"Leo\"]);\nconst primerPrecio = primero([120, 250]);",
+              "explanation": "El tipo T se infiere como string en el primer llamado y number en el segundo. El retorno incluye undefined si el array está vacío."
+            },
+            {
+              "title": "Relacionar dos argumentos",
+              "description": "El genérico mantiene el tipo del dato que se repite.",
+              "code": "function repetir<T>(valor: T, veces: number): T[] {\n  return Array.from({ length: veces }, () => valor);\n}\n\nconst banderas = repetir(true, 3); // boolean[]\nconst etiquetas = repetir(\"nuevo\", 2); // string[]",
+              "explanation": "T relaciona el argumento valor con los elementos del array devuelto."
+            }
+          ],
+          "exercise": "Escribí envolver<T> que reciba un dato y devuelva { valor, creadoEn: Date }. Comprobá que conserva el tipo del dato.",
+          "hint": "Empezá con un solo parámetro de tipo. Agregá genéricos cuando exista una relación real entre entradas y salidas.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Generics",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html"
+            }
+          ],
+          "related": [
+            "ts-funciones-tipadas",
+            "ts-generics-constraints",
+            "ts-generics-interfaces-classes"
+          ]
+        },
+        {
+          "id": "ts-generics-constraints",
+          "title": "Restricciones y valores predeterminados en genéricos",
+          "category": "generics",
+          "summary": "Limitá los tipos permitidos por un genérico y establecé valores predeterminados cuando corresponda.",
+          "purpose": "Una restricción extends establece qué características debe ofrecer T. keyof permite limitar una clave a las propiedades de otro tipo. Un parámetro genérico puede tener un valor predeterminado cuando el consumidor no lo especifica.",
+          "syntax": "function obtener<T, K extends keyof T>(objeto: T, clave: K): T[K] {\n  return objeto[clave];\n}",
+          "examples": [
+            {
+              "title": "Restringir un tipo a objetos con length",
+              "description": "La restricción exige una propiedad length numérica.",
+              "code": "function conLongitud<T extends { length: number }>(valor: T): T {\n  console.log(\"Longitud: \" + valor.length);\n  return valor;\n}\n\nconLongitud(\"TypeScript\");\nconLongitud([1, 2, 3]);\n// conLongitud(42); // Error",
+              "explanation": "T puede ser cualquier tipo que tenga length numérico. La función conserva el tipo concreto original."
+            },
+            {
+              "title": "Restringir claves con keyof",
+              "description": "La clave solo puede ser una propiedad del objeto recibido.",
+              "code": "function obtener<T, K extends keyof T>(objeto: T, clave: K): T[K] {\n  return objeto[clave];\n}\n\nconst producto = { nombre: \"Libro\", precio: 1500 };\nconst nombre = obtener(producto, \"nombre\"); // string\nconst precio = obtener(producto, \"precio\"); // number\n// obtener(producto, \"stock\"); // Error",
+              "explanation": "K queda restringido a keyof T y T[K] devuelve el tipo correspondiente a esa propiedad."
+            },
+            {
+              "title": "Valor predeterminado de un genérico",
+              "description": "El consumidor puede omitir el tipo si el valor por defecto es adecuado.",
+              "code": "type Respuesta<T = string> = { datos: T; correcto: boolean };\n\nconst texto: Respuesta = { datos: \"Listo\", correcto: true };\nconst cantidad: Respuesta<number> = { datos: 3, correcto: true };",
+              "explanation": "Respuesta sin argumento usa string. La segunda declaración elige number explícitamente."
+            }
+          ],
+          "exercise": "Creá obtenerPropiedad que reciba un objeto y una clave válida de ese objeto. El retorno debe corresponder al tipo real de la propiedad.",
+          "hint": "La restricción debe describir las capacidades que la implementación realmente utiliza.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Generics",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html"
+            },
+            {
+              "label": "Keyof Type Operator",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html"
+            }
+          ],
+          "related": [
+            "ts-generics-funciones",
+            "ts-keyof-typeof-indexed"
+          ]
+        },
+        {
+          "id": "ts-generics-interfaces-classes",
+          "title": "Genéricos en interfaces, clases y estructuras de datos",
+          "category": "generics",
+          "summary": "Aplicá parámetros de tipo a contratos y clases para reutilizar estructuras sin perder la información de sus elementos.",
+          "purpose": "Las interfaces, clases y alias también pueden recibir parámetros de tipo. Esto permite describir repositorios, respuestas, pilas, colas y contenedores que trabajan con diferentes datos.",
+          "syntax": "interface Caja<T> { valor: T }\nclass Almacen<T> { agregar(valor: T): void { /* ... */ } }",
+          "examples": [
+            {
+              "title": "Interfaz genérica",
+              "description": "La misma interfaz representa cajas de distintos tipos.",
+              "code": "interface Caja<T> { valor: T }\n\nconst cajaTexto: Caja<string> = { valor: \"Hola\" };\nconst cajaNumero: Caja<number> = { valor: 123 };",
+              "explanation": "El parámetro T se reemplaza por string o number en cada uso."
+            },
+            {
+              "title": "Clase genérica",
+              "description": "Un almacén guarda y devuelve siempre el mismo tipo.",
+              "code": "class Almacen<T> {\n  private elementos: T[] = [];\n  agregar(elemento: T): void { this.elementos.push(elemento); }\n  obtenerTodos(): T[] { return [...this.elementos]; }\n}\n\nconst tareas = new Almacen<string>();\ntareas.agregar(\"Estudiar tipos\");",
+              "explanation": "Almacen<string> solo admite strings. El método devuelve una copia del array interno."
+            },
+            {
+              "title": "Respuesta genérica para una API",
+              "description": "La envoltura es común y el tipo de datos cambia por endpoint.",
+              "code": "type RespuestaApi<T> = { datos: T; mensaje: string };\ntype Usuario = { id: number; nombre: string };\n\nconst respuesta: RespuestaApi<Usuario[]> = {\n  datos: [{ id: 1, nombre: \"Eva\" }],\n  mensaje: \"Consulta exitosa\"\n};",
+              "explanation": "La estructura de respuesta se reutiliza y T especifica su contenido. El tipo no valida automáticamente JSON recibido."
+            }
+          ],
+          "exercise": "Implementá Cola<T> con encolar, desencolar y verPrimero. Considerá qué ocurre cuando la cola está vacía.",
+          "hint": "Los genéricos modelan relaciones de tipos. No son parámetros que existan en runtime.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Generics",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html"
+            }
+          ],
+          "related": [
+            "ts-generics-funciones",
+            "ts-generics-constraints",
+            "ts-utility-types"
+          ]
+        },
+        {
+          "id": "ts-keyof-typeof-indexed",
+          "title": "keyof, typeof e indexed access types",
+          "category": "generics",
+          "summary": "Derivá tipos a partir de propiedades y valores existentes para reducir duplicaciones y mantener contratos sincronizados.",
+          "purpose": "keyof obtiene la unión de claves de un tipo. typeof, en contexto de tipos, obtiene el tipo de una variable o expresión. T[K] accede al tipo de una propiedad; juntos permiten crear funciones y tipos derivados que se actualizan al cambiar el objeto original.",
+          "syntax": "type Clave = keyof Usuario;\ntype Nombre = Usuario[\"nombre\"];\ntype Config = typeof configuracion;",
+          "examples": [
+            {
+              "title": "keyof para obtener claves",
+              "description": "La unión de claves restringe los valores aceptados.",
+              "code": "type Usuario = { id: number; nombre: string; activo: boolean };\ntype ClaveUsuario = keyof Usuario;\n\nlet clave: ClaveUsuario = \"nombre\";\nclave = \"activo\";\n// clave = \"email\"; // Error",
+              "explanation": "ClaveUsuario equivale a las claves del tipo. Si agregás una propiedad, la unión se actualiza."
+            },
+            {
+              "title": "typeof para derivar desde un valor",
+              "description": "Evitá volver a escribir manualmente la forma de una configuración.",
+              "code": "const rutas = { inicio: \"/\", perfil: \"/perfil\", ayuda: \"/ayuda\" } as const;\n\ntype Rutas = typeof rutas;\ntype NombreRuta = keyof Rutas;\nconst rutaActual: NombreRuta = \"perfil\";",
+              "explanation": "typeof se usa en el espacio de tipos. as const conserva los valores literales y readonly."
+            },
+            {
+              "title": "Indexed access para conocer un valor",
+              "description": "Obtené el tipo de una propiedad concreta o de todos los valores.",
+              "code": "type Usuario = { id: number; nombre: string; activo: boolean };\ntype Nombre = Usuario[\"nombre\"]; // string\ntype Valores = Usuario[keyof Usuario]; // number | string | boolean\n\nfunction leer<K extends keyof Usuario>(u: Usuario, k: K): Usuario[K] {\n  return u[k];\n}",
+              "explanation": "Usuario[K] devuelve el tipo asociado a la clave concreta."
+            }
+          ],
+          "exercise": "Definí un objeto constante de configuraciones y derivá un tipo para sus claves y otro para sus valores. Usalos en una función de búsqueda.",
+          "hint": "typeof en una expresión devuelve un valor en runtime; typeof dentro de un tipo consulta la forma estática de esa expresión.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Keyof Type Operator",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html"
+            },
+            {
+              "label": "Typeof Type Operator",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/typeof-types.html"
+            },
+            {
+              "label": "Indexed Access Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html"
+            }
+          ],
+          "related": [
+            "ts-generics-constraints",
+            "ts-utility-types",
+            "ts-uniones-literales"
+          ]
+        },
+        {
+          "id": "ts-utility-types",
+          "title": "Utility Types: Partial, Pick, Omit, Record y más",
+          "category": "generics",
+          "summary": "Transformá tipos existentes con utilidades integradas en TypeScript en lugar de copiar estructuras manualmente.",
+          "purpose": "TypeScript incluye utilidades para construir tipos derivados. Partial vuelve opcionales las propiedades; Required las hace obligatorias; Readonly impide reasignarlas; Pick selecciona claves; Omit las excluye; Record crea un mapa; ReturnType extrae el retorno de una función.",
+          "syntax": "type Edicion = Partial<Usuario>;\ntype VistaPublica = Pick<Usuario, \"id\" | \"nombre\">;",
+          "examples": [
+            {
+              "title": "Partial para actualizaciones",
+              "description": "Una actualización puede enviar solo los campos modificados.",
+              "code": "type Usuario = { id: number; nombre: string; email: string };\ntype ActualizacionUsuario = Partial<Omit<Usuario, \"id\">>;\n\nconst cambios: ActualizacionUsuario = { email: \"nuevo@example.com\" };",
+              "explanation": "Partial hace opcionales los campos y Omit excluye id del contrato de actualización."
+            },
+            {
+              "title": "Pick y Omit para vistas distintas",
+              "description": "Seleccioná o excluí campos de un tipo conocido.",
+              "code": "type Usuario = { id: number; nombre: string; email: string; claveHash: string };\ntype PerfilPublico = Pick<Usuario, \"id\" | \"nombre\">;\ntype UsuarioSinClave = Omit<Usuario, \"claveHash\">;\n\nconst perfil: PerfilPublico = { id: 1, nombre: \"Ana\" };",
+              "explanation": "Pick conserva las claves indicadas y Omit elimina las señaladas. No filtran objetos reales: para no enviar un secreto hay que construir una respuesta sin ese campo."
+            },
+            {
+              "title": "Record y ReturnType",
+              "description": "Creá un mapa exhaustivo y extraé el retorno de una función.",
+              "code": "type Estado = \"borrador\" | \"publicado\" | \"archivado\";\nconst etiquetas: Record<Estado, string> = {\n  borrador: \"En edición\", publicado: \"Visible\", archivado: \"Oculto\"\n};\n\nfunction crearUsuario(nombre: string) { return { id: 1, nombre }; }\ntype ParametrosCrear = Parameters<typeof crearUsuario>;\ntype NuevoUsuario = ReturnType<typeof crearUsuario>;\ntype UsuarioResuelto = Awaited<Promise<Promise<NuevoUsuario>>>;\ntype ValorNoNulo = NonNullable<string | null | undefined>;\ntype SoloTexto = Extract<string | number | boolean, string>;\ntype SinBooleano = Exclude<string | number | boolean, boolean>;",
+              "explanation": "Record exige una etiqueta para cada estado. Parameters obtiene la tupla de parámetros y ReturnType el tipo devuelto. Awaited resuelve tipos de promesas anidadas; NonNullable elimina null y undefined; Extract conserva miembros compatibles y Exclude elimina los indicados. Estas utilidades transforman tipos estáticos, no ejecutan conversiones ni filtran objetos."
+            }
+          ],
+          "exercise": "Modelá una ficha de producto, ProductoPublico que exponga solo nombre y precio, y ProductoActualizacion con campos editables opcionales.",
+          "hint": "Las utilidades transforman contratos estáticos, no modifican ni filtran objetos en runtime.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Utility Types oficiales",
+              "url": "https://www.typescriptlang.org/docs/handbook/utility-types.html"
+            }
+          ],
+          "related": [
+            "ts-generics-interfaces-classes",
+            "ts-keyof-typeof-indexed",
+            "ts-mapped-conditional-types"
+          ]
+        },
+        {
+          "id": "ts-mapped-conditional-types",
+          "title": "Mapped types y conditional types",
+          "category": "generics",
+          "summary": "Creá tipos que recorren propiedades de otro tipo y aplican reglas según la estructura de cada valor.",
+          "purpose": "Los mapped types recorren claves y generan nuevas propiedades. Los conditional types usan T extends U ? X : Y para elegir un tipo según una relación. Son herramientas avanzadas; conviene evitar complejidad que no aporte claridad.",
+          "syntax": "type Opcional<T> = { [K in keyof T]?: T[K] };\ntype EsArray<T> = T extends readonly unknown[] ? true : false;",
+          "examples": [
+            {
+              "title": "Mapped type",
+              "description": "Recreá una utilidad parecida a Partial.",
+              "code": "type Opcional<T> = { [K in keyof T]?: T[K] };\n\ntype Config = { tema: string; animaciones: boolean };\ntype ConfigParcial = Opcional<Config>;\n\nconst cambios: ConfigParcial = { tema: \"oscuro\" };",
+              "explanation": "keyof T obtiene las claves y el mapped type las recorre. ? añade opcionalidad y T[K] conserva el tipo original."
+            },
+            {
+              "title": "Conditional type",
+              "description": "El resultado depende de si T es asignable a string.",
+              "code": "type EsTexto<T> = T extends string ? true : false;\n\ntype CasoA = EsTexto<\"hola\">; // true\ntype CasoB = EsTexto<number>; // false",
+              "explanation": "La condición se evalúa durante el análisis de tipos. No genera un if en JavaScript."
+            },
+            {
+              "title": "Conditional type distributivo",
+              "description": "Una unión se evalúa por cada miembro cuando T es un parámetro desnudo.",
+              "code": "type NoNulos<T> = T extends null | undefined ? never : T;\ntype Entrada = string | number | null;\ntype Salida = NoNulos<Entrada>; // string | number\n\ntype Elemento<T> = T extends readonly (infer U)[] ? U : T;\ntype Letras = Elemento<readonly string[]>; // string\ntype Numero = Elemento<number>; // number",
+              "explanation": "La distribución evalúa cada miembro de la unión y descarta null. infer permite capturar el tipo de elemento de un array. Si T no es un array, este ejemplo devuelve T sin modificarlo."
+            }
+          ],
+          "exercise": "Construí SoloLectura<T> basado en mapped types y ExtraerArray<T> que devuelva el tipo de elemento si T es un array.",
+          "hint": "Antes de crear un tipo complejo, comprobá si Partial, Pick, Exclude u otra utilidad incorporada resuelve el problema.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Creating Types from Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html"
+            },
+            {
+              "label": "Utility Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/utility-types.html"
+            }
+          ],
+          "related": [
+            "ts-utility-types",
+            "ts-keyof-typeof-indexed",
+            "ts-generics-constraints"
+          ]
+        },
+        {
+          "id": "ts-clases",
+          "title": "Clases en TypeScript: propiedades, constructor y métodos",
+          "category": "clases-modulos",
+          "summary": "Definí clases con propiedades tipadas, constructores, métodos y relaciones de herencia.",
+          "purpose": "TypeScript extiende las clases de JavaScript con anotaciones para propiedades y parámetros. El constructor inicializa el estado; los métodos describen el comportamiento. Las anotaciones se eliminan al generar JavaScript.",
+          "syntax": "class Producto {\n  constructor(public nombre: string, public precio: number) {}\n}",
+          "examples": [
+            {
+              "title": "Propiedades y constructor",
+              "description": "Declaración e inicialización explícita del estado.",
+              "code": "class Producto {\n  nombre: string;\n  precio: number;\n\n  constructor(nombre: string, precio: number) {\n    this.nombre = nombre;\n    this.precio = precio;\n  }\n\n  subtotal(cantidad: number): number {\n    return this.precio * cantidad;\n  }\n}\n\nconst libro = new Producto(\"Manual TS\", 8000);",
+              "explanation": "Las propiedades se declaran y se inicializan en el constructor. El método devuelve number."
+            },
+            {
+              "title": "Herencia entre clases",
+              "description": "La clase derivada reutiliza el comportamiento de la base.",
+              "code": "class Persona {\n  constructor(public nombre: string) {}\n  saludar() { return \"Hola, soy \" + this.nombre; }\n}\n\nclass Estudiante extends Persona {\n  constructor(nombre: string, public curso: string) {\n    super(nombre);\n  }\n}\n\nconst alumna = new Estudiante(\"Vera\", \"TypeScript\");",
+              "explanation": "extends crea herencia. super(nombre) ejecuta el constructor base antes de usar this."
+            }
+          ],
+          "exercise": "Construí CuentaBancaria con titular, saldo, depositar y consultarSaldo. Evitá permitir montos negativos.",
+          "hint": "Usá clases cuando necesites instancias con estado y comportamiento relacionado. Un objeto simple tipado puede ser suficiente para muchos modelos.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Classes",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/classes.html"
+            }
+          ],
+          "related": [
+            "ts-modificadores",
+            "ts-clases-abstractas",
+            "ts-interfaces"
+          ]
+        },
+        {
+          "id": "ts-modificadores",
+          "title": "public, private, protected, readonly y static",
+          "category": "clases-modulos",
+          "summary": "Controlá qué miembros de una clase se usan desde fuera, desde subclases o desde la propia clase.",
+          "purpose": "public es el acceso predeterminado; private limita el acceso durante la comprobación de TypeScript; protected permite el acceso a subclases; readonly impide reasignar después de inicializar; static pertenece a la clase y no a cada instancia. Los campos privados # de JavaScript ofrecen privacidad en runtime.",
+          "syntax": "class Sesion {\n  public usuario: string;\n  private token: string;\n  readonly id: string;\n  static activas = 0;\n}",
+          "examples": [
+            {
+              "title": "private para encapsular estado",
+              "description": "Exponé operaciones controladas en vez del dato interno.",
+              "code": "class Cuenta {\n  private saldo = 0;\n\n  depositar(monto: number) {\n    if (monto <= 0) throw new Error(\"Monto inválido\");\n    this.saldo += monto;\n  }\n\n  consultarSaldo() { return this.saldo; }\n}\n\nconst cuenta = new Cuenta();\ncuenta.depositar(500);",
+              "explanation": "saldo no se puede leer directamente desde fuera de la clase durante la comprobación de TypeScript."
+            },
+            {
+              "title": "protected y readonly",
+              "description": "Una subclase accede a un miembro protegido, pero no se reasigna un id readonly.",
+              "code": "class Persona {\n  constructor(public readonly id: number, protected nombre: string) {}\n}\n\nclass Empleado extends Persona {\n  etiqueta() { return this.id + \": \" + this.nombre; }\n}\n\nconst empleado = new Empleado(5, \"Noa\");",
+              "explanation": "protected permite que Empleado lea nombre. readonly evita reasignar id después de inicializarlo."
+            },
+            {
+              "title": "Miembros estáticos",
+              "description": "Un miembro static pertenece a la clase, no a cada instancia.",
+              "code": "class Contador {\n  static total = 0;\n  constructor() { Contador.total++; }\n}\n\nnew Contador();\nnew Contador();\nconsole.log(Contador.total); // 2",
+              "explanation": "total se consulta mediante Contador.total y no desde una instancia."
+            }
+          ],
+          "exercise": "Extendé CuentaBancaria con saldo privado, titular readonly y un contador static de cuentas creadas.",
+          "hint": "private de TypeScript es una restricción de tipos; los campos # privados de JavaScript aplican privacidad en runtime.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Classes",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/classes.html"
+            }
+          ],
+          "related": [
+            "ts-clases",
+            "ts-clases-abstractas"
+          ]
+        },
+        {
+          "id": "ts-clases-abstractas",
+          "title": "Clases abstractas e interfaces con implements",
+          "category": "clases-modulos",
+          "summary": "Definí una base incompleta que obliga a las subclases a implementar comportamientos específicos.",
+          "purpose": "Una clase abstract no se instancia directamente y puede declarar métodos abstract que las clases derivadas deben implementar. implements comprueba que una clase cumpla un contrato de interface, pero no agrega implementación por sí mismo.",
+          "syntax": "abstract class Figura { abstract area(): number; }",
+          "examples": [
+            {
+              "title": "Clase base abstracta",
+              "description": "La clase base define una operación obligatoria.",
+              "code": "abstract class Figura {\n  constructor(public color: string) {}\n  abstract area(): number;\n  describir() { return \"Figura \" + this.color; }\n}\n\nclass Circulo extends Figura {\n  constructor(color: string, private radio: number) { super(color); }\n  area(): number { return Math.PI * this.radio ** 2; }\n}",
+              "explanation": "Figura no puede instanciarse directamente. Circulo hereda describir y debe implementar area."
+            },
+            {
+              "title": "implements para cumplir un contrato",
+              "description": "La clase debe proporcionar el método definido en la interfaz.",
+              "code": "interface Exportable { exportar(): string }\n\nclass Informe implements Exportable {\n  constructor(private titulo: string) {}\n  exportar(): string { return \"# \" + this.titulo; }\n}",
+              "explanation": "implements hace que TypeScript compruebe la firma de exportar. La interfaz no contiene una implementación en runtime."
+            }
+          ],
+          "exercise": "Creá Notificacion abstracta con enviar(): void y dos clases concretas EmailNotificacion y SmsNotificacion.",
+          "hint": "Elegí interfaces para describir capacidades y clases abstractas cuando necesites compartir estado o comportamiento.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Classes",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/classes.html"
+            }
+          ],
+          "related": [
+            "ts-interfaces",
+            "ts-clases",
+            "ts-modificadores"
+          ]
+        },
+        {
+          "id": "ts-modulos-import-export",
+          "title": "Módulos: export, import y type-only imports",
+          "category": "clases-modulos",
+          "summary": "Separá tipos y funciones en archivos y compartí contratos entre módulos de un proyecto.",
+          "purpose": "Los módulos organizan código en archivos con export e import. TypeScript distingue imports usados como valores en runtime de imports que solo sirven como tipos. import type y export type comunican esa intención y ayudan a mantener módulos claros.",
+          "syntax": "export interface Usuario { id: number; nombre: string }\nimport type { Usuario } from \"./usuario.js\";",
+          "examples": [
+            {
+              "title": "Exportar funciones y tipos",
+              "description": "Un módulo puede exportar valores y contratos.",
+              "code": "// src/usuario.ts\nexport interface Usuario { id: number; nombre: string }\n\nexport function crearUsuario(nombre: string): Usuario {\n  return { id: Date.now(), nombre };\n}",
+              "explanation": "Usuario se usa como tipo y crearUsuario es una función real. Solo la función existe en runtime."
+            },
+            {
+              "title": "Importar un tipo y una función",
+              "description": "Separá explícitamente los imports que solo se usan como tipos.",
+              "code": "// src/app.ts\nimport { crearUsuario, type Usuario } from \"./usuario.js\";\n\nconst usuario: Usuario = crearUsuario(\"Mora\");\nconsole.log(usuario.nombre);",
+              "explanation": "La extensión .js puede ser apropiada en proyectos ESM con resolución NodeNext. Seguí la configuración del proyecto y sus convenciones."
+            },
+            {
+              "title": "Exportación default y nombrada",
+              "description": "Podés elegir el estilo de exportación según el módulo.",
+              "code": "// src/formato.ts\nexport const moneda = \"ARS\";\nexport default function formatear(valor: number) {\n  return new Intl.NumberFormat(\"es-AR\", { style: \"currency\", currency: moneda }).format(valor);\n}\n\n// src/app.ts\nimport formatear, { moneda } from \"./formato.js\";",
+              "explanation": "La exportación default se importa con el nombre que el consumidor elija. Las exportaciones nombradas conservan su identificador."
+            }
+          ],
+          "exercise": "Dividí un proyecto en usuario.ts, producto.ts y app.ts. Exportá un tipo, una función y una constante; importalos desde app.ts.",
+          "hint": "Los imports dependen de module y moduleResolution. No copies una ruta sin revisar el entorno donde se ejecutará el JavaScript.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Modules",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/modules.html"
+            },
+            {
+              "label": "Modules Reference",
+              "url": "https://www.typescriptlang.org/docs/handbook/modules/reference.html"
+            }
+          ],
+          "related": [
+            "ts-tsconfig",
+            "ts-declaration-files",
+            "ts-instalacion-primer-proyecto"
+          ]
+        },
+        {
+          "id": "ts-declaration-files",
+          "title": "Archivos .d.ts, @types y bibliotecas JavaScript",
+          "category": "clases-modulos",
+          "summary": "Entendé cómo TypeScript conoce los tipos de paquetes que no están escritos en TypeScript.",
+          "purpose": "Los archivos .d.ts describen valores y módulos sin implementar su comportamiento. Muchos paquetes publican sus propios tipos; otros usan definiciones comunitarias, normalmente instaladas desde @types. Una declaración ayuda al editor y al compilador, pero no valida el paquete real.",
+          "syntax": "npm install --save-dev @types/node\n// types.d.ts describe firmas, no implementaciones",
+          "examples": [
+            {
+              "title": "Declarar tipos de un módulo",
+              "description": "El archivo de declaración describe qué exporta el paquete.",
+              "code": "// src/tipos/calculadora.d.ts\ndeclare module \"calculadora-simple\" {\n  export function sumar(a: number, b: number): number;\n}",
+              "explanation": "El archivo describe la firma de sumar. La implementación debe existir en el paquete real y coincidir con esa declaración."
+            },
+            {
+              "title": "Instalar definiciones comunitarias",
+              "description": "Algunas bibliotecas necesitan un paquete @types separado.",
+              "code": "npm install express\nnpm install --save-dev @types/express @types/node",
+              "explanation": "Express 5 documenta el uso de definiciones comunitarias para trabajar con TypeScript. El paquete principal aporta el código; @types aporta la descripción de sus APIs."
+            },
+            {
+              "title": "Declarar una variable global",
+              "description": "Los archivos .d.ts pueden describir valores inyectados por el entorno.",
+              "code": "// src/tipos/entorno.d.ts\ndeclare const BUILD_VERSION: string;\n\n// src/app.ts\nconsole.log(\"Versión \" + BUILD_VERSION);",
+              "explanation": "La declaración permite que TypeScript reconozca el identificador. El proceso de build debe proporcionar realmente BUILD_VERSION."
+            }
+          ],
+          "exercise": "Elegí una biblioteca JavaScript y averiguá si incluye tipos. Si no, buscá su paquete @types o prepará una declaración pequeña basada en su API real.",
+          "hint": "No inventes tipos que describan una API diferente a la implementación: eso crea una falsa sensación de seguridad.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Declaration Files: introducción",
+              "url": "https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html"
+            },
+            {
+              "label": "DefinitelyTyped",
+              "url": "https://github.com/DefinitelyTyped/DefinitelyTyped"
+            }
+          ],
+          "related": [
+            "ts-modulos-import-export",
+            "ts-js-migration",
+            "ts-react-node"
+          ]
+        },
+        {
+          "id": "ts-tsconfig",
+          "title": "tsconfig.json: configurar el compilador",
+          "category": "config-integracion",
+          "summary": "Configurá TypeScript según el entorno, la estructura y el nivel de seguridad que necesita tu proyecto.",
+          "purpose": "tsconfig.json define qué archivos analiza el compilador y cómo realiza la comprobación o emisión. Las opciones habituales incluyen target, module, moduleResolution, rootDir, outDir, strict, noEmit y skipLibCheck. No existe una configuración idéntica para navegador, Node.js y frameworks.",
+          "syntax": "npx tsc --init\n// tsconfig.json → compilerOptions",
+          "examples": [
+            {
+              "title": "Configuración de base para Node ESM",
+              "description": "Compilá archivos de src y emití JavaScript en dist.",
+              "code": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2022\",\n    \"module\": \"NodeNext\",\n    \"moduleResolution\": \"NodeNext\",\n    \"rootDir\": \"./src\",\n    \"outDir\": \"./dist\",\n    \"strict\": true,\n    \"esModuleInterop\": true,\n    \"skipLibCheck\": true\n  },\n  \"include\": [\"src/**/*.ts\"],\n  \"exclude\": [\"node_modules\", \"dist\"]\n}",
+              "explanation": "Es una configuración ilustrativa para un proyecto Node ESM, no una receta universal. module y moduleResolution deben coincidir con el entorno de ejecución. Para que NodeNext trate los archivos como módulos ESM, configurá también \"type\": \"module\" en package.json (o elegí conscientemente el sistema CommonJS)."
+            },
+            {
+              "title": "Configuración sin emisión",
+              "description": "Un bundler puede encargarse de transformar los módulos.",
+              "code": "{\n  \"compilerOptions\": {\n    \"strict\": true,\n    \"noEmit\": true,\n    \"target\": \"ESNext\",\n    \"module\": \"ESNext\",\n    \"moduleResolution\": \"Bundler\"\n  }\n}",
+              "explanation": "noEmit impide que tsc escriba JavaScript. El bundler transforma los módulos, mientras TypeScript realiza la comprobación."
+            },
+            {
+              "title": "Comprobaciones adicionales",
+              "description": "Podés endurecer el control de valores e índices.",
+              "code": "{\n  \"compilerOptions\": {\n    \"strict\": true,\n    \"noUncheckedIndexedAccess\": true,\n    \"exactOptionalPropertyTypes\": true,\n    \"noUnusedLocals\": true,\n    \"noUnusedParameters\": true\n  }\n}",
+              "explanation": "Estas opciones pueden requerir ajustes en código existente. Activá reglas adicionales de forma consciente y revisá los errores resultantes."
+            }
+          ],
+          "exercise": "Creá un tsconfig.json para un proyecto Node pequeño. Explicá por qué elegiste module, moduleResolution, target, rootDir, outDir y strict.",
+          "hint": "Copiá una configuración solo después de saber si el proyecto compila para navegador, Node, bundler o framework.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "TSConfig Reference",
+              "url": "https://www.typescriptlang.org/tsconfig/"
+            },
+            {
+              "label": "Choosing Compiler Options",
+              "url": "https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html"
+            }
+          ],
+          "related": [
+            "ts-instalacion-primer-proyecto",
+            "ts-cli-compilation",
+            "ts-modulos-import-export"
+          ]
+        },
+        {
+          "id": "ts-cli-compilation",
+          "title": "tsc: compilar, observar cambios y revisar errores",
+          "category": "config-integracion",
+          "summary": "Usá la interfaz de línea de comandos del compilador para comprobar proyectos, observar archivos y generar JavaScript.",
+          "purpose": "tsc es el compilador oficial de TypeScript. Puede trabajar con un archivo, una configuración o un proyecto completo. Las opciones habituales incluyen --project, --noEmit, --watch y --listFiles. La salida depende de tsconfig.json y de los parámetros indicados.",
+          "syntax": "npx tsc --project tsconfig.json\nnpx tsc --noEmit\nnpx tsc --watch",
+          "examples": [
+            {
+              "title": "Comprobar el proyecto",
+              "description": "Indicá explícitamente qué configuración debe leer.",
+              "code": "npx tsc --project tsconfig.json\n# Comprobación sin generar archivos\nnpx tsc --noEmit",
+              "explanation": "El primer comando compila según la configuración indicada. El segundo realiza una comprobación sin emitir archivos."
+            },
+            {
+              "title": "Observar cambios",
+              "description": "Watch vuelve a comprobar cuando guardás los archivos.",
+              "code": "npx tsc --watch",
+              "explanation": "Es útil durante el desarrollo. Detenelo con Ctrl+C. Watch no inicia un servidor web ni ejecuta automáticamente el JavaScript emitido."
+            },
+            {
+              "title": "Compilar un archivo puntual",
+              "description": "Podés hacer pruebas aisladas con un archivo.",
+              "code": "npx tsc src/prueba.ts --target ES2022 --outDir dist",
+              "explanation": "Al pasar archivos directamente, la compilación puede no usar las opciones del tsconfig como esperás. Para proyectos completos, preferí --project."
+            }
+          ],
+          "exercise": "Practicá tsc --noEmit, tsc --watch y tsc --project. Provocá y corregí un error de tipos.",
+          "hint": "Si el resultado no coincide con lo esperado, comprobá qué tsconfig está utilizando el compilador y qué archivos incluye.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Opciones de línea de comandos",
+              "url": "https://www.typescriptlang.org/docs/handbook/compiler-options.html"
+            },
+            {
+              "label": "Instalación oficial",
+              "url": "https://www.typescriptlang.org/download/"
+            }
+          ],
+          "related": [
+            "ts-instalacion-primer-proyecto",
+            "ts-tsconfig",
+            "ts-checking-static-runtime"
+          ]
+        },
+        {
+          "id": "ts-js-migration",
+          "title": "Migrar JavaScript a TypeScript gradualmente",
+          "category": "config-integracion",
+          "summary": "Convertí un proyecto JavaScript existente por etapas sin reescribirlo todo de una sola vez.",
+          "purpose": "TypeScript permite adopción gradual. Podés habilitar allowJs para incluir archivos .js, checkJs para comprobarlos, usar comentarios JSDoc y renombrar archivos poco a poco a .ts o .tsx. Esta estrategia reduce el riesgo y permite priorizar módulos importantes.",
+          "syntax": "allowJs: true\ncheckJs: true\n// @ts-check",
+          "examples": [
+            {
+              "title": "Activar comprobación en archivos JavaScript",
+              "description": "Incluí archivos .js en el proyecto y pedí diagnósticos.",
+              "code": "{\n  \"compilerOptions\": {\n    \"allowJs\": true,\n    \"checkJs\": true,\n    \"noEmit\": true,\n    \"strict\": true\n  },\n  \"include\": [\"src/**/*\"]\n}",
+              "explanation": "allowJs permite incluir archivos .js y checkJs activa diagnósticos. Ajustá el alcance para no incorporar demasiados errores de una sola vez."
+            },
+            {
+              "title": "Agregar tipos con JSDoc",
+              "description": "Documentá parámetros y retorno antes de cambiar la extensión.",
+              "code": "// @ts-check\n/**\n * @param {number} precio\n * @param {number} cantidad\n * @returns {number}\n */\nfunction subtotal(precio, cantidad) {\n  return precio * cantidad;\n}",
+              "explanation": "JSDoc permite que el verificador entienda los contratos de JavaScript. Es una transición útil para código que todavía no querés renombrar."
+            },
+            {
+              "title": "Migrar un módulo pequeño",
+              "description": "Convertí primero un archivo aislado y revisá sus consumidores.",
+              "code": "// Antes: calculos.js\nexport function sumar(a, b) { return a + b; }\n\n// Después: calculos.ts\nexport function sumar(a: number, b: number): number {\n  return a + b;\n}",
+              "explanation": "Migrá un módulo de bajo riesgo, ejecutá pruebas y revisá sus consumidores antes de avanzar."
+            }
+          ],
+          "exercise": "Elegí un archivo JavaScript pequeño, agregá // @ts-check y documentá sus parámetros con JSDoc. Después convertí ese módulo a .ts.",
+          "hint": "Priorizá módulos reutilizados y límites entre capas. Conservá las pruebas y migrá de manera incremental.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "Migrating from JavaScript",
+              "url": "https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html"
+            },
+            {
+              "label": "JS Projects Utilizing TypeScript",
+              "url": "https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html"
+            }
+          ],
+          "related": [
+            "ts-instalacion-primer-proyecto",
+            "ts-declaration-files",
+            "ts-tsconfig"
+          ]
+        },
+        {
+          "id": "ts-dom-events",
+          "title": "TypeScript en el DOM: elementos y eventos",
+          "category": "config-integracion",
+          "summary": "Trabajá con elementos del documento, formularios y eventos utilizando los tipos que ofrece la biblioteca DOM.",
+          "purpose": "TypeScript reconoce interfaces como HTMLElement, HTMLInputElement, MouseEvent y SubmitEvent cuando el proyecto incluye las librerías DOM. Los selectores pueden devolver null y los listeners ofrecen tipos contextuales para sus eventos.",
+          "syntax": "const input = document.querySelector<HTMLInputElement>(\"#nombre\");",
+          "examples": [
+            {
+              "title": "Seleccionar y estrechar un elemento",
+              "description": "querySelector puede no encontrar el elemento.",
+              "code": "const titulo = document.querySelector(\"#titulo\");\n\nif (titulo instanceof HTMLHeadingElement) {\n  titulo.textContent = \"Nuevo título\";\n}",
+              "explanation": "El selector devuelve Element | null. instanceof comprueba el elemento real y permite acceder a propiedades específicas."
+            },
+            {
+              "title": "Usar el tipo genérico de querySelector",
+              "description": "Indicá el elemento esperado y comprobá que exista.",
+              "code": "const campo = document.querySelector<HTMLInputElement>(\"#correo\");\n\nif (campo) {\n  campo.value = \"persona@example.com\";\n  campo.focus();\n}",
+              "explanation": "El parámetro genérico indica el tipo esperado, pero no valida que el selector apunte realmente a un input. La comprobación de existencia sigue siendo necesaria."
+            },
+            {
+              "title": "Tipar eventos de formularios",
+              "description": "El navegador aporta tipos para el evento y el formulario.",
+              "code": "const formulario = document.querySelector<HTMLFormElement>(\"#registro\");\n\nformulario?.addEventListener(\"submit\", (event: SubmitEvent) => {\n  event.preventDefault();\n  const datos = new FormData(formulario);\n  console.log(datos.get(\"correo\"));\n});",
+              "explanation": "FormData.get devuelve FormDataEntryValue | null, porque el campo podría no existir o no tener valor."
+            }
+          ],
+          "exercise": "Creá un formulario con nombre y correo. Tipá el formulario, evitá la recarga y leé los valores con FormData.",
+          "hint": "Los tipos DOM no reemplazan la validación del formulario ni los atributos del HTML. Comprobá los valores también en runtime.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "TypeScript: DOM Manipulation",
+              "url": "https://www.typescriptlang.org/docs/handbook/dom-manipulation.html"
+            },
+            {
+              "label": "MDN: FormData",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/FormData"
+            }
+          ],
+          "related": [
+            "ts-null-undefined",
+            "ts-type-guards",
+            "ts-async-api"
+          ]
+        },
+        {
+          "id": "ts-async-api",
+          "title": "Promesas, async/await y respuestas de APIs tipadas",
+          "category": "config-integracion",
+          "summary": "Tipá operaciones asíncronas y entendé por qué una respuesta JSON necesita validación antes de tratarla como un objeto confiable.",
+          "purpose": "Promise<T> representa una operación que se resolverá con un valor de tipo T. TypeScript infiere el retorno de funciones async. Sin embargo, Response.json entrega datos que deben validarse antes de confiar en ellos: una anotación no comprueba una respuesta de red.",
+          "syntax": "async function cargarUsuario(): Promise<Usuario> { /* ... */ }",
+          "examples": [
+            {
+              "title": "Retorno asíncrono tipado",
+              "description": "La función async devuelve una Promise.",
+              "code": "type Usuario = { id: number; nombre: string };\n\nasync function obtenerUsuario(): Promise<Usuario> {\n  return { id: 1, nombre: \"Mila\" };\n}\n\nobtenerUsuario().then(usuario => console.log(usuario.nombre));",
+              "explanation": "TypeScript comprueba que el valor resuelto cumpla Usuario."
+            },
+            {
+              "title": "Tratar JSON como unknown",
+              "description": "No afirmes que cualquier respuesta ya es un Usuario.",
+              "code": "type Usuario = { id: number; nombre: string };\n\nfunction esUsuario(valor: unknown): valor is Usuario {\n  return typeof valor === \"object\" && valor !== null &&\n    \"id\" in valor && typeof valor.id === \"number\" &&\n    \"nombre\" in valor && typeof valor.nombre === \"string\";\n}\n\nasync function cargarUsuario(id: number): Promise<Usuario> {\n  const respuesta = await fetch(\"/api/usuarios/\" + id);\n  if (!respuesta.ok) throw new Error(\"HTTP \" + respuesta.status);\n  const dato: unknown = await respuesta.json();\n  if (!esUsuario(dato)) throw new Error(\"Respuesta inválida\");\n  return dato;\n}",
+              "explanation": "La función comprueba el estado HTTP, recibe JSON como unknown y valida su estructura antes de devolver Usuario."
+            },
+            {
+              "title": "Manejar errores desconocidos",
+              "description": "No asumas que todo valor capturado es una instancia de Error.",
+              "code": "async function cargarDatos() {\n  try {\n    const respuesta = await fetch(\"/datos.json\");\n    if (!respuesta.ok) throw new Error(\"HTTP \" + respuesta.status);\n    return await respuesta.json();\n  } catch (error: unknown) {\n    if (error instanceof Error) console.error(error.message);\n    else console.error(\"Error desconocido\");\n    throw error;\n  }\n}",
+              "explanation": "En modo strict el error capturado se trata como unknown. instanceof permite acceder a message cuando corresponde."
+            }
+          ],
+          "exercise": "Construí una función que consulte una API, compruebe response.ok y valide el JSON como unknown. Incluí manejo de errores y un tipo de resultado.",
+          "hint": "No uses response.json() as Usuario como única comprobación cuando el dato viene de una fuente externa.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "MDN: Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "Handbook: Functions",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+            }
+          ],
+          "related": [
+            "ts-type-guards",
+            "ts-null-undefined",
+            "ts-generics-interfaces-classes"
+          ]
+        },
+        {
+          "id": "ts-react-node",
+          "title": "TypeScript con React y Node.js",
+          "category": "config-integracion",
+          "summary": "Conectá TypeScript con React en el frontend y Node.js en el backend sin repetir sus fundamentos.",
+          "purpose": "React utiliza archivos .tsx cuando se combina JSX con TypeScript. Las props y eventos se tipan con interfaces y tipos. En Node.js, los tipos del entorno suelen instalarse desde @types/node. La configuración de módulos debe respetar el runtime o framework elegido; Next.js y Express tendrán sus propias guías.",
+          "syntax": "npm install --save-dev @types/node\n// Los componentes con JSX usan .tsx",
+          "examples": [
+            {
+              "title": "Tipar props de React",
+              "description": "Definí el contrato de entrada de un componente.",
+              "code": "import type { ReactNode } from \"react\";\n\ntype TarjetaProps = { titulo: string; children?: ReactNode };\n\nfunction Tarjeta({ titulo, children }: TarjetaProps) {\n  return <section><h2>{titulo}</h2>{children}</section>;\n}",
+              "explanation": "El archivo usa extensión .tsx porque contiene JSX. ReactNode describe el contenido que React puede renderizar."
+            },
+            {
+              "title": "Tipar un evento de React",
+              "description": "Usá los tipos de eventos asociados al elemento.",
+              "code": "import { useState, type ChangeEvent } from \"react\";\n\nfunction CampoNombre() {\n  const [nombre, setNombre] = useState<string>(\"\");\n  const cambiar = (event: ChangeEvent<HTMLInputElement>) => {\n    setNombre(event.target.value);\n  };\n  return <input value={nombre} onChange={cambiar} />;\n}",
+              "explanation": "ChangeEvent<HTMLInputElement> describe el evento. useState puede inferir string desde el valor inicial; el genérico explícito es opcional."
+            },
+            {
+              "title": "Tipar el entorno Node.js",
+              "description": "Leé las variables de entorno como valores que pueden estar ausentes.",
+              "code": "import process from \"node:process\";\n\nconst puerto = Number(process.env.PORT ?? 3000);\nif (!Number.isInteger(puerto) || puerto <= 0) {\n  throw new Error(\"PORT debe ser un entero positivo\");\n}\nconsole.log(\"Servidor en puerto \" + puerto);",
+              "explanation": "PORT se lee como string o undefined. Number no garantiza validez, por eso comprobamos el resultado."
+            }
+          ],
+          "exercise": "Creá un componente React Boton que reciba texto y onClick tipados. Después escribí una función Node que lea PORT y valide su valor.",
+          "hint": "No mezcles configuraciones de React, Node, Next.js y Express sin revisar el entorno. Las estudiaremos en sus respectivos apartados.",
+          "parameters": [],
+          "bestPractices": [
+            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
+            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
+            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+          ],
+          "commonMistakes": [
+            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
+            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
+            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+          ],
+          "resources": [
+            {
+              "label": "React: Using TypeScript",
+              "url": "https://react.dev/learn/typescript"
+            },
+            {
+              "label": "Node.js: TypeScript",
+              "url": "https://nodejs.org/api/typescript.html"
+            },
+            {
+              "label": "Express 5: TypeScript",
+              "url": "https://expressjs.com/es/5x/starter/installing/"
+            }
+          ],
+          "related": [
+            "ts-declaration-files",
+            "ts-dom-events",
+            "ts-modulos-import-export",
+            "ts-tsconfig"
+          ]
+        },
+        {
+          "id": "ts-enums",
+          "title": "Enums y alternativas con uniones literales",
+          "category": "tipos-basicos",
+          "summary": "Representá conjuntos de valores relacionados y compará enums con uniones de strings y objetos const.",
+          "purpose": "Un enum define un conjunto de constantes con nombre. A diferencia de los tipos y las interfaces, un enum normal genera un objeto JavaScript en runtime. Puede ser útil cuando querés un conjunto centralizado de constantes o interoperar con una API existente. Para estados y opciones simples, una unión de strings literales suele ser más directa y no genera un objeto adicional.",
+          "syntax": "enum Estado { Pendiente, Pagado, Enviado }\ntype EstadoSimple = \"pendiente\" | \"pagado\" | \"enviado\";",
+          "examples": [
+            {
+              "title": "Enum numérico",
+              "description": "Los valores numéricos se asignan automáticamente desde cero si no se especifican.",
+              "code": "enum Direccion {\n  Arriba,\n  Abajo,\n  Izquierda,\n  Derecha\n}\n\nconst movimiento = Direccion.Derecha;\nconsole.log(movimiento); // 3",
+              "explanation": "Direccion.Derecha vale 3 porque los miembros anteriores recibieron 0, 1 y 2. Los enums numéricos generan también una asignación inversa en el objeto emitido. No asumas valores numéricos sin revisarlos si se guardarán en una base de datos o viajarán por una API."
+            },
+            {
+              "title": "Enum de strings",
+              "description": "Asigná valores explícitos y legibles, útiles para persistencia o comunicación.",
+              "code": "enum EstadoPedido {\n  Pendiente = \"pendiente\",\n  Pagado = \"pagado\",\n  Enviado = \"enviado\"\n}\n\nfunction actualizarEstado(estado: EstadoPedido) {\n  console.log(\"Estado: \" + estado);\n}\n\nactualizarEstado(EstadoPedido.Pagado);",
+              "explanation": "Los enums de string no tienen valores automáticos: cada miembro debe inicializarse. Los valores son legibles al serializar, aunque el enum sigue generando un objeto en JavaScript."
+            },
+            {
+              "title": "Alternativa moderna con unión literal y objeto const",
+              "description": "Elegí una unión si solo necesitás restringir un valor, sin generar un enum.",
+              "code": "type Estado = \"pendiente\" | \"pagado\" | \"enviado\";\n\nconst ESTADOS = {\n  Pendiente: \"pendiente\",\n  Pagado: \"pagado\",\n  Enviado: \"enviado\"\n} as const;\n\ntype EstadoDesdeObjeto = typeof ESTADOS[keyof typeof ESTADOS];\n\nfunction guardar(estado: Estado) {\n  console.log(estado);\n}\n\nguardar(ESTADOS.Pagado);",
+              "explanation": "La unión describe las alternativas sin crear un objeto JavaScript. El objeto as const es útil cuando también necesitás nombres constantes accesibles en runtime. No existe una única elección correcta: mantené el estilo consistente y considerá la interoperabilidad."
+            }
+          ],
+          "exercise": "Modelá el estado de una descarga de tres maneras: con enum, con una unión de strings y con un objeto as const. Compará el JavaScript generado y decidí qué opción usarías para una API.",
+          "hint": "No elijas enum solo porque existe. Preguntate si necesitás un objeto disponible en runtime o si una unión literal es suficiente.",
+          "parameters": [],
+          "bestPractices": [
+            "Preferí uniones de strings literales para estados simples cuando no necesitás un objeto enum en runtime.",
+            "Si usás enums numéricos, no dependas de valores automáticos para datos persistidos o compartidos con otros sistemas.",
+            "Usá enums de strings cuando la API existente ya define ese contrato o cuando el proyecto adopta ese patrón de forma consistente."
+          ],
+          "commonMistakes": [
+            "Creer que enum es solamente una anotación de tipo: un enum normal también genera JavaScript.",
+            "Suponer que los miembros de un enum numérico tienen valores estables si se reordenan.",
+            "Usar as const sin comprender que conserva literales y readonly en el análisis de tipos."
+          ],
+          "resources": [
+            {
+              "label": "Handbook: Enums",
+              "url": "https://www.typescriptlang.org/docs/handbook/enums.html"
+            },
+            {
+              "label": "Everyday Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+            }
+          ],
+          "related": [
+            "ts-uniones-literales",
+            "ts-type-alias",
+            "ts-tipos-objetos"
           ]
         }
       ]
