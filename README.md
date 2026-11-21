@@ -11,8 +11,9 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 - **Desarrollo de juegos:** Phaser.
 - **Tipado estático:** TypeScript, desde los fundamentos hasta genéricos, módulos, configuración e integración con DOM, React y Node.js.
 - **Framework full-stack:** Next.js, con App Router, Server/Client Components, caché, Server Actions, Route Handlers, seguridad, pruebas y despliegue.
+- **Backend HTTP:** Express.js 5, con rutas, middleware, APIs REST, validación, autenticación, seguridad, TypeScript, pruebas y despliegue.
 
-El catálogo de herramientas y tecnologías contiene **205 artículos**. TypeScript incorpora 37 artículos en siete categorías y Next.js incorpora 44 artículos en siete categorías.
+El catálogo de herramientas y tecnologías contiene **247 artículos**. TypeScript incorpora 37 artículos, Next.js 44 artículos y Express.js 42 artículos, cada tecnología distribuida en siete categorías.
 
 ## Estructura del proyecto
 
