@@ -79,8 +79,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const sections = [
     {id:"concepto", title:"¿Qué es y para qué sirve?", html:"<p>" + escapeHTML(article.purpose) + "</p>"},
     {id:"implementacion", title:"¿Cómo se implementa?", html:"<p>" + escapeHTML(article.howTo) + "</p>"},
-    {id:"ejemplo", title:"Código: cómo se escribe", html:'<p>Ejemplo de implementación:</p><div class="code-example"><span class="code-caption">CÓDIGO HTML</span><pre><code>' + escapeHTML(article.code) + '</code></pre></div>'},
-    {id:"ejemplos-adicionales", title:"Más ejemplos prácticos", html: (article.exampleVariants || []).map(item => '<div class="code-example"><h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description) + '</p><span class="code-caption">CÓDIGO HTML</span><pre><code>' + escapeHTML(item.code) + '</code></pre></div>').join("") || "<p>Este artículo todavía no incluye ejemplos adicionales.</p>"},
+    {id:"ejemplo", title:"Código: cómo se escribe", html:'<p>Ejemplo de implementación:</p><div class="code-example"><span class="code-caption">CÓDIGO HTML</span><pre><code class="language-markup">' + escapeHTML(article.code) + '</code></pre></div>'},
+    {id:"ejemplos-adicionales", title:"Más ejemplos prácticos", html: (article.exampleVariants || []).map(item => '<div class="code-example"><h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description) + '</p><span class="code-caption">CÓDIGO HTML</span><pre><code class="language-markup">' + escapeHTML(item.code) + '</code></pre></div>').join("") || "<p>Este artículo todavía no incluye ejemplos adicionales.</p>"},
     {id:"laboratorio-html", title:"Laboratorio práctico", html:'<p>Modificá el marcado y ejecutá la vista previa. El laboratorio está aislado: el HTML se muestra, pero los scripts del ejemplo no se ejecutan.</p><div class="html-lab-grid"><div class="html-lab-editor"><label for="htmlLabCode">Tu código HTML</label><textarea id="htmlLabCode" spellcheck="false" aria-label="Editor HTML del laboratorio">' + escapeHTML(article.code || "<h1>Hola, web</h1>\\n<p>Mi primera práctica.</p>") + '</textarea><div class="html-lab-actions"><button type="button" id="runHtmlLab">▶ Ejecutar</button><button type="button" id="resetHtmlLab">Restablecer</button><span id="htmlLabStatus" aria-live="polite">Vista previa lista para ejecutar</span></div></div><div class="html-lab-preview"><label>Resultado</label><iframe id="htmlLabFrame" title="Vista previa del laboratorio HTML" sandbox></iframe></div></div><div class="html-practice-task"><strong>Reto de este artículo</strong><p id="htmlPracticeTask"></p><details><summary>Una pista para empezar</summary><p>' + escapeHTML(article.tip || "Cambiá una parte del marcado, guardá una copia y observá cómo cambia el resultado.") + '</p></details><a class="html-open-editor" href="editor.html">Abrir el editor completo ↗</a></div>'},
     {id:"detalles", title:"Detalles importantes", html:"<ul>" + article.details.map(item => "<li>" + escapeHTML(item) + "</li>").join("") + "</ul>"},
     {id:"cuando-no", title:"¿Cuándo no conviene usarlo?", html:'<div class="warning-box">' + escapeHTML(article.avoid) + '</div>'},
@@ -97,6 +97,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     '<section class="article-section" id="' + section.id + '"><h2>' +
     section.title + '</h2>' + section.html + '</section>'
   ).join("");
+  // Colorea los ejemplos HTML después de insertarlos en el documento.
+  if (window.Prism) Prism.highlightAllUnder(body);
   // Laboratorio HTML: el contenido se muestra en un iframe aislado y sin permisos de script.
   const labEditor = document.getElementById("htmlLabCode");
   const labFrame = document.getElementById("htmlLabFrame");
