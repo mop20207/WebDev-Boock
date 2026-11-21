@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link.href = article.url || "#";
 
       const badge = document.createElement("span");
-      badge.className = "favorite-language favorite-" + article.language;
+      badge.className = "favorite-language favorite-" + article.language + (article.language === "tools" ? " favorite-tools" : "");
       badge.textContent = article.languageName || LANGUAGE_NAMES[article.language] || article.language;
 
       const copy = document.createElement("span");
