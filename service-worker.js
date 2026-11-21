@@ -122,11 +122,31 @@ async function staleWhileRevalidate(request) {
   return cached || await update || Response.error();
 }
 
+async function externalAsset(request) {
+  const cached = await caches.match(request);
+  try {
+    const response = await fetch(request);
+    // También se pueden guardar respuestas opacas de CDN para reutilizarlas sin conexión.
+    if (response && (response.ok || response.type === "opaque")) {
+      caches.open(RUNTIME_CACHE).then(cache => cache.put(request, response.clone()));
+    }
+    return response;
+  } catch (error) {
+    return cached || Response.error();
+  }
+}
+
 self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
+  if (url.origin !== APP_BASE.origin) {
+    if (["style", "script", "font", "image"].includes(request.destination)) {
+      event.respondWith(externalAsset(request));
+    }
+    return;
+  }
   if (!isAppRequest(url)) return;
 
   if (request.mode === "navigate") {
