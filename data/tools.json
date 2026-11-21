@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "articleCount": 39,
+  "articleCount": 41,
   "description": "Contenido didáctico propio de Terminal Linux, Git/GitHub y NPM con referencias oficiales.",
   "tools": [
     {
@@ -56,6 +56,16 @@
             "terminal-grep",
             "terminal-tuberias",
             "terminal-historial"
+          ]
+        },
+        {
+          "id": "multimedia",
+          "title": "Multimedia",
+          "description": "Convertí y procesá imágenes, audio y video mediante herramientas de consola.",
+          "icon": "▧",
+          "articles": [
+            "terminal-imagemagick",
+            "terminal-ffmpeg"
           ]
         },
         {
@@ -695,6 +705,100 @@
             }
           ],
           "related": []
+        },
+        {
+          "id": "terminal-imagemagick",
+          "title": "Procesar imágenes con ImageMagick",
+          "category": "multimedia",
+          "summary": "Consultá dimensiones, redimensioná y convertí imágenes desde la terminal.",
+          "purpose": "ImageMagick reúne herramientas de consola para inspeccionar, redimensionar y convertir imágenes. Sus utilidades habituales incluyen magick e identify. Las operaciones disponibles dependen de la versión instalada.",
+          "syntax": "magick entrada.png -resize 800x600 salida.png\\nidentify imagen.png",
+          "examples": [
+            {
+              "title": "Consultar dimensiones",
+              "description": "identify muestra metadatos como formato y tamaño.",
+              "code": "identify foto.jpg",
+              "explanation": "La salida puede incluir formato, dimensiones, espacio de color y tamaño del archivo."
+            },
+            {
+              "title": "Redimensionar una imagen",
+              "description": "Creá una copia con un tamaño máximo y conservá el archivo original.",
+              "code": "magick foto.jpg -resize 800x600 foto-pequena.jpg",
+              "explanation": "La proporción se conserva en este ejemplo. Trabajá sobre una copia para no sobrescribir el original."
+            }
+          ],
+          "exercise": "Elegí una imagen de prueba, consultá sus dimensiones y creá una copia reducida. Compará el tamaño de ambos archivos.",
+          "hint": "La herramienta identify sirve para inspeccionar; magick se utiliza para transformar la imagen.",
+          "parameters": [
+            {
+              "name": "-resize",
+              "description": "Redimensiona una imagen. El comportamiento exacto depende del valor y los modificadores utilizados."
+            }
+          ],
+          "bestPractices": [
+            "Conservá el original y trabajá sobre copias.",
+            "Revisá las opciones disponibles en la versión instalada.",
+            "Tené en cuenta que algunos formatos con pérdida reducen la calidad."
+          ],
+          "commonMistakes": [
+            "Confundir dimensiones con tamaño del archivo.",
+            "Sobrescribir el original por accidente.",
+            "Suponer que todos los formatos admiten las mismas operaciones."
+          ],
+          "resources": [
+            {
+              "label": "ImageMagick: herramientas de línea de comandos",
+              "url": "https://imagemagick.org/script/command-line-tools.php"
+            }
+          ],
+          "related": [
+            "terminal-leer",
+            "terminal-tuberias"
+          ]
+        },
+        {
+          "id": "terminal-ffmpeg",
+          "title": "Convertir audio y video con FFmpeg",
+          "category": "multimedia",
+          "summary": "Inspeccioná archivos multimedia y convertí formatos desde la línea de comandos.",
+          "purpose": "FFmpeg es una colección de herramientas para inspeccionar, convertir y procesar audio y video. ffmpeg realiza conversiones y transformaciones; ffprobe consulta metadatos y pistas. Los formatos disponibles dependen de la compilación instalada.",
+          "syntax": "ffmpeg -i entrada.mp4 salida.webm\\nffprobe -hide_banner entrada.mp4",
+          "examples": [
+            {
+              "title": "Inspeccionar un archivo",
+              "description": "ffprobe consulta la información del contenedor y sus flujos.",
+              "code": "ffprobe -hide_banner video.mp4",
+              "explanation": "La salida puede mostrar duración, resolución, códecs y pistas de audio o subtítulos."
+            },
+            {
+              "title": "Convertir un video",
+              "description": "Este ejemplo genera un archivo WebM a partir de un video de entrada.",
+              "code": "ffmpeg -i entrada.mp4 salida.webm",
+              "explanation": "FFmpeg elige valores predeterminados. Para controlar calidad, códec o tamaño se agregan opciones específicas."
+            }
+          ],
+          "exercise": "Inspeccioná un archivo multimedia propio con ffprobe y anotá su duración, resolución y códecs.",
+          "hint": "Empezá por ffprobe para conocer el archivo antes de probar una conversión con ffmpeg.",
+          "bestPractices": [
+            "No sobrescribas el archivo original durante las primeras pruebas.",
+            "Verificá los formatos y códecs disponibles en tu instalación.",
+            "Utilizá material que tengas derecho a modificar y publicar."
+          ],
+          "commonMistakes": [
+            "Suponer que la extensión determina por sí sola el códec.",
+            "Sobrescribir un archivo de origen.",
+            "Usar opciones de un códec que no está disponible en la instalación."
+          ],
+          "resources": [
+            {
+              "label": "FFmpeg: documentación oficial",
+              "url": "https://ffmpeg.org/documentation.html"
+            }
+          ],
+          "related": [
+            "terminal-imagemagick",
+            "terminal-tuberias"
+          ]
         }
       ]
     },
