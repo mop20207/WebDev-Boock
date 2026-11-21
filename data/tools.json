@@ -1,6 +1,6 @@
 {
-  "version": 16,
-  "articleCount": 241,
+  "version": 17,
+  "articleCount": 247,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -14930,6 +14930,20 @@
             "express-openapi-docs",
             "express-graceful-shutdown"
           ]
+        },
+        {
+          "id": "production-migration",
+          "title": "Producción, arquitectura y migración",
+          "description": "Prepará Express para producción, organizá el proyecto y actualizá aplicaciones heredadas.",
+          "icon": "🚀",
+          "articles": [
+            "express-environment-config",
+            "express-deployment",
+            "express-production-performance",
+            "express-migration-v4-v5",
+            "express-nextjs-integration",
+            "express-project-architecture"
+          ]
         }
       ],
       "articles": [
@@ -17284,6 +17298,419 @@
           "related": [
             "express-app-listen",
             "express-deployment"
+          ]
+        },
+        {
+          "id": "express-environment-config",
+          "title": "Variables de entorno y configuración por ambiente",
+          "category": "production-migration",
+          "summary": "Centralizá puerto, secretos y opciones para desarrollo, pruebas y producción.",
+          "purpose": "Las variables de entorno permiten configurar una aplicación sin escribir valores sensibles en el código. Node expone process.env y un paquete como dotenv puede cargar un archivo local durante desarrollo. Los secretos deben almacenarse en el gestor del entorno de despliegue y nunca en el repositorio.",
+          "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+          "syntax": "const port = Number(process.env.PORT) || 3000;\nconst secret = process.env.SESSION_SECRET;",
+          "level": "Inicial",
+          "examples": [
+            {
+              "title": "Leer variables",
+              "description": "Consultá configuración del proceso y validá los valores requeridos.",
+              "code": "const port = Number(process.env.PORT) || 3000;\nconst databaseUrl = process.env.DATABASE_URL;\nif (!databaseUrl) throw new Error(\"Falta DATABASE_URL\");",
+              "explanation": "PORT puede ser asignado por el proveedor. DATABASE_URL debe existir antes de iniciar el backend."
+            },
+            {
+              "title": "Cargar .env en desarrollo",
+              "description": "dotenv permite cargar valores de un archivo local.",
+              "code": "// npm install dotenv\nimport \"dotenv/config\";\n\nconsole.log(process.env.NODE_ENV);\n// .env debe estar en .gitignore",
+              "explanation": "No subas .env. En producción, configurá las variables en la plataforma y evitá depender de un archivo local."
+            }
+          ],
+          "exercise": "Definí PORT, DATABASE_URL y SESSION_SECRET. Indicá cuáles podrían ser públicas y cuáles nunca deben llegar al navegador.",
+          "hint": "process.env devuelve valores de texto o undefined. Validá variables críticas al arrancar.",
+          "parameters": [
+            {
+              "name": "process.env.NAME",
+              "description": "Acceso a variables del entorno del proceso."
+            },
+            {
+              "name": "dotenv/config",
+              "description": "Carga variables desde un archivo .env durante el arranque."
+            },
+            {
+              "name": "NODE_ENV",
+              "description": "Valor convencional para indicar development, test o production."
+            }
+          ],
+          "bestPractices": [
+            "Validá la configuración al iniciar.",
+            "Mantené .env fuera de Git.",
+            "Usá nombres coherentes y documentá variables obligatorias sin sus valores."
+          ],
+          "commonMistakes": [
+            "Subir .env al repositorio.",
+            "Exponer SESSION_SECRET o DATABASE_URL al cliente.",
+            "Asumir que PORT siempre será 3000 en hosting."
+          ],
+          "resources": [
+            {
+              "label": "Node.js Environment Variables",
+              "url": "https://nodejs.org/api/environment_variables.html"
+            },
+            {
+              "label": "dotenv",
+              "url": "https://github.com/motdotla/dotenv"
+            }
+          ],
+          "related": [
+            "express-typescript",
+            "express-deployment",
+            "express-cookies-sessions"
+          ]
+        },
+        {
+          "id": "express-deployment",
+          "title": "Despliegue de Express en un servidor o plataforma cloud",
+          "category": "production-migration",
+          "summary": "Prepará un backend Node para desplegar y escuchá el puerto indicado por el entorno.",
+          "purpose": "Express es un servidor Node.js, por lo que necesita una plataforma que ejecute procesos Node o contenedores. El proceso debe escuchar en el puerto asignado, configurar variables y conectarse a servicios externos. Un hosting de archivos estáticos como GitHub Pages no ejecuta una aplicación Express.",
+          "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+          "syntax": "npm ci\nnpm start",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Script de producción",
+              "description": "Definí un comando start que ejecute el servidor compilado o de producción.",
+              "code": "{\n  \"scripts\": {\n    \"build\": \"tsc\",\n    \"start\": \"node dist/server.js\"\n  }\n}",
+              "explanation": "Si el proyecto usa JavaScript sin compilación, el script puede ejecutar directamente el archivo de entrada. En TypeScript, compilá y ejecutá la salida."
+            },
+            {
+              "title": "Puerto asignado por el host",
+              "description": "Escuchá en 0.0.0.0 cuando la plataforma requiera una interfaz explícita.",
+              "code": "const port = Number(process.env.PORT) || 3000;\nconst server = app.listen(port, \"0.0.0.0\", () => {\n  console.log(`API escuchando en ${port}`);\n});",
+              "explanation": "El host puede asignar PORT y esperar que el proceso acepte conexiones desde fuera del contenedor."
+            }
+          ],
+          "exercise": "Prepará scripts build/start, configurá variables en el proveedor y explicá por qué GitHub Pages no puede ejecutar Express.",
+          "hint": "Express necesita un proceso Node en ejecución; un host estático solo sirve archivos ya generados.",
+          "parameters": [
+            {
+              "name": "npm ci",
+              "description": "Instala dependencias reproducibles a partir del lockfile."
+            },
+            {
+              "name": "npm start",
+              "description": "Ejecuta el script de producción definido en package.json."
+            },
+            {
+              "name": "PORT",
+              "description": "Puerto asignado por el entorno."
+            },
+            {
+              "name": "0.0.0.0",
+              "description": "Interfaz que permite recibir conexiones externas en algunos entornos."
+            }
+          ],
+          "bestPractices": [
+            "Usá npm ci en pipelines de instalación reproducible.",
+            "Separá variables y secretos por ambiente.",
+            "Probá el servidor después de desplegar mediante un health endpoint."
+          ],
+          "commonMistakes": [
+            "Usar GitHub Pages para ejecutar un servidor Node persistente.",
+            "Fijar puerto en producción sin leer PORT.",
+            "Desplegar dependencias de desarrollo como requisito de runtime sin necesidad."
+          ],
+          "resources": [
+            {
+              "label": "Express — Production Best Practices",
+              "url": "https://expressjs.com/en/advanced/best-practice-performance.html"
+            },
+            {
+              "label": "Node.js deployment",
+              "url": "https://nodejs.org/en/learn/getting-started/deploying-nodejs-applications"
+            }
+          ],
+          "related": [
+            "express-environment-config",
+            "express-graceful-shutdown",
+            "express-trust-proxy"
+          ]
+        },
+        {
+          "id": "express-production-performance",
+          "title": "Rendimiento y buenas prácticas de producción",
+          "category": "production-migration",
+          "summary": "Mejorá compresión, caché, conexiones y comportamiento del servidor bajo carga.",
+          "purpose": "El rendimiento de Express depende del código de rutas, las operaciones I/O, el uso de CPU, la configuración del runtime y la infraestructura. Las recomendaciones oficiales incluyen NODE_ENV=production, compresión cuando corresponde, evitar trabajo síncrono en el request path, manejar errores y usar un proxy inverso para despliegues adecuados.",
+          "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+          "syntax": "NODE_ENV=production\napp.use(compression());",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Compresión HTTP",
+              "description": "El middleware compression puede comprimir respuestas compatibles.",
+              "code": "import compression from \"compression\";\napp.use(compression());",
+              "explanation": "La compresión reduce bytes de texto, pero consume CPU. En ciertos despliegues el proxy inverso puede encargarse de esta tarea."
+            },
+            {
+              "title": "Evitar trabajo síncrono",
+              "description": "Una operación síncrona pesada bloquea el event loop.",
+              "code": "// Evitá en un handler concurrido:\nconst data = readFileSync(\"./large.json\", \"utf8\");\n\n// Preferí una API asíncrona:\nconst data = await readFile(\"./large.json\", \"utf8\");",
+              "explanation": "La operación síncrona bloquea el hilo de JavaScript mientras trabaja. Usá APIs asíncronas para I/O en rutas concurridas."
+            }
+          ],
+          "exercise": "Auditá una ruta lenta: identificá I/O síncrono, llamadas externas, payloads grandes y oportunidades de caché.",
+          "hint": "Medí antes de optimizar. NODE_ENV=production activa comportamientos orientados a producción en varias dependencias.",
+          "parameters": [
+            {
+              "name": "NODE_ENV=production",
+              "description": "Activa configuraciones de producción en Express y otras dependencias."
+            },
+            {
+              "name": "compression()",
+              "description": "Middleware que negocia compresión HTTP compatible."
+            },
+            {
+              "name": "Cache-Control",
+              "description": "Header que define reglas de caché de una respuesta."
+            }
+          ],
+          "bestPractices": [
+            "Evitá operaciones síncronas largas dentro de rutas.",
+            "Usá pools de conexiones y límites de entrada.",
+            "Medí latencia, uso de memoria y errores en el entorno real."
+          ],
+          "commonMistakes": [
+            "Agregar compresión dos veces cuando el proxy ya lo hace.",
+            "Bloquear el event loop con operaciones sync.",
+            "Optimizar únicamente con intuición sin métricas."
+          ],
+          "resources": [
+            {
+              "label": "Express — Performance Best Practices",
+              "url": "https://expressjs.com/en/advanced/best-practice-performance.html"
+            },
+            {
+              "label": "Express — Production Best Practices",
+              "url": "https://expressjs.com/en/advanced/best-practice-production.html"
+            }
+          ],
+          "related": [
+            "express-server-logging",
+            "express-deployment",
+            "express-rate-limiting"
+          ]
+        },
+        {
+          "id": "express-migration-v4-v5",
+          "title": "Migrar de Express 4 a Express 5",
+          "category": "production-migration",
+          "summary": "Reconocé cambios incompatibles y actualizá código antiguo de forma controlada.",
+          "purpose": "Express 5 mantiene gran parte de la API anterior, pero introduce cambios que pueden romper compatibilidad. Entre los más importantes: async handlers reenvían rechazos automáticamente; los comodines de ruta necesitan nombre; los segmentos opcionales usan llaves; req.body puede ser undefined si no se parseó; req.query es un getter y su parser predeterminado cambió a simple; express.urlencoded usa extended false por defecto.",
+          "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+          "syntax": "npm install express@5\nnpm test",
+          "level": "Avanzado",
+          "examples": [
+            {
+              "title": "Actualizar rutas wildcard",
+              "description": "La sintaxis comodín antigua necesita un nombre.",
+              "code": "// Express 4\napp.get(\"/*\", handler);\n\n// Express 5\napp.get(\"/*splat\", handler);\n// Para incluir también /:\napp.get(\"/{*splat}\", handler);",
+              "explanation": "Express 5 exige nombre para el comodín. La variante entre llaves también incluye la raíz."
+            },
+            {
+              "title": "Revisar body y urlencoded",
+              "description": "No asumas que body existe ni que el parser extendido está activo.",
+              "code": "app.use(express.urlencoded({ extended: false }));\napp.use(express.json());\n\napp.post(\"/datos\", (req, res) => {\n  const body = req.body ?? {};\n  res.json({ recibido: body });\n});",
+              "explanation": "La propiedad req.body puede ser undefined si no hubo parser aplicable. Configurá extended explícitamente si tu aplicación requiere el comportamiento anterior."
+            },
+            {
+              "title": "Simplificar async handlers",
+              "description": "En Express 5 los rechazos de async handlers llegan al middleware de error.",
+              "code": "app.get(\"/novelas\", async (_req, res) => {\n  const novelas = await obtenerNovelas();\n  res.json(novelas);\n});",
+              "explanation": "Podés quitar wrappers catch(next) genéricos si ya no aportan lógica, pero revisá callbacks y errores fuera de una promesa devuelta."
+            }
+          ],
+          "exercise": "Auditá una aplicación Express 4 y prepará una lista de cambios antes de actualizar la dependencia. Incluí rutas, body, query y async handlers.",
+          "hint": "No actualices solo package.json. Revisá la guía oficial y ejecutá pruebas de regresión.",
+          "parameters": [
+            {
+              "name": "Path syntax",
+              "description": "Express 5 requiere comodines nombrados y sintaxis de opcionales con llaves."
+            },
+            {
+              "name": "Async error forwarding",
+              "description": "Handlers que devuelven promesas propagan rechazos automáticamente."
+            },
+            {
+              "name": "req.body",
+              "description": "Puede ser undefined si ningún parser procesó el cuerpo."
+            },
+            {
+              "name": "req.query",
+              "description": "Es un getter y el parser predeterminado es simple."
+            }
+          ],
+          "bestPractices": [
+            "Actualizá una rama separada y ejecutá pruebas.",
+            "Migrá rutas y parsers de forma explícita.",
+            "Revisá middleware de terceros compatible con Express 5."
+          ],
+          "commonMistakes": [
+            "Cambiar solo la versión de Express y asumir compatibilidad completa.",
+            "Dejar paths /* sin nombre.",
+            "Seguir esperando req.body igual a {} cuando no hubo parser.",
+            "Conservar wrappers obsoletos sin verificar sus efectos."
+          ],
+          "resources": [
+            {
+              "label": "Upgrade to Express 5",
+              "url": "https://expressjs.com/en/guide/migrating-5.html"
+            },
+            {
+              "label": "Express 5 API",
+              "url": "https://expressjs.com/en/5x/api.html"
+            }
+          ],
+          "related": [
+            "express-route-patterns-v5",
+            "express-async-handlers",
+            "express-body-parsing"
+          ]
+        },
+        {
+          "id": "express-nextjs-integration",
+          "title": "Usar Express junto a Next.js y otros frontends",
+          "category": "production-migration",
+          "summary": "Conectá una aplicación frontend con una API Express y elegí cómo separar las responsabilidades.",
+          "purpose": "Express puede funcionar como backend independiente de una aplicación React, Vue o Next.js. Una opción común es ejecutar frontend y API como servicios separados y comunicarlos mediante fetch. Si están en distintos orígenes, configurá CORS; si comparten dominio, un proxy inverso puede enrutar /api al servidor Express. Next.js también permite un custom server Express, pero no suele ser necesario y puede quitar optimizaciones automáticas del framework.",
+          "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+          "syntax": "Frontend → fetch(\"/api/novelas\") → Express API",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Frontend y API separados",
+              "description": "Un cliente Next.js puede consultar la API Express con fetch.",
+              "code": "// En una página o componente del frontend\nconst response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/novelas`);\nif (!response.ok) throw new Error(\"No se pudo cargar el catálogo\");\nconst novelas = await response.json();",
+              "explanation": "La URL pública de la API puede exponerse al cliente; las claves secretas del backend nunca deben formar parte de NEXT_PUBLIC variables."
+            },
+            {
+              "title": "Mismo dominio mediante proxy",
+              "description": "Un proxy inverso puede enviar /api a Express y el resto al frontend.",
+              "code": "// Ejemplo conceptual de routing:\n// /api/* → servicio Express\n// /*     → aplicación Next.js",
+              "explanation": "El proxy permite evitar CORS entre ambos servicios si el navegador ve el mismo origen. La configuración depende del proveedor de hosting."
+            }
+          ],
+          "exercise": "Diseñá la arquitectura de un catálogo con Next.js como frontend y Express como API independiente. Decidí qué rutas maneja cada servicio.",
+          "hint": "No necesitás un custom server Express para que Next.js consuma una API. Empezá con servicios separados y comunicación HTTP clara.",
+          "parameters": [
+            {
+              "name": "NEXT_PUBLIC_API_URL",
+              "description": "URL pública del backend cuando el navegador necesita conocer el endpoint."
+            },
+            {
+              "name": "fetch()",
+              "description": "API HTTP usada por frontend y servidor para consultar Express."
+            },
+            {
+              "name": "Reverse proxy",
+              "description": "Componente que enruta solicitudes hacia frontend o backend según host/path."
+            }
+          ],
+          "bestPractices": [
+            "Mantené Next.js y Express como servicios separados si no necesitás compartir proceso.",
+            "Protegé endpoints del backend independientemente del frontend.",
+            "Usá CORS solo si los orígenes lo requieren."
+          ],
+          "commonMistakes": [
+            "Poner tokens privados en variables NEXT_PUBLIC_.",
+            "Suponer que CORS autentica al usuario.",
+            "Crear un custom server para Next.js sin necesitarlo y perder optimizaciones."
+          ],
+          "resources": [
+            {
+              "label": "Next.js — Custom Server",
+              "url": "https://nextjs.org/docs/pages/building-your-application/configuring/custom-server"
+            },
+            {
+              "label": "Express — CORS middleware",
+              "url": "https://expressjs.com/en/resources/middleware/cors.html"
+            }
+          ],
+          "related": [
+            "express-cors",
+            "express-rest-crud-api",
+            "express-deployment"
+          ]
+        },
+        {
+          "id": "express-project-architecture",
+          "title": "Arquitectura de proyecto: routes, controllers, services y repositories",
+          "category": "production-migration",
+          "summary": "Organizá una aplicación Express por responsabilidades para reducir acoplamiento y facilitar pruebas.",
+          "purpose": "Express no impone una estructura de carpetas. Una arquitectura habitual separa el punto de entrada, la creación de app, rutas, controladores, servicios de negocio, repositorios, validadores y middleware. La separación evita que los handlers HTTP acumulen consultas, validación y reglas de negocio.",
+          "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+          "syntax": "src/\n  app.js\n  server.js\n  routes/\n  controllers/\n  services/\n  repositories/\n  middlewares/",
+          "level": "Intermedio",
+          "examples": [
+            {
+              "title": "Estructura de carpetas",
+              "description": "Una aplicación mediana puede separar los módulos por responsabilidad.",
+              "code": "src/\n  app.js\n  server.js\n  routes/novelas.routes.js\n  controllers/novelas.controller.js\n  services/novelas.service.js\n  repositories/novelas.repository.js\n  middlewares/error-handler.js\n  validators/novelas.schema.js",
+              "explanation": "Cada capa tiene una tarea principal. No es obligatorio reproducir cada carpeta en proyectos pequeños."
+            },
+            {
+              "title": "Ruta delgada",
+              "description": "El router conecta método, validación y controlador.",
+              "code": "router.post(\"/\", validarCrearNovela, novelasController.crear);\n\n// Controller: traduce HTTP\n// Service: reglas de negocio\n// Repository: acceso a base de datos",
+              "explanation": "La ruta describe el endpoint y delega las tareas. Así podés probar el servicio sin construir una solicitud HTTP."
+            }
+          ],
+          "exercise": "Tomá un CRUD de novelas y separalo en router, controller, service, repository, validator y middleware.",
+          "hint": "No crees capas vacías por obligación. Separá cuando una responsabilidad tiene suficiente lógica para vivir por sí misma.",
+          "parameters": [
+            {
+              "name": "routes",
+              "description": "Declara paths y métodos HTTP."
+            },
+            {
+              "name": "controllers",
+              "description": "Convierte request y resultado de negocio en respuestas HTTP."
+            },
+            {
+              "name": "services",
+              "description": "Contiene reglas de negocio y coordinación de operaciones."
+            },
+            {
+              "name": "repositories",
+              "description": "Encapsula consultas a la base de datos."
+            },
+            {
+              "name": "validators",
+              "description": "Comprueba entrada externa mediante esquemas."
+            }
+          ],
+          "bestPractices": [
+            "Mantené dependencias en una dirección clara.",
+            "Evitá que los repositorios conozcan Express req/res.",
+            "Escribí servicios que se puedan probar sin abrir un servidor."
+          ],
+          "commonMistakes": [
+            "Poner toda la lógica en un archivo server.js.",
+            "Hacer que el service dependa de req y res.",
+            "Crear diez capas para una aplicación mínima sin necesidad."
+          ],
+          "resources": [
+            {
+              "label": "Express — FAQ and application structure",
+              "url": "https://expressjs.com/en/guide/faq.html"
+            },
+            {
+              "label": "Express — Writing middleware",
+              "url": "https://expressjs.com/en/guide/writing-middleware.html"
+            }
+          ],
+          "related": [
+            "express-routers",
+            "express-database-integration",
+            "express-testing-supertest"
           ]
         }
       ]
