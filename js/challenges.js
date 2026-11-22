@@ -182,7 +182,7 @@
 
     const editorShell = node("div", "challenge-editor-shell");
     const toolbar = node("div", "challenge-editor-toolbar");
-    toolbar.append(node("span", "challenge-editor-language", challenge.language.toUpperCase() + " · EDITOR"));
+    toolbar.append(node("span", "challenge-editor-language", (challenge.language === "htmlcss" ? "HTML + CSS · EDITOR" : challenge.language.toUpperCase() + " · EDITOR")));
     const actions = node("div", "challenge-editor-actions");
     const resetButton = node("button", "challenge-action", "Restablecer");
     resetButton.type = "button";
@@ -197,9 +197,9 @@
     editor.autocomplete = "off";
     editor.autocorrect = "off";
     editor.setAttribute("aria-label", "Editor de código para el reto");
-    editor.value = challenge.starterCode || "";
+    editor.value = challenge.starterCode || "";\n    const isHtmlCss = challenge.language === "htmlcss";\n    let cssEditor = null;\n    let previewFrame = null;\n    if (isHtmlCss) { editor.value = challenge.htmlCode || ""; editor.setAttribute("aria-label", "Editor HTML del reto"); cssEditor = node("textarea", "challenge-editor challenge-editor-compact"); cssEditor.id = "challengeCssEditor"; cssEditor.setAttribute("aria-label", "Editor CSS del reto"); cssEditor.value = challenge.cssCode || ""; const panes = node("div", "challenge-dual-editors"); const hp = node("div", "challenge-code-pane"); const cp = node("div", "challenge-code-pane"); const hl = node("label", "challenge-code-label", "HTML"); hl.htmlFor = "challengeEditor"; const cl = node("label", "challenge-code-label", "CSS"); cl.htmlFor = "challengeCssEditor"; hp.append(hl, editor); cp.append(cl, cssEditor); panes.append(hp, cp); previewFrame = document.createElement("iframe"); previewFrame.className = "challenge-live-preview"; previewFrame.title = "Vista previa HTML y CSS"; previewFrame.setAttribute("sandbox", "allow-same-origin"); editorShell.append(toolbar, panes, node("div", "challenge-preview-heading", "Vista previa"), previewFrame, editorHelp); const updatePreview = () => { previewFrame.srcdoc = htmlCssDocument(editor.value, cssEditor.value, "", ""); }; editor.addEventListener("input", updatePreview); cssEditor.addEventListener("input", updatePreview); updatePreview(); } else { editorShell.append(toolbar, editor, editorHelp); }
     const editorHelp = node("div", "challenge-editor-help");
-    editorHelp.append(node("span", "", "Tip: leé los requisitos y probá una solución pequeña primero."), node("span", "", "Ctrl + Enter para ejecutar"));
+    editorHelp.append(node("span", "", isHtmlCss ? "HTML y CSS se ejecutan sin scripts ni acceso a la red." : "Tip: leé los requisitos y probá una solución pequeña primero."), node("span", "", "Ctrl + Enter para ejecutar"));
     editorShell.append(toolbar, editor, editorHelp);
     workspace.append(editorShell);
 
@@ -251,7 +251,7 @@
       editor.value = challenge.starterCode || "";
       results.replaceChildren(node("h4", "", "Resultado de las pruebas"), node("p", "", "Código restablecido. Volvé a ejecutar las pruebas cuando estés listo."));
     });
-    runButton.addEventListener("click", () => runChallenge(challenge, editor.value, results, completeBanner, runButton));
+    runButton.addEventListener("click", () => runChallenge(challenge, editor.value, results, completeBanner, runButton, cssEditor?.value));
     editor.addEventListener("keydown", event => {
       if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
         event.preventDefault();
@@ -378,6 +378,41 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     activeRunner = null;
   }
 
+  function htmlCssDocument(html, css, testScript, nonce) {
+    const policy = testScript
+      ? "default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-" + nonce + "'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'"
+      : "default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
+    const cleanHtml = String(html).replace(/<base\\b[^>]*>/gi, "").replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script\\s*>/gi, "");
+    const script = testScript ? "<script nonce=\"" + nonce + "\">" + testScript + "<\\/script>" : "";
+    return "<!doctype html><html><head><meta charset=\'utf-8\'><meta http-equiv=\'Content-Security-Policy\' content=\"" + policy + "\"><meta name=\'viewport\' content=\'width=device-width,initial-scale=1\'><style>" + String(css).replace(/<\\/style/gi, "") + "</style></head><body>" + cleanHtml + script + "</body></html>";
+  }
+
+  function runHtmlCss(challenge, html, css, resultsNode, completeBanner, runButton) {
+    cancelActiveRunner();
+    const frame = document.createElement("iframe");
+    frame.title = "Pruebas HTML y CSS aisladas";
+    frame.setAttribute("sandbox", "allow-scripts");
+    frame.setAttribute("aria-hidden", "true");
+    frame.style.cssText = "position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0";
+    activeRunner = frame;
+    const nonce = "wd" + Math.random().toString(36).slice(2);
+    const tests = JSON.stringify(challenge.tests || []).replace(/</g, "\\u003c");
+    const script = "const tests=" + tests + ";const results=tests.map(t=>{try{const actual=(new Function(\'return (\'+t.expression+\')\'))();return {label:t.label,passed:JSON.stringify(actual)===JSON.stringify(t.expected),actual,expected:t.expected}}catch(e){return {label:t.label,passed:false,error:String(e.message||e)}}});parent.postMessage({source:\'webdev-challenges\',id:" + JSON.stringify(challenge.id) + ",type:\'results\',results},\'*\');";
+    const receive = event => {
+      if (!activeRunner || event.source !== frame.contentWindow || event.data?.source !== "webdev-challenges" || event.data?.id !== challenge.id || event.data.type !== "results") return;
+      if (runnerTimeout) clearTimeout(runnerTimeout);
+      window.removeEventListener("message", receive); activeRunnerCleanup = null; frame.remove(); activeRunner = null;
+      displayResults(challenge, event.data.results || [], resultsNode, completeBanner, runButton);
+    };
+    window.addEventListener("message", receive);
+    activeRunnerCleanup = () => window.removeEventListener("message", receive);
+    frame.srcdoc = htmlCssDocument(html, css, script, nonce);
+    document.body.append(frame);
+    runnerTimeout = window.setTimeout(() => {
+      window.removeEventListener("message", receive); activeRunnerCleanup = null;
+      if (activeRunner === frame) { frame.remove(); activeRunner = null; resultsNode.replaceChildren(node("h4", "", "La prueba tardó demasiado"), node("p", "", "Se detuvo el entorno aislado. Revisá tu código e intentá nuevamente.")); runButton.disabled = false; runButton.textContent = "▶ Ejecutar pruebas"; }
+    }, 4000);
+  }
   function runInSandbox(challenge, code, resultsNode, completeBanner, runButton) {
     cancelActiveRunner();
 
@@ -470,7 +505,7 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     try { return JSON.stringify(value); } catch (error) { return String(value); }
   }
 
-  async function runChallenge(challenge, source, resultsNode, completeBanner, runButton) {
+  async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource) {\n    if (challenge.language === "htmlcss") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando pruebas HTML y CSS"), node("p", "", "Renderizando la página en un iframe aislado.")); runHtmlCss(challenge, source, cssSource || "", resultsNode, completeBanner, runButton); return; }
     runButton.disabled = true;
     runButton.textContent = "Preparando pruebas…";
     resultsNode.replaceChildren(node("h4", "", "Ejecutando"), node("p", "", "Compilando el código y preparando el entorno aislado…"));
