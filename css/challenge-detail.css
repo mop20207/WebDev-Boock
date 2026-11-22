@@ -20,3 +20,5 @@
 .detail-page-footer{display:flex;justify-content:space-between;gap:12px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:10px}
 body.light .challenge-detail-layout .challenge-detail-panel{background:#fff}
 @media(max-width:680px){.challenge-detail-page{width:min(100% - 24px,1120px);padding-top:12px}.detail-page-topbar{align-items:flex-start;flex-wrap:wrap}.detail-page-brand{order:-1;width:100%}.detail-page-intro{padding:22px 0 15px}.detail-page-intro h1{font-size:30px}.challenge-detail-page .challenge-info-grid,.challenge-detail-page .challenge-guidance-grid{grid-template-columns:1fr}.challenge-detail-page .challenge-editor{min-height:260px;font-size:11px}.detail-page-footer{flex-direction:column}}
+
+.challenge-detail-page .challenge-detail-header h2,.challenge-detail-page .challenge-detail-header>p{display:none}
