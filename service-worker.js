@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v1";
+const CACHE_VERSION = "webdev-book-v2";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -24,9 +24,11 @@ const CORE_FILES = [
   "pages/tools.html",
   "pages/tools-category.html",
   "pages/tools-article.html",
+  "pages/challenges.html",
   "css/global.css",
   "css/home.css",
   "css/tools-library.css",
+  "css/challenges.css",
   "css/pwa.css",
   "assets/images/html-hero.svg",
   "assets/images/css-hero.svg",
@@ -48,6 +50,7 @@ const CORE_FILES = [
   "js/app.js",
   "js/learning-progress.js",
   "js/tools-library.js",
+  "js/challenges.js",
   "js/articulo.js",
   "js/categoria.js",
   "js/css-articulo.js",
@@ -59,7 +62,8 @@ const CORE_FILES = [
   "data/html-articulos.json",
   "data/css-articulos.json",
   "data/js-articulos.json",
-  "data/tools.json"
+  "data/tools.json",
+  "data/challenges.json"
 ];
 
 self.addEventListener("install", event => {
