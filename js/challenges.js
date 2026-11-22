@@ -180,9 +180,10 @@
     editorHeading.append(node("h3", "","Tu solución"), node("span", "", "El código se ejecuta en un entorno aislado."));
     workspace.append(editorHeading);
 
+    const isHtmlCss = challenge.language === "htmlcss";
     const editorShell = node("div", "challenge-editor-shell");
     const toolbar = node("div", "challenge-editor-toolbar");
-    toolbar.append(node("span", "challenge-editor-language", (challenge.language === "htmlcss" ? "HTML + CSS · EDITOR" : challenge.language.toUpperCase() + " · EDITOR")));
+    toolbar.append(node("span", "challenge-editor-language", isHtmlCss ? "HTML + CSS · EDITOR" : challenge.language.toUpperCase() + " · EDITOR"));
     const actions = node("div", "challenge-editor-actions");
     const resetButton = node("button", "challenge-action", "Restablecer");
     resetButton.type = "button";
@@ -196,11 +197,39 @@
     editor.autocapitalize = "off";
     editor.autocomplete = "off";
     editor.autocorrect = "off";
-    editor.setAttribute("aria-label", "Editor de código para el reto");
-    editor.value = challenge.starterCode || "";\n    const isHtmlCss = challenge.language === "htmlcss";\n    let cssEditor = null;\n    let previewFrame = null;\n    if (isHtmlCss) { editor.value = challenge.htmlCode || ""; editor.setAttribute("aria-label", "Editor HTML del reto"); cssEditor = node("textarea", "challenge-editor challenge-editor-compact"); cssEditor.id = "challengeCssEditor"; cssEditor.setAttribute("aria-label", "Editor CSS del reto"); cssEditor.value = challenge.cssCode || ""; const panes = node("div", "challenge-dual-editors"); const hp = node("div", "challenge-code-pane"); const cp = node("div", "challenge-code-pane"); const hl = node("label", "challenge-code-label", "HTML"); hl.htmlFor = "challengeEditor"; const cl = node("label", "challenge-code-label", "CSS"); cl.htmlFor = "challengeCssEditor"; hp.append(hl, editor); cp.append(cl, cssEditor); panes.append(hp, cp); previewFrame = document.createElement("iframe"); previewFrame.className = "challenge-live-preview"; previewFrame.title = "Vista previa HTML y CSS"; previewFrame.setAttribute("sandbox", "allow-same-origin"); editorShell.append(toolbar, panes, node("div", "challenge-preview-heading", "Vista previa"), previewFrame, editorHelp); const updatePreview = () => { previewFrame.srcdoc = htmlCssDocument(editor.value, cssEditor.value, "", ""); }; editor.addEventListener("input", updatePreview); cssEditor.addEventListener("input", updatePreview); updatePreview(); } else { editorShell.append(toolbar, editor, editorHelp); }
+    editor.setAttribute("aria-label", isHtmlCss ? "Editor HTML del reto" : "Editor de código para el reto");
+    editor.value = isHtmlCss ? (challenge.htmlCode || "") : (challenge.starterCode || "");
     const editorHelp = node("div", "challenge-editor-help");
-    editorHelp.append(node("span", "", isHtmlCss ? "HTML y CSS se ejecutan sin scripts ni acceso a la red." : "Tip: leé los requisitos y probá una solución pequeña primero."), node("span", "", "Ctrl + Enter para ejecutar"));
-    editorShell.append(toolbar, editor, editorHelp);
+    editorHelp.append(node("span", "", isHtmlCss ? "HTML y CSS se renderizan sin scripts ni acceso a la red." : "Tip: leé los requisitos y probá una solución pequeña primero."), node("span", "", "Ctrl + Enter para ejecutar"));
+    let cssEditor = null;
+    let previewFrame = null;
+    if (isHtmlCss) {
+      cssEditor = node("textarea", "challenge-editor challenge-editor-compact");
+      cssEditor.id = "challengeCssEditor";
+      cssEditor.setAttribute("aria-label", "Editor CSS del reto");
+      cssEditor.value = challenge.cssCode || "";
+      const panes = node("div", "challenge-dual-editors");
+      const hp = node("div", "challenge-code-pane");
+      const cp = node("div", "challenge-code-pane");
+      const hl = node("label", "challenge-code-label", "HTML");
+      const cl = node("label", "challenge-code-label", "CSS");
+      hl.htmlFor = "challengeEditor";
+      cl.htmlFor = "challengeCssEditor";
+      hp.append(hl, editor);
+      cp.append(cl, cssEditor);
+      panes.append(hp, cp);
+      previewFrame = document.createElement("iframe");
+      previewFrame.className = "challenge-live-preview";
+      previewFrame.title = "Vista previa HTML y CSS";
+      previewFrame.setAttribute("sandbox", "allow-same-origin");
+      const updatePreview = () => { previewFrame.srcdoc = htmlCssDocument(editor.value, cssEditor.value, "", ""); };
+      editor.addEventListener("input", updatePreview);
+      cssEditor.addEventListener("input", updatePreview);
+      updatePreview();
+      editorShell.append(toolbar, panes, node("div", "challenge-preview-heading", "Vista previa"), previewFrame, editorHelp);
+    } else {
+      editorShell.append(toolbar, editor, editorHelp);
+    }
     workspace.append(editorShell);
 
     const results = node("section", "challenge-results");
@@ -255,7 +284,7 @@
     editor.addEventListener("keydown", event => {
       if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
         event.preventDefault();
-        runChallenge(challenge, editor.value, results, completeBanner, runButton);
+        runChallenge(challenge, editor.value, results, completeBanner, runButton, cssEditor?.value);
       }
     });
     hintButton.addEventListener("click", () => {
