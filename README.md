@@ -60,6 +60,16 @@ La interfaz permite buscar conceptos y APIs, filtrar por categoría y estado, na
 
 Referencias oficiales: https://docs.oracle.com/en/java/javase/25/ · https://dev.java/learn/ · https://ops.java/releases/
 
+## Parte 3 · Bloque D: Terminal y línea de comandos
+
+La biblioteca agrega **30 artículos en 6 categorías**, con dos ejemplos comentados por artículo. El recorrido abarca terminal y shell; comandos, argumentos y ayuda; rutas, carpetas y archivos; búsqueda con `find` y `grep`; comodines y comillas; tuberías y redirecciones; variables y PATH; códigos de salida; procesos, trabajos y permisos; `curl`, SSH y archivos comprimidos; scripts Bash, condicionales, bucles, funciones, archivos `.env`, npm y gestores de paquetes.
+
+Los ejemplos ejecutables se centran en **Bash para Linux, macOS y entornos compatibles**. La biblioteca compara de forma explícita Bash, PowerShell y CMD y advierte que sus comandos, opciones, canales de salida y reglas de expansión no son intercambiables. Los comandos potencialmente destructivos se presentan con cautelas y ejercicios de inspección previa.
+
+La página incluye búsqueda, categorías, filtros por pendientes/favoritos, vista individual, navegación, copia y descarga de ejemplos `.sh`, además de progreso y favoritos persistidos en el navegador. WebDev Book muestra y descarga comandos; **no los ejecuta en el navegador ni accede a la terminal del dispositivo**.
+
+Referencias oficiales: https://www.gnu.org/software/bash/manual/bash.html · https://www.gnu.org/software/coreutils/manual/ · https://learn.microsoft.com/en-us/powershell/ · https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands
+
 ## Estructura del proyecto
 
 ```text
