@@ -557,7 +557,14 @@ const payload = __PAYLOAD__;
 const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 function performStep(step) {
-  const element = document.querySelector(step.selector);
+  let element;
+  if (step.selector.includes("::shadow")) {
+    const [hostSelector, innerSelector] = step.selector.split("::shadow");
+    const host = document.querySelector(hostSelector.trim());
+    element = host && host.shadowRoot ? host.shadowRoot.querySelector(innerSelector.trim()) : null;
+  } else {
+    element = document.querySelector(step.selector);
+  }
   if (!element) throw new Error("No se encontró el elemento: " + step.selector);
   if (step.action === "click") element.click();
   else if (step.action === "input" || step.action === "change") {
@@ -590,6 +597,10 @@ async function main() {
         window, document, customElements, HTMLElement, CustomEvent, Event
       );
       await wait(30);
+      window.__challengeEvents = [];
+      for (const eventName of payload.captureEvents || []) {
+        app.querySelectorAll("*").forEach(element => element.addEventListener(eventName, event => window.__challengeEvents.push(event.detail)));
+      }
     }
     const results = [];
     for (const test of payload.tests) {
