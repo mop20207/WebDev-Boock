@@ -1,0 +1,14 @@
+import express from "express";
+import {z} from "zod";
+import {randomUUID} from "node:crypto";
+type Task={id:string;title:string;done:boolean;createdAt:string};
+const app=express();app.use(express.json({limit:"20kb"}));const tasks:Task[]=[];
+const createSchema=z.object({title:z.string().trim().min(2).max(120)});
+const patchSchema=z.object({title:z.string().trim().min(2).max(120).optional(),done:z.boolean().optional()}).refine(v=>Object.keys(v).length>0);
+const find=(id:string)=>tasks.find(task=>task.id===id);
+app.get("/api/tasks",(_req,res)=>res.json({items:tasks}));
+app.get("/api/tasks/:id",(req,res)=>{const task=find(req.params.id);if(!task)return res.status(404).json({error:"No encontrada."});res.json(task);});
+app.post("/api/tasks",(req,res)=>{const parsed=createSchema.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:"Título inválido."});const task:Task={id:randomUUID(),title:parsed.data.title,done:false,createdAt:new Date().toISOString()};tasks.unshift(task);res.status(201).json(task);});
+app.patch("/api/tasks/:id",(req,res)=>{const task=find(req.params.id);if(!task)return res.status(404).json({error:"No encontrada."});const parsed=patchSchema.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:"Actualización inválida."});Object.assign(task,parsed.data);res.json(task);});
+app.delete("/api/tasks/:id",(req,res)=>{const index=tasks.findIndex(task=>task.id===req.params.id);if(index<0)return res.status(404).json({error:"No encontrada."});tasks.splice(index,1);res.status(204).end();});
+app.listen(3000,()=>console.log("API en http://localhost:3000"));

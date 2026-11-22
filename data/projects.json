@@ -1,0 +1,997 @@
+{
+  "version": 2,
+  "description": "15 proyectos progresivos con archivos fuente reales y documentación.",
+  "projects": [
+    {
+      "id": "tarjeta-interactiva",
+      "title": "Tarjeta interactiva",
+      "level": "principiante",
+      "minutes": 35,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Accesibilidad"
+      ],
+      "description": "Tarjeta de perfil con detalles desplegables y acciones accesibles.",
+      "goals": [
+        "HTML semántico",
+        "Flexbox",
+        "Eventos DOM",
+        "Atributos ARIA"
+      ],
+      "steps": [
+        "Creá la carpeta del proyecto y ubicá los archivos respetando sus nombres.",
+        "Leé primero el HTML para identificar los elementos de la interfaz.",
+        "Revisá los estilos y probá la página en una pantalla pequeña y otra amplia.",
+        "Seguí el flujo de JavaScript desde el evento hasta la actualización de la interfaz.",
+        "Ejecutá los criterios de comprobación y después implementá una ampliación."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/tarjeta-interactiva/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/tarjeta-interactiva/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/tarjeta-interactiva/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/tarjeta-interactiva/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Abrir y cerrar con teclado y toque.",
+        "El estado aria-expanded coincide con la visibilidad."
+      ],
+      "notes": []
+    },
+    {
+      "id": "formulario-validacion",
+      "title": "Formulario con validación",
+      "level": "principiante",
+      "minutes": 50,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Formularios"
+      ],
+      "description": "Formulario de contacto con validación de campos y mensajes accesibles.",
+      "goals": [
+        "Labels y controles",
+        "Validación de cadenas",
+        "Expresiones regulares",
+        "aria-live"
+      ],
+      "steps": [
+        "Creá la carpeta del proyecto y ubicá los archivos respetando sus nombres.",
+        "Leé primero el HTML para identificar los elementos de la interfaz.",
+        "Revisá los estilos y probá la página en una pantalla pequeña y otra amplia.",
+        "Seguí el flujo de JavaScript desde el evento hasta la actualización de la interfaz.",
+        "Ejecutá los criterios de comprobación y después implementá una ampliación."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/formulario-validacion/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/formulario-validacion/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/formulario-validacion/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/formulario-validacion/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Nombre con un carácter muestra error.",
+        "Correo inválido muestra error.",
+        "Mensaje menor a 10 caracteres no pasa."
+      ],
+      "notes": []
+    },
+    {
+      "id": "calculadora",
+      "title": "Calculadora básica",
+      "level": "principiante",
+      "minutes": 45,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "description": "Calculadora de cuatro operaciones con decimales y control de división por cero.",
+      "goals": [
+        "Delegación de eventos",
+        "Manejo de estado",
+        "Operaciones numéricas",
+        "Control de errores"
+      ],
+      "steps": [
+        "Creá la carpeta del proyecto y ubicá los archivos respetando sus nombres.",
+        "Leé primero el HTML para identificar los elementos de la interfaz.",
+        "Revisá los estilos y probá la página en una pantalla pequeña y otra amplia.",
+        "Seguí el flujo de JavaScript desde el evento hasta la actualización de la interfaz.",
+        "Ejecutá los criterios de comprobación y después implementá una ampliación."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/calculadora/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/calculadora/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/calculadora/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/calculadora/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "8 dividido 2 devuelve 4.",
+        "5.5 por 2 devuelve 11.",
+        "Dividir por cero muestra un aviso."
+      ],
+      "notes": []
+    },
+    {
+      "id": "reloj-temporizador",
+      "title": "Reloj y temporizador",
+      "level": "principiante",
+      "minutes": 55,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Date",
+        "Intl"
+      ],
+      "description": "Reloj local, cronómetro y cuenta regresiva configurable.",
+      "goals": [
+        "Date e Intl.DateTimeFormat",
+        "setInterval y clearInterval",
+        "performance.now()",
+        "Validación numérica"
+      ],
+      "steps": [
+        "Creá la carpeta del proyecto y ubicá los archivos respetando sus nombres.",
+        "Leé primero el HTML para identificar los elementos de la interfaz.",
+        "Revisá los estilos y probá la página en una pantalla pequeña y otra amplia.",
+        "Seguí el flujo de JavaScript desde el evento hasta la actualización de la interfaz.",
+        "Ejecutá los criterios de comprobación y después implementá una ampliación."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/reloj-temporizador/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/reloj-temporizador/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/reloj-temporizador/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/reloj-temporizador/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Rechazar cero, negativos y valores superiores a 3600.",
+        "Pausar y reanudar el cronómetro no pierde tiempo acumulado."
+      ],
+      "notes": []
+    },
+    {
+      "id": "lista-tareas",
+      "title": "Lista de tareas",
+      "level": "principiante",
+      "minutes": 70,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "DOM",
+        "localStorage"
+      ],
+      "description": "Aplicación CRUD con creación, filtros, tareas completadas y persistencia local.",
+      "goals": [
+        "Arrays y objetos",
+        "Delegación de eventos",
+        "localStorage",
+        "Renderizado seguro"
+      ],
+      "steps": [
+        "Creá la carpeta del proyecto y ubicá los archivos respetando sus nombres.",
+        "Leé primero el HTML para identificar los elementos de la interfaz.",
+        "Revisá los estilos y probá la página en una pantalla pequeña y otra amplia.",
+        "Seguí el flujo de JavaScript desde el evento hasta la actualización de la interfaz.",
+        "Ejecutá los criterios de comprobación y después implementá una ampliación."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/lista-tareas/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/lista-tareas/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/lista-tareas/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/lista-tareas/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Agregar una tarea y verla.",
+        "Marcar, filtrar y recargar conserva el estado.",
+        "Borrar completadas no elimina pendientes."
+      ],
+      "notes": []
+    },
+    {
+      "id": "buscador-peliculas",
+      "title": "Buscador de películas",
+      "level": "intermedio",
+      "minutes": 90,
+      "technologies": [
+        "JavaScript",
+        "Fetch",
+        "JSON",
+        "DOM"
+      ],
+      "description": "Catálogo local de películas con búsqueda y filtro por género.",
+      "goals": [
+        "Modelado de datos",
+        "filter y map",
+        "Estados vacíos",
+        "Renderizado seguro"
+      ],
+      "steps": [
+        "Revisá las propiedades de cada película.",
+        "Generá el filtro a partir de géneros únicos.",
+        "Implementá búsqueda sin distinguir mayúsculas.",
+        "Mostrá resultados y un estado vacío.",
+        "Como ampliación, cargá un JSON con fetch."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/buscador-peliculas/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/buscador-peliculas/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/buscador-peliculas/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/buscador-peliculas/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Buscar parte del título.",
+        "Filtrar por género.",
+        "Mostrar estado vacío sin coincidencias."
+      ],
+      "notes": []
+    },
+    {
+      "id": "catalogo-productos",
+      "title": "Catálogo de productos",
+      "level": "intermedio",
+      "minutes": 100,
+      "technologies": [
+        "JavaScript",
+        "CSS Grid",
+        "Map",
+        "Intl"
+      ],
+      "description": "Catálogo con búsqueda, filtro por categoría, orden y carrito de prueba.",
+      "goals": [
+        "Colecciones Map",
+        "filter y sort",
+        "Estado derivado",
+        "Formato monetario"
+      ],
+      "steps": [
+        "Inspeccioná el arreglo de productos.",
+        "Combiná búsqueda y categoría.",
+        "Agregá orden por nombre y precio.",
+        "Representá cantidades en un Map.",
+        "Calculá el total del carrito."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/catalogo-productos/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/catalogo-productos/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/catalogo-productos/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/catalogo-productos/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Combinar búsqueda y categoría.",
+        "Orden ascendente y descendente por precio.",
+        "Agregar dos unidades actualiza cantidad y total."
+      ],
+      "notes": []
+    },
+    {
+      "id": "aplicacion-clima",
+      "title": "Aplicación del clima",
+      "level": "intermedio",
+      "minutes": 110,
+      "technologies": [
+        "JavaScript",
+        "Fetch",
+        "HTTP",
+        "JSON",
+        "APIs"
+      ],
+      "description": "Busca ciudades y consulta condiciones actuales mediante Open-Meteo.",
+      "goals": [
+        "Solicitudes HTTP encadenadas",
+        "async/await",
+        "Estados de carga y error",
+        "Datos JSON"
+      ],
+      "steps": [
+        "Primero buscá coordenadas a partir del nombre de ciudad.",
+        "Usá latitud y longitud para consultar el clima.",
+        "Mostrá temperatura, humedad, sensación y viento.",
+        "Probá ciudad inexistente y errores de red."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/aplicacion-clima/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/aplicacion-clima/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/aplicacion-clima/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/aplicacion-clima/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Corrientes muestra información cuando la API está disponible.",
+        "Ciudad inexistente muestra un mensaje claro.",
+        "La interfaz muestra estado de carga y error."
+      ],
+      "notes": []
+    },
+    {
+      "id": "panel-administracion",
+      "title": "Panel de administración",
+      "level": "intermedio",
+      "minutes": 100,
+      "technologies": [
+        "JavaScript",
+        "DOM",
+        "Arrays",
+        "HTML Tables"
+      ],
+      "description": "Dashboard con métricas calculadas y tabla filtrable de usuarios ficticios.",
+      "goals": [
+        "Métricas derivadas",
+        "filter",
+        "Tablas semánticas",
+        "Búsqueda multi campo"
+      ],
+      "steps": [
+        "Creá la carpeta del proyecto y ubicá los archivos respetando sus nombres.",
+        "Leé primero el HTML para identificar los elementos de la interfaz.",
+        "Revisá los estilos y probá la página en una pantalla pequeña y otra amplia.",
+        "Seguí el flujo de JavaScript desde el evento hasta la actualización de la interfaz.",
+        "Ejecutá los criterios de comprobación y después implementá una ampliación."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Mejorar accesibilidad de teclado, etiquetas y mensajes de estado.",
+        "Separar funciones en módulos cuando el proyecto crezca.",
+        "Documentar los casos límite y las decisiones técnicas en README.md."
+      ],
+      "files": [
+        {
+          "path": "projects/panel-administracion/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/panel-administracion/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/panel-administracion/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/panel-administracion/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Los contadores coinciden con los registros.",
+        "Buscar correo o rol filtra correctamente.",
+        "Sin resultados muestra una fila vacía explicativa."
+      ],
+      "notes": []
+    },
+    {
+      "id": "sistema-usuarios-demo",
+      "title": "Sistema de usuarios (demo)",
+      "level": "intermedio",
+      "minutes": 110,
+      "technologies": [
+        "JavaScript",
+        "DOM",
+        "Formularios",
+        "localStorage"
+      ],
+      "description": "Directorio local con alta, búsqueda, cambio de rol y eliminación de perfiles de ejemplo.",
+      "goals": [
+        "CRUD",
+        "Validación de correo duplicado",
+        "Persistencia local",
+        "Renderizado seguro"
+      ],
+      "steps": [
+        "Definí la estructura de un perfil.",
+        "Implementá alta y validación de correo único.",
+        "Renderizá la lista y búsqueda.",
+        "Agregá cambio de rol y eliminación.",
+        "Comprobá la persistencia local."
+      ],
+      "extensions": [
+        "Agregar edición de nombre y correo.",
+        "Agregar filtros por rol.",
+        "Reemplazar localStorage por API con autenticación real."
+      ],
+      "files": [
+        {
+          "path": "projects/sistema-usuarios-demo/index.html",
+          "language": "html",
+          "description": "Estructura semántica de la interfaz."
+        },
+        {
+          "path": "projects/sistema-usuarios-demo/styles.css",
+          "language": "css",
+          "description": "Estilos y adaptación responsive."
+        },
+        {
+          "path": "projects/sistema-usuarios-demo/app.js",
+          "language": "javascript",
+          "description": "Lógica interactiva comentada."
+        },
+        {
+          "path": "projects/sistema-usuarios-demo/README.md",
+          "language": "markdown",
+          "description": "Instalación, estructura y explicación."
+        }
+      ],
+      "preview": true,
+      "checks": [
+        "Rechaza correos duplicados.",
+        "Cambiar un rol persiste al recargar.",
+        "Eliminar un perfil no altera los demás."
+      ],
+      "notes": [
+        "Los perfiles son datos ficticios y locales; no hay cuentas reales ni control de acceso."
+      ]
+    },
+    {
+      "id": "autenticacion-segura",
+      "title": "Autenticación segura con Express y PostgreSQL",
+      "level": "avanzado",
+      "minutes": 300,
+      "technologies": [
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "bcrypt",
+        "Sesiones",
+        "Zod"
+      ],
+      "description": "Registro, inicio de sesión y cierre con hash de contraseñas y sesiones en servidor.",
+      "goals": [
+        "Hash de contraseñas",
+        "Sesiones HttpOnly",
+        "SQL parametrizado",
+        "Validación en servidor",
+        "Rate limiting"
+      ],
+      "steps": [
+        "Creá la base de datos y ejecutá sql/schema.sql.",
+        "Configurá .env a partir del ejemplo.",
+        "Instalá las dependencias e iniciá el servidor.",
+        "Probá registro, login, /me y logout.",
+        "Inspeccioná cookies y respuestas para verificar que el hash nunca se devuelve."
+      ],
+      "extensions": [
+        "Implementar protección CSRF acorde al uso de cookies.",
+        "Agregar verificación y recuperación de correo.",
+        "Agregar pruebas de integración y auditoría.",
+        "Revisar expiración y rotación de sesión."
+      ],
+      "files": [
+        {
+          "path": "projects/autenticacion-segura/README.md",
+          "language": "markdown",
+          "description": "Guía de instalación y arquitectura."
+        },
+        {
+          "path": "projects/autenticacion-segura/package.json",
+          "language": "json",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/autenticacion-segura/.env.example",
+          "language": "text",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/autenticacion-segura/sql/schema.sql",
+          "language": "sql",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/autenticacion-segura/src/db.js",
+          "language": "javascript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/autenticacion-segura/src/server.js",
+          "language": "javascript",
+          "description": "Archivo fuente del proyecto."
+        }
+      ],
+      "preview": false,
+      "checks": [
+        "No guardar contraseñas en texto plano.",
+        "La API nunca devuelve password_hash.",
+        "/me devuelve 401 sin sesión."
+      ],
+      "notes": [
+        "Ejemplo educativo. Agregar CSRF, HTTPS y controles adicionales antes de producción."
+      ]
+    },
+    {
+      "id": "tienda-online",
+      "title": "Tienda online con Next.js y TypeScript",
+      "level": "avanzado",
+      "minutes": 360,
+      "technologies": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Zod",
+        "Route Handlers"
+      ],
+      "description": "Catálogo, carrito y endpoint de pedidos que calcula importes en el servidor.",
+      "goals": [
+        "Server y Client Components",
+        "Estado de carrito",
+        "Validación Zod",
+        "Cálculo confiable de precios",
+        "Route Handlers"
+      ],
+      "steps": [
+        "Instalá Node.js y las dependencias.",
+        "Identificá qué código corre en cliente y servidor.",
+        "Probá agregar artículos al carrito.",
+        "Enviá pedidos válidos e inválidos al endpoint.",
+        "Agregá persistencia y pagos en sandbox."
+      ],
+      "extensions": [
+        "Persistir pedidos en PostgreSQL con transacciones.",
+        "Controlar stock y compras concurrentes.",
+        "Integrar proveedor de pago en sandbox.",
+        "Agregar autenticación y panel administrativo."
+      ],
+      "files": [
+        {
+          "path": "projects/tienda-online/README.md",
+          "language": "markdown",
+          "description": "Guía de instalación y arquitectura."
+        },
+        {
+          "path": "projects/tienda-online/package.json",
+          "language": "json",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/tienda-online/.env.example",
+          "language": "text",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/tienda-online/src/app/layout.tsx",
+          "language": "tsx",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/tienda-online/src/lib/products.ts",
+          "language": "typescript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/tienda-online/src/app/api/orders/route.ts",
+          "language": "typescript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/tienda-online/src/app/page.tsx",
+          "language": "tsx",
+          "description": "Archivo fuente del proyecto."
+        }
+      ],
+      "preview": false,
+      "checks": [
+        "POST rechaza cantidad fuera de rango.",
+        "POST calcula total desde precios del servidor.",
+        "No se aceptan importes enviados desde el navegador."
+      ],
+      "notes": [
+        "No hay checkout ni proveedor de pagos real. No se guardan pedidos."
+      ]
+    },
+    {
+      "id": "blog-postgres",
+      "title": "Blog con PostgreSQL",
+      "level": "avanzado",
+      "minutes": 360,
+      "technologies": [
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "SQL",
+        "Zod"
+      ],
+      "description": "API CRUD de publicaciones con esquema relacional, validación y consultas parametrizadas.",
+      "goals": [
+        "Diseño de tabla e índices",
+        "CRUD REST",
+        "Consultas parametrizadas",
+        "Validación",
+        "Códigos HTTP"
+      ],
+      "steps": [
+        "Creá una base y ejecutá schema.sql.",
+        "Configurá DATABASE_URL.",
+        "Instalá dependencias y arrancá el servidor.",
+        "Probá GET, POST, PATCH y DELETE.",
+        "Probá slug repetido, ID inválido y recursos inexistentes."
+      ],
+      "extensions": [
+        "Agregar autores y claves foráneas.",
+        "Implementar autenticación y autorización por autor.",
+        "Añadir paginación, etiquetas y comentarios.",
+        "Crear migraciones y pruebas de integración."
+      ],
+      "files": [
+        {
+          "path": "projects/blog-postgres/README.md",
+          "language": "markdown",
+          "description": "Guía de instalación y arquitectura."
+        },
+        {
+          "path": "projects/blog-postgres/package.json",
+          "language": "json",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/blog-postgres/.env.example",
+          "language": "text",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/blog-postgres/sql/schema.sql",
+          "language": "sql",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/blog-postgres/src/db.js",
+          "language": "javascript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/blog-postgres/src/server.js",
+          "language": "javascript",
+          "description": "Archivo fuente del proyecto."
+        }
+      ],
+      "preview": false,
+      "checks": [
+        "POST correcto devuelve 201.",
+        "Slug duplicado devuelve 409.",
+        "ID no encontrado devuelve 404."
+      ],
+      "notes": [
+        "Agregar autorización antes de permitir edición y eliminación desde Internet."
+      ]
+    },
+    {
+      "id": "api-rest-propia",
+      "title": "API REST propia de tareas",
+      "level": "avanzado",
+      "minutes": 300,
+      "technologies": [
+        "Node.js",
+        "Express.js",
+        "TypeScript",
+        "Zod",
+        "Testing"
+      ],
+      "description": "API CRUD tipada con validación, identificadores UUID y pruebas unitarias del contrato.",
+      "goals": [
+        "Endpoints REST",
+        "TypeScript estricto",
+        "Validación en servidor",
+        "Códigos HTTP",
+        "Pruebas"
+      ],
+      "steps": [
+        "Instalá dependencias.",
+        "Revisá el contrato Task y los esquemas Zod.",
+        "Implementá las cinco rutas.",
+        "Probá entradas inválidas y recursos inexistentes.",
+        "Ejecutá node:test."
+      ],
+      "extensions": [
+        "Separar rutas, controladores y servicios.",
+        "Agregar filtros y paginación.",
+        "Cambiar almacenamiento en memoria por PostgreSQL.",
+        "Agregar autenticación y OpenAPI."
+      ],
+      "files": [
+        {
+          "path": "projects/api-rest-propia/README.md",
+          "language": "markdown",
+          "description": "Guía de instalación y arquitectura."
+        },
+        {
+          "path": "projects/api-rest-propia/package.json",
+          "language": "json",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/api-rest-propia/tsconfig.json",
+          "language": "json",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/api-rest-propia/src/server.ts",
+          "language": "typescript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/api-rest-propia/test/tasks.test.ts",
+          "language": "typescript",
+          "description": "Archivo fuente del proyecto."
+        }
+      ],
+      "preview": false,
+      "checks": [
+        "POST con título vacío devuelve 400.",
+        "GET de un ID inexistente devuelve 404.",
+        "DELETE correcto devuelve 204."
+      ],
+      "notes": [
+        "El almacenamiento en memoria no persiste. Agregar PostgreSQL para una API real."
+      ]
+    },
+    {
+      "id": "gestor-fullstack",
+      "title": "Gestor de proyectos full-stack",
+      "level": "avanzado",
+      "minutes": 420,
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma",
+        "REST"
+      ],
+      "description": "Aplicación full-stack con App Router, modelo relacional, Prisma y API de proyectos.",
+      "goals": [
+        "App Router",
+        "Server Components",
+        "Esquema relacional y migraciones",
+        "Route Handlers",
+        "Persistencia"
+      ],
+      "steps": [
+        "Configurá PostgreSQL y DATABASE_URL.",
+        "Instalá dependencias y generá migración Prisma.",
+        "Implementá GET y POST del recurso Project.",
+        "Mostrá registros desde Server Component.",
+        "Validá errores y entradas inválidas."
+      ],
+      "extensions": [
+        "Agregar miembros y relaciones.",
+        "Implementar edición y borrado con autorización.",
+        "Agregar filtros, paginación y pruebas E2E.",
+        "Incorporar CI y despliegue."
+      ],
+      "files": [
+        {
+          "path": "projects/gestor-fullstack/README.md",
+          "language": "markdown",
+          "description": "Guía de instalación y arquitectura."
+        },
+        {
+          "path": "projects/gestor-fullstack/package.json",
+          "language": "json",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/gestor-fullstack/.env.example",
+          "language": "text",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/gestor-fullstack/prisma/schema.prisma",
+          "language": "prisma",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/gestor-fullstack/src/lib/prisma.ts",
+          "language": "typescript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/gestor-fullstack/src/app/api/projects/route.ts",
+          "language": "typescript",
+          "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/gestor-fullstack/src/app/page.tsx",
+          "language": "tsx",
+          "description": "Archivo fuente del proyecto."
+        }
+      ],
+      "preview": false,
+      "checks": [
+        "La migración crea la tabla Project.",
+        "POST rechaza nombres inválidos.",
+        "GET devuelve registros ordenados por creación."
+      ],
+      "notes": [
+        "No incluye autorización. Agregar control de acceso antes de usar datos reales."
+      ]
+    }
+  ]
+}
