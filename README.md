@@ -12,8 +12,10 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 - **Tipado estático:** TypeScript, desde los fundamentos hasta genéricos, módulos, configuración e integración con DOM, React y Node.js.
 - **Framework full-stack:** Next.js, con App Router, Server/Client Components, caché, Server Actions, Route Handlers, seguridad, pruebas y despliegue.
 - **Backend HTTP:** Express.js 5, con rutas, middleware, APIs REST, validación, autenticación, seguridad, TypeScript, pruebas y despliegue.
+- **Bases relacionales:** SQL y PostgreSQL 19, con diseño relacional, consultas, JOIN, transacciones, JSONB, índices, rendimiento e integración con Node.js.
+- **Bases documentales:** MongoDB, con BSON, modelado embebido y referenciado, CRUD, arrays, agregaciones, índices, seguridad, transacciones y driver de Node.js.
 
-El catálogo de herramientas y tecnologías contiene **247 artículos**. TypeScript incorpora 37 artículos, Next.js 44 artículos y Express.js 42 artículos, cada tecnología distribuida en siete categorías.
+El catálogo de herramientas y tecnologías contiene **331 artículos**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42 y MongoDB 42. Cada una de estas bibliotecas se distribuye en siete categorías.
 
 ## Estructura del proyecto
 
