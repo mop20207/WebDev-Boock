@@ -77,7 +77,7 @@ body.light .mini-project-card{background:#f8faff;border-color:#dce5f2}
 /* Índice de ejercicios por lenguaje. */
 .exercise-hub-section{margin-top:18px;padding:22px}
 .exercise-hub-section h2{margin:5px 0 0;font-size:20px;color:var(--text)}
-.exercise-hub-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:16px}
+.exercise-hub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:16px}
 .exercise-challenges{--accent:#8faeff}
 .exercise-games{--accent:#91aaff}
 .exercise-python{--accent:#7dd9b2}
