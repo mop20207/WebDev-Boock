@@ -24,7 +24,7 @@ El catálogo de herramientas y tecnologías contiene **387 artículos distribuid
 
 La sección independiente de retos permite filtrar ejercicios por tecnología y dificultad (principiante, intermedio, avanzado y experto). Cada reto puede incluir el enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada, errores habituales y seguimiento local del progreso.
 
-La primera entrega incorpora ocho retos de TypeScript y JavaScript. TypeScript practica interfaces, tipos unión, funciones genéricas y restricciones genéricas; JavaScript trabaja funciones, filter, reduce y agrupación de objetos. Cada tecnología tiene un reto inicial en cada nivel de dificultad. El código TypeScript se comprueba con el compilador en el navegador y se ejecuta dentro de un iframe aislado. El progreso se guarda en el navegador mediante `localStorage`.
+La primera entrega incorpora doce retos de HTML, CSS, JavaScript y TypeScript. TypeScript practica interfaces, tipos unión, funciones genéricas y restricciones genéricas; JavaScript trabaja funciones, filter, reduce y agrupación de objetos. Cada tecnología tiene un reto inicial en cada nivel de dificultad. HTML y CSS incorporan un editor doble con vista previa y pruebas de DOM/estilos calculados en un iframe aislado con políticas restrictivas; JavaScript se ejecuta en un iframe aislado y TypeScript se comprueba con el compilador en el navegador antes de ejecutarse. El progreso se guarda en el navegador mediante `localStorage`.
 
 ## Estructura del proyecto
 
