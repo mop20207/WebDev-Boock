@@ -282,7 +282,8 @@
           "label": "Microsoft: Windows Commands",
           "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands"
         }
-      ]
+      ],
+      "extension": "txt"
     },
     {
       "id": "listar-directorios",
@@ -987,7 +988,8 @@
           "label": "PowerShell documentation",
           "url": "https://learn.microsoft.com/en-us/powershell/"
         }
-      ]
+      ],
+      "extension": "txt"
     },
     {
       "id": "procesos-ps",
@@ -1598,7 +1600,8 @@
           "label": "npm CLI documentation",
           "url": "https://docs.npmjs.com/cli/"
         }
-      ]
+      ],
+      "extension": "txt"
     }
   ]
 }
