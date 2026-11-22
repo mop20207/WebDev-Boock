@@ -117,3 +117,5 @@ body.light .challenge-code-pane{background:#0b1422}
   .challenge-workspace.has-active-challenge .challenge-detail-panel{order:-1;scroll-margin-top:82px}
   .challenge-workspace.has-active-challenge .challenge-list-panel{order:0}
 }
+
+.challenge-card{text-decoration:none}
