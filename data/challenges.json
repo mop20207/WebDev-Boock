@@ -216,6 +216,252 @@
       ],
       "estimatedMinutes": 25,
       "typeCheckCode": "const __usuarioEncontrado = buscarPorId([{ id: 1, nombre: \"Ana\" }], 1);\nconst __nombreCheck: string | undefined = __usuarioEncontrado?.nombre;\n// @ts-expect-error Los elementos deben incluir una propiedad id numérica.\nbuscarPorId([{ nombre: \"Ana\" }], 1);"
+    },
+    {
+      "id": "js-funcion-saludo",
+      "technology": "javascript",
+      "technologyName": "JavaScript",
+      "difficulty": "principiante",
+      "title": "Creá una función de saludo",
+      "summary": "Practicá funciones, parámetros y plantillas de texto.",
+      "statement": "Completá una función que reciba un nombre y devuelva un saludo personalizado.",
+      "objectives": "Declarar una función con parámetros.",
+      "requirements": "Devolver un valor desde una función.",
+      "language": "javascript",
+      "starterCode": "function crearSaludo(nombre) {\n  // Devolvé un saludo personalizado.\n  return \"\";\n}",
+      "tests": [
+        {
+          "label": "Saluda a Ada",
+          "expression": "crearSaludo('Ada')",
+          "expected": "¡Hola, Ada!"
+        },
+        {
+          "label": "Saluda a Martín",
+          "expression": "crearSaludo('Martín')",
+          "expected": "¡Hola, Martín!"
+        },
+        {
+          "label": "Acepta nombres compuestos",
+          "expression": "crearSaludo('Grace Hopper')",
+          "expected": "¡Hola, Grace Hopper!"
+        }
+      ],
+      "hints": [
+        "La función ya recibe el nombre mediante el parámetro nombre.",
+        "Una plantilla de texto usa comillas invertidas: `texto ${variable}`.",
+        "Devolvé la plantilla con return para que las pruebas puedan comparar el resultado."
+      ],
+      "solutionCode": "function crearSaludo(nombre) {\n  return `¡Hola, ${nombre}!`;\n}",
+      "solutionExplanation": "El parámetro nombre recibe el dato. La plantilla inserta su valor y return entrega la cadena.",
+      "commonMistakes": [
+        "Usar comillas simples y dejar ${nombre} como texto literal.",
+        "Usar console.log en vez de return.",
+        "Olvidar los signos y espacios del formato solicitado."
+      ],
+      "estimatedMinutes": 8
+    },
+    {
+      "id": "js-filtrar-pares",
+      "technology": "javascript",
+      "technologyName": "JavaScript",
+      "difficulty": "intermedio",
+      "title": "Filtrá los números pares",
+      "summary": "Usá filter y el operador módulo para crear un nuevo arreglo.",
+      "statement": "Conservá solamente los números pares de un arreglo sin modificar el original.",
+      "objectives": [
+        "Recorrer arreglos con métodos de orden superior.",
+        "Usar filter para seleccionar elementos.",
+        "Aplicar el operador módulo."
+      ],
+      "requirements": [
+        "La función debe llamarse obtenerPares.",
+        "Debe recibir un arreglo de números.",
+        "Debe devolver los pares en el mismo orden.",
+        "No modifiques el arreglo ni uses un bucle para construir el resultado."
+      ],
+      "language": "javascript",
+      "starterCode": "function obtenerPares(numeros) {\n  // Devolvé un arreglo con los números pares.\n  return [];\n}",
+      "tests": [
+        {
+          "label": "Filtra pares y conserva el orden",
+          "expression": "obtenerPares([1, 2, 3, 4, 5, 6])",
+          "expected": [
+            2,
+            4,
+            6
+          ]
+        },
+        {
+          "label": "Acepta números negativos",
+          "expression": "obtenerPares([-4, -3, -2, -1, 0, 1])",
+          "expected": [
+            -4,
+            -2,
+            0
+          ]
+        },
+        {
+          "label": "Devuelve un arreglo vacío cuando no hay pares",
+          "expression": "obtenerPares([1, 3, 5])",
+          "expected": []
+        }
+      ],
+      "hints": [
+        "filter conserva los elementos para los que su callback devuelve true.",
+        "El operador % calcula el resto de una división.",
+        "Un número es par cuando numero % 2 === 0."
+      ],
+      "solutionCode": "function obtenerPares(numeros) {\n  return numeros.filter(numero => numero % 2 === 0);\n}",
+      "solutionExplanation": "filter crea un nuevo arreglo con los elementos que cumplen la condición. numero % 2 === 0 identifica los pares sin alterar la entrada.",
+      "commonMistakes": [
+        "Usar = en lugar de ===.",
+        "Olvidar que filter devuelve un arreglo nuevo.",
+        "Dividir por dos en vez de comprobar el resto con %."
+      ],
+      "estimatedMinutes": 12
+    },
+    {
+      "id": "js-total-carrito",
+      "technology": "javascript",
+      "technologyName": "JavaScript",
+      "difficulty": "avanzado",
+      "title": "Calculá el total de un carrito",
+      "summary": "Combiná reduce, objetos y valores iniciales.",
+      "statement": "Sumá precio × cantidad para cada producto y contemplá un carrito vacío.",
+      "objectives": [
+        "Procesar arreglos de objetos.",
+        "Acumular valores con reduce.",
+        "Elegir un valor inicial."
+      ],
+      "requirements": [
+        "La función debe llamarse calcularTotal.",
+        "Cada producto tiene precio y cantidad numéricos.",
+        "Sumá precio * cantidad de todos los productos.",
+        "Un arreglo vacío debe devolver 0.",
+        "No modifiques los objetos recibidos."
+      ],
+      "language": "javascript",
+      "starterCode": "function calcularTotal(carrito) {\n  // Acumulá el importe de todos los productos.\n  return 0;\n}",
+      "tests": [
+        {
+          "label": "Suma varios productos",
+          "expression": "calcularTotal([{ precio: 100, cantidad: 2 }, { precio: 50, cantidad: 3 }])",
+          "expected": 350
+        },
+        {
+          "label": "Un carrito vacío devuelve cero",
+          "expression": "calcularTotal([])",
+          "expected": 0
+        },
+        {
+          "label": "Admite precios decimales",
+          "expression": "calcularTotal([{ precio: 999.5, cantidad: 1 }])",
+          "expected": 999.5
+        }
+      ],
+      "hints": [
+        "reduce recibe una función acumuladora y un valor inicial.",
+        "Sumá al acumulador precio multiplicado por cantidad.",
+        "Usá 0 como segundo argumento de reduce para manejar arreglos vacíos."
+      ],
+      "solutionCode": "function calcularTotal(carrito) {\n  return carrito.reduce((total, producto) => {\n    return total + producto.precio * producto.cantidad;\n  }, 0);\n}",
+      "solutionExplanation": "reduce acumula precio × cantidad para cada producto. El 0 inicial hace que un arreglo vacío devuelva cero.",
+      "commonMistakes": [
+        "Omitir el valor inicial de reduce.",
+        "Ignorar la cantidad y sumar solo el precio.",
+        "Multiplicar el acumulador en lugar de sumar el subtotal."
+      ],
+      "estimatedMinutes": 18
+    },
+    {
+      "id": "js-agrupar-tareas",
+      "technology": "javascript",
+      "technologyName": "JavaScript",
+      "difficulty": "experto",
+      "title": "Agrupá tareas por estado",
+      "summary": "Construí un objeto de grupos con reduce.",
+      "statement": "Transformá una lista de tareas en un objeto cuyas claves sean estados y cuyos valores sean arreglos de tareas.",
+      "objectives": [
+        "Transformar datos con reduce.",
+        "Agrupar objetos por una propiedad dinámica.",
+        "Inicializar grupos y conservar los objetos originales."
+      ],
+      "requirements": [
+        "La función debe llamarse agruparPorEstado.",
+        "Cada tarea contiene titulo y estado.",
+        "Cada clave del resultado es un estado y su valor un arreglo de tareas.",
+        "Debe funcionar con una lista vacía.",
+        "No uses librerías externas ni modifiques la lista original."
+      ],
+      "language": "javascript",
+      "starterCode": "function agruparPorEstado(tareas) {\n  // Agrupá cada tarea bajo una clave dinámica.\n  return {};\n}",
+      "tests": [
+        {
+          "label": "Agrupa estados repetidos",
+          "expression": "agruparPorEstado([{ titulo: 'Diseñar', estado: 'pendiente' }, { titulo: 'Probar', estado: 'hecha' }, { titulo: 'Documentar', estado: 'pendiente' }])",
+          "expected": {
+            "pendiente": [
+              {
+                "titulo": "Diseñar",
+                "estado": "pendiente"
+              },
+              {
+                "titulo": "Documentar",
+                "estado": "pendiente"
+              }
+            ],
+            "hecha": [
+              {
+                "titulo": "Probar",
+                "estado": "hecha"
+              }
+            ]
+          }
+        },
+        {
+          "label": "Crea un grupo para cada estado",
+          "expression": "agruparPorEstado([{ titulo: 'A', estado: 'nueva' }, { titulo: 'B', estado: 'en-curso' }, { titulo: 'C', estado: 'bloqueada' }])",
+          "expected": {
+            "nueva": [
+              {
+                "titulo": "A",
+                "estado": "nueva"
+              }
+            ],
+            "en-curso": [
+              {
+                "titulo": "B",
+                "estado": "en-curso"
+              }
+            ],
+            "bloqueada": [
+              {
+                "titulo": "C",
+                "estado": "bloqueada"
+              }
+            ]
+          }
+        },
+        {
+          "label": "Una lista vacía devuelve un objeto vacío",
+          "expression": "agruparPorEstado([])",
+          "expected": {}
+        }
+      ],
+      "hints": [
+        "Usá reduce con un objeto inicial vacío.",
+        "Accedé a la clave dinámica con grupos[tarea.estado].",
+        "Si el grupo no existe, creá un arreglo vacío antes de agregar la tarea."
+      ],
+      "solutionCode": "function agruparPorEstado(tareas) {\n  return tareas.reduce((grupos, tarea) => {\n    if (!grupos[tarea.estado]) grupos[tarea.estado] = [];\n    grupos[tarea.estado].push(tarea);\n    return grupos;\n  }, {});\n}",
+      "solutionExplanation": "El acumulador es un objeto. Para cada tarea se crea su grupo si todavía no existe y luego se agrega el objeto. El acumulador inicial {} permite procesar listas vacías.",
+      "commonMistakes": [
+        "Usar grupos.estado en vez de grupos[tarea.estado].",
+        "No inicializar el arreglo antes de llamar a push.",
+        "No devolver el acumulador en reduce.",
+        "Usar un arreglo cuando el resultado pedido es un objeto."
+      ],
+      "estimatedMinutes": 25
     }
   ]
 }
