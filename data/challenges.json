@@ -47,7 +47,8 @@
         "Usar Usuario como si fuera un valor en tiempo de ejecución: las interfaces solo existen durante la comprobación de tipos.",
         "Devolver el objeto completo en lugar de una cadena."
       ],
-      "estimatedMinutes": 10
+      "estimatedMinutes": 10,
+      "typeCheckCode": "const __usuarioCheck: Usuario = { nombre: \"Ada\", edad: 28 };\n// @ts-expect-error La edad debe ser numérica.\nconst __usuarioInvalid: Usuario = { nombre: \"Ada\", edad: \"28\" };"
     },
     {
       "id": "ts-union-estado-pedido",
@@ -99,7 +100,8 @@
         "Olvidar un estado y no devolver un mensaje para ese caso.",
         "Escribir un valor distinto, por ejemplo entregado con mayúsculas, aunque el tipo usa minúsculas."
       ],
-      "estimatedMinutes": 15
+      "estimatedMinutes": 15,
+      "typeCheckCode": "const __estadoCheck: EstadoPedido = \"pendiente\";\n// @ts-expect-error Un estado no definido no debe ser aceptado.\nconst __estadoInvalid: EstadoPedido = \"cancelado\";"
     },
     {
       "id": "ts-generic-primer-elemento",
@@ -153,7 +155,8 @@
         "Declarar un retorno T cuando el arreglo puede estar vacío.",
         "Devolver el arreglo completo en vez de su primer elemento."
       ],
-      "estimatedMinutes": 20
+      "estimatedMinutes": 20,
+      "typeCheckCode": "const __numeroCheck: number | undefined = obtenerPrimero([1, 2]);\nconst __textoCheck: string | undefined = obtenerPrimero([\"a\", \"b\"]);\n// @ts-expect-error El resultado de un arreglo numérico no debe ser string.\nconst __tipoIncorrecto: string = obtenerPrimero([1, 2]);"
     },
     {
       "id": "ts-generic-restriction",
@@ -211,7 +214,8 @@
         "Devolver solo el id en vez del objeto completo.",
         "Usar == en lugar de === y permitir comparaciones con coerción."
       ],
-      "estimatedMinutes": 25
+      "estimatedMinutes": 25,
+      "typeCheckCode": "const __usuarioEncontrado = buscarPorId([{ id: 1, nombre: \"Ana\" }], 1);\nconst __nombreCheck: string | undefined = __usuarioEncontrado?.nombre;\n// @ts-expect-error Los elementos deben incluir una propiedad id numérica.\nbuscarPorId([{ nombre: \"Ana\" }], 1);"
     }
   ]
 }
