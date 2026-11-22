@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.dataset.page || "";
   document.querySelectorAll(".nav-link").forEach(link => {
     const href = link.getAttribute("href") || "";
-    if ((page === "home" && href.endsWith("index.html")) || href.endsWith("/" + page + ".html") || (page === "challenges" && link.hasAttribute("data-challenges-link"))) {
+    if ((page === "home" && href.endsWith("index.html")) || href.endsWith("/" + page + ".html") || ((page === "challenges" || page === "challenge-detail") && link.hasAttribute("data-challenges-link"))) {
       link.classList.add("active");
     }
   });
