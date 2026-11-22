@@ -85,6 +85,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch(new URL("data/tools.json", root).href, { cache: "no-store" });
     if (!response.ok) throw new Error("No se pudo cargar data/tools.json (HTTP " + response.status + ").");
     const database = await response.json();
+
+    // Las bibliotecas agregadas al catálogo también aparecen en la navegación
+    // lateral sin tener que duplicar enlaces en cada plantilla HTML.
+    const mainNav = document.querySelector(".main-nav");
+    if (mainNav) {
+      const dynamicTools = [
+        { id: "apis", label: "APIs y comunicación web", symbol: "⇄" },
+        { id: "testing", label: "Testing", symbol: "✓" },
+        { id: "docker-deploy", label: "Docker y despliegue", symbol: "🐳" }
+      ];
+      dynamicTools.forEach(item => {
+        if (mainNav.querySelector('[data-tool-link="' + item.id + '"]')) return;
+        const link = node("a", "nav-link");
+        link.dataset.toolLink = item.id;
+        link.href = urlFor("tools.html", { tool: item.id });
+        link.append(node("span", "nav-icon", item.symbol), node("span", "", item.label));
+        mainNav.append(link);
+      });
+    }
+
     const tool = database.tools?.find(item => item.id === toolId);
 
     if (!tool) {
@@ -107,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       setText("toolArticleCount", tool.articles.length + (tool.articles.length === 1 ? " artículos" : " artículos"));
       setText("toolCategoryCount", tool.categories.length + (tool.categories.length === 1 ? " categoría" : " categorías"));
       setText("toolsCategorySummary", tool.categories.length + " categorías · " + tool.articles.length + " artículos");
-      setText("toolCommand", tool.id === "terminal" ? "terminal" : tool.id === "git" ? "git" : tool.id === "nextjs" ? "next dev" : tool.id === "express" ? "node server.js" : "npm");
+      setText("toolCommand", tool.id === "terminal" ? "terminal" : tool.id === "git" ? "git" : tool.id === "nextjs" ? "next dev" : tool.id === "express" ? "node server.js" : tool.id === "docker-deploy" ? "docker compose" : "npm");
 
       const grid = document.getElementById("toolsCategoryGrid");
       if (grid) {
@@ -202,7 +222,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const syntaxLanguage = article.syntaxLanguage || tool.syntaxLanguage || ({
         terminal: "bash", git: "bash", npm: "bash",
         react: "javascript", webcomponents: "javascript", vuejs: "xml",
-        nodejs: "javascript", astro: "javascript", phaser: "javascript", typescript: "typescript", nextjs: "typescript", express: "javascript"
+        nodejs: "javascript", astro: "javascript", phaser: "javascript", typescript: "typescript", nextjs: "typescript", express: "javascript",
+        "docker-deploy": "dockerfile"
       })[tool.id] || "plaintext";
 
       section = addArticleSection(body, toc, "sintaxis", "Sintaxis y forma de uso");

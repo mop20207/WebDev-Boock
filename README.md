@@ -14,8 +14,11 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 - **Backend HTTP:** Express.js 5, con rutas, middleware, APIs REST, validación, autenticación, seguridad, TypeScript, pruebas y despliegue.
 - **Bases relacionales:** SQL y PostgreSQL 19, con diseño relacional, consultas, JOIN, transacciones, JSONB, índices, rendimiento e integración con Node.js.
 - **Bases documentales:** MongoDB, con BSON, modelado embebido y referenciado, CRUD, arrays, agregaciones, índices, seguridad, transacciones y driver de Node.js.
+- **Comunicación web:** APIs y comunicación web, con HTTP, REST, JSON, Fetch, CORS, autenticación, OpenAPI y webhooks.
+- **Calidad de software:** Testing, con pruebas unitarias, integración, componentes, E2E, Vitest, Testing Library, Playwright y CI.
+- **Contenedores y publicación:** Docker y despliegue, con Dockerfile, imágenes, Compose, redes, volúmenes, seguridad, GHCR, CI/CD y operación en producción.
 
-El catálogo de herramientas y tecnologías contiene **331 artículos**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42 y MongoDB 42. Cada una de estas bibliotecas se distribuye en siete categorías.
+El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
 ## Estructura del proyecto
 
