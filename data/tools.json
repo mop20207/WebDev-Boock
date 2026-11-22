@@ -20499,7 +20499,7 @@
           "purpose": "MongoDB Atlas es un servicio administrado; mongosh es la shell para interactuar con despliegues MongoDB. La URI identifica clúster y credenciales, por lo que debe mantenerse en secreto. El acceso de red y el usuario se configuran por separado.",
           "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
           "syntax": "mongosh \"$MONGODB_URI\" · db · show collections",
-          "syntaxLanguage": "javascript",
+          "syntaxLanguage": "bash",
           "level": "Inicial a avanzado",
           "examples": [
             {
@@ -22302,7 +22302,7 @@
           "purpose": "mongodump genera un backup lógico y mongorestore lo restaura. Las opciones de autenticación, TLS, filtros y consistencia dependen del despliegue. La política debe incluir pruebas de restauración y objetivos de recuperación.",
           "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
           "syntax": "mongodump --uri=\"$MONGODB_URI\" --out=backup/ · mongorestore ...",
-          "syntaxLanguage": "javascript",
+          "syntaxLanguage": "bash",
           "level": "Inicial a avanzado",
           "examples": [
             {
