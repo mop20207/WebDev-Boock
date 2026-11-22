@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v16";
+const CACHE_VERSION = "webdev-book-v17";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -42,6 +42,10 @@ const CORE_FILES = [
   "css/terminal-library.css",
   "js/terminal-library.js",
   "data/terminal.json",
+  "pages/console.html",
+  "css/console-library.css",
+  "js/console-library.js",
+  "data/console.json",
   "css/projects.css",
   "js/projects.js",
   "data/projects.json",
