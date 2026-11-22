@@ -36,6 +36,12 @@ La sección incorpora 52 retos: cuatro por tecnología para TypeScript, JavaScri
 
 Cada uno de los 52 retos tiene su propio archivo HTML en `pages/retos/`. Las páginas reutilizan el motor de ejecución y el progreso local, pero tienen URL, encabezado y presentación independientes. El catálogo de `pages/challenges.html` enlaza con cada página. Los estilos compartidos están en `css/challenges.css` y `css/challenge-detail.css`.
 
+## Parte 3 · Bloque A: Laboratorio de juegos educativos
+
+El laboratorio incorpora seis juegos ejecutables directamente en el navegador: Snake, Pong, Tetris, un laberinto inspirado en Pac-Man, memoria de parejas y un rompecabezas numérico deslizante. Cada juego explica sus objetivos, reglas, controles y conceptos de programación relacionados.
+
+Las experiencias utilizan JavaScript y Canvas 2D o elementos HTML nativos, sin dependencias externas ni servidor. Se adaptan a controles de teclado y, cuando corresponde, a botones táctiles. El avance y las mejores marcas se guardan localmente en el navegador. La página y sus archivos principales se incluyen en la precarga de la PWA.
+
 ## Estructura del proyecto
 
 ```text
