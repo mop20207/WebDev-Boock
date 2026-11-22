@@ -60,7 +60,8 @@
         "Abrir y cerrar con teclado y toque.",
         "El estado aria-expanded coincide con la visibilidad."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "El documento define una tarjeta semántica. JavaScript escucha el clic del botón, cambia aria-expanded y alterna hidden en la sección adicional. Así la interfaz visual y el estado accesible permanecen sincronizados."
     },
     {
       "id": "formulario-validacion",
@@ -121,7 +122,8 @@
         "Correo inválido muestra error.",
         "Mensaje menor a 10 caracteres no pasa."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "Al enviar, el formulario evita la recarga y valida cada campo. Las reglas comprueban longitud mínima y formato de correo; cada error se escribe junto al campo y se marca con aria-invalid. La demo no envía los datos."
     },
     {
       "id": "calculadora",
@@ -181,7 +183,8 @@
         "5.5 por 2 devuelve 11.",
         "Dividir por cero muestra un aviso."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "La calculadora mantiene tres piezas de estado: valor actual, operando guardado y operador pendiente. La delegación de eventos identifica qué botón se pulsó y actualiza ese estado; al pedir el resultado ejecuta la operación y trata la división por cero."
     },
     {
       "id": "reloj-temporizador",
@@ -242,7 +245,8 @@
         "Rechazar cero, negativos y valores superiores a 3600.",
         "Pausar y reanudar el cronómetro no pierde tiempo acumulado."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "Date e Intl muestran la hora local. El cronómetro mide duración con performance.now(), acumulando el tiempo cuando se pausa. setInterval actualiza la pantalla y la cuenta regresiva reduce los segundos hasta llegar a cero."
     },
     {
       "id": "lista-tareas",
@@ -304,7 +308,8 @@
         "Marcar, filtrar y recargar conserva el estado.",
         "Borrar completadas no elimina pendientes."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "Las tareas se representan como objetos dentro de un arreglo. Cada acción modifica ese estado, guarda el arreglo en localStorage y vuelve a dibujar la lista. Los filtros solo cambian qué tareas se muestran, no eliminan datos."
     },
     {
       "id": "buscador-peliculas",
@@ -365,7 +370,8 @@
         "Filtrar por género.",
         "Mostrar estado vacío sin coincidencias."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "El catálogo comienza como un arreglo JSON. Los filtros de género y texto se aplican con filter() y la interfaz se construye desde los resultados. La siguiente evolución es cargar el arreglo desde una API o archivo remoto con fetch()."
     },
     {
       "id": "catalogo-productos",
@@ -426,7 +432,8 @@
         "Orden ascendente y descendente por precio.",
         "Agregar dos unidades actualiza cantidad y total."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "El catálogo mantiene los productos separados del carrito. Un Map registra cantidades por ID; búsqueda, categoría y orden generan una vista derivada. El total se calcula usando los precios del catálogo y no valores escritos por el usuario."
     },
     {
       "id": "aplicacion-clima",
@@ -487,7 +494,8 @@
         "Ciudad inexistente muestra un mensaje claro.",
         "La interfaz muestra estado de carga y error."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "La aplicación primero resuelve el nombre de ciudad mediante geocodificación. Con las coordenadas recibidas consulta el endpoint meteorológico. Cada solicitud tiene validación de respuesta y estados de carga/error antes de representar los datos."
     },
     {
       "id": "panel-administracion",
@@ -548,7 +556,8 @@
         "Buscar correo o rol filtra correctamente.",
         "Sin resultados muestra una fila vacía explicativa."
       ],
-      "notes": []
+      "notes": [],
+      "explanation": "Los registros ficticios son la fuente de verdad. Los contadores se calculan con filter() y la búsqueda filtra nombre, correo y rol. La tabla se vuelve a generar con nodos de texto para evitar interpretar datos como HTML."
     },
     {
       "id": "sistema-usuarios-demo",
@@ -610,7 +619,8 @@
       ],
       "notes": [
         "Los perfiles son datos ficticios y locales; no hay cuentas reales ni control de acceso."
-      ]
+      ],
+      "explanation": "El formulario valida y agrega perfiles a un arreglo, la búsqueda reduce los registros visibles y el selector permite cambiar roles. localStorage persiste la demo. Los roles no son permisos reales porque el navegador no es un límite de seguridad."
     },
     {
       "id": "autenticacion-segura",
@@ -686,7 +696,8 @@
       ],
       "notes": [
         "Ejemplo educativo. Agregar CSRF, HTTPS y controles adicionales antes de producción."
-      ]
+      ],
+      "explanation": "El servidor valida los datos con Zod, genera un hash bcrypt y lo guarda en PostgreSQL mediante parámetros SQL. Al iniciar sesión compara el hash y crea una sesión del lado servidor; la cookie HttpOnly identifica la sesión sin exponer la contraseña."
     },
     {
       "id": "tienda-online",
@@ -766,7 +777,8 @@
       ],
       "notes": [
         "No hay checkout ni proveedor de pagos real. No se guardan pedidos."
-      ]
+      ],
+      "explanation": "La página cliente mantiene las cantidades del carrito y muestra un total orientativo. Al crear un pedido envía IDs y cantidades a un Route Handler. El servidor valida el esquema y vuelve a consultar precios propios antes de calcular el importe; no procesa pagos."
     },
     {
       "id": "blog-postgres",
@@ -841,7 +853,8 @@
       ],
       "notes": [
         "Agregar autorización antes de permitir edición y eliminación desde Internet."
-      ]
+      ],
+      "explanation": "Express recibe solicitudes HTTP y valida entradas con Zod. Cada operación consulta PostgreSQL con parámetros, convierte resultados en JSON y devuelve códigos HTTP adecuados. El esquema define publicaciones e índice para ordenar y filtrar."
     },
     {
       "id": "api-rest-propia",
@@ -911,7 +924,8 @@
       ],
       "notes": [
         "El almacenamiento en memoria no persiste. Agregar PostgreSQL para una API real."
-      ]
+      ],
+      "explanation": "La API expone operaciones REST para tareas. Zod comprueba el cuerpo antes de cambiar datos, TypeScript describe la estructura de cada tarea y cada ruta responde con el código HTTP correspondiente. El almacenamiento actual es memoria para simplificar."
     },
     {
       "id": "gestor-fullstack",
@@ -991,7 +1005,8 @@
       ],
       "notes": [
         "No incluye autorización. Agregar control de acceso antes de usar datos reales."
-      ]
+      ],
+      "explanation": "Prisma define el modelo Project y genera el acceso tipado a PostgreSQL. Un Route Handler valida la creación y persiste el registro; la página usa un Server Component para leer y representar los proyectos directamente desde el servidor."
     }
   ]
 }
