@@ -139,16 +139,17 @@
       meta.append(node("span", "", challenge.technologyName || challenge.technology));
       meta.append(node("span", "", "· " + (challenge.estimatedMinutes || 15) + " min"));
       card.append(meta);
-      card.addEventListener("click", () => renderChallenge(challenge.id));
+      card.addEventListener("click", () => renderChallenge(challenge.id, true));
       listNode.append(card);
     });
   }
 
-  function renderChallenge(id) {
+  function renderChallenge(id, shouldScroll = false) {
     cancelActiveRunner();
     const challenge = challenges.find(item => item.id === id);
     if (!challenge) return;
     activeChallenge = challenge;
+    workspace.classList.add("has-active-challenge");
     revealedHints = 0;
     renderList();
     workspace.replaceChildren();
@@ -347,6 +348,9 @@
       solutionButton.textContent = solution.hidden ? "Mostrar solución" : "Ocultar solución";
     });
     editor.focus({ preventScroll: true });
+    if (shouldScroll && window.matchMedia("(max-width: 760px)").matches) {
+      workspace.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function loadTypeScript() {
