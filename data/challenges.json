@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "description": "Retos prácticos independientes, vinculados con las bibliotecas de WebDev Book.",
+  "challenges": [
+    {
+      "id": "ts-interface-usuario",
+      "technology": "typescript",
+      "technologyName": "TypeScript",
+      "difficulty": "principiante",
+      "title": "Modelá un usuario con una interfaz",
+      "summary": "Definí la forma de un usuario y generá una presentación con sus datos.",
+      "statement": "Una aplicación necesita mostrar un resumen breve de cada usuario. Tu tarea es completar la interfaz Usuario y la función presentarUsuario para que reciban datos correctamente tipados y devuelvan una frase con el nombre y la edad.",
+      "objectives": [
+        "Declarar una interfaz con propiedades obligatorias.",
+        "Usar la interfaz como tipo de un parámetro.",
+        "Devolver un string con interpolación de datos."
+      ],
+      "requirements": [
+        "La interfaz debe llamarse Usuario.",
+        "Debe incluir nombre de tipo string y edad de tipo number.",
+        "La función presentarUsuario debe recibir un Usuario.",
+        "El resultado debe tener el formato: Nombre tiene X años."
+      ],
+      "language": "typescript",
+      "starterCode": "interface Usuario {\n  // Definí las propiedades nombre y edad.\n}\n\nfunction presentarUsuario(usuario: Usuario): string {\n  // Devolvé una frase con el nombre y la edad.\n  return \"\";\n}",
+      "tests": [
+        {
+          "label": "Presenta correctamente a Ada",
+          "expression": "presentarUsuario({ nombre: 'Ada', edad: 28 })",
+          "expected": "Ada tiene 28 años."
+        },
+        {
+          "label": "Presenta correctamente a Linus",
+          "expression": "presentarUsuario({ nombre: 'Linus', edad: 54 })",
+          "expected": "Linus tiene 54 años."
+        }
+      ],
+      "hints": [
+        "Una interfaz describe la forma de un objeto. Dentro de Usuario declarás nombre y edad con sus tipos.",
+        "La función debe recibir un parámetro usuario: Usuario. Podés acceder a sus datos con usuario.nombre y usuario.edad.",
+        "Usá una plantilla de string con comillas invertidas para insertar los valores."
+      ],
+      "solutionCode": "interface Usuario {\n  nombre: string;\n  edad: number;\n}\n\nfunction presentarUsuario(usuario: Usuario): string {\n  return `${usuario.nombre} tiene ${usuario.edad} años.`;\n}",
+      "solutionExplanation": "La interfaz Usuario define un contrato: todo objeto que se pase a presentarUsuario debe incluir nombre como texto y edad como número. La función usa esas propiedades y una plantilla de string para construir la respuesta.",
+      "commonMistakes": [
+        "Escribir nombre o edad sin declarar su tipo.",
+        "Usar Usuario como si fuera un valor en tiempo de ejecución: las interfaces solo existen durante la comprobación de tipos.",
+        "Devolver el objeto completo en lugar de una cadena."
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "id": "ts-union-estado-pedido",
+      "technology": "typescript",
+      "technologyName": "TypeScript",
+      "difficulty": "intermedio",
+      "title": "Representá estados con un tipo unión",
+      "summary": "Restringí los estados válidos de un pedido y devolvé un mensaje para cada uno.",
+      "statement": "Un pequeño sistema de ventas utiliza tres estados posibles para cada pedido. Evitá aceptar textos arbitrarios: definí un tipo unión y completá una función que traduzca cada estado a un mensaje legible.",
+      "objectives": [
+        "Crear un tipo unión con literales de cadena.",
+        "Restringir los valores aceptados por una función.",
+        "Resolver los casos mediante una estructura condicional."
+      ],
+      "requirements": [
+        "El tipo debe llamarse EstadoPedido.",
+        "Los únicos valores válidos son pendiente, enviado y entregado.",
+        "La función obtenerMensaje debe devolver un mensaje distinto para cada estado.",
+        "No uses any."
+      ],
+      "language": "typescript",
+      "starterCode": "type EstadoPedido = \"pendiente\" | \"enviado\" | \"entregado\";\n\nfunction obtenerMensaje(estado: EstadoPedido): string {\n  // Devolvé un mensaje según el estado recibido.\n  return \"\";\n}",
+      "tests": [
+        {
+          "label": "Estado pendiente",
+          "expression": "obtenerMensaje('pendiente')",
+          "expected": "Tu pedido está pendiente."
+        },
+        {
+          "label": "Estado enviado",
+          "expression": "obtenerMensaje('enviado')",
+          "expected": "Tu pedido está en camino."
+        },
+        {
+          "label": "Estado entregado",
+          "expression": "obtenerMensaje('entregado')",
+          "expected": "Tu pedido fue entregado."
+        }
+      ],
+      "hints": [
+        "El tipo unión ya enumera los tres valores permitidos. No hace falta crear un enum.",
+        "Usá switch (estado) o una cadena de if / else if.",
+        "Asegurate de devolver exactamente el mensaje correspondiente a cada uno de los tres casos."
+      ],
+      "solutionCode": "type EstadoPedido = \"pendiente\" | \"enviado\" | \"entregado\";\n\nfunction obtenerMensaje(estado: EstadoPedido): string {\n  switch (estado) {\n    case \"pendiente\":\n      return \"Tu pedido está pendiente.\";\n    case \"enviado\":\n      return \"Tu pedido está en camino.\";\n    case \"entregado\":\n      return \"Tu pedido fue entregado.\";\n  }\n}",
+      "solutionExplanation": "EstadoPedido limita el parámetro a tres cadenas conocidas. switch permite tratar cada estado por separado y retornar el texto asociado. Así se detectan antes de ejecutar muchos errores de escritura o valores no contemplados.",
+      "commonMistakes": [
+        "Usar string en vez de EstadoPedido y perder la restricción de valores.",
+        "Olvidar un estado y no devolver un mensaje para ese caso.",
+        "Escribir un valor distinto, por ejemplo entregado con mayúsculas, aunque el tipo usa minúsculas."
+      ],
+      "estimatedMinutes": 15
+    },
+    {
+      "id": "ts-generic-primer-elemento",
+      "technology": "typescript",
+      "technologyName": "TypeScript",
+      "difficulty": "avanzado",
+      "title": "Creá una función genérica para obtener el primer elemento",
+      "summary": "Usá un parámetro de tipo para conservar el tipo de los elementos de cualquier arreglo.",
+      "statement": "Necesitás una función reutilizable que reciba un arreglo y devuelva su primer elemento. No debe funcionar solamente con números o solamente con strings: debe conservar el tipo concreto que reciba y contemplar arreglos vacíos.",
+      "objectives": [
+        "Declarar una función genérica.",
+        "Relacionar el tipo del arreglo con el tipo de retorno.",
+        "Representar la ausencia de un elemento con undefined."
+      ],
+      "requirements": [
+        "La función debe llamarse obtenerPrimero.",
+        "Debe usar un parámetro genérico T.",
+        "Debe recibir T[] y devolver T | undefined.",
+        "No uses any ni fuerces conversiones de tipo."
+      ],
+      "language": "typescript",
+      "starterCode": "function obtenerPrimero<T>(elementos: T[]): T | undefined {\n  // Devolvé el primer elemento o undefined si el arreglo está vacío.\n  return undefined;\n}",
+      "tests": [
+        {
+          "label": "Obtiene el primer número",
+          "expression": "obtenerPrimero([10, 20, 30])",
+          "expected": 10
+        },
+        {
+          "label": "Obtiene el primer texto",
+          "expression": "obtenerPrimero(['rojo', 'azul'])",
+          "expected": "rojo"
+        },
+        {
+          "label": "Conserva un objeto",
+          "expression": "obtenerPrimero([{ id: 7 }, { id: 8 }])",
+          "expected": {
+            "id": 7
+          }
+        }
+      ],
+      "hints": [
+        "El parámetro <T> representa el tipo que se deduce a partir del arreglo recibido.",
+        "Los arreglos permiten acceder al primer elemento con el índice 0.",
+        "Si el arreglo está vacío, elementos[0] devuelve undefined; ese resultado coincide con T | undefined."
+      ],
+      "solutionCode": "function obtenerPrimero<T>(elementos: T[]): T | undefined {\n  return elementos[0];\n}",
+      "solutionExplanation": "T es un parámetro de tipo. Si recibís number[], el retorno será number | undefined; si recibís string[], será string | undefined. No necesitás duplicar la función para cada tipo.",
+      "commonMistakes": [
+        "Usar any[] y perder la relación entre entrada y salida.",
+        "Declarar un retorno T cuando el arreglo puede estar vacío.",
+        "Devolver el arreglo completo en vez de su primer elemento."
+      ],
+      "estimatedMinutes": 20
+    },
+    {
+      "id": "ts-generic-restriction",
+      "technology": "typescript",
+      "technologyName": "TypeScript",
+      "difficulty": "experto",
+      "title": "Buscá elementos mediante una restricción genérica",
+      "summary": "Aplicá extends para aceptar cualquier objeto que tenga una propiedad id numérica.",
+      "statement": "Una colección puede contener usuarios, productos o tareas. Todos tienen una propiedad id, pero el resto de sus campos cambia. Implementá una función genérica que busque un elemento por id sin perder el tipo específico de los objetos.",
+      "objectives": [
+        "Aplicar una restricción genérica con extends.",
+        "Definir una interfaz mínima compartida.",
+        "Conservar el tipo concreto de los elementos devueltos."
+      ],
+      "requirements": [
+        "Definí la interfaz Identificable con id: number.",
+        "La función debe llamarse buscarPorId.",
+        "Usá T extends Identificable.",
+        "Devolvé el elemento coincidente o undefined si no existe."
+      ],
+      "language": "typescript",
+      "starterCode": "interface Identificable {\n  id: number;\n}\n\nfunction buscarPorId<T extends Identificable>(elementos: T[], id: number): T | undefined {\n  // Buscá el elemento cuyo id coincida con el parámetro.\n  return undefined;\n}",
+      "tests": [
+        {
+          "label": "Encuentra un usuario",
+          "expression": "buscarPorId([{ id: 1, nombre: 'Ana' }, { id: 2, nombre: 'Leo' }], 2)",
+          "expected": {
+            "id": 2,
+            "nombre": "Leo"
+          }
+        },
+        {
+          "label": "Encuentra un producto",
+          "expression": "buscarPorId([{ id: 15, precio: 99 }, { id: 16, precio: 120 }], 15)",
+          "expected": {
+            "id": 15,
+            "precio": 99
+          }
+        },
+        {
+          "label": "Devuelve undefined cuando no existe",
+          "expression": "buscarPorId([{ id: 1, nombre: 'Ana' }], 99)",
+          "expected": null
+        }
+      ],
+      "hints": [
+        "extends Identificable exige que cada elemento tenga id numérico, pero permite propiedades adicionales.",
+        "Podés usar find para recorrer el arreglo y localizar el primer elemento que cumpla una condición.",
+        "La condición es elemento.id === id. find devuelve T o undefined, que coincide con el tipo de retorno."
+      ],
+      "solutionCode": "interface Identificable {\n  id: number;\n}\n\nfunction buscarPorId<T extends Identificable>(elementos: T[], id: number): T | undefined {\n  return elementos.find(elemento => elemento.id === id);\n}",
+      "solutionExplanation": "La restricción T extends Identificable garantiza que cualquier tipo usado tenga un id numérico. Como T puede incluir otras propiedades, el resultado mantiene el tipo original (por ejemplo, Usuario o Producto) en vez de reducirse a Identificable.",
+      "commonMistakes": [
+        "Usar T[] sin restricción y luego intentar acceder a elemento.id.",
+        "Devolver solo el id en vez del objeto completo.",
+        "Usar == en lugar de === y permitir comparaciones con coerción."
+      ],
+      "estimatedMinutes": 25
+    }
+  ]
+}
