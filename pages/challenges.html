@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="Practicá desarrollo web con retos interactivos, pistas progresivas y soluciones comentadas.">
+  <title>Retos interactivos | WebDev Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/challenges.css">
+  <script defer src="../js/theme.js"></script>
+  <script defer src="../js/navigation.js"></script>
+  <script defer src="../js/challenges.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/icon.svg">
+  <link rel="stylesheet" href="../css/pwa.css">
+  <script defer src="../js/pwa.js"></script>
+</head>
+<body data-page="challenges">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+    <div class="sidebar-label">MENÚ PRINCIPAL</div>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a class="nav-link" href="../index.html"><span class="nav-icon">⌂</span> Inicio</a>
+      <a class="nav-link" href="html.html"><span class="nav-icon html-icon">5</span> HTML</a>
+      <a class="nav-link" href="css.html"><span class="nav-icon css-icon">✳</span> CSS</a>
+      <a class="nav-link" href="javascript.html"><span class="nav-icon js-icon">JS</span> JavaScript</a>
+      <a class="nav-link" href="editor.html"><span class="nav-icon">⌘</span> Editor</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" data-tool-link="terminal" href="tools.html?tool=terminal"><span class="nav-icon">$_</span> Terminal Linux</a>
+      <a class="nav-link" data-tool-link="git" href="tools.html?tool=git"><span class="nav-icon">⑂</span> Git y GitHub</a>
+      <a class="nav-link" data-tool-link="npm" href="tools.html?tool=npm"><span class="nav-icon">⬡</span> NPM</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="tools.html?tool=react"><span class="nav-icon">⚛</span> React</a>
+      <a class="nav-link" href="tools.html?tool=webcomponents"><span class="nav-icon">◇</span> Web Components</a>
+      <a class="nav-link" href="tools.html?tool=vuejs"><span class="nav-icon">V</span> Vue.js</a>
+      <a class="nav-link" href="tools.html?tool=nodejs"><span class="nav-icon">⬢</span> Node.js</a>
+      <a class="nav-link" href="tools.html?tool=astro"><span class="nav-icon">✦</span> Astro</a>
+      <a class="nav-link" href="tools.html?tool=phaser"><span class="nav-icon">🎮</span> Phaser</a>
+      <a class="nav-link" data-tool-link="typescript" href="tools.html?tool=typescript"><span class="nav-icon">TS</span> TypeScript</a>
+      <a class="nav-link" data-tool-link="nextjs" href="tools.html?tool=nextjs"><span class="nav-icon">N</span> Next.js</a>
+      <a class="nav-link" data-tool-link="express" href="tools.html?tool=express"><span class="nav-icon">EX</span> Express.js</a>
+      <a class="nav-link" data-tool-link="sql-postgres" href="tools.html?tool=sql-postgres"><span class="nav-icon">SQL</span> SQL y PostgreSQL</a>
+      <a class="nav-link" data-tool-link="mongodb" href="tools.html?tool=mongodb"><span class="nav-icon">MDB</span> MongoDB</a>
+      <a class="nav-link" data-tool-link="apis" href="tools.html?tool=apis"><span class="nav-icon">API</span> APIs y comunicación web</a>
+      <a class="nav-link" data-tool-link="testing" href="tools.html?tool=testing"><span class="nav-icon">✓</span> Testing</a>
+      <a class="nav-link" data-tool-link="docker-deploy" href="tools.html?tool=docker-deploy"><span class="nav-icon">DK</span> Docker y despliegue</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link active" data-challenges-link href="challenges.html"><span class="nav-icon">⌁</span> Retos interactivos</a>
+      <a class="nav-link" href="../index.html#ejercicios"><span class="nav-icon">✎</span> Laboratorios</a>
+      <a class="nav-link" href="../index.html#proyectos"><span class="nav-icon">▣</span> Proyectos</a>
+      <a class="nav-link" href="../index.html#favoritos"><span class="nav-icon">☆</span> Favoritos</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Aprendé resolviendo</strong><p>Probá, equivocáte, revisá las pistas y volvé a intentarlo.</p></div>
+      <button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button>
+      <div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><strong>Retos interactivos</strong></div>
+      <div class="challenge-top-progress"><span id="challengeProgressLabel">0 de 4 retos completados</span><i><b id="challengeProgressBar"></b></i></div>
+      <button class="top-icon" id="topThemeToggle" aria-label="Cambiar tema">◐</button>
+    </header>
+    <div class="page-content challenges-content">
+      <a class="tools-back-link" href="../index.html">← Volver al inicio</a>
+      <section class="challenges-hero">
+        <div class="eyebrow"><span class="status-dot"></span> WEBDEV BOOK / PRÁCTICA GUIADA</div>
+        <h1>Aprendé <span>resolviendo retos.</span></h1>
+        <p>Problemas prácticos vinculados con las tecnologías de la biblioteca. Escribí tu solución, ejecutá las pruebas, pedí pistas de a una y consultá la solución comentada cuando la necesites.</p>
+        <div class="challenge-hero-stats">
+          <span><b id="challengeTotal">4</b> retos disponibles</span>
+          <span><b>4</b> niveles de dificultad</span>
+          <span><b id="challengeCompletedHero">0</b> completados</span>
+        </div>
+      </section>
+      <section class="challenge-filters" aria-label="Filtros de retos">
+        <label class="challenge-search"><span>⌕</span><input id="challengeSearch" type="search" placeholder="Buscar un reto..." autocomplete="off"></label>
+        <label class="challenge-filter-label">Tecnología
+          <select id="technologyFilter"><option value="all">Todas las tecnologías</option></select>
+        </label>
+        <div class="difficulty-filter" role="group" aria-label="Filtrar por dificultad">
+          <button type="button" class="difficulty-button active" data-difficulty="all">Todos</button>
+          <button type="button" class="difficulty-button" data-difficulty="principiante">Principiante</button>
+          <button type="button" class="difficulty-button" data-difficulty="intermedio">Intermedio</button>
+          <button type="button" class="difficulty-button" data-difficulty="avanzado">Avanzado</button>
+          <button type="button" class="difficulty-button" data-difficulty="experto">Experto</button>
+        </div>
+      </section>
+      <div class="challenge-workspace">
+        <aside class="challenge-list-panel">
+          <div class="challenge-list-heading"><div><span class="eyebrow">CATÁLOGO</span><h2>Elegí un reto</h2></div><span id="challengeVisibleCount">4</span></div>
+          <div id="challengeList" class="challenge-list" aria-live="polite"></div>
+          <p class="challenge-list-note">Tu avance se guarda en este navegador.</p>
+        </aside>
+        <section id="challengeWorkspace" class="challenge-detail-panel" aria-live="polite">
+          <div class="challenge-empty-state">
+            <span class="challenge-empty-icon">⌁</span>
+            <h2>Elegí un desafío para empezar</h2>
+            <p>Seleccioná un reto de la lista. Vas a encontrar el problema, los objetivos, los requisitos y un espacio para escribir y probar tu código.</p>
+          </div>
+        </section>
+      </div>
+      <footer class="footer"><span>WebDev Book · Retos interactivos</span><span>Practicá a tu ritmo · Tu progreso queda en este dispositivo</span></footer>
+    </div>
+  </main>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+</body>
+</html>

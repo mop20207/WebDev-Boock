@@ -20,6 +20,12 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 
 El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
+## Retos interactivos
+
+La sección independiente de retos permite filtrar ejercicios por tecnología y dificultad (principiante, intermedio, avanzado y experto). Cada reto puede incluir el enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada, errores habituales y seguimiento local del progreso.
+
+La primera entrega incorpora cuatro retos de TypeScript: interfaces, tipos unión, funciones genéricas y restricciones genéricas. El código TypeScript se comprueba con el compilador en el navegador y se ejecuta dentro de un iframe aislado. El progreso se guarda en el navegador mediante `localStorage`.
+
 ## Estructura del proyecto
 
 ```text
@@ -48,7 +54,8 @@ WebDev-Boock/
 │   ├── html-articulos.json
 │   ├── css-articulos.json
 │   ├── js-articulos.json
-│   └── tools.json
+│   ├── tools.json
+│   └── challenges.json
 └── assets/
     ├── icons/
     └── images/
