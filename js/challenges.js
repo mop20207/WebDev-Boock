@@ -1018,7 +1018,7 @@ function collection(name) {
 const db = { collection };
 (async () => {
   try {
-    const functions = new Function("db", payload.code + "\\nreturn [" + payload.functionNames.join(",") + "]")(db);
+    const functions = new Function("db", payload.code + "\nreturn [" + payload.functionNames.join(",") + "]")(db);
     const results = [];
     for (const test of payload.tests) {
       try {
