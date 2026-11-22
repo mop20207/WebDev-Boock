@@ -1177,6 +1177,11 @@
           "expected": "Estudiar componentes"
         },
         {
+          "label": "Emite el evento personalizado con el detalle",
+          "expression": "window.__challengeEvents[0]?.texto",
+          "expected": "Estudiar componentes"
+        },
+        {
           "label": "No agrega entradas vacías",
           "steps": [
             {
