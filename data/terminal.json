@@ -1,0 +1,1604 @@
+{
+  "version": 1,
+  "language": "Terminal y línea de comandos",
+  "updated": "2026-11-22",
+  "description": "Biblioteca progresiva de terminal y línea de comandos: navegación, archivos, búsqueda, tuberías, redirecciones, procesos, permisos, SSH y scripts, con notas para Bash, PowerShell y CMD.",
+  "scope": "Los ejemplos ejecutables se centran en Bash para Linux, macOS y entornos compatibles. PowerShell y CMD se explican como shells diferentes: no se deben mezclar sus opciones ni su sintaxis.",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos de la terminal",
+      "description": "Entendé qué es una terminal, cómo interpreta comandos y cómo pedir ayuda.",
+      "icon": "$_",
+      "level": "Inicial"
+    },
+    {
+      "id": "navegacion",
+      "title": "Navegación y archivos",
+      "description": "Recorré carpetas, creá y organizá archivos sin perder de vista las rutas.",
+      "icon": "▣",
+      "level": "Inicial"
+    },
+    {
+      "id": "busqueda",
+      "title": "Búsqueda y procesamiento",
+      "description": "Encontrá archivos y texto, combiná comandos y controlá entradas y salidas.",
+      "icon": "⌕",
+      "level": "Intermedio"
+    },
+    {
+      "id": "entorno",
+      "title": "Entorno y ejecución",
+      "description": "Usá variables, rutas de ejecución, códigos de salida y distintas shells.",
+      "icon": "⚙",
+      "level": "Intermedio"
+    },
+    {
+      "id": "sistema",
+      "title": "Procesos y sistema",
+      "description": "Inspeccioná procesos, permisos, red y conexiones de forma controlada.",
+      "icon": "▤",
+      "level": "Intermedio"
+    },
+    {
+      "id": "automatizacion",
+      "title": "Automatización y proyectos",
+      "description": "Escribí scripts, reutilizá funciones y organizá tareas repetitivas.",
+      "icon": "⌘",
+      "level": "Avanzado"
+    }
+  ],
+  "articles": [
+    {
+      "id": "terminal-shell",
+      "category": "fundamentos",
+      "title": "Terminal, shell y línea de comandos",
+      "level": "Inicial",
+      "summary": "La terminal es la interfaz de texto; la shell interpreta lo que escribís y coordina la ejecución de comandos.",
+      "purpose": "Una terminal es una aplicación que muestra una sesión de texto. Dentro corre una shell, como Bash, Zsh o PowerShell. No son sinónimos: podés cambiar de aplicación de terminal sin cambiar necesariamente la shell. La shell separa el comando de sus argumentos, expande variables y rutas, aplica redirecciones y luego ejecuta la instrucción.",
+      "syntax": "# Abrir una terminal\n# Bash / Zsh: mostrar la shell actual\necho \"$SHELL\"\n# Mostrar el directorio de trabajo\npwd",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Reconocer las piezas",
+          "description": "Abrí una terminal y ejecutá estos comandos por separado.",
+          "code": "echo \"Estoy usando una shell\"\npwd",
+          "explanation": "`echo` y `pwd` son comandos distintos: el primero imprime texto y el segundo informa la carpeta de trabajo actual."
+        },
+        {
+          "title": "Comparar intérpretes",
+          "description": "Consultá qué shell responde a cada nombre instalado.",
+          "code": "bash --version\nzsh --version\npwsh --version  # solo si PowerShell está instalado",
+          "explanation": "Cada comando consulta la versión de un intérprete. Un comando puede no existir si no está instalado, y eso no significa que la terminal esté rota."
+        }
+      ],
+      "exercise": "Identificá qué terminal y shell estás usando. Anotá el resultado de `pwd` y la versión de tu shell.",
+      "hint": "La aplicación de terminal y la shell son capas diferentes; consultá `$SHELL` en sistemas Unix.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "Microsoft: Windows Commands",
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands"
+        }
+      ]
+    },
+    {
+      "id": "anatomia-comando",
+      "category": "fundamentos",
+      "title": "Comandos, argumentos y opciones",
+      "level": "Inicial",
+      "summary": "Aprendé a leer la estructura de una instrucción y a distinguir opciones de argumentos.",
+      "purpose": "Una instrucción suele tener un programa, opciones y argumentos. Las opciones modifican el comportamiento; los argumentos indican sobre qué elemento operar. La convención `-h` o `--help` es común, pero cada programa define sus propias opciones.",
+      "syntax": "comando [opciones] [argumentos]\nls -la documentos\n# Programa: ls\n# Opciones: -l y -a\n# Argumento: documentos",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Separar cada parte",
+          "description": "Observá cómo cambia el resultado al agregar opciones.",
+          "code": "ls\nls -l\nls -la",
+          "explanation": "La primera instrucción lista nombres; `-l` muestra detalles y `-a` incluye entradas ocultas en herramientas compatibles con esta convención."
+        },
+        {
+          "title": "Leer ayuda del comando",
+          "description": "Pedí la ayuda de una herramienta habitual.",
+          "code": "cp --help\n# En PowerShell puede usarse Get-Help Copy-Item",
+          "explanation": "`--help` es una convención frecuente de herramientas GNU, no una regla universal. PowerShell cuenta con su propio sistema de ayuda."
+        }
+      ],
+      "exercise": "Elegí tres comandos y señalá el nombre del programa, sus opciones y sus argumentos.",
+      "hint": "Las opciones no son iguales para todos los programas. Leé su ayuda antes de copiar una instrucción encontrada en internet.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "Microsoft: Windows Commands",
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands"
+        }
+      ]
+    },
+    {
+      "id": "pwd-cd",
+      "category": "fundamentos",
+      "title": "Directorio actual: pwd y cd",
+      "level": "Inicial",
+      "summary": "Comprobá dónde estás y cambiá de carpeta con rutas absolutas y relativas.",
+      "purpose": "La shell mantiene un directorio de trabajo actual. Las rutas relativas se interpretan desde allí; las absolutas parten de la raíz del sistema de archivos. `pwd` muestra el directorio y `cd` cambia la ubicación de la sesión.",
+      "syntax": "pwd\ncd documentos\ncd ..\ncd ~",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Navegar desde la carpeta actual",
+          "description": "Movete a una carpeta hija y regresá al directorio anterior.",
+          "code": "pwd\ncd ..\npwd\ncd -",
+          "explanation": "`..` representa el directorio padre. En Bash, `cd -` vuelve al directorio anterior y muestra la ruta a la que regresa."
+        },
+        {
+          "title": "Ir al directorio personal",
+          "description": "Usá el atajo de la carpeta personal y comprobá el resultado.",
+          "code": "cd ~\npwd\n# También podés usar: cd",
+          "explanation": "`~` se expande al directorio personal en shells Unix. `cd` sin argumentos también suele llevarte allí."
+        }
+      ],
+      "exercise": "Navegá desde tu carpeta personal hasta un proyecto y regresá usando rutas relativas.",
+      "hint": "Antes de crear, mover o borrar algo, mirá `pwd` para confirmar en qué carpeta estás.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "Microsoft: Windows Commands",
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands"
+        }
+      ]
+    },
+    {
+      "id": "rutas",
+      "category": "fundamentos",
+      "title": "Rutas absolutas, relativas y espacios",
+      "level": "Inicial",
+      "summary": "Interpretá rutas, nombres con espacios y referencias al directorio actual.",
+      "purpose": "Una ruta absoluta identifica una ubicación desde la raíz, como `/home/ana/proyecto`. Una ruta relativa depende del directorio actual. Los espacios separan argumentos si no citás la ruta, por eso conviene usar comillas o escapar espacios.",
+      "syntax": "cd \"/home/ana/Mis proyectos/web\"\n# Ruta relativa desde la carpeta actual:\ncd ./src\n# Directorio padre:\ncd ..",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Citar una ruta con espacios",
+          "description": "Usá comillas para que la shell entregue una sola ruta como argumento.",
+          "code": "mkdir -p \"mi sitio web/assets\"\ncd \"mi sitio web\"\npwd",
+          "explanation": "Las comillas mantienen el espacio dentro de un mismo argumento. `-p` crea los directorios intermedios si hace falta."
+        },
+        {
+          "title": "Usar una ruta relativa",
+          "description": "Desde la raíz del proyecto, entrá a `src/components` y volvé a `src`.",
+          "code": "cd src/components\ncd ..",
+          "explanation": "Una ruta relativa se calcula desde el directorio de trabajo actual; el mismo texto puede señalar lugares distintos si cambiás de carpeta."
+        }
+      ],
+      "exercise": "Creá una carpeta llamada `Proyecto Web` y entrá a ella usando su nombre con espacios.",
+      "hint": "No elimines las comillas de una ruta que contiene espacios. Revisá la ruta antes de ejecutar comandos destructivos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "Microsoft: Windows Commands",
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands"
+        }
+      ]
+    },
+    {
+      "id": "ayuda-man",
+      "category": "fundamentos",
+      "title": "Ayuda: --help, man y Get-Help",
+      "level": "Inicial",
+      "summary": "Consultá documentación integrada antes de usar parámetros que no conocés.",
+      "purpose": "Las herramientas de línea de comandos suelen ofrecer ayuda propia. En sistemas Unix, `man` abre páginas de manual; muchas utilidades aceptan `--help`. PowerShell ofrece `Get-Help` y documentación por comando. La disponibilidad depende del programa y de la instalación.",
+      "syntax": "ls --help\nman ls\n# PowerShell:\nGet-Help Get-ChildItem",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Buscar una opción",
+          "description": "Consultá cómo mostrar tamaños legibles con `ls` en GNU coreutils.",
+          "code": "ls --help | grep -i human",
+          "explanation": "La tubería filtra el texto de ayuda. `--help` y `grep` corresponden al entorno Unix-like; otras plataformas pueden usar opciones distintas."
+        },
+        {
+          "title": "Pedir ayuda de PowerShell",
+          "description": "Explorá la ayuda de `Get-ChildItem`.",
+          "code": "Get-Help Get-ChildItem\nGet-Help Get-ChildItem -Examples",
+          "explanation": "PowerShell usa cmdlets con nombres verbo-sustantivo y puede mostrar ejemplos mediante `-Examples`."
+        }
+      ],
+      "exercise": "Buscá ayuda para `cp`, `mv` y `grep`. Registrá una opción de cada comando y qué hace.",
+      "hint": "No memorices opciones aisladas. Leé la ayuda de la versión instalada: puede variar entre GNU, BSD y Windows.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "Microsoft: Windows Commands",
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands"
+        }
+      ]
+    },
+    {
+      "id": "listar-directorios",
+      "category": "navegacion",
+      "title": "Listar carpetas: ls y equivalentes",
+      "level": "Inicial",
+      "summary": "Inspeccioná archivos y carpetas antes de operar sobre ellos.",
+      "purpose": "`ls` muestra contenido en Bash y Zsh. Las opciones permiten ver detalles, incluir archivos ocultos o clasificar por tamaño. En PowerShell, `Get-ChildItem` (alias `ls` en algunas sesiones) devuelve objetos; en CMD se usa `dir`. El resultado y las opciones no son idénticos.",
+      "syntax": "ls\nls -la\nls -lh",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Mostrar información detallada",
+          "description": "Compará una lista simple con una lista larga y legible.",
+          "code": "ls -l\nls -lh",
+          "explanation": "`-l` muestra permisos, propietario, tamaño y fecha en implementaciones compatibles; `-h` adapta unidades para lectura humana en GNU ls."
+        },
+        {
+          "title": "Ordenar por modificación",
+          "description": "Listá primero los archivos modificados más recientemente.",
+          "code": "ls -lt",
+          "explanation": "`-t` ordena por fecha de modificación, normalmente del más reciente al más antiguo."
+        }
+      ],
+      "exercise": "Listá una carpeta de proyecto y reconocé qué entradas son archivos, directorios y elementos ocultos.",
+      "hint": "No confundas el alias `ls` de PowerShell con GNU `ls`: sus opciones y tipos de salida difieren.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "GNU Coreutils Manual",
+          "url": "https://www.gnu.org/software/coreutils/manual/"
+        },
+        {
+          "label": "PowerShell: Get-ChildItem",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem"
+        }
+      ]
+    },
+    {
+      "id": "crear-carpetas-archivos",
+      "category": "navegacion",
+      "title": "Crear carpetas y archivos",
+      "level": "Inicial",
+      "summary": "Creá estructuras de proyecto con mkdir y archivos vacíos con touch.",
+      "purpose": "`mkdir` crea directorios. `touch` actualiza marcas de tiempo y, si el archivo no existe, crea uno vacío en los sistemas Unix habituales. PowerShell permite usar `New-Item`.",
+      "syntax": "mkdir proyecto\nmkdir -p proyecto/src/components\ntouch proyecto/README.md",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Preparar una estructura",
+          "description": "Creá varias carpetas anidadas y un README vacío.",
+          "code": "mkdir -p sitio/src sitio/assets\n touch sitio/README.md",
+          "explanation": "`mkdir -p` crea directorios intermedios sin fallar si ya existen. `touch` crea un archivo vacío cuando no existe."
+        },
+        {
+          "title": "Crear con PowerShell",
+          "description": "Usá `New-Item` para crear una carpeta y un archivo.",
+          "code": "New-Item -ItemType Directory -Path .\\sitio\nNew-Item -ItemType File -Path .\\sitio\\README.md",
+          "explanation": "`New-Item` es un cmdlet de PowerShell. Sus parámetros expresan el tipo de objeto y la ruta."
+        }
+      ],
+      "exercise": "Armá `mi-proyecto` con `src`, `assets`, `tests` y `README.md`.",
+      "hint": "Revisá si una carpeta ya existe antes de ejecutar una secuencia automatizada.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "GNU Coreutils Manual",
+          "url": "https://www.gnu.org/software/coreutils/manual/"
+        },
+        {
+          "label": "PowerShell: Get-ChildItem",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem"
+        }
+      ]
+    },
+    {
+      "id": "leer-archivos",
+      "category": "navegacion",
+      "title": "Leer archivos: cat, less, head y tail",
+      "level": "Inicial",
+      "summary": "Elegí la herramienta adecuada según el tamaño del archivo y la parte que necesitás revisar.",
+      "purpose": "`cat` concatena y muestra archivos; `less` permite navegar sin imprimir todo de una vez. `head` y `tail` muestran el comienzo y el final. Para logs que siguen creciendo, `tail -f` muestra nuevas líneas conforme aparecen.",
+      "syntax": "cat README.md\nless README.md\nhead -n 20 README.md\ntail -n 30 app.log",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Leer el comienzo",
+          "description": "Mostrá las primeras diez líneas de un archivo de texto.",
+          "code": "head -n 10 README.md",
+          "explanation": "`-n` define la cantidad de líneas. Si el archivo es muy grande, esta opción evita cargar toda su salida en la terminal."
+        },
+        {
+          "title": "Seguir un log",
+          "description": "Observá nuevas líneas agregadas al final de un archivo.",
+          "code": "tail -f app.log\n# Salí con Ctrl+C",
+          "explanation": "`tail -f` mantiene abierta la observación. `Ctrl+C` interrumpe el proceso en primer plano."
+        }
+      ],
+      "exercise": "Inspeccioná un archivo largo sin modificarlo y encontrá la última línea de un log.",
+      "hint": "No uses `cat` para archivos binarios; puede generar salida ilegible en la terminal.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "GNU Coreutils Manual",
+          "url": "https://www.gnu.org/software/coreutils/manual/"
+        },
+        {
+          "label": "PowerShell: Get-ChildItem",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem"
+        }
+      ]
+    },
+    {
+      "id": "copiar-mover",
+      "category": "navegacion",
+      "title": "Copiar y mover: cp y mv",
+      "level": "Inicial",
+      "summary": "Duplicá archivos y reorganizá carpetas usando rutas claras.",
+      "purpose": "`cp` copia archivos; `cp -r` permite copiar directorios en entornos Unix. `mv` mueve o renombra. Antes de ejecutar, revisá el origen, el destino y si el destino ya existe: el comportamiento de sobrescritura puede variar.",
+      "syntax": "cp origen.txt copia.txt\ncp -r src backup-src\nmv borrador.txt README.md",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Copiar sin borrar el original",
+          "description": "Duplicá un archivo de configuración de ejemplo.",
+          "code": "cp .env.example .env.local",
+          "explanation": "`cp` deja el origen intacto. En proyectos reales, el archivo local puede contener valores privados; no lo publiques."
+        },
+        {
+          "title": "Mover a otra carpeta",
+          "description": "Reubicá un archivo y luego comprobá el resultado.",
+          "code": "mkdir -p docs\nmv README-draft.md docs/README.md\nls docs",
+          "explanation": "`mv` puede mover o renombrar según la ruta destino. La última instrucción verifica el nuevo lugar."
+        }
+      ],
+      "exercise": "Copiá una carpeta de práctica a un respaldo y renombrá un archivo dentro de la copia.",
+      "hint": "No supongas que una operación de movimiento siempre crea una copia. Verificá el destino antes de borrar el origen.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "GNU Coreutils Manual",
+          "url": "https://www.gnu.org/software/coreutils/manual/"
+        },
+        {
+          "label": "PowerShell: Get-ChildItem",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem"
+        }
+      ]
+    },
+    {
+      "id": "borrado-seguro",
+      "category": "navegacion",
+      "title": "Eliminar archivos y carpetas con seguridad",
+      "level": "Inicial",
+      "summary": "Usá rm con cuidado y aprendé alternativas de confirmación antes de borrar datos.",
+      "purpose": "`rm` elimina entradas del sistema de archivos; no funciona como una papelera de reciclaje. `rm -r` recorre directorios y `rm -f` fuerza la operación. La combinación `rm -rf` puede borrar muchos archivos sin pedir confirmación: nunca la copies sin comprender exactamente la ruta.",
+      "syntax": "rm archivo-temporal.txt\nrm -i archivo.txt\n# Directorio vacío:\nrmdir carpeta-vacia",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Pedir confirmación",
+          "description": "Probá la opción interactiva sobre un archivo descartable.",
+          "code": "touch borrar-demo.txt\nrm -i borrar-demo.txt",
+          "explanation": "`-i` solicita confirmación antes de cada eliminación en implementaciones que la admiten."
+        },
+        {
+          "title": "Verificar antes de borrar",
+          "description": "Listá el objetivo y usá una ruta explícita antes de eliminar.",
+          "code": "ls -la ./tmp-demo\n# Solo después de revisar:\nrm -r ./tmp-demo",
+          "explanation": "La primera instrucción permite inspeccionar el contenido. La segunda elimina el directorio y su contenido de forma recursiva."
+        }
+      ],
+      "exercise": "Creá un archivo temporal, confirmá su ubicación con `pwd` y `ls`, y eliminá únicamente ese archivo.",
+      "hint": "No ejecutes comandos de borrado sobre `/`, `~`, variables vacías o rutas que no verificaste. `rm` no ofrece deshacer.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "GNU Coreutils Manual",
+          "url": "https://www.gnu.org/software/coreutils/manual/"
+        },
+        {
+          "label": "PowerShell: Get-ChildItem",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem"
+        }
+      ]
+    },
+    {
+      "id": "find-archivos",
+      "category": "busqueda",
+      "title": "Buscar archivos con find",
+      "level": "Intermedio",
+      "summary": "Encontrá archivos por nombre, extensión, tipo o fecha sin recorrer carpetas manualmente.",
+      "purpose": "`find` recorre un árbol de directorios y evalúa condiciones sobre cada entrada. Las expresiones se leen de izquierda a derecha y pueden combinar nombre, tipo, tamaño y acciones. Empezá con búsquedas que solo imprimen resultados; agregá acciones destructivas únicamente cuando el patrón esté verificado.",
+      "syntax": "find . -name \"*.js\"\nfind . -type d -name \"node_modules\"\nfind . -type f -mtime -7",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Buscar por nombre",
+          "description": "Encontrá todos los archivos JSON bajo la carpeta actual.",
+          "code": "find . -type f -name \"*.json\"",
+          "explanation": "`-type f` limita los resultados a archivos regulares; `-name` compara el nombre con un patrón."
+        },
+        {
+          "title": "Buscar directorios específicos",
+          "description": "Localizá carpetas llamadas `tests` sin modificar nada.",
+          "code": "find . -type d -name tests -print",
+          "explanation": "`-print` deja explícito que la acción es mostrar las rutas encontradas."
+        }
+      ],
+      "exercise": "Buscá archivos `.css` dentro de `src` y guardá mentalmente las rutas obtenidas.",
+      "hint": "No añadas `-delete` ni `-exec rm` mientras no hayas comprobado primero la lista de resultados.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash: Pipelines y redirecciones",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "GNU grep manual",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html"
+        }
+      ]
+    },
+    {
+      "id": "grep-texto",
+      "category": "busqueda",
+      "title": "Buscar contenido con grep",
+      "level": "Intermedio",
+      "summary": "Buscá palabras o patrones dentro de archivos y combiná la búsqueda con otras herramientas.",
+      "purpose": "`grep` examina líneas y muestra las que coinciden con un patrón. `-n` agrega números de línea, `-i` ignora diferencias de mayúsculas y `-r` recorre directorios. La sintaxis de expresiones regulares depende de las opciones utilizadas.",
+      "syntax": "grep -n \"TODO\" README.md\ngrep -ri \"fetch(\" src/\ngrep -E \"error|warning\" app.log",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Ignorar mayúsculas",
+          "description": "Buscá una palabra sin distinguir entre `Error`, `ERROR` y `error`.",
+          "code": "grep -in \"error\" app.log",
+          "explanation": "`-i` hace la coincidencia insensible a mayúsculas y `-n` identifica la línea."
+        },
+        {
+          "title": "Mostrar solo nombres de archivos",
+          "description": "Listá los archivos que contienen una referencia a `localStorage`.",
+          "code": "grep -rl \"localStorage\" src/",
+          "explanation": "`-l` muestra los nombres de los archivos que tienen coincidencias; `-r` recorre subdirectorios."
+        }
+      ],
+      "exercise": "Encontrá dónde se utiliza una función dentro de tu proyecto e identificá el archivo y la línea.",
+      "hint": "No confundas `grep` con una búsqueda semántica: por defecto encuentra coincidencias textuales o regulares.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash: Pipelines y redirecciones",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "GNU grep manual",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html"
+        }
+      ]
+    },
+    {
+      "id": "comodines-comillas",
+      "category": "busqueda",
+      "title": "Comodines, expansión y comillas",
+      "level": "Intermedio",
+      "summary": "Controlá cómo la shell transforma patrones y cadenas antes de ejecutar un programa.",
+      "purpose": "La shell puede expandir comodines como `*` y `?` antes de invocar el programa. Las comillas simples preservan literalmente el contenido en Bash; las dobles permiten algunas expansiones, como variables. PowerShell tiene reglas propias de expansión y paso de argumentos.",
+      "syntax": "ls *.js\nprintf '%s\\n' \"src/*.js\"\necho \"$HOME\"",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Comparar patrón y texto",
+          "description": "Observá la diferencia entre un comodín sin comillas y el mismo patrón citado.",
+          "code": "printf '%s\\n' *.js\nprintf '%s\\n' \"*.js\"",
+          "explanation": "Sin comillas, Bash intenta expandir el patrón a nombres coincidentes. Entre comillas se entrega el texto literal al comando."
+        },
+        {
+          "title": "Conservar espacios en una variable",
+          "description": "Asigná una ruta con espacios y usala citada.",
+          "code": "ruta=\"Mis proyectos/app\"\nprintf '%s\\n' \"$ruta\"",
+          "explanation": "Las comillas dobles preservan los espacios como parte del mismo argumento y permiten expandir `$ruta`."
+        }
+      ],
+      "exercise": "Explicá qué recibe `printf` en cada ejemplo: `*.txt`, `\"*.txt\"` y `\"$HOME\"`.",
+      "hint": "No uses `eval` para intentar solucionar problemas de comillas. Inspeccioná cómo se construyen los argumentos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash: Pipelines y redirecciones",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "GNU grep manual",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html"
+        }
+      ]
+    },
+    {
+      "id": "pipes",
+      "category": "busqueda",
+      "title": "Tuberías: conectar comandos",
+      "level": "Intermedio",
+      "summary": "Encadená herramientas para procesar la salida de una sin crear archivos intermedios.",
+      "purpose": "El operador `|` conecta la salida estándar de un proceso con la entrada estándar del siguiente. En Bash, cada tramo de una tubería se ejecuta normalmente en un entorno de proceso separado. El estado final suele ser el del último comando, salvo que se active `pipefail`.",
+      "syntax": "cat app.log | grep -i error\nfind . -type f | sort | head -n 20\nset -o pipefail",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Filtrar y contar",
+          "description": "Contá cuántas líneas de un log contienen `ERROR`.",
+          "code": "grep -i \"ERROR\" app.log | wc -l",
+          "explanation": "`grep` produce las líneas coincidentes y `wc -l` cuenta las líneas que recibe por la tubería."
+        },
+        {
+          "title": "Encadenar más de dos comandos",
+          "description": "Listá archivos JavaScript, ordenalos y mostrale solo los primeros resultados.",
+          "code": "find src -type f -name \"*.js\" | sort | head -n 10",
+          "explanation": "Cada programa recibe la salida del anterior; el orden de la tubería define el flujo de datos."
+        }
+      ],
+      "exercise": "Tomá una lista de archivos, filtrá los `.json`, ordená el resultado y contá cuántos hay.",
+      "hint": "Una tubería conecta stdout, no cualquier salida. Los errores suelen viajar por stderr y pueden necesitar redirección.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash: Pipelines y redirecciones",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "GNU grep manual",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html"
+        }
+      ]
+    },
+    {
+      "id": "redireccion",
+      "category": "busqueda",
+      "title": "Redirecciones: >, >>, < y stderr",
+      "level": "Intermedio",
+      "summary": "Guardá resultados, agregá registros y separá salida normal de mensajes de error.",
+      "purpose": "En Bash, `>` redirige stdout y suele truncar el archivo; `>>` agrega al final. `<` usa un archivo como entrada. El descriptor `2` representa stderr y `2>&1` combina stderr con stdout. El orden de las redirecciones importa.",
+      "syntax": "comando > salida.txt\ncomando >> registro.log\ncomando 2> errores.log\ncomando > todo.log 2>&1",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Guardar sin agregar",
+          "description": "Redirigí la salida de un comando de listado a un archivo temporal.",
+          "code": "ls -la > listado.txt\ncat listado.txt",
+          "explanation": "`>` crea el archivo o reemplaza su contenido. Usalo solo cuando quieras sobrescribir el destino."
+        },
+        {
+          "title": "Agregar una línea al registro",
+          "description": "Escribí una marca de tiempo al final de un log.",
+          "code": "date >> actividad.log\ncat actividad.log",
+          "explanation": "`>>` conserva el contenido anterior y añade la salida al final."
+        }
+      ],
+      "exercise": "Guardá la salida normal y los errores de un comando de prueba en archivos separados.",
+      "hint": "Verificá el destino de `>` antes de ejecutar: puede reemplazar un archivo existente sin confirmación.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash: Pipelines y redirecciones",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "GNU grep manual",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html"
+        }
+      ]
+    },
+    {
+      "id": "variables-shell",
+      "category": "entorno",
+      "title": "Variables de shell y expansión",
+      "level": "Intermedio",
+      "summary": "Guardá valores reutilizables y expandilos sin romper argumentos ni rutas.",
+      "purpose": "En Bash, una variable se asigna sin espacios alrededor de `=` y se consulta con `$NOMBRE`. Para que un proceso hijo la herede, se exporta. Las variables de entorno suelen configurar rutas, idioma, herramientas y credenciales; no escribas secretos en ejemplos compartidos.",
+      "syntax": "proyecto=\"webdev-book\"\necho \"$proyecto\"\nexport APP_ENV=development\nprintenv APP_ENV",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Crear una variable local",
+          "description": "Definí una variable y reutilizala dentro de un mensaje.",
+          "code": "nombre=\"WebDev Book\"\nprintf 'Proyecto: %s\\n' \"$nombre\"",
+          "explanation": "La variable queda en la shell actual. `printf` usa el formato y el valor proporcionado como argumento."
+        },
+        {
+          "title": "Exportar al entorno",
+          "description": "Comprobá qué valor recibe un proceso hijo.",
+          "code": "export APP_MODE=development\nbash -c 'printf \"%s\\n\" \"$APP_MODE\"'",
+          "explanation": "`export` agrega la variable al entorno heredado por el proceso hijo. Sin exportación, la variable local no se transmite de esa forma."
+        }
+      ],
+      "exercise": "Definí `API_BASE_URL` como variable de entorno temporal y mostrá su valor desde un proceso hijo.",
+      "hint": "No guardes contraseñas o tokens directamente en scripts que vas a subir a Git. Una variable exportada tampoco es automáticamente un secreto.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "PowerShell documentation",
+          "url": "https://learn.microsoft.com/en-us/powershell/"
+        }
+      ]
+    },
+    {
+      "id": "path-comandos",
+      "category": "entorno",
+      "title": "PATH y localización de ejecutables",
+      "level": "Intermedio",
+      "summary": "Entendé cómo la shell encuentra programas y por qué aparece el error command not found.",
+      "purpose": "`PATH` es una lista de directorios que la shell recorre para localizar ejecutables cuando escribís un nombre sin ruta. `command -v` muestra cómo se resolverá un comando en Bash. En PowerShell, `Get-Command` cumple una función similar. Evitá añadir directorios no confiables al PATH.",
+      "syntax": "printf '%s\\n' \"$PATH\"\ncommand -v node\ncommand -v git",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Localizar un programa",
+          "description": "Consultá desde dónde se ejecuta Node.js y Git.",
+          "code": "command -v node\ncommand -v git",
+          "explanation": "`command -v` informa la resolución del nombre dentro de la shell actual; no instala ni modifica el programa."
+        },
+        {
+          "title": "Consultar en PowerShell",
+          "description": "Usá el cmdlet de resolución de comandos.",
+          "code": "Get-Command node\nGet-Command git",
+          "explanation": "PowerShell informa el tipo y la ruta del comando que resolverá. Los resultados pueden incluir alias, funciones o ejecutables."
+        }
+      ],
+      "exercise": "Investigá por qué una terminal no reconoce `node` y verificá si el directorio de instalación está en PATH.",
+      "hint": "No agregues carpetas de descargas temporales o ubicaciones modificables por otros usuarios al PATH.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "PowerShell documentation",
+          "url": "https://learn.microsoft.com/en-us/powershell/"
+        }
+      ]
+    },
+    {
+      "id": "codigo-salida",
+      "category": "entorno",
+      "title": "Códigos de salida y estado $?",
+      "level": "Intermedio",
+      "summary": "Interpretá si un comando terminó correctamente y usá su estado en scripts.",
+      "purpose": "En shells Unix, un proceso devuelve un código de salida: por convención, `0` representa éxito y un valor distinto de cero indica alguna condición de error. En Bash, `$?` contiene el estado del último comando ejecutado. En PowerShell, `$LASTEXITCODE` representa el último código de salida de un programa nativo; `$?` expresa el éxito de la última operación de PowerShell.",
+      "syntax": "ls README.md\necho \"$?\"\nls archivo-inexistente\necho \"$?\"",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Consultar un éxito",
+          "description": "Leé el estado de una operación que debería encontrar un archivo.",
+          "code": "test -f README.md\necho \"$?\"",
+          "explanation": "`test -f` devuelve cero si el archivo existe y un valor distinto de cero si la condición falla."
+        },
+        {
+          "title": "Consultar un fallo esperado",
+          "description": "Probá la condición con una ruta que no existe.",
+          "code": "test -f archivo-que-no-existe\necho \"$?\"",
+          "explanation": "El estado distinto de cero indica que la condición no se cumplió. El número exacto puede variar según el programa."
+        }
+      ],
+      "exercise": "Escribí una secuencia que compruebe si existe un archivo y muestre un mensaje distinto para cada resultado.",
+      "hint": "Guardá el estado inmediatamente. Otro comando puede reemplazar el valor de `$?`.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "PowerShell documentation",
+          "url": "https://learn.microsoft.com/en-us/powershell/"
+        }
+      ]
+    },
+    {
+      "id": "encadenar-comandos",
+      "category": "entorno",
+      "title": "Encadenar comandos con &&, || y ;",
+      "level": "Intermedio",
+      "summary": "Construí secuencias que continúan, se detienen o ejecutan una alternativa según el resultado.",
+      "purpose": "En Bash, `&&` ejecuta el siguiente comando si el anterior terminó con éxito; `||` lo ejecuta si el anterior falló. `;` separa comandos sin condicionar el segundo al resultado del primero. Estos operadores permiten expresar flujos pequeños sin crear un script.",
+      "syntax": "mkdir demo && cd demo\ncomando || echo \"Falló\"\npwd; date",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Ejecutar solo si tuvo éxito",
+          "description": "Creá una carpeta y entrá a ella únicamente cuando la creación funcione.",
+          "code": "mkdir -p practica && cd practica && pwd",
+          "explanation": "El segundo paso depende del código de salida del anterior. Si `mkdir` falla, la cadena posterior no se ejecuta."
+        },
+        {
+          "title": "Mostrar una alternativa",
+          "description": "Comprobá un archivo y mostrá un mensaje si no existe.",
+          "code": "test -f config.json || echo \"Falta config.json\"",
+          "explanation": "`||` ejecuta el mensaje únicamente si la prueba devuelve un código distinto de cero."
+        }
+      ],
+      "exercise": "Diseñá una secuencia que valide una carpeta y luego liste su contenido solo cuando exista.",
+      "hint": "No reemplaces un control de flujo complejo por una cadena ilegible. Para lógica extensa, escribí un script.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "PowerShell documentation",
+          "url": "https://learn.microsoft.com/en-us/powershell/"
+        }
+      ]
+    },
+    {
+      "id": "powershell-cmd-bash",
+      "category": "entorno",
+      "title": "Bash, PowerShell y CMD: diferencias",
+      "level": "Intermedio",
+      "summary": "Reconocé que los comandos y las reglas cambian según la shell, aunque resuelvan tareas parecidas.",
+      "purpose": "Bash/Zsh, PowerShell y CMD son entornos distintos. Bash trabaja habitualmente con texto y programas Unix; PowerShell canaliza objetos .NET; CMD conserva su sintaxis clásica de comandos y archivos por lotes. Los nombres parecidos no garantizan opciones, expansión o comportamiento idénticos.",
+      "syntax": "# Bash / Linux / macOS\npwd\nls -la\n# PowerShell\nGet-Location\nGet-ChildItem -Force\n# CMD\ncd\ndir",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Consultar la carpeta actual",
+          "description": "Compará el comando de ubicación según la shell.",
+          "code": "# Bash\npwd\n# PowerShell\nGet-Location\n# CMD\ncd",
+          "explanation": "Los tres consultan una ubicación actual, pero sus comandos y formatos de salida pertenecen a shells distintas."
+        },
+        {
+          "title": "Listar archivos",
+          "description": "Compará el listado de contenido en cada entorno.",
+          "code": "# Bash\nls -la\n# PowerShell\nGet-ChildItem -Force\n# CMD\ndir /a",
+          "explanation": "Las opciones de Bash no se trasladan a CMD ni a PowerShell. PowerShell devuelve objetos que pueden filtrarse por propiedades."
+        }
+      ],
+      "exercise": "Abrí PowerShell y CMD en Windows y compará los resultados de ubicación y listado. Identificá qué shell estás usando.",
+      "hint": "No pegues opciones de GNU/Linux en CMD esperando que sean válidas. Confirmá la shell antes de seguir un tutorial.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "PowerShell documentation",
+          "url": "https://learn.microsoft.com/en-us/powershell/"
+        }
+      ]
+    },
+    {
+      "id": "procesos-ps",
+      "category": "sistema",
+      "title": "Inspeccionar procesos: ps y top",
+      "level": "Intermedio",
+      "summary": "Identificá procesos activos y recursos antes de decidir si una aplicación necesita atención.",
+      "purpose": "Un proceso es una instancia en ejecución de un programa. `ps` muestra una instantánea de procesos; `top` ofrece una vista actualizable. En Linux, `htop` puede estar disponible si se instaló. En Windows, PowerShell ofrece `Get-Process` y el Administrador de tareas.",
+      "syntax": "ps aux\nps -ef\ntop\n# PowerShell:\nGet-Process",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Filtrar un proceso",
+          "description": "Buscá procesos Node en una lista de procesos.",
+          "code": "ps aux | grep '[n]ode'",
+          "explanation": "El filtro encuentra líneas que contienen el texto. El patrón con corchetes evita que el propio comando grep coincida consigo mismo."
+        },
+        {
+          "title": "Ordenar por consumo",
+          "description": "Mostrá los procesos con mayor uso de CPU.",
+          "code": "ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head",
+          "explanation": "Las columnas seleccionadas permiten inspeccionar identificador, nombre y consumo. Las opciones son habituales en Linux y pueden variar en macOS/BSD."
+        }
+      ],
+      "exercise": "Localizá un proceso que pertenezca a una aplicación que vos abriste y registrá su PID.",
+      "hint": "No finalices procesos del sistema solo por no reconocer su nombre. Investigá su origen y función.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "OpenSSH Manual Pages",
+          "url": "https://www.openssh.com/manual.html"
+        },
+        {
+          "label": "curl documentation",
+          "url": "https://curl.se/docs/"
+        }
+      ]
+    },
+    {
+      "id": "procesos-jobs",
+      "category": "sistema",
+      "title": "Procesos en primer plano y segundo plano",
+      "level": "Intermedio",
+      "summary": "Controlá trabajos de una sesión de shell y recuperá procesos sin cerrar la terminal.",
+      "purpose": "En Bash interactivo, `Ctrl+C` envía una interrupción al proceso en primer plano y `Ctrl+Z` lo suspende. `jobs` enumera trabajos de esa sesión; `bg` y `fg` continúan trabajos en segundo o primer plano. No son herramientas para administrar todos los procesos del sistema.",
+      "syntax": "sleep 60\n# Durante la espera, Ctrl+Z\njobs\nbg\nfg",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Suspender y reanudar",
+          "description": "Probá con una espera inocua en una terminal de práctica.",
+          "code": "sleep 30\n# Presioná Ctrl+Z\njobs\nfg",
+          "explanation": "`Ctrl+Z` suspende el trabajo y `fg` lo recupera. `sleep` solo espera, no modifica archivos."
+        },
+        {
+          "title": "Mandar una tarea a segundo plano",
+          "description": "Iniciá un proceso de espera directamente en segundo plano.",
+          "code": "sleep 20 &\njobs",
+          "explanation": "El sufijo `&` solicita que la shell lance la tarea en segundo plano y devuelva el control al prompt."
+        }
+      ],
+      "exercise": "Practicá `Ctrl+Z`, `jobs` y `fg` con `sleep`. Observá qué cambia en el estado del trabajo.",
+      "hint": "Los trabajos de `jobs` pertenecen a la sesión de shell actual; no equivalen al listado global de procesos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "OpenSSH Manual Pages",
+          "url": "https://www.openssh.com/manual.html"
+        },
+        {
+          "label": "curl documentation",
+          "url": "https://curl.se/docs/"
+        }
+      ]
+    },
+    {
+      "id": "permisos-chmod",
+      "category": "sistema",
+      "title": "Permisos de archivos: chmod",
+      "level": "Intermedio",
+      "summary": "Leé los permisos Unix y asigná acceso de lectura, escritura y ejecución con cuidado.",
+      "purpose": "En sistemas Unix, cada archivo tiene permisos para propietario, grupo y otros usuarios. `chmod` cambia esos permisos. Los valores numéricos combinan lectura (4), escritura (2) y ejecución (1); por ejemplo, 755 significa rwx para el propietario y r-x para grupo y otros.",
+      "syntax": "ls -l script.sh\nchmod u+x script.sh\nchmod 755 script.sh",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Habilitar ejecución al propietario",
+          "description": "Agregá permiso de ejecución sin reemplazar el resto de los permisos.",
+          "code": "chmod u+x deploy.sh\nls -l deploy.sh",
+          "explanation": "La forma simbólica modifica solo la clase elegida; `u+x` agrega ejecución al propietario."
+        },
+        {
+          "title": "Definir permisos explícitos",
+          "description": "Usá un modo numérico sobre un archivo de ejemplo.",
+          "code": "chmod 640 notas.txt\nls -l notas.txt",
+          "explanation": "640 asigna lectura y escritura al propietario, lectura al grupo y ningún permiso a otros."
+        }
+      ],
+      "exercise": "Creá un archivo de prueba y compará `chmod 600`, `640` y `755` con `ls -l`.",
+      "hint": "No uses `chmod 777` como solución automática: concede escritura y ejecución a todos los usuarios.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "OpenSSH Manual Pages",
+          "url": "https://www.openssh.com/manual.html"
+        },
+        {
+          "label": "curl documentation",
+          "url": "https://curl.se/docs/"
+        }
+      ]
+    },
+    {
+      "id": "red-curl",
+      "category": "sistema",
+      "title": "Probar URLs y APIs con curl",
+      "level": "Intermedio",
+      "summary": "Inspeccioná respuestas HTTP desde la terminal y entendé códigos, encabezados y cuerpos.",
+      "purpose": "`curl` realiza transferencias mediante URLs y admite distintos protocolos. Para APIs HTTP podés usar `-i` para incluir encabezados, `-I` para consultar encabezados mediante HEAD y `-X` para indicar un método. La respuesta depende del servidor, la red y la autenticación.",
+      "syntax": "curl -I https://example.com\ncurl -i https://example.com\ncurl -sS https://api.github.com",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Ver estado y encabezados",
+          "description": "Consultá solo los encabezados de una página.",
+          "code": "curl -I https://example.com",
+          "explanation": "La opción `-I` solicita encabezados y suele usar el método HEAD. Algunos servidores responden distinto ante HEAD y GET."
+        },
+        {
+          "title": "Inspeccionar el cuerpo JSON",
+          "description": "Solicitá un endpoint público de prueba y mostrá el cuerpo de respuesta.",
+          "code": "curl -sS https://api.github.com/repos/mop20207/WebDev-Boock",
+          "explanation": "`-sS` evita la barra de progreso pero conserva mensajes de error. Una respuesta HTTP con error no siempre equivale a un fallo de transporte."
+        }
+      ],
+      "exercise": "Consultá un endpoint público, identificá el código HTTP y distinguí encabezados de cuerpo.",
+      "hint": "No envíes tokens o contraseñas en URLs visibles ni compartas salidas que contengan credenciales.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "OpenSSH Manual Pages",
+          "url": "https://www.openssh.com/manual.html"
+        },
+        {
+          "label": "curl documentation",
+          "url": "https://curl.se/docs/"
+        }
+      ]
+    },
+    {
+      "id": "ssh-conexiones",
+      "category": "sistema",
+      "title": "SSH: conexión remota segura",
+      "level": "Intermedio",
+      "summary": "Conectate a equipos remotos y reconocé las piezas de una conexión SSH.",
+      "purpose": "SSH proporciona una sesión cifrada hacia un equipo remoto. El formato habitual es `usuario@host`; el puerto puede cambiar y una conexión puede usar autenticación por clave pública. La primera conexión puede pedir confirmar la huella del servidor: verificá que corresponda al host esperado.",
+      "syntax": "ssh usuario@servidor.example\nssh -p 2222 usuario@servidor.example\nssh -i ~/.ssh/id_ed25519 usuario@servidor.example",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Usar una conexión normal",
+          "description": "Conectate a un host de laboratorio que administres.",
+          "code": "ssh alumno@servidor-lab.example",
+          "explanation": "El nombre de usuario y host deben corresponder a una máquina real a la que tengas autorización de acceso."
+        },
+        {
+          "title": "Copiar un archivo con scp",
+          "description": "Transferí un archivo de práctica hacia tu servidor autorizado.",
+          "code": "scp informe.txt alumno@servidor-lab.example:~/informes/",
+          "explanation": "`scp` usa SSH para copiar archivos. La ruta remota se interpreta en el equipo destino."
+        }
+      ],
+      "exercise": "Generá o localizá una clave SSH y documentá cómo se autentica tu equipo ante un servidor de prueba.",
+      "hint": "No aceptes una huella desconocida sin verificarla y nunca compartas tu clave privada.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "OpenSSH Manual Pages",
+          "url": "https://www.openssh.com/manual.html"
+        },
+        {
+          "label": "curl documentation",
+          "url": "https://curl.se/docs/"
+        }
+      ]
+    },
+    {
+      "id": "archivos-comprimidos",
+      "category": "sistema",
+      "title": "Archivos comprimidos: tar y zip",
+      "level": "Intermedio",
+      "summary": "Empaquetá y extraé directorios conservando la estructura de archivos.",
+      "purpose": "`tar` crea archivos contenedores y puede comprimirlos con gzip. `-c` crea, `-x` extrae, `-t` lista, `-f` indica el archivo y `-z` habilita gzip. `zip` y `unzip` manejan archivos ZIP. Revisá el contenido antes de extraer archivos de origen desconocido.",
+      "syntax": "tar -czf respaldo.tar.gz proyecto/\ntar -tzf respaldo.tar.gz\nunzip -l respaldo.zip",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Crear un archivo tar.gz",
+          "description": "Empaquetá una carpeta de práctica sin borrar el original.",
+          "code": "tar -czf proyecto-backup.tar.gz proyecto/\nls -lh proyecto-backup.tar.gz",
+          "explanation": "`-c` crea un archivo tar, `-z` aplica gzip y `-f` nombra el destino. El directorio original permanece intacto."
+        },
+        {
+          "title": "Listar antes de extraer",
+          "description": "Inspeccioná los nombres que contiene un paquete comprimido.",
+          "code": "tar -tzf proyecto-backup.tar.gz",
+          "explanation": "`-t` enumera el contenido sin extraerlo al disco."
+        }
+      ],
+      "exercise": "Empaquetá una carpeta y listá su contenido antes de extraerla en otro directorio.",
+      "hint": "No extraigas paquetes desconocidos sobre carpetas importantes: pueden contener rutas inesperadas o archivos homónimos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "OpenSSH Manual Pages",
+          "url": "https://www.openssh.com/manual.html"
+        },
+        {
+          "label": "curl documentation",
+          "url": "https://curl.se/docs/"
+        }
+      ]
+    },
+    {
+      "id": "scripts-bash",
+      "category": "automatizacion",
+      "title": "Crear y ejecutar scripts Bash",
+      "level": "Intermedio",
+      "summary": "Guardá varios comandos en un archivo ejecutable y repetí tareas de forma consistente.",
+      "purpose": "Un script Bash es un archivo de texto con instrucciones para la shell. El shebang `#!/usr/bin/env bash` solicita ejecutar el intérprete Bash disponible en el PATH. Podés lanzarlo con `bash script.sh` o asignar permiso de ejecución y ejecutarlo desde su ruta.",
+      "syntax": "#!/usr/bin/env bash\nset -euo pipefail\nprintf 'Hola desde Bash\\n'",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Ejecutar con el intérprete",
+          "description": "Guardá un archivo y ejecutalo explícitamente con Bash.",
+          "code": "bash saludo.sh",
+          "explanation": "La shell lee el archivo y ejecuta sus instrucciones. Este modo no necesita que el archivo tenga permiso de ejecución."
+        },
+        {
+          "title": "Ejecutar como programa",
+          "description": "Habilitá el permiso y ejecutá el script mediante su ruta.",
+          "code": "chmod u+x saludo.sh\n./saludo.sh",
+          "explanation": "El bit de ejecución habilita el lanzamiento directo. El shebang indica qué intérprete debe procesar el archivo."
+        }
+      ],
+      "exercise": "Creá `resumen.sh` que muestre la fecha, la carpeta actual y una lista de archivos.",
+      "hint": "Probá primero con `bash script.sh`. Usá `set -euo pipefail` conociendo sus efectos sobre errores y variables no definidas.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    },
+    {
+      "id": "condicionales-bash",
+      "category": "automatizacion",
+      "title": "Condicionales en Bash",
+      "level": "Intermedio",
+      "summary": "Tomá decisiones dentro de un script según archivos, valores y códigos de salida.",
+      "purpose": "La estructura `if ...; then ...; elif ...; then ...; else ...; fi` evalúa el estado de un comando o una condición. Los tests `-f` y `-d` comprueban archivos y directorios. En Bash, el espaciado dentro de `[` y `]` es obligatorio.",
+      "syntax": "if [[ -f \"config.json\" ]]; then\n  echo \"Configuración encontrada\"\nelse\n  echo \"Falta config.json\"\nfi",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Comprobar un archivo",
+          "description": "Mostrá un mensaje según la presencia de un README.",
+          "code": "if [[ -f README.md ]]; then\n  echo \"README disponible\"\nelse\n  echo \"No existe README.md\"\nfi",
+          "explanation": "`[[ -f ... ]]` devuelve éxito cuando la ruta es un archivo regular. El resultado dirige el flujo al bloque correspondiente."
+        },
+        {
+          "title": "Validar una variable",
+          "description": "Comprobá si se recibió el nombre de un entorno.",
+          "code": "if [[ -n \"${APP_ENV:-}\" ]]; then\n  echo \"Entorno: $APP_ENV\"\nelse\n  echo \"APP_ENV no está definido\"\nfi",
+          "explanation": "`${APP_ENV:-}` evita un error con `set -u` al expandir una variable no definida."
+        }
+      ],
+      "exercise": "Escribí un script que compruebe si existen `src/` y `README.md` y devuelva un estado de error si falta alguno.",
+      "hint": "Mantené las comillas alrededor de expansiones de variables para evitar problemas con espacios o valores vacíos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    },
+    {
+      "id": "bucles-bash",
+      "category": "automatizacion",
+      "title": "Bucles for y while",
+      "level": "Intermedio",
+      "summary": "Repetí una operación sobre una lista o mientras una condición siga siendo verdadera.",
+      "purpose": "`for` recorre una lista de palabras o elementos de una expansión; `while` repite mientras una orden termina con éxito. Usá arrays o listas claramente delimitadas si los nombres contienen espacios y evitá procesar resultados de `ls` como si fueran registros seguros.",
+      "syntax": "for archivo in *.js; do\n  printf 'Encontrado: %s\\n' \"$archivo\"\ndone",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Recorrer una lista conocida",
+          "description": "Mostrá una lista fija de nombres sin duplicar instrucciones.",
+          "code": "for nombre in index.html app.js styles.css; do\n  echo \"$nombre\"\ndone",
+          "explanation": "Cada vuelta asigna el siguiente elemento a `nombre` y ejecuta el bloque hasta agotar la lista."
+        },
+        {
+          "title": "Contar con while",
+          "description": "Usá un contador para repetir cinco mensajes.",
+          "code": "i=1\nwhile [[ $i -le 5 ]]; do\n  echo \"Vuelta $i\"\n  ((i += 1))\ndone",
+          "explanation": "La condición se evalúa antes de cada iteración y el contador cambia dentro del bloque."
+        }
+      ],
+      "exercise": "Recorré los archivos `.json` de una carpeta y mostrá el nombre de cada uno.",
+      "hint": "No uses `for archivo in $(ls)` para nombres con espacios o saltos de línea. Usá expansión de glob o lectura segura.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    },
+    {
+      "id": "funciones-bash",
+      "category": "automatizacion",
+      "title": "Funciones y argumentos posicionales",
+      "level": "Intermedio",
+      "summary": "Agrupá instrucciones reutilizables y recibí datos mediante parámetros de función.",
+      "purpose": "Una función Bash agrupa comandos bajo un nombre. Los parámetros se consultan con `$1`, `$2` y `$@`; el código de salida final de la función suele ser el del último comando ejecutado. `local` limita una variable a la función.",
+      "syntax": "saludar() {\n  local nombre=\"$1\"\n  printf 'Hola, %s\\n' \"$nombre\"\n}\nsaludar \"Akamini\"",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Crear una función con argumento",
+          "description": "Llamá varias veces a una función para evitar repetir la salida.",
+          "code": "mostrar_ruta() {\n  printf 'Ubicación: %s\\n' \"$PWD\"\n}\nmostrar_ruta",
+          "explanation": "La función reutiliza una operación y obtiene el directorio desde la variable automática `PWD`."
+        },
+        {
+          "title": "Validar parámetros",
+          "description": "Revisá que se haya pasado un argumento antes de continuar.",
+          "code": "requerir_nombre() {\n  if [[ -z \"${1:-}\" ]]; then\n    echo \"Falta el nombre\" >&2\n    return 2\n  fi\n  echo \"Nombre: $1\"\n}\nrequerir_nombre \"Proyecto\"",
+          "explanation": "La función devuelve un código distinto de cero si no hay argumento y escribe el error en stderr."
+        }
+      ],
+      "exercise": "Creá una función que reciba una ruta y compruebe si existe un archivo en ella.",
+      "hint": "Usá `local` para variables internas y citá `\"$@\"` cuando debas reenviar todos los argumentos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    },
+    {
+      "id": "seguridad-env",
+      "category": "automatizacion",
+      "title": "Archivos .env y secretos",
+      "level": "Avanzado",
+      "summary": "Separá configuración local y secretos del código fuente para evitar publicar credenciales.",
+      "purpose": "Un archivo `.env` suele guardar pares de variables para herramientas que los cargan explícitamente. La shell no carga automáticamente todos los archivos `.env`. Agregá archivos locales con secretos al `.gitignore`, mantené un `.env.example` sin valores reales y usá un gestor de secretos en producción.",
+      "syntax": "# .env.example\nAPI_BASE_URL=https://api.example.com\nAPI_TOKEN=replace-me\n# .gitignore\n.env\n.env.local",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Preparar una plantilla",
+          "description": "Creá un ejemplo de configuración sin incluir credenciales reales.",
+          "code": "cat > .env.example <<'EOF'\nAPI_BASE_URL=https://api.example.com\nAPI_TOKEN=replace-me\nEOF",
+          "explanation": "El documento ilustra el formato, pero el valor de ejemplo no es una credencial. El heredoc facilita crear el archivo sin abrir un editor."
+        },
+        {
+          "title": "Ignorar los secretos locales",
+          "description": "Agregá nombres de archivos locales a `.gitignore`.",
+          "code": "printf '\\n.env\\n.env.local\\n' >> .gitignore\ngit status --short",
+          "explanation": "El patrón evita que Git muestre esos archivos como candidatos habituales, siempre que no estén ya rastreados."
+        }
+      ],
+      "exercise": "Prepará un `.env.example` y configurá el ignore para que tu archivo `.env` real no se publique.",
+      "hint": "`.gitignore` no deja de rastrear archivos que ya fueron confirmados en commits. Rotá los secretos expuestos.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    },
+    {
+      "id": "npm-scripts-cli",
+      "category": "automatizacion",
+      "title": "Ejecutar scripts de proyecto con npm",
+      "level": "Intermedio",
+      "summary": "Usá la terminal para instalar dependencias y ejecutar tareas declaradas en package.json.",
+      "purpose": "npm es el gestor de paquetes del ecosistema Node.js. `npm install` sincroniza dependencias con el proyecto; `npm run` ejecuta scripts definidos en `package.json`. No ejecutes scripts de repositorios desconocidos sin revisar sus comandos y dependencias.",
+      "syntax": "node --version\nnpm --version\nnpm install\nnpm run dev",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Consultar scripts disponibles",
+          "description": "Mostrá las tareas declaradas por un proyecto.",
+          "code": "npm run",
+          "explanation": "npm lista los scripts configurados en `package.json`. Si no hay scripts, el proyecto debe documentar cómo se inicia."
+        },
+        {
+          "title": "Ejecutar una prueba",
+          "description": "Lanzá el script de pruebas si el proyecto lo declara.",
+          "code": "npm test",
+          "explanation": "`npm test` invoca el script `test`. Puede fallar si no existe, faltan dependencias o la prueba detecta un problema."
+        }
+      ],
+      "exercise": "Abrí un proyecto Node y ejecutá el script de desarrollo y el de pruebas según su README.",
+      "hint": "No uses `sudo npm install` como solución general. Leé el script que vas a ejecutar y mantené el lockfile.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    },
+    {
+      "id": "gestores-paquetes",
+      "category": "automatizacion",
+      "title": "Gestores de paquetes y herramientas",
+      "level": "Intermedio",
+      "summary": "Reconocé las opciones habituales para instalar herramientas según el sistema operativo.",
+      "purpose": "Los gestores de paquetes instalan, actualizan y desinstalan software y resuelven dependencias. En Ubuntu/Debian es común `apt`; en macOS, Homebrew; en Windows, `winget` o herramientas como Chocolatey. Los comandos exactos y permisos dependen de la distribución y del gestor instalado.",
+      "syntax": "# Ubuntu / Debian\napt search nodejs\n# macOS con Homebrew\nbrew info node\n# Windows\nwinget search Node.js",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Consultar antes de instalar",
+          "description": "Buscá información del paquete sin iniciar la instalación.",
+          "code": "apt show curl\n# macOS\nbrew info curl\n# Windows\nwinget show Git.Git",
+          "explanation": "Los comandos consultan metadatos. El paquete y el identificador deben confirmarse según el catálogo local."
+        },
+        {
+          "title": "Comprobar herramientas disponibles",
+          "description": "Consultá si un gestor está instalado.",
+          "code": "command -v apt\ncommand -v brew\n# En PowerShell:\nGet-Command winget",
+          "explanation": "La consulta no instala software. Un comando ausente puede indicar que el gestor no está disponible o no está en PATH."
+        }
+      ],
+      "exercise": "Identificá el sistema operativo y averiguá cuál gestor de paquetes recomienda su documentación oficial.",
+      "hint": "No copies comandos de instalación de una distribución a otra. Verificá el origen y la firma de los paquetes.",
+      "bestPractices": [
+        "Confirmá qué shell estás usando antes de copiar opciones de un tutorial.",
+        "Inspeccioná el directorio actual y los argumentos antes de ejecutar operaciones que modifican archivos.",
+        "Preferí rutas explícitas y comillas cuando trabajes con nombres que contienen espacios.",
+        "Leé la ayuda y la documentación de la versión instalada."
+      ],
+      "commonMistakes": [
+        "Suponer que Bash, PowerShell y CMD comparten la misma sintaxis y las mismas opciones.",
+        "Ejecutar una instrucción destructiva sin comprobar el directorio o la ruta de destino.",
+        "Confundir la salida estándar con los mensajes de error o ignorar el código de salida."
+      ],
+      "resources": [
+        {
+          "label": "Bash Reference Manual",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        },
+        {
+          "label": "npm CLI documentation",
+          "url": "https://docs.npmjs.com/cli/"
+        }
+      ]
+    }
+  ]
+}
