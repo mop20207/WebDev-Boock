@@ -886,7 +886,7 @@ parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results
   }
 
   function mongoSimulationDocument(challenge, code) {
-    const payload = JSON.stringify({ id: challenge.id, code, tests: challenge.tests || [], data: challenge.mongoData || {} }).replace(/</g, "\\u003c");
+    const payload = JSON.stringify({ id: challenge.id, code, tests: challenge.tests || [], data: challenge.mongoData || {}, functionNames: challenge.functionNames || [] }).replace(/</g, "\\u003c");
     const script = String.raw`
 const payload = __PAYLOAD__;
 const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
@@ -1018,11 +1018,11 @@ function collection(name) {
 const db = { collection };
 (async () => {
   try {
-    new Function("db", payload.code)(db);
+    const functions = new Function("db", payload.code + "\\nreturn [" + payload.functionNames.join(",") + "]")(db);
     const results = [];
     for (const test of payload.tests) {
       try {
-        const actual = await new Function("db", "return (async () => (" + test.expression + "))()")(db);
+        const actual = await new Function("db", ...payload.functionNames, "return (async () => (" + test.expression + "))()")(db, ...functions);
         results.push({ label: test.label, passed: JSON.stringify(actual) === JSON.stringify(test.expected), actual, expected: test.expected });
       } catch (error) { results.push({ label: test.label, passed: false, error: String(error && error.message || error) }); }
     }
