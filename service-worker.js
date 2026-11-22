@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v12";
+const CACHE_VERSION = "webdev-book-v13";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -26,6 +26,10 @@ const CORE_FILES = [
   "pages/tools-article.html",
   "pages/challenges.html",
   "pages/projects.html",
+  "pages/games.html",
+  "css/games.css",
+  "js/game-lab.js",
+  "data/games.json",
   "css/projects.css",
   "js/projects.js",
   "data/projects.json",
