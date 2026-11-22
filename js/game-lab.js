@@ -318,7 +318,7 @@ const engines = {
     function resetState() {
       snake = [{ x: 8, y: 10 }, { x: 7, y: 10 }, { x: 6, y: 10 }];
       direction = "right"; queued = "right"; score = 0; over = false; running = true;
-      placeFood(); draw(); api.setScore(0); api.setStatus("Movete y comé la fruta. No choques contra paredes ni contra tu cuerpo.");
+      placeFood(); draw(); api.setStatus("Movete y comé la fruta. No choques contra paredes ni contra tu cuerpo.");
     }
     function draw() {
       ctx.fillStyle = "#071323"; ctx.fillRect(0, 0, canvasSize, canvasSize);
@@ -506,7 +506,7 @@ const engines = {
     }
     function reset() {
       board = Array.from({ length: rows }, () => Array(cols).fill(0));
-      lines = 0; score = 0; over = false; running = true; api.setScore(0);
+      lines = 0; score = 0; over = false; running = true;
       newPiece(); draw();
       api.setStatus("Completá filas horizontales. Diez líneas cumplen el objetivo.");
     }
@@ -556,7 +556,7 @@ const engines = {
       player = { x: 1, y: 1 }; ghost = { x: 7, y: 5 };
       direction = "right"; nextDirection = "right"; score = 0; over = false; running = true;
       remaining = map.flat().filter(value => value === ".").length;
-      draw(); api.setScore(0);
+      draw();
       api.setStatus("Recogé todos los puntos y evitá tocar al fantasma.");
     }
     function walkable(x, y) { return y >= 0 && y < rows && x >= 0 && x < cols && map[y][x] !== "#"; }
@@ -620,7 +620,7 @@ const engines = {
 
   memory(api) {
     const symbols = ["🐙", "🚀", "🦊", "🎧", "🌙", "🍀", "🎮", "⚡"];
-    let deck = [], first = null, lock = false, moves = 0, matches = 0;
+    let deck = [], first = null, lock = false, moves = 0, matches = 0, mismatchTimer = 0;
     const board = document.createElement("div");
     board.className = "memory-board";
     board.setAttribute("aria-label", "Tablero de memoria de dieciséis cartas");
@@ -638,7 +638,6 @@ const engines = {
     }
     function update() {
       counter.textContent = "Movimientos: " + moves + " · Parejas: " + matches + " de 8";
-      api.setScore(Math.max(0, 100 - moves));
     }
     function choose(index, button) {
       if (lock || deck[index].matched || deck[index].open) return;
@@ -658,7 +657,7 @@ const engines = {
         if (matches === symbols.length) api.finish("¡Encontraste las ocho parejas en " + moves + " movimientos!", Math.max(0, 100 - moves), true);
       } else {
         lock = true; update();
-        window.setTimeout(() => {
+        mismatchTimer = window.setTimeout(() => {
           deck[firstIndex].open = false; deck[index].open = false;
           board.children[firstIndex].textContent = "?";
           button.textContent = "?";
@@ -680,7 +679,7 @@ const engines = {
     });
     update();
     api.setStatus("Buscá las ocho parejas. Solo podés revelar dos cartas a la vez.");
-    return { cleanup() {} };
+    return { cleanup() { window.clearTimeout(mismatchTimer); } };
   },
 
   puzzle(api) {
@@ -708,7 +707,6 @@ const engines = {
         board.append(button); buttons.push(button);
       });
       movesLabel.textContent = "Movimientos: " + moves + " · Completá el orden del 1 al 8";
-      api.setScore(Math.max(0, 200 - moves));
     }
     function move(index) {
       const empty = values.indexOf(0);
