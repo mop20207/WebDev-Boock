@@ -3333,8 +3333,9 @@
         },
         {
           "label": "No declara variables de entorno con nombres de secretos",
-          "pattern": "^(?!\\s*(?:ARG|ENV)\\s+(?:.*_)?(?:PASSWORD|SECRET|TOKEN|API_KEY)\\b).*$",
-          "flags": "gmi"
+          "pattern": "^\\s*(?:ARG|ENV)\\s+\\w*(?:PASSWORD|SECRET|TOKEN|API_KEY)\\b",
+          "flags": "gmi",
+          "negative": true
         }
       ],
       "hints": [
