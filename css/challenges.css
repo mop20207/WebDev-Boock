@@ -111,3 +111,9 @@ body.light .challenge-solution p{color:#405777}
 .challenge-live-preview{display:block;width:100%;height:230px;border:0;background:#fff}
 body.light .challenge-code-pane{background:#0b1422}
 @media(max-width:620px){.challenge-dual-editors{grid-template-columns:1fr}.challenge-editor-compact{height:170px;min-height:150px}.challenge-live-preview{height:200px}}
+
+/* En móviles, mostrar el reto seleccionado antes del catálogo para que no quede debajo de las 52 tarjetas. */
+@media(max-width:760px){
+  .challenge-workspace.has-active-challenge .challenge-detail-panel{order:-1;scroll-margin-top:82px}
+  .challenge-workspace.has-active-challenge .challenge-list-panel{order:0}
+}
