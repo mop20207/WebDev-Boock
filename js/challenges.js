@@ -293,6 +293,66 @@
   async function compileCode(challenge, source) {
     if (challenge.language !== "typescript") return source;
     const ts = await loadTypeScript();
+    const standardTypes = `
+interface Array<T> {
+  readonly length: number;
+  [index: number]: T;
+  find(predicate: (value: T, index: number, array: T[]) => unknown): T | undefined;
+  map<U>(callback: (value: T, index: number, array: T[]) => U): U[];
+  filter(predicate: (value: T, index: number, array: T[]) => unknown): T[];
+  forEach(callback: (value: T, index: number, array: T[]) => void): void;
+  includes(searchElement: T): boolean;
+  push(...items: T[]): number;
+}
+interface ReadonlyArray<T> { readonly length: number; readonly [index: number]: T; }
+interface String {}
+interface Number {}
+interface Boolean {}
+interface Object {}
+interface Function {}
+interface IArguments {}
+interface RegExp {}
+interface CallableFunction extends Function {}
+interface NewableFunction extends Function {}
+declare const console: { log(...values: unknown[]): void; error(...values: unknown[]): void; };
+`;
+    const files = {
+      "/lib.d.ts": standardTypes,
+      "/challenge.ts": source + "\\n" + (challenge.typeCheckCode || "")
+    };
+    const normalize = fileName => String(fileName).replace(/\\\\/g, "/");
+    const host = {
+      getSourceFile: (fileName, languageVersion) => {
+        const key = normalize(fileName);
+        return files[key] === undefined ? undefined : ts.createSourceFile(key, files[key], languageVersion, true);
+      },
+      getDefaultLibFileName: () => "/lib.d.ts",
+      writeFile: () => {},
+      getCurrentDirectory: () => "/",
+      getDirectories: () => [],
+      fileExists: fileName => files[normalize(fileName)] !== undefined,
+      readFile: fileName => files[normalize(fileName)],
+      getCanonicalFileName: fileName => normalize(fileName),
+      useCaseSensitiveFileNames: () => true,
+      getNewLine: () => "\\n"
+    };
+    const program = ts.createProgram(
+      ["/lib.d.ts", "/challenge.ts"],
+      { strict: true, noEmit: true, noLib: true, target: ts.ScriptTarget.ES2020 },
+      host
+    );
+    const diagnostics = ts.getPreEmitDiagnostics(program);
+    const errors = diagnostics.filter(item => item.category === ts.DiagnosticCategory.Error);
+    if (errors.length) {
+      const message = errors.map(item => {
+        const position = item.file && item.start !== undefined
+          ? item.file.getLineAndCharacterOfPosition(item.start)
+          : null;
+        const location = position ? "Línea " + (position.line + 1) + ": " : "";
+        return location + ts.flattenDiagnosticMessageText(item.messageText, "\\n");
+      }).join("\\n");
+      throw new Error("TypeScript encontró errores de tipos o sintaxis:\\n" + message);
+    }
     const output = ts.transpileModule(source, {
       compilerOptions: {
         target: ts.ScriptTarget.ES2020,
@@ -301,10 +361,10 @@
       },
       reportDiagnostics: true
     });
-    const errors = (output.diagnostics || []).filter(item => item.category === ts.DiagnosticCategory.Error);
-    if (errors.length) {
-      const message = errors.map(item => ts.flattenDiagnosticMessageText(item.messageText, "\n")).join("\n");
-      throw new Error("TypeScript encontró errores de sintaxis:\n" + message);
+    const syntaxErrors = (output.diagnostics || []).filter(item => item.category === ts.DiagnosticCategory.Error);
+    if (syntaxErrors.length) {
+      const message = syntaxErrors.map(item => ts.flattenDiagnosticMessageText(item.messageText, "\\n")).join("\\n");
+      throw new Error("No se pudo transpilar TypeScript:\\n" + message);
     }
     return output.outputText;
   }
