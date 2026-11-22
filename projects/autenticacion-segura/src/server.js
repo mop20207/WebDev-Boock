@@ -22,7 +22,12 @@ app.post("/api/auth/register",limiter,async(req,res,next)=>{
   const parsed=registerSchema.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:"Datos de registro inválidos."});
   const {name,email,password}=parsed.data,hash=await bcrypt.hash(password,12);
   const result=await pool.query("INSERT INTO users(name,email,password_hash) VALUES($1,LOWER($2),$3) RETURNING id,name,email",[name,email,hash]);
-  req.session.userId=result.rows[0].id;res.status(201).json({user:result.rows[0]});
+  // Regeneramos el identificador después del registro para evitar fijación de sesión.
+  req.session.regenerate(error=>{
+   if(error)return next(error);
+   req.session.userId=result.rows[0].id;
+   res.status(201).json({user:result.rows[0]});
+  });
  }catch(error){if(error.code==="23505")return res.status(409).json({error:"No se pudo crear la cuenta con esos datos."});next(error);}
 });
 app.post("/api/auth/login",limiter,async(req,res,next)=>{

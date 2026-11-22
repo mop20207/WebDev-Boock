@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v11";
+const CACHE_VERSION = "webdev-book-v12";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -29,6 +29,11 @@ const CORE_FILES = [
   "css/projects.css",
   "js/projects.js",
   "data/projects.json",
+  "projects/gestor-fullstack/prisma7.config.ts",
+  "projects/gestor-fullstack/next-env.d.ts",
+  "projects/gestor-fullstack/tsconfig.json",
+  "projects/tienda-online/next-env.d.ts",
+  "projects/tienda-online/tsconfig.json",
   "projects/api-rest-propia/README.md",
   "projects/api-rest-propia/package.json",
   "projects/api-rest-propia/src/server.ts",
