@@ -36,6 +36,30 @@ La sección incorpora 52 retos: cuatro por tecnología para TypeScript, JavaScri
 
 Cada uno de los 52 retos tiene su propio archivo HTML en `pages/retos/`. Las páginas reutilizan el motor de ejecución y el progreso local, pero tienen URL, encabezado y presentación independientes. El catálogo de `pages/challenges.html` enlaza con cada página. Los estilos compartidos están en `css/challenges.css` y `css/challenge-detail.css`.
 
+## Parte 3 · Bloque A: Laboratorio de juegos educativos
+
+El laboratorio incorpora seis juegos ejecutables directamente en el navegador: Snake, Pong, Tetris, un laberinto inspirado en Pac-Man, memoria de parejas y un rompecabezas numérico deslizante. Cada juego explica sus objetivos, reglas, controles y conceptos de programación relacionados.
+
+Las experiencias utilizan JavaScript y Canvas 2D o elementos HTML nativos, sin dependencias externas ni servidor. Se adaptan a controles de teclado y, cuando corresponde, a botones táctiles. El avance y las mejores marcas se guardan localmente en el navegador. La página y sus archivos principales se incluyen en la precarga de la PWA.
+
+## Parte 3 · Bloque B: Biblioteca de Python
+
+La biblioteca incorpora **38 artículos distribuidos en 9 categorías**: fundamentos; operadores y control de flujo; cadenas y estructuras de datos; funciones; programación orientada a objetos; módulos, entornos y archivos; errores, tipos y pruebas; biblioteca estándar y datos; y conceptos avanzados. Los artículos incluyen explicaciones, sintaxis, ejemplos comentados, buenas prácticas, errores frecuentes, ejercicios, pistas y enlaces a la documentación oficial. El contenido está organizado para Python 3.15.2 y evita requerir paquetes externos para los ejemplos de fundamentos.
+
+La página permite buscar términos, filtrar por categoría, consultar artículos individuales, copiar y descargar ejemplos `.py`, marcar lecturas completadas y guardar favoritos. El progreso se mantiene localmente en el navegador. La biblioteca está publicada como contenido educativo: los ejemplos descargados se ejecutan en un intérprete de Python instalado en el equipo; la página no ejecuta código Python arbitrario en el servidor.
+
+Referencia oficial: https://docs.python.org/3.15/
+
+## Parte 3 · Bloque C: Biblioteca de Java
+
+La biblioteca incorpora **49 artículos en 9 categorías**: fundamentos y entorno; control de flujo; métodos; programación orientada a objetos; genéricos y colecciones; excepciones; APIs y biblioteca estándar; pruebas y herramientas; y Java moderno y concurrencia. Incluye 98 ejemplos comentados, buenas prácticas, errores frecuentes, ejercicios, pistas y enlaces a documentación oficial.
+
+Los ejemplos se mantienen compatibles con **Java 25 LTS**, elegido como base de aprendizaje estable. Al 22 de noviembre de 2026, JDK 27 es la versión de funciones más reciente y JDK 25 es la línea LTS. Las guías incluyen Maven, Gradle, JUnit y JDBC; esas herramientas o sus drivers se agregan como dependencias cuando el proyecto las necesita. La página educativa copia o descarga los ejemplos `.java`, pero no ejecuta código Java arbitrario dentro del navegador.
+
+La interfaz permite buscar conceptos y APIs, filtrar por categoría y estado, navegar entre artículos, copiar y descargar ejemplos, guardar favoritos y registrar el progreso localmente.
+
+Referencias oficiales: https://docs.oracle.com/en/java/javase/25/ · https://dev.java/learn/ · https://ops.java/releases/
+
 ## Estructura del proyecto
 
 ```text

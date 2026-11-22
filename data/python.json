@@ -1,0 +1,1705 @@
+{
+  "version": 1,
+  "language": "Python",
+  "release": "3.15.2",
+  "releaseDate": "25 de octubre de 2026",
+  "description": "Biblioteca progresiva de Python con ejemplos comentados, prácticas, buenas prácticas, errores frecuentes y referencias oficiales.",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos y primeros pasos",
+      "description": "Conocé el intérprete, la sintaxis, las variables y la entrada y salida de datos.",
+      "icon": "⌁",
+      "level": "Inicial"
+    },
+    {
+      "id": "control",
+      "title": "Operadores y control de flujo",
+      "description": "Tomá decisiones, repetí instrucciones y controlá el recorrido de tus programas.",
+      "icon": "⇄",
+      "level": "Inicial"
+    },
+    {
+      "id": "colecciones",
+      "title": "Cadenas y estructuras de datos",
+      "description": "Organizá y transformá información con strings, listas, tuplas, diccionarios y conjuntos.",
+      "icon": "▤",
+      "level": "Inicial"
+    },
+    {
+      "id": "funciones",
+      "title": "Funciones y código reutilizable",
+      "description": "Dividí problemas en funciones, recibí argumentos y expresá transformaciones de datos.",
+      "icon": "ƒ",
+      "level": "Intermedio"
+    },
+    {
+      "id": "poo",
+      "title": "Programación orientada a objetos",
+      "description": "Modelá entidades con clases, objetos, métodos, herencia y propiedades.",
+      "icon": "◇",
+      "level": "Intermedio"
+    },
+    {
+      "id": "modulos",
+      "title": "Módulos, entornos y archivos",
+      "description": "Organizá proyectos, administrá dependencias y trabajá con archivos y formatos habituales.",
+      "icon": "▣",
+      "level": "Intermedio"
+    },
+    {
+      "id": "calidad",
+      "title": "Errores, tipos y pruebas",
+      "description": "Manejá errores de forma explícita, documentá tipos y verificá el comportamiento del código.",
+      "icon": "✓",
+      "level": "Intermedio"
+    },
+    {
+      "id": "stdlib",
+      "title": "Biblioteca estándar y datos",
+      "description": "Usá herramientas incluidas en Python para fechas, aleatoriedad, colecciones especializadas y SQLite.",
+      "icon": "⚙",
+      "level": "Intermedio"
+    },
+    {
+      "id": "avanzado",
+      "title": "Conceptos avanzados",
+      "description": "Explorá generadores, decoradores, administradores de contexto y programación asíncrona.",
+      "icon": "✦",
+      "level": "Avanzado"
+    }
+  ],
+  "articles": [
+    {
+      "id": "instalar-ejecutar",
+      "category": "fundamentos",
+      "title": "Instalar Python y ejecutar programas",
+      "level": "Inicial",
+      "summary": "Prepará el entorno, reconocé el intérprete y ejecutá un archivo .py desde la terminal.",
+      "purpose": "Python es un lenguaje interpretado: escribís instrucciones en archivos de texto y el intérprete las ejecuta. Para empezar alcanza con instalar una versión compatible, comprobar el comando disponible y crear un archivo .py.",
+      "syntax": "python --version\npython programa.py\npython -c \"print('Hola')\"",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Comprobar la instalación",
+          "description": "Consultá qué versión del intérprete responde en tu terminal.",
+          "code": "python --version\n# En algunos sistemas el comando disponible es python3:\npython3 --version",
+          "explanation": "El primer comando muestra la versión del intérprete. En Linux y macOS puede ser necesario usar python3 para distinguirlo de otros comandos."
+        },
+        {
+          "title": "Crear y ejecutar un archivo",
+          "description": "Guardá estas instrucciones en hola.py y ejecutá python hola.py.",
+          "code": "# hola.py\nprint('Hola desde Python')\nprint(2 + 3)\n\n# En la terminal:\n# python hola.py",
+          "explanation": "El archivo contiene código Python. La terminal invoca al intérprete y le pasa la ruta del archivo."
+        }
+      ],
+      "exercise": "Creá un archivo saludo.py que muestre tu nombre, tu ciudad y el resultado de una suma. Ejecutalo desde la terminal.",
+      "hint": "Usá print() para mostrar cada dato. Separá el código del comando que se escribe en la terminal.",
+      "bestPractices": [
+        "Comprobá la versión antes de instalar paquetes.",
+        "Guardá los programas con extensión .py.",
+        "Ejecutá los comandos desde la carpeta del proyecto."
+      ],
+      "commonMistakes": [
+        "Escribir python programa.py dentro del archivo .py: ese comando pertenece a la terminal.",
+        "Suponer que todos los sistemas usan exactamente el mismo nombre de comando."
+      ],
+      "resources": [
+        {
+          "label": "Instalación y uso de Python",
+          "url": "https://www.python.org/downloads/"
+        },
+        {
+          "label": "Tutorial oficial: usar el intérprete",
+          "url": "https://docs.python.org/3.15/tutorial/app.html"
+        }
+      ]
+    },
+    {
+      "id": "sintaxis-indentar",
+      "category": "fundamentos",
+      "title": "Sintaxis, comentarios e indentación",
+      "level": "Inicial",
+      "summary": "Entendé bloques de código, dos puntos, comentarios y espacios significativos.",
+      "purpose": "Python utiliza la indentación para delimitar bloques. Después de una instrucción que abre un bloque, como if, for, while, def o class, se escribe dos puntos y se indenta el cuerpo. La convención habitual es usar cuatro espacios.",
+      "syntax": "# comentario\nif condicion:\n    instruccion()\n    otra_instruccion()",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Un bloque condicional",
+          "description": "Las dos instrucciones indentadas pertenecen al mismo bloque.",
+          "code": "edad = 20\n\nif edad >= 18:\n    print('Puede ingresar')\n    print('Se verificó la edad')\n\nprint('Fin del programa')",
+          "explanation": "Los espacios indican qué instrucciones dependen del if. La última línea está al nivel principal y se ejecuta siempre."
+        },
+        {
+          "title": "Comentarios y continuación",
+          "description": "Usá comentarios para explicar decisiones, no para repetir literalmente la instrucción.",
+          "code": "# Calculamos el precio final con descuento.\nprecio = 12000\nporcentaje = 0.15\ntotal = precio * (1 - porcentaje)\n\nprint(total)",
+          "explanation": "Todo lo que aparece después de # en esa línea es un comentario y el intérprete no lo ejecuta."
+        }
+      ],
+      "exercise": "Corregí un bloque con un if, un else y dos print() en cada rama. Asegurate de que el print final quede fuera del condicional.",
+      "hint": "Cada rama debe tener una indentación consistente. Alineá else con if, no con los print().",
+      "bestPractices": [
+        "Usá cuatro espacios por nivel de indentación.",
+        "Mantené una indentación uniforme en todo el proyecto.",
+        "Escribí comentarios que expliquen el motivo de una decisión."
+      ],
+      "commonMistakes": [
+        "Mezclar tabuladores y espacios.",
+        "Olvidar los dos puntos al iniciar un bloque.",
+        "Indentar una línea que debería ejecutarse siempre."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: introducción al lenguaje",
+          "url": "https://docs.python.org/3.15/tutorial/introduction.html"
+        },
+        {
+          "label": "Tutorial oficial: primeras herramientas",
+          "url": "https://docs.python.org/3.15/tutorial/firststeps.html"
+        }
+      ]
+    },
+    {
+      "id": "variables-tipos",
+      "category": "fundamentos",
+      "title": "Variables y tipos de datos",
+      "level": "Inicial",
+      "summary": "Asigná nombres a valores y diferenciá números, texto, booleanos y ausencia de valor.",
+      "purpose": "Una variable es un nombre que referencia un objeto. Python determina el tipo del objeto en tiempo de ejecución; no hace falta declarar un tipo para asignar una variable, aunque podés inspeccionarlo con type().",
+      "syntax": "nombre = 'Ana'\nedad = 25\naltura = 1.68\nactivo = True\nresultado = None",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Tipos básicos",
+          "description": "Creá valores de distintos tipos y consultalos.",
+          "code": "nombre = 'Lucía'       # str\nedad = 25              # int\naltura = 1.68          # float\nestudia = True         # bool\nsin_dato = None        # NoneType\n\nprint(type(nombre))\nprint(type(edad))",
+          "explanation": "str representa texto; int, enteros; float, números decimales; bool, verdadero o falso; None representa ausencia intencional de valor."
+        },
+        {
+          "title": "Conversión explícita",
+          "description": "Convertí texto numérico antes de realizar cálculos.",
+          "code": "edad_texto = '25'\nedad = int(edad_texto)\n\nprecio_texto = '19.90'\nprecio = float(precio_texto)\n\nprint(edad + 1)\nprint(precio * 2)",
+          "explanation": "input() devuelve texto. int() y float() convierten cadenas válidas a valores numéricos. Si el contenido no es válido, se produce ValueError."
+        }
+      ],
+      "exercise": "Guardá nombre, edad y saldo en tres variables. Mostrá sus tipos y calculá cuánto saldo habría después de sumar 150.",
+      "hint": "Usá int() para la edad y float() para el saldo si los datos empiezan como texto.",
+      "bestPractices": [
+        "Elegí nombres descriptivos como total_ventas o edad_usuario.",
+        "Usá snake_case para variables y funciones.",
+        "Convertí tipos de forma explícita cuando una operación lo requiera."
+      ],
+      "commonMistakes": [
+        "Confundir = (asignación) con == (comparación).",
+        "Concatenar texto y números sin convertirlos o formatearlos.",
+        "Usar float para cálculos financieros exactos sin considerar Decimal."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: tipos y valores",
+          "url": "https://docs.python.org/3.15/tutorial/introduction.html#using-python-as-a-calculator"
+        },
+        {
+          "label": "Tipos incorporados",
+          "url": "https://docs.python.org/3.15/library/stdtypes.html"
+        }
+      ]
+    },
+    {
+      "id": "entrada-salida",
+      "category": "fundamentos",
+      "title": "Entrada y salida: input() y print()",
+      "level": "Inicial",
+      "summary": "Pedí información al usuario, convertí datos y presentá resultados legibles.",
+      "purpose": "input() lee una línea y la devuelve como str. print() muestra valores y permite controlar separadores y terminadores. Las f-strings permiten insertar expresiones dentro de un texto.",
+      "syntax": "nombre = input('Nombre: ')\nprint(f'Hola, {nombre}')",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Pedir y validar un dato",
+          "description": "Convertí el valor recibido y controlá errores de conversión.",
+          "code": "texto = input('Ingresá tu edad: ')\n\ntry:\n    edad = int(texto)\n    print(f'El año que viene tendrás {edad + 1}')\nexcept ValueError:\n    print('Ingresá un número entero válido')",
+          "explanation": "input() siempre devuelve texto. int() puede fallar; try/except evita que el programa termine abruptamente ante una entrada incorrecta."
+        },
+        {
+          "title": "Formato de salida",
+          "description": "Usá f-strings y especificadores de formato.",
+          "code": "producto = 'Teclado'\nprecio = 25999.9\ncantidad = 2\n\nprint(f'{producto}: ${precio:,.2f}')\nprint(f'Total: ${precio * cantidad:,.2f}')",
+          "explanation": "La expresión entre llaves se evalúa. :.2f muestra dos decimales; el formato de separadores puede variar según la configuración regional."
+        }
+      ],
+      "exercise": "Solicitá dos números y mostrá su suma, resta y producto. Si el usuario escribe texto no numérico, mostrá un mensaje útil.",
+      "hint": "Podés convertir cada entrada con float() dentro de un bloque try/except.",
+      "bestPractices": [
+        "Validá y convertí entradas antes de operar.",
+        "Usá f-strings para salidas con variables.",
+        "Mantené separados los mensajes para el usuario y los datos internos."
+      ],
+      "commonMistakes": [
+        "Olvidar que input() devuelve str.",
+        "Usar eval() para convertir entradas: no es seguro.",
+        "No tratar ValueError ante una conversión inválida."
+      ],
+      "resources": [
+        {
+          "label": "Funciones incorporadas: input y print",
+          "url": "https://docs.python.org/3.15/library/functions.html"
+        }
+      ]
+    },
+    {
+      "id": "operadores",
+      "category": "control",
+      "title": "Operadores aritméticos, comparación y lógica",
+      "level": "Inicial",
+      "summary": "Combiná operaciones numéricas, comparaciones y condiciones booleanas.",
+      "purpose": "Los operadores permiten calcular valores y construir expresiones. Además de +, -, * y /, Python ofrece // para división entera, % para resto, ** para potencia, y los operadores lógicos and, or y not.",
+      "syntax": "resultado = (a + b) * 2\nes_valido = edad >= 18 and activo",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Aritmética",
+          "description": "Calculá el cociente, el resto y una potencia.",
+          "code": "a = 17\nb = 5\n\nprint(a / b)   # 3.4\nprint(a // b)  # 3\nprint(a % b)   # 2\nprint(2 ** 5)  # 32",
+          "explanation": "/ devuelve división real; // redondea hacia abajo; % devuelve el resto; ** calcula una potencia."
+        },
+        {
+          "title": "Comparar y combinar",
+          "description": "Armá una condición con comparaciones y operadores lógicos.",
+          "code": "edad = 22\nentrada_comprada = True\n\npuede_entrar = edad >= 18 and entrada_comprada\nprint(puede_entrar)\n\nprint(not entrada_comprada)",
+          "explanation": "Las comparaciones producen bool. and requiere que ambas condiciones sean verdaderas; or necesita al menos una; not invierte el resultado."
+        }
+      ],
+      "exercise": "Calculá si un número es par y si se encuentra entre 10 y 100 inclusive. Mostrá ambos resultados.",
+      "hint": "El resto de dividir por dos permite detectar paridad: numero % 2 == 0.",
+      "bestPractices": [
+        "Usá paréntesis cuando mejoren la legibilidad.",
+        "Preferí comparaciones encadenadas como 10 <= n <= 100.",
+        "Aprovechá el cortocircuito de and y or cuando corresponda."
+      ],
+      "commonMistakes": [
+        "Confundir / con //.",
+        "Comparar valores flotantes usando igualdad exacta sin tolerancia.",
+        "Escribir if activo == True en lugar de if activo."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: operadores",
+          "url": "https://docs.python.org/3.15/tutorial/introduction.html#using-python-as-a-calculator"
+        }
+      ]
+    },
+    {
+      "id": "condicionales",
+      "category": "control",
+      "title": "Condicionales: if, elif y else",
+      "level": "Inicial",
+      "summary": "Elegí qué instrucciones ejecutar según una o varias condiciones.",
+      "purpose": "if ejecuta un bloque cuando su condición es verdadera. elif permite probar condiciones adicionales y else cubre los casos restantes. Las ramas se evalúan en orden y solo se ejecuta la primera que coincide.",
+      "syntax": "if condicion:\n    ...\nelif otra_condicion:\n    ...\nelse:\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Clasificar una nota",
+          "description": "Cada rango se evalúa de arriba hacia abajo.",
+          "code": "nota = 8\n\nif nota >= 9:\n    resultado = 'Excelente'\nelif nota >= 7:\n    resultado = 'Aprobado'\nelif nota >= 4:\n    resultado = 'Recuperatorio'\nelse:\n    resultado = 'Desaprobado'\n\nprint(resultado)",
+          "explanation": "El orden importa: primero se evalúa la condición más exigente. Cuando una rama coincide, las siguientes ya no se comprueban."
+        },
+        {
+          "title": "Condición compuesta",
+          "description": "Combiná varias reglas y evitá anidar condicionales innecesariamente.",
+          "code": "usuario_activo = True\nemail_verificado = True\nbloqueado = False\n\nif usuario_activo and email_verificado and not bloqueado:\n    print('Acceso permitido')\nelse:\n    print('Acceso denegado')",
+          "explanation": "Una condición compuesta puede expresar reglas de negocio de forma clara. Separar valores en variables mejora su lectura."
+        }
+      ],
+      "exercise": "Creá un clasificador de temperatura: menor a 10 'frío', de 10 a 24 'templado' y 25 o más 'caluroso'.",
+      "hint": "Usá if, elif y else en ese orden.",
+      "bestPractices": [
+        "Cub r í los casos límite de cada rango.",
+        "Ordená las condiciones para evitar que una rama oculte a otra.",
+        "Usá condiciones simples y nombres booleanos claros."
+      ],
+      "commonMistakes": [
+        "Solapar rangos o dejar valores sin clasificar.",
+        "Invertir el orden de las ramas.",
+        "Usar varios if independientes cuando solo debe ejecutarse una rama."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: if y control de flujo",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#if-statements"
+        }
+      ]
+    },
+    {
+      "id": "bucle-for",
+      "category": "control",
+      "title": "Bucle for, range() y enumerate()",
+      "level": "Inicial",
+      "summary": "Recorré secuencias, repetí acciones y obtené índices de forma idiomática.",
+      "purpose": "for toma cada elemento de un iterable y ejecuta el bloque una vez por elemento. range() genera una secuencia de enteros; enumerate() entrega pares de índice y valor.",
+      "syntax": "for elemento in iterable:\n    procesar(elemento)\n\nfor indice, valor in enumerate(valores):\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Recorrer un rango",
+          "description": "range(inicio, fin, paso) no incluye el valor final.",
+          "code": "for numero in range(1, 6):\n    print(numero)\n\nfor par in range(0, 11, 2):\n    print(par)",
+          "explanation": "range(1, 6) genera 1, 2, 3, 4 y 5. El límite superior queda excluido."
+        },
+        {
+          "title": "Índice y elemento",
+          "description": "enumerate() evita administrar manualmente un contador.",
+          "code": "frutas = ['pera', 'manzana', 'uva']\n\nfor indice, fruta in enumerate(frutas, start=1):\n    print(f'{indice}. {fruta}')",
+          "explanation": "enumerate() agrega un contador al recorrido. start=1 hace que el primer índice mostrado sea uno."
+        }
+      ],
+      "exercise": "Recorré una lista de precios y calculá la suma y el promedio sin usar sum().",
+      "hint": "Inicializá acumulador y contador antes del for.",
+      "bestPractices": [
+        "Iterá directamente sobre los elementos cuando no necesites índices.",
+        "Usá enumerate() cuando necesites índice y valor.",
+        "Elegí nombres que describan el elemento recorrido."
+      ],
+      "commonMistakes": [
+        "Usar range(len(lista)) sin necesidad.",
+        "Olvidar inicializar el acumulador.",
+        "Modificar una lista mientras se la recorre sin una estrategia clara."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: for y range",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#for-statements"
+        }
+      ]
+    },
+    {
+      "id": "match-case",
+      "category": "control",
+      "title": "Pattern matching con match y case",
+      "level": "Intermedio",
+      "summary": "Seleccioná una rama según la forma o el valor de un dato usando match y case.",
+      "purpose": "match/case permite comparar un valor contra patrones y ejecutar la primera rama que coincide. Está disponible desde Python 3.10. Además de valores literales, puede comparar secuencias y diccionarios; el comodín _ captura cualquier caso restante.",
+      "syntax": "match valor:\n    case patron_1:\n        ...\n    case patron_2:\n        ...\n    case _:\n        ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Elegir una operación",
+          "description": "Usá patrones literales para elegir una acción.",
+          "code": "operacion = 'multiplicar'\na, b = 4, 3\n\nmatch operacion:\n    case 'sumar':\n        resultado = a + b\n    case 'multiplicar':\n        resultado = a * b\n    case 'restar':\n        resultado = a - b\n    case _:\n        resultado = None\n\nprint(resultado)",
+          "explanation": "Python compara el valor de operacion con cada patrón. El guion bajo funciona como alternativa general cuando ninguno de los casos anteriores coincide."
+        },
+        {
+          "title": "Reconocer estructuras",
+          "description": "Los patrones pueden comprobar la forma de una secuencia.",
+          "code": "comando = ['mover', 10, 5]\n\nmatch comando:\n    case ['mover', x, y]:\n        print(f'Mover a {x}, {y}')\n    case ['salir']:\n        print('Cerrar aplicación')\n    case _:\n        print('Comando desconocido')",
+          "explanation": "El patrón de lista coincide si la secuencia tiene la forma indicada. Los nombres x e y capturan los valores correspondientes."
+        }
+      ],
+      "exercise": "Recibí una tupla con el nombre de una figura y sus dimensiones. Usá match/case para calcular el área de un rectángulo o un cuadrado y mostrar un mensaje para figuras desconocidas.",
+      "hint": "Usá patrones como ('cuadrado', lado) y ('rectangulo', ancho, alto).",
+      "bestPractices": [
+        "Usá match cuando compares una misma expresión contra varias formas o patrones.",
+        "Dejá case _ al final como alternativa general.",
+        "Preferí if/elif cuando solo comparás condiciones booleanas sencillas."
+      ],
+      "commonMistakes": [
+        "Olvidar que match/case necesita Python 3.10 o posterior.",
+        "Colocar un patrón general antes de uno más específico.",
+        "Confundir la captura de un nombre con una comparación de variable."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: match y case",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#match-statements"
+        }
+      ]
+    },
+    {
+      "id": "bucle-while",
+      "category": "control",
+      "title": "Bucle while, break y continue",
+      "level": "Inicial",
+      "summary": "Repetí instrucciones mientras una condición siga siendo verdadera y controlá la salida.",
+      "purpose": "while vuelve a comprobar su condición antes de cada iteración. break termina el bucle; continue salta al comienzo de la siguiente iteración. La condición debe poder volverse falsa para evitar ciclos infinitos.",
+      "syntax": "while condicion:\n    if salir:\n        break\n    if omitir:\n        continue",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Contador controlado",
+          "description": "Actualizá el estado para que el bucle termine.",
+          "code": "contador = 3\n\nwhile contador > 0:\n    print(contador)\n    contador -= 1\n\nprint('¡Listo!')",
+          "explanation": "El contador disminuye en cada vuelta. Cuando llega a cero, la condición deja de cumplirse."
+        },
+        {
+          "title": "break y continue",
+          "description": "Saltá valores no deseados y detené el recorrido ante un límite.",
+          "code": "numeros = [4, 7, -1, 9, 12]\n\nfor numero in numeros:\n    if numero < 0:\n        continue  # omite negativos\n    if numero > 10:\n        break    # termina el bucle\n    print(numero)",
+          "explanation": "continue omite el resto de la iteración actual; break termina por completo el bucle."
+        }
+      ],
+      "exercise": "Pedí una contraseña hasta que coincida con una clave de prueba. Limitá el número de intentos a tres.",
+      "hint": "Usá un contador y una condición combinada: intentos < 3 y no_acertó.",
+      "bestPractices": [
+        "Asegurá una condición de salida alcanzable.",
+        "Preferí for cuando el número de iteraciones o la secuencia ya se conoce.",
+        "Usá break y continue solo cuando aclaren el flujo."
+      ],
+      "commonMistakes": [
+        "Crear un while cuya condición nunca cambia.",
+        "Confundir break con continue.",
+        "Olvidar actualizar el contador."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: while y break",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#break-and-continue-statements"
+        }
+      ]
+    },
+    {
+      "id": "cadenas",
+      "category": "colecciones",
+      "title": "Cadenas de texto (str)",
+      "level": "Inicial",
+      "summary": "Manipulá texto con índices, slicing, métodos y cadenas formateadas.",
+      "purpose": "str representa texto Unicode y es inmutable: los métodos devuelven nuevas cadenas en lugar de modificar la original. Podés acceder a caracteres por índice y extraer fragmentos con slicing.",
+      "syntax": "texto[0]\ntexto[-1]\ntexto[inicio:fin]\ntexto.strip().lower()",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Normalizar y consultar",
+          "description": "Limpiá espacios y compará sin distinguir mayúsculas.",
+          "code": "entrada = '  PyThOn es Genial  '\nlimpia = entrada.strip().lower()\n\nprint(limpia)\nprint(limpia.startswith('python'))\nprint(limpia.replace('genial', 'útil'))",
+          "explanation": "strip() quita espacios de los extremos; lower() convierte a minúsculas; startswith() comprueba un prefijo; replace() devuelve otra cadena."
+        },
+        {
+          "title": "Slicing y unión",
+          "description": "Extraé partes y uní palabras con un separador.",
+          "code": "codigo = 'PYTHON-315'\nprint(codigo[:6])\nprint(codigo[-3:])\n\npalabras = ['aprender', 'con', 'práctica']\nprint(' '.join(palabras))",
+          "explanation": "El límite final del slicing no se incluye. join() une una secuencia de cadenas usando el texto que precede al punto."
+        }
+      ],
+      "exercise": "Solicitá una frase y mostrá cuántos caracteres tiene, su versión en mayúsculas y las palabras separadas.",
+      "hint": "Usá len(), upper() y split().",
+      "bestPractices": [
+        "Recordá que str es inmutable.",
+        "Usá f-strings para interpolar valores.",
+        "Elegí métodos como casefold() para comparaciones Unicode sin distinción de mayúsculas más completas."
+      ],
+      "commonMistakes": [
+        "Intentar asignar texto[0] = 'A'.",
+        "Olvidar que el slicing excluye el índice final.",
+        "Usar + repetidamente en bucles grandes para concatenar muchas cadenas."
+      ],
+      "resources": [
+        {
+          "label": "Tipos incorporados: str",
+          "url": "https://docs.python.org/3.15/library/stdtypes.html#text-sequence-type-str"
+        }
+      ]
+    },
+    {
+      "id": "listas",
+      "category": "colecciones",
+      "title": "Listas: crear, modificar y recorrer",
+      "level": "Inicial",
+      "summary": "Guardá elementos ordenados en una colección mutable y aplicá operaciones comunes.",
+      "purpose": "list es una secuencia mutable. Permite elementos repetidos, acceso por índice, slicing, inserciones, eliminaciones y recorridos. append() agrega al final y extend() agrega varios elementos.",
+      "syntax": "frutas = ['pera', 'uva']\nfrutas.append('kiwi')\nfrutas[0] = 'manzana'",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Operaciones básicas",
+          "description": "Agregá, reemplazá y quitá elementos.",
+          "code": "tareas = ['leer', 'estudiar']\ntareas.append('practicar')\ntareas.insert(1, 'descansar')\ntareas.remove('leer')\nultima = tareas.pop()\n\nprint(tareas)\nprint(ultima)",
+          "explanation": "append() agrega al final, insert() inserta en una posición, remove() borra por valor y pop() extrae un elemento."
+        },
+        {
+          "title": "Filtrar y transformar",
+          "description": "Construí una nueva lista a partir de una condición.",
+          "code": "precios = [120, 85, 230, 60]\nmayores = [precio for precio in precios if precio >= 100]\ncon_iva = [precio * 1.21 for precio in mayores]\n\nprint(mayores)\nprint(con_iva)",
+          "explanation": "La comprensión recorre los precios, conserva los que cumplen la condición y crea otra lista con los valores transformados."
+        }
+      ],
+      "exercise": "Creá una lista de cinco números. Mostrá el mayor, el menor y una nueva lista con los números pares.",
+      "hint": "Podés usar max(), min() y una comprensión con numero % 2 == 0.",
+      "bestPractices": [
+        "Usá append() para agregar un elemento y extend() para agregar varios.",
+        "Evitá modificar la lista mientras la recorrés si puede alterar el resultado.",
+        "Usá copias explícitas cuando necesites duplicar una lista: lista.copy()."
+      ],
+      "commonMistakes": [
+        "Confundir append([a, b]) con extend([a, b]).",
+        "Creer que lista = otra_lista crea una copia independiente.",
+        "Eliminar por índice incorrecto después de mutar la lista."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: listas",
+          "url": "https://docs.python.org/3.15/tutorial/datastructures.html#more-on-lists"
+        }
+      ]
+    },
+    {
+      "id": "tuplas",
+      "category": "colecciones",
+      "title": "Tuplas y secuencias inmutables",
+      "level": "Inicial",
+      "summary": "Agrupá valores ordenados que no necesitás modificar y desempaquetá sus elementos.",
+      "purpose": "tuple es una secuencia inmutable. Una tupla puede contener valores de distintos tipos y es útil para representar registros pequeños o devolver varios resultados desde una función. Una tupla de un elemento necesita una coma final.",
+      "syntax": "coordenada = (10, 20)\nx, y = coordenada\nun_elemento = (5,)",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Desempaquetar",
+          "description": "Asigná cada posición de la tupla a una variable.",
+          "code": "persona = ('Mara', 25, 'Corrientes')\nnombre, edad, ciudad = persona\n\nprint(nombre)\nprint(edad)\nprint(ciudad)",
+          "explanation": "El desempaquetado asigna cada elemento a la variable correspondiente. La cantidad de variables debe coincidir con la cantidad de valores, salvo que uses *resto."
+        },
+        {
+          "title": "Retornar varios valores",
+          "description": "Una función puede devolver una tupla que se desempaqueta al recibirla.",
+          "code": "def calcular(a, b):\n    return a + b, a * b\n\nsuma, producto = calcular(4, 3)\nprint(suma, producto)",
+          "explanation": "La coma construye una tupla. Python la desempaqueta en las variables suma y producto."
+        }
+      ],
+      "exercise": "Representá una coordenada 2D como tupla. Desempaquetá x e y y calculá la distancia al origen para un punto sobre un eje.",
+      "hint": "Para un punto (x, 0), la distancia al origen es abs(x).",
+      "bestPractices": [
+        "Elegí tuplas para colecciones que no deban cambiar.",
+        "Usá nombres explícitos al desempaquetar.",
+        "Considerá NamedTuple o dataclass cuando una tupla requiera campos con nombres."
+      ],
+      "commonMistakes": [
+        "Olvidar la coma en una tupla de un solo elemento.",
+        "Suponer que una tupla vuelve inmutables los objetos mutables que contiene.",
+        "Intentar modificar una posición de una tupla."
+      ],
+      "resources": [
+        {
+          "label": "Tipos incorporados: tuple",
+          "url": "https://docs.python.org/3.15/library/stdtypes.html#tuples"
+        }
+      ]
+    },
+    {
+      "id": "diccionarios",
+      "category": "colecciones",
+      "title": "Diccionarios: claves y valores",
+      "level": "Inicial",
+      "summary": "Representá datos asociados mediante pares clave-valor y recorré sus entradas.",
+      "purpose": "dict almacena asociaciones entre claves hashables y valores. Las claves son únicas. get() permite leer con un valor predeterminado; items() recorre pares clave-valor.",
+      "syntax": "usuario = {'nombre': 'Luz', 'edad': 25}\nusuario['activo'] = True\nprint(usuario.get('email', 'Sin email'))",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Consultar y actualizar",
+          "description": "Accedé por clave y actualizá el contenido.",
+          "code": "stock = {'teclado': 8, 'mouse': 12}\nstock['teclado'] -= 1\nstock['monitor'] = 4\n\nfor producto, cantidad in stock.items():\n    print(f'{producto}: {cantidad}')",
+          "explanation": "La asignación a una clave existente reemplaza su valor; si la clave no existía, la crea. items() permite recibir clave y valor."
+        },
+        {
+          "title": "Contar ocurrencias",
+          "description": "Usá get() para inicializar contadores de manera sencilla.",
+          "code": "palabras = ['sol', 'luna', 'sol', 'mar', 'sol']\nfrecuencias = {}\n\nfor palabra in palabras:\n    frecuencias[palabra] = frecuencias.get(palabra, 0) + 1\n\nprint(frecuencias)",
+          "explanation": "get(palabra, 0) devuelve cero cuando no existe aún la clave. Luego se suma uno y se guarda el nuevo contador."
+        }
+      ],
+      "exercise": "Contá cuántas veces aparece cada letra en una palabra, ignorando espacios y mayúsculas.",
+      "hint": "Normalizá primero con lower() y recorré el texto.",
+      "bestPractices": [
+        "Elegí claves estables e inmutables.",
+        "Usá get() cuando la clave puede faltar.",
+        "Recorré items() cuando necesites clave y valor."
+      ],
+      "commonMistakes": [
+        "Usar una lista como clave de diccionario.",
+        "Acceder con corchetes a una clave inexistente sin manejar KeyError.",
+        "Suponer que las claves duplicadas se conservan: la última asignación prevalece."
+      ],
+      "resources": [
+        {
+          "label": "Tipos incorporados: dict",
+          "url": "https://docs.python.org/3.15/library/stdtypes.html#mapping-types-dict"
+        }
+      ]
+    },
+    {
+      "id": "conjuntos",
+      "category": "colecciones",
+      "title": "Conjuntos: set y operaciones de conjuntos",
+      "level": "Inicial",
+      "summary": "Eliminá duplicados y compará colecciones con unión, intersección y diferencia.",
+      "purpose": "set es una colección no ordenada de elementos únicos. Sirve para eliminar duplicados y resolver operaciones matemáticas entre conjuntos. Para crear un conjunto vacío se usa set(), porque {} crea un diccionario.",
+      "syntax": "etiquetas = {'python', 'web', 'datos'}\ncomunes = a & b\nunion = a | b",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Quitar duplicados",
+          "description": "Convertí una secuencia en conjunto cuando el orden no sea la prioridad.",
+          "code": "lenguajes = ['Python', 'JS', 'Python', 'CSS']\nunicos = set(lenguajes)\n\nprint(unicos)\nprint(len(unicos))",
+          "explanation": "El set elimina repeticiones. No dependas del orden de iteración del conjunto para una salida ordenada."
+        },
+        {
+          "title": "Comparar grupos",
+          "description": "Intersección, unión y diferencia producen nuevos conjuntos.",
+          "code": "frontend = {'HTML', 'CSS', 'JavaScript'}\nbackend = {'Python', 'SQL', 'JavaScript'}\n\nprint(frontend & backend)  # comunes\nprint(frontend | backend)  # todos\nprint(frontend - backend)  # solo frontend",
+          "explanation": "& obtiene elementos comunes; | combina; - conserva los que están en el primero pero no en el segundo."
+        }
+      ],
+      "exercise": "Dados dos conjuntos de estudiantes que aprobaron dos materias, mostrá quién aprobó ambas y quién aprobó al menos una.",
+      "hint": "Usá intersección y unión con & y |.",
+      "bestPractices": [
+        "Usá set cuando la unicidad sea importante.",
+        "No esperes un orden posicional en un conjunto.",
+        "Elegí frozenset cuando necesites un conjunto inmutable."
+      ],
+      "commonMistakes": [
+        "Crear un conjunto vacío con {}.",
+        "Intentar guardar listas o diccionarios como elementos.",
+        "Suponer que un set conserva el orden de inserción."
+      ],
+      "resources": [
+        {
+          "label": "Tipos incorporados: set",
+          "url": "https://docs.python.org/3.15/library/stdtypes.html#set-types-set-frozenset"
+        }
+      ]
+    },
+    {
+      "id": "funciones",
+      "category": "funciones",
+      "title": "Definir funciones con def",
+      "level": "Intermedio",
+      "summary": "Encapsulá una tarea con parámetros, cuerpo y documentación clara.",
+      "purpose": "Una función permite reutilizar una operación y darle un nombre. def define la función; los parámetros reciben datos y return puede devolver un resultado al código que la llamó.",
+      "syntax": "def nombre_funcion(parametro):\n    \"\"\"Documentación breve.\"\"\"\n    return resultado",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Función con parámetros",
+          "description": "Separá el cálculo de la presentación del resultado.",
+          "code": "def calcular_total(precio, cantidad):\n    \"\"\"Devuelve el costo de varias unidades.\"\"\"\n    return precio * cantidad\n\ntotal = calcular_total(1200, 3)\nprint(total)",
+          "explanation": "La función recibe dos argumentos, calcula el producto y devuelve el valor. El print queda fuera para que la función pueda reutilizarse."
+        },
+        {
+          "title": "Validar en una función",
+          "description": "Una función puede comprobar requisitos antes de devolver un valor.",
+          "code": "def es_email_basico(texto):\n    return '@' in texto and '.' in texto.split('@')[-1]\n\nprint(es_email_basico('ana@example.com'))\nprint(es_email_basico('texto-invalido'))",
+          "explanation": "La expresión booleana es el resultado de la función. Esta validación es didáctica y no reemplaza una validación robusta de correo."
+        }
+      ],
+      "exercise": "Escribí una función convertir_celsius(fahrenheit) que devuelva grados Celsius y probala con varios valores.",
+      "hint": "La fórmula es (fahrenheit - 32) * 5 / 9.",
+      "bestPractices": [
+        "Mantené una función enfocada en una responsabilidad.",
+        "Elegí nombres con verbos cuando describan acciones.",
+        "Agregá docstrings a funciones públicas o no triviales."
+      ],
+      "commonMistakes": [
+        "Confundir print() con return.",
+        "Definir una función y olvidar llamarla.",
+        "Crear funciones demasiado extensas."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: definir funciones",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#defining-functions"
+        }
+      ]
+    },
+    {
+      "id": "parametros-args-kwargs",
+      "category": "funciones",
+      "title": "Parámetros por defecto, *args y **kwargs",
+      "level": "Intermedio",
+      "summary": "Diseñá funciones flexibles con valores predeterminados y cantidades variables de argumentos.",
+      "purpose": "Un parámetro puede tener un valor predeterminado. *args reúne argumentos posicionales adicionales en una tupla y **kwargs reúne argumentos nombrados adicionales en un diccionario. Los valores mutables como listas no deben usarse como valores predeterminados compartidos.",
+      "syntax": "def mostrar(nombre, idioma='es'):\n    ...\n\ndef sumar(*numeros):\n    ...\n\ndef configurar(**opciones):\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Valor predeterminado",
+          "description": "Un argumento puede omitirse cuando su parámetro tiene un valor por defecto.",
+          "code": "def saludar(nombre, saludo='Hola'):\n    return f'{saludo}, {nombre}!'\n\nprint(saludar('Ana'))\nprint(saludar('Leo', saludo='Buen día'))",
+          "explanation": "El valor predeterminado se usa cuando no se pasa el argumento correspondiente. Los argumentos nombrados hacen más legible la llamada."
+        },
+        {
+          "title": "Capturar argumentos variables",
+          "description": "Usá *args para recibir una cantidad variable de números.",
+          "code": "def promedio(*valores):\n    if not valores:\n        return 0\n    return sum(valores) / len(valores)\n\nprint(promedio(6, 8, 10))",
+          "explanation": "args es una tupla con los argumentos posicionales. **kwargs se usa de forma similar para argumentos nombrados y produce un diccionario."
+        }
+      ],
+      "exercise": "Creá una función crear_perfil(nombre, **datos) que devuelva un diccionario con el nombre y los datos extra.",
+      "hint": "Construí un diccionario y actualizalo con datos.",
+      "bestPractices": [
+        "Usá argumentos nombrados para llamadas con varios parámetros.",
+        "Documentá los parámetros opcionales.",
+        "Usá None como valor predeterminado cuando necesites crear una lista nueva dentro de la función."
+      ],
+      "commonMistakes": [
+        "Usar una lista mutable como valor predeterminado compartido.",
+        "Confundir *args con **kwargs.",
+        "Colocar parámetros obligatorios después de parámetros con valor por defecto."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: parámetros y argumentos",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#more-on-defining-functions"
+        }
+      ]
+    },
+    {
+      "id": "return-alcance",
+      "category": "funciones",
+      "title": "return, None y alcance de variables",
+      "level": "Intermedio",
+      "summary": "Controlá qué información devuelve una función y comprendé dónde existe cada nombre.",
+      "purpose": "return termina la ejecución de la función y devuelve un valor. Si no se ejecuta return, la función devuelve None. Los nombres locales viven dentro de su ámbito; para compartir estado, suele ser mejor pasar y devolver valores antes que modificar variables globales.",
+      "syntax": "def funcion():\n    resultado = 42\n    return resultado",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Dos caminos de retorno",
+          "description": "Cada ruta puede devolver un valor diferente.",
+          "code": "def clasificar(numero):\n    if numero < 0:\n        return 'negativo'\n    if numero == 0:\n        return 'cero'\n    return 'positivo'\n\nprint(clasificar(-3))\nprint(clasificar(0))",
+          "explanation": "Cuando una condición se cumple, return sale inmediatamente de la función. El flujo no continúa con las líneas siguientes."
+        },
+        {
+          "title": "Alcance local",
+          "description": "Una variable creada dentro de la función no existe automáticamente fuera de ella.",
+          "code": "def calcular():\n    total = 10 + 5\n    return total\n\nresultado = calcular()\nprint(resultado)\n# print(total)  # NameError: total es local",
+          "explanation": "total pertenece al ámbito local de calcular(). El valor se comunica al exterior mediante return y se guarda en resultado."
+        }
+      ],
+      "exercise": "Escribí una función que devuelva el mayor de tres números sin usar max().",
+      "hint": "Compará los valores con if y devolvé el resultado.",
+      "bestPractices": [
+        "Preferí devolver datos antes que imprimir dentro de una función reutilizable.",
+        "Evitá modificar variables globales.",
+        "Usá retornos tempranos para reducir anidamientos."
+      ],
+      "commonMistakes": [
+        "Esperar que una variable local esté disponible fuera de la función.",
+        "Olvidar que una función sin return devuelve None.",
+        "Escribir código después de un return que nunca podrá ejecutarse."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: return",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#defining-functions"
+        }
+      ]
+    },
+    {
+      "id": "comprensiones",
+      "category": "funciones",
+      "title": "Comprensiones de listas, diccionarios y conjuntos",
+      "level": "Intermedio",
+      "summary": "Construí colecciones nuevas con expresiones compactas y legibles.",
+      "purpose": "Una comprensión combina un iterable, una expresión y opcionalmente un filtro. Es útil para transformar o seleccionar elementos sin escribir un bucle explícito. Si la lógica se vuelve compleja, un for convencional suele ser más claro.",
+      "syntax": "[expresion for elemento in iterable if condicion]\n{clave: valor for elemento in iterable}",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Transformar una lista",
+          "description": "Aplicá una operación a cada elemento.",
+          "code": "precios = [100, 250, 80]\ncon_iva = [precio * 1.21 for precio in precios]\nprint(con_iva)",
+          "explanation": "La expresión se evalúa para cada precio y el resultado se añade a la nueva lista."
+        },
+        {
+          "title": "Filtrar y contar",
+          "description": "Construí un diccionario de longitudes y un conjunto de valores únicos.",
+          "code": "palabras = ['sol', 'luna', 'mar']\nlongitudes = {palabra: len(palabra) for palabra in palabras}\nletras = {letra for palabra in palabras for letra in palabra}\n\nprint(longitudes)\nprint(letras)",
+          "explanation": "Las llaves forman un diccionario cuando hay pares clave: valor y un conjunto cuando solo hay expresiones. El conjunto elimina letras repetidas."
+        }
+      ],
+      "exercise": "Creá una lista con los cuadrados de los números impares entre 1 y 20.",
+      "hint": "Usá range(1, 21) y un filtro numero % 2 == 1.",
+      "bestPractices": [
+        "Usá comprensiones para transformaciones cortas.",
+        "No anides demasiados bucles en una sola línea.",
+        "Elegí un for normal si hay efectos secundarios o lógica extensa."
+      ],
+      "commonMistakes": [
+        "Crear una comprensión difícil de leer por ahorrar líneas.",
+        "Confundir la sintaxis de set comprehension con dict comprehension.",
+        "Usar una comprensión solo para ejecutar print() o mutar objetos."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: comprensiones",
+          "url": "https://docs.python.org/3.15/tutorial/datastructures.html#list-comprehensions"
+        }
+      ]
+    },
+    {
+      "id": "clases-objetos",
+      "category": "poo",
+      "title": "Clases y objetos",
+      "level": "Intermedio",
+      "summary": "Modelá entidades con una clase y creá instancias independientes.",
+      "purpose": "Una clase define una estructura y un comportamiento. Un objeto es una instancia de esa clase. Los atributos guardan estado y los métodos definen acciones que operan sobre ese estado.",
+      "syntax": "class Producto:\n    def metodo(self):\n        ...\n\nproducto = Producto()",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Definir una clase",
+          "description": "Agregá un método que represente un comportamiento.",
+          "code": "class Producto:\n    def mostrar(self):\n        print('Soy un producto')\n\nteclado = Producto()\nteclado.mostrar()",
+          "explanation": "class define un tipo nuevo. Producto() crea un objeto y teclado.mostrar() invoca el método sobre esa instancia."
+        },
+        {
+          "title": "Atributo de clase",
+          "description": "Un atributo de clase se comparte a través de la clase y sus instancias, salvo que se sobrescriba.",
+          "code": "class Usuario:\n    tipo = 'miembro'\n\nana = Usuario()\nleo = Usuario()\nprint(ana.tipo)\nprint(Usuario.tipo)",
+          "explanation": "tipo está definido en la clase. Es apropiado para datos compartidos por todas las instancias, no para datos personales de cada usuario."
+        }
+      ],
+      "exercise": "Definí una clase Libro con un método describir() que muestre su título. Creá dos instancias.",
+      "hint": "Los datos específicos de cada libro se reciben normalmente en __init__.",
+      "bestPractices": [
+        "Usá clases cuando haya estado y comportamiento relacionados.",
+        "Mantené métodos enfocados.",
+        "Elegí nombres de clases en PascalCase."
+      ],
+      "commonMistakes": [
+        "Confundir clase con instancia.",
+        "Olvidar self como primer parámetro de los métodos de instancia.",
+        "Guardar datos individuales en atributos de clase."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: clases",
+          "url": "https://docs.python.org/3.15/tutorial/classes.html"
+        }
+      ]
+    },
+    {
+      "id": "init-atributos-metodos",
+      "category": "poo",
+      "title": "__init__, atributos y métodos de instancia",
+      "level": "Intermedio",
+      "summary": "Inicializá objetos y definí operaciones que usan sus propios atributos.",
+      "purpose": "__init__ se ejecuta al crear una instancia y permite inicializar atributos. self referencia la instancia actual. Los métodos de instancia reciben self automáticamente al llamarlos desde el objeto.",
+      "syntax": "class Persona:\n    def __init__(self, nombre):\n        self.nombre = nombre",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Constructor",
+          "description": "Guardá atributos propios de cada instancia.",
+          "code": "class Persona:\n    def __init__(self, nombre, edad):\n        self.nombre = nombre\n        self.edad = edad\n\n    def presentarse(self):\n        return f'Soy {self.nombre} y tengo {self.edad}'\n\npersona = Persona('Mila', 25)\nprint(persona.presentarse())",
+          "explanation": "__init__ asigna datos a la instancia. Cada objeto conserva sus propios valores y el método usa self para consultarlos."
+        },
+        {
+          "title": "Validar al inicializar",
+          "description": "Rechazá datos inválidos con una excepción apropiada.",
+          "code": "class Cuenta:\n    def __init__(self, titular, saldo=0):\n        if saldo < 0:\n            raise ValueError('El saldo no puede ser negativo')\n        self.titular = titular\n        self.saldo = saldo\n\ncuenta = Cuenta('Nico', 500)",
+          "explanation": "La validación protege el estado del objeto. raise ValueError comunica que el argumento recibido no cumple las reglas."
+        }
+      ],
+      "exercise": "Creá una clase Rectangulo que reciba ancho y alto, y tenga métodos para calcular área y perímetro.",
+      "hint": "Área = ancho * alto; perímetro = 2 * (ancho + alto).",
+      "bestPractices": [
+        "Inicializá atributos en __init__.",
+        "Validá invariantes al crear o modificar el objeto.",
+        "Usá métodos que expresen operaciones relacionadas con el objeto."
+      ],
+      "commonMistakes": [
+        "Olvidar self en la definición de un método de instancia.",
+        "Usar __init__ como si devolviera el objeto: no debe retornar un valor distinto de None.",
+        "No validar valores que rompen las reglas del objeto."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: métodos especiales y clases",
+          "url": "https://docs.python.org/3.15/tutorial/classes.html#class-and-instance-variables"
+        }
+      ]
+    },
+    {
+      "id": "herencia-super",
+      "category": "poo",
+      "title": "Herencia y super()",
+      "level": "Intermedio",
+      "summary": "Reutilizá comportamiento común y especializá una clase derivada.",
+      "purpose": "La herencia permite crear una clase que extiende o modifica otra. super() permite delegar parte del trabajo a la implementación siguiente según el orden de resolución de métodos (MRO).",
+      "syntax": "class Base:\n    ...\n\nclass Derivada(Base):\n    def metodo(self):\n        super().metodo()",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Extender una clase",
+          "description": "La clase derivada hereda atributos y métodos de la clase base.",
+          "code": "class Animal:\n    def __init__(self, nombre):\n        self.nombre = nombre\n\n    def hablar(self):\n        return 'Sonido'\n\nclass Perro(Animal):\n    def hablar(self):\n        return 'Guau'\n\nperro = Perro('Jello')\nprint(perro.nombre, perro.hablar())",
+          "explanation": "Perro hereda el constructor de Animal y redefine hablar(). El objeto conserva nombre y usa la versión especializada del método."
+        },
+        {
+          "title": "Delegar con super()",
+          "description": "Extendé el constructor sin duplicar inicializaciones.",
+          "code": "class Usuario:\n    def __init__(self, nombre):\n        self.nombre = nombre\n\nclass Administrador(Usuario):\n    def __init__(self, nombre, permisos):\n        super().__init__(nombre)\n        self.permisos = permisos\n\nadmin = Administrador('Ana', ['editar'])",
+          "explanation": "super().__init__(nombre) ejecuta la inicialización heredada; después se agrega el atributo específico de Administrador."
+        }
+      ],
+      "exercise": "Creá una clase Vehiculo con marca y una subclase Auto que agregue cantidad_puertas. Usá super().",
+      "hint": "Llamá a super().__init__(marca) antes de guardar el atributo adicional.",
+      "bestPractices": [
+        "Preferí composición cuando una relación no sea realmente del tipo 'es un'.",
+        "Usá super() en jerarquías cooperativas.",
+        "Documentá qué métodos redefine una subclase."
+      ],
+      "commonMistakes": [
+        "Repetir toda la inicialización de la clase base.",
+        "Confundir herencia con composición.",
+        "Llamar directamente a la clase base en jerarquías complejas en vez de usar super()."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: herencia",
+          "url": "https://docs.python.org/3.15/tutorial/classes.html#inheritance"
+        }
+      ]
+    },
+    {
+      "id": "properties-encapsulamiento",
+      "category": "poo",
+      "title": "Encapsulamiento y propiedades con @property",
+      "level": "Intermedio",
+      "summary": "Controlá el acceso a un atributo y validá cambios mediante propiedades.",
+      "purpose": "Python utiliza convenciones de nombres y propiedades para controlar el acceso a datos. @property permite exponer un método como atributo de lectura; un setter puede validar antes de actualizar el estado.",
+      "syntax": "@property\ndef valor(self):\n    return self._valor\n\n@valor.setter\ndef valor(self, nuevo):\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Propiedad de lectura",
+          "description": "Calculá un dato derivado sin almacenarlo duplicado.",
+          "code": "class Rectangulo:\n    def __init__(self, ancho, alto):\n        self.ancho = ancho\n        self.alto = alto\n\n    @property\n    def area(self):\n        return self.ancho * self.alto\n\nr = Rectangulo(4, 3)\nprint(r.area)",
+          "explanation": "area parece un atributo al consultarse, pero se calcula dinámicamente. No se llama como area()."
+        },
+        {
+          "title": "Validar con setter",
+          "description": "Impedí guardar un valor fuera del dominio permitido.",
+          "code": "class Producto:\n    def __init__(self, precio):\n        self.precio = precio\n\n    @property\n    def precio(self):\n        return self._precio\n\n    @precio.setter\n    def precio(self, valor):\n        if valor < 0:\n            raise ValueError('Precio inválido')\n        self._precio = valor",
+          "explanation": "El setter intercepta las asignaciones a precio. El almacenamiento interno usa _precio para evitar llamar recursivamente a la propiedad."
+        }
+      ],
+      "exercise": "Agregá una propiedad edad a Persona que no permita asignar edades negativas.",
+      "hint": "Usá @property y @edad.setter, guardando el valor en self._edad.",
+      "bestPractices": [
+        "Usá un guion bajo inicial para indicar atributos internos por convención.",
+        "Validá valores en setters cuando exista una regla de dominio.",
+        "No crees propiedades sin una necesidad real."
+      ],
+      "commonMistakes": [
+        "Asignar dentro del setter a self.precio y provocar recursión.",
+        "Creer que _atributo es privado de manera estricta.",
+        "Guardar el mismo dato en varios lugares y permitir inconsistencias."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: propiedades y descriptores",
+          "url": "https://docs.python.org/3.15/tutorial/classes.html#random-remarks"
+        }
+      ]
+    },
+    {
+      "id": "imports-modulos",
+      "category": "modulos",
+      "title": "Módulos, import y organización de paquetes",
+      "level": "Intermedio",
+      "summary": "Separá el código en archivos reutilizables y aprendé a importar funciones y módulos.",
+      "purpose": "Un módulo es un archivo Python que puede definir funciones, clases y variables. import permite reutilizar ese contenido. Un paquete agrupa módulos y puede organizar aplicaciones más grandes.",
+      "syntax": "import math\nfrom pathlib import Path\n\nif __name__ == '__main__':\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Importar biblioteca estándar",
+          "description": "Importá un módulo completo o un nombre puntual.",
+          "code": "import math\nfrom datetime import date\n\nprint(math.sqrt(81))\nprint(date.today())",
+          "explanation": "import math crea el nombre math. from datetime import date importa directamente date para usarlo sin prefijo."
+        },
+        {
+          "title": "Crear un módulo propio",
+          "description": "Un archivo puede ser importado por otro archivo del mismo proyecto.",
+          "code": "# calculos.py\ndef doble(numero):\n    return numero * 2\n\n# main.py\nfrom calculos import doble\nprint(doble(7))",
+          "explanation": "Python busca el módulo en las rutas de importación. Mantener archivos relacionados juntos facilita la reutilización."
+        }
+      ],
+      "exercise": "Separá una función convertir_km_millas() en un archivo conversiones.py y llamala desde main.py.",
+      "hint": "Importá la función con from conversiones import convertir_km_millas.",
+      "bestPractices": [
+        "Evitá nombres de archivo que oculten módulos estándar como json.py o random.py.",
+        "Mantené imports al inicio del módulo.",
+        "Usá if __name__ == '__main__' para código de ejecución directa."
+      ],
+      "commonMistakes": [
+        "Llamar a un archivo del proyecto como math.py o json.py.",
+        "Crear imports circulares entre módulos.",
+        "Usar import * y contaminar el espacio de nombres."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: módulos",
+          "url": "https://docs.python.org/3.15/tutorial/modules.html"
+        }
+      ]
+    },
+    {
+      "id": "venv-pip",
+      "category": "modulos",
+      "title": "Entornos virtuales y pip",
+      "level": "Intermedio",
+      "summary": "Aislá las dependencias de cada proyecto y administrá paquetes de terceros.",
+      "purpose": "Un entorno virtual mantiene intérprete y paquetes instalados para un proyecto separados de otros proyectos. venv crea el entorno; pip instala paquetes en él. Activarlo no es obligatorio para usarlo: también podés invocar su intérprete directamente.",
+      "syntax": "python -m venv .venv\npython -m pip install paquete\npython -m pip freeze",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Crear y activar un entorno",
+          "description": "Los comandos de activación dependen del sistema operativo.",
+          "code": "# Crear el entorno\npython -m venv .venv\n\n# Linux/macOS\nsource .venv/bin/activate\n\n# Windows PowerShell\n.venv\\Scripts\\Activate.ps1\n\npython -m pip --version",
+          "explanation": "python -m venv crea el entorno en .venv. La activación ajusta el PATH de esa terminal para usar el intérprete del entorno."
+        },
+        {
+          "title": "Instalar y registrar dependencias",
+          "description": "Invocá pip mediante el intérprete activo.",
+          "code": "python -m pip install requests\npython -m pip freeze > requirements.txt\n\n# En otra instalación:\npython -m pip install -r requirements.txt",
+          "explanation": "python -m pip asegura que pip corresponda al intérprete elegido. requirements.txt permite reproducir el conjunto de dependencias."
+        }
+      ],
+      "exercise": "Prepará un proyecto con entorno virtual y registrá una dependencia instalada en requirements.txt. No subas .venv al repositorio.",
+      "hint": "Agregá .venv/ al .gitignore y ejecutá pip freeze después de instalar.",
+      "bestPractices": [
+        "Usá un entorno virtual por proyecto.",
+        "Preferí python -m pip para evitar instalar en otro intérprete.",
+        "No incluyas .venv en Git."
+      ],
+      "commonMistakes": [
+        "Instalar paquetes globalmente por accidente.",
+        "No activar el entorno y asumir que pip apunta al entorno virtual.",
+        "Subir la carpeta .venv al repositorio."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de venv",
+          "url": "https://docs.python.org/3.15/library/venv.html"
+        },
+        {
+          "label": "Guía oficial de empaquetado",
+          "url": "https://packaging.python.org/en/latest/tutorials/installing-packages/"
+        }
+      ]
+    },
+    {
+      "id": "archivos-pathlib",
+      "category": "modulos",
+      "title": "Archivos y rutas con pathlib",
+      "level": "Intermedio",
+      "summary": "Leé y escribí archivos usando rutas portables y administrá carpetas.",
+      "purpose": "pathlib.Path representa rutas del sistema de archivos con una API orientada a objetos. read_text() y write_text() permiten trabajar con archivos de texto; open() mediante Path.open() sirve para casos más específicos.",
+      "syntax": "from pathlib import Path\n\nruta = Path('datos.txt')\nruta.write_text('Hola', encoding='utf-8')\ncontenido = ruta.read_text(encoding='utf-8')",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Leer y escribir texto",
+          "description": "Indicá una codificación explícita y manejá la ruta como objeto.",
+          "code": "from pathlib import Path\n\nruta = Path('notas.txt')\nruta.write_text('Primera línea\\nSegunda línea', encoding='utf-8')\ntexto = ruta.read_text(encoding='utf-8')\nprint(texto)",
+          "explanation": "Path facilita construir rutas independientes del separador del sistema. encoding='utf-8' evita depender de codificaciones implícitas."
+        },
+        {
+          "title": "Comprobar archivos",
+          "description": "Verificá existencia y creá directorios cuando haga falta.",
+          "code": "from pathlib import Path\n\ncarpeta = Path('salida')\ncarpeta.mkdir(exist_ok=True)\narchivo = carpeta / 'resumen.txt'\n\nif archivo.exists():\n    print(archivo.stat().st_size, 'bytes')",
+          "explanation": "El operador / une segmentos de ruta. mkdir(exist_ok=True) crea el directorio sin error si ya existe."
+        }
+      ],
+      "exercise": "Creá una carpeta reportes y un archivo resumen.txt dentro. Escribí una línea y volvé a leerla.",
+      "hint": "Usá Path('reportes') / 'resumen.txt' para construir la ruta.",
+      "bestPractices": [
+        "Usá pathlib para código portable.",
+        "Indicá encoding='utf-8' al leer o escribir texto.",
+        "Validá rutas y errores de permisos antes de procesar archivos externos."
+      ],
+      "commonMistakes": [
+        "Concatenar rutas con barras de texto manualmente.",
+        "Suponer que el archivo existe antes de leerlo.",
+        "Usar rutas proporcionadas por usuarios sin validar el acceso esperado."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de pathlib",
+          "url": "https://docs.python.org/3.15/library/pathlib.html"
+        }
+      ]
+    },
+    {
+      "id": "json-csv",
+      "category": "modulos",
+      "title": "Trabajar con JSON y CSV",
+      "level": "Intermedio",
+      "summary": "Intercambiá datos estructurados usando formatos JSON y tabulares CSV.",
+      "purpose": "json convierte entre estructuras compatibles de Python y texto JSON. csv lee y escribe archivos tabulares. Para archivos JSON se suele usar json.load()/dump(); para cadenas, loads()/dumps().",
+      "syntax": "import json\nimport csv\n\njson.loads(texto)\njson.dump(datos, archivo, ensure_ascii=False, indent=2)",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Guardar y leer JSON",
+          "description": "Usá utf-8 y una salida indentada para que sea legible.",
+          "code": "import json\n\nusuario = {'nombre': 'Luz', 'edad': 25}\ntexto = json.dumps(usuario, ensure_ascii=False, indent=2)\nrecuperado = json.loads(texto)\nprint(recuperado['nombre'])",
+          "explanation": "dumps() convierte un objeto Python en cadena JSON. loads() interpreta la cadena y devuelve objetos Python compatibles."
+        },
+        {
+          "title": "Leer CSV como diccionarios",
+          "description": "DictReader toma la primera fila como nombres de columnas.",
+          "code": "import csv\nfrom io import StringIO\n\ncontenido = 'nombre,edad\\nAna,25\\nLeo,31'\narchivo = StringIO(contenido)\n\nfor fila in csv.DictReader(archivo):\n    print(f\"{fila['nombre']}: {fila['edad']}\")",
+          "explanation": "DictReader facilita acceder a cada campo por nombre. En archivos reales, abrí el archivo con newline='' y encoding='utf-8'."
+        }
+      ],
+      "exercise": "Convertí una lista de diccionarios de productos a JSON y luego recuperá el nombre de cada producto.",
+      "hint": "Usá json.dumps() y json.loads(); iterá el resultado recuperado.",
+      "bestPractices": [
+        "Usá ensure_ascii=False para preservar caracteres Unicode legibles.",
+        "Validá el esquema de datos después de parsear JSON.",
+        "Al trabajar con CSV, revisá delimitadores y encabezados."
+      ],
+      "commonMistakes": [
+        "Confundir dumps() con dump() y loads() con load().",
+        "Intentar serializar directamente objetos que JSON no admite, como conjuntos o instancias arbitrarias.",
+        "Olvidar codificación y newline al trabajar con archivos CSV."
+      ],
+      "resources": [
+        {
+          "label": "Módulo json",
+          "url": "https://docs.python.org/3.15/library/json.html"
+        },
+        {
+          "label": "Módulo csv",
+          "url": "https://docs.python.org/3.15/library/csv.html"
+        }
+      ]
+    },
+    {
+      "id": "excepciones",
+      "category": "calidad",
+      "title": "Excepciones: try, except, else y finally",
+      "level": "Intermedio",
+      "summary": "Recuperate de errores esperables y separá el camino exitoso del manejo de fallos.",
+      "purpose": "Una excepción interrumpe el flujo normal. try contiene la operación susceptible de fallar; except maneja tipos concretos; else se ejecuta si no hubo excepción; finally se ejecuta siempre, incluso ante return o errores no capturados.",
+      "syntax": "try:\n    operacion()\nexcept ValueError as error:\n    ...\nelse:\n    ...\nfinally:\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Capturar un error concreto",
+          "description": "Convertí texto a número y tratá solo el error esperado.",
+          "code": "texto = '12x'\n\ntry:\n    numero = int(texto)\nexcept ValueError as error:\n    print(f'No es un entero: {error}')\nelse:\n    print(numero * 2)",
+          "explanation": "ValueError aparece cuando el texto no representa un entero válido. else permite dejar fuera del try el código que solo tiene sentido tras una conversión exitosa."
+        },
+        {
+          "title": "finally para limpieza",
+          "description": "La limpieza debe ejecutarse tanto si la operación tiene éxito como si falla.",
+          "code": "archivo = None\ntry:\n    archivo = open('datos.txt', encoding='utf-8')\n    contenido = archivo.read()\nexcept OSError as error:\n    print(f'No se pudo leer: {error}')\nfinally:\n    if archivo is not None:\n        archivo.close()",
+          "explanation": "finally se ejecuta en todos los caminos. Para archivos, el administrador de contexto with suele ser una opción más segura y clara."
+        }
+      ],
+      "exercise": "Pedí dos números y dividilos. Mostrá un mensaje cuando el divisor sea cero o cuando la entrada no sea numérica.",
+      "hint": "Manejá ValueError para la conversión y ZeroDivisionError para la división.",
+      "bestPractices": [
+        "Capturá excepciones específicas.",
+        "Mantené el bloque try lo más pequeño posible.",
+        "Usá with para recursos que deban cerrarse."
+      ],
+      "commonMistakes": [
+        "Usar except: sin especificar tipo y ocultar errores inesperados.",
+        "Capturar una excepción y no informar ni resolver el problema.",
+        "Usar excepciones como reemplazo de condiciones sencillas."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: excepciones",
+          "url": "https://docs.python.org/3.15/tutorial/errors.html"
+        }
+      ]
+    },
+    {
+      "id": "raise-excepciones-personalizadas",
+      "category": "calidad",
+      "title": "raise y excepciones personalizadas",
+      "level": "Intermedio",
+      "summary": "Señalá estados inválidos y definí excepciones propias cuando el dominio lo requiera.",
+      "purpose": "raise lanza una excepción. Podés reutilizar las excepciones integradas o crear una clase que herede de Exception para representar errores específicos de tu aplicación. Las excepciones deben comunicar por qué una operación no pudo completarse.",
+      "syntax": "if saldo < monto:\n    raise ValueError('Saldo insuficiente')\n\nclass StockInsuficienteError(Exception):\n    pass",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Lanzar una excepción integrada",
+          "description": "Usá ValueError cuando un argumento tiene un valor no permitido.",
+          "code": "def retirar(saldo, monto):\n    if monto <= 0:\n        raise ValueError('El monto debe ser positivo')\n    if monto > saldo:\n        raise ValueError('Saldo insuficiente')\n    return saldo - monto\n\nprint(retirar(1000, 300))",
+          "explanation": "raise comunica que la función no puede cumplir su contrato con esos argumentos. El llamador decide si maneja el error."
+        },
+        {
+          "title": "Excepción propia",
+          "description": "Creá un tipo que haga explícito el problema de dominio.",
+          "code": "class StockInsuficienteError(Exception):\n    \"\"\"Se intenta vender más unidades que las disponibles.\"\"\"\n    pass\n\ndef vender(stock, cantidad):\n    if cantidad > stock:\n        raise StockInsuficienteError('No hay unidades suficientes')\n    return stock - cantidad",
+          "explanation": "Una excepción propia permite distinguir un error del dominio de otros ValueError o errores de entrada."
+        }
+      ],
+      "exercise": "Definí una excepción EdadInvalidaError y lanzala si una edad es negativa. Capturala en el código principal.",
+      "hint": "La clase puede heredar directamente de Exception.",
+      "bestPractices": [
+        "Usá tipos de excepción estándar cuando describan bien el fallo.",
+        "Definí excepciones propias para errores del dominio.",
+        "No uses excepciones para flujo normal que se resuelve con if."
+      ],
+      "commonMistakes": [
+        "Lanzar Exception genérica cuando una más específica existe.",
+        "Capturar una excepción demasiado pronto y perder contexto.",
+        "Ignorar la excepción con pass sin una razón documentada."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: lanzar excepciones",
+          "url": "https://docs.python.org/3.15/tutorial/errors.html#raising-exceptions"
+        }
+      ]
+    },
+    {
+      "id": "type-hints",
+      "category": "calidad",
+      "title": "Anotaciones de tipo y typing",
+      "level": "Intermedio",
+      "summary": "Documentá los tipos esperados y mejorá la lectura y el análisis estático del programa.",
+      "purpose": "Las anotaciones agregan información sobre los tipos de parámetros, variables y resultados. Python no aplica estas anotaciones automáticamente en tiempo de ejecución; analizadores y editores pueden usarlas para detectar inconsistencias.",
+      "syntax": "def buscar(id: int) -> str | None:\n    ...\n\nnombres: list[str] = []",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Anotar parámetros y retorno",
+          "description": "Indicá qué recibe una función y qué devuelve.",
+          "code": "def calcular_iva(precio: float, tasa: float = 0.21) -> float:\n    return precio * tasa\n\nresultado: float = calcular_iva(1000)\nprint(resultado)",
+          "explanation": "Las anotaciones describen el contrato esperado. No convierten por sí mismas un texto en float ni impiden pasar valores de otro tipo."
+        },
+        {
+          "title": "Tipos opcionales y colecciones",
+          "description": "Expresá que una búsqueda puede no encontrar un resultado.",
+          "code": "def buscar_usuario(usuarios: dict[int, str], id: int) -> str | None:\n    return usuarios.get(id)\n\nnombres: list[str] = ['Ana', 'Leo']\nprint(buscar_usuario({1: 'Ana'}, 2))",
+          "explanation": "str | None significa que el resultado puede ser una cadena o None. La sintaxis de unión con | está disponible desde Python 3.10."
+        }
+      ],
+      "exercise": "Anotá una función que reciba una lista de enteros y devuelva el promedio como float. Indicá cómo representar una lista vacía.",
+      "hint": "Definí un retorno float | None si decidís devolver None cuando no hay datos.",
+      "bestPractices": [
+        "Anotá funciones públicas y estructuras de datos importantes.",
+        "No confundas anotaciones con validación en tiempo de ejecución.",
+        "Usá tipos simples y concretos antes de recurrir a tipos complejos."
+      ],
+      "commonMistakes": [
+        "Creer que una anotación convierte automáticamente los valores.",
+        "No comprobar None antes de operar con un valor opcional.",
+        "Anotar tipos demasiado amplios que no ayudan al lector."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de typing",
+          "url": "https://docs.python.org/3.15/library/typing.html"
+        }
+      ]
+    },
+    {
+      "id": "unittest",
+      "category": "calidad",
+      "title": "Pruebas automatizadas con unittest",
+      "level": "Intermedio",
+      "summary": "Verificá funciones con casos normales, límites y entradas inválidas.",
+      "purpose": "unittest es el framework de pruebas incluido en la biblioteca estándar. Una clase de prueba hereda de TestCase y define métodos cuyo nombre suele empezar con test_. Las aserciones comprueban resultados esperados.",
+      "syntax": "import unittest\n\nclass TestCalculo(unittest.TestCase):\n    def test_suma(self):\n        self.assertEqual(sumar(2, 3), 5)",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Probar un resultado",
+          "description": "Separá la función que se prueba de la clase de pruebas.",
+          "code": "def es_par(numero):\n    return numero % 2 == 0\n\nimport unittest\n\nclass TestEsPar(unittest.TestCase):\n    def test_par(self):\n        self.assertTrue(es_par(8))\n\n    def test_impar(self):\n        self.assertFalse(es_par(7))\n\nif __name__ == '__main__':\n    unittest.main()",
+          "explanation": "assertTrue y assertFalse verifican condiciones booleanas. unittest descubre los métodos test_ y muestra qué pruebas fallan."
+        },
+        {
+          "title": "Esperar una excepción",
+          "description": "Probá también comportamientos inválidos.",
+          "code": "def dividir(a, b):\n    if b == 0:\n        raise ValueError('Divisor cero')\n    return a / b\n\nclass TestDividir(unittest.TestCase):\n    def test_divisor_cero(self):\n        with self.assertRaises(ValueError):\n            dividir(5, 0)",
+          "explanation": "assertRaises verifica que el bloque produzca el tipo de excepción esperado. Si no aparece, la prueba falla."
+        }
+      ],
+      "exercise": "Escribí pruebas para una función que convierta kilómetros a millas. Cubrí cero, un valor normal y un valor inválido.",
+      "hint": "Usá assertAlmostEqual() para comparar resultados flotantes.",
+      "bestPractices": [
+        "Probá resultados, límites y errores.",
+        "Mantené cada prueba enfocada en un comportamiento.",
+        "Hacé que las pruebas sean repetibles y no dependan del orden."
+      ],
+      "commonMistakes": [
+        "Probar solo el caso ideal.",
+        "Escribir pruebas que dependen de datos externos cambiantes.",
+        "Usar assertEqual con flotantes que pueden tener diferencias de precisión."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de unittest",
+          "url": "https://docs.python.org/3.15/library/unittest.html"
+        }
+      ]
+    },
+    {
+      "id": "datetime",
+      "category": "stdlib",
+      "title": "Fechas y horas con datetime",
+      "level": "Intermedio",
+      "summary": "Representá fechas y horas, comparalas y calculá diferencias temporales.",
+      "purpose": "datetime proporciona date, time, datetime y timedelta. Una fecha representa un día; datetime combina fecha y hora. Las fechas conscientes de zona horaria (aware) evitan ambigüedades al trabajar con instantes globales.",
+      "syntax": "from datetime import date, datetime, timedelta\n\nhoy = date.today()\nmanana = hoy + timedelta(days=1)",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Fechas y diferencias",
+          "description": "Sumá días y compará fechas.",
+          "code": "from datetime import date, timedelta\n\nhoy = date.today()\nlimite = hoy + timedelta(days=30)\ndias = limite - hoy\n\nprint(hoy)\nprint(limite)\nprint(dias.days)",
+          "explanation": "timedelta representa una duración. Restar dos fechas produce un timedelta que permite consultar la cantidad de días."
+        },
+        {
+          "title": "Parsear y formatear",
+          "description": "Usá strptime() para interpretar texto y strftime() para presentarlo.",
+          "code": "from datetime import datetime\n\ntexto = '22/11/2026'\nfecha = datetime.strptime(texto, '%d/%m/%Y')\nprint(fecha.strftime('%Y-%m-%d'))",
+          "explanation": "strptime() convierte texto siguiendo un formato. strftime() genera texto a partir de la fecha."
+        }
+      ],
+      "exercise": "Calculá cuántos días faltan para una fecha ingresada con formato AAAA-MM-DD y controlá fechas inválidas.",
+      "hint": "Convertí el texto con date.fromisoformat() y restalo de date.today().",
+      "bestPractices": [
+        "Preferí fechas conscientes de zona horaria para instantes globales.",
+        "Guardá fechas en formatos estándar como ISO 8601.",
+        "No confundas fecha local con un instante UTC."
+      ],
+      "commonMistakes": [
+        "Comparar strings de fechas en formatos distintos.",
+        "Ignorar zonas horarias en aplicaciones distribuidas.",
+        "Confundir timedelta con un número de segundos absoluto."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de datetime",
+          "url": "https://docs.python.org/3.15/library/datetime.html"
+        }
+      ]
+    },
+    {
+      "id": "math-random",
+      "category": "stdlib",
+      "title": "Matemática y aleatoriedad con math y random",
+      "level": "Intermedio",
+      "summary": "Usá funciones matemáticas y generá valores aleatorios para simulaciones y juegos.",
+      "purpose": "math ofrece funciones matemáticas habituales como sqrt(), ceil(), floor() y pi. random genera valores pseudoaleatorios útiles para simulaciones y juegos, pero no para contraseñas ni tokens de seguridad.",
+      "syntax": "import math\nimport random\n\nraiz = math.sqrt(81)\ndado = random.randint(1, 6)",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Funciones matemáticas",
+          "description": "Combiná raíz, redondeo y constantes.",
+          "code": "import math\n\nradio = 3\narea = math.pi * radio ** 2\nprint(math.sqrt(81))\nprint(math.ceil(4.2))\nprint(round(area, 2))",
+          "explanation": "sqrt() calcula raíz cuadrada; ceil() redondea hacia arriba; pi es una constante. round() redondea un número al número de decimales indicado."
+        },
+        {
+          "title": "Elegir valores al azar",
+          "description": "Usá choice() y randint() en un juego de práctica.",
+          "code": "import random\n\nopciones = ['piedra', 'papel', 'tijera']\ncomputadora = random.choice(opciones)\ndado = random.randint(1, 6)\nprint(computadora, dado)",
+          "explanation": "choice() elige un elemento de una secuencia y randint() incluye ambos extremos. random no es un generador criptográficamente seguro."
+        }
+      ],
+      "exercise": "Simulá cien lanzamientos de un dado y contá cuántas veces aparece cada cara.",
+      "hint": "Inicializá un diccionario con claves de 1 a 6 y actualizá el contador en un bucle.",
+      "bestPractices": [
+        "Usá math para cálculos matemáticos estándar.",
+        "Usá random solo para aleatoriedad no relacionada con seguridad.",
+        "Inyectá o fijá una semilla en pruebas que necesitan resultados reproducibles."
+      ],
+      "commonMistakes": [
+        "Usar random para generar contraseñas o tokens de seguridad.",
+        "Confundir randint(a, b) con un intervalo donde b está excluido.",
+        "Redondear resultados intermedios cuando necesitás conservar precisión."
+      ],
+      "resources": [
+        {
+          "label": "Módulo math",
+          "url": "https://docs.python.org/3.15/library/math.html"
+        },
+        {
+          "label": "Módulo random",
+          "url": "https://docs.python.org/3.15/library/random.html"
+        }
+      ]
+    },
+    {
+      "id": "collections-itertools",
+      "category": "stdlib",
+      "title": "collections e itertools",
+      "level": "Intermedio",
+      "summary": "Resolvé tareas de conteo, agrupación y recorridos eficientes con herramientas estándar.",
+      "purpose": "collections aporta estructuras como Counter, defaultdict y deque. itertools ofrece iteradores eficientes para combinar, agrupar o recorrer datos sin construir necesariamente todas las colecciones en memoria.",
+      "syntax": "from collections import Counter, defaultdict, deque\nfrom itertools import combinations",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Contar con Counter",
+          "description": "Contá elementos sin escribir manualmente el diccionario de frecuencias.",
+          "code": "from collections import Counter\n\nvotos = ['azul', 'rojo', 'azul', 'verde', 'azul']\nconteo = Counter(votos)\nprint(conteo.most_common(2))",
+          "explanation": "Counter es una subclase especializada de diccionario para contar elementos hashables. most_common() devuelve los más frecuentes."
+        },
+        {
+          "title": "Combinaciones",
+          "description": "Generá pares posibles de elementos.",
+          "code": "from itertools import combinations\n\npersonas = ['Ana', 'Leo', 'Mara']\nfor pareja in combinations(personas, 2):\n    print(pareja)",
+          "explanation": "combinations(iterable, r) produce grupos de r elementos sin repetir posiciones ni invertir el orden de un mismo grupo."
+        }
+      ],
+      "exercise": "Usá Counter para encontrar las tres palabras más repetidas de una lista y combinations para formar parejas de participantes.",
+      "hint": "Importá Counter y combinations desde sus respectivos módulos.",
+      "bestPractices": [
+        "Elegí deque para colas con inserciones y extracciones en ambos extremos.",
+        "Usá Counter para frecuencias y defaultdict para agrupaciones.",
+        "Recordá que muchos iteradores se consumen una sola vez."
+      ],
+      "commonMistakes": [
+        "Convertir un iterable grande a lista sin necesitarlo.",
+        "Suponer que deque y list tienen el mismo rendimiento para todas las operaciones.",
+        "Olvidar que combinations no devuelve una lista sino un iterador."
+      ],
+      "resources": [
+        {
+          "label": "Módulo collections",
+          "url": "https://docs.python.org/3.15/library/collections.html"
+        },
+        {
+          "label": "Módulo itertools",
+          "url": "https://docs.python.org/3.15/library/itertools.html"
+        }
+      ]
+    },
+    {
+      "id": "sqlite3",
+      "category": "stdlib",
+      "title": "Bases de datos SQLite con sqlite3",
+      "level": "Intermedio",
+      "summary": "Guardá y consultá datos relacionales sin instalar un servidor de base de datos.",
+      "purpose": "sqlite3 permite conectarse a una base SQLite local. Podés crear tablas, ejecutar consultas parametrizadas, recuperar filas y confirmar transacciones. Las consultas deben usar placeholders para separar datos del SQL.",
+      "syntax": "import sqlite3\n\nwith sqlite3.connect('app.db') as conexion:\n    conexion.execute('CREATE TABLE IF NOT EXISTS tareas (id INTEGER PRIMARY KEY, titulo TEXT)')",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Crear tabla e insertar",
+          "description": "Usá parámetros en vez de concatenar datos dentro de SQL.",
+          "code": "import sqlite3\n\nwith sqlite3.connect(':memory:') as db:\n    db.execute('CREATE TABLE usuarios (id INTEGER PRIMARY KEY, nombre TEXT)')\n    db.execute('INSERT INTO usuarios (nombre) VALUES (?)', ('Ana',))\n    filas = db.execute('SELECT id, nombre FROM usuarios').fetchall()\n    print(filas)",
+          "explanation": "? es un placeholder. El valor se pasa por separado como tupla, evitando mezclar la entrada con el texto SQL."
+        },
+        {
+          "title": "Transacción y consulta",
+          "description": "El administrador de contexto confirma o revierte la transacción según el resultado.",
+          "code": "import sqlite3\n\nwith sqlite3.connect(':memory:') as db:\n    db.execute('CREATE TABLE productos (nombre TEXT, precio REAL)')\n    productos = [('Mouse', 12000), ('Teclado', 25000)]\n    db.executemany('INSERT INTO productos VALUES (?, ?)', productos)\n    for fila in db.execute('SELECT nombre, precio FROM productos WHERE precio > ?', (15000,)):\n        print(fila)",
+          "explanation": "executemany() ejecuta una operación para varias filas. El contexto de conexión confirma cambios si todo termina bien."
+        }
+      ],
+      "exercise": "Creá una base temporal con tabla tareas, insertá tres registros y consultá los pendientes.",
+      "hint": "Podés usar ':memory:' para una base que existe solo durante la conexión.",
+      "bestPractices": [
+        "Usá placeholders para todos los datos externos.",
+        "Abrí conexiones dentro de un administrador de contexto cuando corresponda.",
+        "Definí claves primarias y restricciones según el modelo."
+      ],
+      "commonMistakes": [
+        "Concatenar entradas en el SQL y abrir una inyección SQL.",
+        "Olvidar confirmar cambios cuando no se usa un contexto adecuado.",
+        "Confundir SQLite embebido con PostgreSQL servidor."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de sqlite3",
+          "url": "https://docs.python.org/3.15/library/sqlite3.html"
+        }
+      ]
+    },
+    {
+      "id": "generadores",
+      "category": "avanzado",
+      "title": "Iteradores y generadores con yield",
+      "level": "Avanzado",
+      "summary": "Producí valores bajo demanda y recorré secuencias sin almacenarlas completas.",
+      "purpose": "Un iterador entrega valores uno por uno. Una función generadora usa yield y conserva su estado entre iteraciones. Los generadores son útiles para procesar secuencias grandes o flujos de datos.",
+      "syntax": "def contar(hasta):\n    numero = 1\n    while numero <= hasta:\n        yield numero\n        numero += 1",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Generador simple",
+          "description": "Cada yield pausa la función y entrega un valor.",
+          "code": "def cuadrados(limite):\n    for numero in range(limite):\n        yield numero ** 2\n\nfor valor in cuadrados(4):\n    print(valor)",
+          "explanation": "El generador calcula un cuadrado cuando se solicita el siguiente valor. No crea de antemano una lista con todos los resultados."
+        },
+        {
+          "title": "Expresión generadora",
+          "description": "Usá paréntesis para crear un generador compacto.",
+          "code": "numeros = range(1, 1_000_001)\npares_cuadrados = (n * n for n in numeros if n % 2 == 0)\n\nprimeros = [next(pares_cuadrados) for _ in range(3)]\nprint(primeros)",
+          "explanation": "La expresión generadora produce valores bajo demanda. next() consume el siguiente elemento del iterador."
+        }
+      ],
+      "exercise": "Escribí un generador que lea una lista de temperaturas y produzca solo las que superen un umbral.",
+      "hint": "Usá yield dentro de un for y una condición if.",
+      "bestPractices": [
+        "Usá generadores para procesar flujos grandes.",
+        "Recordá que un generador suele consumirse una sola vez.",
+        "Preferí listas cuando necesites acceso por índice o recorrer varias veces."
+      ],
+      "commonMistakes": [
+        "Esperar que un generador pueda recorrerse desde el comienzo después de agotarse.",
+        "Usar return para producir valores intermedios en vez de yield.",
+        "Materializar todos los valores sin necesidad."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: generadores",
+          "url": "https://docs.python.org/3.15/tutorial/classes.html#generators"
+        }
+      ]
+    },
+    {
+      "id": "decoradores",
+      "category": "avanzado",
+      "title": "Decoradores de funciones",
+      "level": "Avanzado",
+      "summary": "Envolvé una función para agregar comportamiento reutilizable sin modificar su cuerpo.",
+      "purpose": "Un decorador recibe una función y devuelve otra función o un objeto invocable. La sintaxis @decorador equivale a reasignar la función al resultado de aplicar el decorador. functools.wraps conserva metadatos de la función original.",
+      "syntax": "@decorador\ndef funcion():\n    ...",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Medir una ejecución",
+          "description": "Envolvé la llamada y devolvé el resultado original.",
+          "code": "from functools import wraps\nfrom time import perf_counter\n\ndef medir_tiempo(funcion):\n    @wraps(funcion)\n    def envoltura(*args, **kwargs):\n        inicio = perf_counter()\n        resultado = funcion(*args, **kwargs)\n        print(f'Tardó {perf_counter() - inicio:.6f}s')\n        return resultado\n    return envoltura\n\n@medir_tiempo\ndef sumar(a, b):\n    return a + b\n\nprint(sumar(2, 3))",
+          "explanation": "La envoltura recibe y reenvía argumentos. @wraps mantiene el nombre y la documentación de la función original."
+        },
+        {
+          "title": "Decorador con parámetros",
+          "description": "Una función externa puede crear decoradores configurables.",
+          "code": "from functools import wraps\n\ndef repetir(veces):\n    def decorador(funcion):\n        @wraps(funcion)\n        def envoltura(*args, **kwargs):\n            resultado = None\n            for _ in range(veces):\n                resultado = funcion(*args, **kwargs)\n            return resultado\n        return envoltura\n    return decorador\n\n@repetir(3)\ndef avisar():\n    print('Hola')",
+          "explanation": "Hay tres niveles: la fábrica de decoradores recibe la configuración, el decorador recibe la función y la envoltura ejecuta el comportamiento adicional."
+        }
+      ],
+      "exercise": "Creá un decorador que registre el nombre de la función antes de ejecutarla y que devuelva su resultado.",
+      "hint": "Usá @wraps y una función interna envoltura(*args, **kwargs).",
+      "bestPractices": [
+        "Usá functools.wraps en la envoltura.",
+        "Conservá el valor de retorno y propagá excepciones salvo que tengas una razón para manejarlas.",
+        "Mantené el decorador independiente de la función decorada."
+      ],
+      "commonMistakes": [
+        "Olvidar devolver la envoltura.",
+        "No reenviar argumentos o resultado.",
+        "Confundir una función decoradora con el decorador ya aplicado."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial oficial: decoradores",
+          "url": "https://docs.python.org/3.15/tutorial/controlflow.html#intermezzo-coding-style"
+        },
+        {
+          "label": "Módulo functools",
+          "url": "https://docs.python.org/3.15/library/functools.html"
+        }
+      ]
+    },
+    {
+      "id": "context-managers",
+      "category": "avanzado",
+      "title": "Administradores de contexto: with",
+      "level": "Avanzado",
+      "summary": "Gestioná recursos que deben abrirse y cerrarse de forma segura.",
+      "purpose": "Un administrador de contexto implementa el protocolo __enter__ y __exit__. La sentencia with garantiza que la limpieza se realice al abandonar el bloque, también cuando ocurre una excepción. Los generadores pueden crear administradores de contexto con contextlib.contextmanager.",
+      "syntax": "with recurso as valor:\n    usar(valor)",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Abrir un archivo de forma segura",
+          "description": "with cierra el archivo al abandonar el bloque.",
+          "code": "from pathlib import Path\n\nruta = Path('registro.txt')\nwith ruta.open('w', encoding='utf-8') as archivo:\n    archivo.write('Proceso iniciado\\n')\n\nprint('El archivo ya está cerrado')",
+          "explanation": "El administrador de contexto controla el ciclo de vida del archivo. No necesitás llamar a close() manualmente."
+        },
+        {
+          "title": "Crear un administrador propio",
+          "description": "Implementá __enter__ y __exit__ para definir la preparación y la limpieza.",
+          "code": "class Recurso:\n    def __enter__(self):\n        print('Abrir recurso')\n        return self\n\n    def __exit__(self, tipo, valor, traza):\n        print('Cerrar recurso')\n        return False\n\nwith Recurso() as recurso:\n    print('Usar recurso')",
+          "explanation": "__enter__ devuelve el objeto disponible después de as. __exit__ recibe información de una posible excepción; devolver False permite que se propague."
+        }
+      ],
+      "exercise": "Implementá un administrador de contexto que registre 'inicio' al entrar y 'fin' al salir, incluso si el bloque lanza ValueError.",
+      "hint": "El método __exit__ debe encargarse de la limpieza y devolver False.",
+      "bestPractices": [
+        "Usá with para archivos, conexiones y recursos con cierre.",
+        "No suprimas excepciones sin una razón clara.",
+        "Mantené la limpieza dentro del administrador de contexto."
+      ],
+      "commonMistakes": [
+        "Olvidar cerrar recursos si no se usa with.",
+        "Devolver True desde __exit__ y ocultar errores sin querer.",
+        "Confundir __enter__ con __init__."
+      ],
+      "resources": [
+        {
+          "label": "Protocolo de administradores de contexto",
+          "url": "https://docs.python.org/3.15/library/with.html"
+        },
+        {
+          "label": "Módulo contextlib",
+          "url": "https://docs.python.org/3.15/library/contextlib.html"
+        }
+      ]
+    },
+    {
+      "id": "async-await",
+      "category": "avanzado",
+      "title": "Programación asíncrona con asyncio",
+      "level": "Avanzado",
+      "summary": "Coordiná operaciones que esperan entrada/salida sin bloquear todo el flujo.",
+      "purpose": "async def define una corrutina. await suspende esa corrutina hasta que otra operación asíncrona esté disponible, permitiendo que el event loop ejecute otras tareas. asyncio es útil para concurrencia de I/O, no para acelerar automáticamente cálculos intensivos de CPU.",
+      "syntax": "import asyncio\n\nasync def tarea():\n    await asyncio.sleep(1)\n\nasyncio.run(tarea())",
+      "syntaxLanguage": "python",
+      "examples": [
+        {
+          "title": "Crear una corrutina",
+          "description": "asyncio.sleep() simula una espera sin bloquear el event loop.",
+          "code": "import asyncio\n\nasync def saludar():\n    print('Hola')\n    await asyncio.sleep(1)\n    print('Después de esperar')\n\nasyncio.run(saludar())",
+          "explanation": "asyncio.run() inicia el event loop, ejecuta la corrutina principal y cierra el ciclo cuando termina."
+        },
+        {
+          "title": "Ejecutar tareas concurrentes",
+          "description": "gather() espera varias corrutinas dentro de una misma ejecución.",
+          "code": "import asyncio\n\nasync def descargar(nombre, demora):\n    await asyncio.sleep(demora)\n    return f'{nombre} lista'\n\nasync def main():\n    resultados = await asyncio.gather(\n        descargar('A', 1),\n        descargar('B', 2)\n    )\n    print(resultados)\n\nasyncio.run(main())",
+          "explanation": "gather() permite esperar varias operaciones. Como las esperas son asíncronas, ambas pueden progresar sin bloquearse una a la otra."
+        }
+      ],
+      "exercise": "Escribí tres corrutinas que simulen consultas con diferentes tiempos y reuní sus resultados con asyncio.gather().",
+      "hint": "La función principal debe ser async y usar await asyncio.gather(...).",
+      "bestPractices": [
+        "Usá async para operaciones con espera de I/O.",
+        "No llames a time.sleep() dentro de una corrutina: bloquea el event loop.",
+        "Propagá o manejá cancelaciones y errores de tareas."
+      ],
+      "commonMistakes": [
+        "Llamar a una corrutina sin await ni crear una tarea.",
+        "Esperar que async acelere cálculos pesados de CPU.",
+        "Bloquear el event loop con operaciones sincrónicas prolongadas."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de asyncio",
+          "url": "https://docs.python.org/3.15/library/asyncio.html"
+        }
+      ]
+    }
+  ]
+}

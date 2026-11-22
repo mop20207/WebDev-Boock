@@ -1,0 +1,2490 @@
+{
+  "version": 1,
+  "language": "Java",
+  "baseline": "Java SE 25 LTS",
+  "latestFeature": "Java SE 27",
+  "updated": "2026-11-22",
+  "description": "Biblioteca progresiva de Java con explicaciones, sintaxis, ejemplos comentados, buenas prácticas, errores frecuentes, prácticas y referencias oficiales.",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos y entorno",
+      "description": "Instalá el JDK, ejecutá tu primer programa y comprendé variables, tipos y operaciones.",
+      "icon": "⌁",
+      "level": "Inicial"
+    },
+    {
+      "id": "control",
+      "title": "Control de flujo y estructuras básicas",
+      "description": "Tomá decisiones, repetí instrucciones, trabajá con arrays y manipulá texto.",
+      "icon": "⇄",
+      "level": "Inicial"
+    },
+    {
+      "id": "metodos",
+      "title": "Métodos y organización de comportamiento",
+      "description": "Creá métodos reutilizables, sobrecargalos y usá argumentos variables y enumeraciones.",
+      "icon": "ƒ",
+      "level": "Inicial"
+    },
+    {
+      "id": "poo",
+      "title": "Programación orientada a objetos",
+      "description": "Modelá clases, objetos, constructores, encapsulamiento, herencia, interfaces y records.",
+      "icon": "◇",
+      "level": "Intermedio"
+    },
+    {
+      "id": "colecciones",
+      "title": "Genéricos y colecciones",
+      "description": "Organizá datos dinámicos con List, Set, Map, genéricos, iteradores y Optional.",
+      "icon": "▤",
+      "level": "Intermedio"
+    },
+    {
+      "id": "errores",
+      "title": "Excepciones y manejo de errores",
+      "description": "Detectá fallos, manejá excepciones y definí errores propios del dominio.",
+      "icon": "!",
+      "level": "Intermedio"
+    },
+    {
+      "id": "apis",
+      "title": "APIs y biblioteca estándar",
+      "description": "Trabajá con fechas, archivos, expresiones regulares, HTTP y bases de datos JDBC.",
+      "icon": "⚙",
+      "level": "Intermedio"
+    },
+    {
+      "id": "calidad",
+      "title": "Pruebas y herramientas de proyecto",
+      "description": "Escribí pruebas automatizadas y organizá aplicaciones con Maven y Gradle.",
+      "icon": "✓",
+      "level": "Intermedio"
+    },
+    {
+      "id": "avanzado",
+      "title": "Java moderno y concurrencia",
+      "description": "Usá lambdas, Streams, módulos, ejecutores, CompletableFuture y virtual threads.",
+      "icon": "✦",
+      "level": "Avanzado"
+    }
+  ],
+  "articles": [
+    {
+      "id": "instalar-jdk",
+      "category": "fundamentos",
+      "title": "Instalar el JDK y preparar el entorno",
+      "level": "Inicial",
+      "summary": "Prepará Java para desarrollar: distinguí JDK, JVM y JRE, verificá la instalación y ejecutá un archivo.",
+      "purpose": "El JDK (Java Development Kit) contiene herramientas para desarrollar y ejecutar aplicaciones, entre ellas javac y java. El compilador javac transforma código fuente .java en bytecode .class; la JVM ejecuta ese bytecode. En versiones modernas también podés lanzar un archivo fuente directamente con java Archivo.java.",
+      "syntax": "java --version\njavac --version\njavac Main.java\njava Main\njava Main.java",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Comprobar las herramientas",
+          "description": "Verificá que estén disponibles el lanzador y el compilador.",
+          "code": "java --version\njavac --version\n\n# Consultar el compilador y el lanzador por separado",
+          "explanation": "java muestra la versión del entorno de ejecución y javac la del compilador. Si javac no existe, puede que tengas instalado solo un runtime reducido o que el JDK no esté en PATH."
+        },
+        {
+          "title": "Compilar y ejecutar",
+          "description": "Guardá el código en Main.java y ejecutá los dos pasos clásicos.",
+          "code": "// Main.java\nclass Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hola desde Java\");\n    }\n}\n\n// En la terminal:\n// javac Main.java\n// java Main",
+          "explanation": "javac genera Main.class. Luego java Main inicia la clase sin escribir la extensión .class."
+        }
+      ],
+      "exercise": "Instalá un JDK, comprobá java --version y javac --version, y ejecutá un programa que muestre tu nombre.",
+      "hint": "Primero comprobá que javac esté disponible. El comando java Main.java también puede lanzar el archivo fuente en versiones modernas.",
+      "bestPractices": [
+        "Instalá un JDK mantenido y recibí actualizaciones de seguridad.",
+        "Usá la misma familia de JDK para compilar y probar localmente.",
+        "Diferenciá comandos de terminal del código Java."
+      ],
+      "commonMistakes": [
+        "Confundir JDK con JVM: el JDK incluye herramientas de desarrollo; la JVM ejecuta bytecode.",
+        "Escribir javac o java dentro del archivo .java.",
+        "Suponer que java Main incluye la extensión .class."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Descargas oficiales de Java",
+          "url": "https://www.oracle.com/java/technologies/downloads/"
+        },
+        {
+          "label": "Calendario y versiones JDK",
+          "url": "https://ops.java/releases/"
+        }
+      ]
+    },
+    {
+      "id": "estructura-main",
+      "category": "fundamentos",
+      "title": "Estructura de un programa Java",
+      "level": "Inicial",
+      "summary": "Reconocé clases, método main, bloques, instrucciones y el punto de entrada de una aplicación.",
+      "purpose": "En Java el código se organiza en clases y otros tipos. En una aplicación de consola clásica, la JVM inicia la ejecución en un método main con firma compatible. Las instrucciones terminan en punto y coma; los bloques se delimitan con llaves. El nombre del archivo debe coincidir con el tipo público de nivel superior.",
+      "syntax": "public class Main {\n    public static void main(String[] args) {\n        // instrucciones\n    }\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Programa mínimo",
+          "description": "El método main es el punto de entrada tradicional de esta aplicación.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hola, mundo\");\n    }\n}",
+          "explanation": "public permite que la clase sea accesible; class declara el tipo; main recibe los argumentos del proceso; System.out.println escribe una línea."
+        },
+        {
+          "title": "Separar instrucciones en métodos",
+          "description": "El método main puede delegar trabajo a otros métodos estáticos.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        mostrarBienvenida();\n    }\n\n    static void mostrarBienvenida() {\n        System.out.println(\"Bienvenido a WebDev Book\");\n    }\n}",
+          "explanation": "La ejecución comienza en main y luego llama a mostrarBienvenida. Separar tareas evita un main demasiado extenso."
+        }
+      ],
+      "exercise": "Creá Main.java con un método main que llame a otro método llamado mostrarDatos().",
+      "hint": "Definí el segundo método dentro de la clase, pero fuera de main.",
+      "bestPractices": [
+        "Usá nombres de clase en PascalCase y métodos/variables en camelCase.",
+        "Mantené cada clase pública en un archivo con el mismo nombre.",
+        "Separá la lógica en métodos pequeños."
+      ],
+      "commonMistakes": [
+        "Olvidar punto y coma al final de una instrucción.",
+        "Colocar un método dentro de otro método: Java no permite métodos locales clásicos.",
+        "Crear public class Main en un archivo llamado distinto."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: primeros pasos",
+          "url": "https://dev.java/learn/"
+        }
+      ]
+    },
+    {
+      "id": "variables-tipos",
+      "category": "fundamentos",
+      "title": "Variables y tipos de datos",
+      "level": "Inicial",
+      "summary": "Declará variables primitivas y referencias, distinguí tipos numéricos y aplicá conversiones seguras.",
+      "purpose": "Java es estáticamente tipado: cada variable tiene un tipo que se conoce al compilar. Los primitivos incluyen byte, short, int, long, float, double, char y boolean. Las variables de referencia apuntan a objetos. var permite inferir el tipo de una variable local inicializada, pero no reemplaza el sistema de tipos.",
+      "syntax": "int edad = 25;\ndouble precio = 19.90;\nchar inicial = 'A';\nboolean activo = true;\nString nombre = \"Ana\";\nvar total = 3 * precio;",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Tipos primitivos",
+          "description": "Elegí el tipo de acuerdo con el dato que necesitás representar.",
+          "code": "int cantidad = 12;\nlong poblacion = 4_500_000L;\ndouble altura = 1.72;\nfloat temperatura = 21.5F;\nchar letra = 'J';\nboolean disponible = true;\n\nSystem.out.println(cantidad + poblacion);",
+          "explanation": "L y F indican literales long y float. double es habitual para cálculos de punto flotante; BigDecimal es preferible para ciertos cálculos decimales financieros."
+        },
+        {
+          "title": "Conversiones",
+          "description": "Convertí valores explícitamente y evitá truncamientos inesperados.",
+          "code": "double precio = 19.95;\nint entero = (int) precio; // pierde la parte decimal\nString texto = \"42\";\nint numero = Integer.parseInt(texto);\n\nSystem.out.println(entero);\nSystem.out.println(numero + 1);",
+          "explanation": "El cast de double a int trunca la parte decimal. parseInt convierte una cadena válida; si no contiene un entero, lanza NumberFormatException."
+        }
+      ],
+      "exercise": "Declará variables para nombre, edad, precio y disponibilidad. Mostrá sus valores y probá convertir el texto \"25\" a entero.",
+      "hint": "String se convierte a entero con Integer.parseInt(). Los valores de tipo char usan comillas simples.",
+      "bestPractices": [
+        "Elegí el tipo más específico que represente el dato.",
+        "Usá nombres descriptivos y evita abreviaturas opacas.",
+        "Usá BigDecimal para montos donde el redondeo binario no sea aceptable."
+      ],
+      "commonMistakes": [
+        "Confundir char con String.",
+        "Olvidar el sufijo L al usar literales long grandes.",
+        "Creer que var significa tipado dinámico: el tipo sigue siendo estático e inferido."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: tipos primitivos",
+          "url": "https://dev.java/learn/language-basics/"
+        }
+      ]
+    },
+    {
+      "id": "operadores",
+      "category": "fundamentos",
+      "title": "Operadores y expresiones",
+      "level": "Inicial",
+      "summary": "Combiná operadores aritméticos, relacionales, lógicos y de asignación.",
+      "purpose": "Los operadores construyen expresiones que producen valores. Java diferencia operaciones enteras y de punto flotante. La precedencia determina el orden de evaluación, pero los paréntesis ayudan a expresar la intención. && y || aplican cortocircuito y no evalúan el segundo operando cuando ya se conoce el resultado.",
+      "syntax": "int suma = a + b;\nboolean valido = edad >= 18 && activo;\nint resto = numero % 2;",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Aritmética y resto",
+          "description": "Usá % para detectar divisibilidad y paridad.",
+          "code": "int a = 17;\nint b = 5;\n\nSystem.out.println(a + b); // 22\nSystem.out.println(a / b); // 3: división entera\nSystem.out.println(a % b); // 2: resto\nSystem.out.println(a / 5.0); // 3.4",
+          "explanation": "Cuando ambos operandos son enteros, / devuelve un entero. Si necesitás decimales, al menos uno de los operandos debe ser de punto flotante."
+        },
+        {
+          "title": "Comparaciones y lógica",
+          "description": "Construí una regla de acceso con operadores booleanos.",
+          "code": "int edad = 22;\nboolean entrada = true;\nboolean bloqueado = false;\n\nboolean puedeEntrar = edad >= 18 && entrada && !bloqueado;\nSystem.out.println(puedeEntrar);",
+          "explanation": "&& requiere que ambas partes sean verdaderas. ! invierte el valor booleano. El resultado final se almacena en puedeEntrar."
+        }
+      ],
+      "exercise": "Calculá si un entero es par y si se encuentra entre 10 y 100 inclusive. Mostrá ambos resultados.",
+      "hint": "Un número es par cuando numero % 2 == 0. Para comprobar el rango, combiná >= y <=.",
+      "bestPractices": [
+        "Usá paréntesis para aclarar expresiones complejas.",
+        "Preferí && y || cuando el cortocircuito sea útil.",
+        "Compará objetos String con equals(), no con ==."
+      ],
+      "commonMistakes": [
+        "Dividir dos int y esperar un decimal.",
+        "Confundir = con ==.",
+        "Usar == para comparar contenido de cadenas."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "entrada-salida",
+      "category": "fundamentos",
+      "title": "Entrada y salida con Scanner y Console",
+      "level": "Inicial",
+      "summary": "Leé datos desde la consola, convertí entradas y presentá resultados legibles.",
+      "purpose": "Scanner analiza texto de una fuente como System.in y ofrece métodos para leer tipos habituales. nextInt() lee un entero; nextLine() lee el resto de la línea. Al combinar ambos, atendé el salto de línea pendiente. Console ofrece lectura de contraseñas sin mostrarlas, aunque puede no estar disponible en algunos entornos.",
+      "syntax": "Scanner scanner = new Scanner(System.in);\nString nombre = scanner.nextLine();\nint edad = scanner.nextInt();\nSystem.out.printf(\"Hola %s%n\", nombre);",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Leer texto y números",
+          "description": "Consumí el salto de línea después de nextInt() antes de leer otra línea completa.",
+          "code": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        System.out.print(\"Nombre: \");\n        String nombre = sc.nextLine();\n        System.out.print(\"Edad: \");\n        int edad = sc.nextInt();\n        sc.nextLine(); // consumir el salto pendiente\n        System.out.println(\"Hola \" + nombre + \", edad: \" + edad);\n    }\n}",
+          "explanation": "nextInt() deja el separador de línea pendiente. nextLine() después de él lo consume para que la siguiente lectura de texto no devuelva una línea vacía."
+        },
+        {
+          "title": "Formatear salida",
+          "description": "printf permite usar especificadores como %s, %d y %.2f.",
+          "code": "String producto = \"Teclado\";\nint cantidad = 2;\ndouble precio = 25999.9;\n\ndouble total = cantidad * precio;\nSystem.out.printf(\"%s x %d: $%.2f%n\", producto, cantidad, total);",
+          "explanation": "%s muestra texto; %d un entero; %.2f muestra dos decimales; %n inserta un salto de línea independiente del sistema."
+        }
+      ],
+      "exercise": "Creá un programa que pida dos números decimales y muestre suma, resta, producto y cociente. Validá que el divisor no sea cero.",
+      "hint": "Leé ambos datos con nextDouble() y usá if antes de realizar la división.",
+      "bestPractices": [
+        "Cerrá recursos cuando seas dueño de ellos; tené cuidado al cerrar System.in en ejercicios encadenados.",
+        "Validá entradas antes de operar.",
+        "Usá printf cuando necesites controlar el formato numérico."
+      ],
+      "commonMistakes": [
+        "Mezclar nextInt() y nextLine() sin consumir el salto de línea.",
+        "No capturar InputMismatchException cuando el usuario puede escribir otro tipo.",
+        "Suponer que System.console() siempre está disponible."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Scanner API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html"
+        }
+      ]
+    },
+    {
+      "id": "condicionales",
+      "category": "control",
+      "title": "Condicionales if, else y bloques",
+      "level": "Inicial",
+      "summary": "Ejecutá diferentes instrucciones según condiciones booleanas.",
+      "purpose": "if evalúa una expresión booleana y ejecuta un bloque si es true. else ofrece una alternativa y else if permite evaluar varias condiciones en orden. Cada rama puede tener llaves aunque contenga una sola instrucción; usarlas siempre evita errores al ampliar el código.",
+      "syntax": "if (condicion) {\n    // rama verdadera\n} else if (otraCondicion) {\n    // segunda rama\n} else {\n    // alternativa\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Clasificar una nota",
+          "description": "Ordená los rangos de mayor a menor para evitar que una condición oculte otra.",
+          "code": "int nota = 8;\nString resultado;\n\nif (nota >= 9) {\n    resultado = \"Excelente\";\n} else if (nota >= 7) {\n    resultado = \"Aprobado\";\n} else if (nota >= 4) {\n    resultado = \"Recuperatorio\";\n} else {\n    resultado = \"Desaprobado\";\n}\nSystem.out.println(resultado);",
+          "explanation": "Las condiciones se evalúan en orden. Cuando se encuentra una rama verdadera, las siguientes se omiten."
+        },
+        {
+          "title": "Condición compuesta",
+          "description": "Combiná reglas de negocio con operadores lógicos.",
+          "code": "boolean usuarioActivo = true;\nboolean emailVerificado = true;\nboolean bloqueado = false;\n\nif (usuarioActivo && emailVerificado && !bloqueado) {\n    System.out.println(\"Acceso permitido\");\n} else {\n    System.out.println(\"Acceso denegado\");\n}",
+          "explanation": "La expresión requiere que la cuenta esté activa, verificada y no bloqueada."
+        }
+      ],
+      "exercise": "Creá un clasificador de temperatura: menor a 10 'frío', de 10 a 24 'templado' y 25 o más 'caluroso'.",
+      "hint": "Usá if, else if y else en ese orden.",
+      "bestPractices": [
+        "Cubrí los valores límite de cada rango.",
+        "Usá llaves en todas las ramas.",
+        "Evitá anidar condicionales cuando una condición compuesta sea más clara."
+      ],
+      "commonMistakes": [
+        "Usar = en lugar de == dentro de una comparación.",
+        "Ordenar mal las condiciones y dejar rangos inalcanzables.",
+        "Olvidar las llaves cuando se agregan instrucciones nuevas."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "switch",
+      "category": "control",
+      "title": "switch clásico y expresiones switch",
+      "level": "Inicial",
+      "summary": "Elegí una rama según el valor de una expresión; diferenciá switch statement de switch expression.",
+      "purpose": "switch permite seleccionar una rama según el valor de una expresión compatible. La sintaxis moderna con flechas evita el fall-through accidental y puede devolver un valor cuando se usa como expresión. La sintaxis clásica con case y break sigue apareciendo en código existente.",
+      "syntax": "String tipo = switch (codigo) {\n    case 1 -> \"Uno\";\n    case 2 -> \"Dos\";\n    default -> \"Otro\";\n};",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Switch como expresión",
+          "description": "Asigná directamente el resultado de la rama coincidente.",
+          "code": "int codigo = 2;\nString estado = switch (codigo) {\n    case 1 -> \"Pendiente\";\n    case 2 -> \"En proceso\";\n    case 3 -> \"Finalizado\";\n    default -> \"Desconocido\";\n};\nSystem.out.println(estado);",
+          "explanation": "Las flechas terminan cada rama sin fall-through. La expresión debe producir un valor compatible con el tipo de estado."
+        },
+        {
+          "title": "Switch tradicional",
+          "description": "En la sintaxis clásica, break evita continuar a la siguiente etiqueta.",
+          "code": "int dia = 6;\nswitch (dia) {\n    case 1:\n        System.out.println(\"Lunes\");\n        break;\n    case 6:\n    case 7:\n        System.out.println(\"Fin de semana\");\n        break;\n    default:\n        System.out.println(\"Día laborable\");\n}",
+          "explanation": "La sintaxis clásica permite agrupar etiquetas. Sin break, en muchos casos la ejecución continúa dentro del siguiente case."
+        }
+      ],
+      "exercise": "Convertí un código numérico (1, 2 o 3) en un nombre de prioridad usando switch expression.",
+      "hint": "Cada case puede devolver directamente una cadena con ->.",
+      "bestPractices": [
+        "Preferí switch expression cuando necesitás calcular un valor.",
+        "Usá default o cubrí todos los casos relevantes.",
+        "Conservá break explícitos al usar switch tradicional."
+      ],
+      "commonMistakes": [
+        "Olvidar break en switch clásico.",
+        "Suponer que -> y : tienen exactamente el mismo comportamiento.",
+        "No cubrir casos desconocidos cuando el dato proviene de entrada externa."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: control de flujo",
+          "url": "https://dev.java/learn/language-basics/"
+        }
+      ]
+    },
+    {
+      "id": "bucles",
+      "category": "control",
+      "title": "Bucles for, while y do-while",
+      "level": "Inicial",
+      "summary": "Repetí instrucciones y recorré secuencias con el ciclo adecuado.",
+      "purpose": "for se usa habitualmente cuando la cantidad de iteraciones o el índice son conocidos; while repite mientras una condición sea verdadera; do-while ejecuta su cuerpo al menos una vez. break termina el bucle y continue salta a la siguiente iteración.",
+      "syntax": "for (int i = 0; i < limite; i++) { ... }\nwhile (condicion) { ... }\ndo { ... } while (condicion);",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "for y acumuladores",
+          "description": "Inicializá el acumulador antes del ciclo y actualizalo en cada vuelta.",
+          "code": "int[] precios = {120, 85, 230, 60};\nint total = 0;\n\nfor (int precio : precios) {\n    total += precio;\n}\nSystem.out.println(total);",
+          "explanation": "El for-each recorre cada elemento sin manejar índices. total acumula el valor de cada precio."
+        },
+        {
+          "title": "while para repetir una entrada",
+          "description": "Un bucle while permite pedir datos hasta cumplir un criterio de salida.",
+          "code": "int intentos = 0;\nboolean correcto = false;\n\nwhile (intentos < 3 && !correcto) {\n    intentos++;\n    // aquí se comprobaría la entrada\n}\nSystem.out.println(\"Intentos: \" + intentos);",
+          "explanation": "La condición combina el límite de intentos y el estado de la respuesta. En cada vuelta debe cambiar alguna de esas variables."
+        }
+      ],
+      "exercise": "Recorré los enteros del 1 al 100 y contá cuántos son múltiplos de 3 y de 5.",
+      "hint": "Usá un for, el operador % y un contador.",
+      "bestPractices": [
+        "Preferí for-each si no necesitás índice.",
+        "Verificá que la condición de while pueda volverse falsa.",
+        "Usá break y continue solo si aclaran el flujo."
+      ],
+      "commonMistakes": [
+        "Crear un bucle infinito por no actualizar la condición.",
+        "Modificar el índice de un for de forma inesperada.",
+        "Confundir = con == en la condición."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "arrays",
+      "category": "control",
+      "title": "Arrays unidimensionales y multidimensionales",
+      "level": "Inicial",
+      "summary": "Almacená elementos de longitud fija y recorré sus posiciones con índices.",
+      "purpose": "Un array es un objeto contenedor de tamaño fijo que almacena elementos de un mismo tipo. Los índices empiezan en cero y el tamaño se consulta con length. Los arrays multidimensionales de Java son arrays cuyos elementos pueden ser otros arrays; incluso pueden tener filas de longitudes diferentes.",
+      "syntax": "int[] numeros = {3, 5, 8};\nint segundo = numeros[1];\nint[][] matriz = {{1, 2}, {3, 4}};",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Crear, leer y recorrer",
+          "description": "Usá length para recorrer un arreglo sin codificar su tamaño.",
+          "code": "int[] notas = {8, 9, 7, 10};\nint suma = 0;\n\nfor (int i = 0; i < notas.length; i++) {\n    suma += notas[i];\n}\ndouble promedio = (double) suma / notas.length;\nSystem.out.println(promedio);",
+          "explanation": "length es una propiedad del array. El cast a double evita la división entera y conserva la parte decimal del promedio."
+        },
+        {
+          "title": "Matriz",
+          "description": "Accedé a filas y columnas con dos índices.",
+          "code": "int[][] tablero = {\n    {1, 0, 1},\n    {0, 1, 0}\n};\n\nfor (int fila = 0; fila < tablero.length; fila++) {\n    for (int columna = 0; columna < tablero[fila].length; columna++) {\n        System.out.print(tablero[fila][columna] + \" \");\n    }\n    System.out.println();\n}",
+          "explanation": "El primer índice selecciona la fila; el segundo, la columna. Consultar la longitud de cada fila permite recorrer arrays irregulares."
+        }
+      ],
+      "exercise": "Creá un array con cinco calificaciones. Calculá el promedio, el máximo y cuántas superan el promedio.",
+      "hint": "Usá un recorrido para sumar y otro para contar las calificaciones mayores al promedio.",
+      "bestPractices": [
+        "Comprobá índices entre 0 y length - 1.",
+        "Usá arrays cuando el tamaño fijo sea adecuado.",
+        "Preferí List cuando necesitás agregar o quitar elementos."
+      ],
+      "commonMistakes": [
+        "Acceder a una posición fuera de rango y provocar ArrayIndexOutOfBoundsException.",
+        "Confundir length (array) con length() (String).",
+        "Comparar arrays con equals() esperando comparar todos sus elementos; usá Arrays.equals()."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Arrays API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html"
+        }
+      ]
+    },
+    {
+      "id": "strings",
+      "category": "control",
+      "title": "String, inmutabilidad y StringBuilder",
+      "level": "Inicial",
+      "summary": "Manipulá texto, compará contenido correctamente y elegí entre concatenación y StringBuilder.",
+      "purpose": "String representa una secuencia de caracteres y es inmutable: las operaciones que parecen modificarla devuelven otra cadena. equals() compara contenido; == compara referencias. StringBuilder permite construir texto mutable de manera eficiente cuando concatenás repetidamente.",
+      "syntax": "String nombre = \"Java\";\nString limpio = nombre.trim().toLowerCase();\nStringBuilder texto = new StringBuilder();\ntexto.append(\"Hola\");",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Comparar y normalizar",
+          "description": "Usá equals() o equalsIgnoreCase() para comparar contenido.",
+          "code": "String lenguaje = \"Java\";\nString entrada = \"java\";\n\nif (lenguaje.equalsIgnoreCase(entrada)) {\n    System.out.println(\"Coinciden\");\n}\nSystem.out.println(lenguaje.length());\nSystem.out.println(lenguaje.substring(0, 2));",
+          "explanation": "equalsIgnoreCase ignora diferencias de mayúsculas y minúsculas. substring usa un inicio incluido y un final excluido."
+        },
+        {
+          "title": "Construir texto",
+          "description": "StringBuilder es útil en ciclos que agregan fragmentos repetidamente.",
+          "code": "StringBuilder reporte = new StringBuilder();\nfor (int i = 1; i <= 3; i++) {\n    reporte.append(\"Línea \").append(i).append(System.lineSeparator());\n}\nSystem.out.println(reporte);",
+          "explanation": "append agrega fragmentos al mismo objeto StringBuilder. toString() devuelve una cadena con el contenido acumulado cuando necesitás guardarla."
+        }
+      ],
+      "exercise": "Solicitá una frase y mostr á cantidad de caracteres, texto en mayúsculas y cantidad de palabras.",
+      "hint": "Usá length(), toUpperCase() y trim().split(\"\\\\s+\").",
+      "bestPractices": [
+        "Usá equals para comparar cadenas.",
+        "Elegí StringBuilder para concatenaciones repetidas en bucles.",
+        "Recordá que los métodos de String devuelven cadenas nuevas."
+      ],
+      "commonMistakes": [
+        "Comparar Strings con ==.",
+        "Esperar que trim() o replace() modifiquen la cadena original.",
+        "Llamar substring con índices inválidos."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "String API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html"
+        },
+        {
+          "label": "StringBuilder API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/StringBuilder.html"
+        }
+      ]
+    },
+    {
+      "id": "metodos",
+      "category": "metodos",
+      "title": "Métodos: parámetros y valores de retorno",
+      "level": "Inicial",
+      "summary": "Dividí un programa en operaciones reutilizables con parámetros y tipos de retorno.",
+      "purpose": "Un método define un comportamiento asociado a una clase. Su firma incluye el nombre y los tipos de parámetros; el tipo de retorno declara qué valor produce. void indica que no devuelve un valor. Java pasa argumentos por valor: para referencias se copia el valor de la referencia, no se pasa la variable original por referencia.",
+      "syntax": "static int sumar(int a, int b) {\n    return a + b;\n}\n\nvoid mostrarMensaje(String texto) {\n    System.out.println(texto);\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Método que devuelve un valor",
+          "description": "Separá el cálculo de su presentación.",
+          "code": "public class Main {\n    static double calcularIva(double precio, double tasa) {\n        return precio * tasa;\n    }\n\n    public static void main(String[] args) {\n        double iva = calcularIva(1000, 0.21);\n        System.out.println(iva);\n    }\n}",
+          "explanation": "El método recibe dos parámetros double y devuelve otro double. main utiliza el resultado para mostrarlo."
+        },
+        {
+          "title": "Método void",
+          "description": "Una operación puede realizar una acción sin devolver un resultado.",
+          "code": "public class Main {\n    static void saludar(String nombre) {\n        System.out.println(\"Hola, \" + nombre);\n    }\n\n    public static void main(String[] args) {\n        saludar(\"Ana\");\n    }\n}",
+          "explanation": "void indica que no hay resultado que asignar. La llamada ejecuta la impresión."
+        }
+      ],
+      "exercise": "Escribí un método convertirCelsius(double fahrenheit) que devuelva grados Celsius y probalo con tres valores.",
+      "hint": "La fórmula es (fahrenheit - 32) * 5 / 9.0.",
+      "bestPractices": [
+        "Elegí nombres con verbos para métodos que realizan acciones.",
+        "Mantené una responsabilidad por método.",
+        "Devolvé resultados en vez de imprimirlos cuando el método sea reutilizable."
+      ],
+      "commonMistakes": [
+        "Olvidar return en un método que promete un valor.",
+        "Llamar un método de instancia como si fuera static.",
+        "Confundir parámetros con argumentos."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "sobrecarga",
+      "category": "metodos",
+      "title": "Sobrecarga de métodos",
+      "level": "Inicial",
+      "summary": "Definí varios métodos con el mismo nombre y diferentes listas de parámetros.",
+      "purpose": "La sobrecarga permite declarar varios métodos con el mismo nombre si sus listas de parámetros difieren en cantidad, tipos u orden. El compilador selecciona la versión compatible en función de los argumentos. Cambiar solo el tipo de retorno no crea una sobrecarga válida.",
+      "syntax": "static int sumar(int a, int b) { ... }\nstatic double sumar(double a, double b) { ... }\nstatic int sumar(int a, int b, int c) { ... }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Distintas cantidades",
+          "description": "La cantidad de parámetros puede diferenciar una sobrecarga.",
+          "code": "static int sumar(int a, int b) {\n    return a + b;\n}\n\nstatic int sumar(int a, int b, int c) {\n    return a + b + c;\n}\n\nSystem.out.println(sumar(2, 3));\nSystem.out.println(sumar(2, 3, 4));",
+          "explanation": "El compilador resuelve la llamada según la cantidad y los tipos de argumentos."
+        },
+        {
+          "title": "Distintos tipos",
+          "description": "El tipo de los parámetros también puede distinguir los métodos.",
+          "code": "static int duplicar(int valor) {\n    return valor * 2;\n}\n\nstatic double duplicar(double valor) {\n    return valor * 2;\n}\n\nSystem.out.println(duplicar(5));\nSystem.out.println(duplicar(2.5));",
+          "explanation": "La primera llamada utiliza la versión int y la segunda la versión double."
+        }
+      ],
+      "exercise": "Creá un método calcularArea sobrecargado para círculo y rectángulo.",
+      "hint": "Una versión puede recibir radio y otra ancho y alto.",
+      "bestPractices": [
+        "Usá sobrecarga cuando las operaciones tienen la misma intención.",
+        "Mantené comportamientos coherentes entre las versiones.",
+        "Revisá ambigüedades con tipos numéricos y conversiones."
+      ],
+      "commonMistakes": [
+        "Intentar diferenciar métodos solo por el tipo de retorno.",
+        "Crear demasiadas sobrecargas con significados distintos.",
+        "No considerar que null puede volver ambigua una llamada con varios tipos de referencia."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "varargs",
+      "category": "metodos",
+      "title": "Varargs y alcance de variables",
+      "level": "Inicial",
+      "summary": "Recibí una cantidad variable de argumentos y comprendé el alcance de parámetros y variables locales.",
+      "purpose": "Un parámetro varargs usa ... y permite pasar cero o más argumentos del tipo indicado. Dentro del método se comporta como un array. Solo puede haber un parámetro varargs y debe ser el último de la lista. Las variables locales viven en el bloque donde se declaran.",
+      "syntax": "static int sumar(int... valores) {\n    int total = 0;\n    for (int valor : valores) total += valor;\n    return total;\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Sumar cantidad variable",
+          "description": "Llamá al mismo método con distinta cantidad de números.",
+          "code": "static int sumar(int... numeros) {\n    int total = 0;\n    for (int numero : numeros) {\n        total += numero;\n    }\n    return total;\n}\n\nSystem.out.println(sumar(2, 3));\nSystem.out.println(sumar(1, 2, 3, 4));",
+          "explanation": "El compilador agrupa los argumentos en un array int[] que el método recorre."
+        },
+        {
+          "title": "Parámetro fijo y varargs",
+          "description": "Los parámetros normales aparecen antes del varargs.",
+          "code": "static void registrar(String categoria, String... nombres) {\n    System.out.println(categoria);\n    for (String nombre : nombres) {\n        System.out.println(nombre);\n    }\n}\n\nregistrar(\"Libros\", \"Dune\", \"Solaris\");",
+          "explanation": "categoria es obligatorio y nombres puede contener cero o más cadenas."
+        }
+      ],
+      "exercise": "Creá un método promedio(double... valores) que devuelva el promedio y maneje la ausencia de argumentos.",
+      "hint": "Comprobá valores.length antes de dividir.",
+      "bestPractices": [
+        "Limitá varargs a métodos donde varios argumentos sean naturales.",
+        "Documentá el comportamiento cuando no se reciben valores.",
+        "Evitá ambigüedades al combinar sobrecarga y varargs."
+      ],
+      "commonMistakes": [
+        "Ubicar un parámetro después de varargs.",
+        "Olvidar que varargs puede estar vacío.",
+        "Dividir por cero cuando no se pasó ningún valor."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "enums",
+      "category": "metodos",
+      "title": "Enumeraciones con enum",
+      "level": "Inicial",
+      "summary": "Representá un conjunto cerrado de opciones con constantes seguras y legibles.",
+      "purpose": "enum define un tipo cuyos valores posibles se declaran explícitamente. Es preferible a usar números o cadenas mágicas cuando un dato solo puede tomar un conjunto conocido de opciones. Las enumeraciones pueden incluir campos, constructores y métodos.",
+      "syntax": "enum EstadoPedido {\n    PENDIENTE, EN_PREPARACION, ENVIADO, ENTREGADO\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Usar enum en una condición",
+          "description": "El tipo impide asignar valores fuera del conjunto declarado.",
+          "code": "enum Estado { PENDIENTE, PAGADO, ENVIADO }\n\nEstado estado = Estado.PAGADO;\nif (estado == Estado.PAGADO) {\n    System.out.println(\"Preparar envío\");\n}",
+          "explanation": "Las constantes enum se comparan habitualmente con == porque cada constante es una instancia única."
+        },
+        {
+          "title": "Enum con datos",
+          "description": "Una enumeración puede asociar una descripción a cada constante.",
+          "code": "enum Prioridad {\n    BAJA(\"Puede esperar\"),\n    MEDIA(\"Resolver pronto\"),\n    ALTA(\"Atención inmediata\");\n\n    private final String descripcion;\n\n    Prioridad(String descripcion) {\n        this.descripcion = descripcion;\n    }\n\n    public String descripcion() {\n        return descripcion;\n    }\n}\n\nSystem.out.println(Prioridad.ALTA.descripcion());",
+          "explanation": "El constructor del enum es privado de forma implícita. Cada constante se inicializa con el valor definido."
+        }
+      ],
+      "exercise": "Definí un enum DiaSemana y un método que indique si el día es laborable.",
+      "hint": "Usá un switch sobre las constantes del enum.",
+      "bestPractices": [
+        "Usá enum para valores finitos y conocidos.",
+        "Evitá comparar ordinales para representar reglas del negocio.",
+        "Preferí name() o una propiedad explícita al persistir una enumeración."
+      ],
+      "commonMistakes": [
+        "Usar cadenas arbitrarias en lugar de un enum.",
+        "Depender del ordinal porque cambiar el orden altera sus valores.",
+        "Intentar instanciar un enum con new."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "clases-objetos",
+      "category": "poo",
+      "title": "Clases y objetos",
+      "level": "Intermedio",
+      "summary": "Modelá entidades creando tipos propios con atributos y métodos.",
+      "purpose": "Una clase define el estado y comportamiento de objetos. Cada instancia tiene sus propios atributos de instancia. Los métodos representan operaciones relacionadas con esos datos. Una clase también puede declarar atributos y métodos estáticos compartidos a nivel de tipo.",
+      "syntax": "class Producto {\n    String nombre;\n    double precio;\n\n    void mostrar() { ... }\n}\nProducto teclado = new Producto();",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Crear una clase simple",
+          "description": "Declará una clase Producto y creá una instancia.",
+          "code": "class Producto {\n    String nombre;\n    double precio;\n\n    void mostrar() {\n        System.out.println(nombre + \": $\" + precio);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Producto item = new Producto();\n        item.nombre = \"Mouse\";\n        item.precio = 12500;\n        item.mostrar();\n    }\n}",
+          "explanation": "new crea una instancia. Los campos guardan el estado del objeto y mostrar() es un método de instancia."
+        },
+        {
+          "title": "Dos instancias independientes",
+          "description": "Cada objeto conserva su propio estado.",
+          "code": "Producto primero = new Producto();\nprimero.nombre = \"Teclado\";\nProducto segundo = new Producto();\nsegundo.nombre = \"Monitor\";\n\nSystem.out.println(primero.nombre);\nSystem.out.println(segundo.nombre);",
+          "explanation": "Las variables primero y segundo referencian objetos distintos y sus atributos no se comparten."
+        }
+      ],
+      "exercise": "Modelá una clase Libro con título, autor y un método mostrarFicha(). Creá dos libros.",
+      "hint": "Primero declar á los atributos; luego creá el método que los use.",
+      "bestPractices": [
+        "Agrupá datos y comportamientos que pertenecen al mismo concepto.",
+        "Elegí nombres de clases en PascalCase.",
+        "Evitá clases que concentren demasiadas responsabilidades."
+      ],
+      "commonMistakes": [
+        "Confundir una clase con una instancia.",
+        "Acceder a miembros de instancia desde un contexto static sin objeto.",
+        "Dejar atributos públicos y permitir cualquier cambio sin validación."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "constructores-this",
+      "category": "poo",
+      "title": "Constructores y palabra clave this",
+      "level": "Intermedio",
+      "summary": "Inicializá objetos al crearlos y distinguí atributos de parámetros.",
+      "purpose": "Un constructor tiene el mismo nombre que la clase y no declara tipo de retorno. Se ejecuta cuando se crea una instancia. this referencia al objeto actual y sirve para desambiguar atributos y parámetros, o para invocar otro constructor mediante this(...).",
+      "syntax": "class Persona {\n    private String nombre;\n    Persona(String nombre) {\n        this.nombre = nombre;\n    }\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Inicializar atributos",
+          "description": "El constructor recibe y valida los datos del nuevo objeto.",
+          "code": "class Persona {\n    private final String nombre;\n\n    Persona(String nombre) {\n        if (nombre == null || nombre.isBlank()) {\n            throw new IllegalArgumentException(\"Nombre obligatorio\");\n        }\n        this.nombre = nombre;\n    }\n\n    String nombre() { return nombre; }\n}",
+          "explanation": "this.nombre señala el atributo y nombre es el parámetro. final impide reasignar el campo después de la inicialización."
+        },
+        {
+          "title": "Encadenar constructores",
+          "description": "Un constructor puede delegar en otro de la misma clase.",
+          "code": "class Producto {\n    private String nombre;\n    private double precio;\n\n    Producto(String nombre) {\n        this(nombre, 0.0);\n    }\n\n    Producto(String nombre, double precio) {\n        this.nombre = nombre;\n        this.precio = precio;\n    }\n}",
+          "explanation": "this(nombre, 0.0) llama a otro constructor. La llamada debe ser la primera instrucción del constructor."
+        }
+      ],
+      "exercise": "Creá una clase Rectangulo con constructor que reciba ancho y alto y valide que ambos sean positivos.",
+      "hint": "Usá this.ancho y this.alto. Lanzá IllegalArgumentException si un valor no es válido.",
+      "bestPractices": [
+        "Inicializá todos los campos necesarios desde los constructores.",
+        "Validá invariantes al crear el objeto.",
+        "Usá constructores sobrecargados cuando existan valores predeterminados naturales."
+      ],
+      "commonMistakes": [
+        "Declarar un tipo de retorno en un constructor.",
+        "Llamar a this(...) después de otra instrucción.",
+        "No validar parámetros que podrían dejar un objeto en estado inválido."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "encapsulamiento",
+      "category": "poo",
+      "title": "Encapsulamiento y modificadores de acceso",
+      "level": "Intermedio",
+      "summary": "Protegé los datos internos de un objeto y exponé operaciones controladas.",
+      "purpose": "El encapsulamiento oculta detalles internos y permite controlar cómo cambia el estado. private restringe el acceso a la clase; sin modificador, el acceso es de paquete; protected permite acceso desde el paquete y subclases; public permite acceso desde cualquier lugar donde el tipo sea visible.",
+      "syntax": "public class Cuenta {\n    private double saldo;\n    public void depositar(double monto) { ... }\n    public double saldo() { return saldo; }\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Campo privado y métodos públicos",
+          "description": "La clase aplica las reglas para modificar su estado.",
+          "code": "class Cuenta {\n    private double saldo;\n\n    public void depositar(double monto) {\n        if (monto <= 0) throw new IllegalArgumentException();\n        saldo += monto;\n    }\n\n    public double saldo() {\n        return saldo;\n    }\n}",
+          "explanation": "El atributo no es accesible directamente desde otra clase. depositar valida la entrada antes de modificarlo."
+        },
+        {
+          "title": "Acceso de solo lectura",
+          "description": "Un campo final puede exponerse mediante un método sin setter.",
+          "code": "class Usuario {\n    private final String id;\n\n    Usuario(String id) {\n        this.id = id;\n    }\n\n    public String id() {\n        return id;\n    }\n}",
+          "explanation": "El id queda establecido en el constructor y no puede reasignarse después."
+        }
+      ],
+      "exercise": "Implementá una clase Termostato cuyo método setTemperatura solo acepte valores entre 5 y 35 grados.",
+      "hint": "Guardá el atributo como private y validá el dato antes de asignarlo.",
+      "bestPractices": [
+        "Mantené los campos normalmente privados.",
+        "Exponé métodos que representen operaciones válidas del dominio.",
+        "No generes getters y setters de forma automática si no aportan una regla clara."
+      ],
+      "commonMistakes": [
+        "Hacer todos los campos public.",
+        "Exponer referencias mutables sin copiar cuando se necesita proteger una colección interna.",
+        "Confundir private con un mecanismo de seguridad criptográfica."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "static-final",
+      "category": "poo",
+      "title": "Miembros static y constantes final",
+      "level": "Intermedio",
+      "summary": "Diferenciá miembros pertenecientes a la clase y a cada instancia; declar á constantes.",
+      "purpose": "static declara un miembro asociado a la clase en vez de a cada objeto. final limita la reasignación de una variable o campo. static final suele utilizarse para constantes, que por convención se nombran en MAYÚSCULAS_CON_GUIONES.",
+      "syntax": "static int contador;\nstatic final double IVA = 0.21;\n\nstatic int siguienteId() { ... }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Contador compartido",
+          "description": "Cada instancia incrementa el mismo contador de clase.",
+          "code": "class Usuario {\n    private static int creados = 0;\n    private final int id;\n\n    Usuario() {\n        creados++;\n        id = creados;\n    }\n\n    static int totalCreados() { return creados; }\n    int id() { return id; }\n}\n\nUsuario a = new Usuario();\nUsuario b = new Usuario();\nSystem.out.println(Usuario.totalCreados());",
+          "explanation": "creados pertenece a la clase y se comparte. id es diferente para cada instancia."
+        },
+        {
+          "title": "Constantes",
+          "description": "Usá static final para valores que no cambian durante la ejecución.",
+          "code": "class Impuestos {\n    static final double IVA_GENERAL = 0.21;\n\n    static double calcular(double neto) {\n        return neto * IVA_GENERAL;\n    }\n}\n\nSystem.out.println(Impuestos.calcular(1000));",
+          "explanation": "La constante se accede desde la clase sin crear un objeto. final impide reasignar la variable, aunque no vuelve inmutable automáticamente al objeto referenciado."
+        }
+      ],
+      "exercise": "Creá una clase Conversor con constantes estáticas para pasar de kilómetros a millas y un método estático de conversión.",
+      "hint": "Declará el factor como static final double y usalo desde convertir().",
+      "bestPractices": [
+        "Accedé a miembros estáticos con el nombre de la clase.",
+        "Usá constantes para valores que representan reglas estables.",
+        "Evitá estado mutable global salvo que sea necesario y esté controlado."
+      ],
+      "commonMistakes": [
+        "Usar static en métodos que necesitan datos de una instancia sin recibirla.",
+        "Creer que final vuelve inmutable cualquier objeto.",
+        "Crear constantes públicas sin explicar su unidad o significado."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "herencia",
+      "category": "poo",
+      "title": "Herencia y palabra clave super",
+      "level": "Intermedio",
+      "summary": "Extendé una clase existente y reutilizá su comportamiento con una subclase.",
+      "purpose": "La herencia permite crear una clase derivada que reutiliza campos y métodos accesibles de una clase base. extends establece la relación; super permite invocar el constructor o un método de la clase padre. Java tiene herencia simple de clases: una clase solo extiende directamente una clase.",
+      "syntax": "class Animal { ... }\nclass Perro extends Animal {\n    Perro(String nombre) {\n        super(nombre);\n    }\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Herencia básica",
+          "description": "La subclase agrega comportamiento específico y hereda el nombre.",
+          "code": "class Animal {\n    protected String nombre;\n    Animal(String nombre) { this.nombre = nombre; }\n    void hacerSonido() { System.out.println(\"Sonido\"); }\n}\n\nclass Perro extends Animal {\n    Perro(String nombre) { super(nombre); }\n    void moverCola() { System.out.println(\"Mueve la cola\"); }\n}",
+          "explanation": "Perro hereda hacerSonido() y el atributo protegido nombre. super(nombre) inicializa la parte Animal del objeto."
+        },
+        {
+          "title": "Extender método base",
+          "description": "Una subclase puede invocar la implementación heredada.",
+          "code": "class Vehiculo {\n    void arrancar() { System.out.println(\"Motor iniciado\"); }\n}\n\nclass Auto extends Vehiculo {\n    @Override\n    void arrancar() {\n        super.arrancar();\n        System.out.println(\"Chequeo del auto completo\");\n    }\n}\n\nnew Auto().arrancar();",
+          "explanation": "super.arrancar() ejecuta primero el comportamiento de la clase base y luego continúa con la lógica especializada."
+        }
+      ],
+      "exercise": "Creá Vehiculo con marca y método describir(); luego Auto extiende Vehiculo y agrega cantidadPuertas.",
+      "hint": "El constructor de Auto debe llamar a super(marca).",
+      "bestPractices": [
+        "Modelá herencia solo cuando exista una relación clara de tipo 'es un'.",
+        "Preferí composición cuando solo necesites reutilizar un colaborador.",
+        "Usá @Override para hacer explícita la intención de redefinir."
+      ],
+      "commonMistakes": [
+        "Intentar extender dos clases.",
+        "Olvidar llamar al constructor de la superclase cuando no hay constructor sin argumentos accesible.",
+        "Usar campos protected para todo en lugar de diseñar una API controlada."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "polimorfismo",
+      "category": "poo",
+      "title": "Polimorfismo y sobrescritura de métodos",
+      "level": "Intermedio",
+      "summary": "Usá referencias del tipo base para tratar objetos especializados mediante un contrato común.",
+      "purpose": "El polimorfismo permite invocar un método sobrescrito a través de una referencia cuyo tipo declarado es una superclase o interfaz. En tiempo de ejecución se ejecuta la implementación correspondiente al tipo real del objeto. La anotación @Override ayuda al compilador a comprobar la intención.",
+      "syntax": "Animal animal = new Perro();\nanimal.hacerSonido();",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Referencia de tipo base",
+          "description": "La implementación ejecutada corresponde al objeto real.",
+          "code": "class Animal {\n    void hablar() { System.out.println(\"Sonido\"); }\n}\nclass Gato extends Animal {\n    @Override\n    void hablar() { System.out.println(\"Miau\"); }\n}\n\nAnimal mascota = new Gato();\nmascota.hablar();",
+          "explanation": "Aunque la variable está declarada como Animal, el objeto real es Gato y se llama a la versión sobrescrita."
+        },
+        {
+          "title": "Polimorfismo en una lista",
+          "description": "Guardá objetos diferentes bajo una misma referencia común.",
+          "code": "List<Animal> animales = List.of(new Perro(), new Gato());\nfor (Animal animal : animales) {\n    animal.hablar();\n}",
+          "explanation": "La lista almacena diferentes subtipos. El ciclo ejecuta el método adecuado sin preguntar qué clase concreta tiene cada elemento."
+        }
+      ],
+      "exercise": "Creá una jerarquía Figura con Circulo y Rectangulo. Usá una lista de Figura para calcular el área de cada una.",
+      "hint": "Definí calcularArea() como método sobrescribible en la clase base.",
+      "bestPractices": [
+        "Programá contra el tipo base o interfaz cuando sea posible.",
+        "Usá @Override para detectar firmas incorrectas.",
+        "Preferí despacho polimórfico en vez de muchos instanceof y if por tipo."
+      ],
+      "commonMistakes": [
+        "Confundir sobrecarga con sobrescritura.",
+        "Sobrescribir con una firma distinta por error.",
+        "Intentar llamar métodos específicos que no están declarados en el tipo de la referencia."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "clases-abstractas",
+      "category": "poo",
+      "title": "Clases abstractas y métodos abstractos",
+      "level": "Intermedio",
+      "summary": "Definí una base común que no se instancia directamente y obligá a las subclases a completar ciertos comportamientos.",
+      "purpose": "Una clase abstract no puede instanciarse directamente. Puede combinar atributos, constructores y métodos concretos con métodos abstractos que las subclases concretas deben implementar. Sirve cuando varios tipos comparten estado o comportamiento, pero hay operaciones que cada subtipo debe definir.",
+      "syntax": "abstract class Figura {\n    abstract double area();\n    void imprimir() { ... }\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Definir una clase abstracta",
+          "description": "La clase establece un contrato parcial y una implementación común.",
+          "code": "abstract class Figura {\n    abstract double area();\n\n    void mostrarArea() {\n        System.out.println(area());\n    }\n}\n\nclass Cuadrado extends Figura {\n    private final double lado;\n    Cuadrado(double lado) { this.lado = lado; }\n    @Override double area() { return lado * lado; }\n}",
+          "explanation": "Figura no puede instanciarse. Cuadrado completa el método area() y hereda mostrarArea()."
+        },
+        {
+          "title": "Constructor en abstracta",
+          "description": "Una clase abstracta puede inicializar campos usados por subclases.",
+          "code": "abstract class Empleado {\n    protected final String nombre;\n    Empleado(String nombre) { this.nombre = nombre; }\n    abstract double calcularSueldo();\n}\n\nclass EmpleadoFijo extends Empleado {\n    private final double sueldo;\n    EmpleadoFijo(String nombre, double sueldo) {\n        super(nombre);\n        this.sueldo = sueldo;\n    }\n    @Override double calcularSueldo() { return sueldo; }\n}",
+          "explanation": "La clase abstracta puede tener constructor y campos. La subclase utiliza super(nombre) para inicializar el estado común."
+        }
+      ],
+      "exercise": "Definí una clase abstracta Transporte con calcularCosto(distancia), e implementala para Bicicleta y Taxi.",
+      "hint": "Usá una clase abstracta para el comportamiento común y deja el cálculo específico a cada subclase.",
+      "bestPractices": [
+        "Usá una clase abstracta cuando compartas estado e implementación.",
+        "Usá interfaces para contratos que varios tipos no relacionados puedan implementar.",
+        "No marques abstract un método que no necesita redefinición."
+      ],
+      "commonMistakes": [
+        "Intentar instanciar una clase abstracta.",
+        "No implementar todos los métodos abstractos en una subclase concreta.",
+        "Confundir una clase abstracta con una interfaz."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "interfaces",
+      "category": "poo",
+      "title": "Interfaces y contratos",
+      "level": "Intermedio",
+      "summary": "Definí capacidades que diferentes clases pueden implementar sin compartir una clase base concreta.",
+      "purpose": "Una interfaz describe un contrato de métodos y puede incluir constantes, métodos abstractos, default, static y métodos privados auxiliares. Una clase puede implementar varias interfaces. Esto permite componer capacidades sin la limitación de herencia simple de clases.",
+      "syntax": "interface Imprimible {\n    void imprimir();\n}\n\nclass Reporte implements Imprimible {\n    public void imprimir() { ... }\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Implementar una interfaz",
+          "description": "La clase concreta debe implementar los métodos abstractos requeridos.",
+          "code": "interface Descontable {\n    double aplicarDescuento(double porcentaje);\n}\n\nclass Producto implements Descontable {\n    private double precio;\n    Producto(double precio) { this.precio = precio; }\n    public double aplicarDescuento(double porcentaje) {\n        return precio * (1 - porcentaje);\n    }\n}",
+          "explanation": "implements indica que Producto cumple el contrato Descontable. El método debe ser public porque los métodos abstractos de interfaz son públicos."
+        },
+        {
+          "title": "Implementar varias interfaces",
+          "description": "Una clase puede combinar diferentes capacidades.",
+          "code": "interface Exportable { void exportar(); }\ninterface Validable { boolean validar(); }\n\nclass Documento implements Exportable, Validable {\n    public void exportar() { System.out.println(\"Exportando\"); }\n    public boolean validar() { return true; }\n}",
+          "explanation": "Documento ofrece ambos contratos. Las interfaces no consumen la única posibilidad de extender una clase."
+        }
+      ],
+      "exercise": "Creá las interfaces Guardable y Publicable y una clase Articulo que implemente ambas.",
+      "hint": "Cada método implementado debe ser public.",
+      "bestPractices": [
+        "Diseñá interfaces pequeñas y enfocadas.",
+        "Preferí interfaces para capacidades compartidas entre clases diferentes.",
+        "Usá @Override también al implementar contratos."
+      ],
+      "commonMistakes": [
+        "Olvidar hacer public los métodos implementados.",
+        "Intentar instanciar una interfaz con new.",
+        "Acoplar demasiados comportamientos en una sola interfaz."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "records",
+      "category": "poo",
+      "title": "Records para modelar datos",
+      "level": "Intermedio",
+      "summary": "Creá tipos de datos concisos e inmutables con records.",
+      "purpose": "record declara una clase especial orientada a transportar datos. El compilador genera campos privados y finales, constructor canónico, accesores, equals(), hashCode() y toString(). Los records son finales y no reemplazan a todas las clases: son apropiados para datos cuyo estado se expresa en sus componentes.",
+      "syntax": "public record Persona(String nombre, int edad) { }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Record compacto",
+          "description": "El constructor compacto valida componentes sin repetir asignaciones.",
+          "code": "public record Persona(String nombre, int edad) {\n    public Persona {\n        if (nombre == null || nombre.isBlank()) {\n            throw new IllegalArgumentException(\"Nombre obligatorio\");\n        }\n        if (edad < 0) throw new IllegalArgumentException(\"Edad inválida\");\n    }\n}\n\nPersona persona = new Persona(\"Ana\", 25);\nSystem.out.println(persona.nombre());",
+          "explanation": "El constructor compacto valida los componentes. El compilador asigna automáticamente los parámetros a los campos después de ejecutar ese cuerpo."
+        },
+        {
+          "title": "Igualdad por valor",
+          "description": "Dos records con los mismos componentes comparan como iguales.",
+          "code": "record Punto(int x, int y) { }\n\nPunto a = new Punto(3, 4);\nPunto b = new Punto(3, 4);\nSystem.out.println(a.equals(b));\nSystem.out.println(a);",
+          "explanation": "equals compara los componentes. toString genera una representación legible de los datos."
+        }
+      ],
+      "exercise": "Modelá un record Producto con nombre, precio y stock. Validá que precio y stock no sean negativos.",
+      "hint": "Usá un constructor compacto y lanzá IllegalArgumentException ante valores inválidos.",
+      "bestPractices": [
+        "Usá records para modelos de datos principalmente inmutables.",
+        "Validá componentes en el constructor compacto.",
+        "Recordá que una referencia mutable como List dentro de un record sigue apuntando a una lista potencialmente mutable."
+      ],
+      "commonMistakes": [
+        "Intentar extender un record con otra clase.",
+        "Esperar setters generados automáticamente.",
+        "Creer que los componentes mutables quedan profundamente inmutables."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: records y POO",
+          "url": "https://dev.java/learn/language/oop/"
+        }
+      ]
+    },
+    {
+      "id": "packages-import",
+      "category": "poo",
+      "title": "Paquetes, import y organización de clases",
+      "level": "Intermedio",
+      "summary": "Organizá clases en paquetes y usá imports para mantener proyectos ordenados.",
+      "purpose": "Un paquete agrupa tipos relacionados y evita colisiones de nombres. La declaración package se coloca al comienzo del archivo. import permite referenciar tipos de otros paquetes sin escribir el nombre completamente cualificado. La estructura de carpetas normalmente refleja el nombre del paquete.",
+      "syntax": "package com.ejemplo.app;\n\nimport java.util.List;\n\npublic class Main { ... }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Declarar un paquete",
+          "description": "Ubicá la clase en la carpeta correspondiente al paquete.",
+          "code": "// src/com/ejemplo/modelo/Producto.java\npackage com.ejemplo.modelo;\n\npublic class Producto {\n    private final String nombre;\n    public Producto(String nombre) { this.nombre = nombre; }\n    public String nombre() { return nombre; }\n}",
+          "explanation": "La declaración package debe coincidir con la estructura del proyecto. La clase pública puede ser importada desde otros paquetes."
+        },
+        {
+          "title": "Importar una clase propia",
+          "description": "Usá la clase a través del paquete declarado.",
+          "code": "// src/com/ejemplo/app/Main.java\npackage com.ejemplo.app;\n\nimport com.ejemplo.modelo.Producto;\n\npublic class Main {\n    public static void main(String[] args) {\n        Producto producto = new Producto(\"Teclado\");\n        System.out.println(producto.nombre());\n    }\n}",
+          "explanation": "import permite escribir Producto en vez de su nombre completo com.ejemplo.modelo.Producto."
+        }
+      ],
+      "exercise": "Creá paquetes modelo y app. Definí una clase Cliente en modelo y usala desde Main en app.",
+      "hint": "La ruta de archivos debe reflejar los nombres de paquete.",
+      "bestPractices": [
+        "Usá nombres de paquete en minúsculas y dominios invertidos cuando corresponda.",
+        "Separá modelos, servicios y puntos de entrada de forma coherente.",
+        "Evitá el paquete por defecto en proyectos medianos o grandes."
+      ],
+      "commonMistakes": [
+        "Colocar package después de imports o declaraciones.",
+        "No respetar la estructura de carpetas en compilaciones convencionales.",
+        "Confundir imports con instalación de bibliotecas."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "generics",
+      "category": "colecciones",
+      "title": "Genéricos: clases, métodos y tipos parametrizados",
+      "level": "Intermedio",
+      "summary": "Escribí código reutilizable que conserve información de tipos en tiempo de compilación.",
+      "purpose": "Los genéricos permiten parametrizar clases, interfaces y métodos con tipos. Evitan casts manuales y detectan incompatibilidades antes de ejecutar. En Java los tipos genéricos usan tipos de referencia; para primitivos se usan clases wrapper como Integer y Double.",
+      "syntax": "List<String> nombres = new ArrayList<>();\n\nstatic <T> T primero(List<T> valores) {\n    return valores.get(0);\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Método genérico",
+          "description": "El parámetro <T> declara un tipo que se infiere desde los argumentos.",
+          "code": "static <T> T primero(List<T> elementos) {\n    if (elementos.isEmpty()) {\n        throw new IllegalArgumentException(\"Lista vacía\");\n    }\n    return elementos.get(0);\n}\n\nList<String> nombres = List.of(\"Ana\", \"Leo\");\nString nombre = primero(nombres);",
+          "explanation": "T representa el tipo de elemento de la lista. Si se recibe List<String>, el método devuelve String."
+        },
+        {
+          "title": "Límite superior",
+          "description": "Un tipo genérico puede restringirse a una familia de clases o interfaces.",
+          "code": "static <T extends Number> double sumar(Number a, Number b) {\n    return a.doubleValue() + b.doubleValue();\n}\n\nSystem.out.println(sumar(4, 2.5));",
+          "explanation": "extends en una cota de tipo permite limitar el tipo a Number o a una subclase. En APIs genéricas más complejas también aparecen comodines ? extends y ? super."
+        }
+      ],
+      "exercise": "Creá una clase Caja<T> que almacene un valor, lo permita consultar y lo reemplace.",
+      "hint": "Declará class Caja<T> y un atributo privado de tipo T.",
+      "bestPractices": [
+        "Preferí tipos genéricos a Object cuando conocés la relación de tipos.",
+        "Usá nombres como T, E, K y V para parámetros de tipo convencionales.",
+        "Aplicá límites genéricos solo cuando el método necesite esas capacidades."
+      ],
+      "commonMistakes": [
+        "Intentar usar int o double como argumentos de tipo sin wrapper.",
+        "Suponer que se puede escribir new T() dentro de un genérico.",
+        "Confundir T con un tipo real concreto."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "list-arraylist",
+      "category": "colecciones",
+      "title": "List y ArrayList",
+      "level": "Intermedio",
+      "summary": "Almacená elementos ordenados y de tamaño dinámico con la interfaz List.",
+      "purpose": "List representa una secuencia ordenada que puede contener duplicados. ArrayList es una implementación basada en un arreglo redimensionable. Programar contra List en lugar de ArrayList facilita cambiar la implementación. List.of crea listas no modificables.",
+      "syntax": "List<String> nombres = new ArrayList<>();\nnombres.add(\"Ana\");\nnombres.get(0);\nnombres.remove(\"Ana\");",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Agregar, consultar y quitar",
+          "description": "Usá métodos de List para modificar y leer elementos.",
+          "code": "List<String> tareas = new ArrayList<>();\ntareas.add(\"Estudiar\");\ntareas.add(\"Practicar\");\ntareas.add(\"Leer\");\n\nSystem.out.println(tareas.get(0));\ntareas.remove(\"Leer\");\nSystem.out.println(tareas.size());",
+          "explanation": "add agrega; get consulta por índice; remove elimina por valor o posición; size devuelve la cantidad actual."
+        },
+        {
+          "title": "Filtrar con removeIf",
+          "description": "Eliminá elementos que cumplan una condición.",
+          "code": "List<Integer> numeros = new ArrayList<>(List.of(2, 5, 8, 11, 14));\nnumeros.removeIf(numero -> numero % 2 != 0);\nSystem.out.println(numeros);",
+          "explanation": "removeIf recibe un Predicate y quita los elementos para los que devuelve true. La lista debe ser modificable."
+        }
+      ],
+      "exercise": "Guardá una lista de productos, eliminá los que tengan stock cero y mostrá los restantes.",
+      "hint": "Usá una clase Producto o un record, y removeIf(producto -> producto.stock() == 0).",
+      "bestPractices": [
+        "Declará variables con el tipo de interfaz List.",
+        "Usá List.of para listas de solo lectura.",
+        "Elegí ArrayList para acceso por índice frecuente."
+      ],
+      "commonMistakes": [
+        "Suponer que List.of permite agregar o quitar elementos.",
+        "Usar índices fuera del rango.",
+        "Modificar una lista durante un for-each de manera que provoque ConcurrentModificationException."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Collections Framework",
+          "url": "https://dev.java/learn/api/collections-framework/"
+        },
+        {
+          "label": "ArrayList API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html"
+        }
+      ]
+    },
+    {
+      "id": "set-map",
+      "category": "colecciones",
+      "title": "Set, Map, HashSet y HashMap",
+      "level": "Intermedio",
+      "summary": "Representá elementos únicos y asociaciones clave-valor con las colecciones adecuadas.",
+      "purpose": "Set modela una colección sin duplicados. Map asocia claves únicas con valores. HashSet y HashMap ofrecen operaciones habituales eficientes en promedio, pero no garantizan orden de iteración. LinkedHashSet y LinkedHashMap conservan orden de inserción; TreeSet y TreeMap mantienen orden natural o por comparador.",
+      "syntax": "Set<String> etiquetas = new HashSet<>();\nMap<String, Integer> stock = new HashMap<>();\nstock.put(\"mouse\", 5);",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Eliminar duplicados",
+          "description": "Un Set conserva una sola ocurrencia de cada elemento según equals/hashCode.",
+          "code": "Set<String> lenguajes = new HashSet<>();\nlenguajes.add(\"Java\");\nlenguajes.add(\"Python\");\nlenguajes.add(\"Java\");\nSystem.out.println(lenguajes.size());",
+          "explanation": "La segunda inserción de Java no agrega otro elemento porque ya existe uno equivalente."
+        },
+        {
+          "title": "Contar con Map",
+          "description": "Usá getOrDefault o merge para actualizar contadores.",
+          "code": "String[] votos = {\"azul\", \"rojo\", \"azul\", \"verde\", \"azul\"};\nMap<String, Integer> conteo = new HashMap<>();\n\nfor (String voto : votos) {\n    conteo.merge(voto, 1, Integer::sum);\n}\nSystem.out.println(conteo);",
+          "explanation": "merge inserta 1 cuando la clave no existe y suma el valor cuando ya hay una entrada."
+        }
+      ],
+      "exercise": "Contá cuántas veces aparece cada palabra en una lista y mostr á el resultado. Usá Map<String, Integer>.",
+      "hint": "Usá merge(palabra, 1, Integer::sum) para actualizar.",
+      "bestPractices": [
+        "Elegí List para orden y duplicados, Set para unicidad y Map para asociaciones.",
+        "No dependas del orden de HashMap o HashSet.",
+        "Usá tipos inmutables o implementá correctamente equals/hashCode para las claves."
+      ],
+      "commonMistakes": [
+        "Suponer que HashMap mantiene el orden de inserción.",
+        "Guardar claves mutables cuyo hashCode cambia después de insertarlas.",
+        "Usar List para representar directamente una asociación clave-valor."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "HashMap API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html"
+        },
+        {
+          "label": "HashSet API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashSet.html"
+        }
+      ]
+    },
+    {
+      "id": "iteradores-comparator",
+      "category": "colecciones",
+      "title": "Iteradores, Comparable y Comparator",
+      "level": "Intermedio",
+      "summary": "Recorré colecciones y definí órdenes naturales o personalizados.",
+      "purpose": "Iterator proporciona un recorrido controlado de una colección y permite eliminar de forma segura durante la iteración con remove(). Comparable define el orden natural de un tipo; Comparator define criterios de orden externos o alternativos.",
+      "syntax": "Iterator<String> it = nombres.iterator();\nwhile (it.hasNext()) {\n    String nombre = it.next();\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Eliminar con Iterator",
+          "description": "Usá iterator.remove() mientras recorres una colección.",
+          "code": "List<String> nombres = new ArrayList<>(List.of(\"Ana\", \"Leo\", \"Mara\"));\nIterator<String> it = nombres.iterator();\n\nwhile (it.hasNext()) {\n    if (it.next().startsWith(\"L\")) {\n        it.remove();\n    }\n}\nSystem.out.println(nombres);",
+          "explanation": "remove() elimina el último elemento devuelto por next() de forma compatible con el iterador."
+        },
+        {
+          "title": "Ordenar con Comparator",
+          "description": "Definí un criterio usando una lambda y Comparator.comparing.",
+          "code": "record Producto(String nombre, double precio) { }\n\nList<Producto> productos = new ArrayList<>(List.of(\n    new Producto(\"Mouse\", 12000),\n    new Producto(\"Teclado\", 25000)\n));\nproductos.sort(Comparator.comparing(Producto::precio));\nproductos.forEach(System.out::println);",
+          "explanation": "Comparator.comparing construye un criterio de orden por precio. El método sort modifica el orden de la lista."
+        }
+      ],
+      "exercise": "Ordená una lista de personas primero por edad ascendente y, si empatan, por nombre.",
+      "hint": "Combiná Comparator.comparing(Persona::edad).thenComparing(Persona::nombre).",
+      "bestPractices": [
+        "Preferí for-each cuando no necesites eliminar desde la iteración.",
+        "Usá Comparator cuando el criterio de orden depende del contexto.",
+        "Asegurá que compareTo sea coherente con equals cuando sea relevante."
+      ],
+      "commonMistakes": [
+        "Eliminar elementos directamente de la colección mientras un for-each la recorre.",
+        "Implementar compare devolviendo solo 1 o -1 y no 0 cuando hay igualdad.",
+        "No definir criterios de desempate y obtener un orden inesperado."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Iterator API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Iterator.html"
+        },
+        {
+          "label": "Comparator API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html"
+        }
+      ]
+    },
+    {
+      "id": "optional",
+      "category": "colecciones",
+      "title": "Optional para valores que pueden faltar",
+      "level": "Intermedio",
+      "summary": "Expresá de forma explícita que una operación puede no devolver un resultado.",
+      "purpose": "Optional<T> es un contenedor que puede contener un valor no nulo o estar vacío. Se usa habitualmente como tipo de retorno para representar ausencia sin devolver null. orElse, orElseGet, ifPresent y map ofrecen operaciones para consumir o transformar el valor si está disponible.",
+      "syntax": "Optional<String> buscar(int id) { ... }\nString nombre = resultado.orElse(\"Desconocido\");",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Devolver un Optional",
+          "description": "Usá Optional.ofNullable cuando el origen puede ser null.",
+          "code": "static Optional<String> buscar(Map<Integer, String> usuarios, int id) {\n    return Optional.ofNullable(usuarios.get(id));\n}\n\nMap<Integer, String> datos = Map.of(1, \"Ana\");\nSystem.out.println(buscar(datos, 2).orElse(\"No encontrado\"));",
+          "explanation": "ofNullable transforma una referencia posiblemente nula en Optional vacío o con valor. orElse devuelve un valor alternativo."
+        },
+        {
+          "title": "Transformar un valor opcional",
+          "description": "map transforma el contenido sin extraerlo manualmente.",
+          "code": "Optional<String> nombre = Optional.of(\"  JAVA  \");\nString normalizado = nombre\n    .map(String::trim)\n    .map(String::toLowerCase)\n    .orElse(\"sin nombre\");\nSystem.out.println(normalizado);",
+          "explanation": "map aplica la transformación solo cuando hay valor; si está vacío, el resultado sigue vacío."
+        }
+      ],
+      "exercise": "Escribí buscarProducto(id) que devuelva Optional<Producto> y mostr á un mensaje cuando no exista.",
+      "hint": "Usá Optional.ofNullable al consultar el mapa y orElseGet para construir el mensaje alternativo si hace falta.",
+      "bestPractices": [
+        "Usá Optional principalmente como retorno de métodos.",
+        "Preferí orElseGet si el valor alternativo requiere trabajo costoso.",
+        "Evitá llamar get() sin verificar presencia."
+      ],
+      "commonMistakes": [
+        "Usar Optional como reemplazo de todos los campos nullable.",
+        "Llamar get() sobre un Optional vacío.",
+        "Crear Optional.of(null), que lanza NullPointerException."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Optional API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Optional.html"
+        }
+      ]
+    },
+    {
+      "id": "excepciones",
+      "category": "errores",
+      "title": "Excepciones: try, catch, finally y try-with-resources",
+      "level": "Intermedio",
+      "summary": "Detectá fallos esperables, recuperate cuando sea apropiado y liberá recursos de forma segura.",
+      "purpose": "Las excepciones interrumpen el flujo normal. try contiene el código susceptible de fallar; catch maneja un tipo; finally ejecuta tareas de limpieza. try-with-resources cierra automáticamente recursos que implementan AutoCloseable. Las excepciones checked deben capturarse o declararse; las unchecked derivan de RuntimeException.",
+      "syntax": "try {\n    operacion();\n} catch (IOException error) {\n    ...\n} finally {\n    ...\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Capturar errores concretos",
+          "description": "Manejá solo los errores que realmente podés resolver.",
+          "code": "String texto = \"12x\";\ntry {\n    int numero = Integer.parseInt(texto);\n    System.out.println(numero * 2);\n} catch (NumberFormatException error) {\n    System.out.println(\"Ingresá un entero válido\");\n}",
+          "explanation": "parseInt lanza NumberFormatException cuando el texto no representa un entero. El catch permite mostrar un mensaje controlado."
+        },
+        {
+          "title": "Cerrar archivos automáticamente",
+          "description": "try-with-resources llama a close() al salir del bloque.",
+          "code": "import java.io.BufferedReader;\nimport java.io.IOException;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\n\ntry (BufferedReader reader = Files.newBufferedReader(Path.of(\"datos.txt\"))) {\n    System.out.println(reader.readLine());\n} catch (IOException error) {\n    System.err.println(\"No se pudo leer el archivo: \" + error.getMessage());\n}",
+          "explanation": "El recurso se declara entre paréntesis y se cierra automáticamente. IOException agrupa errores de lectura y acceso."
+        }
+      ],
+      "exercise": "Pedí dos enteros y dividilos. Mostrá un mensaje si la entrada no es numérica o si el divisor es cero.",
+      "hint": "Manejá NumberFormatException y ArithmeticException en bloques específicos.",
+      "bestPractices": [
+        "Capturá excepciones específicas.",
+        "Usá try-with-resources para archivos, sockets y recursos AutoCloseable.",
+        "No ocultes errores inesperados con catch vacío."
+      ],
+      "commonMistakes": [
+        "Capturar Exception para todo y perder información.",
+        "No cerrar un recurso abierto manualmente.",
+        "Usar finally para reemplazar try-with-resources cuando hay recursos AutoCloseable."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: excepciones",
+          "url": "https://dev.java/learn/exceptions/"
+        }
+      ]
+    },
+    {
+      "id": "excepciones-propias",
+      "category": "errores",
+      "title": "Lanzar excepciones y crear excepciones propias",
+      "level": "Intermedio",
+      "summary": "Rechazá operaciones inválidas y expresá errores específicos de tu dominio.",
+      "purpose": "throw lanza una excepción en el punto donde detectás un estado inválido. throws declara que un método puede propagar excepciones checked. Podés crear excepciones propias extendiendo Exception o RuntimeException para representar fallos específicos de la aplicación.",
+      "syntax": "if (monto <= 0) {\n    throw new IllegalArgumentException(\"Monto inválido\");\n}\n\nclass StockInsuficienteException extends Exception { ... }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Lanzar una excepción integrada",
+          "description": "Indicá con claridad qué argumento incumple la regla.",
+          "code": "static double retirar(double saldo, double monto) {\n    if (monto <= 0) {\n        throw new IllegalArgumentException(\"El monto debe ser positivo\");\n    }\n    if (monto > saldo) {\n        throw new IllegalArgumentException(\"Saldo insuficiente\");\n    }\n    return saldo - monto;\n}",
+          "explanation": "IllegalArgumentException representa un argumento incompatible con la operación. El llamador puede capturarla o permitir que se propague."
+        },
+        {
+          "title": "Excepción propia checked",
+          "description": "Creá un tipo para una condición particular del negocio.",
+          "code": "class StockInsuficienteException extends Exception {\n    StockInsuficienteException(String mensaje) {\n        super(mensaje);\n    }\n}\n\nstatic void vender(int stock, int cantidad) throws StockInsuficienteException {\n    if (cantidad > stock) {\n        throw new StockInsuficienteException(\"No hay unidades suficientes\");\n    }\n}",
+          "explanation": "La excepción extiende Exception y por eso es checked. El método declara throws y quien lo llama debe manejarla o declararla."
+        }
+      ],
+      "exercise": "Creá EdadInvalidaException y usala cuando una persona tenga edad negativa.",
+      "hint": "Podés extender IllegalArgumentException para una excepción unchecked o Exception para una checked.",
+      "bestPractices": [
+        "Elegí checked o unchecked de acuerdo con la posibilidad de recuperación del llamador.",
+        "Incluí mensajes que aporten contexto sin exponer secretos.",
+        "No uses excepciones para control de flujo normal."
+      ],
+      "commonMistakes": [
+        "Lanzar Exception genérica para todo.",
+        "Declarar throws pero olvidar manejar la excepción checked en el punto de entrada.",
+        "Capturar la excepción y continuar como si la operación hubiera sido exitosa."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        }
+      ]
+    },
+    {
+      "id": "fechas-java-time",
+      "category": "apis",
+      "title": "Fechas y horas con java.time",
+      "level": "Intermedio",
+      "summary": "Representá fechas, horas, instantes y zonas horarias con la API moderna java.time.",
+      "purpose": "java.time ofrece tipos inmutables para fechas y horas. LocalDate representa una fecha sin hora; LocalDateTime no incluye zona; Instant representa un instante UTC; ZonedDateTime incluye zona horaria. Duration modela tiempo basado en segundos y Period diferencias basadas en calendario.",
+      "syntax": "LocalDate hoy = LocalDate.now();\nLocalDate manana = hoy.plusDays(1);\nInstant instante = Instant.now();",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Fecha y operaciones",
+          "description": "Sumá días y compará fechas sin manipular strings.",
+          "code": "LocalDate hoy = LocalDate.now();\nLocalDate vencimiento = hoy.plusDays(30);\nlong dias = ChronoUnit.DAYS.between(hoy, vencimiento);\n\nSystem.out.println(hoy);\nSystem.out.println(vencimiento);\nSystem.out.println(dias);",
+          "explanation": "LocalDate representa una fecha sin zona horaria. ChronoUnit calcula diferencias entre fechas."
+        },
+        {
+          "title": "Parsear una fecha",
+          "description": "Usá formatos ISO o DateTimeFormatter para formatos de presentación.",
+          "code": "LocalDate fecha = LocalDate.parse(\"2026-11-22\");\nDateTimeFormatter formato = DateTimeFormatter.ofPattern(\"dd/MM/yyyy\");\nSystem.out.println(fecha.format(formato));",
+          "explanation": "parse interpreta la forma ISO yyyy-MM-dd. DateTimeFormatter permite mostrar una fecha en el patrón requerido."
+        }
+      ],
+      "exercise": "Calculá cuántos días faltan para una fecha escrita en formato AAAA-MM-DD y manejá fechas inválidas.",
+      "hint": "Usá LocalDate.parse() y ChronoUnit.DAYS.between().",
+      "bestPractices": [
+        "Usá java.time en código nuevo en lugar de Date y Calendar antiguos.",
+        "Elegí tipos con zona horaria cuando representes instantes globales.",
+        "No confundas duración exacta con períodos de calendario."
+      ],
+      "commonMistakes": [
+        "Usar LocalDateTime para representar un instante universal.",
+        "Ignorar zona horaria en eventos internacionales.",
+        "Parsear texto de fecha con formatos ambiguos."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "java.time API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/package-summary.html"
+        }
+      ]
+    },
+    {
+      "id": "archivos-path-files",
+      "category": "apis",
+      "title": "Archivos y rutas con Path y Files",
+      "level": "Intermedio",
+      "summary": "Leé, escribí, copiá y recorré archivos usando NIO.2.",
+      "purpose": "Path representa una ruta del sistema de archivos y Files ofrece operaciones estáticas para trabajar con ellas. Las rutas se construyen con Path.of y pueden resolverse con resolve. Muchas operaciones de entrada/salida lanzan IOException y se benefician del try-with-resources.",
+      "syntax": "Path ruta = Path.of(\"datos.txt\");\nFiles.writeString(ruta, \"Hola\", StandardCharsets.UTF_8);\nString texto = Files.readString(ruta, StandardCharsets.UTF_8);",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Escribir y leer texto",
+          "description": "Indicá la codificación y manejá IOException.",
+          "code": "import java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\n\nPath ruta = Path.of(\"notas.txt\");\ntry {\n    Files.writeString(ruta, \"Primera línea\\n\", StandardCharsets.UTF_8);\n    String contenido = Files.readString(ruta, StandardCharsets.UTF_8);\n    System.out.println(contenido);\n} catch (IOException error) {\n    System.err.println(error.getMessage());\n}",
+          "explanation": "writeString crea o sobrescribe el archivo según sus opciones; readString obtiene el contenido como texto. Ambas operaciones pueden fallar por permisos o rutas inexistentes."
+        },
+        {
+          "title": "Crear carpetas y resolver rutas",
+          "description": "Usá resolve() en lugar de concatenar separadores manualmente.",
+          "code": "Path carpeta = Path.of(\"reportes\");\nPath archivo = carpeta.resolve(\"resumen.txt\");\n\ntry {\n    Files.createDirectories(carpeta);\n    Files.writeString(archivo, \"Reporte listo\");\n    System.out.println(Files.size(archivo));\n} catch (IOException error) {\n    System.err.println(\"Error: \" + error.getMessage());\n}",
+          "explanation": "resolve construye la ruta hija con las reglas del sistema. createDirectories crea también directorios intermedios necesarios."
+        }
+      ],
+      "exercise": "Creá la carpeta reportes, escribí resumen.txt y leé su contenido. Controlá IOException.",
+      "hint": "Usá Path.of, Files.createDirectories, Files.writeString y Files.readString.",
+      "bestPractices": [
+        "Preferí Path a concatenar strings de rutas.",
+        "Indicá UTF-8 al escribir texto cuando sea parte del formato esperado.",
+        "Validá permisos y alcance de rutas externas antes de escribir."
+      ],
+      "commonMistakes": [
+        "Usar separadores de Windows o Linux directamente en strings.",
+        "Ignorar IOException.",
+        "Confiar en rutas recibidas del usuario sin normalizarlas y validar su destino."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Path API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Path.html"
+        },
+        {
+          "label": "Files API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html"
+        }
+      ]
+    },
+    {
+      "id": "regex",
+      "category": "apis",
+      "title": "Expresiones regulares con Pattern y Matcher",
+      "level": "Intermedio",
+      "summary": "Buscá, validá y extraé patrones de texto con la API regex de Java.",
+      "purpose": "Pattern compila una expresión regular y Matcher la aplica a una secuencia de caracteres. matches() comprueba que toda la región coincida; find() busca coincidencias sucesivas; group() recupera un grupo capturado. En strings Java, la barra invertida de una expresión debe escaparse.",
+      "syntax": "Pattern patron = Pattern.compile(\"\\\\d+\");\nMatcher matcher = patron.matcher(texto);\nwhile (matcher.find()) { ... }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Buscar números",
+          "description": "Usá find() para encontrar cada secuencia de dígitos.",
+          "code": "String texto = \"Pedido 125, caja 8 y lote 2026\";\nPattern patron = Pattern.compile(\"\\\\d+\");\nMatcher matcher = patron.matcher(texto);\n\nwhile (matcher.find()) {\n    System.out.println(matcher.group());\n}",
+          "explanation": "\\\\d coincide con un dígito y + requiere uno o más. find() avanza hasta encontrar la próxima coincidencia."
+        },
+        {
+          "title": "Validar un formato simple",
+          "description": "matches() comprueba que toda la cadena coincida con el patrón.",
+          "code": "String codigo = \"AB-1234\";\nboolean valido = codigo.matches(\"[A-Z]{2}-\\\\d{4}\");\nSystem.out.println(valido);",
+          "explanation": "[A-Z]{2} requiere dos letras mayúsculas; - coincide con el guion; \\\\d{4} requiere cuatro dígitos. Es una validación sintáctica, no una regla de negocio completa."
+        }
+      ],
+      "exercise": "Validá un código con formato tres letras mayúsculas, guion y cuatro dígitos.",
+      "hint": "El patrón puede ser [A-Z]{3}-\\\\d{4}.",
+      "bestPractices": [
+        "Compilá el mismo Pattern una vez si lo vas a reutilizar.",
+        "Elegí matches o find según necesites validar todo el texto o buscar partes.",
+        "Documentá el formato esperado y probá casos límite."
+      ],
+      "commonMistakes": [
+        "Olvidar escapar la barra invertida en un literal String.",
+        "Usar matches cuando se quería encontrar una parte del texto.",
+        "Creer que una regex simple valida todas las reglas semánticas."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Pattern API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/regex/Pattern.html"
+        },
+        {
+          "label": "Matcher API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/regex/Matcher.html"
+        }
+      ]
+    },
+    {
+      "id": "http-client",
+      "category": "apis",
+      "title": "HTTP Client: consumir APIs REST",
+      "level": "Intermedio",
+      "summary": "Realizá solicitudes HTTP mediante el cliente incluido en Java moderno.",
+      "purpose": "java.net.http.HttpClient permite enviar solicitudes HTTP y recibir respuestas de forma síncrona o asíncrona. HttpRequest describe el destino, método y encabezados; HttpResponse contiene estado, encabezados y cuerpo. JSON no forma parte de un parser general del JDK, por lo que para JSON completo suele agregarse una biblioteca externa.",
+      "syntax": "HttpClient cliente = HttpClient.newHttpClient();\nHttpRequest solicitud = HttpRequest.newBuilder(URI.create(url)).GET().build();\nHttpResponse<String> respuesta = cliente.send(solicitud, BodyHandlers.ofString());",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "GET sencillo",
+          "description": "Consultá un endpoint público y comprobá el estado HTTP.",
+          "code": "import java.net.URI;\nimport java.net.http.*;\n\nHttpClient cliente = HttpClient.newHttpClient();\nHttpRequest solicitud = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://example.com\"))\n    .GET()\n    .build();\n\nHttpResponse<String> respuesta = cliente.send(\n    solicitud, HttpResponse.BodyHandlers.ofString()\n);\nSystem.out.println(respuesta.statusCode());",
+          "explanation": "send bloquea hasta recibir la respuesta y puede lanzar IOException o InterruptedException. El estado HTTP ayuda a decidir cómo tratar el resultado."
+        },
+        {
+          "title": "POST con JSON",
+          "description": "Mandá el cuerpo como texto y declar á el tipo de contenido.",
+          "code": "String json = \"{\\\"nombre\\\":\\\"Ana\\\"}\";\nHttpRequest solicitud = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://example.com/api/usuarios\"))\n    .header(\"Content-Type\", \"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(json))\n    .build();\n\n// Enviar con cliente.send(...) y procesar el status code.",
+          "explanation": "El ejemplo muestra la estructura de la solicitud. En una aplicación real usá una biblioteca JSON para escapar y serializar datos, y validá la URL y la respuesta."
+        }
+      ],
+      "exercise": "Creá una solicitud GET a un endpoint de prueba, mostr á el código de estado y el cuerpo solo si el estado es 2xx.",
+      "hint": "Consultá respuesta.statusCode() y verificá que esté entre 200 y 299.",
+      "bestPractices": [
+        "Reutilizá instancias de HttpClient.",
+        "Definí timeouts adecuados en cliente y solicitud.",
+        "Validá estados, errores, redirecciones y contenido remoto."
+      ],
+      "commonMistakes": [
+        "Suponer que HTTP 200 garantiza que el cuerpo tenga el formato esperado.",
+        "No manejar IOException e InterruptedException.",
+        "Construir JSON concatenando datos de usuarios sin escapar."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "HttpClient API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.net.http/java/net/http/HttpClient.html"
+        },
+        {
+          "label": "Dev.java: API HTTP",
+          "url": "https://dev.java/learn/api/http-client/"
+        }
+      ]
+    },
+    {
+      "id": "jdbc",
+      "category": "apis",
+      "title": "JDBC: conexión y consultas SQL",
+      "level": "Intermedio",
+      "summary": "Conectá una aplicación Java a una base relacional mediante JDBC.",
+      "purpose": "JDBC es la API estándar de Java para conectarse a bases de datos relacionales. DriverManager obtiene una Connection configurada por un driver específico; PreparedStatement separa SQL de valores; ResultSet permite leer filas. El driver de cada motor es una dependencia externa y debe añadirse al proyecto.",
+      "syntax": "try (Connection cn = DriverManager.getConnection(url, usuario, clave);\n     PreparedStatement ps = cn.prepareStatement(sql)) {\n    ...\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Consultar con parámetros",
+          "description": "Usá PreparedStatement en lugar de concatenar la entrada dentro del SQL.",
+          "code": "String sql = \"SELECT id, nombre FROM usuarios WHERE activo = ?\";\ntry (Connection cn = DriverManager.getConnection(url, usuario, clave);\n     PreparedStatement ps = cn.prepareStatement(sql)) {\n    ps.setBoolean(1, true);\n    try (ResultSet rs = ps.executeQuery()) {\n        while (rs.next()) {\n            System.out.println(rs.getLong(\"id\") + \" \" + rs.getString(\"nombre\"));\n        }\n    }\n}",
+          "explanation": "Los placeholders ? representan valores. setBoolean completa el primer parámetro. ResultSet avanza fila por fila."
+        },
+        {
+          "title": "Insertar con transacción",
+          "description": "Agrupá operaciones relacionadas y confirmá cambios cuando todas hayan salido bien.",
+          "code": "try (Connection cn = DriverManager.getConnection(url, usuario, clave)) {\n    cn.setAutoCommit(false);\n    try (PreparedStatement ps = cn.prepareStatement(\n            \"INSERT INTO tareas(titulo) VALUES (?)\")) {\n        ps.setString(1, \"Estudiar JDBC\");\n        ps.executeUpdate();\n        cn.commit();\n    } catch (SQLException error) {\n        cn.rollback();\n        throw error;\n    }\n}",
+          "explanation": "La transacción agrupa operaciones. Si la inserción falla se revierte; si funciona se confirma. El ejemplo omite la configuración del driver y credenciales, que dependen del motor."
+        }
+      ],
+      "exercise": "Conectá una aplicación a una base de prueba y escribí una consulta parametrizada de búsqueda por id. No guardes credenciales en el código.",
+      "hint": "Usá DriverManager, Connection y PreparedStatement, y leé el resultado con ResultSet.",
+      "bestPractices": [
+        "Usá PreparedStatement para valores externos.",
+        "Cerrá conexiones, statements y result sets con try-with-resources.",
+        "Almacená credenciales fuera del repositorio.",
+        "Configurá transacciones cuando varias operaciones formen una unidad."
+      ],
+      "commonMistakes": [
+        "Concatenar entrada de usuario dentro de SQL y permitir inyección.",
+        "No cerrar recursos JDBC.",
+        "Asumir que el driver está incluido en el JDK."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Paquete java.sql",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.sql/java/sql/package-summary.html"
+        },
+        {
+          "label": "JDBC tutorial",
+          "url": "https://dev.java/learn/jdbc/"
+        }
+      ]
+    },
+    {
+      "id": "junit",
+      "category": "calidad",
+      "title": "Pruebas automatizadas con JUnit 5",
+      "level": "Intermedio",
+      "summary": "Comprobá resultados, límites y excepciones mediante pruebas repetibles.",
+      "purpose": "JUnit 5 es un framework externo ampliamente utilizado para escribir y ejecutar pruebas en Java. @Test marca los métodos de prueba y Assertions ofrece verificaciones como assertEquals, assertTrue y assertThrows. Para ejecutarlo hay que añadir las dependencias al sistema de construcción, por ejemplo Maven o Gradle.",
+      "syntax": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\n\n@Test\nvoid sumaDosNumeros() {\n    assertEquals(5, Calculadora.sumar(2, 3));\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Probar un resultado",
+          "description": "Cada prueba expresa un comportamiento esperado.",
+          "code": "class Calculadora {\n    static int sumar(int a, int b) { return a + b; }\n}\n\nimport org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\n\nclass CalculadoraTest {\n    @Test\n    void sumaDosEnteros() {\n        assertEquals(5, Calculadora.sumar(2, 3));\n    }\n}",
+          "explanation": "assertEquals compara el valor esperado con el resultado real. El motor de JUnit descubre el método anotado @Test."
+        },
+        {
+          "title": "Comprobar una excepción",
+          "description": "assertThrows comprueba que una operación falle del modo esperado.",
+          "code": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\n\nclass ValidadorTest {\n    @Test\n    void rechazaEdadNegativa() {\n        assertThrows(IllegalArgumentException.class,\n            () -> Validador.validarEdad(-1));\n    }\n}",
+          "explanation": "El lambda representa la operación que debe lanzar la excepción. La prueba falla si no se lanza el tipo requerido."
+        }
+      ],
+      "exercise": "Escribí pruebas para una conversión de kilómetros a millas: cero, valor normal y un argumento inválido.",
+      "hint": "Usá assertEquals con delta para números de punto flotante y assertThrows para la entrada inválida.",
+      "bestPractices": [
+        "Escribí pruebas independientes y repetibles.",
+        "Probá caminos válidos, límites y errores.",
+        "No hagas depender una prueba de otra."
+      ],
+      "commonMistakes": [
+        "Creer que JUnit forma parte del JDK: debe agregarse como dependencia.",
+        "Comparar doubles con igualdad exacta sin delta cuando hay redondeo.",
+        "Probar solo el caso ideal."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Guía oficial de usuario JUnit 5",
+          "url": "https://junit.org/junit5/docs/current/user-guide/"
+        }
+      ]
+    },
+    {
+      "id": "maven",
+      "category": "calidad",
+      "title": "Maven: dependencias y ciclo de construcción",
+      "level": "Intermedio",
+      "summary": "Organizá el proyecto y sus dependencias con un archivo pom.xml.",
+      "purpose": "Maven es una herramienta de construcción y gestión de dependencias. El archivo pom.xml declara grupo, artefacto, versión, propiedades y dependencias. Maven utiliza convenciones de carpetas y fases como validate, compile, test, package y verify.",
+      "syntax": "<project>\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.ejemplo</groupId>\n  <artifactId>app</artifactId>\n  <version>1.0.0</version>\n</project>",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Estructura básica",
+          "description": "Ubicá código principal y pruebas en carpetas convencionales.",
+          "code": "mi-app/\n├── pom.xml\n└── src/\n    ├── main/java/com/ejemplo/Main.java\n    └── test/java/com/ejemplo/MainTest.java\n\n# Compilar y probar:\n# mvn test",
+          "explanation": "Maven busca fuentes y pruebas en las rutas convencionales. El comando mvn test compila el proyecto y ejecuta los tests configurados."
+        },
+        {
+          "title": "Agregar una dependencia",
+          "description": "Declará una biblioteca dentro de dependencies.",
+          "code": "<dependencies>\n  <dependency>\n    <groupId>org.junit.jupiter</groupId>\n    <artifactId>junit-jupiter</artifactId>\n    <version>5.12.2</version>\n    <scope>test</scope>\n  </dependency>\n</dependencies>",
+          "explanation": "La dependencia con scope test se utiliza para compilar y ejecutar pruebas, no para el código principal empaquetado."
+        }
+      ],
+      "exercise": "Creá un proyecto Maven mínimo con una clase App y una prueba JUnit. Ejecutá mvn test.",
+      "hint": "Usá src/main/java y src/test/java y definí la dependencia de JUnit con scope test.",
+      "bestPractices": [
+        "Declará versiones explícitas y mantenidas de dependencias.",
+        "Usá el wrapper Maven cuando el proyecto lo incluya.",
+        "Revisá licencias y vulnerabilidades de dependencias."
+      ],
+      "commonMistakes": [
+        "Confundir una dependencia de test con una dependencia de producción.",
+        "Modificar el pom sin conocer herencia y scopes.",
+        "Subir carpetas target o archivos generados innecesarios."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Maven en cinco minutos",
+          "url": "https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html"
+        }
+      ]
+    },
+    {
+      "id": "gradle",
+      "category": "calidad",
+      "title": "Gradle: proyectos y dependencias",
+      "level": "Intermedio",
+      "summary": "Comprendé el archivo de construcción Gradle y ejecutá tareas habituales.",
+      "purpose": "Gradle es una herramienta de automatización de construcciones que utiliza un grafo de tareas. Los proyectos Java suelen usar plugins como java o java-library. La configuración se expresa en build.gradle o build.gradle.kts y las dependencias se declaran en configurations como implementation y testImplementation.",
+      "syntax": "plugins { id 'java' }\n\ndependencies {\n    testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'\n}\n\ntasks.test { useJUnitPlatform() }",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Proyecto Java mínimo",
+          "description": "El plugin java incorpora tareas de compilación, prueba y empaquetado.",
+          "code": "plugins {\n    id 'java'\n}\n\ngroup = 'com.ejemplo'\nversion = '1.0.0'\n\nrepositories { mavenCentral() }",
+          "explanation": "El plugin agrega convenciones y tareas para proyectos Java. repositories define de dónde obtener dependencias."
+        },
+        {
+          "title": "Dependencia de prueba",
+          "description": "Separá dependencias de producción y pruebas.",
+          "code": "dependencies {\n    testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'\n}\n\ntasks.test {\n    useJUnitPlatform()\n}\n\n// En terminal:\n// ./gradlew test",
+          "explanation": "testImplementation limita JUnit al código de pruebas y useJUnitPlatform activa el motor de JUnit Jupiter."
+        }
+      ],
+      "exercise": "Creá build.gradle para una aplicación Java que compile y ejecute pruebas JUnit 5.",
+      "hint": "Aplicá el plugin java, agregá mavenCentral(), testImplementation y useJUnitPlatform().",
+      "bestPractices": [
+        "Preferí gradlew y gradlew.bat para fijar la versión del proyecto.",
+        "Separá dependencias de producción y pruebas.",
+        "Evitá scripts de construcción con lógica innecesariamente compleja."
+      ],
+      "commonMistakes": [
+        "No usar el wrapper y depender de una versión instalada arbitraria.",
+        "Olvidar habilitar el motor JUnit Platform.",
+        "Usar implementation para una biblioteca exclusiva de pruebas."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Gradle: Building Java Projects",
+          "url": "https://docs.gradle.org/current/userguide/building_java_projects.html"
+        }
+      ]
+    },
+    {
+      "id": "lambdas",
+      "category": "avanzado",
+      "title": "Expresiones lambda e interfaces funcionales",
+      "level": "Avanzado",
+      "summary": "Pasá comportamiento como argumento y simplificá operaciones sobre colecciones.",
+      "purpose": "Una expresión lambda implementa el único método abstracto de una interfaz funcional. Java incluye interfaces como Predicate, Function, Consumer y Supplier. Una lambda puede capturar variables locales efectivamente finales y ayuda a expresar operaciones concisas.",
+      "syntax": "(parametros) -> expresion\n\nPredicate<String> noVacio = texto -> !texto.isBlank();\nConsumer<String> imprimir = System.out::println;",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Predicate para filtrar",
+          "description": "Una interfaz funcional describe una prueba que devuelve boolean.",
+          "code": "List<String> nombres = List.of(\"Ana\", \"\", \"Leo\");\nPredicate<String> valido = nombre -> !nombre.isBlank();\n\nnombres.stream()\n    .filter(valido)\n    .forEach(System.out::println);",
+          "explanation": "Predicate<T> recibe un T y devuelve boolean. filter conserva los elementos para los que la prueba resulta verdadera."
+        },
+        {
+          "title": "Function para transformar",
+          "description": "Function<T, R> transforma un valor de entrada en otro.",
+          "code": "Function<String, Integer> longitud = String::length;\nList<String> palabras = List.of(\"Java\", \"Código\");\n\npalabras.stream()\n    .map(longitud)\n    .forEach(System.out::println);",
+          "explanation": "String::length es una referencia a método que equivale a texto -> texto.length(). map aplica la transformación a cada elemento."
+        }
+      ],
+      "exercise": "Definí Predicate para detectar pares y Function<Integer, Integer> para elevar números al cuadrado.",
+      "hint": "Predicate<Integer> par = n -> n % 2 == 0; Function<Integer, Integer> cuadrado = n -> n * n.",
+      "bestPractices": [
+        "Elegí el tipo funcional según la forma de entrada y salida.",
+        "Preferí lambdas cortas y legibles.",
+        "Usá referencias a métodos cuando simplifiquen la expresión."
+      ],
+      "commonMistakes": [
+        "Confundir -> con -> de otro lenguaje sin considerar los tipos Java.",
+        "Modificar variables locales capturadas que no son efectivamente finales.",
+        "Escribir lambdas extensas con demasiada lógica."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: Lambdas y genéricos",
+          "url": "https://dev.java/learn/language/lambda-expressions/"
+        }
+      ]
+    },
+    {
+      "id": "streams",
+      "category": "avanzado",
+      "title": "Streams: filter, map, sorted y collect",
+      "level": "Avanzado",
+      "summary": "Procesá datos declarativamente mediante operaciones intermedias y terminales.",
+      "purpose": "Stream representa una secuencia de elementos que puede procesarse con operaciones como filter, map, sorted y reduce. Las operaciones intermedias son perezosas y devuelven otro Stream; una operación terminal ejecuta el procesamiento y consume el flujo. Un stream no es una colección ni debe reutilizarse después de una operación terminal.",
+      "syntax": "lista.stream()\n    .filter(condicion)\n    .map(transformacion)\n    .toList();",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Filtrar y transformar",
+          "description": "Encadená operaciones para seleccionar elementos y producir otros valores.",
+          "code": "List<Integer> numeros = List.of(1, 2, 3, 4, 5, 6);\nList<Integer> cuadradosPares = numeros.stream()\n    .filter(n -> n % 2 == 0)\n    .map(n -> n * n)\n    .toList();\nSystem.out.println(cuadradosPares);",
+          "explanation": "filter conserva los números pares; map calcula sus cuadrados; toList reúne el resultado en una lista no modificable."
+        },
+        {
+          "title": "Agrupar y sumar",
+          "description": "Collectors agrupa datos y calcula resultados agregados.",
+          "code": "record Venta(String categoria, double total) { }\nList<Venta> ventas = List.of(\n    new Venta(\"libros\", 100),\n    new Venta(\"juegos\", 80),\n    new Venta(\"libros\", 50)\n);\n\nMap<String, Double> totales = ventas.stream().collect(\n    Collectors.groupingBy(Venta::categoria,\n        Collectors.summingDouble(Venta::total))\n);\nSystem.out.println(totales);",
+          "explanation": "groupingBy agrupa por categoría y summingDouble suma el total dentro de cada grupo."
+        }
+      ],
+      "exercise": "Desde una lista de productos, obtené los nombres de los productos activos ordenados alfabéticamente.",
+      "hint": "Encadená stream(), filter(), map(), sorted() y toList().",
+      "bestPractices": [
+        "Usá streams para transformaciones declarativas de datos.",
+        "Mantené funciones intermedias sin efectos secundarios.",
+        "Elegí un bucle tradicional si resulta más claro para lógica compleja."
+      ],
+      "commonMistakes": [
+        "Intentar reutilizar un stream después de una operación terminal.",
+        "Colocar efectos secundarios difíciles de razonar dentro de map.",
+        "Olvidar que toList() devuelve una lista no modificable."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: Streams",
+          "url": "https://dev.java/learn/api/streams/"
+        }
+      ]
+    },
+    {
+      "id": "modulos-java",
+      "category": "avanzado",
+      "title": "Sistema de módulos de Java",
+      "level": "Avanzado",
+      "summary": "Declará módulos explícitos y controlá qué paquetes exporta y qué dependencias requiere.",
+      "purpose": "El sistema de módulos permite agrupar paquetes en unidades de despliegue con dependencias explícitas. module-info.java declara el nombre del módulo, sus requires y exports. Una aplicación pequeña puede funcionar sin descriptor; los módulos son útiles en sistemas más grandes que necesitan límites claros.",
+      "syntax": "module com.ejemplo.app {\n    requires java.sql;\n    exports com.ejemplo.api;\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Declarar un módulo",
+          "description": "El descriptor se ubica en la raíz del código fuente del módulo.",
+          "code": "module com.ejemplo.app {\n    requires java.logging;\n    exports com.ejemplo.api;\n}",
+          "explanation": "requires declara una dependencia del módulo. exports expone un paquete a otros módulos; los paquetes no exportados no son API pública para otros módulos."
+        },
+        {
+          "title": "Estructura de proyecto modular",
+          "description": "La carpeta del módulo contiene descriptor y paquetes.",
+          "code": "src/\n└── com.ejemplo.app/\n    ├── module-info.java\n    └── com/ejemplo/api/Servicio.java\n\n// Compilación modular se realiza con opciones del compilador\n// como --module-source-path y -d.",
+          "explanation": "La estructura y los comandos de compilación dependen del diseño del proyecto. Maven y Gradle pueden automatizar la construcción modular."
+        }
+      ],
+      "exercise": "Definí un módulo que requiera java.sql y exporte el paquete com.ejemplo.modelo.",
+      "hint": "El descriptor debe incluir requires java.sql y exports com.ejemplo.modelo.",
+      "bestPractices": [
+        "Usá módulos para límites reales de arquitectura.",
+        "Exportá únicamente paquetes que deban formar parte de la API pública.",
+        "No agregues módulos a proyectos pequeños sin necesidad."
+      ],
+      "commonMistakes": [
+        "Confundir package con module.",
+        "Suponer que exportar un paquete hace pública cada clase privada.",
+        "Olvidar declarar las dependencias de módulos."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Documentación oficial del sistema de módulos",
+          "url": "https://docs.oracle.com/en/java/javase/25/javadoc/module-summary.html"
+        }
+      ]
+    },
+    {
+      "id": "threads",
+      "category": "avanzado",
+      "title": "Threads y sincronización básica",
+      "level": "Avanzado",
+      "summary": "Ejecutá tareas concurrentes y comprendé los riesgos de compartir estado.",
+      "purpose": "Un Thread representa un hilo de ejecución. start() inicia un nuevo hilo y ejecuta run() en ese hilo; llamar directamente a run() es una llamada normal. Cuando varios hilos acceden a estado compartido, se necesitan mecanismos de coordinación como synchronized, locks o estructuras concurrentes.",
+      "syntax": "Thread hilo = new Thread(() -> tarea());\nhilo.start();\nhilo.join();",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Iniciar un hilo",
+          "description": "Pasá una tarea con Runnable y usá start() para ejecutarla concurrentemente.",
+          "code": "Runnable tarea = () -> System.out.println(\"Ejecutando en \" + Thread.currentThread().getName());\nThread hilo = new Thread(tarea, \"trabajador-1\");\nhilo.start();\n\ntry {\n    hilo.join();\n} catch (InterruptedException error) {\n    Thread.currentThread().interrupt();\n}",
+          "explanation": "start inicia el hilo; join espera a que termine. InterruptedException debe tratarse preservando el estado de interrupción cuando se decide propagarlo."
+        },
+        {
+          "title": "Sincronizar un contador",
+          "description": "Protegé actualizaciones compuestas de una variable compartida.",
+          "code": "class Contador {\n    private int valor;\n    synchronized void incrementar() { valor++; }\n    synchronized int valor() { return valor; }\n}",
+          "explanation": "synchronized limita el acceso concurrente a esos métodos de instancia para un mismo objeto y establece garantías de visibilidad y exclusión mutua."
+        }
+      ],
+      "exercise": "Creá dos hilos que incrementen un contador compartido 1000 veces cada uno. Asegurá que el resultado final sea 2000.",
+      "hint": "Un incremento valor++ no es atómico. Podés protegerlo con synchronized o usar AtomicInteger.",
+      "bestPractices": [
+        "Preferí executors a administrar muchos Threads manualmente.",
+        "Evitá compartir estado mutable cuando sea posible.",
+        "Propagá y manejá interrupciones de forma consciente."
+      ],
+      "commonMistakes": [
+        "Llamar run() y esperar que cree un hilo nuevo.",
+        "Suponer que valor++ es atómico.",
+        "Ignorar InterruptedException o limpiar el flag de interrupción accidentalmente."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Dev.java: virtual threads y concurrencia",
+          "url": "https://dev.java/learn/api/concurrency/"
+        }
+      ]
+    },
+    {
+      "id": "executor-service",
+      "category": "avanzado",
+      "title": "ExecutorService y tareas concurrentes",
+      "level": "Avanzado",
+      "summary": "Delegá la administración de hilos a un ejecutor y recogé resultados con Future.",
+      "purpose": "ExecutorService separa el envío de tareas de la estrategia de ejecución. submit() devuelve un Future para consultar o esperar el resultado. El ejecutor debe cerrarse cuando termina su uso; en Java moderno puede gestionarse con try-with-resources cuando implementa AutoCloseable.",
+      "syntax": "try (ExecutorService executor = Executors.newFixedThreadPool(4)) {\n    Future<Integer> futuro = executor.submit(() -> 2 + 3);\n    System.out.println(futuro.get());\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Enviar tareas y recoger resultados",
+          "description": "El pool ejecuta las tareas y Future obtiene el valor cuando está disponible.",
+          "code": "try (ExecutorService executor = Executors.newFixedThreadPool(2)) {\n    Future<Integer> a = executor.submit(() -> 20 + 22);\n    Future<Integer> b = executor.submit(() -> 10 * 5);\n    System.out.println(a.get());\n    System.out.println(b.get());\n}",
+          "explanation": "submit programa tareas. get espera por el resultado y puede lanzar InterruptedException o ExecutionException."
+        },
+        {
+          "title": "Invocar varias tareas",
+          "description": "invokeAll espera a que todas las tareas terminen o sean canceladas.",
+          "code": "try (ExecutorService executor = Executors.newFixedThreadPool(3)) {\n    List<Callable<String>> tareas = List.of(\n        () -> \"A\", () -> \"B\", () -> \"C\"\n    );\n    List<Future<String>> resultados = executor.invokeAll(tareas);\n    for (Future<String> resultado : resultados) {\n        System.out.println(resultado.get());\n    }\n}",
+          "explanation": "Callable produce un resultado y puede lanzar excepciones. invokeAll devuelve futures en el mismo orden de la lista recibida."
+        }
+      ],
+      "exercise": "Procesá diez tareas independientes con un pool de tres hilos y reuní sus resultados.",
+      "hint": "Usá newFixedThreadPool(3), submit o invokeAll y cerrá el executor.",
+      "bestPractices": [
+        "Usá ejecutores para limitar y administrar tareas concurrentes.",
+        "Definí políticas de cierre y cancelación.",
+        "Evitá crear un pool nuevo para cada tarea."
+      ],
+      "commonMistakes": [
+        "Olvidar apagar el executor en versiones o patrones donde no se gestiona automáticamente.",
+        "Bloquear el hilo principal con Future.get antes de que las tareas terminen cuando no es necesario.",
+        "Usar un tamaño de pool arbitrario sin considerar el tipo de trabajo."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "ExecutorService API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/ExecutorService.html"
+        }
+      ]
+    },
+    {
+      "id": "completable-future",
+      "category": "avanzado",
+      "title": "CompletableFuture y composición asíncrona",
+      "level": "Avanzado",
+      "summary": "Componé operaciones asíncronas y transformá sus resultados sin bloquear cada paso.",
+      "purpose": "CompletableFuture implementa Future y CompletionStage. supplyAsync inicia una tarea que produce un valor; thenApply transforma el resultado; thenCompose encadena otra operación asíncrona; exceptionally permite recuperar errores. Los métodos Async usan por defecto un executor común si no se proporciona uno.",
+      "syntax": "CompletableFuture.supplyAsync(() -> consultar())\n    .thenApply(this::transformar)\n    .exceptionally(error -> valorAlternativo);",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Encadenar transformaciones",
+          "description": "Transformá el resultado cuando la primera operación termina.",
+          "code": "CompletableFuture<String> futuro = CompletableFuture\n    .supplyAsync(() -> \" java \")\n    .thenApply(String::trim)\n    .thenApply(String::toUpperCase);\n\nSystem.out.println(futuro.join());",
+          "explanation": "supplyAsync ejecuta la primera tarea; thenApply transforma el valor; join espera el resultado y puede lanzar CompletionException."
+        },
+        {
+          "title": "Combinar dos tareas",
+          "description": "thenCombine combina resultados de operaciones independientes.",
+          "code": "CompletableFuture<Integer> a = CompletableFuture.supplyAsync(() -> 20);\nCompletableFuture<Integer> b = CompletableFuture.supplyAsync(() -> 22);\n\nCompletableFuture<Integer> suma = a.thenCombine(b, Integer::sum);\nSystem.out.println(suma.join());",
+          "explanation": "Las tareas pueden progresar de forma concurrente. thenCombine recibe los dos resultados y calcula uno nuevo."
+        }
+      ],
+      "exercise": "Simulá dos consultas independientes con supplyAsync y combiná sus resultados con thenCombine.",
+      "hint": "Cada función devuelve un CompletableFuture y la combinación recibe ambos valores.",
+      "bestPractices": [
+        "Componé etapas en lugar de bloquear entre cada una.",
+        "Elegí un executor explícito cuando necesites controlar recursos.",
+        "Manejá las excepciones en el punto adecuado del flujo."
+      ],
+      "commonMistakes": [
+        "Usar get o join innecesariamente entre etapas y bloquear la composición.",
+        "Confundir thenApply con thenCompose.",
+        "Ignorar CompletionException y los errores de las tareas."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "CompletableFuture API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/CompletableFuture.html"
+        }
+      ]
+    },
+    {
+      "id": "virtual-threads",
+      "category": "avanzado",
+      "title": "Virtual threads y concurrencia moderna",
+      "level": "Avanzado",
+      "summary": "Escalá aplicaciones con muchas tareas bloqueantes mediante hilos virtuales.",
+      "purpose": "Los virtual threads son hilos ligeros gestionados por la JVM y están disponibles de forma estable desde Java 21. Son adecuados para aplicaciones con muchas tareas de I/O bloqueante, pero no hacen que el cálculo intensivo de CPU sea más rápido. Se pueden crear con Thread.ofVirtual o ejecutores de hilos virtuales.",
+      "syntax": "Thread hilo = Thread.ofVirtual().start(() -> tarea());\n\ntry (var executor = Executors.newVirtualThreadPerTaskExecutor()) {\n    executor.submit(() -> consultarServicio());\n}",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Crear un virtual thread",
+          "description": "El hilo virtual utiliza la API Thread y se inicia como una tarea.",
+          "code": "Thread hilo = Thread.ofVirtual()\n    .name(\"consulta-1\")\n    .start(() -> System.out.println(\"Trabajo en \" + Thread.currentThread()));\n\ntry {\n    hilo.join();\n} catch (InterruptedException error) {\n    Thread.currentThread().interrupt();\n}",
+          "explanation": "ofVirtual crea un builder y start inicia la tarea en un hilo virtual."
+        },
+        {
+          "title": "Un hilo virtual por tarea",
+          "description": "Un executor puede crear un virtual thread para cada tarea enviada.",
+          "code": "try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {\n    for (int i = 0; i < 100; i++) {\n        int id = i;\n        executor.submit(() -> System.out.println(\"Tarea \" + id));\n    }\n}",
+          "explanation": "El executor crea y administra virtual threads por tarea, y se cierra al salir del bloque. Para tareas CPU-bound se siguen necesitando límites de concurrencia y dimensionamiento adecuados."
+        }
+      ],
+      "exercise": "Creá cien tareas que simulen espera de I/O y ejecutalas con un executor de virtual threads. Contá cuántas finalizaron.",
+      "hint": "Usá newVirtualThreadPerTaskExecutor() y await termination o una colección de Future.",
+      "bestPractices": [
+        "Usá virtual threads para muchas tareas bloqueantes independientes.",
+        "No crees pools de virtual threads: se crean por tarea.",
+        "Limitá el acceso a servicios externos aunque puedas crear muchos hilos."
+      ],
+      "commonMistakes": [
+        "Creer que los virtual threads aceleran cualquier cálculo.",
+        "Usar virtual threads para reemplazar toda estrategia de concurrencia.",
+        "No limitar recursos externos como conexiones a bases de datos."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Guía oficial de virtual threads",
+          "url": "https://docs.oracle.com/en/java/javase/25/core/virtual-threads.html"
+        }
+      ]
+    },
+    {
+      "id": "annotation-reflection",
+      "category": "avanzado",
+      "title": "Anotaciones y reflexión",
+      "level": "Avanzado",
+      "summary": "Agregá metadatos declarativos y consultá información de clases en tiempo de ejecución.",
+      "purpose": "Las anotaciones agregan metadatos a clases, métodos, campos y otros elementos. Algunas son procesadas por herramientas de compilación; otras pueden conservarse en tiempo de ejecución. Reflection permite inspeccionar tipos y miembros durante la ejecución, pero debe usarse con cuidado por su complejidad, seguridad y costo.",
+      "syntax": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Revisar { }\n\nMethod metodo = tipo.getDeclaredMethod(\"procesar\");",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Crear una anotación",
+          "description": "Definí dónde se puede usar y cuánto tiempo conservarla.",
+          "code": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Revisar {\n    String responsable() default \"equipo\";\n}\n\nclass Servicio {\n    @Revisar(responsable = \"backend\")\n    void procesar() { }\n}",
+          "explanation": "Retention.RUNTIME conserva la anotación para reflexión; Target limita su uso a métodos. El atributo responsable tiene un valor predeterminado."
+        },
+        {
+          "title": "Inspeccionar una anotación",
+          "description": "La reflexión puede consultar metadatos del método.",
+          "code": "Method metodo = Servicio.class.getDeclaredMethod(\"procesar\");\nRevisar anotacion = metodo.getAnnotation(Revisar.class);\nif (anotacion != null) {\n    System.out.println(anotacion.responsable());\n}",
+          "explanation": "getAnnotation devuelve la anotación si está presente y es visible en tiempo de ejecución. La reflexión debe manejar excepciones de búsqueda de métodos."
+        }
+      ],
+      "exercise": "Creá una anotación @Auditable con Retention.RUNTIME y consultala mediante reflexión.",
+      "hint": "Usá getDeclaredMethod y getAnnotation.",
+      "bestPractices": [
+        "Preferí interfaces y APIs explícitas para lógica de negocio normal.",
+        "Usá anotaciones para metadatos declarativos.",
+        "Limitá la reflexión y documentá los supuestos sobre los tipos inspeccionados."
+      ],
+      "commonMistakes": [
+        "Olvidar Retention.RUNTIME cuando necesitás inspección en ejecución.",
+        "Suponer que una anotación ejecuta automáticamente su comportamiento.",
+        "Usar reflexión para evitar diseñar contratos claros."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "Reflection API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/reflect/package-summary.html"
+        }
+      ]
+    },
+    {
+      "id": "http-server",
+      "category": "avanzado",
+      "title": "Servidor HTTP mínimo con HttpServer",
+      "level": "Avanzado",
+      "summary": "Creá un servidor HTTP básico usando una API incluida en el módulo jdk.httpserver.",
+      "purpose": "com.sun.net.httpserver.HttpServer ofrece un servidor HTTP ligero dentro del JDK, pensado para servicios mínimos y pruebas, no como sustituto automático de frameworks de producción. Debe habilitarse el módulo jdk.httpserver al compilar o ejecutar en contextos modulares.",
+      "syntax": "HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);\nserver.createContext(\"/saludo\", exchange -> { ... });\nserver.start();",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Responder una ruta GET",
+          "description": "Creá un contexto, escribí una respuesta y cerrá el intercambio.",
+          "code": "import com.sun.net.httpserver.*;\nimport java.net.InetSocketAddress;\nimport java.nio.charset.StandardCharsets;\n\nHttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);\nserver.createContext(\"/saludo\", exchange -> {\n    byte[] body = \"Hola HTTP\".getBytes(StandardCharsets.UTF_8);\n    exchange.getResponseHeaders().set(\"Content-Type\", \"text/plain; charset=utf-8\");\n    exchange.sendResponseHeaders(200, body.length);\n    try (var output = exchange.getResponseBody()) {\n        output.write(body);\n    }\n});\nserver.start();",
+          "explanation": "El contexto maneja solicitudes a /saludo. El código establece encabezado y status, envía el tamaño del cuerpo y cierra el stream de respuesta."
+        },
+        {
+          "title": "Cerrar el servidor",
+          "description": "El ciclo de vida del servidor debe administrarse conscientemente.",
+          "code": "// Después de terminar el trabajo:\nserver.stop(1);",
+          "explanation": "stop recibe el retraso en segundos antes de cerrar conexiones existentes. En un servicio real hay que administrar su executor, errores y señales de cierre."
+        }
+      ],
+      "exercise": "Extendé el servidor para responder JSON estático en /api/estado y un 404 en rutas desconocidas.",
+      "hint": "El manejador recibe HttpExchange; comprobá getRequestURI().getPath() y elegí el estado HTTP.",
+      "bestPractices": [
+        "Usá esta API para demos, pruebas y servicios pequeños.",
+        "Validá método, ruta y entrada de cada solicitud.",
+        "Administrá el executor y el cierre del servidor."
+      ],
+      "commonMistakes": [
+        "Exponer el servidor a una red pública sin controles de seguridad.",
+        "No cerrar el cuerpo de respuesta.",
+        "Confiar en que la API mínima incluya funciones de un framework completo."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "HttpServer API",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/jdk.httpserver/com/sun/net/httpserver/HttpServer.html"
+        }
+      ]
+    },
+    {
+      "id": "java-modernos",
+      "category": "avanzado",
+      "title": "Características modernas: var, switch, records y text blocks",
+      "level": "Avanzado",
+      "summary": "Reconocé algunas mejoras modernas del lenguaje y cuándo hacen el código más legible.",
+      "purpose": "Java evoluciona mediante versiones de la plataforma. var para variables locales, switch expressions, records y text blocks son características estables desde versiones anteriores a Java 25. Las versiones actuales también incorporan otras funciones; la biblioteca enseña un conjunto estable y ampliamente útil en proyectos Java 25 LTS.",
+      "syntax": "var nombre = \"Java\";\nString json = \"\"\"\n    { \"estado\": \"ok\" }\n    \"\"\";\nString resultado = switch (codigo) { ... };",
+      "syntaxLanguage": "java",
+      "examples": [
+        {
+          "title": "Text blocks",
+          "description": "Los bloques de texto permiten escribir cadenas multilínea sin escapar cada salto.",
+          "code": "String json = \"\"\"\n    {\n      \"nombre\": \"Ana\",\n      \"activo\": true\n    }\n    \"\"\";\nSystem.out.println(json);",
+          "explanation": "Las comillas triples delimitan un text block. Es útil para SQL, JSON estático y mensajes largos, pero no reemplaza un serializador cuando hay datos dinámicos."
+        },
+        {
+          "title": "var con inferencia local",
+          "description": "El compilador deduce el tipo desde el inicializador.",
+          "code": "var nombres = new ArrayList<String>();\nnombres.add(\"Ana\");\n// nombres = new ArrayList<Integer>(); // no compila\nSystem.out.println(nombres.getFirst());",
+          "explanation": "var no hace que la variable cambie de tipo. El compilador infiere ArrayList<String> y conserva el tipado estático."
+        }
+      ],
+      "exercise": "Reescribí un ejemplo con String multilínea y switch expression, manteniendo el mismo resultado que la versión tradicional.",
+      "hint": "Usá text blocks con \"\"\" y switch con flechas.",
+      "bestPractices": [
+        "Preferí claridad por encima de sintaxis novedosa.",
+        "Usá var cuando el tipo se entienda desde el inicializador.",
+        "Conocé la versión mínima requerida por el proyecto antes de usar una característica."
+      ],
+      "commonMistakes": [
+        "Creer que var permite cambiar el tipo de una variable.",
+        "Confundir text blocks con plantillas interpoladas.",
+        "Usar características recientes sin declarar el nivel de lenguaje de compilación."
+      ],
+      "resources": [
+        {
+          "label": "Dev.java: guía oficial",
+          "url": "https://dev.java/learn/"
+        },
+        {
+          "label": "Documentación y API de Java 25",
+          "url": "https://docs.oracle.com/en/java/javase/25/docs/api/index.html"
+        },
+        {
+          "label": "JDK 25: actualizaciones del lenguaje",
+          "url": "https://docs.oracle.com/en/java/javase/25/language/index.html"
+        }
+      ]
+    }
+  ]
+}
