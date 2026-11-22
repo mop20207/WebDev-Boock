@@ -20,6 +20,12 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 
 El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
+## Biblioteca de proyectos
+
+La biblioteca reúne **15 proyectos completos y progresivos**: cinco principiantes, cinco intermedios y cinco avanzados. Incluye tarjetas interactivas, formularios validados, calculadora, reloj y temporizador, lista de tareas, buscador de películas, catálogo de productos, clima, panel administrativo, directorio de usuarios de demostración, autenticación segura, tienda online, blog con PostgreSQL, API REST propia y gestor full-stack.
+
+Cada proyecto tiene una carpeta propia en `projects/<id>/`, con archivos fuente reales, README, objetivos, tecnologías, pasos, criterios de comprobación y ampliaciones. La interfaz permite consultar, copiar y descargar archivos, usar vistas previas aisladas para proyectos de frontend y guardar el progreso local. Los ejemplos de backend requieren Node.js y/o base de datos: GitHub Pages solo los documenta, no los ejecuta.
+
 ## Retos interactivos
 
 La sección de retos incluye un catálogo filtrable por tecnología y dificultad (principiante, intermedio, avanzado y experto), además de una página HTML independiente para cada ejercicio. Cada reto puede incluir el enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada, errores habituales y seguimiento local del progreso.
