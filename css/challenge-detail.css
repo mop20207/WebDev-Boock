@@ -1,0 +1,22 @@
+.challenge-detail-page{width:min(1120px,100% - 32px);margin:0 auto;padding:22px 0 48px}
+.detail-page-topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0 22px;border-bottom:1px solid var(--line)}
+.detail-back-link,.detail-page-footer a{color:var(--muted);font-size:12px;text-decoration:none}
+.detail-back-link:hover,.detail-page-footer a:hover{color:var(--text)}
+.detail-page-brand{font:700 17px "Space Grotesk",sans-serif;color:var(--text)}
+.detail-page-brand span{color:#7898e8;margin-right:7px}
+.detail-page-intro{padding:30px 0 22px}
+.detail-page-intro .eyebrow{color:#7294e8;font-size:10px;font-weight:800;letter-spacing:1px}
+.detail-page-intro h1{margin:10px 0;font:700 clamp(29px,5vw,44px)/1.15 "Space Grotesk",sans-serif;color:var(--text);letter-spacing:-1px}
+.detail-page-intro>p{max-width:780px;color:var(--muted);font-size:14px;line-height:1.75}
+.detail-page-progress{display:flex;align-items:center;gap:12px;max-width:420px;margin-top:18px;color:var(--muted);font-size:10px}
+.detail-page-progress i{display:block;flex:1;height:5px;overflow:hidden;border-radius:9px;background:var(--surface-3)}
+.detail-page-progress i b{display:block;width:0;height:100%;background:linear-gradient(90deg,#668cff,#69c9a5)}
+.challenge-detail-layout .challenge-detail-panel{padding:clamp(15px,3vw,28px);border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.challenge-detail-page .challenge-detail-header{padding-bottom:22px}
+.challenge-detail-page .challenge-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.challenge-detail-page .challenge-editor{min-height:340px;font-size:13px}
+.challenge-detail-page .challenge-guidance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.challenge-engine-hidden{display:none!important}
+.detail-page-footer{display:flex;justify-content:space-between;gap:12px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:10px}
+body.light .challenge-detail-layout .challenge-detail-panel{background:#fff}
+@media(max-width:680px){.challenge-detail-page{width:min(100% - 24px,1120px);padding-top:12px}.detail-page-topbar{align-items:flex-start;flex-wrap:wrap}.detail-page-brand{order:-1;width:100%}.detail-page-intro{padding:22px 0 15px}.detail-page-intro h1{font-size:30px}.challenge-detail-page .challenge-info-grid,.challenge-detail-page .challenge-guidance-grid{grid-template-columns:1fr}.challenge-detail-page .challenge-editor{min-height:260px;font-size:11px}.detail-page-footer{flex-direction:column}}
