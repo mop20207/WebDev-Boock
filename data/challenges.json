@@ -195,8 +195,8 @@
         },
         {
           "label": "Devuelve undefined cuando no existe",
-          "expression": "buscarPorId([{ id: 1, nombre: 'Ana' }], 99)",
-          "expected": null
+          "expression": "buscarPorId([{ id: 1, nombre: 'Ana' }], 99) === undefined",
+          "expected": true
         }
       ],
       "hints": [
