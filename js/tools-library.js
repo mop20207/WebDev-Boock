@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       section.append(node("p", "", article.purpose));
       if (article.whenToUse) section.append(node("h3", "", "Cuándo utilizarlo"), node("p", "", article.whenToUse));
 
-      const syntaxLanguage = ({
+      const syntaxLanguage = article.syntaxLanguage || tool.syntaxLanguage || ({
         terminal: "bash", git: "bash", npm: "bash",
         react: "javascript", webcomponents: "javascript", vuejs: "xml",
         nodejs: "javascript", astro: "javascript", phaser: "javascript", typescript: "typescript", nextjs: "typescript", express: "javascript"
@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       (article.examples || []).forEach((example, index) => {
         const card = node("div", "tools-example-card");
         card.append(node("h3", "", (index + 1) + ". " + example.title), node("p", "", example.description));
-        addCode(card, example.code, tool.title.toUpperCase() + " / EJEMPLO " + (index + 1), syntaxLanguage);
+        addCode(card, example.code, tool.title.toUpperCase() + " / EJEMPLO " + (index + 1), example.language || syntaxLanguage);
         card.append(node("p", "tools-example-explanation", example.explanation || ""));
         section.append(card);
       });
