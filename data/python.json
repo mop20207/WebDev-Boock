@@ -1060,7 +1060,7 @@
         {
           "title": "Crear y activar un entorno",
           "description": "Los comandos de activación dependen del sistema operativo.",
-          "code": "# Crear el entorno\npython -m venv .venv\n\n# Linux/macOS\nsource .venv/bin/activate\n\n# Windows PowerShell\n.venv\\\\Scripts\\\\Activate.ps1\n\npython -m pip --version",
+          "code": "# Crear el entorno\npython -m venv .venv\n\n# Linux/macOS\nsource .venv/bin/activate\n\n# Windows PowerShell\n.venv\\Scripts\\Activate.ps1\n\npython -m pip --version",
           "explanation": "python -m venv crea el entorno en .venv. La activación ajusta el PATH de esa terminal para usar el intérprete del entorno."
         },
         {
