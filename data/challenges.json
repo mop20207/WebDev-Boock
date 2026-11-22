@@ -2350,6 +2350,7 @@
           "label": "Devuelve el resultado de la actualización",
           "expression": "await reponerProducto(db,99,1)",
           "expected": {
+            "acknowledged": true,
             "matchedCount": 0,
             "modifiedCount": 0
           }
@@ -2513,7 +2514,7 @@
         },
         {
           "label": "No duplica una etiqueta existente",
-          "expression": "await (async()=>{await agregarEtiqueta(db,1,'hardware');return db.collection('articulos').findOne({_id:1}).etiquetas})()",
+          "expression": "await (async()=>{await agregarEtiqueta(db,1,'hardware');return (await db.collection('articulos').findOne({_id:1})).etiquetas})()",
           "expected": [
             "hardware",
             "oferta"
