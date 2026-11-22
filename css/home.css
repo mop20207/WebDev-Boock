@@ -79,6 +79,9 @@ body.light .mini-project-card{background:#f8faff;border-color:#dce5f2}
 .exercise-hub-section h2{margin:5px 0 0;font-size:20px;color:var(--text)}
 .exercise-hub-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:16px}
 .exercise-challenges{--accent:#8faeff}
+.exercise-games{--accent:#91aaff}
+.exercise-python{--accent:#7dd9b2}
+.exercise-java{--accent:#f0a66e}
 .exercise-hub-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:17px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);color:var(--text);transition:transform .15s,border-color .15s}
 .exercise-hub-card:hover{transform:translateY(-2px);border-color:var(--accent)}
 .exercise-hub-card>span{font-size:9px;font-weight:900;letter-spacing:.09em;color:var(--accent)}
@@ -91,3 +94,5 @@ body.light .exercise-hub-card{background:#f8faff;border-color:#dce5f2}
 @media(max-width:650px){.exercise-hub-section{padding:16px}.exercise-hub-section h2{font-size:18px}.exercise-hub-grid{grid-template-columns:1fr}}
 
 .project-library-link{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;color:var(--text);text-decoration:none;font-size:11px;font-weight:800;background:var(--surface-2)}.project-library-link:hover{border-color:#718fe0;color:#8da8ff}
+
+.exercise-terminal{--accent:#70d8c2}.exercise-console{--accent:#f1b36e}

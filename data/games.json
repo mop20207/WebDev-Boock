@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "description": "Seis juegos de navegador con objetivos, reglas y conceptos de programación explicados.",
+  "games": [
+    {
+      "id": "snake",
+      "title": "Snake",
+      "icon": "🐍",
+      "level": "Principiante",
+      "description": "Controlá una serpiente, recogé frutas y evitá chocar contra las paredes o tu propio cuerpo.",
+      "objectives": ["Controlar el movimiento de un objeto en una cuadrícula.", "Detectar colisiones entre coordenadas.", "Actualizar el estado del juego en intervalos regulares."],
+      "concepts": ["Arrays y objetos para representar segmentos.", "setInterval y clearInterval para el ciclo del juego.", "Aleatoriedad para ubicar la fruta.", "Condicionales para detectar límites y colisiones."],
+      "controls": ["Flechas o W, A, S y D para cambiar la dirección.", "También podés usar los botones en pantalla.", "Conseguí 10 frutas para completar el objetivo."]
+    },
+    {
+      "id": "pong",
+      "title": "Pong",
+      "icon": "🏓",
+      "level": "Principiante",
+      "description": "Jugá contra una paleta controlada por la computadora. Calculá rebotes y tratá de llegar primero a cinco puntos.",
+      "objectives": ["Mover objetos según el tiempo transcurrido.", "Detectar colisiones entre pelota y paletas.", "Modificar la velocidad y dirección de un vector."],
+      "concepts": ["Canvas 2D y requestAnimationFrame.", "Velocidad como desplazamiento por segundo.", "Colisiones rectangulares y rebotes.", "Estado de teclado y puntuación."],
+      "controls": ["Flechas arriba y abajo o W y S.", "En celular, usá los botones Subir y Bajar.", "El primero en llegar a cinco puntos gana."]
+    },
+    {
+      "id": "tetris",
+      "title": "Tetris",
+      "icon": "🧩",
+      "level": "Intermedio",
+      "description": "Encajá piezas, completá filas y despejá el tablero. El objetivo educativo es completar diez líneas.",
+      "objectives": ["Representar un tablero como matriz bidimensional.", "Transformar matrices para rotar piezas.", "Comprobar límites y superposición antes de mover."],
+      "concepts": ["Matrices y arreglos anidados.", "Funciones de validación y detección de colisiones.", "Algoritmos de búsqueda y filtrado de filas.", "Temporizadores y control de estado."],
+      "controls": ["Flechas izquierda y derecha para mover.", "Flecha abajo para acelerar; flecha arriba para girar.", "Espacio para caída rápida; también hay controles táctiles."]
+    },
+    {
+      "id": "pacman",
+      "title": "Laberinto de puntos",
+      "icon": "👾",
+      "level": "Intermedio",
+      "description": "Recorré un laberinto, recogé todos los puntos y evitá al fantasma que busca acercarse.",
+      "objectives": ["Modelar un mapa con una matriz de caracteres.", "Validar movimientos según las paredes.", "Tomar decisiones usando distancias entre posiciones."],
+      "concepts": ["Matrices para representar mapas.", "Coordenadas de fila y columna.", "Búsqueda de movimientos posibles.", "Heurística de distancia Manhattan para orientar al enemigo."],
+      "controls": ["Flechas o W, A, S y D para moverte.", "También podés usar los botones en pantalla.", "Recogé todos los puntos sin tocar al fantasma."]
+    },
+    {
+      "id": "memory",
+      "title": "Memoria de parejas",
+      "icon": "🧠",
+      "level": "Principiante",
+      "description": "Dá vuelta las cartas de a dos, recordá sus posiciones y encontrá las ocho parejas.",
+      "objectives": ["Gestionar el estado de cada carta.", "Comparar dos elementos y resolver coincidencias.", "Evitar interacciones mientras se verifica un par."],
+      "concepts": ["Objetos y propiedades booleanas.", "Eventos click y manipulación del DOM.", "setTimeout para ocultar cartas.", "Condiciones de finalización y contadores."],
+      "controls": ["Seleccioná dos cartas para revelar sus símbolos.", "Cuando no coincidan, se ocultarán después de un momento.", "Encontrá las ocho parejas para terminar."]
+    },
+    {
+      "id": "puzzle",
+      "title": "Rompecabezas numérico",
+      "icon": "🔢",
+      "level": "Intermedio",
+      "description": "Deslizá las fichas hacia el espacio vacío para ordenar los números del 1 al 8.",
+      "objectives": ["Representar una disposición como arreglo.", "Comprobar si dos posiciones son vecinas.", "Generar un tablero mezclado que siempre tenga solución."],
+      "concepts": ["Arreglos y búsqueda de índices.", "Distancia Manhattan entre celdas.", "Intercambio de valores y mutación controlada.", "Mezcla mediante una secuencia de movimientos válidos."],
+      "controls": ["Tocá una ficha que esté al lado del espacio vacío.", "El espacio vacío cambia de lugar con esa ficha.", "Ordená del 1 al 8; el tablero se mezcla con movimientos legales."]
+    }
+  ]
+}
