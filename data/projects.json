@@ -1,0 +1,421 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "id": "tarjeta-perfil",
+      "title": "Tarjeta de perfil",
+      "level": "principiante",
+      "minutes": 45,
+      "technologies": [
+        "HTML",
+        "CSS"
+      ],
+      "description": "Tarjeta responsive con avatar, biografía y contacto.",
+      "goals": [
+        "Semántica",
+        "Flexbox",
+        "accesibilidad"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Tarjeta de perfil\n\nTarjeta responsive con avatar, biografía y contacto.\n\nTecnologías: HTML, CSS.\n\nObjetivos: Semántica, Flexbox, accesibilidad.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "landing-producto",
+      "title": "Landing page de producto",
+      "level": "principiante",
+      "minutes": 45,
+      "technologies": [
+        "HTML",
+        "CSS"
+      ],
+      "description": "Página promocional con hero, beneficios y llamada a la acción.",
+      "goals": [
+        "Secciones",
+        "jerarquía visual",
+        "responsive"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Landing page de producto\n\nPágina promocional con hero, beneficios y llamada a la acción.\n\nTecnologías: HTML, CSS.\n\nObjetivos: Secciones, jerarquía visual, responsive.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "calculadora",
+      "title": "Calculadora básica",
+      "level": "principiante",
+      "minutes": 45,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "description": "Calculadora de cuatro operaciones con validación.",
+      "goals": [
+        "Eventos",
+        "funciones",
+        "validación"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Calculadora básica\n\nCalculadora de cuatro operaciones con validación.\n\nTecnologías: HTML, CSS, JavaScript.\n\nObjetivos: Eventos, funciones, validación.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "reloj-digital",
+      "title": "Reloj digital",
+      "level": "principiante",
+      "minutes": 45,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "description": "Reloj local con formato de 12 o 24 horas.",
+      "goals": [
+        "Date",
+        "Intl",
+        "setInterval"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Reloj digital\n\nReloj local con formato de 12 o 24 horas.\n\nTecnologías: HTML, CSS, JavaScript.\n\nObjetivos: Date, Intl, setInterval.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "lista-tareas",
+      "title": "Lista de tareas",
+      "level": "intermedio",
+      "minutes": 120,
+      "technologies": [
+        "JavaScript",
+        "DOM",
+        "localStorage"
+      ],
+      "description": "CRUD de tareas con persistencia local.",
+      "goals": [
+        "Estado",
+        "delegación de eventos",
+        "persistencia"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Lista de tareas\n\nCRUD de tareas con persistencia local.\n\nTecnologías: JavaScript, DOM, localStorage.\n\nObjetivos: Estado, delegación de eventos, persistencia.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "catalogo-peliculas",
+      "title": "Catálogo de películas",
+      "level": "intermedio",
+      "minutes": 120,
+      "technologies": [
+        "JavaScript",
+        "Fetch",
+        "JSON"
+      ],
+      "description": "Buscador y filtros sobre un catálogo JSON.",
+      "goals": [
+        "Fetch",
+        "filtros",
+        "estados de interfaz"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Catálogo de películas\n\nBuscador y filtros sobre un catálogo JSON.\n\nTecnologías: JavaScript, Fetch, JSON.\n\nObjetivos: Fetch, filtros, estados de interfaz.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "catalogo-productos",
+      "title": "Catálogo de productos",
+      "level": "intermedio",
+      "minutes": 120,
+      "technologies": [
+        "JavaScript",
+        "CSS Grid"
+      ],
+      "description": "Catálogo con filtros, orden y carrito.",
+      "goals": [
+        "Map",
+        "reduce",
+        "estado derivado"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Catálogo de productos\n\nCatálogo con filtros, orden y carrito.\n\nTecnologías: JavaScript, CSS Grid.\n\nObjetivos: Map, reduce, estado derivado.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "panel-usuarios",
+      "title": "Panel de usuarios",
+      "level": "intermedio",
+      "minutes": 120,
+      "technologies": [
+        "JavaScript",
+        "CRUD"
+      ],
+      "description": "Tabla administrativa con validación y paginación.",
+      "goals": [
+        "Validación",
+        "CRUD",
+        "paginación"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Panel de usuarios\n\nTabla administrativa con validación y paginación.\n\nTecnologías: JavaScript, CRUD.\n\nObjetivos: Validación, CRUD, paginación.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "dashboard-clima",
+      "title": "Dashboard del clima",
+      "level": "intermedio",
+      "minutes": 120,
+      "technologies": [
+        "JavaScript",
+        "Fetch",
+        "APIs"
+      ],
+      "description": "Panel meteorológico con carga, error y respuesta API.",
+      "goals": [
+        "HTTP",
+        "async/await",
+        "errores"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Dashboard del clima\n\nPanel meteorológico con carga, error y respuesta API.\n\nTecnologías: JavaScript, Fetch, APIs.\n\nObjetivos: HTTP, async/await, errores.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "api-rest-tareas",
+      "title": "API REST de tareas",
+      "level": "avanzado",
+      "minutes": 300,
+      "technologies": [
+        "Node.js",
+        "Express.js",
+        "REST"
+      ],
+      "description": "API CRUD con validación y códigos HTTP.",
+      "goals": [
+        "REST",
+        "middleware",
+        "validación"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# API REST de tareas\n\nAPI CRUD con validación y códigos HTTP.\n\nTecnologías: Node.js, Express.js, REST.\n\nObjetivos: REST, middleware, validación.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "blog-postgres",
+      "title": "Blog con PostgreSQL",
+      "level": "avanzado",
+      "minutes": 300,
+      "technologies": [
+        "Node.js",
+        "Express.js",
+        "PostgreSQL"
+      ],
+      "description": "Blog relacional con consultas parametrizadas.",
+      "goals": [
+        "Relaciones",
+        "JOIN",
+        "SQL seguro"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Blog con PostgreSQL\n\nBlog relacional con consultas parametrizadas.\n\nTecnologías: Node.js, Express.js, PostgreSQL.\n\nObjetivos: Relaciones, JOIN, SQL seguro.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    },
+    {
+      "id": "tienda-fullstack",
+      "title": "Tienda full-stack",
+      "level": "avanzado",
+      "minutes": 300,
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL"
+      ],
+      "description": "Catálogo, carrito y pedidos con validación en servidor.",
+      "goals": [
+        "Cliente/servidor",
+        "transacciones",
+        "stock"
+      ],
+      "files": [
+        {
+          "name": "README.md",
+          "language": "markdown",
+          "code": "# Tienda full-stack\n\nCatálogo, carrito y pedidos con validación en servidor.\n\nTecnologías: Next.js, TypeScript, PostgreSQL.\n\nObjetivos: Cliente/servidor, transacciones, stock.\n\nConstruí cada parte en etapas pequeñas, probá los casos límite y documentá cómo ejecutar el proyecto."
+        }
+      ],
+      "steps": [
+        "Prepará la estructura de carpetas y los archivos iniciales.",
+        "Implementá la funcionalidad principal separando datos, lógica e interfaz.",
+        "Agregá validaciones, estados de carga y errores según corresponda.",
+        "Probá casos normales, vacíos y límites; revisá accesibilidad y responsive."
+      ],
+      "extensions": [
+        "Agregar pruebas automatizadas.",
+        "Persistir datos o conectarlos a una base de datos cuando corresponda.",
+        "Documentar instalación, ejecución y decisiones técnicas."
+      ]
+    }
+  ]
+}
