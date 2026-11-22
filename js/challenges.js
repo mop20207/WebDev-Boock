@@ -318,9 +318,9 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
 `;
     const files = {
       "/lib.d.ts": standardTypes,
-      "/challenge.ts": source + "\\n" + (challenge.typeCheckCode || "")
+      "/challenge.ts": source + "\n" + (challenge.typeCheckCode || "")
     };
-    const normalize = fileName => String(fileName).replace(/\\\\/g, "/");
+    const normalize = fileName => String(fileName).replace(/\\/g, "/");
     const host = {
       getSourceFile: (fileName, languageVersion) => {
         const key = normalize(fileName);
@@ -334,7 +334,7 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
       readFile: fileName => files[normalize(fileName)],
       getCanonicalFileName: fileName => normalize(fileName),
       useCaseSensitiveFileNames: () => true,
-      getNewLine: () => "\\n"
+      getNewLine: () => "\n"
     };
     const program = ts.createProgram(
       ["/lib.d.ts", "/challenge.ts"],
@@ -349,9 +349,9 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
           ? item.file.getLineAndCharacterOfPosition(item.start)
           : null;
         const location = position ? "Línea " + (position.line + 1) + ": " : "";
-        return location + ts.flattenDiagnosticMessageText(item.messageText, "\\n");
-      }).join("\\n");
-      throw new Error("TypeScript encontró errores de tipos o sintaxis:\\n" + message);
+        return location + ts.flattenDiagnosticMessageText(item.messageText, "\n");
+      }).join("\n");
+      throw new Error("TypeScript encontró errores de tipos o sintaxis:\n" + message);
     }
     const output = ts.transpileModule(source, {
       compilerOptions: {
@@ -363,8 +363,8 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     });
     const syntaxErrors = (output.diagnostics || []).filter(item => item.category === ts.DiagnosticCategory.Error);
     if (syntaxErrors.length) {
-      const message = syntaxErrors.map(item => ts.flattenDiagnosticMessageText(item.messageText, "\\n")).join("\\n");
-      throw new Error("No se pudo transpilar TypeScript:\\n" + message);
+      const message = syntaxErrors.map(item => ts.flattenDiagnosticMessageText(item.messageText, "\n")).join("\n");
+      throw new Error("No se pudo transpilar TypeScript:\n" + message);
     }
     return output.outputText;
   }
