@@ -62,7 +62,7 @@ Referencias oficiales: https://docs.oracle.com/en/java/javase/25/ · https://dev
 
 ## Parte 3 · Bloque D: Terminal y línea de comandos
 
-La biblioteca agrega **30 artículos en 6 categorías**, con dos ejemplos comentados por artículo. El recorrido abarca terminal y shell; comandos, argumentos y ayuda; rutas, carpetas y archivos; búsqueda con `find` y `grep`; comodines y comillas; tuberías y redirecciones; variables y PATH; códigos de salida; procesos, trabajos y permisos; `curl`, SSH y archivos comprimidos; scripts Bash, condicionales, bucles, funciones, archivos `.env`, npm y gestores de paquetes.
+La biblioteca agrega **33 artículos en 6 categorías**, con dos ejemplos comentados por artículo. El recorrido abarca terminal y shell; comandos, argumentos y ayuda; rutas, carpetas y archivos; búsqueda con `find` y `grep`; comodines y comillas; tuberías y redirecciones; variables y PATH; códigos de salida; procesos, trabajos y permisos; `curl`, SSH y archivos comprimidos; scripts Bash, condicionales, bucles, funciones, archivos `.env`, npm y gestores de paquetes.
 
 Los ejemplos ejecutables se centran en **Bash para Linux, macOS y entornos compatibles**. La biblioteca compara de forma explícita Bash, PowerShell y CMD y advierte que sus comandos, opciones, canales de salida y reglas de expansión no son intercambiables. Los comandos potencialmente destructivos se presentan con cautelas y ejercicios de inspección previa.
 
