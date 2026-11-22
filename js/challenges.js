@@ -24,6 +24,7 @@
   let compilerPromise = null;
   let activeRunner = null;
   let runnerTimeout = null;
+  let activeRunnerCleanup = null;
   let progress = readProgress();
 
   function readProgress() {
@@ -144,6 +145,7 @@
   }
 
   function renderChallenge(id) {
+    cancelActiveRunner();
     const challenge = challenges.find(item => item.id === id);
     if (!challenge) return;
     activeChallenge = challenge;
@@ -302,14 +304,22 @@
     const errors = (output.diagnostics || []).filter(item => item.category === ts.DiagnosticCategory.Error);
     if (errors.length) {
       const message = errors.map(item => ts.flattenDiagnosticMessageText(item.messageText, "\n")).join("\n");
-      throw new Error("TypeScript encontró errores de sintaxis o compilación:\n" + message);
+      throw new Error("TypeScript encontró errores de sintaxis:\n" + message);
     }
     return output.outputText;
   }
 
-  function runInSandbox(challenge, code, resultsNode, completeBanner, runButton) {
-    if (activeRunner) activeRunner.remove();
+  function cancelActiveRunner() {
     if (runnerTimeout) clearTimeout(runnerTimeout);
+    runnerTimeout = null;
+    if (activeRunnerCleanup) activeRunnerCleanup();
+    if (activeRunner) activeRunner.remove();
+    activeRunnerCleanup = null;
+    activeRunner = null;
+  }
+
+  function runInSandbox(challenge, code, resultsNode, completeBanner, runButton) {
+    cancelActiveRunner();
 
     const payload = {
       id: challenge.id,
@@ -329,11 +339,13 @@
       if (event.data.type !== "results") return;
       if (runnerTimeout) clearTimeout(runnerTimeout);
       window.removeEventListener("message", receive);
+      activeRunnerCleanup = null;
       activeRunner.remove();
       activeRunner = null;
       displayResults(challenge, event.data.results || [], resultsNode, completeBanner, runButton);
     };
     window.addEventListener("message", receive);
+    activeRunnerCleanup = () => window.removeEventListener("message", receive);
 
     const runnerDocument = "<!doctype html><html><head><meta charset='utf-8'></head><body><script>" +
       "const payload=" + safePayload + ";" +
@@ -352,6 +364,7 @@
 
     runnerTimeout = window.setTimeout(() => {
       window.removeEventListener("message", receive);
+      activeRunnerCleanup = null;
       if (activeRunner === runner) {
         runner.remove();
         activeRunner = null;
