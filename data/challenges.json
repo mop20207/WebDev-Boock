@@ -1946,6 +1946,10 @@
           "sql": "SELECT nombre, stock FROM productos WHERE stock < 10 ORDER BY stock ASC",
           "expected": [
             {
+              "nombre": "Webcam",
+              "stock": 0
+            },
+            {
               "nombre": "Mouse",
               "stock": 3
             },
@@ -1959,6 +1963,10 @@
           "label": "La consulta del editor también devuelve las filas requeridas",
           "useUserQuery": true,
           "expected": [
+            {
+              "nombre": "Webcam",
+              "stock": 0
+            },
             {
               "nombre": "Mouse",
               "stock": 3
@@ -2299,7 +2307,10 @@
             "precio": 250
           }
         ]
-      }
+      },
+      "functionNames": [
+        "buscarEconomicos"
+      ]
     },
     {
       "id": "mongo-crud-stock",
@@ -2372,7 +2383,10 @@
             "disponible": false
           }
         ]
-      }
+      },
+      "functionNames": [
+        "reponerProducto"
+      ]
     },
     {
       "id": "mongo-aggregate-resumen",
@@ -2457,7 +2471,10 @@
             "estado": "pendiente"
           }
         ]
-      }
+      },
+      "functionNames": [
+        "resumirVentas"
+      ]
     },
     {
       "id": "mongo-arrays-proyeccion",
@@ -2547,7 +2564,11 @@
             ]
           }
         ]
-      }
+      },
+      "functionNames": [
+        "agregarEtiqueta",
+        "buscarEtiquetados"
+      ]
     },
     {
       "id": "api-get-json",
