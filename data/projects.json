@@ -767,6 +767,16 @@
           "path": "projects/tienda-online/src/app/page.tsx",
           "language": "tsx",
           "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/tienda-online/tsconfig.json",
+          "language": "json",
+          "description": "Configuración TypeScript y alias de importación."
+        },
+        {
+          "path": "projects/tienda-online/next-env.d.ts",
+          "language": "typescript",
+          "description": "Referencias de tipos de Next.js."
         }
       ],
       "preview": false,
@@ -995,6 +1005,21 @@
           "path": "projects/gestor-fullstack/src/app/page.tsx",
           "language": "tsx",
           "description": "Archivo fuente del proyecto."
+        },
+        {
+          "path": "projects/gestor-fullstack/tsconfig.json",
+          "language": "json",
+          "description": "Configuración TypeScript y alias de importación."
+        },
+        {
+          "path": "projects/gestor-fullstack/next-env.d.ts",
+          "language": "typescript",
+          "description": "Referencias de tipos de Next.js."
+        },
+        {
+          "path": "projects/gestor-fullstack/prisma7.config.ts",
+          "language": "typescript",
+          "description": "Configuración de Prisma ORM 7."
         }
       ],
       "preview": false,
