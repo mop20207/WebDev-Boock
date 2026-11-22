@@ -22,9 +22,13 @@ El catálogo de herramientas y tecnologías contiene **387 artículos distribuid
 
 ## Retos interactivos
 
-La sección independiente de retos permite filtrar ejercicios por tecnología y dificultad (principiante, intermedio, avanzado y experto). Cada reto puede incluir el enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada, errores habituales y seguimiento local del progreso.
+La sección de retos incluye un catálogo filtrable por tecnología y dificultad (principiante, intermedio, avanzado y experto), además de una página HTML independiente para cada ejercicio. Cada reto puede incluir el enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada, errores habituales y seguimiento local del progreso.
 
 La sección incorpora 52 retos: cuatro por tecnología para TypeScript, JavaScript, HTML/CSS, React, Web Components, Vue.js, Node.js, Astro, SQL/PostgreSQL, MongoDB, APIs y comunicación web, Testing, y Docker/despliegue. Cada tecnología tiene un reto en cada nivel de dificultad (principiante, intermedio, avanzado y experto). Los ejercicios incluyen enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada y errores habituales. HTML/CSS dispone de editor doble y vista previa aislada; JavaScript y TypeScript usan un iframe aislado y TypeScript se comprueba con el compilador en el navegador. React se transpila con Babel y se monta con React 18; Vue.js usa Vue 3; Web Components utiliza APIs nativas del navegador. Node.js tiene un simulador educativo en memoria para `process`, `path`, `events` y `fs/promises`. Astro y Docker/Compose se validan estáticamente (no se ejecuta un proyecto Astro ni un Docker Engine). PostgreSQL se ejecuta en el navegador mediante PGlite/WebAssembly y una base temporal por ejercicio. MongoDB, APIs y Testing disponen de simuladores didácticos aislados: colecciones en memoria, `fetch` con respuestas locales y un runner de pruebas reducido, respectivamente; no conectan a servidores externos ni sustituyen una instancia real de MongoDB, Vitest o servicios HTTP. El progreso se guarda en el navegador mediante `localStorage`.
+
+## Páginas individuales de retos
+
+Cada uno de los 52 retos tiene su propio archivo HTML en `pages/retos/`. Las páginas reutilizan el motor de ejecución y el progreso local, pero tienen URL, encabezado y presentación independientes. El catálogo de `pages/challenges.html` enlaza con cada página. Los estilos compartidos están en `css/challenges.css` y `css/challenge-detail.css`.
 
 ## Estructura del proyecto
 
