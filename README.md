@@ -70,6 +70,16 @@ La página incluye búsqueda, categorías, filtros por pendientes/favoritos, vis
 
 Referencias oficiales: https://www.gnu.org/software/bash/manual/bash.html · https://www.gnu.org/software/coreutils/manual/ · https://learn.microsoft.com/en-us/powershell/ · https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands
 
+## Parte 3 · Bloque E: API de Consola y herramientas de desarrollo
+
+La biblioteca suma **30 artículos en 6 categorías**, con 60 ejemplos JavaScript comentados. La parte de API cubre niveles de registro (`log`, `info`, `warn`, `error`), inspección de objetos, formatos, tablas, grupos, contadores, aserciones, temporizadores, trazas y limpieza de la consola. La parte de DevTools recorre Console, Elements/Inspector, Styles, Sources/Debugger, breakpoints, Call Stack, Scope, Network, Application/Storage, IndexedDB, cookies, Service Workers, Performance, Memory, modo responsive, accesibilidad, Issues, seguridad, source maps y Coverage.
+
+La documentación distingue los métodos de la API web `console` de las funciones y vistas específicas de las herramientas del navegador. Los nombres, atajos y paneles pueden variar entre Chrome, Firefox y otras implementaciones. Los ejemplos son código JavaScript para practicar en una página propia o en la consola de DevTools; la biblioteca no ejecuta código ajeno por sí misma.
+
+La interfaz incluye búsqueda, categorías, filtros de pendientes/favoritos, navegación por artículos, copia y descarga de ejemplos `.js`, además de progreso y favoritos guardados localmente.
+
+Referencias oficiales: https://developer.mozilla.org/es/docs/Web/API/console · https://developer.chrome.com/docs/devtools/ · https://developer.chrome.com/docs/devtools/network/overview/ · https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
 ## Estructura del proyecto
 
 ```text
