@@ -1033,7 +1033,7 @@
           "steps": [
             {
               "action": "click",
-              "selector": "contador-local .incrementar"
+              "selector": "contador-local::shadow .incrementar"
             }
           ],
           "expression": "document.querySelector('contador-local')?.shadowRoot?.querySelector('.valor')?.textContent",
@@ -1044,7 +1044,7 @@
           "steps": [
             {
               "action": "click",
-              "selector": "contador-local .incrementar"
+              "selector": "contador-local::shadow .incrementar"
             }
           ],
           "expression": "document.querySelector('contador-local')?.shadowRoot?.querySelector('.valor')?.textContent",
@@ -1165,12 +1165,12 @@
           "steps": [
             {
               "action": "input",
-              "selector": "lista-tareas .nueva-tarea",
+              "selector": "lista-tareas::shadow .nueva-tarea",
               "value": "Estudiar componentes"
             },
             {
               "action": "click",
-              "selector": "lista-tareas .agregar"
+              "selector": "lista-tareas::shadow .agregar"
             }
           ],
           "expression": "document.querySelector('lista-tareas')?.shadowRoot?.querySelector('.tarea')?.textContent",
@@ -1181,12 +1181,12 @@
           "steps": [
             {
               "action": "input",
-              "selector": "lista-tareas .nueva-tarea",
+              "selector": "lista-tareas::shadow .nueva-tarea",
               "value": "   "
             },
             {
               "action": "click",
-              "selector": "lista-tareas .agregar"
+              "selector": "lista-tareas::shadow .agregar"
             }
           ],
           "expression": "document.querySelector('lista-tareas')?.shadowRoot?.querySelectorAll('.tarea').length",
@@ -1207,7 +1207,10 @@
         "Omitir composed cuando el evento debe atravesar el límite del Shadow DOM."
       ],
       "estimatedMinutes": 30,
-      "fixtureHTML": "<lista-tareas></lista-tareas>"
+      "fixtureHTML": "<lista-tareas></lista-tareas>",
+      "captureEvents": [
+        "tarea-agregada"
+      ]
     },
     {
       "id": "vue-saludo-props",
