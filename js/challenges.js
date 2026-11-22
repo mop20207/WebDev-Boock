@@ -552,7 +552,7 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     } else if (challenge.runner === "vue") {
       libraries = "<script src=\"https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js\"></script>";
     }
-    const script = String.raw\`
+    const script = String.raw`
 const payload = __PAYLOAD__;
 const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -575,13 +575,13 @@ async function main() {
     if (payload.runner === "react") {
       if (!window.React || !window.ReactDOM || !window.Babel) throw new Error("No se pudieron cargar React o Babel desde el CDN. Revisá la conexión.");
       const compiled = Babel.transform(payload.code, { presets: ["react"] }).code;
-      const Component = new Function("React", compiled + "\\nreturn " + payload.componentName)(React);
+      const Component = new Function("React", compiled + "\nreturn " + payload.componentName)(React);
       const root = ReactDOM.createRoot(app);
       root.render(React.createElement(Component, payload.props));
       await wait(80);
     } else if (payload.runner === "vue") {
       if (!window.Vue) throw new Error("No se pudo cargar Vue desde el CDN. Revisá la conexión.");
-      const Component = new Function("Vue", payload.code + "\\nreturn " + payload.componentName)(Vue);
+      const Component = new Function("Vue", payload.code + "\nreturn " + payload.componentName)(Vue);
       Vue.createApp(Component, payload.props).mount(app);
       await wait(50);
     } else if (payload.runner === "webcomponents") {
@@ -610,7 +610,7 @@ async function main() {
   }
 }
 main();
-\`.replace("__PAYLOAD__", payload);
+`.replace("__PAYLOAD__", payload);
     return "<!doctype html><html lang=\"es\"><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"" + policy + "\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>body{font:14px system-ui,sans-serif;color:#172033;margin:0;padding:18px;background:#fff}button,input{font:inherit;padding:7px 10px;margin:4px}ul{padding-left:22px}#app{min-height:40px}</style>" + libraries + "</head><body><div id=\"app\"></div><script nonce=\"" + nonce + "\">" + script + "</script></body></html>";
   }
 
@@ -653,13 +653,13 @@ main();
       environment: challenge.environment || {}, virtualFiles: challenge.virtualFiles || {}
     }).replace(/</g, "\\u003c");
     const policy = "default-src 'none'; script-src 'nonce-" + nonce + "' 'unsafe-eval'; connect-src 'none'; img-src data:; style-src 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'";
-    const script = String.raw\`
+    const script = String.raw`
 const payload = __PAYLOAD__;
 const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
 function normalizePath(value) {
   const absolute = String(value).startsWith("/");
   const parts = [];
-  String(value).replace(/\\\\/g, "/").split("/").forEach(part => {
+  String(value).replace(/\\/g, "/").split("/").forEach(part => {
     if (!part || part === ".") return;
     if (part === "..") { if (parts.length && parts[parts.length - 1] !== "..") parts.pop(); else if (!absolute) parts.push(".."); }
     else parts.push(part);
@@ -701,7 +701,7 @@ const fsPromises = {
   },
   async unlink(file) { if (!files.delete(normalizePath(file))) throw fsError("ENOENT", file); },
   async readdir(directory) {
-    const prefix = normalizePath(directory).replace(/\\\\/$/, "") + "/";
+    const prefix = normalizePath(directory).replace(/\/$/, "") + "/";
     return [...files.keys()].filter(key => key.startsWith(prefix)).map(key => key.slice(prefix.length).split("/")[0]).filter((name, index, all) => all.indexOf(name) === index);
   }
 };
@@ -758,7 +758,7 @@ function requireModule(name) {
     send([{ label: "Ejecución Node.js simulada", passed: false, error: String(error && error.message || error) }]);
   }
 })();
-\`.replace("__PAYLOAD__", payload);
+`.replace("__PAYLOAD__", payload);
     return "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"" + policy + "\"></head><body><script nonce=\"" + nonce + "\">" + script + "</script></body></html>";
   }
 
