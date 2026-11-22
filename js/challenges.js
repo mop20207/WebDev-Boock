@@ -411,9 +411,12 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     const policy = testScript
       ? "default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-" + nonce + "'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'"
       : "default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
-    const cleanHtml = String(html).replace(/<base\\b[^>]*>/gi, "").replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script\\s*>/gi, "");
-    const script = testScript ? "<script nonce=\"" + nonce + "\">" + testScript + "<\\/script>" : "";
-    return "<!doctype html><html><head><meta charset=\'utf-8\'><meta http-equiv=\'Content-Security-Policy\' content=\"" + policy + "\"><meta name=\'viewport\' content=\'width=device-width,initial-scale=1\'><style>" + String(css).replace(/<\\/style/gi, "") + "</style></head><body>" + cleanHtml + script + "</body></html>";
+    const cleanHtml = String(html)
+      .replace(/<base\b[^>]*>/gi, "")
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, "");
+    const safeCss = String(css).replace(/<\/style/gi, "");
+    const script = testScript ? "<script nonce=\"" + nonce + "\">" + testScript + "</script>" : "";
+    return "<!doctype html><html><head><meta charset='utf-8'><meta http-equiv='Content-Security-Policy' content=\"" + policy + "\"><meta name='viewport' content='width=device-width,initial-scale=1'><style>" + safeCss + "</style></head><body>" + cleanHtml + script + "</body></html>";
   }
 
   function runHtmlCss(challenge, html, css, resultsNode, completeBanner, runButton) {
@@ -426,11 +429,14 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     activeRunner = frame;
     const nonce = "wd" + Math.random().toString(36).slice(2);
     const tests = JSON.stringify(challenge.tests || []).replace(/</g, "\\u003c");
-    const script = "const tests=" + tests + ";const results=tests.map(t=>{try{const actual=(new Function(\'return (\'+t.expression+\')\'))();return {label:t.label,passed:JSON.stringify(actual)===JSON.stringify(t.expected),actual,expected:t.expected}}catch(e){return {label:t.label,passed:false,error:String(e.message||e)}}});parent.postMessage({source:\'webdev-challenges\',id:" + JSON.stringify(challenge.id) + ",type:\'results\',results},\'*\');";
+    const script = "const tests=" + tests + ";const results=tests.map(t=>{try{const actual=(new Function('return ('+t.expression+')'))();return {label:t.label,passed:JSON.stringify(actual)===JSON.stringify(t.expected),actual,expected:t.expected}}catch(e){return {label:t.label,passed:false,error:String(e.message||e)}}});parent.postMessage({source:'webdev-challenges',id:" + JSON.stringify(challenge.id) + ",type:'results',results},'*');";
     const receive = event => {
       if (!activeRunner || event.source !== frame.contentWindow || event.data?.source !== "webdev-challenges" || event.data?.id !== challenge.id || event.data.type !== "results") return;
       if (runnerTimeout) clearTimeout(runnerTimeout);
-      window.removeEventListener("message", receive); activeRunnerCleanup = null; frame.remove(); activeRunner = null;
+      window.removeEventListener("message", receive);
+      activeRunnerCleanup = null;
+      frame.remove();
+      activeRunner = null;
       displayResults(challenge, event.data.results || [], resultsNode, completeBanner, runButton);
     };
     window.addEventListener("message", receive);
@@ -438,10 +444,18 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     frame.srcdoc = htmlCssDocument(html, css, script, nonce);
     document.body.append(frame);
     runnerTimeout = window.setTimeout(() => {
-      window.removeEventListener("message", receive); activeRunnerCleanup = null;
-      if (activeRunner === frame) { frame.remove(); activeRunner = null; resultsNode.replaceChildren(node("h4", "", "La prueba tardó demasiado"), node("p", "", "Se detuvo el entorno aislado. Revisá tu código e intentá nuevamente.")); runButton.disabled = false; runButton.textContent = "▶ Ejecutar pruebas"; }
+      window.removeEventListener("message", receive);
+      activeRunnerCleanup = null;
+      if (activeRunner === frame) {
+        frame.remove();
+        activeRunner = null;
+        resultsNode.replaceChildren(node("h4", "", "La prueba tardó demasiado"), node("p", "", "Se detuvo el entorno aislado. Revisá tu código e intentá nuevamente."));
+        runButton.disabled = false;
+        runButton.textContent = "▶ Ejecutar pruebas";
+      }
     }, 4000);
   }
+
   function runInSandbox(challenge, code, resultsNode, completeBanner, runButton) {
     cancelActiveRunner();
 
