@@ -1,0 +1,103 @@
+.challenges-content{max-width:1450px;padding-top:28px}
+.challenge-top-progress{display:grid;gap:5px;min-width:190px;margin-left:auto;color:var(--muted);font-size:10px}
+.challenge-top-progress>i{display:block;height:5px;overflow:hidden;border-radius:10px;background:var(--surface-3)}
+.challenge-top-progress>i>b{display:block;width:0;height:100%;border-radius:10px;background:linear-gradient(90deg,#668cff,#69c9a5);transition:width .25s}
+.challenges-hero{position:relative;overflow:hidden;padding:34px 38px;border:1px solid #2b4164;border-radius:20px;background:radial-gradient(circle at 85% 12%,#4e72c744,transparent 34%),linear-gradient(125deg,#14233c,#111a2b 70%,#172943);box-shadow:var(--shadow)}
+.challenges-hero h1{max-width:760px;margin:14px 0 10px;color:#f3f6ff;font:700 clamp(35px,4.5vw,55px)/1.08 "Space Grotesk",sans-serif;letter-spacing:-2px}
+.challenges-hero h1 span{color:#8faeff}
+.challenges-hero>p{max-width:760px;margin:0;color:#aebbd1;font-size:14px;line-height:1.8}
+.challenge-hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.challenge-hero-stats span{padding:8px 12px;border:1px solid #3b5072;border-radius:30px;background:#ffffff0b;color:#c4d0e4;font-size:11px}
+.challenge-hero-stats b{margin-right:4px;color:#a9c1ff}
+.challenge-filters{display:grid;grid-template-columns:minmax(190px,1fr) auto;gap:13px;align-items:center;margin:22px 0 16px}
+.challenge-search{display:flex;align-items:center;gap:9px;min-height:42px;padding:0 13px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--muted)}
+.challenge-search>span{font-size:20px}
+.challenge-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--text);font:inherit;font-size:12px}
+.challenge-filter-label{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:11px}
+.challenge-filter-label select{min-height:42px;padding:0 30px 0 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);font:inherit;font-size:11px}
+.difficulty-filter{grid-column:1/-1;display:flex;gap:7px;flex-wrap:wrap}
+.difficulty-button{padding:8px 12px;border:1px solid var(--line);border-radius:20px;background:var(--surface);color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;transition:.18s}
+.difficulty-button:hover,.difficulty-button.active{border-color:#6c8ee0;background:#20345a;color:#e5edff}
+.challenge-workspace{display:grid;grid-template-columns:minmax(255px,330px) minmax(0,1fr);gap:16px;align-items:start}
+.challenge-list-panel,.challenge-detail-panel{min-width:0;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.challenge-list-panel{position:sticky;top:94px;padding:17px}
+.challenge-list-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:12px}
+.challenge-list-heading h2{margin:4px 0 0;font:700 18px "Space Grotesk",sans-serif}
+.challenge-list-heading>span{display:grid;place-items:center;min-width:28px;height:28px;padding:0 7px;border-radius:8px;background:var(--surface-2);color:var(--muted);font-size:10px}
+.challenge-list{display:grid;gap:8px}
+.challenge-card{display:block;width:100%;padding:13px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--text);cursor:pointer;transition:border-color .18s,transform .18s}
+.challenge-card:hover{transform:translateY(-1px);border-color:#6889ce}
+.challenge-card.active{border-color:#6e91e8;background:linear-gradient(135deg,#20365c,#17243a);box-shadow:inset 3px 0 #8eacff}
+.challenge-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.challenge-card h3{margin:9px 0 5px;font:700 13px/1.4 "Space Grotesk",sans-serif}
+.challenge-card p{margin:0;color:var(--muted);font-size:10px;line-height:1.55}
+.challenge-card-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:9px}
+.challenge-card-status{color:#6bcda6;font-weight:800}
+.challenge-list-empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:11px;line-height:1.6}
+.challenge-list-note{margin:13px 0 0;color:var(--muted);font-size:9px;line-height:1.6}
+.challenge-detail-panel{padding:24px}
+.challenge-empty-state{display:grid;justify-items:center;min-height:430px;align-content:center;text-align:center;padding:30px}
+.challenge-empty-icon{display:grid;place-items:center;width:62px;height:62px;border:1px solid #3b5684;border-radius:18px;background:#1c2d4b;color:#9bb6f5;font-size:30px}
+.challenge-empty-state h2{margin:17px 0 7px;font:700 21px "Space Grotesk",sans-serif}
+.challenge-empty-state p{max-width:470px;margin:0;color:var(--muted);font-size:12px;line-height:1.8}
+.challenge-detail-header{padding-bottom:19px;border-bottom:1px solid var(--line)}
+.challenge-detail-badges{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.challenge-badge{display:inline-flex;align-items:center;padding:5px 9px;border:1px solid var(--line);border-radius:20px;background:var(--surface-2);color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.3px}
+.challenge-badge.level-principiante{color:#75d3a9;border-color:#315e4b;background:#18372d}
+.challenge-badge.level-intermedio{color:#e8c66f;border-color:#6c5830;background:#3b301a}
+.challenge-badge.level-avanzado{color:#8eb7ff;border-color:#38547e;background:#1d3150}
+.challenge-badge.level-experto{color:#d2a5ff;border-color:#60417c;background:#352448}
+.challenge-detail-header h2{margin:12px 0 7px;font:700 clamp(23px,3vw,31px)/1.2 "Space Grotesk",sans-serif;letter-spacing:-.7px}
+.challenge-detail-header>p{max-width:850px;margin:0;color:var(--muted);font-size:12px;line-height:1.75}
+.challenge-progress-state{margin-top:13px;color:#73d1a8;font-size:10px;font-weight:800}
+.challenge-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:18px 0}
+.challenge-info-card{padding:15px;border:1px solid var(--line);border-radius:11px;background:var(--surface-2)}
+.challenge-info-card h3{margin:0 0 8px;font:700 12px "Space Grotesk",sans-serif}
+.challenge-info-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.7}
+.challenge-info-card ul{display:grid;gap:6px;margin:0;padding-left:17px;color:var(--muted);font-size:10px;line-height:1.65}
+.challenge-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 9px}
+.challenge-section-title h3{margin:0;font:700 15px "Space Grotesk",sans-serif}
+.challenge-section-title span{color:var(--muted);font-size:9px}
+.challenge-editor-shell{overflow:hidden;border:1px solid #2d4262;border-radius:12px;background:#0b1422}
+.challenge-editor-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid #2b3d58;background:#111e31}
+.challenge-editor-language{color:#9db8ee;font-size:10px;font-weight:800;letter-spacing:.6px}
+.challenge-editor-actions{display:flex;gap:7px;flex-wrap:wrap}
+.challenge-action{padding:8px 11px;border:1px solid #3b5278;border-radius:7px;background:#1a2a45;color:#c9d8f4;font-size:10px;font-weight:800;cursor:pointer}
+.challenge-action:hover{border-color:#7c9eea;background:#263d63}
+.challenge-action.primary{border-color:#5678ca;background:#4166bd;color:#fff}
+.challenge-editor{display:block;width:100%;min-height:300px;resize:vertical;padding:17px;border:0;outline:0;background:#0b1422;color:#d8e4f7;font:12px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2;white-space:pre;overflow:auto}
+.challenge-editor:focus{box-shadow:inset 0 0 0 1px #648cff}
+.challenge-editor-help{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-top:1px solid #2b3d58;color:#8397b8;font-size:9px}
+.challenge-results{margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.challenge-results h4{margin:0 0 8px;font:700 11px "Space Grotesk",sans-serif}
+.challenge-results p{margin:0;color:var(--muted);font-size:10px;line-height:1.65}
+.challenge-test-list{display:grid;gap:7px;margin-top:9px}
+.challenge-test-result{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:var(--surface)}
+.challenge-test-result b{flex:0 0 auto;font-size:10px}
+.challenge-test-result span{color:var(--muted);font-size:10px;line-height:1.5}
+.challenge-test-result.pass b{color:#68d1a2}
+.challenge-test-result.fail b{color:#f09a91}
+.challenge-guidance-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.challenge-guidance-card{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.challenge-guidance-card h3{margin:0 0 8px;font:700 12px "Space Grotesk",sans-serif}
+.challenge-guidance-card p{margin:0;color:var(--muted);font-size:10px;line-height:1.7}
+.challenge-guidance-card ul{display:grid;gap:6px;margin:0;padding-left:17px;color:var(--muted);font-size:10px;line-height:1.65}
+.challenge-guidance-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.challenge-guidance-actions button{padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--text);font-size:9px;font-weight:800;cursor:pointer}
+.challenge-guidance-actions button:disabled{opacity:.45;cursor:not-allowed}
+.challenge-solution{margin-top:10px;padding:12px;border:1px solid #425b87;border-radius:9px;background:#172943}
+.challenge-solution[hidden]{display:none}
+.challenge-solution pre{overflow:auto;margin:0;padding:11px;border-radius:7px;background:#0b1422;color:#d9e5f8;font:11px/1.7 ui-monospace,monospace;white-space:pre}
+.challenge-solution p{margin:10px 0 0;color:#b9c9e4;font-size:10px;line-height:1.7}
+.challenge-complete-banner{display:flex;gap:10px;align-items:center;margin-top:13px;padding:11px 13px;border:1px solid #315f4b;border-radius:9px;background:#17372d;color:#a5e7c8;font-size:10px}
+.challenge-complete-banner[hidden]{display:none}
+body.light .challenge-list-panel,body.light .challenge-detail-panel,body.light .challenge-results,body.light .challenge-info-card,body.light .challenge-guidance-card{background:#fff}
+body.light .challenge-card{background:#f6f8fc}
+body.light .challenge-card.active{background:#edf3ff}
+body.light .challenge-detail-header>p,body.light .challenge-info-card p,body.light .challenge-info-card ul,body.light .challenge-guidance-card p,body.light .challenge-guidance-card ul{color:#5d6f89}
+body.light .challenge-guidance-actions button{background:#fff;color:#314765}
+body.light .challenge-solution{background:#edf3ff}
+body.light .challenge-solution p{color:#405777}
+@media(max-width:1000px){.challenge-workspace{grid-template-columns:270px minmax(0,1fr)}.challenge-detail-panel{padding:18px}.challenge-filters{grid-template-columns:1fr auto}}
+@media(max-width:760px){.challenges-content{padding:24px 16px}.challenge-top-progress{display:none}.challenges-hero{padding:24px 21px}.challenges-hero h1{font-size:37px}.challenge-filters{grid-template-columns:1fr}.challenge-filter-label{justify-content:space-between}.difficulty-filter{grid-column:auto}.challenge-workspace{grid-template-columns:1fr}.challenge-list-panel{position:static}.challenge-list{grid-template-columns:repeat(2,minmax(0,1fr))}.challenge-detail-panel{padding:16px}.challenge-info-grid,.challenge-guidance-grid{grid-template-columns:1fr}.challenge-editor{min-height:260px;font-size:11px}}
+@media(max-width:480px){.challenge-list{grid-template-columns:1fr}.challenge-editor-toolbar{align-items:flex-start;flex-direction:column}.challenge-editor-actions{width:100%}.challenge-action{flex:1}.challenge-editor-help{flex-direction:column}.challenge-hero-stats{gap:6px}.challenge-hero-stats span{font-size:9px}}
