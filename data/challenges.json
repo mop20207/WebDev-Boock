@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Retos prácticos independientes, vinculados con las bibliotecas de WebDev Book.",
+  "description": "Retos prácticos independientes para HTML, CSS, JavaScript, TypeScript, React, Web Components, Vue.js y Node.js. Los entornos de ejecución se aíslan por tecnología.",
   "challenges": [
     {
       "id": "ts-interface-usuario",
@@ -681,6 +681,1021 @@
         "Definir grid-template-columns pero olvidar display:grid."
       ],
       "estimatedMinutes": 30
+    },
+    {
+      "id": "react-saludo-props",
+      "technology": "react",
+      "technologyName": "React",
+      "difficulty": "principiante",
+      "title": "Creá un componente de saludo con props",
+      "summary": "Recibí datos desde el componente padre y mostralos en JSX.",
+      "statement": "Construí un componente funcional llamado Saludo. Debe recibir la propiedad nombre y mostrar un saludo dentro de un encabezado. El evaluador lo montará con nombre=\"Ada\".",
+      "objectives": [
+        "Crear un componente funcional de React.",
+        "Recibir y desestructurar props.",
+        "Devolver elementos JSX."
+      ],
+      "requirements": [
+        "El componente debe llamarse Saludo.",
+        "Debe recibir la propiedad nombre.",
+        "Debe renderizar un h2 con la clase saludo.",
+        "El texto visible debe ser ¡Hola, Ada!.",
+        "No manipules el DOM directamente."
+      ],
+      "language": "javascript",
+      "runner": "react",
+      "starterCode": "function Saludo({ nombre }) {\n  // Devolvé un encabezado con un saludo personalizado.\n  return null;\n}",
+      "tests": [
+        {
+          "label": "Renderiza el saludo recibido por props",
+          "expression": "document.querySelector('.saludo')?.textContent",
+          "expected": "¡Hola, Ada!"
+        }
+      ],
+      "hints": [
+        "Un componente funcional es una función que devuelve JSX.",
+        "Las propiedades llegan como un objeto en el primer parámetro.",
+        "Usá <h2 className=\"saludo\">¡Hola, {nombre}!</h2>."
+      ],
+      "solutionCode": "function Saludo({ nombre }) {\n  return <h2 className=\"saludo\">¡Hola, {nombre}!</h2>;\n}",
+      "solutionExplanation": "React llama al componente con las propiedades que recibe del padre. La desestructuración extrae nombre y JSX inserta su valor. className se usa en lugar de class porque JSX representa elementos de React.",
+      "commonMistakes": [
+        "Olvidar devolver JSX.",
+        "Escribir class en lugar de className.",
+        "Leer nombre desde una variable global en vez de props."
+      ],
+      "estimatedMinutes": 12,
+      "componentName": "Saludo",
+      "props": {
+        "nombre": "Ada"
+      }
+    },
+    {
+      "id": "react-contador-estado",
+      "technology": "react",
+      "technologyName": "React",
+      "difficulty": "intermedio",
+      "title": "Construí un contador con estado",
+      "summary": "Practicá useState y actualizaciones a partir del valor anterior.",
+      "statement": "Creá un contador que comience en el valor recibido por la propiedad inicial. El botón Sumar debe incrementar el valor y la pantalla debe reflejar cada cambio.",
+      "objectives": [
+        "Usar el hook useState.",
+        "Leer y actualizar estado.",
+        "Actualizar el estado usando una función basada en el valor anterior."
+      ],
+      "requirements": [
+        "El componente debe llamarse Contador.",
+        "Debe recibir inicial como número.",
+        "El valor debe mostrarse en output.valor.",
+        "El botón debe tener la clase incrementar.",
+        "Cada clic debe sumar exactamente uno."
+      ],
+      "language": "javascript",
+      "runner": "react",
+      "starterCode": "function Contador({ inicial = 0 }) {\n  // Declarar el estado y crear la interfaz del contador.\n  return null;\n}",
+      "tests": [
+        {
+          "label": "Muestra el valor inicial",
+          "expression": "document.querySelector('.valor')?.textContent",
+          "expected": "3"
+        },
+        {
+          "label": "Suma uno al primer clic",
+          "steps": [
+            {
+              "action": "click",
+              "selector": ".incrementar"
+            }
+          ],
+          "expression": "document.querySelector('.valor')?.textContent",
+          "expected": "4"
+        },
+        {
+          "label": "Sigue incrementando en clics sucesivos",
+          "steps": [
+            {
+              "action": "click",
+              "selector": ".incrementar"
+            }
+          ],
+          "expression": "document.querySelector('.valor')?.textContent",
+          "expected": "5"
+        }
+      ],
+      "hints": [
+        "useState(inicial) devuelve el valor actual y una función para actualizarlo.",
+        "El segundo elemento del arreglo se suele llamar setValor.",
+        "Usá setValor(actual => actual + 1) para calcular el siguiente valor."
+      ],
+      "solutionCode": "function Contador({ inicial = 0 }) {\n  const [valor, setValor] = React.useState(inicial);\n  return (\n    <section>\n      <output className=\"valor\">{valor}</output>\n      <button className=\"incrementar\" onClick={() => setValor(actual => actual + 1)}>Sumar</button>\n    </section>\n  );\n}",
+      "solutionExplanation": "useState conserva el valor entre renderizados. El evento onClick solicita una actualización; React vuelve a renderizar el componente con el nuevo valor. La forma funcional de setValor evita depender de una captura antigua del estado.",
+      "commonMistakes": [
+        "Modificar una variable normal y esperar que React renderice de nuevo.",
+        "Llamar setValor(valor++) y mutar el valor anterior.",
+        "Olvidar pasar inicial al hook."
+      ],
+      "estimatedMinutes": 18,
+      "componentName": "Contador",
+      "props": {
+        "inicial": 3
+      }
+    },
+    {
+      "id": "react-lista-filtrable",
+      "technology": "react",
+      "technologyName": "React",
+      "difficulty": "avanzado",
+      "title": "Filtrá una lista con estado y useMemo",
+      "summary": "Combiná inputs controlados, arreglos y valores derivados.",
+      "statement": "Recibís un arreglo de tecnologías. Creá un campo de búsqueda controlado y mostrale al usuario solo los elementos cuyo nombre contenga el texto ingresado, ignorando mayúsculas y minúsculas.",
+      "objectives": [
+        "Controlar un input con useState.",
+        "Filtrar datos sin mutar el arreglo original.",
+        "Usar useMemo para calcular una lista derivada."
+      ],
+      "requirements": [
+        "El componente debe llamarse ListaFiltrable y recibir elementos.",
+        "El input debe tener la clase busqueda.",
+        "Cada resultado debe aparecer en un li.elemento.",
+        "La búsqueda no debe distinguir mayúsculas de minúsculas.",
+        "La lista original no debe modificarse."
+      ],
+      "language": "javascript",
+      "runner": "react",
+      "starterCode": "function ListaFiltrable({ elementos = [] }) {\n  // Creá el estado de búsqueda y la lista filtrada.\n  return null;\n}",
+      "tests": [
+        {
+          "label": "Muestra todos los elementos al iniciar",
+          "expression": "document.querySelectorAll('.elemento').length",
+          "expected": 3
+        },
+        {
+          "label": "Filtra por el texto ingresado",
+          "steps": [
+            {
+              "action": "input",
+              "selector": ".busqueda",
+              "value": "vue"
+            }
+          ],
+          "expression": "document.querySelectorAll('.elemento').length",
+          "expected": 1
+        },
+        {
+          "label": "Conserva el elemento coincidente",
+          "expression": "document.querySelector('.elemento')?.textContent",
+          "expected": "Vue.js"
+        }
+      ],
+      "hints": [
+        "Guardá el texto del input en un estado llamado busqueda.",
+        "Usá onChange para actualizar ese estado con event.target.value.",
+        "useMemo puede devolver elementos.filter(...) y depender de elementos y busqueda."
+      ],
+      "solutionCode": "function ListaFiltrable({ elementos = [] }) {\n  const [busqueda, setBusqueda] = React.useState(\"\");\n  const filtrados = React.useMemo(() => elementos.filter(item => item.toLowerCase().includes(busqueda.toLowerCase())), [elementos, busqueda]);\n  return (\n    <section>\n      <label>Buscar <input className=\"busqueda\" value={busqueda} onChange={event => setBusqueda(event.target.value)} /></label>\n      <ul>{filtrados.map(item => <li className=\"elemento\" key={item}>{item}</li>)}</ul>\n    </section>\n  );\n}",
+      "solutionExplanation": "El input es controlado porque su valor procede del estado. Cada cambio actualiza busqueda y provoca un nuevo renderizado. useMemo recalcula la lista filtrada cuando cambian los elementos o el término de búsqueda.",
+      "commonMistakes": [
+        "No enlazar el valor del input al estado.",
+        "Filtrar sin normalizar mayúsculas y minúsculas.",
+        "Modificar elementos directamente en vez de derivar otra lista.",
+        "Omitir dependencias de useMemo."
+      ],
+      "estimatedMinutes": 25,
+      "componentName": "ListaFiltrable",
+      "props": {
+        "elementos": [
+          "React",
+          "Vue.js",
+          "Svelte"
+        ]
+      }
+    },
+    {
+      "id": "react-carrito-reducer",
+      "technology": "react",
+      "technologyName": "React",
+      "difficulty": "experto",
+      "title": "Administrá un carrito con useReducer",
+      "summary": "Modelá acciones y estado compuesto con un reducer.",
+      "statement": "Implementá un pequeño carrito. Cada producto tiene id, nombre y precio. El botón de cada producto agrega una unidad; el total debe calcularse a partir del estado del carrito.",
+      "objectives": [
+        "Modelar estado con useReducer.",
+        "Definir acciones y un reducer puro.",
+        "Calcular valores derivados sin duplicar estado."
+      ],
+      "requirements": [
+        "El componente debe llamarse Carrito.",
+        "Debe recibir products.",
+        "Usá useReducer con una acción ADD.",
+        "Cada producto debe tener un botón con data-add igual a su id.",
+        "El total debe mostrarse en output.total.",
+        "No modifiques el estado anterior."
+      ],
+      "language": "javascript",
+      "runner": "react",
+      "starterCode": "function Carrito({ products = [] }) {\n  // Definí el reducer, el estado y la vista del carrito.\n  return null;\n}",
+      "tests": [
+        {
+          "label": "El total inicial es cero",
+          "expression": "document.querySelector('.total')?.textContent",
+          "expected": "0"
+        },
+        {
+          "label": "Agrega el primer producto",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "[data-add=\"1\"]"
+            }
+          ],
+          "expression": "document.querySelector('.total')?.textContent",
+          "expected": "120"
+        },
+        {
+          "label": "Acumula unidades sin perder el estado anterior",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "[data-add=\"1\"]"
+            }
+          ],
+          "expression": "document.querySelector('.total')?.textContent",
+          "expected": "240"
+        }
+      ],
+      "hints": [
+        "El estado puede ser un objeto con una propiedad cantidades.",
+        "El reducer recibe el estado actual y una acción; debe devolver un objeto nuevo.",
+        "En ADD copiá el mapa de cantidades y sumá una unidad al id recibido."
+      ],
+      "solutionCode": "function Carrito({ products = [] }) {\n  function reducer(state, action) {\n    if (action.type === \"ADD\") {\n      return { cantidades: { ...state.cantidades, [action.id]: (state.cantidades[action.id] || 0) + 1 } };\n    }\n    return state;\n  }\n  const [state, dispatch] = React.useReducer(reducer, { cantidades: {} });\n  const total = products.reduce((sum, product) => sum + product.price * (state.cantidades[product.id] || 0), 0);\n  return (\n    <section>\n      {products.map(product => <button key={product.id} data-add={product.id} onClick={() => dispatch({ type: \"ADD\", id: product.id })}>Agregar {product.name}</button>)}\n      <output className=\"total\">{total}</output>\n    </section>\n  );\n}",
+      "solutionExplanation": "useReducer concentra las transiciones en una función pura. La acción ADD identifica el producto, el reducer crea un mapa nuevo de cantidades y el total se deriva recorriendo los productos. No hace falta guardar el total como otro estado.",
+      "commonMistakes": [
+        "Mutar state.cantidades directamente.",
+        "Olvidar devolver el estado cuando la acción no se reconoce.",
+        "Almacenar un total separado y dejarlo desincronizado.",
+        "No proporcionar una key al renderizar listas."
+      ],
+      "estimatedMinutes": 30,
+      "componentName": "Carrito",
+      "props": {
+        "products": [
+          {
+            "id": 1,
+            "name": "Libro",
+            "price": 120
+          },
+          {
+            "id": 2,
+            "name": "Cuaderno",
+            "price": 80
+          }
+        ]
+      }
+    },
+    {
+      "id": "wc-saludo-shadow",
+      "technology": "webcomponents",
+      "technologyName": "Web Components",
+      "difficulty": "principiante",
+      "title": "Creá un elemento personalizado de saludo",
+      "summary": "Definí un custom element y encapsulá su contenido en Shadow DOM.",
+      "statement": "Implementá el elemento <saludo-card>. Debe leer el atributo nombre y renderizar un saludo dentro de su shadow root.",
+      "objectives": [
+        "Extender HTMLElement.",
+        "Definir una clase de elemento personalizado.",
+        "Crear y usar un Shadow DOM."
+      ],
+      "requirements": [
+        "La clase debe extender HTMLElement.",
+        "Registrá el tag saludo-card.",
+        "El saludo debe aparecer dentro de shadowRoot.",
+        "Usá el atributo nombre.",
+        "El texto debe ser ¡Hola, Ada!."
+      ],
+      "language": "javascript",
+      "runner": "webcomponents",
+      "starterCode": "class SaludoCard extends HTMLElement {\n  constructor() {\n    super();\n    // Creá el shadow root.\n  }\n  connectedCallback() {\n    // Renderizá el saludo con el atributo nombre.\n  }\n}\n// Registrá el elemento personalizado.",
+      "tests": [
+        {
+          "label": "Registra el elemento y muestra el saludo en Shadow DOM",
+          "expression": "document.querySelector('saludo-card')?.shadowRoot?.querySelector('.mensaje')?.textContent",
+          "expected": "¡Hola, Ada!"
+        }
+      ],
+      "hints": [
+        "La clase de un elemento personalizado extiende HTMLElement.",
+        "attachShadow({ mode: 'open' }) crea un árbol DOM encapsulado.",
+        "Leé el atributo con getAttribute('nombre') y asigná texto con textContent."
+      ],
+      "solutionCode": "class SaludoCard extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n  }\n  connectedCallback() {\n    const nombre = this.getAttribute(\"nombre\") || \"visitante\";\n    const mensaje = document.createElement(\"h2\");\n    mensaje.className = \"mensaje\";\n    mensaje.textContent = `¡Hola, ${nombre}!`;\n    this.shadowRoot.replaceChildren(mensaje);\n  }\n}\ncustomElements.define(\"saludo-card\", SaludoCard);",
+      "solutionExplanation": "El constructor prepara el shadow root. connectedCallback se ejecuta cuando el elemento se conecta al documento. textContent inserta el valor como texto, no como HTML.",
+      "commonMistakes": [
+        "Usar un nombre de etiqueta que no contenga guion.",
+        "Intentar extender una clase que no sea HTMLElement.",
+        "Olvidar registrar la clase con customElements.define.",
+        "Usar innerHTML para insertar texto dinámico sin necesidad."
+      ],
+      "estimatedMinutes": 12,
+      "fixtureHTML": "<saludo-card nombre=\"Ada\"></saludo-card>"
+    },
+    {
+      "id": "wc-contador-atributos",
+      "technology": "webcomponents",
+      "technologyName": "Web Components",
+      "difficulty": "intermedio",
+      "title": "Construí un contador con atributos y eventos",
+      "summary": "Reaccioná a interacciones y reflejá el estado dentro del componente.",
+      "statement": "Creá <contador-local inicial=\"2\">. El componente debe mostrar el valor inicial y aumentarlo al presionar su botón.",
+      "objectives": [
+        "Leer atributos de un custom element.",
+        "Crear controles dentro del shadow root.",
+        "Responder a eventos de clic y actualizar la vista."
+      ],
+      "requirements": [
+        "Registrá contador-local.",
+        "El valor inicial procede del atributo inicial.",
+        "Mostrá el valor en output.valor.",
+        "El botón debe tener la clase incrementar.",
+        "Cada clic suma uno."
+      ],
+      "language": "javascript",
+      "runner": "webcomponents",
+      "starterCode": "class ContadorLocal extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n    // Inicializá el estado.\n  }\n  connectedCallback() {\n    // Construí el botón y el output.\n  }\n}\n// Registrá el elemento.",
+      "tests": [
+        {
+          "label": "Muestra el valor inicial",
+          "expression": "document.querySelector('contador-local')?.shadowRoot?.querySelector('.valor')?.textContent",
+          "expected": "2"
+        },
+        {
+          "label": "Incrementa el valor",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "contador-local::shadow .incrementar"
+            }
+          ],
+          "expression": "document.querySelector('contador-local')?.shadowRoot?.querySelector('.valor')?.textContent",
+          "expected": "3"
+        },
+        {
+          "label": "Permite seguir incrementando",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "contador-local::shadow .incrementar"
+            }
+          ],
+          "expression": "document.querySelector('contador-local')?.shadowRoot?.querySelector('.valor')?.textContent",
+          "expected": "4"
+        }
+      ],
+      "hints": [
+        "Convertí el atributo inicial a número con Number(...).",
+        "Guardá el valor en this.valor.",
+        "Separá la actualización del estado y la representación visual en un método render()."
+      ],
+      "solutionCode": "class ContadorLocal extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n    this.valor = Number(this.getAttribute(\"inicial\") || 0);\n  }\n  connectedCallback() {\n    const output = document.createElement(\"output\");\n    output.className = \"valor\";\n    const button = document.createElement(\"button\");\n    button.className = \"incrementar\";\n    button.textContent = \"Sumar\";\n    button.addEventListener(\"click\", () => { this.valor += 1; this.render(); });\n    this.shadowRoot.replaceChildren(output, button);\n    this.render();\n  }\n  render() { this.shadowRoot.querySelector(\".valor\").textContent = String(this.valor); }\n}\ncustomElements.define(\"contador-local\", ContadorLocal);",
+      "solutionExplanation": "El componente inicializa su estado con el atributo. connectedCallback crea la interfaz una sola vez y conecta el evento. render actualiza solo el texto del output, sin reconstruir los controles ni perder listeners.",
+      "commonMistakes": [
+        "Olvidar convertir el atributo a number.",
+        "Crear el botón en cada render y duplicar listeners.",
+        "Modificar el DOM externo en vez de usar shadowRoot.",
+        "Registrar dos veces el mismo nombre de elemento."
+      ],
+      "estimatedMinutes": 18,
+      "fixtureHTML": "<contador-local inicial=\"2\"></contador-local>"
+    },
+    {
+      "id": "wc-atributos-observados",
+      "technology": "webcomponents",
+      "technologyName": "Web Components",
+      "difficulty": "avanzado",
+      "title": "Reaccioná a cambios de atributos",
+      "summary": "Usá observedAttributes y attributeChangedCallback para mantener el componente sincronizado.",
+      "statement": "Creá <producto-card>. Debe mostrar nombre y precio. Cuando cambie cualquiera de esos atributos, el contenido del shadow root debe actualizarse automáticamente.",
+      "objectives": [
+        "Declarar observedAttributes.",
+        "Implementar attributeChangedCallback.",
+        "Sincronizar atributos con la interfaz."
+      ],
+      "requirements": [
+        "Registrá producto-card.",
+        "Observá los atributos nombre y precio.",
+        "Mostrá el nombre en .nombre y el precio en .precio.",
+        "El cambio del atributo precio debe reflejarse en el componente."
+      ],
+      "language": "javascript",
+      "runner": "webcomponents",
+      "starterCode": "class ProductoCard extends HTMLElement {\n  static get observedAttributes() { return []; }\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n  }\n  connectedCallback() {\n    // Renderizá los atributos iniciales.\n  }\n  attributeChangedCallback(nombre, anterior, actual) {\n    // Actualizá el contenido cuando cambie un atributo observado.\n  }\n}\n// Registrá el elemento.",
+      "tests": [
+        {
+          "label": "Renderiza el nombre inicial",
+          "expression": "document.querySelector('producto-card')?.shadowRoot?.querySelector('.nombre')?.textContent",
+          "expected": "Teclado"
+        },
+        {
+          "label": "Renderiza el precio inicial",
+          "expression": "document.querySelector('producto-card')?.shadowRoot?.querySelector('.precio')?.textContent",
+          "expected": "45.5"
+        },
+        {
+          "label": "Actualiza el precio al cambiar el atributo",
+          "steps": [
+            {
+              "action": "attribute",
+              "selector": "producto-card",
+              "name": "precio",
+              "value": "39.9"
+            }
+          ],
+          "expression": "document.querySelector('producto-card')?.shadowRoot?.querySelector('.precio')?.textContent",
+          "expected": "39.9"
+        }
+      ],
+      "hints": [
+        "observedAttributes es una propiedad estática que devuelve los nombres que querés observar.",
+        "attributeChangedCallback recibe el nombre, el valor anterior y el nuevo.",
+        "Centralizá la actualización visual en un método render()."
+      ],
+      "solutionCode": "class ProductoCard extends HTMLElement {\n  static get observedAttributes() { return [\"nombre\", \"precio\"]; }\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n  }\n  connectedCallback() { this.render(); }\n  attributeChangedCallback() { if (this.isConnected) this.render(); }\n  render() {\n    const nombre = this.getAttribute(\"nombre\") || \"Producto\";\n    const precio = this.getAttribute(\"precio\") || \"0\";\n    this.shadowRoot.innerHTML = `<article><h2 class=\"nombre\"></h2><p>Precio: <strong class=\"precio\"></strong></p></article>`;\n    this.shadowRoot.querySelector(\".nombre\").textContent = nombre;\n    this.shadowRoot.querySelector(\".precio\").textContent = precio;\n  }\n}\ncustomElements.define(\"producto-card\", ProductoCard);",
+      "solutionExplanation": "El navegador invoca attributeChangedCallback solo para atributos incluidos en observedAttributes. render centraliza la presentación y usa textContent para insertar valores de forma segura.",
+      "commonMistakes": [
+        "No declarar observados los atributos que necesitás escuchar.",
+        "Actualizar solo el DOM inicial y olvidar los cambios posteriores.",
+        "No comprobar isConnected y renderizar antes de crear el shadow root.",
+        "Interpolar datos del usuario directamente en HTML."
+      ],
+      "estimatedMinutes": 25,
+      "fixtureHTML": "<producto-card nombre=\"Teclado\" precio=\"45.5\"></producto-card>"
+    },
+    {
+      "id": "wc-lista-tareas-eventos",
+      "technology": "webcomponents",
+      "technologyName": "Web Components",
+      "difficulty": "experto",
+      "title": "Creá una lista de tareas con eventos personalizados",
+      "summary": "Diseñá un componente reutilizable que emita eventos DOM propios.",
+      "statement": "Implementá <lista-tareas> con un input, un botón Agregar y una lista. Al agregar una tarea válida, debe aparecer un li y el componente debe emitir el evento personalizado tarea-agregada con el texto de la tarea en detail.",
+      "objectives": [
+        "Componer un custom element con Shadow DOM.",
+        "Gestionar eventos y estado interno.",
+        "Emitir CustomEvent con detail, bubbles y composed."
+      ],
+      "requirements": [
+        "El componente debe llamarse lista-tareas.",
+        "El input debe tener la clase nueva-tarea.",
+        "El botón debe tener la clase agregar.",
+        "Las tareas deben aparecer en li.tarea.",
+        "Al agregar, emití tarea-agregada con detail.texto.",
+        "No agregues tareas vacías."
+      ],
+      "language": "javascript",
+      "runner": "webcomponents",
+      "starterCode": "class ListaTareas extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n    // Prepará el arreglo interno de tareas.\n  }\n  connectedCallback() {\n    // Construí el formulario y registrá el evento.\n  }\n  agregarTarea(texto) {\n    // Validá, guardá y renderizá la tarea.\n    // Emití el evento personalizado.\n  }\n}\n// Registrá el elemento.",
+      "tests": [
+        {
+          "label": "Comienza sin tareas",
+          "expression": "document.querySelector('lista-tareas')?.shadowRoot?.querySelectorAll('.tarea').length",
+          "expected": 0
+        },
+        {
+          "label": "Agrega una tarea",
+          "steps": [
+            {
+              "action": "input",
+              "selector": "lista-tareas::shadow .nueva-tarea",
+              "value": "Estudiar componentes"
+            },
+            {
+              "action": "click",
+              "selector": "lista-tareas::shadow .agregar"
+            }
+          ],
+          "expression": "document.querySelector('lista-tareas')?.shadowRoot?.querySelector('.tarea')?.textContent",
+          "expected": "Estudiar componentes"
+        },
+        {
+          "label": "Emite el evento personalizado con el detalle",
+          "expression": "window.__challengeEvents[0]?.texto",
+          "expected": "Estudiar componentes"
+        },
+        {
+          "label": "No agrega entradas vacías",
+          "steps": [
+            {
+              "action": "input",
+              "selector": "lista-tareas::shadow .nueva-tarea",
+              "value": "   "
+            },
+            {
+              "action": "click",
+              "selector": "lista-tareas::shadow .agregar"
+            }
+          ],
+          "expression": "document.querySelector('lista-tareas')?.shadowRoot?.querySelectorAll('.tarea').length",
+          "expected": 1
+        }
+      ],
+      "hints": [
+        "Guardá las tareas en this.tareas.",
+        "Usá trim() para descartar cadenas vacías.",
+        "new CustomEvent('tarea-agregada', { detail: { texto }, bubbles: true, composed: true }) permite comunicar el cambio fuera del shadow root."
+      ],
+      "solutionCode": "class ListaTareas extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n    this.tareas = [];\n  }\n  connectedCallback() {\n    this.shadowRoot.innerHTML = `<form><input class=\"nueva-tarea\" aria-label=\"Nueva tarea\"><button class=\"agregar\" type=\"submit\">Agregar</button></form><ul class=\"lista\"></ul>`;\n    this.shadowRoot.querySelector(\"form\").addEventListener(\"submit\", event => {\n      event.preventDefault();\n      const input = this.shadowRoot.querySelector(\".nueva-tarea\");\n      this.agregarTarea(input.value);\n      input.value = \"\";\n    });\n  }\n  agregarTarea(texto) {\n    const limpio = String(texto).trim();\n    if (!limpio) return;\n    this.tareas.push(limpio);\n    const item = document.createElement(\"li\");\n    item.className = \"tarea\";\n    item.textContent = limpio;\n    this.shadowRoot.querySelector(\".lista\").append(item);\n    this.dispatchEvent(new CustomEvent(\"tarea-agregada\", { detail: { texto: limpio }, bubbles: true, composed: true }));\n  }\n}\ncustomElements.define(\"lista-tareas\", ListaTareas);",
+      "solutionExplanation": "El componente mantiene sus datos en this.tareas. El formulario evita el envío tradicional y delega la incorporación en agregarTarea. CustomEvent permite que la aplicación contenedora escuche el evento y reciba datos mediante detail.",
+      "commonMistakes": [
+        "No usar preventDefault en el formulario.",
+        "Aceptar cadenas que solo contienen espacios.",
+        "Emitir un evento Event común y olvidar el objeto detail.",
+        "Omitir composed cuando el evento debe atravesar el límite del Shadow DOM."
+      ],
+      "estimatedMinutes": 30,
+      "fixtureHTML": "<lista-tareas></lista-tareas>",
+      "captureEvents": [
+        "tarea-agregada"
+      ]
+    },
+    {
+      "id": "vue-saludo-props",
+      "technology": "vuejs",
+      "technologyName": "Vue.js",
+      "difficulty": "principiante",
+      "title": "Mostrá un saludo con props en Vue",
+      "summary": "Definí un componente Vue y recibí datos del componente padre.",
+      "statement": "Creá un componente llamado SaludoVue que reciba la propiedad nombre y muestre un encabezado con un saludo personalizado. El entorno lo monta con nombre=\"Ada\".",
+      "objectives": [
+        "Declarar un objeto de componente Vue.",
+        "Definir propiedades con props.",
+        "Usar interpolación en una plantilla."
+      ],
+      "requirements": [
+        "El objeto debe llamarse SaludoVue.",
+        "Debe declarar la prop nombre de tipo String.",
+        "La plantilla debe incluir h2.saludo.",
+        "Debe mostrar ¡Hola, Ada!."
+      ],
+      "language": "javascript",
+      "runner": "vue",
+      "starterCode": "const SaludoVue = {\n  // Declarar props y template.\n};",
+      "tests": [
+        {
+          "label": "Muestra el saludo recibido por props",
+          "expression": "document.querySelector('.saludo')?.textContent",
+          "expected": "¡Hola, Ada!"
+        }
+      ],
+      "hints": [
+        "Vue recibe las propiedades mediante la opción props.",
+        "La plantilla puede escribirse en la propiedad template.",
+        "La interpolación {{ nombre }} inserta el valor reactivo."
+      ],
+      "solutionCode": "const SaludoVue = {\n  props: { nombre: { type: String, default: \"visitante\" } },\n  template: '<h2 class=\"saludo\">¡Hola, {{ nombre }}!</h2>'\n};",
+      "solutionExplanation": "SaludoVue declara una prop tipada y una plantilla. Vue la expone en el contexto de la plantilla y actualiza la salida cuando cambia su valor.",
+      "commonMistakes": [
+        "Olvidar declarar la prop.",
+        "Usar una interpolación fuera de la plantilla.",
+        "Escribir un nombre de componente distinto del indicado."
+      ],
+      "estimatedMinutes": 12,
+      "componentName": "SaludoVue",
+      "props": {
+        "nombre": "Ada"
+      }
+    },
+    {
+      "id": "vue-contador-ref",
+      "technology": "vuejs",
+      "technologyName": "Vue.js",
+      "difficulty": "intermedio",
+      "title": "Creá un contador con ref",
+      "summary": "Manejá estado reactivo con Composition API.",
+      "statement": "Construí un contador cuyo valor inicial se recibe mediante la prop inicial. El botón debe incrementar el estado y la plantilla debe reflejar cada cambio.",
+      "objectives": [
+        "Importar conceptualmente ref desde Vue global.",
+        "Crear y modificar una referencia reactiva.",
+        "Vincular un método a un evento de plantilla."
+      ],
+      "requirements": [
+        "El componente debe llamarse ContadorVue.",
+        "Debe aceptar la prop inicial.",
+        "El valor debe aparecer en output.valor.",
+        "El botón debe tener la clase incrementar.",
+        "Cada clic debe sumar uno."
+      ],
+      "language": "javascript",
+      "runner": "vue",
+      "starterCode": "const ContadorVue = {\n  props: { inicial: { type: Number, default: 0 } },\n  setup(props) {\n    // Creá el estado y el método incrementar.\n    return {};\n  },\n  template: ''\n};",
+      "tests": [
+        {
+          "label": "Muestra el valor inicial",
+          "expression": "document.querySelector('.valor')?.textContent",
+          "expected": "3"
+        },
+        {
+          "label": "Incrementa una vez",
+          "steps": [
+            {
+              "action": "click",
+              "selector": ".incrementar"
+            }
+          ],
+          "expression": "document.querySelector('.valor')?.textContent",
+          "expected": "4"
+        },
+        {
+          "label": "Actualiza el valor en cada clic",
+          "steps": [
+            {
+              "action": "click",
+              "selector": ".incrementar"
+            }
+          ],
+          "expression": "document.querySelector('.valor')?.textContent",
+          "expected": "5"
+        }
+      ],
+      "hints": [
+        "En setup recibís las props como primer argumento.",
+        "Creá const valor = Vue.ref(props.inicial).",
+        "El método incrementar puede hacer valor.value += 1; devolvé valor e incrementar."
+      ],
+      "solutionCode": "const ContadorVue = {\n  props: { inicial: { type: Number, default: 0 } },\n  setup(props) {\n    const valor = Vue.ref(props.inicial);\n    const incrementar = () => { valor.value += 1; };\n    return { valor, incrementar };\n  },\n  template: '<section><output class=\"valor\">{{ valor }}</output><button class=\"incrementar\" @click=\"incrementar\">Sumar</button></section>'\n};",
+      "solutionExplanation": "ref crea una referencia reactiva. En JavaScript se modifica mediante valor.value; en la plantilla Vue desenvuelve automáticamente la referencia. El método se devuelve desde setup para quedar disponible en template.",
+      "commonMistakes": [
+        "Modificar la referencia sin usar .value en setup.",
+        "No devolver las referencias desde setup.",
+        "Usar onclick en lugar de @click en una plantilla Vue."
+      ],
+      "estimatedMinutes": 18,
+      "componentName": "ContadorVue",
+      "props": {
+        "inicial": 3
+      }
+    },
+    {
+      "id": "vue-lista-computed",
+      "technology": "vuejs",
+      "technologyName": "Vue.js",
+      "difficulty": "avanzado",
+      "title": "Filtrá elementos con computed",
+      "summary": "Separá el estado de búsqueda del resultado derivado.",
+      "statement": "Recibís una lista de tecnologías y debés crear un buscador reactivo. La lista debe actualizarse mientras se escribe y la búsqueda no debe distinguir mayúsculas.",
+      "objectives": [
+        "Crear estado con ref.",
+        "Calcular resultados mediante computed.",
+        "Enlazar un input con v-model."
+      ],
+      "requirements": [
+        "El componente debe llamarse ListaVue.",
+        "Debe recibir items.",
+        "El input debe tener la clase busqueda y usar v-model.",
+        "Los resultados deben ser li.elemento.",
+        "Usá computed para filtrar."
+      ],
+      "language": "javascript",
+      "runner": "vue",
+      "starterCode": "const ListaVue = {\n  props: { items: { type: Array, default: () => [] } },\n  setup(props) {\n    // Definí termino y filtrados.\n    return {};\n  },\n  template: ''\n};",
+      "tests": [
+        {
+          "label": "Muestra los tres elementos al iniciar",
+          "expression": "document.querySelectorAll('.elemento').length",
+          "expected": 3
+        },
+        {
+          "label": "Filtra cuando cambia el input",
+          "steps": [
+            {
+              "action": "input",
+              "selector": ".busqueda",
+              "value": "vue"
+            }
+          ],
+          "expression": "document.querySelectorAll('.elemento').length",
+          "expected": 1
+        },
+        {
+          "label": "Conserva el resultado correcto",
+          "expression": "document.querySelector('.elemento')?.textContent",
+          "expected": "Vue.js"
+        }
+      ],
+      "hints": [
+        "Creá termino con Vue.ref('').",
+        "computed recibe una función que devuelve el arreglo filtrado.",
+        "Usá item.toLowerCase().includes(termino.value.toLowerCase())."
+      ],
+      "solutionCode": "const ListaVue = {\n  props: { items: { type: Array, default: () => [] } },\n  setup(props) {\n    const termino = Vue.ref(\"\");\n    const filtrados = Vue.computed(() => props.items.filter(item => item.toLowerCase().includes(termino.value.toLowerCase())));\n    return { termino, filtrados };\n  },\n  template: '<section><input class=\"busqueda\" v-model=\"termino\" aria-label=\"Buscar\"><ul><li class=\"elemento\" v-for=\"item in filtrados\" :key=\"item\">{{ item }}</li></ul></section>'\n};",
+      "solutionExplanation": "computed crea un valor derivado que se recalcula cuando cambian sus dependencias reactivas. v-model conecta el input con termino. La lista original se conserva y la plantilla itera sobre filtrados.",
+      "commonMistakes": [
+        "Usar ref para guardar también la lista filtrada y sincronizarla manualmente.",
+        "Olvidar .value dentro del código JavaScript.",
+        "No usar una key estable en v-for.",
+        "Comparar texto sin normalizar mayúsculas."
+      ],
+      "estimatedMinutes": 25,
+      "componentName": "ListaVue",
+      "props": {
+        "items": [
+          "React",
+          "Vue.js",
+          "Svelte"
+        ]
+      }
+    },
+    {
+      "id": "vue-carrito-computed",
+      "technology": "vuejs",
+      "technologyName": "Vue.js",
+      "difficulty": "experto",
+      "title": "Calculá un carrito con estado reactivo",
+      "summary": "Combiná reactive, computed y métodos para administrar cantidades.",
+      "statement": "Construí un carrito a partir de una lista de productos. Cada botón agrega una unidad. El total debe ser un valor derivado y no un estado duplicado.",
+      "objectives": [
+        "Crear estado compuesto con reactive.",
+        "Calcular el total con computed.",
+        "Actualizar cantidades mediante métodos."
+      ],
+      "requirements": [
+        "El componente debe llamarse CarritoVue.",
+        "Debe recibir products.",
+        "Usá reactive para las cantidades.",
+        "Usá computed para el total.",
+        "Cada botón debe incluir data-add con el id del producto.",
+        "Mostrá el importe en output.total."
+      ],
+      "language": "javascript",
+      "runner": "vue",
+      "starterCode": "const CarritoVue = {\n  props: { products: { type: Array, default: () => [] } },\n  setup(props) {\n    // Definí cantidades, agregar y total.\n    return {};\n  },\n  template: ''\n};",
+      "tests": [
+        {
+          "label": "El total inicial es cero",
+          "expression": "document.querySelector('.total')?.textContent",
+          "expected": "0"
+        },
+        {
+          "label": "Agrega el producto",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "[data-add=\"1\"]"
+            }
+          ],
+          "expression": "document.querySelector('.total')?.textContent",
+          "expected": "120"
+        },
+        {
+          "label": "Acumula la segunda unidad",
+          "steps": [
+            {
+              "action": "click",
+              "selector": "[data-add=\"1\"]"
+            }
+          ],
+          "expression": "document.querySelector('.total')?.textContent",
+          "expected": "240"
+        }
+      ],
+      "hints": [
+        "Creá cantidades con Vue.reactive({}).",
+        "En agregar(id), incrementá cantidades[id] con el valor anterior o cero.",
+        "computed debe recorrer products y multiplicar precio por cantidad."
+      ],
+      "solutionCode": "const CarritoVue = {\n  props: { products: { type: Array, default: () => [] } },\n  setup(props) {\n    const cantidades = Vue.reactive({});\n    const agregar = id => { cantidades[id] = (cantidades[id] || 0) + 1; };\n    const total = Vue.computed(() => props.products.reduce((sum, product) => sum + product.price * (cantidades[product.id] || 0), 0));\n    return { cantidades, agregar, total };\n  },\n  template: '<section><button v-for=\"product in products\" :key=\"product.id\" :data-add=\"product.id\" @click=\"agregar(product.id)\">Agregar {{ product.name }}</button><output class=\"total\">{{ total }}</output></section>'\n};",
+      "solutionExplanation": "reactive crea un objeto cuyas propiedades son reactivas. El método agregar cambia la cantidad asociada al id. computed recalcula el total cuando cambian esas cantidades o los productos.",
+      "commonMistakes": [
+        "Reemplazar el objeto reactivo completo sin necesidad.",
+        "Guardar el total como estado duplicado.",
+        "Olvidar inicializar la cantidad antes de sumarla.",
+        "No usar key en el v-for."
+      ],
+      "estimatedMinutes": 30,
+      "componentName": "CarritoVue",
+      "props": {
+        "products": [
+          {
+            "id": 1,
+            "name": "Libro",
+            "price": 120
+          },
+          {
+            "id": 2,
+            "name": "Cuaderno",
+            "price": 80
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-config-entorno",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "principiante",
+      "title": "Leé la configuración del entorno",
+      "summary": "Usá process.env y convertí valores de configuración.",
+      "statement": "Implementá crearConfiguracion para obtener PORT, NODE_ENV y API_PREFIX desde el entorno. PORT debe convertirse a número y deben existir valores predeterminados.",
+      "objectives": [
+        "Reconocer process.env.",
+        "Convertir una variable de entorno numérica.",
+        "Definir valores predeterminados seguros."
+      ],
+      "requirements": [
+        "Exportá crearConfiguracion mediante module.exports.",
+        "PORT debe convertirse a number y usar 3000 como predeterminado.",
+        "production debe ser true solo cuando NODE_ENV sea production.",
+        "apiPrefix debe usar /api si no está definido."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "function crearConfiguracion(env = process.env) {\n  // Leé las variables y devolvé el objeto de configuración.\n}\nmodule.exports = { crearConfiguracion };",
+      "tests": [
+        {
+          "label": "Convierte y devuelve la configuración del entorno",
+          "expression": "module.exports.crearConfiguracion()",
+          "expected": {
+            "port": 4173,
+            "production": true,
+            "apiPrefix": "/api/v1"
+          }
+        }
+      ],
+      "hints": [
+        "process.env contiene valores de texto.",
+        "Convertí PORT usando Number(...).",
+        "Usá el operador || para proporcionar valores por defecto."
+      ],
+      "solutionCode": "function crearConfiguracion(env = process.env) {\n  return {\n    port: Number(env.PORT || 3000),\n    production: env.NODE_ENV === \"production\",\n    apiPrefix: env.API_PREFIX || \"/api\"\n  };\n}\nmodule.exports = { crearConfiguracion };",
+      "solutionExplanation": "process.env permite consultar variables definidas en el entorno donde se ejecuta Node.js. Como sus valores son cadenas, PORT se convierte explícitamente a number. Los valores predeterminados hacen que la aplicación pueda arrancar sin una configuración completa.",
+      "commonMistakes": [
+        "Tratar PORT como número sin convertirlo.",
+        "Comparar NODE_ENV con una cadena distinta de production.",
+        "Olvidar los valores predeterminados.",
+        "Usar variables globales del navegador en un módulo Node."
+      ],
+      "estimatedMinutes": 12,
+      "environment": {
+        "NODE_ENV": "production",
+        "PORT": "4173",
+        "API_PREFIX": "/api/v1"
+      }
+    },
+    {
+      "id": "node-path-modulos",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "intermedio",
+      "title": "Construí rutas de archivos con node:path",
+      "summary": "Practicá módulos CommonJS y utilidades de rutas.",
+      "statement": "Implementá funciones que construyan la ruta de un recurso dentro de la carpeta pública y obtengan la extensión de un archivo. Usá el módulo path en vez de concatenar separadores manualmente.",
+      "objectives": [
+        "Importar un módulo nativo con require.",
+        "Usar path.join y path.extname.",
+        "Exportar funciones mediante CommonJS."
+      ],
+      "requirements": [
+        "Importá node:path.",
+        "crearRutaAsset debe unir /srv/app/public con el nombre recibido.",
+        "obtenerExtension debe devolver la extensión, incluido el punto.",
+        "Exportá ambas funciones en module.exports."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "const path = require('node:path');\n\nfunction crearRutaAsset(nombre) {\n  // Construí una ruta dentro de public.\n}\n\nfunction obtenerExtension(nombre) {\n  // Devolvé la extensión del archivo.\n}\n\nmodule.exports = { crearRutaAsset, obtenerExtension };",
+      "tests": [
+        {
+          "label": "Construye una ruta con separadores del sistema",
+          "expression": "module.exports.crearRutaAsset('css/site.css')",
+          "expected": "/srv/app/public/css/site.css"
+        },
+        {
+          "label": "Obtiene la extensión final",
+          "expression": "module.exports.obtenerExtension('main.bundle.js')",
+          "expected": ".js"
+        },
+        {
+          "label": "Devuelve una cadena vacía si no hay extensión",
+          "expression": "module.exports.obtenerExtension('README')",
+          "expected": ""
+        }
+      ],
+      "hints": [
+        "require('node:path') carga el módulo nativo de rutas.",
+        "path.join combina segmentos y normaliza separadores.",
+        "path.extname devuelve la extensión del último segmento."
+      ],
+      "solutionCode": "const path = require(\"node:path\");\n\nfunction crearRutaAsset(nombre) {\n  if (path.isAbsolute(nombre)) throw new Error(\"La ruta debe ser relativa\");\n  return path.join(\"/srv/app/public\", nombre);\n}\n\nfunction obtenerExtension(nombre) {\n  return path.extname(nombre);\n}\n\nmodule.exports = { crearRutaAsset, obtenerExtension };",
+      "solutionExplanation": "CommonJS permite importar módulos con require y exportar valores mediante module.exports. path.join evita concatenaciones frágiles de barras y path.extname extrae la extensión del archivo.",
+      "commonMistakes": [
+        "Concatenar rutas con + en vez de usar path.",
+        "Olvidar exportar las funciones.",
+        "Confundir basename con extname.",
+        "No validar las rutas absolutas cuando la función requiere rutas relativas."
+      ],
+      "estimatedMinutes": 18,
+      "environment": {}
+    },
+    {
+      "id": "node-event-emitter",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "avanzado",
+      "title": "Organizá eventos con EventEmitter",
+      "summary": "Desacoplá la emisión de eventos de las funciones que los procesan.",
+      "statement": "Creá un canal de pedidos con EventEmitter. El canal debe contar cuántas veces se emite el evento pedido-creado y ofrecer un método para registrar un listener de una sola ejecución.",
+      "objectives": [
+        "Importar EventEmitter desde node:events.",
+        "Registrar listeners con on y once.",
+        "Emitir eventos y mantener contadores."
+      ],
+      "requirements": [
+        "Exportá crearCanalPedidos y contarUnaVez.",
+        "crearCanalPedidos debe devolver emitter y getNotificaciones.",
+        "Cada evento pedido-creado incrementa el contador.",
+        "contarUnaVez debe ejecutar su listener una sola vez aunque el evento se emita dos veces."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "const { EventEmitter } = require('node:events');\n\nfunction crearCanalPedidos() {\n  // Creá el emisor y el contador de notificaciones.\n}\n\nfunction contarUnaVez() {\n  // Registrá un listener que se ejecute una sola vez.\n}\n\nmodule.exports = { crearCanalPedidos, contarUnaVez };",
+      "tests": [
+        {
+          "label": "Cuenta los eventos recibidos",
+          "expression": "(function(){const canal=module.exports.crearCanalPedidos();canal.emitter.emit('pedido-creado');canal.emitter.emit('pedido-creado');return canal.getNotificaciones();})()",
+          "expected": 2
+        },
+        {
+          "label": "El listener once solo se ejecuta una vez",
+          "expression": "module.exports.contarUnaVez()",
+          "expected": 1
+        }
+      ],
+      "hints": [
+        "Instanciá EventEmitter con new EventEmitter().",
+        "Usá on para registrar un listener persistente.",
+        "Usá once para un listener que se elimina automáticamente después del primer evento."
+      ],
+      "solutionCode": "const { EventEmitter } = require(\"node:events\");\n\nfunction crearCanalPedidos() {\n  const emitter = new EventEmitter();\n  let notificaciones = 0;\n  emitter.on(\"pedido-creado\", () => { notificaciones += 1; });\n  return { emitter, getNotificaciones: () => notificaciones };\n}\n\nfunction contarUnaVez() {\n  const emitter = new EventEmitter();\n  let total = 0;\n  emitter.once(\"cerrar\", () => { total += 1; });\n  emitter.emit(\"cerrar\");\n  emitter.emit(\"cerrar\");\n  return total;\n}\n\nmodule.exports = { crearCanalPedidos, contarUnaVez };",
+      "solutionExplanation": "EventEmitter implementa el patrón observador. on registra una función que permanece activa y once registra una función de un único uso. El emisor no necesita conocer los detalles de quienes reaccionan al evento.",
+      "commonMistakes": [
+        "Invocar el listener directamente en vez de emitir el evento.",
+        "Usar on cuando se requiere una única ejecución.",
+        "No devolver el emisor desde la función de fábrica.",
+        "Compartir contadores globales entre instancias."
+      ],
+      "estimatedMinutes": 25,
+      "environment": {}
+    },
+    {
+      "id": "node-fs-promises",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "experto",
+      "title": "Guardá y leé un informe con fs/promises",
+      "summary": "Practicá operaciones asíncronas de archivos y manejo de errores.",
+      "statement": "Implementá guardarInforme y leerInforme usando node:fs/promises. La primera función debe crear el directorio si falta, escribir el contenido y devolver lo leído. La segunda debe devolver null cuando el archivo no exista.",
+      "objectives": [
+        "Importar fs/promises y path.",
+        "Usar async/await con operaciones de archivos.",
+        "Manejar errores identificando el código ENOENT."
+      ],
+      "requirements": [
+        "Importá node:fs/promises y node:path.",
+        "guardarInforme debe crear el directorio recursivamente.",
+        "Escribí y luego leé el archivo con codificación utf8.",
+        "leerInforme debe devolver null ante ENOENT y propagar otros errores.",
+        "Exportá ambas funciones mediante module.exports."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "const fs = require('node:fs/promises');\nconst path = require('node:path');\n\nasync function guardarInforme(ruta, contenido) {\n  // Creá el directorio, escribí y volvé a leer el archivo.\n}\n\nasync function leerInforme(ruta) {\n  // Capturá solo el error de archivo inexistente.\n}\n\nmodule.exports = { guardarInforme, leerInforme };",
+      "tests": [
+        {
+          "label": "Crea el directorio y guarda el contenido",
+          "expression": "module.exports.guardarInforme('/workspace/reportes/ventas.txt', 'Ventas: 42')",
+          "expected": "Ventas: 42"
+        },
+        {
+          "label": "Devuelve null si el archivo no existe",
+          "expression": "module.exports.leerInforme('/workspace/no-existe.txt')",
+          "expected": null
+        }
+      ],
+      "hints": [
+        "path.dirname(ruta) obtiene el directorio padre.",
+        "await fs.mkdir(directorio, { recursive: true }) crea los directorios necesarios.",
+        "Leé el archivo con await fs.readFile(ruta, 'utf8') y capturá ENOENT."
+      ],
+      "solutionCode": "const fs = require(\"node:fs/promises\");\nconst path = require(\"node:path\");\n\nasync function guardarInforme(ruta, contenido) {\n  await fs.mkdir(path.dirname(ruta), { recursive: true });\n  await fs.writeFile(ruta, contenido, \"utf8\");\n  return fs.readFile(ruta, \"utf8\");\n}\n\nasync function leerInforme(ruta) {\n  try {\n    return await fs.readFile(ruta, \"utf8\");\n  } catch (error) {\n    if (error.code === \"ENOENT\") return null;\n    throw error;\n  }\n}\n\nmodule.exports = { guardarInforme, leerInforme };",
+      "solutionExplanation": "fs/promises ofrece operaciones asíncronas que devuelven promesas. mkdir con recursive evita fallar si el directorio ya existe o si faltan carpetas intermedias. leerInforme captura solo ENOENT: los demás errores deben propagarse para no ocultar fallos inesperados.",
+      "commonMistakes": [
+        "Usar las variantes síncronas en una operación asíncrona.",
+        "Olvidar await y devolver una promesa donde se espera contenido.",
+        "Capturar cualquier error y devolver null, ocultando errores reales.",
+        "No crear el directorio antes de escribir el archivo."
+      ],
+      "estimatedMinutes": 30,
+      "environment": {},
+      "virtualFiles": {}
     }
   ]
 }
