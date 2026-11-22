@@ -20507,7 +20507,7 @@
               "description": "Usá una URI obtenida desde Atlas o el administrador.",
               "code": "# Ejecutá en la terminal y obtené la URI desde un secreto.\nmongosh \"$MONGODB_URI\"",
               "explanation": "La URI puede contener credenciales: no la pegues en commits, capturas ni logs.",
-              "language": "javascript"
+              "language": "bash"
             },
             {
               "title": "Explorar la base",
@@ -22039,7 +22039,7 @@
           "purpose": "El driver permite parametrizar Collection con tipos de documento. TypeScript mejora autocompletado y comprobación estática, pero sus anotaciones desaparecen en runtime y no validan documentos externos.",
           "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
           "syntax": "interface Novela { titulo:string; estado:... } · Collection<Novela>",
-          "syntaxLanguage": "javascript",
+          "syntaxLanguage": "typescript",
           "level": "Inicial a avanzado",
           "examples": [
             {
@@ -22047,14 +22047,14 @@
               "description": "Vinculá una interfaz con Collection.",
               "code": "// Los genéricos describen el contrato estático de los documentos.\nimport { Collection, ObjectId } from 'mongodb';\ninterface Novela { _id?: ObjectId; titulo: string; estado: 'borrador' | 'publicada'; }\nconst novelas: Collection<Novela> = db.collection<Novela>('novelas');",
               "explanation": "El genérico aporta tipos a las operaciones; no crea una validación automática en la base.",
-              "language": "javascript"
+              "language": "typescript"
             },
             {
               "title": "Tratar un resultado ausente",
               "description": "findOne puede devolver null.",
               "code": "// Comprobá null antes de acceder a las propiedades.\nconst novela = await novelas.findOne({ titulo: 'Re:Zero' });\nif (!novela) throw new Error('Novela no encontrada');\nconsole.log(novela.estado);",
               "explanation": "La comprobación evita acceder a propiedades de un resultado inexistente.",
-              "language": "javascript"
+              "language": "typescript"
             }
           ],
           "parameters": [],
