@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "../data/challenges.json";
+  const DATA_URL = document.body.dataset.page === "challenge-detail" ? "../../data/challenges.json" : "../data/challenges.json";
   const STORAGE_KEY = "webdevbook.challenges.v1";
   const LEVEL_NAMES = {
     principiante: "Principiante",
