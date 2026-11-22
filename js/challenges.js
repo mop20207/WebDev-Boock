@@ -409,7 +409,7 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
 
   function htmlCssDocument(html, css, testScript, nonce) {
     const policy = testScript
-      ? "default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-" + nonce + "'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'"
+      ? "default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-" + nonce + "' 'unsafe-eval'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'"
       : "default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'";
     const cleanHtml = String(html)
       .replace(/<base\b[^>]*>/gi, "")
