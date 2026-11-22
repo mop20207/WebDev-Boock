@@ -547,6 +547,7 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     let libraries = "";
     if (challenge.runner === "react") {
       libraries = "<script src=\"https://unpkg.com/react@18.3.1/umd/react.production.min.js\"></script>" +
+        "<script src=\"https://unpkg.com/scheduler@0.23.2/umd/scheduler.production.min.js\"></script>" +
         "<script src=\"https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js\"></script>" +
         "<script src=\"https://unpkg.com/@babel/standalone@7.26.10/babel.min.js\"></script>";
     } else if (challenge.runner === "vue") {
