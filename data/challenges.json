@@ -2643,7 +2643,8 @@
             ]
           }
         }
-      }
+      },
+      "functionName": "obtenerUsuarios"
     },
     {
       "id": "api-post-json",
@@ -2716,7 +2717,8 @@
             "completada": false
           }
         }
-      }
+      },
+      "functionName": "crearTarea"
     },
     {
       "id": "api-paginacion",
@@ -2826,7 +2828,8 @@
             "nextPage": null
           }
         }
-      }
+      },
+      "functionName": "obtenerTodosLosLibros"
     },
     {
       "id": "api-auth-timeout-error",
@@ -2895,7 +2898,8 @@
             "rol": "editora"
           }
         }
-      }
+      },
+      "functionName": "obtenerPerfil"
     },
     {
       "id": "testing-primeras-aserciones",
