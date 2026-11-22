@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="Biblioteca educativa de Python: fundamentos, estructuras de datos, funciones, POO, archivos, pruebas y programación avanzada.">
+  <title>Biblioteca de Python | WebDev Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/python-library.css">
+  <script defer src="../js/theme.js"></script>
+  <script defer src="../js/navigation.js"></script>
+  <script defer src="../js/python-library.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/icon.svg">
+  <link rel="stylesheet" href="../css/pwa.css">
+  <script defer src="../js/pwa.js"></script>
+</head>
+<body data-page="python">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+    <div class="sidebar-label">MENÚ PRINCIPAL</div>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a class="nav-link" href="../index.html"><span class="nav-icon">⌂</span> Inicio</a>
+      <a class="nav-link" href="html.html"><span class="nav-icon html-icon">5</span> HTML</a>
+      <a class="nav-link" href="css.html"><span class="nav-icon css-icon">✳</span> CSS</a>
+      <a class="nav-link" href="javascript.html"><span class="nav-icon js-icon">JS</span> JavaScript</a>
+      <a class="nav-link" href="editor.html"><span class="nav-icon">⌘</span> Editor</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="tools.html?tool=terminal">$_ Terminal Linux</a>
+      <a class="nav-link" href="tools.html?tool=git">⑂ Git y GitHub</a>
+      <a class="nav-link" href="tools.html?tool=npm">⬡ NPM</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="tools.html?tool=react">⚛ React</a>
+      <a class="nav-link" href="tools.html?tool=webcomponents">◇ Web Components</a>
+      <a class="nav-link" href="tools.html?tool=vuejs">V Vue.js</a>
+      <a class="nav-link" href="tools.html?tool=nodejs">⬢ Node.js</a>
+      <a class="nav-link" href="tools.html?tool=astro">✦ Astro</a>
+      <a class="nav-link" href="tools.html?tool=phaser">🎮 Phaser</a>
+      <a class="nav-link" href="tools.html?tool=typescript">TS TypeScript</a>
+      <a class="nav-link" href="tools.html?tool=nextjs">N Next.js</a>
+      <a class="nav-link" href="tools.html?tool=express">EX Express.js</a>
+      <a class="nav-link" href="tools.html?tool=sql-postgres">SQL PostgreSQL</a>
+      <a class="nav-link" href="tools.html?tool=mongodb">MDB MongoDB</a>
+      <a class="nav-link" href="tools.html?tool=apis">API APIs</a>
+      <a class="nav-link" href="tools.html?tool=testing">✓ Testing</a>
+      <a class="nav-link" href="tools.html?tool=docker-deploy">DK Docker</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="challenges.html">⌁ Retos interactivos</a>
+      <a class="nav-link" href="projects.html">▦ Biblioteca de proyectos</a>
+      <a class="nav-link" href="games.html">🎮 Laboratorio de juegos</a>
+      <a class="nav-link active" href="python.html" aria-current="page"><span class="nav-icon">Py</span> Biblioteca de Python</a>
+      <a class="nav-link" href="java.html"><span class="nav-icon">☕</span> Biblioteca de Java</a>
+      <a class="nav-link" href="../index.html#favoritos">☆ Favoritos</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Aprendé paso a paso</strong><p>Leé, probá los ejemplos y aplicá cada concepto en un ejercicio.</p></div>
+      <button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button>
+      <div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><strong>Python</strong></div>
+      <div class="python-top-progress" id="pythonProgressLabel">0 de 37 artículos completados</div>
+      <button class="top-icon" id="topThemeToggle" type="button" aria-label="Cambiar tema">◐</button>
+    </header>
+    <div class="page-content python-content">
+      <a class="tools-back-link" href="../index.html">← Volver al inicio</a>
+      <section class="python-hero">
+        <div class="eyebrow"><span class="status-dot"></span> PARTE 3 / BLOQUE B · BIBLIOTECA DE PYTHON</div>
+        <div class="python-hero-layout">
+          <div>
+            <h1>Aprendé Python<br><span>desde los fundamentos.</span></h1>
+            <p>Una ruta progresiva desde las primeras instrucciones hasta la programación orientada a objetos, los archivos, las pruebas y conceptos avanzados. Cada artículo incluye ejemplos comentados y una práctica para resolver.</p>
+            <div class="python-hero-actions">
+              <a class="button button-primary" href="#pythonCatalog">Explorar contenidos <span>→</span></a>
+              <a class="button button-ghost" href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">Descargar Python ↗</a>
+            </div>
+          </div>
+          <div class="python-mark" aria-hidden="true"><span>Py</span><i>3.15</i><b>{ }</b></div>
+        </div>
+        <div class="python-stats">
+          <div><strong id="pythonArticleTotal">37</strong><span>artículos</span></div>
+          <div><strong id="pythonCategoryTotal">9</strong><span>categorías</span></div>
+          <div><strong id="pythonCompletedTotal">0</strong><span>completados</span></div>
+          <div><strong id="pythonFavoriteTotal">0</strong><span>favoritos</span></div>
+        </div>
+        <p class="python-version-note">Contenido organizado para Python 3.15.2 · <a href="https://docs.python.org/3.15/" target="_blank" rel="noopener noreferrer">Documentación oficial ↗</a></p>
+      </section>
+
+      <section class="python-catalog-section" id="pythonCatalog">
+        <div class="section-heading">
+          <div><div class="eyebrow">RECORRIDO DE APRENDIZAJE</div><h2>Explorá los temas</h2></div>
+          <span class="section-note">Elegí una categoría o buscá un concepto</span>
+        </div>
+        <div class="python-controls">
+          <label class="python-search"><span>⌕</span><input id="pythonSearch" type="search" placeholder="Buscar funciones, métodos, conceptos..." autocomplete="off"></label>
+          <label class="python-category-select">Categoría<select id="pythonCategoryFilter"><option value="">Todas las categorías</option></select></label>
+          <div class="python-view-filters" role="group" aria-label="Filtrar artículos">
+            <button type="button" class="python-filter active" data-filter="all" aria-pressed="true">Todos</button>
+            <button type="button" class="python-filter" data-filter="pending" aria-pressed="false">Pendientes</button>
+            <button type="button" class="python-filter" data-filter="favorites" aria-pressed="false">★ Favoritos</button>
+          </div>
+        </div>
+        <p class="python-result-count" id="pythonResultCount" aria-live="polite">Cargando contenidos…</p>
+        <div id="pythonCategoryGrid" class="python-category-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="pythonArticleView" class="python-article-view" hidden aria-live="polite"></section>
+      <p id="pythonStatus" class="sr-only" role="status" aria-live="polite"></p>
+      <footer class="footer"><span>WebDev Book · Biblioteca de Python</span><span>Leé · Probá · Practicá · Repetí</span></footer>
+    </div>
+  </main>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+</body>
+</html>
