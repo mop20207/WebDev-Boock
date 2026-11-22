@@ -20,6 +20,10 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 
 El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
+## Biblioteca de proyectos
+
+La sección de proyectos comienza con 12 prácticas guiadas en tres niveles: cuatro principiantes, cinco intermedias y tres avanzadas. Incluye tarjetas, landing pages, calculadora, reloj, lista de tareas, catálogos, panel administrativo, dashboard de clima, API REST, blog con PostgreSQL y tienda full-stack. Cada ficha presenta objetivos, tecnologías, un archivo de referencia, pasos de construcción y ampliaciones. La biblioteca dispone de búsqueda y filtros por nivel y tecnología.
+
 ## Retos interactivos
 
 La sección independiente de retos permite filtrar ejercicios por tecnología y dificultad (principiante, intermedio, avanzado y experto). Cada reto puede incluir el enunciado, objetivos, requisitos, editor, pruebas, pistas progresivas, solución explicada, errores habituales y seguimiento local del progreso.
