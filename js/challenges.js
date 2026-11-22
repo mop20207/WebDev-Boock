@@ -1129,7 +1129,17 @@ const vi = { fn: viFn };
 const payload = __PAYLOAD__;
 const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
 const normalize = rows => rows.map(row => Object.fromEntries(Object.entries(row).sort(([a], [b]) => a.localeCompare(b))));
-const same = (a, b) => JSON.stringify(normalize(a)) === JSON.stringify(normalize(b));
+function sameValue(actual, expected) {
+  if (typeof actual === "number" && typeof expected === "string" && expected.trim() !== "" && Number.isFinite(Number(expected))) return actual === Number(expected);
+  if (typeof expected === "number" && typeof actual === "string" && actual.trim() !== "" && Number.isFinite(Number(actual))) return Number(actual) === expected;
+  if (Array.isArray(actual) && Array.isArray(expected)) return actual.length === expected.length && actual.every((value, index) => sameValue(value, expected[index]));
+  if (actual && expected && typeof actual === "object" && typeof expected === "object") {
+    const a = Object.keys(actual).sort(), b = Object.keys(expected).sort();
+    return a.length === b.length && a.every((key, index) => key === b[index] && sameValue(actual[key], expected[key]));
+  }
+  return Object.is(actual, expected);
+}
+const same = (a, b) => sameValue(normalize(a), normalize(b));
 (async () => {
   let db;
   try {
