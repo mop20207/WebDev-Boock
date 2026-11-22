@@ -3230,10 +3230,9 @@
         }
       ],
       "hints": [
-        "Nombrá la primera etapa con AS deps.",
-        "La segunda instrucción FROM inicia una nueva etapa.",
-        "COPY --from=deps copia archivos de la etapa anterior.",
-        "USER node cambia el usuario para las instrucciones posteriores y el proceso del contenedor."
+        "Nombrá la primera etapa con AS deps; cada nueva instrucción FROM inicia otra etapa.",
+        "COPY --from=deps copia archivos desde la etapa de instalación a la etapa final.",
+        "USER node cambia al usuario sin privilegios para ejecutar la aplicación."
       ],
       "solutionCode": "FROM node:22-alpine AS deps\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\n\nFROM node:22-alpine AS runtime\nWORKDIR /app\nENV NODE_ENV=production\nCOPY --from=deps /app/node_modules ./node_modules\nCOPY --chown=node:node . .\nUSER node\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
       "solutionExplanation": "El multi-stage build evita arrastrar herramientas de instalación a la imagen final. La segunda etapa recibe solo los archivos necesarios. USER node reduce los privilegios del proceso de la aplicación.",
@@ -3294,10 +3293,9 @@
         }
       ],
       "hints": [
-        "Compose define servicios dentro de services.",
-        "healthcheck permite comprobar disponibilidad real del servicio.",
-        "depends_on con service_healthy condiciona el arranque del servicio dependiente.",
-        "Un volumen nombrado conserva los datos entre recreaciones del contenedor."
+        "Compose define servicios dentro de services y permite conectarlos usando el nombre del servicio.",
+        "healthcheck puede verificar PostgreSQL con pg_isready; depends_on con service_healthy espera ese estado.",
+        "Un volumen nombrado, declarado al nivel raíz, conserva los datos entre recreaciones."
       ],
       "solutionCode": "services:\n  db:\n    image: postgres:17-alpine\n    environment:\n      POSTGRES_DB: webdev\n      POSTGRES_USER: app\n      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definí POSTGRES_PASSWORD}\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}\"]\n      interval: 5s\n      timeout: 3s\n      retries: 10\n  api:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      DATABASE_URL: postgres://app:$${POSTGRES_PASSWORD}@db:5432/webdev\n    depends_on:\n      db:\n        condition: service_healthy\nvolumes:\n  pgdata:",
       "solutionExplanation": "Compose crea una red interna donde la API accede al servicio db por su nombre. healthcheck verifica que PostgreSQL acepte conexiones y service_healthy evita iniciar la API antes de tiempo. pgdata persiste los archivos de la base.",
@@ -3365,10 +3363,9 @@
         }
       ],
       "hints": [
-        "Separá build y runtime para reducir herramientas en producción.",
-        "No copies secretos dentro de capas de imagen; inyectalos en el despliegue.",
-        "USER node reduce privilegios.",
-        "HEALTHCHECK define una señal de salud, pero debe corresponder a un comando disponible en la imagen."
+        "Separá build y runtime para reducir herramientas en la imagen final.",
+        "No copies secretos en capas de imagen; inyectalos al desplegar y ejecutá como USER node.",
+        "HEALTHCHECK define una señal de salud y CMD en formato exec ejecuta el proceso directamente."
       ],
       "solutionCode": "FROM node:22-alpine AS build\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nRUN npm run build\n\nFROM node:22-alpine AS runtime\nENV NODE_ENV=production\nWORKDIR /app\nCOPY --from=build --chown=node:node /app/dist ./dist\nCOPY --from=build --chown=node:node /app/node_modules ./node_modules\nUSER node\nEXPOSE 3000\nHEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD [\"node\", \"dist/healthcheck.js\"]\nCMD [\"node\", \"dist/server.js\"]",
       "solutionExplanation": "Una imagen de producción separa el entorno de construcción del runtime. El proceso corre como node y los secretos se inyectan durante el despliegue, no en el Dockerfile. HEALTHCHECK permite al orquestador consultar el estado del servicio y CMD exec mejora el manejo de señales.",
