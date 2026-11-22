@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="Aprendé la API console de JavaScript y las herramientas DevTools del navegador: depuración, red, almacenamiento, rendimiento y accesibilidad.">
+  <title>API de Consola y DevTools | WebDev Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/console-library.css">
+  <script defer src="../js/theme.js"></script>
+  <script defer src="../js/navigation.js"></script>
+  <script defer src="../js/console-library.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/icon.svg">
+  <link rel="stylesheet" href="../css/pwa.css">
+  <script defer src="../js/pwa.js"></script>
+</head>
+<body data-page="console">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+    <div class="sidebar-label">MENÚ PRINCIPAL</div>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a class="nav-link" href="../index.html"><span class="nav-icon">⌂</span> Inicio</a>
+      <a class="nav-link" href="html.html"><span class="nav-icon html-icon">5</span> HTML</a>
+      <a class="nav-link" href="css.html"><span class="nav-icon css-icon">✳</span> CSS</a>
+      <a class="nav-link" href="javascript.html"><span class="nav-icon js-icon">JS</span> JavaScript</a>
+      <a class="nav-link" href="editor.html"><span class="nav-icon">⌘</span> Editor</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="tools.html?tool=terminal">$_ Terminal Linux</a>
+      <a class="nav-link" href="tools.html?tool=git">⑂ Git y GitHub</a>
+      <a class="nav-link" href="tools.html?tool=npm">⬡ NPM</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="tools.html?tool=react">⚛ React</a>
+      <a class="nav-link" href="tools.html?tool=webcomponents">◇ Web Components</a>
+      <a class="nav-link" href="tools.html?tool=vuejs">V Vue.js</a>
+      <a class="nav-link" href="tools.html?tool=nodejs">⬢ Node.js</a>
+      <a class="nav-link" href="tools.html?tool=astro">✦ Astro</a>
+      <a class="nav-link" href="tools.html?tool=phaser">🎮 Phaser</a>
+      <a class="nav-link" href="tools.html?tool=typescript">TS TypeScript</a>
+      <a class="nav-link" href="tools.html?tool=nextjs">N Next.js</a>
+      <a class="nav-link" href="tools.html?tool=express">EX Express.js</a>
+      <a class="nav-link" href="tools.html?tool=sql-postgres">SQL PostgreSQL</a>
+      <a class="nav-link" href="tools.html?tool=mongodb">MDB MongoDB</a>
+      <a class="nav-link" href="tools.html?tool=apis">API APIs</a>
+      <a class="nav-link" href="tools.html?tool=testing">✓ Testing</a>
+      <a class="nav-link" href="tools.html?tool=docker-deploy">DK Docker</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="challenges.html">⌁ Retos interactivos</a>
+      <a class="nav-link" href="projects.html">▦ Biblioteca de proyectos</a>
+      <a class="nav-link" href="games.html">🎮 Laboratorio de juegos</a>
+      <a class="nav-link" href="terminal.html"><span class="nav-icon">$_</span> Terminal y línea de comandos</a>
+      <a class="nav-link active" href="console.html" aria-current="page"><span class="nav-icon">JS</span> API de Consola y DevTools</a>
+      <a class="nav-link" href="python.html"><span class="nav-icon">Py</span> Biblioteca de Python</a>
+      <a class="nav-link" href="java.html"><span class="nav-icon">☕</span> Biblioteca de Java</a>
+      <a class="nav-link" href="../index.html#favoritos">☆ Favoritos</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Aprendé paso a paso</strong><p>Leé, probá los ejemplos y aplicá cada concepto en un ejercicio.</p></div>
+      <button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button>
+      <div class="breadcrumb"><a href="../index.html">Biblioteca</a><b>/</b><strong>Consola</strong></div>
+      <div class="console-top-progress" id="consoleProgressLabel">0 de 32 artículos completados</div>
+      <button class="top-icon" id="topThemeToggle" type="button" aria-label="Cambiar tema">◐</button>
+    </header>
+    <div class="page-content console-content">
+      <a class="tools-back-link" href="../index.html">← Volver al inicio</a>
+      <section class="console-hero">
+        <div class="eyebrow"><span class="status-dot"></span> PARTE 3 / BLOQUE E · API DE CONSOLA Y HERRAMIENTAS DE DESARROLLO</div>
+        <div class="console-hero-layout">
+          <div>
+            <h1>Investigá y depurá<br><span>con Console y DevTools.</span></h1>
+            <p>Aprendé a registrar y organizar mensajes con la API console, inspeccionar el DOM y CSS, depurar JavaScript y analizar solicitudes, almacenamiento, rendimiento, memoria y accesibilidad desde las herramientas del navegador.</p>
+            <div class="console-hero-actions">
+              <a class="button button-primary" href="#consoleCatalog">Explorar contenidos <span>→</span></a>
+              <a class="button button-ghost" href="https://developer.mozilla.org/es/docs/Web/API/console" target="_blank" rel="noopener noreferrer">API Console en MDN ↗</a>
+            </div>
+          </div>
+          <div class="console-mark" aria-hidden="true"><span>JS</span><i>DEVTOOLS</i><b>&gt;_</b></div>
+        </div>
+        <div class="console-stats">
+          <div><strong id="consoleArticleTotal">32</strong><span>artículos</span></div>
+          <div><strong id="consoleCategoryTotal">6</strong><span>categorías</span></div>
+          <div><strong id="consoleCompletedTotal">0</strong><span>completados</span></div>
+          <div><strong id="consoleFavoriteTotal">0</strong><span>favoritos</span></div>
+        </div>
+        <p class="console-version-note">API Console de JavaScript + herramientas DevTools del navegador · <a href="https://developer.mozilla.org/es/docs/Web/API/console" target="_blank" rel="noopener noreferrer">MDN Console API ↗</a> · <a href="https://developer.chrome.com/docs/devtools/" target="_blank" rel="noopener noreferrer">Chrome DevTools ↗</a></p>
+      </section>
+
+      <section class="console-catalog-section" id="consoleCatalog">
+        <div class="section-heading">
+          <div><div class="eyebrow">RECORRIDO DE APRENDIZAJE</div><h2>Explorá los temas</h2></div>
+          <span class="section-note">Elegí una categoría o buscá un concepto</span>
+        </div>
+        <div class="console-controls">
+          <label class="console-search"><span>⌕</span><input id="consoleSearch" type="search" placeholder="Buscar métodos console, paneles, breakpoints, red..." autocomplete="off"></label>
+          <label class="console-category-select">Categoría<select id="consoleCategoryFilter"><option value="">Todas las categorías</option></select></label>
+          <div class="console-view-filters" role="group" aria-label="Filtrar artículos">
+            <button type="button" class="console-filter active" data-filter="all" aria-pressed="true">Todos</button>
+            <button type="button" class="console-filter" data-filter="pending" aria-pressed="false">Pendientes</button>
+            <button type="button" class="console-filter" data-filter="favorites" aria-pressed="false">★ Favoritos</button>
+          </div>
+        </div>
+        <p class="console-result-count" id="consoleResultCount" aria-live="polite">Cargando contenidos…</p>
+        <div id="consoleCategoryGrid" class="console-category-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="consoleArticleView" class="console-article-view" hidden aria-live="polite"></section>
+      <p id="consoleStatus" class="sr-only" role="status" aria-live="polite"></p>
+      <footer class="footer"><span>WebDev Book · API de Consola y DevTools</span><span>Leé · Probá · Practicá · Repetí</span></footer>
+    </div>
+  </main>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+</body>
+</html>
