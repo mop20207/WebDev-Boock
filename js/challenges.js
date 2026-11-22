@@ -184,7 +184,14 @@
     const hasFrameworkPreview = ["react", "vue", "webcomponents"].includes(challenge.runner);
     const editorShell = node("div", "challenge-editor-shell");
     const toolbar = node("div", "challenge-editor-toolbar");
-    toolbar.append(node("span", "challenge-editor-language", isHtmlCss ? "HTML + CSS · EDITOR" : challenge.language.toUpperCase() + " · EDITOR"));
+    const editorLanguage = isHtmlCss
+      ? "HTML + CSS · EDITOR"
+      : challenge.runner === "react" ? "REACT · JSX EDITOR"
+        : challenge.runner === "vue" ? "VUE.JS · EDITOR"
+          : challenge.runner === "webcomponents" ? "WEB COMPONENTS · EDITOR"
+            : challenge.runner === "node-sim" ? "NODE.JS · SIMULADOR"
+              : challenge.language.toUpperCase() + " · EDITOR";
+    toolbar.append(node("span", "challenge-editor-language", editorLanguage));
     const actions = node("div", "challenge-editor-actions");
     const resetButton = node("button", "challenge-action", "Restablecer");
     resetButton.type = "button";
