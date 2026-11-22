@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Retos prácticos independientes para HTML, CSS, JavaScript, TypeScript, React, Web Components, Vue.js y Node.js. Los entornos de ejecución se aíslan por tecnología.",
+  "description": "Retos interactivos para HTML, CSS, JavaScript, TypeScript, React, Web Components, Vue.js, Node.js, Astro, PostgreSQL, MongoDB, APIs, Testing y Docker.",
   "challenges": [
     {
       "id": "ts-interface-usuario",
@@ -1696,6 +1696,1688 @@
       "estimatedMinutes": 30,
       "environment": {},
       "virtualFiles": {}
+    },
+    {
+      "id": "astro-primer-componente",
+      "technology": "astro",
+      "technologyName": "Astro",
+      "difficulty": "principiante",
+      "title": "Creá tu primer componente Astro",
+      "summary": "Usá frontmatter y propiedades para generar contenido HTML.",
+      "statement": "Completá un componente `.astro` que reciba `nombre` desde `Astro.props` y renderice un título de bienvenida. El ejercicio analiza la estructura y sintaxis esencial del componente.",
+      "objectives": [
+        "Reconocer el bloque frontmatter delimitado por --- .",
+        "Leer props desde Astro.props.",
+        "Interpolar datos en una plantilla Astro."
+      ],
+      "requirements": [
+        "Debe existir un bloque frontmatter válido.",
+        "Desestructurá nombre desde Astro.props.",
+        "El componente debe renderizar un h1 con clase bienvenida.",
+        "El mensaje debe usar una expresión JSX-like de Astro: {nombre}."
+      ],
+      "language": "astro",
+      "runner": "astro-static",
+      "starterCode": "---\n// Leé la prop nombre con un valor predeterminado.\n---\n\n<h1 class=\"bienvenida\">Hola, {nombre}</h1>",
+      "tests": [
+        {
+          "label": "Declara frontmatter Astro",
+          "pattern": "^---[\\s\\S]*?^---",
+          "flags": "m"
+        },
+        {
+          "label": "Lee propiedades de Astro.props",
+          "pattern": "Astro\\.props"
+        },
+        {
+          "label": "Renderiza la propiedad dentro de h1",
+          "pattern": "<h1\\b[^>]*class=[\"']bienvenida[\"'][^>]*>[\\s\\S]*\\{\\s*nombre\\s*\\}[\\s\\S]*<\\/h1>"
+        }
+      ],
+      "hints": [
+        "Los componentes Astro usan una sección frontmatter delimitada por dos líneas con --- .",
+        "Las propiedades que llegan desde el padre se leen desde Astro.props.",
+        "Podés desestructurar con const { nombre = 'Mundo' } = Astro.props;."
+      ],
+      "solutionCode": "---\nconst { nombre = \"Mundo\" } = Astro.props;\n---\n\n<h1 class=\"bienvenida\">Hola, {nombre}</h1>",
+      "solutionExplanation": "Astro ejecuta el frontmatter en el servidor durante la generación o petición de la página. La plantilla combina HTML con expresiones entre llaves; Astro.props contiene los datos recibidos por el componente.",
+      "commonMistakes": [
+        "Olvidar los delimitadores del frontmatter.",
+        "Usar props.nombre sin recibir ni desestructurar props.",
+        "Escribir { nombre } como texto literal fuera de una expresión.",
+        "Confundir la sintaxis de una plantilla Astro con JSX de React."
+      ],
+      "estimatedMinutes": 12,
+      "runnerNote": "El validador revisa la estructura del archivo .astro mediante reglas estáticas. No compila ni ejecuta un proyecto Astro completo."
+    },
+    {
+      "id": "astro-lista-dinamica",
+      "technology": "astro",
+      "technologyName": "Astro",
+      "difficulty": "intermedio",
+      "title": "Renderizá una lista dinámica",
+      "summary": "Recorré datos recibidos y generá elementos HTML desde una plantilla Astro.",
+      "statement": "Recibís un arreglo `tecnologias` mediante props. Debés generar una lista `<ul>` con un `<li>` por cada tecnología y conservar la clase `tecnologia` en cada elemento.",
+      "objectives": [
+        "Desestructurar arreglos desde Astro.props.",
+        "Usar map para recorrer datos.",
+        "Insertar expresiones JavaScript dentro de una plantilla."
+      ],
+      "requirements": [
+        "Debe existir el frontmatter.",
+        "Leé tecnologias desde Astro.props con un valor por defecto de arreglo vacío.",
+        "Usá tecnologias.map(...).",
+        "Cada entrada debe producir un li con clase tecnologia.",
+        "Interpolá el nombre con {tecnologia}."
+      ],
+      "language": "astro",
+      "runner": "astro-static",
+      "starterCode": "---\n// Obtené el arreglo tecnologias.\n---\n\n<ul>\n  <!-- Generá un li por tecnología. -->\n</ul>",
+      "tests": [
+        {
+          "label": "Lee el arreglo desde props",
+          "pattern": "tecnologias\\s*(?:=|,).*Astro\\.props|const\\s*\\{[^}]*tecnologias[^}]*\\}\\s*=\\s*Astro\\.props"
+        },
+        {
+          "label": "Recorre el arreglo con map",
+          "pattern": "tecnologias\\.map\\s*\\("
+        },
+        {
+          "label": "Genera elementos li con la clase requerida",
+          "pattern": "<li\\b[^>]*class=[\"']tecnologia[\"'][^>]*>[\\s\\S]*?\\{\\s*tecnologia\\s*\\}[\\s\\S]*?<\\/li>"
+        }
+      ],
+      "hints": [
+        "Desestructurá tecnologias desde Astro.props y dale [] como valor por defecto.",
+        "Las expresiones de plantilla permiten llamar métodos de arreglos.",
+        "El callback de map puede devolver directamente un elemento li."
+      ],
+      "solutionCode": "---\nconst { tecnologias = [] } = Astro.props;\n---\n\n<ul>\n  {tecnologias.map((tecnologia) => <li class=\"tecnologia\">{tecnologia}</li>)}\n</ul>",
+      "solutionExplanation": "Astro permite ejecutar expresiones JavaScript en la plantilla. map transforma cada elemento del arreglo en un elemento de la lista. El valor predeterminado evita fallos cuando el padre no envía la propiedad.",
+      "commonMistakes": [
+        "Usar forEach, que no devuelve un arreglo de elementos.",
+        "Olvidar el valor por defecto cuando la prop no llega.",
+        "Colocar la expresión fuera del bloque de la plantilla.",
+        "Renderizar el arreglo como una cadena separada por comas."
+      ],
+      "estimatedMinutes": 18,
+      "runnerNote": "Validación estática de la sintaxis de plantilla Astro; no sustituye al compilador oficial."
+    },
+    {
+      "id": "astro-layout-slot",
+      "technology": "astro",
+      "technologyName": "Astro",
+      "difficulty": "avanzado",
+      "title": "Creá un layout reutilizable con slots",
+      "summary": "Componé páginas mediante layouts, metadatos y contenido insertado.",
+      "statement": "Construí un layout Astro que reciba `titulo` y coloque el contenido de la página dentro de `<slot />`. El título debe aparecer tanto en el documento como en la barra superior.",
+      "objectives": [
+        "Crear una estructura de página reutilizable.",
+        "Usar props en un layout.",
+        "Insertar contenido hijo con slot."
+      ],
+      "requirements": [
+        "Leé titulo desde Astro.props.",
+        "Incluí un elemento title dentro de head con el título dinámico.",
+        "Mostrá titulo en un header con clase page-title.",
+        "Insertá el contenido hijo mediante <slot />.",
+        "Incluí estructura html, head y body."
+      ],
+      "language": "astro",
+      "runner": "astro-static",
+      "starterCode": "---\n// Leé la prop titulo.\n---\n\n<html lang=\"es\">\n  <head>\n    <!-- Título del documento. -->\n  </head>\n  <body>\n    <header><!-- Título visible. --></header>\n    <main><!-- Contenido hijo. --></main>\n  </body>\n</html>",
+      "tests": [
+        {
+          "label": "Recibe titulo desde Astro.props",
+          "pattern": "const\\s*\\{[^}]*titulo[^}]*\\}\\s*=\\s*Astro\\.props"
+        },
+        {
+          "label": "Incluye un title dinámico",
+          "pattern": "<title>[^<]*\\{\\s*titulo\\s*\\}[^<]*<\\/title>"
+        },
+        {
+          "label": "Muestra el título en el encabezado",
+          "pattern": "<header[^>]*>[\\s\\S]*?class=[\"']page-title[\"'][^>]*>[\\s\\S]*?\\{\\s*titulo\\s*\\}"
+        },
+        {
+          "label": "Proyecta el contenido hijo con slot",
+          "pattern": "<slot\\s*\\/?\\s*>"
+        }
+      ],
+      "hints": [
+        "Desestructurá titulo desde Astro.props.",
+        "La etiqueta title se escribe dentro de head.",
+        "El elemento slot reserva el lugar donde se insertará el contenido de la página."
+      ],
+      "solutionCode": "---\nconst { titulo = \"Mi sitio\" } = Astro.props;\n---\n\n<html lang=\"es\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>{titulo}</title>\n  </head>\n  <body>\n    <header><h1 class=\"page-title\">{titulo}</h1></header>\n    <main><slot /></main>\n  </body>\n</html>",
+      "solutionExplanation": "Los layouts permiten compartir la estructura común de varias páginas. Astro.props permite personalizar el título y slot proyecta el contenido que cada página coloca entre las etiquetas del layout.",
+      "commonMistakes": [
+        "Olvidar <slot /> y perder el contenido de la página.",
+        "Usar una variable que no se obtuvo de Astro.props.",
+        "Poner la etiqueta title fuera de head.",
+        "Pensar que slot de Astro equivale a un slot de Vue en todos sus detalles."
+      ],
+      "estimatedMinutes": 25,
+      "runnerNote": "El ejercicio verifica la estructura del layout; no renderiza una ruta Astro."
+    },
+    {
+      "id": "astro-islands-seguridad",
+      "technology": "astro",
+      "technologyName": "Astro",
+      "difficulty": "experto",
+      "title": "Elegí correctamente una directiva de hidratación",
+      "summary": "Diferenciá componentes estáticos e islas interactivas del cliente.",
+      "statement": "Tenés un componente `Contador` que necesita interacción inmediata y un componente `Mapa` pesado que puede hidratarse cuando se acerque al viewport. Importá ambos componentes y elegí las directivas apropiadas. El resto de la página debe seguir siendo HTML estático.",
+      "objectives": [
+        "Importar componentes en frontmatter.",
+        "Elegir directivas client:* según la experiencia requerida.",
+        "Combinar contenido estático con islas interactivas."
+      ],
+      "requirements": [
+        "Importá Contador y Mapa desde rutas de componentes.",
+        "Usá client:load para Contador.",
+        "Usá client:visible para Mapa.",
+        "Incluí un bloque de contenido estático que no tenga directiva client:.",
+        "No uses client:only si el componente puede renderizarse en el servidor."
+      ],
+      "language": "astro",
+      "runner": "astro-static",
+      "starterCode": "---\n// Importá Contador y Mapa.\n---\n\n<main>\n  <!-- Contenido estático. -->\n  <!-- Contador interactivo inmediato. -->\n  <!-- Mapa pesado visible al desplazarse. -->\n</main>",
+      "tests": [
+        {
+          "label": "Importa ambos componentes",
+          "pattern": "import\\s+Contador\\s+from\\s+[\"'][^\"']+Contador[^\"']*[\"']"
+        },
+        {
+          "label": "Hidrata el contador al cargar",
+          "pattern": "<Contador\\b[^>]*client:load"
+        },
+        {
+          "label": "Hidrata el mapa al hacerse visible",
+          "pattern": "<Mapa\\b[^>]*client:visible"
+        },
+        {
+          "label": "Conserva contenido estático",
+          "pattern": "<p\\b[^>]*>[^<]+<\\/p>"
+        }
+      ],
+      "hints": [
+        "client:load hidrata el componente al cargar la página.",
+        "client:visible espera a que el componente entre en el viewport.",
+        "Los componentes Astro sin directiva client se renderizan como HTML y no envían JavaScript de hidratación."
+      ],
+      "solutionCode": "---\nimport Contador from \"../components/Contador.jsx\";\nimport Mapa from \"../components/Mapa.jsx\";\n---\n\n<main>\n  <p>Este texto es contenido estático renderizado por Astro.</p>\n  <Contador client:load />\n  <Mapa client:visible />\n</main>",
+      "solutionExplanation": "Las directivas client:* controlan cuándo se hidrata una isla. client:load prioriza la interacción inmediata, mientras client:visible difiere el JavaScript hasta que el elemento se acerca al viewport. El contenido estático no necesita hidratación.",
+      "commonMistakes": [
+        "Hidratar todo con client:load sin necesidad.",
+        "Usar client:visible para un control crítico que debe responder al cargar.",
+        "Confundir client:only con una simple optimización de carga.",
+        "Añadir directivas a elementos HTML nativos, no a componentes de framework."
+      ],
+      "estimatedMinutes": 30,
+      "runnerNote": "El validador comprueba reglas y patrones de arquitectura Astro; no ejecuta directivas de hidratación."
+    },
+    {
+      "id": "sql-consulta-filtro",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "principiante",
+      "title": "Consultá productos con poco stock",
+      "summary": "Usá SELECT, WHERE y ORDER BY para filtrar datos.",
+      "statement": "El esquema `productos` ya existe. Devolvé el nombre y el stock de los artículos con menos de 10 unidades, ordenados desde el stock más bajo al más alto.",
+      "objectives": [
+        "Seleccionar columnas concretas.",
+        "Filtrar filas con WHERE.",
+        "Ordenar resultados con ORDER BY."
+      ],
+      "requirements": [
+        "Usá SELECT y FROM productos.",
+        "Incluí únicamente nombre y stock.",
+        "Filtrá stock < 10.",
+        "Ordená por stock ascendente.",
+        "No uses SELECT *."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Devolvé nombre y stock de los productos con menos de 10 unidades.\n",
+      "tests": [
+        {
+          "label": "Devuelve los productos bajo el límite",
+          "sql": "SELECT nombre, stock FROM productos WHERE stock < 10 ORDER BY stock ASC",
+          "expected": [
+            {
+              "nombre": "Webcam",
+              "stock": 0
+            },
+            {
+              "nombre": "Mouse",
+              "stock": 3
+            },
+            {
+              "nombre": "Teclado",
+              "stock": 8
+            }
+          ]
+        },
+        {
+          "label": "La consulta del editor también devuelve las filas requeridas",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "nombre": "Webcam",
+              "stock": 0
+            },
+            {
+              "nombre": "Mouse",
+              "stock": 3
+            },
+            {
+              "nombre": "Teclado",
+              "stock": 8
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "SELECT define qué columnas querés recibir.",
+        "WHERE stock < 10 filtra los registros que cumplen la condición.",
+        "ORDER BY stock ASC ordena del valor menor al mayor."
+      ],
+      "solutionCode": "SELECT nombre, stock\nFROM productos\nWHERE stock < 10\nORDER BY stock ASC;",
+      "solutionExplanation": "El motor PostgreSQL ejecuta la consulta sobre una tabla de ejemplo. Se seleccionan solo las columnas necesarias, se filtra con WHERE y se ordena de forma ascendente con ORDER BY.",
+      "commonMistakes": [
+        "Usar HAVING para filtrar filas individuales en lugar de WHERE.",
+        "Olvidar FROM productos.",
+        "Usar SELECT * cuando se piden columnas concretas.",
+        "Ordenar en forma DESC por error."
+      ],
+      "estimatedMinutes": 12,
+      "setupSql": "CREATE TABLE productos (id integer PRIMARY KEY, nombre text NOT NULL, stock integer NOT NULL, precio numeric(10,2) NOT NULL); INSERT INTO productos VALUES (1,'Mouse',3,15.50),(2,'Teclado',8,35.00),(3,'Monitor',15,180.00),(4,'Webcam',0,42.00);",
+      "userQuery": true
+    },
+    {
+      "id": "sql-join-ventas",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "intermedio",
+      "title": "Relacioná pedidos con clientes",
+      "summary": "Combiná tablas con INNER JOIN y calculá el importe de cada pedido.",
+      "statement": "El esquema contiene `clientes` y `pedidos`. Obtené el nombre del cliente y el total de cada pedido, sin perder la relación entre las tablas.",
+      "objectives": [
+        "Relacionar claves primarias y foráneas.",
+        "Usar INNER JOIN con ON.",
+        "Calcular expresiones en SELECT."
+      ],
+      "requirements": [
+        "Uní pedidos con clientes mediante cliente_id.",
+        "Mostrá cliente y total.",
+        "Calculá total como cantidad * precio_unitario.",
+        "Ordená por id_pedido ascendente."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Relacioná pedidos con clientes y calculá el total.\n",
+      "tests": [
+        {
+          "label": "Resuelve la relación y el cálculo",
+          "sql": "SELECT c.nombre AS cliente, p.id AS id_pedido, p.cantidad * p.precio_unitario AS total FROM pedidos p INNER JOIN clientes c ON c.id = p.cliente_id ORDER BY p.id",
+          "expected": [
+            {
+              "cliente": "Ana",
+              "id_pedido": 101,
+              "total": "60.00"
+            },
+            {
+              "cliente": "Luis",
+              "id_pedido": 102,
+              "total": "45.00"
+            },
+            {
+              "cliente": "Ana",
+              "id_pedido": 103,
+              "total": "25.00"
+            }
+          ]
+        },
+        {
+          "label": "La consulta escrita resuelve el ejercicio",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "cliente": "Ana",
+              "id_pedido": 101,
+              "total": "60.00"
+            },
+            {
+              "cliente": "Luis",
+              "id_pedido": 102,
+              "total": "45.00"
+            },
+            {
+              "cliente": "Ana",
+              "id_pedido": 103,
+              "total": "25.00"
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "Usá alias para abreviar los nombres de las tablas.",
+        "La condición del JOIN conecta p.cliente_id con c.id.",
+        "Multiplicá cantidad por precio_unitario para obtener el importe."
+      ],
+      "solutionCode": "SELECT\n  c.nombre AS cliente,\n  p.id AS id_pedido,\n  p.cantidad * p.precio_unitario AS total\nFROM pedidos AS p\nINNER JOIN clientes AS c ON c.id = p.cliente_id\nORDER BY p.id ASC;",
+      "solutionExplanation": "INNER JOIN combina filas cuyos identificadores coinciden. Los alias hacen la consulta más legible y la expresión calculada devuelve el importe de cada pedido.",
+      "commonMistakes": [
+        "Unir las tablas sin condición y producir un producto cartesiano.",
+        "Comparar el nombre en vez de las claves.",
+        "Olvidar el alias de la columna calculada.",
+        "Usar LEFT JOIN cuando el requisito pide únicamente coincidencias."
+      ],
+      "estimatedMinutes": 18,
+      "setupSql": "CREATE TABLE clientes (id integer PRIMARY KEY, nombre text NOT NULL); CREATE TABLE pedidos (id integer PRIMARY KEY, cliente_id integer REFERENCES clientes(id), cantidad integer NOT NULL, precio_unitario numeric(10,2) NOT NULL); INSERT INTO clientes VALUES (1,'Ana'),(2,'Luis'),(3,'Mara'); INSERT INTO pedidos VALUES (101,1,2,30.00),(102,2,3,15.00),(103,1,1,25.00);",
+      "userQuery": true
+    },
+    {
+      "id": "sql-agrupacion-having",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "avanzado",
+      "title": "Encontrá clientes con varias compras",
+      "summary": "Agrupá registros y filtrá grupos con HAVING.",
+      "statement": "Construí un resumen de compras por cliente. Mostrá el número de pedidos y el importe acumulado, pero conservá solo los clientes con al menos dos pedidos.",
+      "objectives": [
+        "Agrupar filas con GROUP BY.",
+        "Calcular COUNT y SUM.",
+        "Filtrar grupos con HAVING."
+      ],
+      "requirements": [
+        "Usá pedidos y clientes.",
+        "Mostrá nombre como cliente, COUNT(*) como cantidad_pedidos y SUM(cantidad * precio_unitario) como total.",
+        "Agrupá por cliente.",
+        "Usá HAVING para pedir al menos dos pedidos.",
+        "Ordená por nombre."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Resumí los pedidos por cliente y conservá grupos con dos o más pedidos.\n",
+      "tests": [
+        {
+          "label": "Agrupa y filtra correctamente",
+          "sql": "SELECT c.nombre AS cliente, COUNT(*) AS cantidad_pedidos, SUM(p.cantidad * p.precio_unitario) AS total FROM pedidos p JOIN clientes c ON c.id=p.cliente_id GROUP BY c.id,c.nombre HAVING COUNT(*) >= 2 ORDER BY c.nombre",
+          "expected": [
+            {
+              "cliente": "Ana",
+              "cantidad_pedidos": "2",
+              "total": "85.00"
+            },
+            {
+              "cliente": "Luis",
+              "cantidad_pedidos": "2",
+              "total": "100.00"
+            }
+          ]
+        },
+        {
+          "label": "La consulta del editor cumple la agrupación",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "cliente": "Ana",
+              "cantidad_pedidos": "2",
+              "total": "85.00"
+            },
+            {
+              "cliente": "Luis",
+              "cantidad_pedidos": "2",
+              "total": "100.00"
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "GROUP BY crea un grupo para cada cliente.",
+        "COUNT(*) cuenta pedidos y SUM(...) acumula importes.",
+        "HAVING filtra los grupos luego de la agrupación; WHERE filtra filas antes."
+      ],
+      "solutionCode": "SELECT\n  c.nombre AS cliente,\n  COUNT(*) AS cantidad_pedidos,\n  SUM(p.cantidad * p.precio_unitario) AS total\nFROM pedidos AS p\nINNER JOIN clientes AS c ON c.id = p.cliente_id\nGROUP BY c.id, c.nombre\nHAVING COUNT(*) >= 2\nORDER BY c.nombre;",
+      "solutionExplanation": "GROUP BY combina pedidos por cliente. COUNT y SUM producen métricas del grupo. HAVING conserva solo los grupos cuyo conteo alcanza el mínimo solicitado.",
+      "commonMistakes": [
+        "Usar WHERE COUNT(*) >= 2, porque los agregados se filtran con HAVING.",
+        "Agrupar solo por el nombre cuando se necesita identificar la clave.",
+        "Sumar precio_unitario sin multiplicar por cantidad.",
+        "Olvidar incluir columnas no agregadas en GROUP BY."
+      ],
+      "estimatedMinutes": 25,
+      "setupSql": "CREATE TABLE clientes (id integer PRIMARY KEY, nombre text NOT NULL); CREATE TABLE pedidos (id integer PRIMARY KEY, cliente_id integer REFERENCES clientes(id), cantidad integer NOT NULL, precio_unitario numeric(10,2) NOT NULL); INSERT INTO clientes VALUES (1,'Ana'),(2,'Luis'),(3,'Mara'); INSERT INTO pedidos VALUES (101,1,2,30.00),(102,2,3,15.00),(103,1,1,25.00),(104,2,1,55.00),(105,3,1,10.00);",
+      "userQuery": true
+    },
+    {
+      "id": "sql-cte-window-jsonb",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "experto",
+      "title": "Ranking de productos con CTE y JSONB",
+      "summary": "Combiná una CTE, funciones de ventana y operadores de PostgreSQL.",
+      "statement": "Tenés una tabla `eventos` con una columna JSONB `detalle`. Construí una consulta que extraiga la categoría, calcule el total por categoría y asigne un ranking por monto acumulado descendente.",
+      "objectives": [
+        "Crear una CTE con WITH.",
+        "Extraer datos de una columna JSONB.",
+        "Usar SUM como función de ventana y RANK."
+      ],
+      "requirements": [
+        "Usá detalle->>'categoria' para obtener la categoría.",
+        "Calculá SUM(monto) por categoría.",
+        "Aplicá RANK() OVER (ORDER BY total_categoria DESC).",
+        "Devolvé categoria, total_categoria y posicion.",
+        "Ordená por posicion."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Usá una CTE para agrupar por categoría y una función de ventana para el ranking.\n",
+      "tests": [
+        {
+          "label": "Extrae JSONB y calcula el ranking",
+          "sql": "WITH resumen AS (SELECT detalle->>'categoria' AS categoria, SUM(monto) AS total_categoria FROM eventos GROUP BY detalle->>'categoria') SELECT categoria, total_categoria, RANK() OVER (ORDER BY total_categoria DESC) AS posicion FROM resumen ORDER BY posicion",
+          "expected": [
+            {
+              "categoria": "libros",
+              "total_categoria": "150.00",
+              "posicion": "1"
+            },
+            {
+              "categoria": "cursos",
+              "total_categoria": "120.00",
+              "posicion": "2"
+            },
+            {
+              "categoria": "hardware",
+              "total_categoria": "80.00",
+              "posicion": "3"
+            }
+          ]
+        },
+        {
+          "label": "La consulta del editor aplica CTE y ranking",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "categoria": "libros",
+              "total_categoria": "150.00",
+              "posicion": "1"
+            },
+            {
+              "categoria": "cursos",
+              "total_categoria": "120.00",
+              "posicion": "2"
+            },
+            {
+              "categoria": "hardware",
+              "total_categoria": "80.00",
+              "posicion": "3"
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "La CTE resumen separa la agregación del ranking final.",
+        "detalle->>'categoria' extrae un valor de texto desde JSONB.",
+        "RANK() OVER (ORDER BY ... DESC) asigna posiciones sin perder las filas."
+      ],
+      "solutionCode": "WITH resumen AS (\n  SELECT\n    detalle->>'categoria' AS categoria,\n    SUM(monto) AS total_categoria\n  FROM eventos\n  GROUP BY detalle->>'categoria'\n)\nSELECT\n  categoria,\n  total_categoria,\n  RANK() OVER (ORDER BY total_categoria DESC) AS posicion\nFROM resumen\nORDER BY posicion;",
+      "solutionExplanation": "PostgreSQL permite trabajar con JSONB mediante ->>. La CTE organiza el cálculo de totales y RANK como función de ventana asigna posiciones según la suma descendente.",
+      "commonMistakes": [
+        "Extraer categoría con -> en vez de ->> cuando se requiere texto.",
+        "Intentar usar un alias calculado en WHERE de la misma capa SELECT.",
+        "Confundir una función agregada con una función de ventana.",
+        "Omitir la CTE y duplicar subconsultas innecesariamente."
+      ],
+      "estimatedMinutes": 32,
+      "setupSql": "CREATE TABLE eventos (id integer PRIMARY KEY, monto numeric(10,2) NOT NULL, detalle jsonb NOT NULL); INSERT INTO eventos VALUES (1,100.00,'{\"categoria\":\"libros\"}'),(2,50.00,'{\"categoria\":\"libros\"}'),(3,120.00,'{\"categoria\":\"cursos\"}'),(4,80.00,'{\"categoria\":\"hardware\"}');",
+      "userQuery": true
+    },
+    {
+      "id": "mongo-find-filtro",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "principiante",
+      "title": "Buscá productos por precio",
+      "summary": "Usá find con operadores de comparación de MongoDB.",
+      "statement": "Tenés una colección `productos`. Implementá `buscarEconomicos(db)` para devolver productos cuyo precio sea menor o igual a 100, sin modificar los documentos.",
+      "objectives": [
+        "Consultar una colección con find.",
+        "Usar el operador $lte.",
+        "Convertir el cursor a un arreglo."
+      ],
+      "requirements": [
+        "Usá db.collection('productos').",
+        "Filtrá con { precio: { $lte: 100 } }.",
+        "Devolvé el resultado de toArray().",
+        "No modifiques ni ordenes el conjunto original."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function buscarEconomicos(db) {\n  // Buscá los productos cuyo precio sea menor o igual a 100.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve los productos dentro del presupuesto",
+          "expression": "await buscarEconomicos(db)",
+          "expected": [
+            {
+              "_id": 1,
+              "nombre": "Mouse",
+              "precio": 50
+            },
+            {
+              "_id": 2,
+              "nombre": "Teclado",
+              "precio": 100
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "find recibe un documento de consulta.",
+        "$lte significa menor o igual que.",
+        "El cursor puede convertirse en arreglo mediante toArray()."
+      ],
+      "solutionCode": "async function buscarEconomicos(db) {\n  return db.collection(\"productos\").find({ precio: { $lte: 100 } }).toArray();\n}",
+      "solutionExplanation": "find filtra documentos mediante un documento de consulta. $lte compara el valor de un campo con un límite y toArray obtiene una lista de los documentos coincidentes.",
+      "commonMistakes": [
+        "Usar $lt cuando también debe incluirse el límite.",
+        "Olvidar llamar toArray() en el cursor.",
+        "Modificar la colección antes de consultarla."
+      ],
+      "estimatedMinutes": 12,
+      "mongoData": {
+        "productos": [
+          {
+            "_id": 1,
+            "nombre": "Mouse",
+            "precio": 50
+          },
+          {
+            "_id": 2,
+            "nombre": "Teclado",
+            "precio": 100
+          },
+          {
+            "_id": 3,
+            "nombre": "Monitor",
+            "precio": 250
+          }
+        ]
+      },
+      "functionNames": [
+        "buscarEconomicos"
+      ]
+    },
+    {
+      "id": "mongo-crud-stock",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "intermedio",
+      "title": "Actualizá el stock de un producto",
+      "summary": "Combiná updateOne con $inc y $set.",
+      "statement": "Implementá `reponerProducto(db, id, unidades)` para aumentar el stock y marcar como disponible el producto que recibe una reposición.",
+      "objectives": [
+        "Actualizar un documento con updateOne.",
+        "Usar operadores $inc y $set.",
+        "Interpretar el resultado de una operación de escritura."
+      ],
+      "requirements": [
+        "Buscá por _id.",
+        "Incrementá stock en unidades usando $inc.",
+        "Establecé disponible en true con $set.",
+        "Devolvé el resultado de updateOne.",
+        "No reemplaces el documento entero."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function reponerProducto(db, id, unidades) {\n  // Actualizá el stock y el estado del producto.\n}\n",
+      "tests": [
+        {
+          "label": "Incrementa el stock en la cantidad recibida",
+          "expression": "await (async()=>{await reponerProducto(db,2,5);return db.collection('productos').findOne({_id:2})})()",
+          "expected": {
+            "_id": 2,
+            "nombre": "Teclado",
+            "stock": 8,
+            "disponible": true
+          }
+        },
+        {
+          "label": "Devuelve el resultado de la actualización",
+          "expression": "await reponerProducto(db,99,1)",
+          "expected": {
+            "acknowledged": true,
+            "matchedCount": 0,
+            "modifiedCount": 0
+          }
+        }
+      ],
+      "hints": [
+        "updateOne recibe un filtro y un documento de actualización.",
+        "$inc suma una cantidad al valor actual.",
+        "$set cambia una o más propiedades del documento."
+      ],
+      "solutionCode": "async function reponerProducto(db, id, unidades) {\n  return db.collection(\"productos\").updateOne(\n    { _id: id },\n    { $inc: { stock: unidades }, $set: { disponible: true } }\n  );\n}",
+      "solutionExplanation": "updateOne actualiza el primer documento que coincide con el filtro. Los operadores de actualización modifican campos concretos y devuelven contadores matchedCount y modifiedCount.",
+      "commonMistakes": [
+        "Pasar campos directos sin $inc o $set y terminar reemplazando el documento.",
+        "Usar updateMany cuando solo se pide un producto.",
+        "Olvidar devolver el resultado de la operación."
+      ],
+      "estimatedMinutes": 18,
+      "mongoData": {
+        "productos": [
+          {
+            "_id": 1,
+            "nombre": "Mouse",
+            "stock": 3,
+            "disponible": true
+          },
+          {
+            "_id": 2,
+            "nombre": "Teclado",
+            "stock": 3,
+            "disponible": false
+          }
+        ]
+      },
+      "functionNames": [
+        "reponerProducto"
+      ]
+    },
+    {
+      "id": "mongo-aggregate-resumen",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "avanzado",
+      "title": "Resumí ventas con aggregation",
+      "summary": "Construí un pipeline con $match, $group y $sort.",
+      "statement": "Una colección `ventas` contiene registros de operaciones. Implementá `resumirVentas(db)` para calcular el total vendido por categoría, contando cuántas operaciones se registraron y ordenando de mayor a menor importe.",
+      "objectives": [
+        "Encadenar etapas de agregación.",
+        "Filtrar documentos con $match.",
+        "Agrupar y acumular con $group.",
+        "Ordenar resultados con $sort."
+      ],
+      "requirements": [
+        "Filtrá ventas con estado 'pagada'.",
+        "Agrupá por categoria.",
+        "Calculá total con $sum sobre $importe.",
+        "Calculá operaciones con $sum: 1.",
+        "Ordená por total descendente."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function resumirVentas(db) {\n  // Devolvé un pipeline de agregación por categoría.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve categorías ordenadas por importe",
+          "expression": "await resumirVentas(db)",
+          "expected": [
+            {
+              "_id": "libros",
+              "total": 180,
+              "operaciones": 2
+            },
+            {
+              "_id": "cursos",
+              "total": 120,
+              "operaciones": 1
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "aggregate recibe un arreglo de etapas del pipeline.",
+        "$match conserva documentos que cumplen el filtro.",
+        "$group usa _id para la clave y $sum para acumular."
+      ],
+      "solutionCode": "async function resumirVentas(db) {\n  return db.collection(\"ventas\").aggregate([\n    { $match: { estado: \"pagada\" } },\n    { $group: { _id: \"$categoria\", total: { $sum: \"$importe\" }, operaciones: { $sum: 1 } } },\n    { $sort: { total: -1 } }\n  ]).toArray();\n}",
+      "solutionExplanation": "El pipeline filtra primero las ventas pagadas, agrupa por categoría y calcula dos acumuladores. La etapa $sort ordena el total de mayor a menor.",
+      "commonMistakes": [
+        "Usar find para un resumen que requiere agregación.",
+        "Agrupar por el campo equivocado.",
+        "Usar $sum: '$importe' como valor literal en lugar de objeto acumulador.",
+        "Ordenar antes de agrupar."
+      ],
+      "estimatedMinutes": 25,
+      "mongoData": {
+        "ventas": [
+          {
+            "_id": 1,
+            "categoria": "libros",
+            "importe": 100,
+            "estado": "pagada"
+          },
+          {
+            "_id": 2,
+            "categoria": "libros",
+            "importe": 80,
+            "estado": "pagada"
+          },
+          {
+            "_id": 3,
+            "categoria": "cursos",
+            "importe": 120,
+            "estado": "pagada"
+          },
+          {
+            "_id": 4,
+            "categoria": "libros",
+            "importe": 40,
+            "estado": "pendiente"
+          }
+        ]
+      },
+      "functionNames": [
+        "resumirVentas"
+      ]
+    },
+    {
+      "id": "mongo-arrays-proyeccion",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "experto",
+      "title": "Actualizá etiquetas y proyectá resultados",
+      "summary": "Usá arrays, $addToSet y una proyección para evitar duplicados.",
+      "statement": "Tenés una colección de artículos. Implementá `agregarEtiqueta(db, id, etiqueta)` con $addToSet y `buscarEtiquetados(db, etiqueta)` para devolver solo nombre y etiquetas de los documentos que contienen esa etiqueta.",
+      "objectives": [
+        "Actualizar arreglos con $addToSet.",
+        "Consultar campos de arreglos.",
+        "Limitar campos mediante proyección."
+      ],
+      "requirements": [
+        "agregarEtiqueta debe usar updateOne y $addToSet.",
+        "buscarEtiquetados debe consultar etiquetas con el valor recibido.",
+        "Proyectá nombre y etiquetas, excluyendo _id.",
+        "Devolvé arreglos con toArray()."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function agregarEtiqueta(db, id, etiqueta) {\n  // Agregá una etiqueta sin duplicados.\n}\n\nasync function buscarEtiquetados(db, etiqueta) {\n  // Buscá documentos y devolvé solo los campos solicitados.\n}\n",
+      "tests": [
+        {
+          "label": "Agrega una etiqueta nueva",
+          "expression": "await (async()=>{await agregarEtiqueta(db,1,'oferta');return db.collection('articulos').findOne({_id:1})})()",
+          "expected": {
+            "_id": 1,
+            "nombre": "Monitor",
+            "etiquetas": [
+              "hardware",
+              "oferta"
+            ]
+          }
+        },
+        {
+          "label": "No duplica una etiqueta existente",
+          "expression": "await (async()=>{await agregarEtiqueta(db,1,'hardware');return (await db.collection('articulos').findOne({_id:1})).etiquetas})()",
+          "expected": [
+            "hardware",
+            "oferta"
+          ]
+        },
+        {
+          "label": "Devuelve solo nombre y etiquetas",
+          "expression": "await buscarEtiquetados(db,'oferta')",
+          "expected": [
+            {
+              "nombre": "Monitor",
+              "etiquetas": [
+                "hardware",
+                "oferta"
+              ]
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "$addToSet agrega un valor solo cuando todavía no existe.",
+        "MongoDB puede comparar un campo de arreglo con un valor para encontrar documentos que lo contienen.",
+        "El segundo argumento de find acepta una proyección de campos."
+      ],
+      "solutionCode": "async function agregarEtiqueta(db, id, etiqueta) {\n  return db.collection(\"articulos\").updateOne({ _id: id }, { $addToSet: { etiquetas: etiqueta } });\n}\n\nasync function buscarEtiquetados(db, etiqueta) {\n  return db.collection(\"articulos\").find({ etiquetas: etiqueta }, { projection: { _id: 0, nombre: 1, etiquetas: 1 } }).toArray();\n}",
+      "solutionExplanation": "$addToSet añade un valor a un arreglo sin repetirlo. La consulta por etiquetas encuentra documentos cuyo arreglo contiene el elemento y la proyección limita los campos devueltos.",
+      "commonMistakes": [
+        "Usar $push y crear duplicados.",
+        "Buscar etiquetas dentro de una cadena con includes.",
+        "Olvidar desactivar _id cuando la consigna pide solo nombre y etiquetas.",
+        "Reemplazar el arreglo completo en lugar de agregar un único valor."
+      ],
+      "estimatedMinutes": 32,
+      "mongoData": {
+        "articulos": [
+          {
+            "_id": 1,
+            "nombre": "Monitor",
+            "etiquetas": [
+              "hardware"
+            ]
+          },
+          {
+            "_id": 2,
+            "nombre": "Libro",
+            "etiquetas": [
+              "lectura"
+            ]
+          }
+        ]
+      },
+      "functionNames": [
+        "agregarEtiqueta",
+        "buscarEtiquetados"
+      ]
+    },
+    {
+      "id": "api-get-json",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "principiante",
+      "title": "Consumí un endpoint JSON",
+      "summary": "Usá fetch, comprobá la respuesta y parseá el cuerpo.",
+      "statement": "Implementá `obtenerUsuarios()` para solicitar `/api/usuarios`. La API devuelve un objeto JSON con una propiedad data. Tu función debe devolver el arreglo y detectar respuestas HTTP fallidas.",
+      "objectives": [
+        "Realizar una petición GET con fetch.",
+        "Comprobar response.ok.",
+        "Parsear JSON de forma asíncrona."
+      ],
+      "requirements": [
+        "Usá fetch('/api/usuarios').",
+        "Si response.ok es false, lanzá un Error.",
+        "Devolvé el arreglo response.json().data.",
+        "No uses XMLHttpRequest."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function obtenerUsuarios() {\n  // Solicitá los usuarios y devolvé el arreglo data.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve el arreglo de usuarios",
+          "expression": "await api.obtenerUsuarios()",
+          "expected": [
+            {
+              "id": 1,
+              "nombre": "Ada"
+            },
+            {
+              "id": 2,
+              "nombre": "Linus"
+            }
+          ]
+        },
+        {
+          "label": "Usa GET para consultar el endpoint",
+          "expression": "api.fetch.requests[0].options.method",
+          "expected": "GET"
+        }
+      ],
+      "hints": [
+        "fetch devuelve una promesa con un objeto Response.",
+        "Comprobá response.ok antes de leer el resultado.",
+        "response.json() también devuelve una promesa, por eso necesitás await."
+      ],
+      "solutionCode": "async function obtenerUsuarios() {\n  const response = await fetch(\"/api/usuarios\");\n  if (!response.ok) throw new Error(\"No se pudieron obtener los usuarios\");\n  const body = await response.json();\n  return body.data;\n}",
+      "solutionExplanation": "fetch realiza la petición HTTP. response.ok permite distinguir respuestas satisfactorias de errores HTTP. json() convierte el cuerpo JSON en un objeto JavaScript y data contiene el arreglo solicitado.",
+      "commonMistakes": [
+        "Olvidar await antes de response.json().",
+        "No comprobar response.ok.",
+        "Devolver todo el objeto cuando se solicita data.",
+        "Usar console.log en lugar de return."
+      ],
+      "estimatedMinutes": 12,
+      "apiFixtures": {
+        "/api/usuarios": {
+          "status": 200,
+          "body": {
+            "data": [
+              {
+                "id": 1,
+                "nombre": "Ada"
+              },
+              {
+                "id": 2,
+                "nombre": "Linus"
+              }
+            ]
+          }
+        }
+      },
+      "functionName": "obtenerUsuarios"
+    },
+    {
+      "id": "api-post-json",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "intermedio",
+      "title": "Enviá datos con POST",
+      "summary": "Construí una petición con JSON y encabezados apropiados.",
+      "statement": "Implementá `crearTarea(tarea)` para enviar una nueva tarea a `/api/tareas`. Enviá JSON con Content-Type y devolvé el recurso creado.",
+      "objectives": [
+        "Elegir el método POST.",
+        "Serializar datos con JSON.stringify.",
+        "Configurar encabezados HTTP."
+      ],
+      "requirements": [
+        "Usá method: 'POST'.",
+        "Incluí Content-Type: application/json.",
+        "Serializá tarea en body.",
+        "Comprobá response.ok y devolvé el JSON creado."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function crearTarea(tarea) {\n  // Enviá la tarea como JSON.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve el recurso creado por el servidor",
+          "expression": "await api.crearTarea({titulo:'Estudiar Fetch'})",
+          "expected": {
+            "id": 31,
+            "titulo": "Estudiar Fetch",
+            "completada": false
+          }
+        },
+        {
+          "label": "Envía POST",
+          "expression": "api.fetch.requests[0].options.method",
+          "expected": "POST"
+        },
+        {
+          "label": "Serializa el cuerpo como JSON",
+          "expression": "api.fetch.requests[0].options.body",
+          "expected": "{\"titulo\":\"Estudiar Fetch\"}"
+        },
+        {
+          "label": "Incluye Content-Type JSON",
+          "expression": "api.fetch.requests[0].options.headers['Content-Type']",
+          "expected": "application/json"
+        }
+      ],
+      "hints": [
+        "El método se define en la propiedad method de las opciones de fetch.",
+        "JSON.stringify convierte el objeto en una cadena JSON.",
+        "Agregá Content-Type para que el servidor interprete el cuerpo como JSON."
+      ],
+      "solutionCode": "async function crearTarea(tarea) {\n  const response = await fetch(\"/api/tareas\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(tarea)\n  });\n  if (!response.ok) throw new Error(\"No se pudo crear la tarea\");\n  return response.json();\n}",
+      "solutionExplanation": "POST envía datos al servidor. JSON.stringify serializa el objeto y Content-Type informa el formato del cuerpo. La función comprueba la respuesta antes de devolver el recurso creado.",
+      "commonMistakes": [
+        "Enviar un objeto directamente en body.",
+        "Usar GET para crear datos.",
+        "Olvidar Content-Type.",
+        "No comprobar errores del servidor."
+      ],
+      "estimatedMinutes": 18,
+      "apiFixtures": {
+        "/api/tareas": {
+          "status": 201,
+          "body": {
+            "id": 31,
+            "titulo": "Estudiar Fetch",
+            "completada": false
+          }
+        }
+      },
+      "functionName": "crearTarea"
+    },
+    {
+      "id": "api-paginacion",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "avanzado",
+      "title": "Recorré una API paginada",
+      "summary": "Combiná query parameters y peticiones sucesivas.",
+      "statement": "Implementá `obtenerTodosLosLibros()` para recorrer las páginas de `/api/libros?page=N`. Cada respuesta incluye items y nextPage. Reuní todos los libros hasta que nextPage sea null.",
+      "objectives": [
+        "Construir query parameters.",
+        "Procesar respuestas por páginas.",
+        "Acumular resultados sin perder datos."
+      ],
+      "requirements": [
+        "Comenzá en la página 1.",
+        "Solicitá /api/libros?page=N.",
+        "Agregá items al arreglo acumulado.",
+        "Continuá usando nextPage mientras no sea null.",
+        "Devolvé todos los registros."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function obtenerTodosLosLibros() {\n  // Recorre todas las páginas y acumula items.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve los libros de las tres páginas",
+          "expression": "await api.obtenerTodosLosLibros()",
+          "expected": [
+            {
+              "id": 1,
+              "titulo": "Dune"
+            },
+            {
+              "id": 2,
+              "titulo": "Solaris"
+            },
+            {
+              "id": 3,
+              "titulo": "Fundación"
+            }
+          ]
+        },
+        {
+          "label": "Solicita la primera página",
+          "expression": "api.fetch.requests[0].url",
+          "expected": "/api/libros?page=1"
+        },
+        {
+          "label": "Consulta la última página",
+          "expression": "api.fetch.requests.map(item=>item.url)",
+          "expected": [
+            "/api/libros?page=1",
+            "/api/libros?page=2",
+            "/api/libros?page=3"
+          ]
+        }
+      ],
+      "hints": [
+        "Usá un arreglo acumulador iniciado en [].",
+        "La respuesta indica la siguiente página que existe.",
+        "Finalizá el ciclo cuando nextPage sea null."
+      ],
+      "solutionCode": "async function obtenerTodosLosLibros() {\n  const libros = [];\n  let pagina = 1;\n  while (pagina !== null) {\n    const response = await fetch(`/api/libros?page=${pagina}`);\n    if (!response.ok) throw new Error(\"Falló la consulta de libros\");\n    const body = await response.json();\n    libros.push(...body.items);\n    pagina = body.nextPage;\n  }\n  return libros;\n}",
+      "solutionExplanation": "Cada respuesta contiene items y nextPage. El ciclo agrega los elementos de la página y toma el número de la siguiente. Cuando nextPage vale null, el recorrido termina.",
+      "commonMistakes": [
+        "Fijar el número de páginas a mano.",
+        "Olvidar actualizar pagina y generar un ciclo infinito.",
+        "Sobrescribir el acumulador en cada vuelta.",
+        "No comprobar errores HTTP entre páginas."
+      ],
+      "estimatedMinutes": 25,
+      "apiFixtures": {
+        "/api/libros?page=1": {
+          "status": 200,
+          "body": {
+            "items": [
+              {
+                "id": 1,
+                "titulo": "Dune"
+              }
+            ],
+            "nextPage": 2
+          }
+        },
+        "/api/libros?page=2": {
+          "status": 200,
+          "body": {
+            "items": [
+              {
+                "id": 2,
+                "titulo": "Solaris"
+              }
+            ],
+            "nextPage": 3
+          }
+        },
+        "/api/libros?page=3": {
+          "status": 200,
+          "body": {
+            "items": [
+              {
+                "id": 3,
+                "titulo": "Fundación"
+              }
+            ],
+            "nextPage": null
+          }
+        }
+      },
+      "functionName": "obtenerTodosLosLibros"
+    },
+    {
+      "id": "api-auth-timeout-error",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "experto",
+      "title": "ManejÁ token, timeout y errores HTTP",
+      "summary": "Centralizá peticiones autenticadas y respuestas fallidas.",
+      "statement": "Implementá `obtenerPerfil(token)` para solicitar `/api/perfil` con un token Bearer y un AbortSignal de timeout. Si el servidor responde con error, lanzá un mensaje claro sin filtrar datos sensibles.",
+      "objectives": [
+        "Construir encabezados de autenticación.",
+        "Controlar duración de una petición.",
+        "Distinguir errores HTTP de errores de red."
+      ],
+      "requirements": [
+        "Enviá Authorization: Bearer <token>.",
+        "Usá AbortController y configurá un timeout de 1000 ms.",
+        "Pasá signal a fetch.",
+        "Si response.ok es false, lanzá Error('No se pudo cargar el perfil').",
+        "Devolvé el JSON en caso de éxito."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function obtenerPerfil(token) {\n  // Realizá la petición autenticada con timeout y manejo de errores.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve el perfil cuando la autenticación es válida",
+          "expression": "await api.obtenerPerfil('token-demo')",
+          "expected": {
+            "id": 7,
+            "nombre": "Ada",
+            "rol": "editora"
+          }
+        },
+        {
+          "label": "Envía el token Bearer",
+          "expression": "api.fetch.requests[0].options.headers.Authorization",
+          "expected": "Bearer token-demo"
+        },
+        {
+          "label": "Usa un AbortSignal",
+          "expression": "Boolean(api.fetch.requests[0].options.signal)",
+          "expected": true
+        }
+      ],
+      "hints": [
+        "Creá un AbortController antes de iniciar fetch.",
+        "Programá controller.abort() con setTimeout y pasá controller.signal.",
+        "Usá finally para limpiar el temporizador."
+      ],
+      "solutionCode": "async function obtenerPerfil(token) {\n  const controller = new AbortController();\n  const timeout = setTimeout(() => controller.abort(), 1000);\n  try {\n    const response = await fetch(\"/api/perfil\", {\n      headers: { Authorization: `Bearer ${token}` },\n      signal: controller.signal\n    });\n    if (!response.ok) throw new Error(\"No se pudo cargar el perfil\");\n    return await response.json();\n  } finally {\n    clearTimeout(timeout);\n  }\n}",
+      "solutionExplanation": "AbortController crea una señal que se pasa a fetch. El temporizador solicita la cancelación después del límite configurado y finally garantiza su limpieza tanto cuando la petición funciona como cuando falla. El mensaje de error no revela el token.",
+      "commonMistakes": [
+        "Enviar el token como query parameter y filtrarlo en URLs.",
+        "Olvidar limpiar el temporizador.",
+        "Ignorar response.ok.",
+        "Capturar cualquier error y devolver un objeto que parece válido."
+      ],
+      "estimatedMinutes": 32,
+      "apiFixtures": {
+        "/api/perfil": {
+          "status": 200,
+          "body": {
+            "id": 7,
+            "nombre": "Ada",
+            "rol": "editora"
+          }
+        }
+      },
+      "functionName": "obtenerPerfil"
+    },
+    {
+      "id": "testing-primeras-aserciones",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "principiante",
+      "title": "Escribí pruebas para una función de suma",
+      "summary": "Usá un pequeño runner compatible con la forma básica de test y expect.",
+      "statement": "Completá `sumar(a, b)` y escribí al menos dos pruebas unitarias con `test()` y `expect().toBe()`. El runner ejecuta las pruebas que escribas y comprueba sus nombres.",
+      "objectives": [
+        "Separar código y pruebas.",
+        "Usar test para registrar casos.",
+        "Comparar resultados con toBe."
+      ],
+      "requirements": [
+        "Implementá sumar(a, b).",
+        "Registrá una prueba llamada 'suma positivos'.",
+        "Registrá otra prueba llamada 'suma con negativo'.",
+        "Cada prueba debe usar expect(...).toBe(...)."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "function sumar(a, b) {\n  // Devolvé la suma.\n}\n\ntest('suma positivos', () => {\n  // Escribí una aserción.\n});\n\ntest('suma con negativo', () => {\n  // Escribí una segunda aserción.\n});",
+      "tests": [
+        {
+          "label": "suma positivos",
+          "testName": "suma positivos"
+        },
+        {
+          "label": "suma con negativo",
+          "testName": "suma con negativo"
+        }
+      ],
+      "hints": [
+        "Una prueba registra el comportamiento esperado, no la implementación interna.",
+        "toBe compara valores primitivos con igualdad estricta.",
+        "Cada test debe tener un nombre descriptivo."
+      ],
+      "solutionCode": "function sumar(a, b) {\n  return a + b;\n}\n\ntest(\"suma positivos\", () => {\n  expect(sumar(2, 3)).toBe(5);\n});\n\ntest(\"suma con negativo\", () => {\n  expect(sumar(8, -3)).toBe(5);\n});",
+      "solutionExplanation": "Las pruebas unitarias verifican una unidad pequeña de comportamiento. test registra cada caso y expect(...).toBe(...) comprueba una igualdad estricta. Dos ejemplos cubren entradas positivas y negativas.",
+      "commonMistakes": [
+        "Escribir console.log en vez de una aserción.",
+        "Usar el resultado esperado como argumento de la función.",
+        "No llamar test y dejar las pruebas sin registrar.",
+        "Usar toBe para comparar objetos por contenido."
+      ],
+      "estimatedMinutes": 12,
+      "requiredTests": [
+        "suma positivos",
+        "suma con negativo"
+      ]
+    },
+    {
+      "id": "testing-casos-borde",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "intermedio",
+      "title": "Probá validaciones y casos límite",
+      "summary": "Verificá entradas válidas e inválidas con distintas aserciones.",
+      "statement": "Implementá `validarEdad(edad)` para aceptar únicamente enteros entre 18 y 120 inclusive. Escribí pruebas para límites y entradas inválidas.",
+      "objectives": [
+        "Identificar clases de equivalencia.",
+        "Probar límites inclusivos.",
+        "Usar aserciones booleanas y de igualdad."
+      ],
+      "requirements": [
+        "Implementá validarEdad.",
+        "Aceptá 18 y 120.",
+        "Rechazá 17, 121 y valores no enteros.",
+        "Escribí los tres tests requeridos.",
+        "Usá toBeTruthy y toBeFalsy o toBe."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "function validarEdad(edad) {\n  // Validá tipo, entero y rango.\n}\n\ntest('acepta limite inferior', () => {\n  // assertion\n});\n\ntest('acepta limite superior', () => {\n  // assertion\n});\n\ntest('rechaza valores fuera de rango', () => {\n  // assertion\n});",
+      "tests": [
+        {
+          "label": "acepta limite inferior",
+          "testName": "acepta limite inferior"
+        },
+        {
+          "label": "acepta limite superior",
+          "testName": "acepta limite superior"
+        },
+        {
+          "label": "rechaza valores fuera de rango",
+          "testName": "rechaza valores fuera de rango"
+        }
+      ],
+      "hints": [
+        "Number.isInteger permite comprobar que el dato sea entero.",
+        "El rango pedido incluye ambos extremos.",
+        "Podés combinar type checks y comparaciones con &&."
+      ],
+      "solutionCode": "function validarEdad(edad) {\n  return Number.isInteger(edad) && edad >= 18 && edad <= 120;\n}\n\ntest(\"acepta limite inferior\", () => {\n  expect(validarEdad(18)).toBeTruthy();\n});\n\ntest(\"acepta limite superior\", () => {\n  expect(validarEdad(120)).toBe(true);\n});\n\ntest(\"rechaza valores fuera de rango\", () => {\n  expect(validarEdad(17)).toBeFalsy();\n  expect(validarEdad(121)).toBe(false);\n  expect(validarEdad(18.5)).toBe(false);\n});",
+      "solutionExplanation": "Los casos límite verifican las fronteras del rango. Number.isInteger descarta decimales y la condición comprueba que la edad esté entre 18 y 120 inclusive.",
+      "commonMistakes": [
+        "Aceptar 17 o 121 por un operador incorrecto.",
+        "No validar el tipo ni los decimales.",
+        "Probar solo el caso habitual y no las fronteras.",
+        "Escribir una prueba que no ejecuta ninguna aserción."
+      ],
+      "estimatedMinutes": 18,
+      "requiredTests": [
+        "acepta limite inferior",
+        "acepta limite superior",
+        "rechaza valores fuera de rango"
+      ]
+    },
+    {
+      "id": "testing-asincrono",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "avanzado",
+      "title": "Probá una función asíncrona",
+      "summary": "Escribí tests que esperen promesas y validen resultados o errores.",
+      "statement": "Implementá `obtenerPrecio(catalogo, id)` para devolver el precio de un producto. Debe rechazar con Error cuando el producto no exista. Escribí pruebas asíncronas para ambos caminos.",
+      "objectives": [
+        "Probar promesas con pruebas asíncronas.",
+        "Usar async/await en el callback de test.",
+        "Verificar rechazos de promesas."
+      ],
+      "requirements": [
+        "La función debe ser async.",
+        "Si no existe el producto, lanzá Error('Producto inexistente').",
+        "Registrá los tests 'devuelve precio existente' y 'rechaza producto ausente'.",
+        "En la segunda prueba, comprobá el mensaje de error."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "async function obtenerPrecio(catalogo, id) {\n  // Buscá el producto o lanzá un error.\n}\n\ntest('devuelve precio existente', async () => {\n  // Esperá la promesa y comprobá el precio.\n});\n\ntest('rechaza producto ausente', async () => {\n  // Comprobá el rechazo y su mensaje.\n});",
+      "tests": [
+        {
+          "label": "devuelve precio existente",
+          "testName": "devuelve precio existente"
+        },
+        {
+          "label": "rechaza producto ausente",
+          "testName": "rechaza producto ausente"
+        }
+      ],
+      "hints": [
+        "Una función async siempre devuelve una promesa.",
+        "Usá await dentro del callback async de test.",
+        "Para comprobar el error podés usar try/catch y verificar error.message."
+      ],
+      "solutionCode": "async function obtenerPrecio(catalogo, id) {\n  const producto = catalogo.find(item => item.id === id);\n  if (!producto) throw new Error(\"Producto inexistente\");\n  return producto.precio;\n}\n\ntest(\"devuelve precio existente\", async () => {\n  const precio = await obtenerPrecio([{ id: 1, precio: 250 }], 1);\n  expect(precio).toBe(250);\n});\n\ntest(\"rechaza producto ausente\", async () => {\n  try {\n    await obtenerPrecio([], 99);\n    throw new Error(\"La promesa debía rechazarse\");\n  } catch (error) {\n    expect(error.message).toBe(\"Producto inexistente\");\n  }\n});",
+      "solutionExplanation": "Las pruebas asíncronas deben esperar la promesa; de lo contrario, el runner podría finalizar antes de conocer su resultado. La segunda prueba verifica que se produzca el error esperado, no solo que cualquier error ocurra.",
+      "commonMistakes": [
+        "No marcar el test como async.",
+        "Olvidar await y crear una prueba que termina demasiado pronto.",
+        "Capturar errores sin comprobar su mensaje.",
+        "Devolver un valor por defecto cuando la consigna requiere rechazo."
+      ],
+      "estimatedMinutes": 25,
+      "requiredTests": [
+        "devuelve precio existente",
+        "rechaza producto ausente"
+      ]
+    },
+    {
+      "id": "testing-mocks-spies",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "experto",
+      "title": "Aislá una dependencia con un mock",
+      "summary": "Usá una función espía para comprobar la colaboración entre módulos.",
+      "statement": "Implementá `guardarPedido(pedido, repositorio)` para delegar el guardado en `repositorio.guardar`. Escribí una prueba que inyecte un spy, lo ejecute y compruebe tanto la llamada como el argumento.",
+      "objectives": [
+        "Aplicar inyección de dependencias.",
+        "Crear un mock/spy controlado.",
+        "Verificar llamadas y argumentos."
+      ],
+      "requirements": [
+        "guardarPedido debe invocar repositorio.guardar(pedido).",
+        "Debe devolver lo que retorne guardar.",
+        "Creá el doble con vi.fn().",
+        "Escribí el test 'delegar guardado al repositorio'.",
+        "Comprobá toHaveBeenCalledTimes(1) y toHaveBeenCalledWith(pedido)."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "async function guardarPedido(pedido, repositorio) {\n  // Delegá el guardado al repositorio.\n}\n\ntest('delegar guardado al repositorio', async () => {\n  // Creá un spy, invocá guardarPedido y verificá la llamada.\n});",
+      "tests": [
+        {
+          "label": "delegar guardado al repositorio",
+          "testName": "delegar guardado al repositorio"
+        }
+      ],
+      "hints": [
+        "La inyección de dependencias permite reemplazar el repositorio real por un spy.",
+        "vi.fn() crea una función registradora de llamadas.",
+        "toHaveBeenCalledWith comprueba los argumentos entregados al spy."
+      ],
+      "solutionCode": "async function guardarPedido(pedido, repositorio) {\n  return repositorio.guardar(pedido);\n}\n\ntest(\"delegar guardado al repositorio\", async () => {\n  const pedido = { id: 10, total: 99 };\n  const guardar = vi.fn(async valor => ({ ...valor, guardado: true }));\n  const resultado = await guardarPedido(pedido, { guardar });\n  expect(resultado.guardado).toBe(true);\n  expect(guardar).toHaveBeenCalledTimes(1);\n  expect(guardar).toHaveBeenCalledWith(pedido);\n});",
+      "solutionExplanation": "El repositorio se recibe como dependencia, lo que facilita sustituirlo en las pruebas. vi.fn registra las llamadas y permite verificar que guardarPedido delegue exactamente una vez y con el pedido correcto.",
+      "commonMistakes": [
+        "Crear el repositorio real durante una prueba unitaria.",
+        "Comprobar solo el resultado e ignorar si se llamó a la dependencia.",
+        "No pasar el argumento al spy.",
+        "Usar un mock global compartido que conserva llamadas entre pruebas."
+      ],
+      "estimatedMinutes": 30,
+      "requiredTests": [
+        "delegar guardado al repositorio"
+      ]
+    },
+    {
+      "id": "dockerfile-node-basico",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "principiante",
+      "title": "Escribí un Dockerfile para Node.js",
+      "summary": "Definí la imagen base, el directorio, dependencias y comando de inicio.",
+      "statement": "Completá un Dockerfile para una aplicación Node.js sencilla. La imagen debe instalar dependencias de forma reproducible y arrancar `server.js`.",
+      "objectives": [
+        "Elegir una imagen base.",
+        "Definir WORKDIR.",
+        "Instalar dependencias con npm ci.",
+        "Declarar el comando de arranque."
+      ],
+      "requirements": [
+        "Usá node:22-alpine como imagen base.",
+        "Definí WORKDIR /app.",
+        "Copiá package*.json antes del código.",
+        "Ejecutá npm ci.",
+        "Copiá el resto del proyecto.",
+        "Exponé el puerto 3000.",
+        "Definí CMD en formato exec."
+      ],
+      "language": "dockerfile",
+      "runner": "docker-static",
+      "starterCode": "FROM node:22-alpine\n# Configurá el directorio de trabajo.\n# Copiá manifiestos e instalá dependencias.\n# Copiá el código y definí el puerto y comando.",
+      "tests": [
+        {
+          "label": "Usa una imagen Node Alpine",
+          "pattern": "^FROM\\s+node:22-alpine",
+          "flags": "mi"
+        },
+        {
+          "label": "Define el directorio /app",
+          "pattern": "^WORKDIR\\s+/app\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Instala dependencias reproducibles",
+          "pattern": "^RUN\\s+npm\\s+ci\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Expone el puerto 3000",
+          "pattern": "^EXPOSE\\s+3000\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Arranca server.js con formato exec",
+          "pattern": "^CMD\\s+\\[\\s*\"node\"\\s*,\\s*\"server\\.js\"\\s*\\]",
+          "flags": "mi"
+        }
+      ],
+      "hints": [
+        "FROM define la imagen base.",
+        "npm ci usa el lockfile para instalar dependencias reproducibles.",
+        "El formato exec de CMD evita una shell innecesaria y entrega señales correctamente."
+      ],
+      "solutionCode": "FROM node:22-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
+      "solutionExplanation": "Cada instrucción crea una capa de imagen. Copiar primero los manifiestos permite reutilizar la capa de dependencias cuando solo cambia el código. CMD en formato exec inicia Node directamente.",
+      "commonMistakes": [
+        "Usar npm install cuando el proyecto cuenta con lockfile y se busca reproducibilidad.",
+        "Copiar todo antes de instalar dependencias y perder caché de capas.",
+        "Usar CMD como cadena de shell sin necesidad.",
+        "Creer que EXPOSE publica automáticamente el puerto en el host."
+      ],
+      "estimatedMinutes": 15,
+      "runnerNote": "El validador revisa el Dockerfile de manera estática. No construye ni ejecuta contenedores."
+    },
+    {
+      "id": "docker-multistage",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "intermedio",
+      "title": "Reducí una imagen con multi-stage build",
+      "summary": "Separá la etapa de instalación de dependencias del runtime.",
+      "statement": "Completá un Dockerfile multi-stage. La primera etapa prepara dependencias y la segunda copia solo lo necesario para ejecutar la aplicación. El contenedor final debe usar el usuario no privilegiado `node`.",
+      "objectives": [
+        "Nombrar etapas con AS.",
+        "Copiar artefactos entre etapas.",
+        "Reducir el contenido de la imagen final.",
+        "Evitar ejecutar como root."
+      ],
+      "requirements": [
+        "La primera etapa debe llamarse deps.",
+        "La segunda etapa debe partir de node:22-alpine.",
+        "Copiá node_modules desde --from=deps.",
+        "Copiá el código de la aplicación.",
+        "Definí USER node.",
+        "Usá CMD en formato exec."
+      ],
+      "language": "dockerfile",
+      "runner": "docker-static",
+      "starterCode": "FROM node:22-alpine AS deps\n# Instalá dependencias.\n\n# Segunda etapa de runtime.\n",
+      "tests": [
+        {
+          "label": "Declara etapa de dependencias",
+          "pattern": "^FROM\\s+node:22-alpine\\s+AS\\s+deps",
+          "flags": "mi"
+        },
+        {
+          "label": "Crea segunda etapa de runtime",
+          "pattern": "^FROM\\s+node:22-alpine",
+          "flags": "mi"
+        },
+        {
+          "label": "Copia dependencias desde deps",
+          "pattern": "^COPY\\s+--from=deps\\s+[^\\n]+",
+          "flags": "mi"
+        },
+        {
+          "label": "Usa usuario no privilegiado",
+          "pattern": "^USER\\s+node\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Declara comando de inicio",
+          "pattern": "^CMD\\s+\\[",
+          "flags": "mi"
+        }
+      ],
+      "hints": [
+        "Nombrá la primera etapa con AS deps; cada nueva instrucción FROM inicia otra etapa.",
+        "COPY --from=deps copia archivos desde la etapa de instalación a la etapa final.",
+        "USER node cambia al usuario sin privilegios para ejecutar la aplicación."
+      ],
+      "solutionCode": "FROM node:22-alpine AS deps\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\n\nFROM node:22-alpine AS runtime\nWORKDIR /app\nENV NODE_ENV=production\nCOPY --from=deps /app/node_modules ./node_modules\nCOPY --chown=node:node . .\nUSER node\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
+      "solutionExplanation": "El multi-stage build evita arrastrar herramientas de instalación a la imagen final. La segunda etapa recibe solo los archivos necesarios. USER node reduce los privilegios del proceso de la aplicación.",
+      "commonMistakes": [
+        "Copiar node_modules desde un contexto equivocado.",
+        "Olvidar que cada FROM inicia una etapa nueva.",
+        "Dejar el contenedor ejecutándose como root.",
+        "Copiar todo desde una etapa de build cuando solo se requieren artefactos concretos."
+      ],
+      "estimatedMinutes": 22,
+      "runnerNote": "Las reglas son validaciones estáticas de Dockerfile; la construcción debe probarse con Docker real."
+    },
+    {
+      "id": "docker-compose-postgres",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "avanzado",
+      "title": "Orquestá una API y PostgreSQL con Compose",
+      "summary": "Definí servicios, variables, healthcheck y volumen persistente.",
+      "statement": "Escribí un fragmento Compose con una API Node y una base PostgreSQL. La API debe esperar a que la base esté saludable y la base debe conservar sus datos en un volumen nombrado.",
+      "objectives": [
+        "Definir servicios en Compose.",
+        "Conectar servicios por nombre DNS interno.",
+        "Usar healthcheck y depends_on con condición healthy.",
+        "Persistir datos mediante volúmenes."
+      ],
+      "requirements": [
+        "Definí servicios api y db.",
+        "El servicio db debe usar postgres:17-alpine.",
+        "Definí POSTGRES_DB, POSTGRES_USER y POSTGRES_PASSWORD mediante variables.",
+        "Agregá healthcheck con pg_isready.",
+        "La API debe depender de db con condition: service_healthy.",
+        "Montá pgdata en /var/lib/postgresql/data."
+      ],
+      "language": "yaml",
+      "runner": "docker-static",
+      "starterCode": "services:\n  db:\n    image: postgres:17-alpine\n    # variables, healthcheck y volumen\n  api:\n    # build, depends_on y puerto\nvolumes:\n  # volumen persistente\n",
+      "tests": [
+        {
+          "label": "Define la base PostgreSQL",
+          "pattern": "db:\\s*\\n(?:\\s+.*\\n){0,4}\\s+image:\\s*postgres:17-alpine"
+        },
+        {
+          "label": "Configura variables de la base",
+          "pattern": "POSTGRES_DB:|POSTGRES_USER:|POSTGRES_PASSWORD:"
+        },
+        {
+          "label": "Agrega healthcheck con pg_isready",
+          "pattern": "healthcheck:[\\s\\S]*?pg_isready"
+        },
+        {
+          "label": "La API espera a que db esté saludable",
+          "pattern": "depends_on:[\\s\\S]*?db:[\\s\\S]*?condition:\\s*service_healthy"
+        },
+        {
+          "label": "Persiste los datos en un volumen nombrado",
+          "pattern": "pgdata:[\\s\\S]*?/var/lib/postgresql/data"
+        }
+      ],
+      "hints": [
+        "Compose define servicios dentro de services y permite conectarlos usando el nombre del servicio.",
+        "healthcheck puede verificar PostgreSQL con pg_isready; depends_on con service_healthy espera ese estado.",
+        "Un volumen nombrado, declarado al nivel raíz, conserva los datos entre recreaciones."
+      ],
+      "solutionCode": "services:\n  db:\n    image: postgres:17-alpine\n    environment:\n      POSTGRES_DB: webdev\n      POSTGRES_USER: app\n      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definí POSTGRES_PASSWORD}\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}\"]\n      interval: 5s\n      timeout: 3s\n      retries: 10\n  api:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      DATABASE_URL: postgres://app:$${POSTGRES_PASSWORD}@db:5432/webdev\n    depends_on:\n      db:\n        condition: service_healthy\nvolumes:\n  pgdata:",
+      "solutionExplanation": "Compose crea una red interna donde la API accede al servicio db por su nombre. healthcheck verifica que PostgreSQL acepte conexiones y service_healthy evita iniciar la API antes de tiempo. pgdata persiste los archivos de la base.",
+      "commonMistakes": [
+        "Usar localhost para conectar la API con el servicio de base dentro de Compose.",
+        "Poner depends_on sin condición y asumir que la base ya acepta conexiones.",
+        "Olvidar declarar el volumen en el nivel raíz.",
+        "Escribir contraseñas reales en el archivo Compose."
+      ],
+      "estimatedMinutes": 28,
+      "runnerNote": "Se validan patrones del YAML, no se ejecuta docker compose ni se valida el YAML con el parser oficial."
+    },
+    {
+      "id": "docker-seguridad-produccion",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "experto",
+      "title": "Endurecé una imagen de producción",
+      "summary": "Revisá usuario, secretos, señales y prácticas de construcción.",
+      "statement": "Construí una imagen de producción segura para una API Node. Debe ser multi-stage, evitar secretos dentro de la imagen, correr sin root, usar un healthcheck y ejecutar el proceso directamente.",
+      "objectives": [
+        "Aplicar multi-stage build.",
+        "Evitar secretos en capas de imagen.",
+        "Usar usuario no privilegiado.",
+        "Agregar healthcheck.",
+        "Preferir formato exec en CMD."
+      ],
+      "requirements": [
+        "Usá una etapa build y otra runtime.",
+        "No agregues ARG ni ENV para secretos o contraseñas.",
+        "Usá USER node.",
+        "Incluí HEALTHCHECK.",
+        "Usá CMD en formato exec.",
+        "Copiá archivos desde la etapa build en vez de copiar herramientas de compilación al runtime."
+      ],
+      "language": "dockerfile",
+      "runner": "docker-static",
+      "starterCode": "FROM node:22-alpine AS build\n# Instala y prepara la aplicación.\n\nFROM node:22-alpine AS runtime\n# Copia artefactos, configura usuario y healthcheck.\n",
+      "tests": [
+        {
+          "label": "Usa al menos dos etapas",
+          "pattern": "^FROM\\s+[^\\n]+\\s+AS\\s+build[\\s\\S]*?^FROM\\s+[^\\n]+\\s+AS\\s+runtime",
+          "flags": "mi"
+        },
+        {
+          "label": "Ejecuta como usuario node",
+          "pattern": "^USER\\s+node\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Incluye healthcheck",
+          "pattern": "^HEALTHCHECK\\s+",
+          "flags": "mi"
+        },
+        {
+          "label": "CMD utiliza formato exec",
+          "pattern": "^CMD\\s+\\[",
+          "flags": "mi"
+        },
+        {
+          "label": "No declara variables de entorno con nombres de secretos",
+          "pattern": "^\\s*(?:ARG|ENV)\\s+\\w*(?:PASSWORD|SECRET|TOKEN|API_KEY)\\b",
+          "flags": "gmi",
+          "negative": true
+        }
+      ],
+      "hints": [
+        "Separá build y runtime para reducir herramientas en la imagen final.",
+        "No copies secretos en capas de imagen; inyectalos al desplegar y ejecutá como USER node.",
+        "HEALTHCHECK define una señal de salud y CMD en formato exec ejecuta el proceso directamente."
+      ],
+      "solutionCode": "FROM node:22-alpine AS build\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nRUN npm run build\n\nFROM node:22-alpine AS runtime\nENV NODE_ENV=production\nWORKDIR /app\nCOPY --from=build --chown=node:node /app/dist ./dist\nCOPY --from=build --chown=node:node /app/node_modules ./node_modules\nUSER node\nEXPOSE 3000\nHEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD [\"node\", \"dist/healthcheck.js\"]\nCMD [\"node\", \"dist/server.js\"]",
+      "solutionExplanation": "Una imagen de producción separa el entorno de construcción del runtime. El proceso corre como node y los secretos se inyectan durante el despliegue, no en el Dockerfile. HEALTHCHECK permite al orquestador consultar el estado del servicio y CMD exec mejora el manejo de señales.",
+      "commonMistakes": [
+        "Guardar secretos con ARG o ENV y dejarlos en capas de la imagen.",
+        "Ejecutar como root sin una necesidad concreta.",
+        "Copiar compiladores y dependencias de desarrollo a runtime.",
+        "No definir un healthcheck realista.",
+        "Usar CMD en formato shell cuando se necesita manejo directo de señales."
+      ],
+      "estimatedMinutes": 32,
+      "runnerNote": "El analizador es estático y educativo. Para una auditoría real se requiere construir y escanear la imagen con herramientas del entorno de despliegue."
     }
   ]
 }

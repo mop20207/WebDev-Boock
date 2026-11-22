@@ -190,7 +190,13 @@
         : challenge.runner === "vue" ? "VUE.JS · EDITOR"
           : challenge.runner === "webcomponents" ? "WEB COMPONENTS · EDITOR"
             : challenge.runner === "node-sim" ? "NODE.JS · SIMULADOR"
-              : challenge.language.toUpperCase() + " · EDITOR";
+              : challenge.runner === "astro-static" ? "ASTRO · VALIDADOR ESTÁTICO"
+                : challenge.runner === "postgres" ? "POSTGRESQL · SQL"
+                  : challenge.runner === "mongo-sim" ? "MONGODB · SIMULADOR"
+                    : challenge.runner === "api-sim" ? "FETCH API · SIMULADOR"
+                      : challenge.runner === "testing-sim" ? "TEST RUNNER · EDITOR"
+                        : challenge.runner === "docker-static" ? "DOCKERFILE / COMPOSE · VALIDADOR"
+                          : challenge.language.toUpperCase() + " · EDITOR";
     toolbar.append(node("span", "challenge-editor-language", editorLanguage));
     const actions = node("div", "challenge-editor-actions");
     const resetButton = node("button", "challenge-action", "Restablecer");
@@ -212,9 +218,21 @@
       ? "HTML y CSS se renderizan sin scripts ni acceso a la red."
       : challenge.runner === "node-sim"
         ? "Simulador educativo: APIs de Node.js con datos en memoria; no accede al servidor, red ni archivos reales."
-        : hasFrameworkPreview
-          ? "Vista previa aislada. React y Vue se cargan desde CDN; Web Components usa APIs nativas del navegador."
-          : "Tip: leé los requisitos y probá una solución pequeña primero.";
+        : challenge.runner === "astro-static"
+          ? "Validador estático de componentes Astro: revisa estructura y directivas, pero no compila un proyecto Astro completo."
+          : challenge.runner === "postgres"
+            ? "PostgreSQL real en WebAssembly mediante PGlite. Se descarga desde CDN; cada ejecución usa una base temporal aislada."
+            : challenge.runner === "mongo-sim"
+              ? "Simulador en memoria de consultas, CRUD y aggregation. No conecta con un servidor MongoDB real."
+              : challenge.runner === "api-sim"
+                ? "Fetch simulado con respuestas locales; permite probar métodos, JSON, paginación y errores sin acceder a Internet."
+                : challenge.runner === "testing-sim"
+                  ? "Mini runner didáctico con test, expect y spies vi.fn; no es una instalación completa de Vitest."
+                  : challenge.runner === "docker-static"
+                    ? "Validador estático de Dockerfile y Compose. No construye imágenes ni ejecuta un Docker Engine."
+                    : hasFrameworkPreview
+                      ? "Vista previa aislada. React y Vue se cargan desde CDN; Web Components usa APIs nativas del navegador."
+                      : "Tip: leé los requisitos y probá una solución pequeña primero.";
     editorHelp.append(node("span", "", runnerHelp), node("span", "", "Ctrl + Enter para ejecutar"));
     let cssEditor = null;
     let previewFrame = null;
@@ -815,6 +833,342 @@ function requireModule(name) {
     }, 5000);
   }
 
+
+  function runDocumentRunner(challenge, documentHtml, resultsNode, completeBanner, runButton, timeoutMs) {
+    cancelActiveRunner();
+    const frame = document.createElement("iframe");
+    frame.title = "Entorno aislado: " + challenge.technologyName;
+    frame.setAttribute("sandbox", "allow-scripts");
+    frame.setAttribute("aria-hidden", "true");
+    frame.style.cssText = "position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0";
+    activeRunner = frame;
+    const receive = event => {
+      if (!activeRunner || event.source !== frame.contentWindow || event.data?.source !== "webdev-challenges" || event.data?.id !== challenge.id || event.data.type !== "results") return;
+      if (runnerTimeout) clearTimeout(runnerTimeout);
+      window.removeEventListener("message", receive);
+      activeRunnerCleanup = null;
+      frame.remove();
+      activeRunner = null;
+      displayResults(challenge, event.data.results || [], resultsNode, completeBanner, runButton);
+    };
+    window.addEventListener("message", receive);
+    activeRunnerCleanup = () => window.removeEventListener("message", receive);
+    frame.srcdoc = documentHtml;
+    document.body.append(frame);
+    runnerTimeout = window.setTimeout(() => {
+      window.removeEventListener("message", receive);
+      activeRunnerCleanup = null;
+      if (activeRunner === frame) {
+        frame.remove();
+        activeRunner = null;
+        resultsNode.replaceChildren(node("h4", "", "El entorno superó el tiempo límite"), node("p", "", "Se detuvo la ejecución aislada. Revisá el código e intentá nuevamente."));
+        runButton.disabled = false;
+        runButton.textContent = "▶ Ejecutar pruebas";
+      }
+    }, timeoutMs || 8000);
+  }
+
+  function staticRulesDocument(challenge, source) {
+    const payload = JSON.stringify({ id: challenge.id, source, tests: challenge.tests || [] }).replace(/</g, "\\u003c");
+    const script = String.raw`
+const payload = __PAYLOAD__;
+const results = payload.tests.map(test => {
+  try {
+    const matched = new RegExp(test.pattern, test.flags || "m").test(payload.source);
+    return { label: test.label, passed: test.negative ? !matched : matched, actual: matched, expected: !test.negative };
+  } catch (error) {
+    return { label: test.label, passed: false, error: String(error && error.message || error) };
+  }
+});
+parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
+`.replace("__PAYLOAD__", payload);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'nonce-static' 'unsafe-eval'; connect-src 'none'\"></head><body><script nonce=\"static\">" + script + "</script></body></html>";
+  }
+
+  function mongoSimulationDocument(challenge, code) {
+    const payload = JSON.stringify({ id: challenge.id, code, tests: challenge.tests || [], data: challenge.mongoData || {}, functionNames: challenge.functionNames || [] }).replace(/</g, "\\u003c");
+    const script = String.raw`
+const payload = __PAYLOAD__;
+const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
+const clone = value => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
+const getPath = (object, path) => String(path).split(".").reduce((value, key) => value == null ? undefined : value[key], object);
+function equal(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+function fieldMatches(actual, expected) {
+  if (expected && typeof expected === "object" && !Array.isArray(expected)) {
+    for (const [operator, value] of Object.entries(expected)) {
+      if (operator === "$gt" && !(actual > value)) return false;
+      if (operator === "$gte" && !(actual >= value)) return false;
+      if (operator === "$lt" && !(actual < value)) return false;
+      if (operator === "$lte" && !(actual <= value)) return false;
+      if (operator === "$eq" && !equal(actual, value)) return false;
+      if (operator === "$ne" && equal(actual, value)) return false;
+      if (operator === "$in" && !value.some(item => Array.isArray(actual) ? actual.some(x => equal(x, item)) : equal(actual, item))) return false;
+      if (operator === "$nin" && value.some(item => Array.isArray(actual) ? actual.some(x => equal(x, item)) : equal(actual, item))) return false;
+      if (operator === "$exists" && ((actual !== undefined) !== Boolean(value))) return false;
+      if (!["$gt","$gte","$lt","$lte","$eq","$ne","$in","$nin","$exists"].includes(operator)) return false;
+    }
+    return true;
+  }
+  if (Array.isArray(actual)) return actual.some(item => equal(item, expected));
+  return equal(actual, expected);
+}
+function matches(document, query) {
+  return Object.entries(query || {}).every(([field, expected]) => {
+    if (field === "$and") return expected.every(part => matches(document, part));
+    if (field === "$or") return expected.some(part => matches(document, part));
+    if (field === "$nor") return !expected.some(part => matches(document, part));
+    return fieldMatches(getPath(document, field), expected);
+  });
+}
+function project(document, projection) {
+  if (!projection || !Object.keys(projection).length) return clone(document);
+  const included = Object.entries(projection).filter(([key, value]) => key !== "_id" && Boolean(value)).map(([key]) => key);
+  if (included.length) {
+    const result = {};
+    for (const key of included) { const value = getPath(document, key); if (value !== undefined) result[key] = clone(value); }
+    if (projection._id !== 0 && document._id !== undefined) result._id = clone(document._id);
+    return result;
+  }
+  const result = clone(document);
+  for (const [key, value] of Object.entries(projection)) if (!value) delete result[key];
+  return result;
+}
+function applyUpdate(document, update) {
+  if (Object.keys(update).some(key => key.startsWith("$"))) {
+    for (const [operator, values] of Object.entries(update)) {
+      for (const [field, value] of Object.entries(values)) {
+        const current = getPath(document, field);
+        if (operator === "$set") document[field] = clone(value);
+        else if (operator === "$inc") document[field] = (Number(current) || 0) + Number(value);
+        else if (operator === "$push") (document[field] ||= []).push(clone(value));
+        else if (operator === "$addToSet") { const array = document[field] ||= []; if (!array.some(item => equal(item, value))) array.push(clone(value)); }
+        else if (operator === "$unset") delete document[field];
+      }
+    }
+  } else {
+    for (const key of Object.keys(document)) if (key !== "_id") delete document[key];
+    Object.assign(document, clone(update));
+  }
+}
+function groupValue(document, expression) {
+  if (typeof expression === "string" && expression.startsWith("$")) return getPath(document, expression.slice(1));
+  return expression;
+}
+const collections = Object.fromEntries(Object.entries(payload.data).map(([name, documents]) => [name, clone(documents)]));
+function collection(name) {
+  const items = collections[name] || (collections[name] = []);
+  return {
+    find(filter = {}, options = {}) {
+      const found = items.filter(document => matches(document, filter)).map(document => project(document, options.projection));
+      return { toArray: () => Promise.resolve(clone(found)) };
+    },
+    findOne(filter = {}, options = {}) {
+      const document = items.find(item => matches(item, filter));
+      return Promise.resolve(document ? project(document, options.projection) : null);
+    },
+    async insertOne(document) {
+      const created = clone(document);
+      if (created._id === undefined) created._id = items.length ? Math.max(...items.map(item => Number(item._id) || 0)) + 1 : 1;
+      items.push(created);
+      return { acknowledged: true, insertedId: created._id };
+    },
+    async updateOne(filter, update) {
+      const document = items.find(item => matches(item, filter));
+      if (!document) return { acknowledged: true, matchedCount: 0, modifiedCount: 0 };
+      const before = clone(document);
+      applyUpdate(document, update);
+      return { acknowledged: true, matchedCount: 1, modifiedCount: equal(before, document) ? 0 : 1 };
+    },
+    aggregate(pipeline = []) {
+      let result = clone(items);
+      for (const stage of pipeline) {
+        if (stage.$match) result = result.filter(item => matches(item, stage.$match));
+        else if (stage.$group) {
+          const groups = new Map();
+          for (const document of result) {
+            const key = groupValue(document, stage.$group._id);
+            const bucket = groups.get(JSON.stringify(key)) || { _id: clone(key) };
+            for (const [field, expression] of Object.entries(stage.$group)) {
+              if (field === "_id") continue;
+              if (expression && expression.$sum !== undefined) {
+                const amount = expression.$sum === 1 ? 1 : Number(groupValue(document, expression.$sum)) || 0;
+                bucket[field] = (bucket[field] || 0) + amount;
+              }
+            }
+            groups.set(JSON.stringify(key), bucket);
+          }
+          result = [...groups.values()];
+        } else if (stage.$sort) {
+          const entries = Object.entries(stage.$sort);
+          result.sort((a, b) => {
+            for (const [key, direction] of entries) {
+              const av = getPath(a, key), bv = getPath(b, key);
+              if (av < bv) return -1 * direction;
+              if (av > bv) return 1 * direction;
+            }
+            return 0;
+          });
+        } else if (stage.$limit !== undefined) result = result.slice(0, stage.$limit);
+        else if (stage.$project) result = result.map(item => project(item, stage.$project));
+      }
+      return { toArray: () => Promise.resolve(clone(result)) };
+    }
+  };
+}
+const db = { collection };
+(async () => {
+  try {
+    const functions = new Function("db", payload.code + "\nreturn [" + payload.functionNames.join(",") + "]")(db);
+    const results = [];
+    for (const test of payload.tests) {
+      try {
+        const actual = await new Function("db", ...payload.functionNames, "return (async () => (" + test.expression + "))()")(db, ...functions);
+        results.push({ label: test.label, passed: JSON.stringify(actual) === JSON.stringify(test.expected), actual, expected: test.expected });
+      } catch (error) { results.push({ label: test.label, passed: false, error: String(error && error.message || error) }); }
+    }
+    send(results);
+  } catch (error) { send([{ label: "Ejecución MongoDB simulada", passed: false, error: String(error && error.message || error) }]); }
+})();
+`.replace("__PAYLOAD__", payload);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'nonce-mongo' 'unsafe-eval'; connect-src 'none'\"></head><body><script nonce=\"mongo\">" + script + "</script></body></html>";
+  }
+
+  function apiSimulationDocument(challenge, code) {
+    const payload = JSON.stringify({ id: challenge.id, code, tests: challenge.tests || [], fixtures: challenge.apiFixtures || {}, functionName: challenge.functionName }).replace(/</g, "\\u003c");
+    const script = String.raw`
+const payload = __PAYLOAD__;
+const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
+const clone = value => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
+const requests = [];
+async function fetchMock(input, options = {}) {
+  const url = typeof input === "string" ? input : input.url;
+  const normalizedOptions = { method: "GET", ...options };
+  requests.push({ url, options: normalizedOptions });
+  const fixture = payload.fixtures[url] || { status: 404, body: { message: "Ruta no encontrada" } };
+  const status = fixture.status || 200;
+  const body = clone(fixture.body);
+  return {
+    ok: status >= 200 && status < 300, status, statusText: status >= 400 ? "Error" : "OK",
+    headers: { get: name => name.toLowerCase() === "content-type" ? "application/json" : null },
+    json: async () => clone(body), text: async () => JSON.stringify(body)
+  };
+}
+fetchMock.requests = requests;
+(async () => {
+  try {
+    const fn = new Function("fetch", "AbortController", payload.code + "\nreturn " + payload.functionName)(fetchMock, AbortController);
+    const api = { fetch: fetchMock };
+    api[payload.functionName] = fn;
+    const results = [];
+    for (const test of payload.tests) {
+      try {
+        const actual = await new Function("api", "return (async () => (" + test.expression + "))()")(api);
+        results.push({ label: test.label, passed: JSON.stringify(actual) === JSON.stringify(test.expected), actual, expected: test.expected });
+      } catch (error) { results.push({ label: test.label, passed: false, error: String(error && error.message || error) }); }
+    }
+    send(results);
+  } catch (error) { send([{ label: "Ejecución de API simulada", passed: false, error: String(error && error.message || error) }]); }
+})();
+`.replace("__PAYLOAD__", payload);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'nonce-api' 'unsafe-eval'; connect-src 'none'\"></head><body><script nonce=\"api\">" + script + "</script></body></html>";
+  }
+
+  function testingSimulationDocument(challenge, code) {
+    const payload = JSON.stringify({ id: challenge.id, code, requiredTests: challenge.requiredTests || [] }).replace(/</g, "\\u003c");
+    const script = String.raw`
+const payload = __PAYLOAD__;
+const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
+const registered = [];
+function test(name, callback) { registered.push({ name: String(name), callback }); }
+const it = test;
+function equal(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+function viFn(implementation) {
+  const spy = function (...args) { spy.mock.calls.push(args); return implementation ? implementation.apply(this, args) : undefined; };
+  spy.mock = { calls: [] };
+  spy.mockResolvedValue = value => { implementation = () => Promise.resolve(value); return spy; };
+  spy.mockImplementation = fn => { implementation = fn; return spy; };
+  spy.mockClear = () => { spy.mock.calls = []; return spy; };
+  return spy;
+}
+function expect(actual) {
+  const assert = (passed, message) => { if (!passed) throw new Error(message); };
+  return {
+    toBe(expected) { assert(Object.is(actual, expected), "Esperado " + JSON.stringify(expected) + " y se obtuvo " + JSON.stringify(actual)); },
+    toEqual(expected) { assert(equal(actual, expected), "Esperado " + JSON.stringify(expected) + " y se obtuvo " + JSON.stringify(actual)); },
+    toBeTruthy() { assert(Boolean(actual), "Se esperaba un valor truthy"); },
+    toBeFalsy() { assert(!actual, "Se esperaba un valor falsy"); },
+    toContain(expected) { assert(actual != null && typeof actual.includes === "function" && actual.includes(expected), "El valor no contiene " + JSON.stringify(expected)); },
+    toHaveLength(expected) { assert(actual != null && actual.length === expected, "Se esperaba longitud " + expected); },
+    toHaveBeenCalledTimes(expected) { assert(typeof actual === "function" && actual.mock && actual.mock.calls.length === expected, "Se esperaba que el spy se llamara " + expected + " veces"); },
+    toHaveBeenCalledWith(...expected) { assert(typeof actual === "function" && actual.mock && actual.mock.calls.some(args => equal(args, expected)), "El spy no recibió los argumentos esperados " + JSON.stringify(expected)); }
+  };
+}
+const vi = { fn: viFn };
+(async () => {
+  try {
+    new Function("test", "it", "expect", "vi", payload.code)(test, it, expect, vi);
+    const results = [];
+    for (const entry of registered) {
+      try { await entry.callback(); results.push({ label: entry.name, passed: true, actual: "passed", expected: "passed" }); }
+      catch (error) { results.push({ label: entry.name, passed: false, error: String(error && error.message || error) }); }
+    }
+    for (const required of payload.requiredTests) {
+      if (!registered.some(entry => entry.name === required)) results.push({ label: required, passed: false, error: "No registraste la prueba requerida." });
+    }
+    if (!registered.length && !payload.requiredTests.length) results.push({ label: "Suite de pruebas", passed: false, error: "No se registró ninguna prueba." });
+    send(results);
+  } catch (error) { send([{ label: "Suite de pruebas", passed: false, error: String(error && error.message || error) }]); }
+})();
+`.replace("__PAYLOAD__", payload);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'nonce-test' 'unsafe-eval'; connect-src 'none'\"></head><body><script nonce=\"test\">" + script + "</script></body></html>";
+  }
+
+  function postgresRunnerDocument(challenge, source) {
+    const payload = JSON.stringify({ id: challenge.id, source, setupSql: challenge.setupSql || "", tests: challenge.tests || [] }).replace(/</g, "\\u003c");
+    const script = String.raw`
+const payload = __PAYLOAD__;
+const send = results => parent.postMessage({ source: "webdev-challenges", id: payload.id, type: "results", results }, "*");
+const normalize = rows => rows.map(row => Object.fromEntries(Object.entries(row).sort(([a], [b]) => a.localeCompare(b))));
+function sameValue(actual, expected) {
+  if (typeof actual === "number" && typeof expected === "string" && expected.trim() !== "" && Number.isFinite(Number(expected))) return actual === Number(expected);
+  if (typeof expected === "number" && typeof actual === "string" && actual.trim() !== "" && Number.isFinite(Number(actual))) return Number(actual) === expected;
+  if (Array.isArray(actual) && Array.isArray(expected)) return actual.length === expected.length && actual.every((value, index) => sameValue(value, expected[index]));
+  if (actual && expected && typeof actual === "object" && typeof expected === "object") {
+    const a = Object.keys(actual).sort(), b = Object.keys(expected).sort();
+    return a.length === b.length && a.every((key, index) => key === b[index] && sameValue(actual[key], expected[key]));
+  }
+  return Object.is(actual, expected);
+}
+const same = (a, b) => sameValue(normalize(a), normalize(b));
+(async () => {
+  let db;
+  try {
+    const { PGlite } = await import("https://cdn.jsdelivr.net/npm/@electric-sql/pglite/dist/index.js");
+    db = new PGlite();
+    if (payload.setupSql) await db.exec(payload.setupSql);
+    if (!payload.source.trim()) throw new Error("Escribí una consulta SQL antes de ejecutar las pruebas.");
+    await db.exec(payload.source);
+    const results = [];
+    for (const test of payload.tests) {
+      try {
+        const query = test.useUserQuery ? payload.source.trim().replace(/;+\s*$/, "") : test.sql;
+        const response = await db.query(query);
+        const actual = normalize(response.rows);
+        const expected = normalize(test.expected);
+        results.push({ label: test.label, passed: same(actual, expected), actual, expected });
+      } catch (error) { results.push({ label: test.label, passed: false, error: String(error && error.message || error) }); }
+    }
+    await db.close();
+    send(results);
+  } catch (error) {
+    if (db) { try { await db.close(); } catch (_) {} }
+    send([{ label: "Motor PostgreSQL en el navegador", passed: false, error: String(error && error.message || error) }]);
+  }
+})();
+`.replace("__PAYLOAD__", payload);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'nonce-pg' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; connect-src https://cdn.jsdelivr.net blob:; worker-src blob:; style-src 'unsafe-inline'\"></head><body><script type=\"module\" nonce=\"pg\">" + script + "</script></body></html>";
+  }
+
   function displayResults(challenge, results, resultsNode, completeBanner, runButton) {
     const passed = results.filter(result => result.passed).length;
     const allPassed = results.length > 0 && passed === results.length;
@@ -850,6 +1204,11 @@ function requireModule(name) {
   async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource, previewFrame) {
     if (challenge.language === "htmlcss") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando pruebas HTML y CSS"), node("p", "", "Renderizando la página en un iframe aislado.")); runHtmlCss(challenge, source, cssSource || "", resultsNode, completeBanner, runButton); return; }
     if (challenge.runner === "node-sim") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando simulación de Node.js"), node("p", "", "Se probarán módulos y APIs educativas dentro de un entorno en memoria, sin acceder al servidor.")); runNodeSimulationChallenge(challenge, source, resultsNode, completeBanner, runButton); return; }
+    if (challenge.runner === "astro-static" || challenge.runner === "docker-static") { runButton.disabled = true; runButton.textContent = "Analizando…"; resultsNode.replaceChildren(node("h4", "", "Analizando estructura"), node("p", "", "Se revisan reglas y patrones del archivo sin ejecutar el proyecto.")); runDocumentRunner(challenge, staticRulesDocument(challenge, source), resultsNode, completeBanner, runButton, 5000); return; }
+    if (challenge.runner === "mongo-sim") { runButton.disabled = true; runButton.textContent = "Simulando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando operaciones MongoDB"), node("p", "", "Se prueban consultas y operaciones en colecciones temporales en memoria.")); runDocumentRunner(challenge, mongoSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
+    if (challenge.runner === "api-sim") { runButton.disabled = true; runButton.textContent = "Probando API…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando peticiones simuladas"), node("p", "", "Fetch usa respuestas de prueba locales y no realiza conexiones externas.")); runDocumentRunner(challenge, apiSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
+    if (challenge.runner === "testing-sim") { runButton.disabled = true; runButton.textContent = "Ejecutando tests…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando suite de pruebas"), node("p", "", "Se ejecutan los tests que escribiste y se verifican los nombres requeridos.")); runDocumentRunner(challenge, testingSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
+    if (challenge.runner === "postgres") { runButton.disabled = true; runButton.textContent = "Iniciando PostgreSQL…"; resultsNode.replaceChildren(node("h4", "", "Iniciando PostgreSQL en WebAssembly"), node("p", "", "Se prepara una base temporal y se ejecutan las consultas en un iframe aislado. La primera carga puede tardar un poco.")); runDocumentRunner(challenge, postgresRunnerDocument(challenge, source), resultsNode, completeBanner, runButton, 30000); return; }
     if (["react", "vue", "webcomponents"].includes(challenge.runner)) { runButton.disabled = true; runButton.textContent = "Preparando entorno…"; resultsNode.replaceChildren(node("h4", "", "Montando componente"), node("p", "", "Preparando la vista previa aislada y ejecutando los casos de prueba.")); runFrameworkChallenge(challenge, source, resultsNode, completeBanner, runButton, previewFrame); return; }
     runButton.disabled = true;
     runButton.textContent = "Preparando pruebas…";
