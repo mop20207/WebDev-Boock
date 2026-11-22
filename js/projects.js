@@ -61,6 +61,7 @@ function renderDetail(){
  const badge=document.createElement("span");badge.className="project-level level-"+p.level;badge.textContent=names[p.level];top.append(back,badge);
  const title=document.createElement("h2");title.textContent=p.title;
  const intro=document.createElement("p");intro.className="project-detail-intro";intro.textContent=p.description;
+ const explanation=document.createElement("p");explanation.className="project-detail-intro project-explanation";explanation.textContent=p.explanation;
  const tags=document.createElement("div");tags.className="project-tags";p.technologies.forEach(t=>{const span=document.createElement("span");span.textContent=t;tags.append(span);});
  const info=document.createElement("div");info.className="project-detail-grid";
  const goals=listBlock("Objetivos de aprendizaje",p.goals);
@@ -82,7 +83,7 @@ function renderDetail(){
  const note=document.createElement("p");note.textContent=(p.notes||[]).join(" ");
  const complete=document.createElement("button");complete.type="button";complete.id="projectComplete";complete.className="project-complete";complete.addEventListener("click",()=>{if(completed.has(p.id))completed.delete(p.id);else completed.add(p.id);saveProgress();render();});
  progress.append(note,complete);
- detail.append(top,title,intro,tags,info,fileArea,preview,sections,checks,progress);renderFilePanel();updateProgress();
+ detail.append(top,title,intro,explanation,tags,info,fileArea,preview,sections,checks,progress);renderFilePanel();updateProgress();
 }
 function renderFilePanel(){
  const panel=$("#projectFilePanel"),file=files[fileIndex];if(!panel||!file)return;panel.replaceChildren();
