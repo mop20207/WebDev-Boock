@@ -126,9 +126,9 @@
 
     filtered.forEach(challenge => {
       const completed = progress.completed.includes(challenge.id);
-      const card = node("button", "challenge-card" + (activeChallenge?.id === challenge.id ? " active" : ""));
-      card.type = "button";
-      card.setAttribute("aria-pressed", String(activeChallenge?.id === challenge.id));
+      const card = node("a", "challenge-card" + (activeChallenge?.id === challenge.id ? " active" : ""));
+      card.href = "retos/" + challenge.id + ".html";
+      card.setAttribute("aria-label", "Abrir reto: " + challenge.title);
       const top = node("div", "challenge-card-top");
       top.append(
         node("span", "challenge-badge level-" + challenge.difficulty, LEVEL_NAMES[challenge.difficulty] || challenge.difficulty),
@@ -139,7 +139,6 @@
       meta.append(node("span", "", challenge.technologyName || challenge.technology));
       meta.append(node("span", "", "· " + (challenge.estimatedMinutes || 15) + " min"));
       card.append(meta);
-      card.addEventListener("click", () => renderChallenge(challenge.id, true));
       listNode.append(card);
     });
   }
@@ -1238,7 +1237,17 @@ const same = (a, b) => sameValue(normalize(a), normalize(b));
       populateTechnologyFilter();
       updateProgressSummary();
       renderList();
-      renderChallenge(challenges[0].id);
+      const requestedId = document.body.dataset.challengeId;
+      const requestedChallenge = requestedId && challenges.find(item => item.id === requestedId);
+      if (document.body.dataset.page === "challenge-detail") {
+        if (!requestedChallenge) throw new Error("No se encontró el reto solicitado.");
+        document.title = requestedChallenge.title + " | Retos · WebDev Book";
+        const pageHeading = document.getElementById("detailPageHeading");
+        if (pageHeading) pageHeading.textContent = requestedChallenge.title;
+        renderChallenge(requestedChallenge.id);
+      } else {
+        renderChallenge(challenges[0].id);
+      }
     } catch (error) {
       workspace.replaceChildren(node("div", "challenge-empty-state"));
       const message = node("p", "", error.message || "Ocurrió un error al cargar los retos.");
