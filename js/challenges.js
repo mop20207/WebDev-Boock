@@ -277,7 +277,8 @@
     workspace.append(completeBanner);
 
     resetButton.addEventListener("click", () => {
-      editor.value = challenge.starterCode || "";
+      editor.value = isHtmlCss ? (challenge.htmlCode || "") : (challenge.starterCode || "");
+      if (isHtmlCss && cssEditor) { cssEditor.value = challenge.cssCode || ""; previewFrame.srcdoc = htmlCssDocument(editor.value, cssEditor.value, "", ""); }
       results.replaceChildren(node("h4", "", "Resultado de las pruebas"), node("p", "", "Código restablecido. Volvé a ejecutar las pruebas cuando estés listo."));
     });
     runButton.addEventListener("click", () => runChallenge(challenge, editor.value, results, completeBanner, runButton, cssEditor?.value));
@@ -548,7 +549,8 @@ declare const console: { log(...values: unknown[]): void; error(...values: unkno
     try { return JSON.stringify(value); } catch (error) { return String(value); }
   }
 
-  async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource) {\n    if (challenge.language === "htmlcss") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando pruebas HTML y CSS"), node("p", "", "Renderizando la página en un iframe aislado.")); runHtmlCss(challenge, source, cssSource || "", resultsNode, completeBanner, runButton); return; }
+  async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource) {
+    if (challenge.language === "htmlcss") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando pruebas HTML y CSS"), node("p", "", "Renderizando la página en un iframe aislado.")); runHtmlCss(challenge, source, cssSource || "", resultsNode, completeBanner, runButton); return; }
     runButton.disabled = true;
     runButton.textContent = "Preparando pruebas…";
     resultsNode.replaceChildren(node("h4", "", "Ejecutando"), node("p", "", "Compilando el código y preparando el entorno aislado…"));
