@@ -77,10 +77,11 @@ body.light .mini-project-card{background:#f8faff;border-color:#dce5f2}
 /* Índice de ejercicios por lenguaje. */
 .exercise-hub-section{margin-top:18px;padding:22px}
 .exercise-hub-section h2{margin:5px 0 0;font-size:20px;color:var(--text)}
-.exercise-hub-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin-top:16px}
+.exercise-hub-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px;margin-top:16px}
 .exercise-challenges{--accent:#8faeff}
 .exercise-games{--accent:#91aaff}
 .exercise-python{--accent:#7dd9b2}
+.exercise-java{--accent:#f0a66e}
 .exercise-hub-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:17px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);color:var(--text);transition:transform .15s,border-color .15s}
 .exercise-hub-card:hover{transform:translateY(-2px);border-color:var(--accent)}
 .exercise-hub-card>span{font-size:9px;font-weight:900;letter-spacing:.09em;color:var(--accent)}

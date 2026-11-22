@@ -50,6 +50,16 @@ La página permite buscar términos, filtrar por categoría, consultar artículo
 
 Referencia oficial: https://docs.python.org/3.15/
 
+## Parte 3 · Bloque C: Biblioteca de Java
+
+La biblioteca incorpora **49 artículos en 9 categorías**: fundamentos y entorno; control de flujo; métodos; programación orientada a objetos; genéricos y colecciones; excepciones; APIs y biblioteca estándar; pruebas y herramientas; y Java moderno y concurrencia. Incluye 98 ejemplos comentados, buenas prácticas, errores frecuentes, ejercicios, pistas y enlaces a documentación oficial.
+
+Los ejemplos se mantienen compatibles con **Java 25 LTS**, elegido como base de aprendizaje estable. Al 22 de noviembre de 2026, JDK 27 es la versión de funciones más reciente y JDK 25 es la línea LTS. Las guías incluyen Maven, Gradle, JUnit y JDBC; esas herramientas o sus drivers se agregan como dependencias cuando el proyecto las necesita. La página educativa copia o descarga los ejemplos `.java`, pero no ejecuta código Java arbitrario dentro del navegador.
+
+La interfaz permite buscar conceptos y APIs, filtrar por categoría y estado, navegar entre artículos, copiar y descargar ejemplos, guardar favoritos y registrar el progreso localmente.
+
+Referencias oficiales: https://docs.oracle.com/en/java/javase/25/ · https://dev.java/learn/ · https://ops.java/releases/
+
 ## Estructura del proyecto
 
 ```text
