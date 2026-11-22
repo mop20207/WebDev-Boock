@@ -462,6 +462,225 @@
         "Usar un arreglo cuando el resultado pedido es un objeto."
       ],
       "estimatedMinutes": 25
+    },
+    {
+      "technology": "html-css",
+      "technologyName": "HTML + CSS",
+      "language": "htmlcss",
+      "id": "html-card-perfil",
+      "difficulty": "principiante",
+      "title": "Construí una tarjeta de perfil",
+      "summary": "Estructurá contenido con HTML semántico y una clase CSS.",
+      "statement": "Creá una tarjeta de perfil con un título y una descripción. Usá estructura semántica y aplicá estilos a la tarjeta.",
+      "objectives": [
+        "Practicar etiquetas semánticas y encabezados.",
+        "Relacionar HTML con CSS mediante clases.",
+        "Comprobar contenido con selectores del DOM."
+      ],
+      "requirements": [
+        "Debe existir un elemento main.",
+        "La tarjeta debe usar la clase perfil.",
+        "Debe contener un h1 con el texto Ada Lovelace.",
+        "Debe incluir un párrafo que contenga matemática."
+      ],
+      "htmlCode": "<main>\n  <article class=\"perfil\">\n    <h1>Ada Lovelace</h1>\n    <p>Pionera de la matemática y la programación.</p>\n  </article>\n</main>",
+      "cssCode": ".perfil {\n  max-width: 320px;\n  padding: 24px;\n  border: 1px solid #cbd5e1;\n  border-radius: 12px;\n  font-family: Arial, sans-serif;\n}",
+      "tests": [
+        {
+          "label": "Existe la estructura principal",
+          "expression": "document.querySelectorAll('main').length === 1",
+          "expected": true
+        },
+        {
+          "label": "La tarjeta tiene un encabezado correcto",
+          "expression": "document.querySelector('.perfil h1')?.textContent.trim() === 'Ada Lovelace'",
+          "expected": true
+        },
+        {
+          "label": "La descripción contiene el tema solicitado",
+          "expression": "document.querySelector('.perfil p')?.textContent.toLowerCase().includes('matemática') === true",
+          "expected": true
+        }
+      ],
+      "hints": [
+        "Usá main para el contenido principal y article para la tarjeta.",
+        "Asigná la clase perfil al article.",
+        "El selector .perfil h1 comprueba el encabezado dentro de la tarjeta."
+      ],
+      "solutionCode": "<main>\n  <article class=\"perfil\">\n    <h1>Ada Lovelace</h1>\n    <p>Pionera de la matemática y la programación.</p>\n  </article>\n</main>\n\n<style>\n.perfil { max-width: 320px; padding: 24px; border: 1px solid #cbd5e1; border-radius: 12px; }\n</style>",
+      "solutionExplanation": "main identifica el contenido principal, article agrupa una pieza independiente y la clase perfil conecta la estructura con sus reglas CSS. El h1 establece el título principal.",
+      "commonMistakes": [
+        "Usar un div para todo y perder significado semántico.",
+        "Olvidar el punto al seleccionar una clase en CSS.",
+        "Cerrar etiquetas en un orden incorrecto."
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "technology": "html-css",
+      "technologyName": "HTML + CSS",
+      "language": "htmlcss",
+      "id": "html-formulario-contacto",
+      "difficulty": "intermedio",
+      "title": "Creá un formulario accesible",
+      "summary": "Vinculá etiquetas label, campos requeridos y estados de foco.",
+      "statement": "Construí un formulario de contacto con nombre y correo electrónico. Cada campo debe tener una etiqueta asociada y ambos datos deben ser obligatorios.",
+      "objectives": [
+        "Relacionar label e input mediante for e id.",
+        "Usar tipos de entrada adecuados.",
+        "Aplicar estilos de foco visibles."
+      ],
+      "requirements": [
+        "Debe existir un form con la clase contacto.",
+        "Debe haber un input text con id nombre y label asociado.",
+        "Debe haber un input email con id correo y label asociado.",
+        "Ambos campos deben tener required.",
+        "El foco debe distinguirse visualmente."
+      ],
+      "htmlCode": "<form class=\"contacto\">\n  <label for=\"nombre\">Nombre</label>\n  <input id=\"nombre\" name=\"nombre\" type=\"text\" required>\n  <label for=\"correo\">Correo electrónico</label>\n  <input id=\"correo\" name=\"correo\" type=\"email\" required>\n  <button type=\"submit\">Enviar</button>\n</form>",
+      "cssCode": ".contacto { display: grid; gap: 10px; max-width: 360px; font-family: Arial, sans-serif; }\n.contacto input { padding: 10px; border: 1px solid #94a3b8; border-radius: 6px; }\n.contacto input:focus { outline: 3px solid #93c5fd; border-color: #2563eb; }",
+      "tests": [
+        {
+          "label": "Existe el formulario",
+          "expression": "document.querySelectorAll('form.contacto').length === 1",
+          "expected": true
+        },
+        {
+          "label": "Las etiquetas están asociadas",
+          "expression": "document.querySelector('label[for=nombre]')?.textContent.trim() === 'Nombre' && document.querySelector('label[for=correo]')?.textContent.includes('Correo')",
+          "expected": true
+        },
+        {
+          "label": "Los campos son obligatorios y usan tipos correctos",
+          "expression": "document.querySelector('#nombre')?.required === true && document.querySelector('#correo')?.required === true && document.querySelector('#correo')?.type === 'email'",
+          "expected": true
+        }
+      ],
+      "hints": [
+        "El valor de for debe coincidir exactamente con el id del input.",
+        "El campo de correo debe usar type=email.",
+        "required activa la validación nativa del navegador."
+      ],
+      "solutionCode": "<form class=\"contacto\">\n  <label for=\"nombre\">Nombre</label>\n  <input id=\"nombre\" type=\"text\" required>\n  <label for=\"correo\">Correo electrónico</label>\n  <input id=\"correo\" type=\"email\" required>\n</form>\n\n<style>\n.contacto { display:grid; gap:10px; }\n.contacto input:focus { outline:3px solid #93c5fd; }\n</style>",
+      "solutionExplanation": "for e id crean una relación programática entre la etiqueta y su campo. required indica que el dato no puede quedar vacío y type=email aporta validación básica.",
+      "commonMistakes": [
+        "Usar placeholder como sustituto de label.",
+        "Asignar el mismo id a varios campos.",
+        "Quitar el indicador de foco sin ofrecer otro visible."
+      ],
+      "estimatedMinutes": 15
+    },
+    {
+      "technology": "html-css",
+      "technologyName": "HTML + CSS",
+      "language": "htmlcss",
+      "id": "css-layout-flex",
+      "difficulty": "avanzado",
+      "title": "Alineá una barra de navegación con Flexbox",
+      "summary": "Usá display:flex, gap y alineación para distribuir elementos.",
+      "statement": "Diseñá una barra horizontal con un logotipo a la izquierda y tres enlaces a la derecha. Usá Flexbox para distribuirlos.",
+      "objectives": [
+        "Aplicar display:flex.",
+        "Distinguir justify-content de align-items.",
+        "Usar gap para separar elementos."
+      ],
+      "requirements": [
+        "El contenedor debe tener la clase barra.",
+        "Debe utilizar display:flex.",
+        "Debe distribuir el logotipo y la navegación en extremos opuestos.",
+        "La lista debe usar flex y gap mayor que cero."
+      ],
+      "htmlCode": "<header class=\"barra\">\n  <strong class=\"logo\">WebDev</strong>\n  <nav aria-label=\"Principal\">\n    <a href=\"#inicio\">Inicio</a>\n    <a href=\"#cursos\">Cursos</a>\n    <a href=\"#contacto\">Contacto</a>\n  </nav>\n</header>",
+      "cssCode": ".barra { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; }\n.barra nav { display: flex; gap: 18px; }\n.barra a { color: #2563eb; text-decoration: none; }",
+      "tests": [
+        {
+          "label": "La barra utiliza Flexbox",
+          "expression": "getComputedStyle(document.querySelector('.barra')).display === 'flex'",
+          "expected": true
+        },
+        {
+          "label": "El contenido se distribuye entre extremos",
+          "expression": "getComputedStyle(document.querySelector('.barra')).justifyContent === 'space-between'",
+          "expected": true
+        },
+        {
+          "label": "Los enlaces forman una fila con separación",
+          "expression": "getComputedStyle(document.querySelector('.barra nav')).display === 'flex' && parseFloat(getComputedStyle(document.querySelector('.barra nav')).columnGap) > 0",
+          "expected": true
+        }
+      ],
+      "hints": [
+        "Convertí .barra en un contenedor flex.",
+        "space-between reparte el espacio libre entre el primer y último elemento.",
+        "Aplicá display:flex y gap al nav para separar sus enlaces."
+      ],
+      "solutionCode": "<header class=\"barra\"><strong>WebDev</strong><nav><a href=\"#inicio\">Inicio</a><a href=\"#cursos\">Cursos</a><a href=\"#contacto\">Contacto</a></nav></header>\n<style>\n.barra { display:flex; justify-content:space-between; align-items:center; }\n.barra nav { display:flex; gap:18px; }\n</style>",
+      "solutionExplanation": "display:flex crea un contexto flexible. justify-content:space-between distribuye los hijos en los extremos y align-items:center los centra en el eje transversal. gap controla la separación entre enlaces.",
+      "commonMistakes": [
+        "Usar text-align:right pensando que distribuye dos bloques.",
+        "Aplicar gap al contenedor equivocado.",
+        "Confundir align-items con justify-content."
+      ],
+      "estimatedMinutes": 20
+    },
+    {
+      "technology": "html-css",
+      "technologyName": "HTML + CSS",
+      "language": "htmlcss",
+      "id": "css-grid-dashboard",
+      "difficulty": "experto",
+      "title": "Construí una cuadrícula adaptable",
+      "summary": "Combiná CSS Grid, minmax y auto-fit para crear tarjetas responsivas.",
+      "statement": "Creá un panel con cuatro tarjetas distribuidas en columnas adaptables. Usá CSS Grid y evitá fijar un número rígido de columnas.",
+      "objectives": [
+        "Crear un contenedor grid.",
+        "Usar repeat, auto-fit y minmax.",
+        "Comprender cómo se calculan columnas adaptables."
+      ],
+      "requirements": [
+        "El contenedor debe usar la clase panel.",
+        "Debe utilizar display:grid.",
+        "Las columnas deben usar repeat(auto-fit, minmax(...)).",
+        "Debe existir separación mediante gap.",
+        "Debe contener cuatro elementos con clase tarjeta."
+      ],
+      "htmlCode": "<main class=\"panel\">\n  <article class=\"tarjeta\">HTML</article>\n  <article class=\"tarjeta\">CSS</article>\n  <article class=\"tarjeta\">JavaScript</article>\n  <article class=\"tarjeta\">TypeScript</article>\n</main>",
+      "cssCode": ".panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }\n.tarjeta { padding: 24px; border-radius: 10px; background: #dbeafe; color: #1e3a8a; }",
+      "tests": [
+        {
+          "label": "El panel utiliza CSS Grid",
+          "expression": "getComputedStyle(document.querySelector('.panel')).display === 'grid'",
+          "expected": true
+        },
+        {
+          "label": "Hay cuatro tarjetas",
+          "expression": "document.querySelectorAll('.panel .tarjeta').length === 4",
+          "expected": true
+        },
+        {
+          "label": "Las columnas tienen una configuración calculada",
+          "expression": "getComputedStyle(document.querySelector('.panel')).gridTemplateColumns !== 'none'",
+          "expected": true
+        },
+        {
+          "label": "Existe separación entre tarjetas",
+          "expression": "parseFloat(getComputedStyle(document.querySelector('.panel')).gap) > 0",
+          "expected": true
+        }
+      ],
+      "hints": [
+        "El contenedor principal debe ser display:grid.",
+        "repeat permite repetir un patrón; auto-fit adapta la cantidad al espacio disponible.",
+        "minmax(140px, 1fr) establece un mínimo y permite que cada columna crezca."
+      ],
+      "solutionCode": "<main class=\"panel\"><article class=\"tarjeta\">HTML</article><article class=\"tarjeta\">CSS</article><article class=\"tarjeta\">JavaScript</article><article class=\"tarjeta\">TypeScript</article></main>\n<style>\n.panel { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:16px; }\n.tarjeta { padding:24px; border-radius:10px; }\n</style>",
+      "solutionExplanation": "Grid organiza elementos en filas y columnas. repeat(auto-fit, minmax(140px, 1fr)) permite que entren tantas columnas como quepan respetando un ancho mínimo y distribuyendo el espacio sobrante. gap define la separación.",
+      "commonMistakes": [
+        "Usar auto-fill sin comprender las pistas vacías.",
+        "Invertir mínimo y máximo dentro de minmax.",
+        "Definir grid-template-columns pero olvidar display:grid."
+      ],
+      "estimatedMinutes": 30
     }
   ]
 }
