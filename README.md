@@ -72,7 +72,7 @@ Referencias oficiales: https://www.gnu.org/software/bash/manual/bash.html · htt
 
 ## Parte 3 · Bloque E: API de Consola y herramientas de desarrollo
 
-La biblioteca suma **30 artículos en 6 categorías**, con 60 ejemplos JavaScript comentados. La parte de API cubre niveles de registro (`log`, `info`, `warn`, `error`), inspección de objetos, formatos, tablas, grupos, contadores, aserciones, temporizadores, trazas y limpieza de la consola. La parte de DevTools recorre Console, Elements/Inspector, Styles, Sources/Debugger, breakpoints, Call Stack, Scope, Network, Application/Storage, IndexedDB, cookies, Service Workers, Performance, Memory, modo responsive, accesibilidad, Issues, seguridad, source maps y Coverage.
+La biblioteca suma **32 artículos en 6 categorías**, con 64 ejemplos JavaScript comentados. La parte de API cubre niveles de registro (`log`, `info`, `warn`, `error`), inspección de objetos, formatos, tablas, grupos, contadores, aserciones, temporizadores, trazas y limpieza de la consola. La parte de DevTools recorre Console, Elements/Inspector, Styles, Sources/Debugger, breakpoints, Call Stack, Scope, Network, Application/Storage, IndexedDB, cookies, Service Workers, Performance, Memory, modo responsive, accesibilidad, Issues, seguridad, source maps y Coverage.
 
 La documentación distingue los métodos de la API web `console` de las funciones y vistas específicas de las herramientas del navegador. Los nombres, atajos y paneles pueden variar entre Chrome, Firefox y otras implementaciones. Los ejemplos son código JavaScript para practicar en una página propia o en la consola de DevTools; la biblioteca no ejecuta código ajeno por sí misma.
 
