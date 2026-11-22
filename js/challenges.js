@@ -190,7 +190,13 @@
         : challenge.runner === "vue" ? "VUE.JS · EDITOR"
           : challenge.runner === "webcomponents" ? "WEB COMPONENTS · EDITOR"
             : challenge.runner === "node-sim" ? "NODE.JS · SIMULADOR"
-              : challenge.language.toUpperCase() + " · EDITOR";
+              : challenge.runner === "astro-static" ? "ASTRO · VALIDADOR ESTÁTICO"
+                : challenge.runner === "postgres" ? "POSTGRESQL · SQL"
+                  : challenge.runner === "mongo-sim" ? "MONGODB · SIMULADOR"
+                    : challenge.runner === "api-sim" ? "FETCH API · SIMULADOR"
+                      : challenge.runner === "testing-sim" ? "TEST RUNNER · EDITOR"
+                        : challenge.runner === "docker-static" ? "DOCKERFILE / COMPOSE · VALIDADOR"
+                          : challenge.language.toUpperCase() + " · EDITOR";
     toolbar.append(node("span", "challenge-editor-language", editorLanguage));
     const actions = node("div", "challenge-editor-actions");
     const resetButton = node("button", "challenge-action", "Restablecer");
@@ -212,9 +218,21 @@
       ? "HTML y CSS se renderizan sin scripts ni acceso a la red."
       : challenge.runner === "node-sim"
         ? "Simulador educativo: APIs de Node.js con datos en memoria; no accede al servidor, red ni archivos reales."
-        : hasFrameworkPreview
-          ? "Vista previa aislada. React y Vue se cargan desde CDN; Web Components usa APIs nativas del navegador."
-          : "Tip: leé los requisitos y probá una solución pequeña primero.";
+        : challenge.runner === "astro-static"
+          ? "Validador estático de componentes Astro: revisa estructura y directivas, pero no compila un proyecto Astro completo."
+          : challenge.runner === "postgres"
+            ? "PostgreSQL real en WebAssembly mediante PGlite. Se descarga desde CDN; cada ejecución usa una base temporal aislada."
+            : challenge.runner === "mongo-sim"
+              ? "Simulador en memoria de consultas, CRUD y aggregation. No conecta con un servidor MongoDB real."
+              : challenge.runner === "api-sim"
+                ? "Fetch simulado con respuestas locales; permite probar métodos, JSON, paginación y errores sin acceder a Internet."
+                : challenge.runner === "testing-sim"
+                  ? "Mini runner didáctico con test, expect y spies vi.fn; no es una instalación completa de Vitest."
+                  : challenge.runner === "docker-static"
+                    ? "Validador estático de Dockerfile y Compose. No construye imágenes ni ejecuta un Docker Engine."
+                    : hasFrameworkPreview
+                      ? "Vista previa aislada. React y Vue se cargan desde CDN; Web Components usa APIs nativas del navegador."
+                      : "Tip: leé los requisitos y probá una solución pequeña primero.";
     editorHelp.append(node("span", "", runnerHelp), node("span", "", "Ctrl + Enter para ejecutar"));
     let cssEditor = null;
     let previewFrame = null;
@@ -1176,6 +1194,11 @@ const same = (a, b) => JSON.stringify(normalize(a)) === JSON.stringify(normalize
   async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource, previewFrame) {
     if (challenge.language === "htmlcss") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando pruebas HTML y CSS"), node("p", "", "Renderizando la página en un iframe aislado.")); runHtmlCss(challenge, source, cssSource || "", resultsNode, completeBanner, runButton); return; }
     if (challenge.runner === "node-sim") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando simulación de Node.js"), node("p", "", "Se probarán módulos y APIs educativas dentro de un entorno en memoria, sin acceder al servidor.")); runNodeSimulationChallenge(challenge, source, resultsNode, completeBanner, runButton); return; }
+    if (challenge.runner === "astro-static" || challenge.runner === "docker-static") { runButton.disabled = true; runButton.textContent = "Analizando…"; resultsNode.replaceChildren(node("h4", "", "Analizando estructura"), node("p", "", "Se revisan reglas y patrones del archivo sin ejecutar el proyecto.")); runDocumentRunner(challenge, staticRulesDocument(challenge, source), resultsNode, completeBanner, runButton, 5000); return; }
+    if (challenge.runner === "mongo-sim") { runButton.disabled = true; runButton.textContent = "Simulando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando operaciones MongoDB"), node("p", "", "Se prueban consultas y operaciones en colecciones temporales en memoria.")); runDocumentRunner(challenge, mongoSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
+    if (challenge.runner === "api-sim") { runButton.disabled = true; runButton.textContent = "Probando API…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando peticiones simuladas"), node("p", "", "Fetch usa respuestas de prueba locales y no realiza conexiones externas.")); runDocumentRunner(challenge, apiSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
+    if (challenge.runner === "testing-sim") { runButton.disabled = true; runButton.textContent = "Ejecutando tests…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando suite de pruebas"), node("p", "", "Se ejecutan los tests que escribiste y se verifican los nombres requeridos.")); runDocumentRunner(challenge, testingSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
+    if (challenge.runner === "postgres") { runButton.disabled = true; runButton.textContent = "Iniciando PostgreSQL…"; resultsNode.replaceChildren(node("h4", "", "Iniciando PostgreSQL en WebAssembly"), node("p", "", "Se prepara una base temporal y se ejecutan las consultas en un iframe aislado. La primera carga puede tardar un poco.")); runDocumentRunner(challenge, postgresRunnerDocument(challenge, source), resultsNode, completeBanner, runButton, 30000); return; }
     if (["react", "vue", "webcomponents"].includes(challenge.runner)) { runButton.disabled = true; runButton.textContent = "Preparando entorno…"; resultsNode.replaceChildren(node("h4", "", "Montando componente"), node("p", "", "Preparando la vista previa aislada y ejecutando los casos de prueba.")); runFrameworkChallenge(challenge, source, resultsNode, completeBanner, runButton, previewFrame); return; }
     runButton.disabled = true;
     runButton.textContent = "Preparando pruebas…";
