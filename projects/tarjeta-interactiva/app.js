@@ -1,3 +1,4 @@
+// Tarjeta interactiva: sincroniza el desplegado con aria-expanded.
 const button=document.querySelector("#toggle");
 const details=document.querySelector("#details");
 const status=document.querySelector("#status");

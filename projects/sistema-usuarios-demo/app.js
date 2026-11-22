@@ -1,3 +1,4 @@
+// Usuarios demo: administra perfiles locales; no implementa autenticación real.
 const KEY="webdev-project-users-demo-v1",list=document.querySelector("#users"),status=document.querySelector("#status");
 let users=load();
 function load(){try{const data=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(data)?data:[];}catch{return [];}}

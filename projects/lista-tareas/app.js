@@ -1,3 +1,4 @@
+// Lista de tareas: modifica el arreglo, persiste y vuelve a renderizar.
 const STORAGE="webdev-project-todo-v1",list=document.querySelector("#taskList"),summary=document.querySelector("#summary");
 let filter="all",tasks=read();
 function read(){try{const saved=JSON.parse(localStorage.getItem(STORAGE)||"[]");return Array.isArray(saved)?saved:[];}catch{return [];}}

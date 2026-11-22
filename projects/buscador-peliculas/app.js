@@ -1,3 +1,4 @@
+// Películas: filtra un catálogo local y actualiza las tarjetas.
 const catalogue=[
  {title:"Interestelar",genre:"Ciencia ficción",year:2014,rating:8.7,icon:"✦",description:"Un viaje espacial para buscar un futuro."},
  {title:"El viaje de Chihiro",genre:"Fantasía",year:2001,rating:8.6,icon:"❋",description:"Una niña descubre un mundo de espíritus."},

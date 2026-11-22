@@ -1,3 +1,4 @@
+// Panel: calcula métricas y filtra la tabla de usuarios.
 const users=[{name:"Ana Gómez",email:"ana@example.com",active:true,role:"Admin"},{name:"Bruno Díaz",email:"bruno@example.com",active:true,role:"Editor"},{name:"Carla Ruiz",email:"carla@example.com",active:false,role:"Usuario"},{name:"Diego López",email:"diego@example.com",active:true,role:"Usuario"}];
 const rows=document.querySelector("#rows"),search=document.querySelector("#search");
 function render(){

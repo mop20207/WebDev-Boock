@@ -1,3 +1,4 @@
+// Calculadora: conserva operando, operador y valor actual como estado.
 const display=document.querySelector("#display"),message=document.querySelector("#message");
 let current="0",stored=null,operator=null,replaceNext=false;
 function paint(){display.textContent=current;}

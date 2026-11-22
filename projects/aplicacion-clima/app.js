@@ -1,3 +1,4 @@
+// Clima: encadena geocodificación y consulta meteorológica.
 const form=document.querySelector("#form"),input=document.querySelector("#city"),status=document.querySelector("#status"),result=document.querySelector("#result");
 const descriptions={0:"Despejado",1:"Mayormente despejado",2:"Parcialmente nublado",3:"Nublado",45:"Niebla",51:"Llovizna",61:"Lluvia",63:"Lluvia moderada",65:"Lluvia intensa",71:"Nieve",80:"Chaparrones",95:"Tormenta"};
 async function loadWeather(city){

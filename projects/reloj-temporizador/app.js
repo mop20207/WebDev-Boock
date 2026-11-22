@@ -1,3 +1,4 @@
+// Reloj: actualiza hora local, cronómetro y cuenta regresiva.
 const time=document.querySelector("#time"),date=document.querySelector("#date"),watch=document.querySelector("#watch"),countdown=document.querySelector("#countdown");
 let elapsed=0,started=0,watchTimer=null,countTimer=null,remaining=30;
 function updateClock(){const now=new Date();time.textContent=new Intl.DateTimeFormat("es-AR",{hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(now);date.textContent=new Intl.DateTimeFormat("es-AR",{dateStyle:"full"}).format(now);}

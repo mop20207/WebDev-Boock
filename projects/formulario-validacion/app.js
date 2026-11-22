@@ -1,3 +1,4 @@
+// Formulario: valida entradas y comunica errores junto a cada campo.
 const form=document.querySelector("#form");
 const fields=["name","email","message"];
 function showError(id,message){

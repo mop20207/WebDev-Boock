@@ -1,3 +1,4 @@
+// Productos: combina filtros y mantiene las cantidades del carrito.
 const products=[{id:1,name:"Auriculares",category:"Audio",price:24900,icon:"🎧"},{id:2,name:"Teclado mecánico",category:"Accesorios",price:58900,icon:"⌨️"},{id:3,name:"Mouse inalámbrico",category:"Accesorios",price:17900,icon:"🖱️"},{id:4,name:"Parlante portátil",category:"Audio",price:32900,icon:"🔊"},{id:5,name:"Webcam HD",category:"Video",price:41900,icon:"📷"}];
 const $=selector=>document.querySelector(selector),cart=new Map();
 [...new Set(products.map(p=>p.category))].forEach(category=>{const o=document.createElement("option");o.value=category;o.textContent=category;$("#category").append(o);});
