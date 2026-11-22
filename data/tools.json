@@ -1,6 +1,6 @@
 {
-  "version": 19,
-  "articleCount": 331,
+  "version": 20,
+  "articleCount": 359,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
   "tools": [
     {
@@ -22460,6 +22460,2062 @@
           "related": [
             "mongodb-node-driver-connect",
             "mongodb-backup-restore"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apis",
+      "title": "APIs y comunicación web",
+      "shortTitle": "APIs",
+      "symbol": "⇄",
+      "eyebrow": "HTTP / REST / FETCH",
+      "tagline": "Aprendé a diseñar, construir y consumir servicios web.",
+      "description": "Biblioteca práctica sobre HTTP, diseño REST, JSON, Fetch, seguridad, documentación e integración entre aplicaciones.",
+      "level": "Inicial a avanzado",
+      "accent": "apis",
+      "categories": [
+        {
+          "id": "fundamentos-http",
+          "title": "Fundamentos de HTTP",
+          "description": "Entendé cómo viajan las solicitudes y respuestas entre clientes y servidores.",
+          "icon": "⇄",
+          "articles": [
+            "api-http",
+            "api-metodos",
+            "api-status",
+            "api-headers"
+          ]
+        },
+        {
+          "id": "diseno-rest",
+          "title": "Diseño de APIs",
+          "description": "Diseñá recursos, contratos, validaciones y respuestas coherentes.",
+          "icon": "◇",
+          "articles": [
+            "api-rest",
+            "api-json",
+            "api-paginacion"
+          ]
+        },
+        {
+          "id": "consumo",
+          "title": "Consumo desde JavaScript",
+          "description": "Consumí servicios con Fetch y controlá errores, tiempos y datos.",
+          "icon": "↗",
+          "articles": [
+            "api-fetch",
+            "api-response",
+            "api-abort"
+          ]
+        },
+        {
+          "id": "seguridad",
+          "title": "Seguridad y comunicación",
+          "description": "Comprendé CORS, autenticación y protección de solicitudes.",
+          "icon": "⌑",
+          "articles": [
+            "api-cors",
+            "api-auth"
+          ]
+        },
+        {
+          "id": "integracion",
+          "title": "Integración y documentación",
+          "description": "Documentá contratos y conectá sistemas mediante eventos.",
+          "icon": "⌘",
+          "articles": [
+            "api-openapi",
+            "api-webhooks"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "api-http",
+          "title": "¿Qué es HTTP y cómo funciona una comunicación web?",
+          "category": "fundamentos-http",
+          "summary": "Conocé el protocolo que permite que navegadores, aplicaciones y servidores intercambien solicitudes y respuestas.",
+          "purpose": "HTTP es un protocolo de aplicación basado en mensajes. El cliente envía una solicitud con método, destino, cabeceras y, en algunos casos, cuerpo. El servidor responde con un código de estado, cabeceras y un cuerpo opcional. HTTPS protege ese intercambio mediante TLS.",
+          "whenToUse": "HTTP es un protocolo de aplicación basado en mensajes. El cliente envía una solicitud con método, destino, cabeceras y, en algunos casos, cuerpo. El servidor responde con un código de estado, cabeceras y un cuerpo opcional. HTTPS protege ese intercambio mediante TLS.",
+          "syntax": "Cliente → solicitud HTTP → servidor → respuesta HTTP → cliente",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Inspeccionar una solicitud con Fetch",
+              "description": "El navegador construye una solicitud HTTP al consultar un recurso.",
+              "code": "const respuesta = await fetch('https://jsonplaceholder.typicode.com/posts/1');\nconsole.log(respuesta.status); // 200\nconsole.log(respuesta.headers.get('content-type'));",
+              "explanation": "fetch inicia la comunicación. status expone el código HTTP y headers.get permite consultar una cabecera. La respuesta todavía debe leerse con json(), text() u otro método."
+            },
+            {
+              "title": "Ver el intercambio desde la terminal",
+              "description": "curl permite consultar una URL y mostrar cabeceras de respuesta.",
+              "code": "curl -i https://jsonplaceholder.typicode.com/posts/1",
+              "explanation": "-i incluye las cabeceras HTTP junto con el cuerpo. Es útil para inspeccionar el protocolo sin depender de la interfaz del navegador."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Solicitud",
+              "description": "Mensaje que envía el cliente; incluye método, URL, cabeceras y, opcionalmente, cuerpo."
+            },
+            {
+              "name": "Respuesta",
+              "description": "Mensaje del servidor con código de estado, cabeceras y contenido."
+            },
+            {
+              "name": "HTTPS",
+              "description": "HTTP protegido por TLS, que aporta confidencialidad e integridad durante el transporte."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Explicá qué partes forman una solicitud y qué información devuelve una respuesta HTTP.",
+          "hint": "Identificá método, URL, cabeceras y cuerpo en la solicitud; luego status, headers y body en la respuesta.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-metodos",
+            "api-status"
+          ]
+        },
+        {
+          "id": "api-metodos",
+          "title": "Métodos HTTP: GET, POST, PUT, PATCH y DELETE",
+          "category": "fundamentos-http",
+          "summary": "Elegí el método HTTP según la intención de la operación sobre un recurso.",
+          "purpose": "Los métodos describen la semántica de la solicitud. GET recupera; POST suele crear o ejecutar una operación; PUT reemplaza la representación de un recurso; PATCH aplica cambios parciales; DELETE solicita eliminarlo. La semántica importa para caché, reintentos e idempotencia.",
+          "whenToUse": "Los métodos describen la semántica de la solicitud. GET recupera; POST suele crear o ejecutar una operación; PUT reemplaza la representación de un recurso; PATCH aplica cambios parciales; DELETE solicita eliminarlo. La semántica importa para caché, reintentos e idempotencia.",
+          "syntax": "GET /api/libros\nPOST /api/libros\nPUT /api/libros/7\nPATCH /api/libros/7\nDELETE /api/libros/7",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Leer un recurso",
+              "description": "GET recupera datos sin pedir una modificación.",
+              "code": "const respuesta = await fetch('/api/libros/7');\nconst libro = await respuesta.json();\nconsole.log(libro.titulo);",
+              "explanation": "GET es seguro por definición: no debería producir cambios de negocio. Puede ser almacenado en caché según las cabeceras."
+            },
+            {
+              "title": "Crear un recurso",
+              "description": "POST envía los datos que el servidor usará para crear un registro.",
+              "code": "const respuesta = await fetch('/api/libros', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ titulo: 'Dune', autor: 'Frank Herbert' })\n});\nconst creado = await respuesta.json();",
+              "explanation": "method selecciona POST; Content-Type declara el formato del cuerpo; JSON.stringify convierte el objeto JavaScript en texto JSON."
+            },
+            {
+              "title": "Actualizar parcialmente",
+              "description": "PATCH cambia solo los campos indicados.",
+              "code": "await fetch('/api/libros/7', {\n  method: 'PATCH',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ disponible: false })\n});",
+              "explanation": "El ejemplo modifica disponible sin reenviar el resto del libro. El formato exacto de PATCH depende del contrato de la API."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "method",
+              "description": "Opción de fetch que indica el método HTTP, por ejemplo GET, POST o PATCH."
+            },
+            {
+              "name": "PUT",
+              "description": "Suele reemplazar la representación completa del recurso identificado."
+            },
+            {
+              "name": "PATCH",
+              "description": "Aplica una modificación parcial según el formato definido por la API."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Diseñá las solicitudes para listar libros, crear uno, cambiar su título y eliminarlo.",
+          "hint": "Pensá si la operación lee, crea, reemplaza, modifica parcialmente o elimina.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-http",
+            "api-rest"
+          ]
+        },
+        {
+          "id": "api-status",
+          "title": "Códigos de estado HTTP: 2xx, 3xx, 4xx y 5xx",
+          "category": "fundamentos-http",
+          "summary": "Interpretá el resultado de una solicitud mediante su código de estado.",
+          "purpose": "Los códigos se agrupan por clase: 2xx indica éxito, 3xx redirección, 4xx un problema en la solicitud o autorización del cliente y 5xx un fallo del servidor o de un servicio aguas arriba. Elegir códigos precisos mejora la integración y el diagnóstico.",
+          "whenToUse": "Los códigos se agrupan por clase: 2xx indica éxito, 3xx redirección, 4xx un problema en la solicitud o autorización del cliente y 5xx un fallo del servidor o de un servicio aguas arriba. Elegir códigos precisos mejora la integración y el diagnóstico.",
+          "syntax": "200 OK · 201 Created · 204 No Content\n301/302 Redirect · 400 Bad Request · 401 Unauthorized\n403 Forbidden · 404 Not Found · 409 Conflict\n422 Unprocessable Content · 429 Too Many Requests\n500 Internal Server Error · 503 Service Unavailable",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Comprobar el estado",
+              "description": "fetch no rechaza automáticamente la promesa por respuestas 404 o 500.",
+              "code": "const respuesta = await fetch('/api/libros/999');\n\nif (!respuesta.ok) {\n  throw new Error(`La API respondió ${respuesta.status}`);\n}\n\nconst libro = await respuesta.json();",
+              "explanation": "ok es true para estados entre 200 y 299. Un 404 sigue siendo una respuesta HTTP válida a nivel de transporte; por eso hay que comprobar ok."
+            },
+            {
+              "title": "Responder desde Express",
+              "description": "Un servidor puede indicar creación y ausencia de contenido.",
+              "code": "app.post('/api/libros', async (req, res) => {\n  const libro = await guardarLibro(req.body);\n  res.status(201).json(libro);\n});\n\napp.delete('/api/libros/:id', async (req, res) => {\n  await borrarLibro(req.params.id);\n  res.status(204).end();\n});",
+              "explanation": "201 comunica que se creó un recurso. 204 comunica éxito sin cuerpo; por eso se usa end() y no se envía JSON."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "response.ok",
+              "description": "Propiedad booleana de Response; indica si el estado está entre 200 y 299."
+            },
+            {
+              "name": "201 Created",
+              "description": "Éxito que indica que se creó un recurso."
+            },
+            {
+              "name": "204 No Content",
+              "description": "Éxito sin cuerpo de respuesta."
+            },
+            {
+              "name": "401 y 403",
+              "description": "401 indica falta de autenticación válida; 403 indica que el servidor entiende quién solicita, pero no permite la operación."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Elegí un código para: libro creado, libro inexistente, datos inválidos, conflicto de versión y error inesperado.",
+          "hint": "Separá errores del cliente (4xx) de errores del servidor (5xx) y distinguí éxito con cuerpo de éxito sin cuerpo.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-http",
+            "api-fetch"
+          ]
+        },
+        {
+          "id": "api-headers",
+          "title": "Cabeceras HTTP y negociación de contenido",
+          "category": "fundamentos-http",
+          "summary": "Usá cabeceras para describir el contenido, la autenticación, la caché y las preferencias del cliente.",
+          "purpose": "Las cabeceras son metadatos que acompañan solicitudes y respuestas. Content-Type describe el formato enviado; Accept expresa formatos aceptables; Authorization transporta credenciales; Cache-Control define directivas de caché. No reemplazan el cuerpo: explican cómo interpretarlo o procesarlo.",
+          "whenToUse": "Las cabeceras son metadatos que acompañan solicitudes y respuestas. Content-Type describe el formato enviado; Accept expresa formatos aceptables; Authorization transporta credenciales; Cache-Control define directivas de caché. No reemplazan el cuerpo: explican cómo interpretarlo o procesarlo.",
+          "syntax": "Content-Type: application/json\nAccept: application/json\nAuthorization: Bearer <token>\nCache-Control: no-store",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Enviar y leer JSON",
+              "description": "Declarar el tipo de contenido evita ambigüedades.",
+              "code": "const respuesta = await fetch('/api/perfil', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({ nombre: 'Ana' })\n});\nconsole.log(await respuesta.json());",
+              "explanation": "Content-Type describe el cuerpo que enviás. Accept indica qué formato preferís recibir. Son cabeceras distintas y cumplen funciones diferentes."
+            },
+            {
+              "title": "Leer una cabecera de respuesta",
+              "description": "Response.headers permite consultar metadatos.",
+              "code": "const respuesta = await fetch('/api/perfil');\nconst tipo = respuesta.headers.get('content-type');\nconsole.log(tipo);",
+              "explanation": "Headers.get devuelve el valor o null si no existe. Los nombres de cabeceras no distinguen mayúsculas y minúsculas."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "description": "Formato del cuerpo enviado o devuelto, como application/json."
+            },
+            {
+              "name": "Accept",
+              "description": "Tipos de contenido que el cliente puede procesar."
+            },
+            {
+              "name": "Authorization",
+              "description": "Cabecera habitual para enviar credenciales, por ejemplo un token Bearer."
+            },
+            {
+              "name": "Cache-Control",
+              "description": "Directivas que controlan almacenamiento y reutilización de respuestas."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Prepará una solicitud JSON y especificá qué formato enviás y cuál esperás recibir.",
+          "hint": "Usá Content-Type para el cuerpo que mandás y Accept para el formato que querés recibir.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-http",
+            "api-fetch"
+          ]
+        },
+        {
+          "id": "api-rest",
+          "title": "Diseño de APIs REST y recursos",
+          "category": "diseno-rest",
+          "summary": "Modelá una API alrededor de recursos, rutas predecibles y operaciones HTTP coherentes.",
+          "purpose": "REST es un estilo arquitectónico para sistemas distribuidos. En una API orientada a recursos, las URL identifican recursos y los métodos HTTP expresan operaciones. Una API REST bien diseñada mantiene convenciones consistentes, estados claros, validación y representaciones estables; no consiste simplemente en devolver JSON.",
+          "whenToUse": "REST es un estilo arquitectónico para sistemas distribuidos. En una API orientada a recursos, las URL identifican recursos y los métodos HTTP expresan operaciones. Una API REST bien diseñada mantiene convenciones consistentes, estados claros, validación y representaciones estables; no consiste simplemente en devolver JSON.",
+          "syntax": "GET /api/novelas\nGET /api/novelas/12\nPOST /api/novelas\nPATCH /api/novelas/12\nDELETE /api/novelas/12",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Rutas de una colección",
+              "description": "Una colección y un elemento individual tienen rutas distintas.",
+              "code": "app.get('/api/novelas', listarNovelas);\napp.get('/api/novelas/:id', obtenerNovela);\napp.post('/api/novelas', crearNovela);\napp.patch('/api/novelas/:id', actualizarNovela);\napp.delete('/api/novelas/:id', eliminarNovela);",
+              "explanation": "La colección /novelas representa el conjunto; /novelas/:id identifica un elemento. Los métodos expresan lectura, creación, modificación y eliminación."
+            },
+            {
+              "title": "Filtrar una colección",
+              "description": "Los parámetros de consulta sirven para filtros y ordenamiento.",
+              "code": "GET /api/novelas?genero=fantasia&orden= titulo",
+              "explanation": "Los query parameters refinan la colección sin convertir cada filtro en una ruta diferente. En una API real, documentá los valores admitidos y cómo se combinan."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Recurso",
+              "description": "Entidad o concepto identificado por una URL, como una novela o un usuario."
+            },
+            {
+              "name": "Path parameter",
+              "description": "Parte de la ruta que identifica un recurso, como :id."
+            },
+            {
+              "name": "Query parameter",
+              "description": "Parámetro opcional que filtra, ordena o pagina resultados."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Diseñá cinco endpoints REST para consultar, crear, editar y borrar novelas, además de filtrar por género.",
+          "hint": "Nombrá recursos con sustantivos y dejá que el método HTTP exprese la operación.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-metodos",
+            "api-json",
+            "api-paginacion"
+          ]
+        },
+        {
+          "id": "api-json",
+          "title": "JSON, validación y contratos de datos",
+          "category": "diseno-rest",
+          "summary": "Comprendé cómo representar datos y validar lo que recibís de una API.",
+          "purpose": "JSON es un formato textual de intercambio que representa objetos, arreglos, cadenas, números, booleanos y null. Parsear JSON solo comprueba que el texto tenga sintaxis válida; no garantiza que los campos cumplan las reglas de tu aplicación. Validá estructura, tipos, rangos y campos permitidos.",
+          "whenToUse": "JSON es un formato textual de intercambio que representa objetos, arreglos, cadenas, números, booleanos y null. Parsear JSON solo comprueba que el texto tenga sintaxis válida; no garantiza que los campos cumplan las reglas de tu aplicación. Validá estructura, tipos, rangos y campos permitidos.",
+          "syntax": "JSON.stringify(objeto) → texto\nJSON.parse(texto) → valor JavaScript",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Serializar y parsear",
+              "description": "Convertí un objeto a JSON y recuperalo.",
+              "code": "const novela = { titulo: 'Re:Zero', volumenes: 10 };\nconst texto = JSON.stringify(novela);\nconst recuperada = JSON.parse(texto);\nconsole.log(recuperada.titulo);",
+              "explanation": "stringify produce texto JSON. parse interpreta ese texto. parse puede lanzar SyntaxError si el texto está mal formado."
+            },
+            {
+              "title": "Validar campos manualmente",
+              "description": "No confíes en que el cliente envíe tipos correctos.",
+              "code": "function validarNovela(datos) {\n  if (typeof datos.titulo !== 'string' || !datos.titulo.trim()) {\n    throw new Error('El título es obligatorio');\n  }\n  if (!Number.isInteger(datos.volumenes) || datos.volumenes < 0) {\n    throw new Error('volumenes debe ser un entero no negativo');\n  }\n  return { titulo: datos.titulo.trim(), volumenes: datos.volumenes };\n}",
+              "explanation": "La función verifica tipos y reglas de negocio antes de persistir. En proyectos mayores se puede usar un validador de esquemas, manteniendo la misma idea."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "JSON.stringify(valor)",
+              "description": "Serializa un valor JavaScript compatible como texto JSON."
+            },
+            {
+              "name": "JSON.parse(texto)",
+              "description": "Interpreta texto JSON y devuelve el valor JavaScript correspondiente; puede lanzar SyntaxError."
+            },
+            {
+              "name": "Validación",
+              "description": "Comprueba reglas de forma y negocio; es distinta de verificar la sintaxis JSON."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Escribí un validador para un objeto usuario que exija email no vacío y edad entera mayor o igual a 18.",
+          "hint": "Primero verificá typeof y después las reglas de negocio; no confundas JSON válido con datos válidos.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-rest",
+            "api-fetch"
+          ]
+        },
+        {
+          "id": "api-paginacion",
+          "title": "Paginación, filtros y ordenamiento",
+          "category": "diseno-rest",
+          "summary": "Evitá respuestas enormes y diseñá colecciones fáciles de recorrer.",
+          "purpose": "La paginación divide una colección en porciones. Offset/limit es simple, pero puede volverse costoso y producir saltos cuando los datos cambian. La paginación por cursor usa un punto de continuación estable y suele ser adecuada para colecciones grandes o cambiantes. El contrato debe informar cómo continuar y cuándo termina.",
+          "whenToUse": "La paginación divide una colección en porciones. Offset/limit es simple, pero puede volverse costoso y producir saltos cuando los datos cambian. La paginación por cursor usa un punto de continuación estable y suele ser adecuada para colecciones grandes o cambiantes. El contrato debe informar cómo continuar y cuándo termina.",
+          "syntax": "GET /api/novelas?limit=20&offset=40\nGET /api/novelas?limit=20&cursor=eyJpZCI6... ",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Paginación con limit y offset",
+              "description": "El servidor limita la cantidad y calcula desde dónde comenzar.",
+              "code": "app.get('/api/novelas', async (req, res) => {\n  const limit = Math.min(Number(req.query.limit) || 20, 100);\n  const offset = Math.max(Number(req.query.offset) || 0, 0);\n  const items = await buscarNovelas({ limit, offset });\n  res.json({ items, limit, offset });\n});",
+              "explanation": "Se aplica un máximo para evitar que el cliente solicite cantidades desmedidas. También se normaliza offset para impedir valores negativos."
+            },
+            {
+              "title": "Respuesta con siguiente cursor",
+              "description": "Una API puede entregar un cursor para continuar la lectura.",
+              "code": "res.json({\n  items,\n  nextCursor: items.length === limit ? items.at(-1).id : null\n});",
+              "explanation": "El cursor debe representar un orden estable y validarse en el servidor. null indica que no hay una página siguiente según esta estrategia."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "limit",
+              "description": "Cantidad máxima de elementos de la página."
+            },
+            {
+              "name": "offset",
+              "description": "Cantidad de elementos que se omiten antes de devolver resultados."
+            },
+            {
+              "name": "cursor",
+              "description": "Marcador opaco que permite continuar desde una posición estable."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Diseñá una respuesta paginada para 250 novelas con 25 resultados por página.",
+          "hint": "Incluí items y metadatos para que el cliente sepa qué página recibió y cómo continuar.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-rest",
+            "api-json"
+          ]
+        },
+        {
+          "id": "api-fetch",
+          "title": "Fetch API: solicitudes GET y POST",
+          "category": "consumo",
+          "summary": "Consumí endpoints desde JavaScript usando la API nativa Fetch.",
+          "purpose": "fetch(url, options) inicia una solicitud y devuelve una Promise que se resuelve con un objeto Response cuando llegan las cabeceras. No convierte automáticamente el cuerpo a JSON ni rechaza la promesa por un estado 404/500. Debés comprobar response.ok y leer el cuerpo con el método adecuado.",
+          "whenToUse": "fetch(url, options) inicia una solicitud y devuelve una Promise que se resuelve con un objeto Response cuando llegan las cabeceras. No convierte automáticamente el cuerpo a JSON ni rechaza la promesa por un estado 404/500. Debés comprobar response.ok y leer el cuerpo con el método adecuado.",
+          "syntax": "const response = await fetch(url, options);\nconst data = await response.json();",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "GET con manejo de estado",
+              "description": "Consultá un endpoint y distinguí errores HTTP de errores de red.",
+              "code": "async function obtenerNovela(id) {\n  const respuesta = await fetch(`/api/novelas/${id}`);\n  if (!respuesta.ok) {\n    throw new Error(`HTTP ${respuesta.status}`);\n  }\n  return await respuesta.json();\n}\n\ntry {\n  console.log(await obtenerNovela(12));\n} catch (error) {\n  console.error('No se pudo cargar:', error.message);\n}",
+              "explanation": "async/await simplifica el uso de promesas. response.ok comprueba estados 2xx. try/catch captura fallos de red, parseo y el error que lanzamos ante estados no exitosos."
+            },
+            {
+              "title": "POST enviando JSON",
+              "description": "Enviá un objeto como cuerpo de una solicitud.",
+              "code": "const respuesta = await fetch('/api/novelas', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ titulo: 'Fundación', autor: 'Isaac Asimov' })\n});\n\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst nuevaNovela = await respuesta.json();",
+              "explanation": "method selecciona POST; headers describe el cuerpo; JSON.stringify serializa el objeto. El servidor debe validar los datos recibidos."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fetch(input, init)",
+              "description": "Inicia una solicitud; init puede incluir method, headers, body, signal, credentials y otras opciones."
+            },
+            {
+              "name": "response.ok",
+              "description": "Indica si el estado HTTP pertenece al rango 200–299."
+            },
+            {
+              "name": "response.json()",
+              "description": "Lee el cuerpo y lo interpreta como JSON; devuelve una Promise."
+            },
+            {
+              "name": "body",
+              "description": "Contenido enviado; para JSON se serializa con JSON.stringify."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Consumí un endpoint de prueba y mostrale al usuario un mensaje diferente si el servidor devuelve 404 o 500.",
+          "hint": "Comprobá response.ok antes de llamar a response.json y usá try/catch para errores de red.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-response",
+            "api-status",
+            "api-abort"
+          ]
+        },
+        {
+          "id": "api-response",
+          "title": "Response: leer JSON, texto, cabeceras y estado",
+          "category": "consumo",
+          "summary": "Aprendé a interpretar el objeto Response que devuelve Fetch.",
+          "purpose": "Response representa la respuesta recibida. Expone status, ok, statusText, headers y métodos para consumir el cuerpo, como json(), text(), blob(), arrayBuffer() y formData(). El cuerpo normalmente se consume una sola vez; si necesitás dos lecturas, cloná la respuesta antes.",
+          "whenToUse": "Response representa la respuesta recibida. Expone status, ok, statusText, headers y métodos para consumir el cuerpo, como json(), text(), blob(), arrayBuffer() y formData(). El cuerpo normalmente se consume una sola vez; si necesitás dos lecturas, cloná la respuesta antes.",
+          "syntax": "response.status · response.ok · response.headers\nawait response.json() · await response.text()",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Leer una respuesta JSON",
+              "description": "Interpretá un cuerpo JSON y consultá el estado.",
+              "code": "const response = await fetch('/api/estado');\nconsole.log(response.status, response.statusText);\nconsole.log(response.headers.get('content-type'));\nconst datos = await response.json();\nconsole.log(datos.estado);",
+              "explanation": "status devuelve el código numérico; statusText el texto asociado; headers.get consulta una cabecera; json() consume el cuerpo y lo convierte en un valor JavaScript."
+            },
+            {
+              "title": "Leer texto plano",
+              "description": "No todas las respuestas son JSON.",
+              "code": "const response = await fetch('/health');\nconst mensaje = await response.text();\nconsole.log(mensaje);",
+              "explanation": "text() es apropiado para texto plano, HTML o contenido textual que no querés parsear como JSON. Elegí el método según el Content-Type y el contrato."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "status",
+              "description": "Código HTTP numérico de la respuesta."
+            },
+            {
+              "name": "ok",
+              "description": "Booleano que indica un estado 2xx."
+            },
+            {
+              "name": "headers",
+              "description": "Colección Headers con metadatos de la respuesta."
+            },
+            {
+              "name": "json() / text()",
+              "description": "Métodos asíncronos que consumen el cuerpo y lo interpretan como JSON o texto."
+            },
+            {
+              "name": "clone()",
+              "description": "Crea una copia de Response antes de consumir el cuerpo, útil si dos procesos necesitan leerlo."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Obtené una respuesta y registrá status, content-type y el contenido usando el método de lectura adecuado.",
+          "hint": "Mirá Content-Type antes de decidir entre json(), text() o blob(). Recordá que el cuerpo se consume una vez.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-fetch",
+            "api-headers"
+          ]
+        },
+        {
+          "id": "api-abort",
+          "title": "AbortController: cancelar solicitudes y manejar timeouts",
+          "category": "consumo",
+          "summary": "Cancelá solicitudes que ya no hacen falta y evitá esperas indefinidas.",
+          "purpose": "AbortController permite cancelar operaciones compatibles mediante una señal AbortSignal. Fetch acepta signal en sus opciones. Es útil al cambiar de página, al escribir búsquedas sucesivas o al aplicar un límite de tiempo. La cancelación no garantiza deshacer una operación que el servidor ya procesó.",
+          "whenToUse": "AbortController permite cancelar operaciones compatibles mediante una señal AbortSignal. Fetch acepta signal en sus opciones. Es útil al cambiar de página, al escribir búsquedas sucesivas o al aplicar un límite de tiempo. La cancelación no garantiza deshacer una operación que el servidor ya procesó.",
+          "syntax": "const controller = new AbortController();\nfetch(url, { signal: controller.signal });\ncontroller.abort();",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Cancelar una búsqueda anterior",
+              "description": "Cuando llega una nueva búsqueda, cancelá la solicitud previa.",
+              "code": "let controlador;\n\nasync function buscar(texto) {\n  controlador?.abort();\n  controlador = new AbortController();\n\n  try {\n    const respuesta = await fetch(`/api/buscar?q=${encodeURIComponent(texto)}`, {\n      signal: controlador.signal\n    });\n    if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\n    return await respuesta.json();\n  } catch (error) {\n    if (error.name === 'AbortError') return null;\n    throw error;\n  }\n}",
+              "explanation": "Cada llamada cancela la anterior. encodeURIComponent protege el valor insertado en la query string. AbortError identifica una cancelación esperada y puede tratarse sin mostrar un error al usuario."
+            },
+            {
+              "title": "Aplicar un timeout",
+              "description": "Cancelá una consulta si supera un tiempo máximo.",
+              "code": "const controller = new AbortController();\nconst temporizador = setTimeout(() => controller.abort(), 5000);\n\ntry {\n  const respuesta = await fetch('/api/informes', { signal: controller.signal });\n  if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\n  console.log(await respuesta.json());\n} finally {\n  clearTimeout(temporizador);\n}",
+              "explanation": "setTimeout aborta después de cinco segundos. finally limpia el temporizador tanto si la solicitud funciona como si falla. El timeout limita la espera del cliente, no revierte una operación del servidor."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "new AbortController()",
+              "description": "Crea un controlador con una propiedad signal y un método abort()."
+            },
+            {
+              "name": "controller.signal",
+              "description": "Señal que se pasa a fetch para permitir la cancelación."
+            },
+            {
+              "name": "controller.abort()",
+              "description": "Dispara la cancelación; Fetch suele rechazar con un error cuyo nombre es AbortError."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Implementá una búsqueda que cancele la solicitud anterior cuando el usuario escribe otro término.",
+          "hint": "Guardá el controlador fuera de la función para poder abortar la llamada anterior.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-fetch",
+            "api-response"
+          ]
+        },
+        {
+          "id": "api-cors",
+          "title": "CORS y solicitudes entre distintos orígenes",
+          "category": "seguridad",
+          "summary": "Comprendé por qué el navegador bloquea ciertas respuestas y cómo habilitar el acceso correctamente.",
+          "purpose": "CORS es un mecanismo del navegador basado en cabeceras HTTP que permite a un servidor indicar qué orígenes pueden leer sus respuestas. Un origen combina esquema, host y puerto. Algunas solicitudes generan una comprobación previa OPTIONS (preflight). CORS no es autenticación ni reemplaza controles de acceso del servidor.",
+          "whenToUse": "CORS es un mecanismo del navegador basado en cabeceras HTTP que permite a un servidor indicar qué orígenes pueden leer sus respuestas. Un origen combina esquema, host y puerto. Algunas solicitudes generan una comprobación previa OPTIONS (preflight). CORS no es autenticación ni reemplaza controles de acceso del servidor.",
+          "syntax": "Origin: https://app.ejemplo.com\nAccess-Control-Allow-Origin: https://app.ejemplo.com\nAccess-Control-Allow-Methods: GET, POST, OPTIONS",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Configurar CORS en Express",
+              "description": "Permití explícitamente el origen de tu frontend.",
+              "code": "import cors from 'cors';\nimport express from 'express';\n\nconst app = express();\napp.use(cors({\n  origin: 'http://localhost:5173',\n  methods: ['GET', 'POST', 'PATCH', 'DELETE'],\n  allowedHeaders: ['Content-Type', 'Authorization']\n}));",
+              "explanation": "El middleware agrega las cabeceras CORS necesarias y responde a preflight cuando corresponde. En producción configurá los orígenes reales; no uses un comodín indiscriminado."
+            },
+            {
+              "title": "Reconocer un preflight",
+              "description": "El navegador puede preguntar antes si el servidor acepta el método y las cabeceras.",
+              "code": "OPTIONS /api/novelas\nOrigin: http://localhost:5173\nAccess-Control-Request-Method: PATCH\nAccess-Control-Request-Headers: content-type, authorization",
+              "explanation": "El navegador envía OPTIONS para consultar permisos. El servidor debe responder con las cabeceras CORS adecuadas antes de que el navegador envíe la solicitud real."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Origin",
+              "description": "Origen que inicia la solicitud, formado por esquema, host y puerto."
+            },
+            {
+              "name": "Access-Control-Allow-Origin",
+              "description": "Orígenes autorizados por el servidor para leer la respuesta."
+            },
+            {
+              "name": "Preflight",
+              "description": "Solicitud OPTIONS que verifica permisos para ciertas solicitudes no simples."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Explicá por qué una petición desde localhost:5173 a localhost:3000 puede necesitar CORS.",
+          "hint": "Aunque ambas direcciones sean localhost, los puertos distintos forman orígenes distintos. La autorización se configura en el servidor.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-http",
+            "api-headers"
+          ]
+        },
+        {
+          "id": "api-auth",
+          "title": "Autenticación, autorización y tokens Bearer",
+          "category": "seguridad",
+          "summary": "Diferenciá identidad y permisos y aprendé el patrón de autenticación Bearer.",
+          "purpose": "Autenticación responde quién es el usuario; autorización determina qué puede hacer. Una API puede recibir un token de acceso mediante Authorization: Bearer. Los tokens deben protegerse, expirar, validarse en el servidor y tener permisos limitados. Nunca guardes secretos del servidor en el frontend ni registres tokens en logs.",
+          "whenToUse": "Autenticación responde quién es el usuario; autorización determina qué puede hacer. Una API puede recibir un token de acceso mediante Authorization: Bearer. Los tokens deben protegerse, expirar, validarse en el servidor y tener permisos limitados. Nunca guardes secretos del servidor en el frontend ni registres tokens en logs.",
+          "syntax": "Authorization: Bearer <access_token>",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Enviar un token",
+              "description": "El cliente adjunta el token a una solicitud protegida.",
+              "code": "const respuesta = await fetch('/api/perfil', {\n  headers: {\n    Authorization: `Bearer ${token}`,\n    Accept: 'application/json'\n  }\n});",
+              "explanation": "El cliente envía el token como credencial. El servidor debe verificar firma o introspección, expiración, emisor, audiencia y permisos según el sistema utilizado."
+            },
+            {
+              "title": "Proteger una ruta en Express (esquema)",
+              "description": "Un middleware valida la credencial antes de continuar.",
+              "code": "function requiereUsuario(req, res, next) {\n  const cabecera = req.headers.authorization || '';\n  const [tipo, token] = cabecera.split(' ');\n\n  if (tipo !== 'Bearer' || !token) {\n    return res.status(401).json({ error: 'Autenticación requerida' });\n  }\n\n  // Verificar token con la biblioteca y claves del servidor.\n  req.usuario = verificarToken(token);\n  next();\n}\n\napp.get('/api/perfil', requiereUsuario, mostrarPerfil);",
+              "explanation": "Este es un esquema didáctico: verificarToken debe ser una implementación real y segura, con una biblioteca mantenida. No aceptes un token solo porque existe ni implementes criptografía manualmente."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Authentication",
+              "description": "Proceso de verificar la identidad presentada."
+            },
+            {
+              "name": "Authorization",
+              "description": "Proceso de decidir si la identidad puede ejecutar una acción."
+            },
+            {
+              "name": "Bearer token",
+              "description": "Credencial que se envía en Authorization y debe tratarse como secreto."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Describí qué debería pasar si no hay token, si el token expiró y si el usuario no tiene permiso para borrar una novela.",
+          "hint": "401 suele indicar credenciales ausentes o inválidas; 403 indica que la identidad no tiene permiso para esa acción.",
+          "resources": [
+            {
+              "label": "MDN — HTTP",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+            },
+            {
+              "label": "MDN — Fetch API",
+              "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+            },
+            {
+              "label": "MDN — CORS",
+              "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+            }
+          ],
+          "related": [
+            "api-headers",
+            "api-cors"
+          ]
+        },
+        {
+          "id": "api-openapi",
+          "title": "OpenAPI: documentar contratos de una API",
+          "category": "integracion",
+          "summary": "Documentá rutas, parámetros, respuestas y esquemas con una especificación legible por personas y herramientas.",
+          "purpose": "OpenAPI es una especificación independiente del lenguaje para describir APIs HTTP. Permite documentar endpoints, métodos, parámetros, cuerpos, respuestas, autenticación y esquemas. Un contrato explícito ayuda a generar documentación interactiva, clientes y validaciones, y reduce malentendidos entre frontend y backend.",
+          "whenToUse": "OpenAPI es una especificación independiente del lenguaje para describir APIs HTTP. Permite documentar endpoints, métodos, parámetros, cuerpos, respuestas, autenticación y esquemas. Un contrato explícito ayuda a generar documentación interactiva, clientes y validaciones, y reduce malentendidos entre frontend y backend.",
+          "syntax": "openapi: 3.1.0\ninfo: { title: Catalog API, version: 1.0.0 }\npaths: /novelas: ...",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Describir un endpoint",
+              "description": "Este fragmento YAML define una operación GET.",
+              "code": "openapi: 3.1.0\ninfo:\n  title: WebDev Book API\n  version: 1.0.0\npaths:\n  /novelas/{id}:\n    get:\n      summary: Obtener una novela\n      parameters:\n        - name: id\n          in: path\n          required: true\n          schema:\n            type: integer\n      responses:\n        '200':\n          description: Novela encontrada\n        '404':\n          description: Novela inexistente",
+              "explanation": "paths declara rutas. get describe la operación. parameters documenta el identificador obligatorio y responses define resultados posibles. El documento completo también debería declarar schemas y servidores."
+            },
+            {
+              "title": "Describir el esquema de un recurso",
+              "description": "Los esquemas explican la forma de los datos.",
+              "code": "components:\n  schemas:\n    Novela:\n      type: object\n      required: [id, titulo]\n      properties:\n        id:\n          type: integer\n        titulo:\n          type: string\n        volumenes:\n          type: integer\n          minimum: 0",
+              "explanation": "required marca campos obligatorios; properties describe cada campo y sus restricciones. El esquema sirve como contrato documental y puede integrarse con validadores o generadores."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "openapi",
+              "description": "Versión de la especificación OpenAPI utilizada por el documento."
+            },
+            {
+              "name": "paths",
+              "description": "Mapa de rutas y operaciones HTTP disponibles."
+            },
+            {
+              "name": "components.schemas",
+              "description": "Modelos reutilizables de datos."
+            },
+            {
+              "name": "responses",
+              "description": "Estados y contenidos posibles de una operación."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Documentá un endpoint POST /novelas con cuerpo requerido y respuestas 201, 400 y 409.",
+          "hint": "Incluí el método, resumen, requestBody, esquema de entrada y respuestas posibles.",
+          "resources": [
+            {
+              "label": "OpenAPI Specification",
+              "url": "https://spec.openapis.org/oas/latest.html"
+            },
+            {
+              "label": "Swagger Docs",
+              "url": "https://swagger.io/docs/specification/v3_0/about/"
+            }
+          ],
+          "related": [
+            "api-rest",
+            "api-json"
+          ]
+        },
+        {
+          "id": "api-webhooks",
+          "title": "Webhooks: recibir eventos de otros servicios",
+          "category": "integracion",
+          "summary": "Usá webhooks para reaccionar a eventos sin consultar continuamente una API.",
+          "purpose": "Un webhook es una solicitud HTTP que un servicio envía a una URL registrada cuando ocurre un evento. El receptor debe verificar la autenticidad de la notificación, responder rápido, tolerar reintentos y evitar procesar dos veces el mismo evento. La entrega puede repetirse o demorarse; diseñá handlers idempotentes.",
+          "whenToUse": "Un webhook es una solicitud HTTP que un servicio envía a una URL registrada cuando ocurre un evento. El receptor debe verificar la autenticidad de la notificación, responder rápido, tolerar reintentos y evitar procesar dos veces el mismo evento. La entrega puede repetirse o demorarse; diseñá handlers idempotentes.",
+          "syntax": "Proveedor → POST /webhooks/pagos → validar firma → procesar evento → 2xx",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Recibir un evento",
+              "description": "El servidor verifica y registra el evento antes de responder.",
+              "code": "app.post('/webhooks/pagos', express.raw({ type: 'application/json' }), async (req, res) => {\n  const firma = req.headers['x-provider-signature'];\n  if (!verificarFirma(req.body, firma)) {\n    return res.status(401).end();\n  }\n\n  const evento = JSON.parse(req.body.toString('utf8'));\n  await guardarEventoSiNoExiste(evento.id, evento);\n  res.status(200).end();\n});",
+              "explanation": "La firma debe verificarse sobre el cuerpo original según el algoritmo oficial del proveedor. guardarEventoSiNoExiste evita procesar repetidamente un mismo ID. El ejemplo es un patrón, no una implementación criptográfica completa."
+            },
+            {
+              "title": "Hacer el procesamiento idempotente",
+              "description": "Una repetición del mismo evento no debe duplicar efectos.",
+              "code": "async function procesarPago(evento) {\n  const yaProcesado = await eventos.procesados.findOne({ id: evento.id });\n  if (yaProcesado) return;\n\n  await aplicarPago(evento.data);\n  await eventos.procesados.insertOne({ id: evento.id });\n}",
+              "explanation": "El identificador del evento permite detectar repeticiones. En producción, la comprobación y el registro deben ser atómicos o estar protegidos por una restricción única para evitar condiciones de carrera."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Endpoint webhook",
+              "description": "URL pública que recibe solicitudes de eventos."
+            },
+            {
+              "name": "Firma",
+              "description": "Prueba criptográfica para comprobar que el evento proviene del proveedor y no fue alterado."
+            },
+            {
+              "name": "Idempotencia",
+              "description": "Propiedad que evita duplicar efectos cuando una misma notificación se recibe más de una vez."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Diseñá un receptor de webhook que registre un evento de pago sin duplicarlo si el proveedor reintenta.",
+          "hint": "Validá la firma antes de confiar en el contenido y usá un ID de evento único para deduplicar.",
+          "resources": [
+            {
+              "label": "Stripe — Webhooks",
+              "url": "https://docs.stripe.com/webhooks"
+            },
+            {
+              "label": "GitHub — Webhooks",
+              "url": "https://docs.github.com/en/webhooks"
+            }
+          ],
+          "related": [
+            "api-auth",
+            "api-status"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "title": "Testing",
+      "shortTitle": "Testing",
+      "symbol": "✓",
+      "eyebrow": "CALIDAD / PRUEBAS / AUTOMATIZACIÓN",
+      "tagline": "Aprendé a comprobar que tu código funcione correctamente.",
+      "description": "Biblioteca práctica de pruebas unitarias, integración, componentes, E2E, cobertura y automatización de calidad.",
+      "level": "Inicial a avanzado",
+      "accent": "testing",
+      "categories": [
+        {
+          "id": "fundamentos-testing",
+          "title": "Fundamentos de testing",
+          "description": "Aprendé qué probar, cómo organizar pruebas y cómo interpretar resultados.",
+          "icon": "✓",
+          "articles": [
+            "test-que-es",
+            "test-piramide",
+            "test-aaa"
+          ]
+        },
+        {
+          "id": "unitarias",
+          "title": "Pruebas unitarias",
+          "description": "Probá funciones y módulos de forma aislada con herramientas modernas.",
+          "icon": "▣",
+          "articles": [
+            "test-vitest",
+            "test-async",
+            "test-mocks"
+          ]
+        },
+        {
+          "id": "componentes",
+          "title": "Pruebas de componentes",
+          "description": "Verificá interfaces desde el comportamiento que percibe el usuario.",
+          "icon": "▤",
+          "articles": [
+            "test-testing-library",
+            "test-formularios"
+          ]
+        },
+        {
+          "id": "e2e",
+          "title": "Pruebas end-to-end",
+          "description": "Automatizá flujos completos en un navegador real.",
+          "icon": "⌘",
+          "articles": [
+            "test-playwright",
+            "test-locators",
+            "test-api"
+          ]
+        },
+        {
+          "id": "calidad-ci",
+          "title": "Calidad y automatización",
+          "description": "Medí cobertura, evitá pruebas inestables y ejecutá suites en CI.",
+          "icon": "◇",
+          "articles": [
+            "test-cobertura",
+            "test-flaky",
+            "test-ci"
+          ]
+        }
+      ],
+      "articles": [
+        {
+          "id": "test-que-es",
+          "title": "¿Qué es el testing de software y por qué importa?",
+          "category": "fundamentos-testing",
+          "summary": "Comprendé las pruebas como una herramienta para detectar regresiones y verificar comportamientos.",
+          "purpose": "Testing es el proceso de comprobar que un sistema se comporta como se espera. Las pruebas no demuestran que un programa esté libre de defectos, pero ofrecen evidencia reproducible sobre escenarios definidos. Pueden ejecutarse manualmente o automatizarse y abarcar funciones, componentes, integración y flujos completos.",
+          "whenToUse": "Testing es el proceso de comprobar que un sistema se comporta como se espera. Las pruebas no demuestran que un programa esté libre de defectos, pero ofrecen evidencia reproducible sobre escenarios definidos. Pueden ejecutarse manualmente o automatizarse y abarcar funciones, componentes, integración y flujos completos.",
+          "syntax": "Código → escenario de prueba → ejecución → resultado esperado vs. obtenido",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Una función pequeña y su prueba",
+              "description": "Probá una regla de negocio sin depender de la interfaz.",
+              "code": "export function calcularTotal(precio, cantidad) {\n  if (precio < 0 || cantidad < 0) throw new Error('Valores inválidos');\n  return precio * cantidad;\n}\n\n// Prueba conceptual\nconsole.assert(calcularTotal(100, 3) === 300);",
+              "explanation": "La función representa una regla aislada. La prueba compara el resultado con un valor esperado; un runner como Vitest ofrece reportes, organización y aserciones más completas."
+            },
+            {
+              "title": "Pensar en casos límite",
+              "description": "No alcanza con probar un único caso exitoso.",
+              "code": "calcularTotal(100, 3); // caso normal\ncalcularTotal(0, 5);   // precio cero\ncalcularTotal(100, 0); // cantidad cero\ncalcularTotal(-1, 2);  // entrada inválida",
+              "explanation": "Los casos límite suelen revelar errores que no aparecen con datos típicos. También conviene probar tipos incorrectos si la función los puede recibir."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Caso de prueba",
+              "description": "Escenario con condiciones, acción y resultado esperado."
+            },
+            {
+              "name": "Aserción",
+              "description": "Comprobación que compara el resultado real con el esperado."
+            },
+            {
+              "name": "Regresión",
+              "description": "Error que reaparece o se introduce al cambiar código que antes funcionaba."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Elegí una función de tu proyecto y definí tres casos normales y tres casos límite con sus resultados esperados.",
+          "hint": "Describí primero el comportamiento observable y después elegí cómo automatizar la comprobación.",
+          "resources": [
+            {
+              "label": "Vitest — Guide",
+              "url": "https://vitest.dev/guide/"
+            },
+            {
+              "label": "Testing Library — Introduction",
+              "url": "https://testing-library.com/docs/"
+            },
+            {
+              "label": "Playwright — Docs",
+              "url": "https://playwright.dev/docs/"
+            }
+          ],
+          "related": [
+            "test-piramide",
+            "test-aaa"
+          ]
+        },
+        {
+          "id": "test-piramide",
+          "title": "Pirámide de testing: unitarias, integración y E2E",
+          "category": "fundamentos-testing",
+          "summary": "Distribuí las pruebas según alcance, costo y confianza que aportan.",
+          "purpose": "La pirámide de testing propone una base amplia de pruebas unitarias rápidas, una capa de integración y una cantidad menor de pruebas end-to-end más costosas. No es una ley rígida: la distribución depende del riesgo y la arquitectura. La meta es detectar fallos cerca de su origen sin depender exclusivamente de flujos lentos de navegador.",
+          "whenToUse": "La pirámide de testing propone una base amplia de pruebas unitarias rápidas, una capa de integración y una cantidad menor de pruebas end-to-end más costosas. No es una ley rígida: la distribución depende del riesgo y la arquitectura. La meta es detectar fallos cerca de su origen sin depender exclusivamente de flujos lentos de navegador.",
+          "syntax": "Unitarias (muchas y rápidas)\nIntegración (servicios y límites)\nE2E (flujos críticos)",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Prueba unitaria",
+              "description": "Verificá una función sin levantar servidor ni navegador.",
+              "code": "expect(calcularDescuento(1000, 10)).toBe(900);",
+              "explanation": "Aísla una unidad de lógica y permite ejecutar muchos casos rápidamente."
+            },
+            {
+              "title": "Prueba de integración",
+              "description": "Comprobá que una ruta HTTP y su capa de datos colaboren.",
+              "code": "const respuesta = await request(app).get('/api/novelas');\nexpect(respuesta.status).toBe(200);\nexpect(respuesta.body).toEqual(expect.any(Array));",
+              "explanation": "La prueba cruza más de una pieza, por ejemplo router, middleware y repositorio de prueba. No necesita simular todo el navegador."
+            },
+            {
+              "title": "Prueba E2E",
+              "description": "Verificá un recorrido importante desde la interfaz.",
+              "code": "await page.goto('/');\nawait page.getByRole('link', { name: 'Novelas' }).click();\nawait expect(page.getByRole('heading', { name: 'Catálogo' })).toBeVisible();",
+              "explanation": "El navegador ejecuta el flujo como un usuario. Es valioso para rutas críticas, pero más lento y sensible al entorno."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Unit test",
+              "description": "Prueba una unidad pequeña de lógica aislada."
+            },
+            {
+              "name": "Integration test",
+              "description": "Verifica la colaboración entre módulos o servicios."
+            },
+            {
+              "name": "E2E test",
+              "description": "Comprueba un flujo completo a través de la aplicación."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Clasificá una validación de precio, una ruta API con base de datos y un flujo de compra en la pirámide.",
+          "hint": "Preguntate cuántos componentes reales necesita la prueba para verificar ese comportamiento.",
+          "resources": [
+            {
+              "label": "Vitest — Guide",
+              "url": "https://vitest.dev/guide/"
+            },
+            {
+              "label": "Testing Library — Introduction",
+              "url": "https://testing-library.com/docs/"
+            },
+            {
+              "label": "Playwright — Docs",
+              "url": "https://playwright.dev/docs/"
+            }
+          ],
+          "related": [
+            "test-que-es",
+            "test-aaa"
+          ]
+        },
+        {
+          "id": "test-aaa",
+          "title": "Patrón AAA: Arrange, Act, Assert",
+          "category": "fundamentos-testing",
+          "summary": "Organizá cada prueba en preparación, acción y verificación.",
+          "purpose": "AAA es una convención para estructurar pruebas: Arrange prepara datos y dependencias; Act ejecuta la acción bajo prueba; Assert comprueba el resultado. Separar estas etapas hace que las pruebas sean fáciles de leer y depurar.",
+          "whenToUse": "AAA es una convención para estructurar pruebas: Arrange prepara datos y dependencias; Act ejecuta la acción bajo prueba; Assert comprueba el resultado. Separar estas etapas hace que las pruebas sean fáciles de leer y depurar.",
+          "syntax": "Arrange → Act → Assert",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Prueba con AAA",
+              "description": "La preparación, ejecución y comprobación quedan separadas.",
+              "code": "it('calcula el total de una compra', () => {\n  // Arrange: preparar los datos.\n  const precio = 250;\n  const cantidad = 4;\n\n  // Act: ejecutar la función.\n  const total = calcularTotal(precio, cantidad);\n\n  // Assert: comprobar el resultado.\n  expect(total).toBe(1000);\n});",
+              "explanation": "it registra el caso de prueba. Los comentarios muestran las tres fases. Una prueba debería enfocarse en un comportamiento y mantener la preparación mínima necesaria."
+            },
+            {
+              "title": "Probar un error esperado",
+              "description": "También se verifica que una operación rechace entradas inválidas.",
+              "code": "it('rechaza precios negativos', () => {\n  expect(() => calcularTotal(-5, 2)).toThrow('Valores inválidos');\n});",
+              "explanation": "La función se envuelve en otra función para que expect pueda capturar la excepción durante su ejecución."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Arrange",
+              "description": "Preparar entradas, estado inicial y dobles de prueba."
+            },
+            {
+              "name": "Act",
+              "description": "Ejecutar la función o interacción que se quiere verificar."
+            },
+            {
+              "name": "Assert",
+              "description": "Comparar el resultado con el comportamiento esperado mediante aserciones."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Escribí una prueba AAA para una función que convierte grados Celsius a Fahrenheit y otra que rechaza un dato inválido.",
+          "hint": "Separá mentalmente qué preparás, qué ejecutás y qué resultado verificás.",
+          "resources": [
+            {
+              "label": "Vitest — Guide",
+              "url": "https://vitest.dev/guide/"
+            },
+            {
+              "label": "Testing Library — Introduction",
+              "url": "https://testing-library.com/docs/"
+            },
+            {
+              "label": "Playwright — Docs",
+              "url": "https://playwright.dev/docs/"
+            }
+          ],
+          "related": [
+            "test-que-es",
+            "test-vitest"
+          ]
+        },
+        {
+          "id": "test-vitest",
+          "title": "Vitest: configurar y ejecutar pruebas unitarias",
+          "category": "unitarias",
+          "summary": "Usá Vitest para ejecutar pruebas JavaScript y TypeScript con una API familiar y rápida.",
+          "purpose": "Vitest es un test runner que se integra con proyectos Vite y también puede configurarse en otros entornos. Proporciona describe, it/test, expect, mocks, cobertura y ejecución en modo watch. Los tests suelen ubicarse junto al módulo o en una carpeta dedicada.",
+          "whenToUse": "Vitest es un test runner que se integra con proyectos Vite y también puede configurarse en otros entornos. Proporciona describe, it/test, expect, mocks, cobertura y ejecución en modo watch. Los tests suelen ubicarse junto al módulo o en una carpeta dedicada.",
+          "syntax": "npm install -D vitest\nnpx vitest\nnpx vitest run",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Configurar un script",
+              "description": "Agregá un comando para ejecutar la suite.",
+              "code": "// package.json\n{\n  \"scripts\": {\n    \"test\": \"vitest\",\n    \"test:run\": \"vitest run\"\n  }\n}",
+              "explanation": "vitest inicia el modo interactivo/watch en entornos compatibles. vitest run ejecuta una vez y termina, útil para CI."
+            },
+            {
+              "title": "Crear una prueba",
+              "description": "Probá una función exportada desde un módulo.",
+              "code": "// suma.js\nexport function sumar(a, b) {\n  return a + b;\n}\n\n// suma.test.js\nimport { describe, it, expect } from 'vitest';\nimport { sumar } from './suma.js';\n\ndescribe('sumar', () => {\n  it('suma dos números', () => {\n    expect(sumar(2, 3)).toBe(5);\n  });\n});",
+              "explanation": "describe agrupa casos relacionados; it declara un caso; expect crea una aserción. Vitest descubre archivos con patrones como *.test.js y *.spec.js."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "describe(nombre, fn)",
+              "description": "Agrupa casos de prueba relacionados."
+            },
+            {
+              "name": "it/test(nombre, fn)",
+              "description": "Define un caso de prueba."
+            },
+            {
+              "name": "expect(valor)",
+              "description": "Crea aserciones para comparar el valor real con el esperado."
+            },
+            {
+              "name": "vitest run",
+              "description": "Ejecuta pruebas una vez sin permanecer en modo watch."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Configurá Vitest en un proyecto pequeño y escribí pruebas para una función de descuento.",
+          "hint": "Creá un archivo con sufijo .test.js, importá la función y usá describe, it y expect.",
+          "resources": [
+            {
+              "label": "Vitest — Guide",
+              "url": "https://vitest.dev/guide/"
+            },
+            {
+              "label": "Testing Library — Introduction",
+              "url": "https://testing-library.com/docs/"
+            },
+            {
+              "label": "Playwright — Docs",
+              "url": "https://playwright.dev/docs/"
+            }
+          ],
+          "related": [
+            "test-aaa",
+            "test-async"
+          ]
+        },
+        {
+          "id": "test-async",
+          "title": "Probar código asíncrono: Promises y async/await",
+          "category": "unitarias",
+          "summary": "Verificá resultados y errores de funciones asíncronas sin crear falsos positivos.",
+          "purpose": "Las pruebas asíncronas deben esperar la Promise que representa el trabajo. Si no se retorna ni se espera, el runner puede finalizar el test antes de que termine la operación. Para errores, usá rejects o await expect(...).rejects; evitá temporizadores reales cuando se puedan controlar con mocks de tiempo.",
+          "whenToUse": "Las pruebas asíncronas deben esperar la Promise que representa el trabajo. Si no se retorna ni se espera, el runner puede finalizar el test antes de que termine la operación. Para errores, usá rejects o await expect(...).rejects; evitá temporizadores reales cuando se puedan controlar con mocks de tiempo.",
+          "syntax": "await expect(obtenerDatos()).resolves.toEqual(datos)\nawait expect(fallar()).rejects.toThrow()",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Esperar un resultado",
+              "description": "El test debe esperar la promesa antes de terminar.",
+              "code": "it('obtiene el perfil', async () => {\n  const perfil = await obtenerPerfil(7);\n  expect(perfil.nombre).toBe('Ana');\n});",
+              "explanation": "async permite usar await. La prueba no se considera terminada hasta que se resuelve la función asíncrona."
+            },
+            {
+              "title": "Comprobar un rechazo",
+              "description": "Verificá errores de promesas con rejects.",
+              "code": "it('rechaza un identificador inexistente', async () => {\n  await expect(obtenerPerfil(999)).rejects.toThrow('No encontrado');\n});",
+              "explanation": "rejects transforma las aserciones para que esperen el rechazo de la Promise. Sin await, el test podría finalizar antes de verificarlo."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "resolves",
+              "description": "Modificador de expect que permite comprobar el valor de una Promise resuelta."
+            },
+            {
+              "name": "rejects",
+              "description": "Modificador para comprobar una Promise rechazada."
+            },
+            {
+              "name": "async/await",
+              "description": "Sintaxis para esperar operaciones asíncronas dentro de la prueba."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Escribí un test para una función que consulta un perfil y otro que verifica un error 404.",
+          "hint": "Asegurate de que el test retorne o espere la promesa que contiene la aserción.",
+          "resources": [
+            {
+              "label": "Vitest — Guide",
+              "url": "https://vitest.dev/guide/"
+            },
+            {
+              "label": "Testing Library — Introduction",
+              "url": "https://testing-library.com/docs/"
+            },
+            {
+              "label": "Playwright — Docs",
+              "url": "https://playwright.dev/docs/"
+            }
+          ],
+          "related": [
+            "test-vitest",
+            "test-mocks"
+          ]
+        },
+        {
+          "id": "test-mocks",
+          "title": "Mocks, stubs y spies: aislar dependencias",
+          "category": "unitarias",
+          "summary": "Controlá dependencias externas y observá cómo interactúa el código con ellas.",
+          "purpose": "Un mock reemplaza una dependencia y permite definir respuestas o verificar llamadas. Un stub proporciona respuestas preparadas; un spy observa llamadas reales o simuladas. Se usan para aislar unidades, pero abusar de ellos puede hacer que las pruebas verifiquen la implementación en vez del comportamiento.",
+          "whenToUse": "Un mock reemplaza una dependencia y permite definir respuestas o verificar llamadas. Un stub proporciona respuestas preparadas; un spy observa llamadas reales o simuladas. Se usan para aislar unidades, pero abusar de ellos puede hacer que las pruebas verifiquen la implementación en vez del comportamiento.",
+          "syntax": "vi.fn() · vi.spyOn(objeto, 'metodo') · vi.mock()",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Crear una función simulada",
+              "description": "Configurá un resultado y comprobá cómo fue llamada.",
+              "code": "import { vi, it, expect } from 'vitest';\n\nit('usa el repositorio para buscar una novela', async () => {\n  const buscar = vi.fn().mockResolvedValue({ id: 3, titulo: 'Dune' });\n  const servicio = crearServicio({ buscar });\n\n  const resultado = await servicio.obtener(3);\n  expect(resultado.titulo).toBe('Dune');\n  expect(buscar).toHaveBeenCalledWith(3);\n});",
+              "explanation": "vi.fn crea una función simulada. mockResolvedValue hace que devuelva una Promise resuelta. toHaveBeenCalledWith verifica los argumentos recibidos."
+            },
+            {
+              "title": "Espiar un método",
+              "description": "Observá una llamada sin reemplazar manualmente toda la dependencia.",
+              "code": "const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});\n\navisarSiFaltaTitulo({ titulo: '' });\nexpect(spy).toHaveBeenCalled();\nspy.mockRestore();",
+              "explanation": "spyOn crea un spy sobre el método existente. mockImplementation reemplaza temporalmente su implementación y mockRestore devuelve el método original."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "vi.fn()",
+              "description": "Crea una función mock que registra llamadas y permite configurar resultados."
+            },
+            {
+              "name": "mockResolvedValue(valor)",
+              "description": "Configura una Promise resuelta con el valor indicado."
+            },
+            {
+              "name": "vi.spyOn(objeto, metodo)",
+              "description": "Espía un método de un objeto."
+            },
+            {
+              "name": "mockRestore()",
+              "description": "Restaura la implementación original de un spy."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Probá un servicio que depende de un repositorio simulado y verificá tanto el resultado como los argumentos enviados.",
+          "hint": "Inyectá la dependencia en el servicio para poder reemplazarla en la prueba.",
+          "resources": [
+            {
+              "label": "Vitest — Guide",
+              "url": "https://vitest.dev/guide/"
+            },
+            {
+              "label": "Testing Library — Introduction",
+              "url": "https://testing-library.com/docs/"
+            },
+            {
+              "label": "Playwright — Docs",
+              "url": "https://playwright.dev/docs/"
+            }
+          ],
+          "related": [
+            "test-vitest",
+            "test-async"
+          ]
+        },
+        {
+          "id": "test-testing-library",
+          "title": "Testing Library: probar componentes desde el usuario",
+          "category": "componentes",
+          "summary": "Verificá componentes a través de roles, etiquetas y texto visibles, no de detalles internos.",
+          "purpose": "Testing Library ofrece utilidades para probar interfaces desde la perspectiva del usuario. Sus consultas priorizan accesibilidad: getByRole, getByLabelText y getByText. En React se usa @testing-library/react y normalmente user-event para simular interacciones reales. Evitá depender de clases CSS o estructura interna cuando no sea necesario.",
+          "whenToUse": "Testing Library ofrece utilidades para probar interfaces desde la perspectiva del usuario. Sus consultas priorizan accesibilidad: getByRole, getByLabelText y getByText. En React se usa @testing-library/react y normalmente user-event para simular interacciones reales. Evitá depender de clases CSS o estructura interna cuando no sea necesario.",
+          "syntax": "render(<Componente />)\nscreen.getByRole('button', { name: 'Guardar' })",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Renderizar y encontrar un botón",
+              "description": "Buscá el control por su rol accesible y nombre.",
+              "code": "import { render, screen } from '@testing-library/react';\nimport { expect, it } from 'vitest';\nimport BotonGuardar from './BotonGuardar.jsx';\n\nit('muestra el botón guardar', () => {\n  render(<BotonGuardar />);\n  expect(screen.getByRole('button', { name: 'Guardar' })).toBeInTheDocument();\n});",
+              "explanation": "render monta el componente en un entorno DOM de prueba. getByRole consulta por rol y nombre accesible. toBeInTheDocument proviene de jest-dom y requiere configurar sus matchers."
+            },
+            {
+              "title": "Interactuar con user-event",
+              "description": "Simulá una acción del usuario y comprobá el resultado visible.",
+              "code": "import userEvent from '@testing-library/user-event';\n\nit('confirma al guardar', async () => {\n  const user = userEvent.setup();\n  render(<Formulario />);\n  await user.click(screen.getByRole('button', { name: 'Guardar' }));\n  expect(screen.getByText('Guardado correctamente')).toBeInTheDocument();\n});",
+              "explanation": "userEvent.setup crea una sesión de interacción. click devuelve una Promise y debe esperarse. La aserción comprueba el resultado que ve la persona."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "render(ui)",
+              "description": "Renderiza un componente dentro del entorno de prueba."
+            },
+            {
+              "name": "screen",
+              "description": "Objeto con consultas sobre el documento renderizado."
+            },
+            {
+              "name": "getByRole(role, options)",
+              "description": "Busca un elemento por rol accesible y opcionalmente por nombre."
+            },
+            {
+              "name": "userEvent.setup()",
+              "description": "Crea una instancia para simular interacciones de usuario."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Probá un formulario que muestre un mensaje después de enviar datos válidos.",
+          "hint": "Buscá el botón por role y name; interactuá con userEvent y verificá el mensaje visible.",
+          "resources": [
+            {
+              "label": "Testing Library — Queries",
+              "url": "https://testing-library.com/docs/queries/about/"
+            },
+            {
+              "label": "Testing Library — user-event",
+              "url": "https://testing-library.com/docs/user-event/intro/"
+            }
+          ],
+          "related": [
+            "test-aaa",
+            "test-formularios"
+          ]
+        },
+        {
+          "id": "test-formularios",
+          "title": "Probar formularios, validación y mensajes",
+          "category": "componentes",
+          "summary": "Comprobá que un formulario acepte datos válidos y comunique errores de manera accesible.",
+          "purpose": "Las pruebas de formularios deben cubrir etiquetas, campos obligatorios, mensajes de validación, envío y estados de carga. Consultá los controles mediante sus labels y roles accesibles. Para operaciones asíncronas, esperá el cambio de estado con findBy o waitFor, sin introducir pausas arbitrarias.",
+          "whenToUse": "Las pruebas de formularios deben cubrir etiquetas, campos obligatorios, mensajes de validación, envío y estados de carga. Consultá los controles mediante sus labels y roles accesibles. Para operaciones asíncronas, esperá el cambio de estado con findBy o waitFor, sin introducir pausas arbitrarias.",
+          "syntax": "getByLabelText('Correo')\nawait user.type(campo, 'ana@example.com')\nawait user.click(boton)",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Validación de campo requerido",
+              "description": "Verificá que el usuario reciba un mensaje claro.",
+              "code": "it('avisa si falta el correo', async () => {\n  const user = userEvent.setup();\n  render(<FormularioRegistro />);\n  await user.click(screen.getByRole('button', { name: 'Crear cuenta' }));\n  expect(screen.getByText('El correo es obligatorio')).toBeInTheDocument();\n});",
+              "explanation": "La prueba ejecuta la misma acción que una persona: intenta enviar sin completar el campo y verifica el mensaje visible."
+            },
+            {
+              "title": "Esperar una respuesta asíncrona",
+              "description": "findBy espera hasta que el elemento aparezca o venza el timeout.",
+              "code": "await user.type(screen.getByLabelText('Correo'), 'ana@example.com');\nawait user.click(screen.getByRole('button', { name: 'Enviar' }));\nexpect(await screen.findByText('Registro completado')).toBeInTheDocument();",
+              "explanation": "findBy combina una consulta con espera asíncrona. Es preferible a usar setTimeout para adivinar cuánto tarda la interfaz."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "getByLabelText",
+              "description": "Busca un control asociado a su etiqueta."
+            },
+            {
+              "name": "findBy...",
+              "description": "Consulta asíncrona que espera hasta que el elemento aparece o se agota el timeout."
+            },
+            {
+              "name": "waitFor",
+              "description": "Reintenta una aserción mientras espera que una condición se cumpla."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Creá pruebas para un formulario de registro: campo vacío, correo inválido, envío exitoso y estado de carga.",
+          "hint": "Probá cada escenario desde la interfaz y verificá los mensajes que realmente se muestran.",
+          "resources": [
+            {
+              "label": "Testing Library — Async Methods",
+              "url": "https://testing-library.com/docs/dom-testing-library/api-async/"
+            }
+          ],
+          "related": [
+            "test-testing-library",
+            "test-async"
+          ]
+        },
+        {
+          "id": "test-playwright",
+          "title": "Playwright: primeras pruebas end-to-end",
+          "category": "e2e",
+          "summary": "Automatizá recorridos completos usando navegadores reales y aserciones que esperan condiciones.",
+          "purpose": "Playwright es una herramienta de automatización de navegadores y pruebas E2E. Permite ejecutar Chromium, Firefox y WebKit, interactuar con páginas, controlar red y capturar trazas. Una prueba E2E debe enfocarse en flujos importantes y ser independiente de otras pruebas.",
+          "whenToUse": "Playwright es una herramienta de automatización de navegadores y pruebas E2E. Permite ejecutar Chromium, Firefox y WebKit, interactuar con páginas, controlar red y capturar trazas. Una prueba E2E debe enfocarse en flujos importantes y ser independiente de otras pruebas.",
+          "syntax": "npm init playwright@latest\nnpx playwright test",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Abrir la aplicación y verificar el título",
+              "description": "Una prueba E2E inicia el navegador y visita una ruta real.",
+              "code": "import { test, expect } from '@playwright/test';\n\ntest('la página principal muestra WebDev Book', async ({ page }) => {\n  await page.goto('http://127.0.0.1:4173');\n  await expect(page).toHaveTitle(/WebDev Book/);\n});",
+              "explanation": "test define el escenario. page es una instancia de página del navegador. goto navega a la URL y toHaveTitle espera y verifica el título."
+            },
+            {
+              "title": "Probar una navegación",
+              "description": "Interactuá con la interfaz como lo haría una persona.",
+              "code": "test('permite abrir la biblioteca de herramientas', async ({ page }) => {\n  await page.goto('http://127.0.0.1:4173');\n  await page.getByRole('link', { name: /herramientas/i }).click();\n  await expect(page).toHaveURL(/tools/);\n});",
+              "explanation": "getByRole prioriza semántica accesible. click espera la interacción y toHaveURL comprueba la navegación."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "test(nombre, fn)",
+              "description": "Define un caso E2E."
+            },
+            {
+              "name": "page.goto(url)",
+              "description": "Navega a una dirección."
+            },
+            {
+              "name": "page.getByRole(role, options)",
+              "description": "Localiza elementos por rol y nombre accesible."
+            },
+            {
+              "name": "expect(locator).toBeVisible()",
+              "description": "Aserción con espera automática para comprobar visibilidad."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Instalá Playwright y escribí una prueba que abra tu aplicación, navegue a una categoría y compruebe un artículo.",
+          "hint": "Configurá primero webServer o iniciá la aplicación de prueba; luego usá locators accesibles.",
+          "resources": [
+            {
+              "label": "Playwright — Getting started",
+              "url": "https://playwright.dev/docs/intro"
+            },
+            {
+              "label": "Playwright — Assertions",
+              "url": "https://playwright.dev/docs/test-assertions"
+            }
+          ],
+          "related": [
+            "test-locators",
+            "test-api"
+          ]
+        },
+        {
+          "id": "test-locators",
+          "title": "Locators de Playwright y buenas consultas",
+          "category": "e2e",
+          "summary": "Elegí localizadores resistentes que representen cómo se identifica un control en la interfaz.",
+          "purpose": "Un Locator representa una consulta que Playwright resuelve cuando necesita interactuar o verificar. Preferí getByRole, getByLabel, getByText y getByTestId cuando corresponda. Los selectores CSS profundos y XPath acoplan la prueba a detalles de implementación y suelen romperse ante cambios visuales.",
+          "whenToUse": "Un Locator representa una consulta que Playwright resuelve cuando necesita interactuar o verificar. Preferí getByRole, getByLabel, getByText y getByTestId cuando corresponda. Los selectores CSS profundos y XPath acoplan la prueba a detalles de implementación y suelen romperse ante cambios visuales.",
+          "syntax": "page.getByRole('button', { name: 'Buscar' })\npage.getByLabel('Correo')\npage.getByText('Resultado')",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Usar rol y nombre",
+              "description": "Localizá un botón de forma accesible.",
+              "code": "const guardar = page.getByRole('button', { name: 'Guardar cambios' });\nawait guardar.click();\nawait expect(guardar).toBeDisabled();",
+              "explanation": "El rol identifica el tipo de control y name su nombre accesible. La aserción comprueba que queda deshabilitado después de la acción."
+            },
+            {
+              "title": "Usar una etiqueta de formulario",
+              "description": "Encontrá el campo mediante su label asociado.",
+              "code": "await page.getByLabel('Título de la novela').fill('Dune');\nawait page.getByRole('button', { name: 'Crear novela' }).click();",
+              "explanation": "getByLabel funciona cuando el control tiene una etiqueta accesible correctamente asociada. fill reemplaza el valor del campo."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "getByRole",
+              "description": "Consulta por rol accesible y nombre."
+            },
+            {
+              "name": "getByLabel",
+              "description": "Consulta por etiqueta de formulario."
+            },
+            {
+              "name": "getByText",
+              "description": "Consulta por contenido textual visible."
+            },
+            {
+              "name": "getByTestId",
+              "description": "Consulta por un atributo de prueba explícito; usalo cuando no exista una consulta semántica adecuada."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Elegí cinco elementos de una pantalla y escribí un locator robusto para cada uno.",
+          "hint": "Priorizá rol y nombre accesible; usá test id como alternativa deliberada, no como primera opción.",
+          "resources": [
+            {
+              "label": "Playwright — Locators",
+              "url": "https://playwright.dev/docs/locators"
+            }
+          ],
+          "related": [
+            "test-playwright",
+            "test-testing-library"
+          ]
+        },
+        {
+          "id": "test-api",
+          "title": "Probar APIs HTTP y respuestas de red",
+          "category": "e2e",
+          "summary": "Comprobá endpoints y escenarios de red sin depender exclusivamente de la interfaz.",
+          "purpose": "Las pruebas de API verifican rutas, códigos, esquemas, validación y permisos. Playwright incluye APIRequestContext para realizar solicitudes HTTP directamente. También permite interceptar y simular tráfico del navegador, útil para probar estados de error o respuestas lentas de forma determinista.",
+          "whenToUse": "Las pruebas de API verifican rutas, códigos, esquemas, validación y permisos. Playwright incluye APIRequestContext para realizar solicitudes HTTP directamente. También permite interceptar y simular tráfico del navegador, útil para probar estados de error o respuestas lentas de forma determinista.",
+          "syntax": "request.get(url)\nrequest.post(url, { data })\npage.route(url, handler)",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Probar un endpoint",
+              "description": "Consultá una API y verificá estado y contenido.",
+              "code": "import { test, expect } from '@playwright/test';\n\ntest('API devuelve una novela', async ({ request }) => {\n  const respuesta = await request.get('http://127.0.0.1:3000/api/novelas/1');\n  expect(respuesta.status()).toBe(200);\n  const novela = await respuesta.json();\n  expect(novela).toHaveProperty('titulo');\n});",
+              "explanation": "request realiza HTTP sin abrir una página. status devuelve el código y json interpreta el cuerpo. En proyectos reales conviene configurar baseURL."
+            },
+            {
+              "title": "Simular una respuesta de error",
+              "description": "Interceptá una ruta para probar cómo responde la interfaz.",
+              "code": "await page.route('**/api/novelas', async route => {\n  await route.fulfill({\n    status: 503,\n    contentType: 'application/json',\n    body: JSON.stringify({ error: 'Servicio temporalmente no disponible' })\n  });\n});\n\nawait page.goto('/catalogo');\nawait expect(page.getByText(/temporalmente no disponible/i)).toBeVisible();",
+              "explanation": "route intercepta solicitudes que coinciden con el patrón. fulfill responde con una respuesta controlada. Esto permite probar estados de error sin depender de una caída real del backend."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "request.get(url)",
+              "description": "Realiza una solicitud GET mediante el contexto API."
+            },
+            {
+              "name": "APIResponse.status()",
+              "description": "Devuelve el estado HTTP."
+            },
+            {
+              "name": "APIResponse.json()",
+              "description": "Interpreta el cuerpo como JSON."
+            },
+            {
+              "name": "page.route(pattern, handler)",
+              "description": "Intercepta solicitudes de red que coinciden con el patrón."
+            },
+            {
+              "name": "route.fulfill(options)",
+              "description": "Completa una solicitud interceptada con una respuesta simulada."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Escribí una prueba que verifique un endpoint existente y otra que simule un error 503 para la interfaz.",
+          "hint": "Separá la prueba directa de API de la prueba de interfaz que consume una respuesta simulada.",
+          "resources": [
+            {
+              "label": "Playwright — API testing",
+              "url": "https://playwright.dev/docs/api-testing"
+            },
+            {
+              "label": "Playwright — Network",
+              "url": "https://playwright.dev/docs/network"
+            }
+          ],
+          "related": [
+            "test-playwright",
+            "test-flaky"
+          ]
+        },
+        {
+          "id": "test-cobertura",
+          "title": "Cobertura de código: statements, branches, functions y lines",
+          "category": "calidad-ci",
+          "summary": "Interpretá qué mide la cobertura y cómo usarla sin convertirla en una meta vacía.",
+          "purpose": "La cobertura mide qué partes del código ejecutó la suite: líneas, sentencias, funciones y ramas. Una cobertura alta no garantiza buenas pruebas; una línea puede ejecutarse sin verificar su resultado. Usá los reportes para encontrar áreas sin escenarios relevantes y priorizá lógica crítica y riesgos.",
+          "whenToUse": "La cobertura mide qué partes del código ejecutó la suite: líneas, sentencias, funciones y ramas. Una cobertura alta no garantiza buenas pruebas; una línea puede ejecutarse sin verificar su resultado. Usá los reportes para encontrar áreas sin escenarios relevantes y priorizá lógica crítica y riesgos.",
+          "syntax": "npx vitest run --coverage",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Habilitar cobertura en Vitest",
+              "description": "Instalá un proveedor y ejecutá el reporte.",
+              "code": "npm install -D @vitest/coverage-v8\nnpx vitest run --coverage",
+              "explanation": "El proveedor V8 recoge información de ejecución. La salida muestra porcentajes por archivo y tipo de cobertura; consultá la configuración de tu versión de Vitest."
+            },
+            {
+              "title": "Pensar en ramas",
+              "description": "Una función puede ejecutar la línea y aun así no probar todas las decisiones.",
+              "code": "function etiquetaStock(cantidad) {\n  if (cantidad > 0) return 'Disponible';\n  return 'Agotado';\n}\n\n// Se necesitan al menos dos escenarios para cubrir ambas ramas.\netiquetaStock(4);\netiquetaStock(0);",
+              "explanation": "Ejecutar solo cantidad 4 no prueba la rama agotado. La cobertura de ramas ayuda a descubrir esa omisión, pero las aserciones deben comprobar el texto correcto."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Statements",
+              "description": "Porcentaje de sentencias ejecutadas."
+            },
+            {
+              "name": "Branches",
+              "description": "Porcentaje de ramas condicionales ejecutadas."
+            },
+            {
+              "name": "Functions",
+              "description": "Porcentaje de funciones invocadas."
+            },
+            {
+              "name": "Lines",
+              "description": "Porcentaje de líneas ejecutadas."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Buscá una función con un if y diseñá pruebas que recorran cada rama y verifiquen el resultado.",
+          "hint": "No te limites a subir el porcentaje: preguntá qué comportamiento demuestra cada aserción.",
+          "resources": [
+            {
+              "label": "Vitest — Coverage",
+              "url": "https://vitest.dev/guide/coverage.html"
+            }
+          ],
+          "related": [
+            "test-vitest",
+            "test-ci"
+          ]
+        },
+        {
+          "id": "test-flaky",
+          "title": "Pruebas flaky: detectar y reducir inestabilidad",
+          "category": "calidad-ci",
+          "summary": "Reconocé pruebas que pasan y fallan sin cambios de código y eliminá sus causas.",
+          "purpose": "Una prueba flaky produce resultados inconsistentes por temporizadores, dependencias externas, datos compartidos, orden de ejecución, concurrencia o selectores frágiles. Reintentar puede ayudar a diagnosticar, pero no corrige la causa. Priorizá esperas basadas en condiciones, aislamiento y datos controlados.",
+          "whenToUse": "Una prueba flaky produce resultados inconsistentes por temporizadores, dependencias externas, datos compartidos, orden de ejecución, concurrencia o selectores frágiles. Reintentar puede ayudar a diagnosticar, pero no corrige la causa. Priorizá esperas basadas en condiciones, aislamiento y datos controlados.",
+          "syntax": "Esperar condición observable > sleep fijo\nDatos aislados > estado compartido",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Evitar pausas arbitrarias",
+              "description": "No uses una espera fija para adivinar cuándo termina una acción.",
+              "code": "// Frágil:\nawait page.waitForTimeout(3000);\n\n// Preferible:\nawait expect(page.getByText('Carga completa')).toBeVisible();",
+              "explanation": "La aserción espera la condición hasta el timeout configurado. Una pausa fija puede ser demasiado corta en CI y demasiado larga en una máquina rápida."
+            },
+            {
+              "title": "Aislar datos de prueba",
+              "description": "Cada prueba debe crear y limpiar su propio estado.",
+              "code": "test('crea una novela', async ({ request }) => {\n  const titulo = `Prueba-${crypto.randomUUID()}`;\n  const respuesta = await request.post('/api/novelas', { data: { titulo } });\n  expect(respuesta.status()).toBe(201);\n  // Limpiar el recurso creado usando el endpoint de test.\n});",
+              "explanation": "Un identificador único evita colisiones entre ejecuciones paralelas. En una suite real, agregá limpieza fiable incluso si falla una aserción, por ejemplo con fixtures o hooks."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "Flaky test",
+              "description": "Prueba cuyo resultado cambia de forma no determinista sin cambios relevantes en el código."
+            },
+            {
+              "name": "Auto-wait",
+              "description": "Esperas integradas que aguardan condiciones de locators y aserciones."
+            },
+            {
+              "name": "Retry",
+              "description": "Reejecución configurada para diagnosticar o tolerar fallos transitorios; no sustituye corregir la causa."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Encontrá una prueba que dependa de un tiempo fijo y reemplazá esa espera por una condición observable.",
+          "hint": "Buscá dependencias externas, estado compartido, selectores débiles y carreras entre operaciones.",
+          "resources": [
+            {
+              "label": "Playwright — Best Practices",
+              "url": "https://playwright.dev/docs/best-practices"
+            }
+          ],
+          "related": [
+            "test-playwright",
+            "test-ci"
+          ]
+        },
+        {
+          "id": "test-ci",
+          "title": "Ejecutar pruebas en CI/CD",
+          "category": "calidad-ci",
+          "summary": "Automatizá la ejecución de pruebas para detectar regresiones antes de integrar cambios.",
+          "purpose": "La integración continua ejecuta verificaciones automáticamente ante pushes y pull requests. Una pipeline básica instala dependencias desde el lockfile, ejecuta lint, pruebas unitarias, pruebas de integración y, cuando corresponde, E2E. Los secretos deben almacenarse en el sistema de CI y no en el repositorio.",
+          "whenToUse": "La integración continua ejecuta verificaciones automáticamente ante pushes y pull requests. Una pipeline básica instala dependencias desde el lockfile, ejecuta lint, pruebas unitarias, pruebas de integración y, cuando corresponde, E2E. Los secretos deben almacenarse en el sistema de CI y no en el repositorio.",
+          "syntax": "checkout → setup runtime → npm ci → npm test → build",
+          "level": "Inicial a avanzado",
+          "examples": [
+            {
+              "title": "Workflow de GitHub Actions",
+              "description": "Ejemplo mínimo para ejecutar pruebas al abrir un pull request.",
+              "code": "name: Tests\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n          cache: npm\n      - run: npm ci\n      - run: npm test -- --run\n      - run: npm run build --if-present",
+              "explanation": "checkout obtiene el código; setup-node configura Node y caché; npm ci instala según el lockfile; las pruebas y build validan el cambio. Ajustá comandos y versión de Node a tu proyecto."
+            },
+            {
+              "title": "Separar verificaciones",
+              "description": "Una suite rápida puede ejecutarse en cada commit y una E2E más amplia en etapas posteriores.",
+              "code": "{\n  \"scripts\": {\n    \"test:unit\": \"vitest run\",\n    \"test:e2e\": \"playwright test\",\n    \"check\": \"npm run test:unit && npm run build\"\n  }\n}",
+              "explanation": "Los scripts nombrados hacen explícito qué tipo de validación se ejecuta. La pipeline puede correr E2E en un job separado con el servidor de prueba."
+            }
+          ],
+          "parameters": [
+            {
+              "name": "npm ci",
+              "description": "Instala dependencias de forma reproducible usando el lockfile y falla si no está sincronizado."
+            },
+            {
+              "name": "Pull request checks",
+              "description": "Verificaciones automáticas que informan si un cambio pasa las condiciones definidas."
+            },
+            {
+              "name": "Secrets",
+              "description": "Valores sensibles configurados en el entorno CI; no deben escribirse en el código fuente."
+            }
+          ],
+          "bestPractices": [
+            "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+            "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+            "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+          ],
+          "commonMistakes": [
+            "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+            "Olvidar manejar errores y estados inesperados.",
+            "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+          ],
+          "exercise": "Definí una pipeline que instale dependencias, ejecute pruebas y construya la aplicación ante un pull request.",
+          "hint": "Usá npm ci y comandos que ya existan en package.json; no inventes scripts que el proyecto no tenga.",
+          "resources": [
+            {
+              "label": "GitHub Actions — Node.js",
+              "url": "https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs"
+            },
+            {
+              "label": "Vitest — CI",
+              "url": "https://vitest.dev/guide/cli.html"
+            }
+          ],
+          "related": [
+            "test-cobertura",
+            "test-flaky"
           ]
         }
       ]
