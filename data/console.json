@@ -729,7 +729,7 @@
         {
           "title": "Encontrar una función",
           "description": "Usá la búsqueda global de DevTools para localizar una palabra del código.",
-          "code": "// En Sources, buscá:\nfunction calcularPrecio\n// Luego abrí el archivo encontrado",
+          "code": "// En Sources, buscá la cadena: function calcularPrecio\n// Abrí el archivo encontrado y localizá su línea de definición.\nconsole.log(\"Revisá el archivo de origen en Sources.\");",
           "explanation": "La búsqueda global permite ubicar declaraciones o textos distribuidos entre recursos cargados."
         },
         {
