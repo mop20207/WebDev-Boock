@@ -1,0 +1,1601 @@
+{
+  "version": 1,
+  "language": "API de Consola y herramientas de desarrollo",
+  "updated": "2026-11-22",
+  "description": "Biblioteca educativa de la API console de JavaScript y herramientas de desarrollo del navegador: inspección, depuración, red, almacenamiento, rendimiento, memoria y accesibilidad.",
+  "scope": "Los ejemplos de console se ejecutan en JavaScript del navegador o desde la consola de DevTools. Las herramientas y etiquetas visuales varían entre Chrome, Firefox y otros navegadores. No se necesita una extensión ni se ejecuta código remoto desde esta biblioteca.",
+  "categories": [
+    {
+      "id": "console-api",
+      "title": "API Console: salida y objetos",
+      "description": "Registrá mensajes, inspeccioná objetos y organizá resultados desde JavaScript.",
+      "icon": "JS",
+      "level": "Inicial"
+    },
+    {
+      "id": "console-control",
+      "title": "API Console: control y diagnóstico",
+      "description": "Usá grupos, contadores, aserciones, temporizadores y trazas.",
+      "icon": "⌁",
+      "level": "Intermedio"
+    },
+    {
+      "id": "devtools-debug",
+      "title": "DevTools: inspección y depuración",
+      "description": "Explorá el DOM, CSS, fuentes, breakpoints, scopes y pila de llamadas.",
+      "icon": "⌘",
+      "level": "Intermedio"
+    },
+    {
+      "id": "devtools-network",
+      "title": "DevTools: red y solicitudes",
+      "description": "Analizá peticiones HTTP, cabeceras, cuerpos, tiempos, caché y errores de red.",
+      "icon": "⇄",
+      "level": "Intermedio"
+    },
+    {
+      "id": "devtools-storage",
+      "title": "DevTools: almacenamiento y aplicación",
+      "description": "Inspeccioná almacenamiento web, cookies, IndexedDB y Service Workers.",
+      "icon": "▣",
+      "level": "Intermedio"
+    },
+    {
+      "id": "devtools-quality",
+      "title": "DevTools: rendimiento y calidad",
+      "description": "Medí rendimiento, memoria, diseño adaptable, accesibilidad y seguridad.",
+      "icon": "✓",
+      "level": "Avanzado"
+    }
+  ],
+  "articles": [
+    {
+      "id": "log-niveles",
+      "category": "console-api",
+      "title": "console.log, info, warn y error",
+      "level": "Inicial",
+      "summary": "Elegí el nivel de mensaje adecuado para informar, advertir o señalar un problema.",
+      "purpose": "El objeto global `console` ofrece métodos de diagnóstico que escriben en la consola del navegador. `log` se usa para información general; `info`, `debug`, `warn` y `error` permiten expresar intención y facilitan el filtrado. La presentación exacta cambia según el navegador y su configuración.",
+      "syntax": "console.log(\"Aplicación iniciada\");\nconsole.info(\"Usuario cargado\");\nconsole.warn(\"La respuesta tardó más de lo esperado\");\nconsole.error(\"No se pudo guardar\");",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Registrar una operación",
+          "description": "Agregá mensajes de inicio y fin alrededor de una función de ejemplo.",
+          "code": "function cargarPerfil() {\n  console.info(\"Inicia la carga del perfil\");\n  const perfil = { id: 7, nombre: \"Luna\" };\n  console.log(\"Perfil recibido:\", perfil);\n  return perfil;\n}\ncargarPerfil();",
+          "explanation": "Los mensajes muestran el paso por la función y permiten inspeccionar el objeto sin convertirlo manualmente a texto."
+        },
+        {
+          "title": "Informar un problema",
+          "description": "Usá un aviso para un dato inesperado y un error para una operación fallida.",
+          "code": "const intentos = 4;\nif (intentos > 3) {\n  console.warn(\"Se superó el número habitual de intentos\");\n}\nconsole.error(\"No se pudo completar la operación\");",
+          "explanation": "`warn` y `error` clasifican los mensajes. No reemplazan la validación ni el manejo real de errores."
+        }
+      ],
+      "exercise": "Agregá mensajes de diagnóstico a una función que valida un formulario. Usá un nivel distinto según el caso.",
+      "hint": "No dejes datos sensibles, tokens, contraseñas o información personal en mensajes de consola de producción.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: Console API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "objetos-console",
+      "category": "console-api",
+      "title": "Mostrar objetos y variables",
+      "level": "Inicial",
+      "summary": "Pasá objetos y valores como argumentos separados para conservar su estructura al inspeccionarlos.",
+      "purpose": "`console.log` acepta varios argumentos. Si pasás un objeto directamente, DevTools puede mostrar una representación interactiva. Convertirlo con `JSON.stringify` produce texto, pero pierde algunas capacidades interactivas y no representa todos los tipos de datos.",
+      "syntax": "const usuario = { id: 12, nombre: \"Ana\", activo: true };\nconsole.log(\"Usuario:\", usuario);\nconsole.log(\"Activo:\", usuario.activo);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Mostrar un objeto",
+          "description": "Registrá un objeto completo junto a una etiqueta descriptiva.",
+          "code": "const pedido = { numero: 104, total: 2590, estado: \"pendiente\" };\nconsole.log(\"Pedido actual:\", pedido);",
+          "explanation": "El navegador puede presentar propiedades expandibles. La etiqueta ayuda a reconocer qué objeto se está observando."
+        },
+        {
+          "title": "Comparar objeto y JSON",
+          "description": "Convertí una copia simple a texto JSON para comparar las representaciones.",
+          "code": "const producto = { nombre: \"Teclado\", precio: 1200 };\nconsole.log(producto);\nconsole.log(JSON.stringify(producto, null, 2));",
+          "explanation": "La segunda salida es una cadena con formato. `JSON.stringify` no serializa funciones, símbolos ni referencias circulares de forma directa."
+        }
+      ],
+      "exercise": "Registrá un objeto anidado y compará cómo aparece directamente y después de serializarlo como JSON.",
+      "hint": "No serialices automáticamente todo objeto: la salida interactiva suele ser más útil para explorar propiedades.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: Console API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "sustitucion-formatos",
+      "category": "console-api",
+      "title": "Formato de mensajes y sustituciones",
+      "level": "Inicial",
+      "summary": "Usá marcadores de formato para presentar valores sin concatenaciones difíciles de leer.",
+      "purpose": "Los métodos de consola admiten argumentos múltiples y cadenas de sustitución como `%s`, `%d`, `%i`, `%f` y `%o` en navegadores compatibles. La interpretación y los especificadores disponibles pueden variar; para código portable, los argumentos separados son una alternativa sencilla.",
+      "syntax": "const nombre = \"Mara\";\nconst puntos = 42;\nconsole.log(\"Usuario: %s · Puntos: %d\", nombre, puntos);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Sustituir valores",
+          "description": "Insertá una cadena y un número en una misma línea.",
+          "code": "const producto = \"Mouse\";\nconst stock = 8;\nconsole.log(\"%s tiene %d unidades\", producto, stock);",
+          "explanation": "Los marcadores se reemplazan con los argumentos posteriores en las implementaciones que admiten ese formato."
+        },
+        {
+          "title": "Mostrar un objeto",
+          "description": "Utilizá `%o` para pedir una representación de objeto en navegadores compatibles.",
+          "code": "const config = { modo: \"oscuro\", animaciones: false };\nconsole.log(\"Configuración: %o\", config);",
+          "explanation": "El especificador de objeto está orientado a la consola del navegador; no lo confundas con el formato de `printf` de todos los lenguajes."
+        }
+      ],
+      "exercise": "Reescribí un mensaje con concatenación para que use argumentos separados y luego probá un marcador de sustitución.",
+      "hint": "La consola del navegador no implementa todas las reglas de formato de Node.js, Python o printf.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: Console API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "console-table",
+      "category": "console-api",
+      "title": "console.table para datos tabulares",
+      "level": "Inicial",
+      "summary": "Convertí arreglos de objetos o matrices en una tabla fácil de comparar.",
+      "purpose": "`console.table(data, columns)` muestra datos tabulares cuando el navegador admite esa presentación. Es útil para arreglos de objetos y matrices. El segundo argumento puede limitar las columnas visibles; la representación es una ayuda visual, no una salida de datos para producción.",
+      "syntax": "const alumnos = [\n  { nombre: \"Luz\", nota: 8 },\n  { nombre: \"Tomás\", nota: 9 }\n];\nconsole.table(alumnos);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Tabla de objetos",
+          "description": "Mostrá propiedades seleccionadas de una lista de productos.",
+          "code": "const productos = [\n  { id: 1, nombre: \"Libro\", precio: 1200 },\n  { id: 2, nombre: \"Lápiz\", precio: 250 }\n];\nconsole.table(productos, [\"nombre\", \"precio\"]);",
+          "explanation": "La selección de columnas reduce ruido cuando los objetos contienen muchas propiedades."
+        },
+        {
+          "title": "Tabla de valores",
+          "description": "Pasá una matriz para comparar filas y columnas.",
+          "code": "console.table([\n  [\"HTML\", 90],\n  [\"CSS\", 85],\n  [\"JavaScript\", 72]\n]);",
+          "explanation": "La matriz se representa con índices como filas; cada elemento ocupa una columna."
+        }
+      ],
+      "exercise": "Prepará un arreglo de cinco tareas y usá `console.table` para mostrar título, prioridad y estado.",
+      "hint": "No uses tablas de consola como salida funcional de tu aplicación: son una herramienta de inspección.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: Console API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "console-dir",
+      "category": "console-api",
+      "title": "console.dir y exploración de propiedades",
+      "level": "Intermedio",
+      "summary": "Inspeccioná la estructura de un objeto sin reducirla a una cadena de texto.",
+      "purpose": "`console.dir` muestra una lista de propiedades de un objeto; la representación exacta depende del navegador. Puede ser útil para examinar objetos DOM o estructuras anidadas. `console.dirxml` intenta presentar una estructura XML/HTML cuando el objeto lo permite.",
+      "syntax": "const estado = {\n  usuario: { nombre: \"Noa\", roles: [\"editor\", \"lector\"] },\n  conectado: true\n};\nconsole.dir(estado);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Explorar una estructura",
+          "description": "Mostrá un objeto con propiedades anidadas.",
+          "code": "const sesion = {\n  id: \"s-18\",\n  permisos: { leer: true, editar: false }\n};\nconsole.dir(sesion);",
+          "explanation": "La vista permite expandir las propiedades internas para observar cómo se compone el objeto."
+        },
+        {
+          "title": "Inspeccionar un nodo",
+          "description": "Seleccioná un elemento del documento y compará `log` con `dir`.",
+          "code": "const boton = document.querySelector(\"button\");\nconsole.log(boton);\nconsole.dir(boton);",
+          "explanation": "La vista de `log` suele resaltar la representación del nodo; `dir` presenta propiedades JavaScript inspeccionables."
+        }
+      ],
+      "exercise": "Elegí un elemento de tu página y compará `console.log(elemento)` y `console.dir(elemento)`.",
+      "hint": "La salida visual no es idéntica en todos los navegadores; verificá el tipo de objeto antes de interpretar sus propiedades.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: Console API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "grupos-console",
+      "category": "console-control",
+      "title": "Organizar mensajes con grupos",
+      "level": "Intermedio",
+      "summary": "Agrupá mensajes relacionados para que una sesión de diagnóstico sea más fácil de leer.",
+      "purpose": "`console.group(label)` crea un grupo expandido; `console.groupCollapsed(label)` crea uno inicialmente contraído y `console.groupEnd()` cierra el grupo más reciente. Los grupos pueden anidarse, por lo que conviene cerrarlos incluso cuando se organiza el diagnóstico en funciones.",
+      "syntax": "console.group(\"Carga inicial\");\nconsole.log(\"HTML listo\");\nconsole.log(\"Datos listos\");\nconsole.groupEnd();",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Crear un grupo",
+          "description": "Agrupá los datos que se cargan al iniciar una página.",
+          "code": "console.group(\"Inicialización\");\nconsole.info(\"Configuración leída\");\nconsole.info(\"Eventos registrados\");\nconsole.groupEnd();",
+          "explanation": "Los mensajes se visualizan bajo una etiqueta común y se pueden plegar o desplegar según el navegador."
+        },
+        {
+          "title": "Anidar grupos",
+          "description": "Separá los datos de usuario y de preferencias.",
+          "code": "console.group(\"Aplicación\");\nconsole.groupCollapsed(\"Usuario\");\nconsole.log({ id: 5, activo: true });\nconsole.groupEnd();\nconsole.groupCollapsed(\"Preferencias\");\nconsole.log({ tema: \"oscuro\" });\nconsole.groupEnd();\nconsole.groupEnd();",
+          "explanation": "Los grupos anidados comunican jerarquía. Cada `group` debe equilibrarse con su `groupEnd`."
+        }
+      ],
+      "exercise": "Agrupá el diagnóstico de una petición en tres secciones: solicitud, respuesta y resultado.",
+      "hint": "Cerrá cada grupo en el mismo flujo lógico donde lo abriste para no mezclar mensajes posteriores.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: métodos de Console",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        },
+        {
+          "label": "MDN: Console en Web Workers",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "count-contadores",
+      "category": "console-control",
+      "title": "console.count y countReset",
+      "level": "Intermedio",
+      "summary": "Contá cuántas veces pasa la ejecución por una zona del código.",
+      "purpose": "`console.count(label)` incrementa un contador asociado a una etiqueta y lo registra. `console.countReset(label)` reinicia ese contador. Cada etiqueta mantiene un conteo independiente; los detalles de reinicio y salida siguen la implementación del navegador.",
+      "syntax": "for (let i = 0; i < 3; i++) {\n  console.count(\"bucle principal\");\n}",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Contar eventos",
+          "description": "Registrá cuántas veces se dispara una función de interacción.",
+          "code": "function clicRegistrado() {\n  console.count(\"clic en botón guardar\");\n}\n// Vinculala al evento click de tu botón",
+          "explanation": "La etiqueta identifica el contador y permite ver si una acción se repite más de lo esperado."
+        },
+        {
+          "title": "Reiniciar un contador",
+          "description": "Reiniciá el contador antes de comenzar una nueva medición.",
+          "code": "console.count(\"intentos\");\nconsole.count(\"intentos\");\nconsole.countReset(\"intentos\");\nconsole.count(\"intentos\");",
+          "explanation": "Después del reinicio, el contador vuelve a iniciar para esa etiqueta."
+        }
+      ],
+      "exercise": "Contá cuántas veces se ejecuta una función de búsqueda y reiniciá el conteo al borrar el formulario.",
+      "hint": "Usá etiquetas descriptivas y no dejes contadores de diagnóstico innecesarios en el código final.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: métodos de Console",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        },
+        {
+          "label": "MDN: Console en Web Workers",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "assert-console",
+      "category": "console-control",
+      "title": "Aserciones con console.assert",
+      "level": "Intermedio",
+      "summary": "Registrá una condición que no debería fallar sin detener automáticamente el flujo de ejecución.",
+      "purpose": "`console.assert(condition, ...data)` registra un mensaje cuando la condición es falsa. Es una ayuda de diagnóstico, no una excepción ni una validación de seguridad. Si la condición debe impedir continuar, usá una estructura `if` y lanzá o devolvé un error según el diseño.",
+      "syntax": "const edad = 17;\nconsole.assert(edad >= 18, \"La edad debería ser 18 o más\");",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Comprobar un supuesto",
+          "description": "Registrá un mensaje cuando un dato esperado sea incorrecto.",
+          "code": "const items = [\"HTML\", \"CSS\"];\nconsole.assert(items.length > 0, \"La lista no debería estar vacía\");",
+          "explanation": "La aserción no vacía ni corrige la lista; solo hace visible el supuesto incumplido."
+        },
+        {
+          "title": "Separar diagnóstico de validación",
+          "description": "Usá una validación real para impedir una operación no permitida.",
+          "code": "function retirar(saldo, monto) {\n  if (monto <= 0 || monto > saldo) {\n    throw new Error(\"Monto inválido\");\n  }\n  return saldo - monto;\n}\nconsole.assert(retirar(100, 20) === 80);",
+          "explanation": "El control de flujo y la excepción determinan el comportamiento. `console.assert` únicamente añade una observación si su condición falla."
+        }
+      ],
+      "exercise": "Escribí una aserción para un supuesto interno y una validación que impida guardar datos inválidos.",
+      "hint": "No uses `console.assert` como reemplazo de `if`, `throw`, validación del servidor o controles de acceso.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: métodos de Console",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        },
+        {
+          "label": "MDN: Console en Web Workers",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "temporizadores-console",
+      "category": "console-control",
+      "title": "Medir con console.time y timeEnd",
+      "level": "Intermedio",
+      "summary": "Obtené una medición rápida del tiempo transcurrido entre dos puntos del código.",
+      "purpose": "`console.time(label)` inicia un temporizador; `console.timeLog(label)` muestra el tiempo transcurrido sin cerrarlo y `console.timeEnd(label)` lo detiene y registra el total. El nombre debe coincidir entre llamadas. No es un sustituto de un perfilador de rendimiento.",
+      "syntax": "console.time(\"procesar datos\");\n// operación a medir\nconst total = [2, 4, 6, 8].reduce((a, b) => a + b, 0);\nconsole.timeEnd(\"procesar datos\");",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Medir una función",
+          "description": "Medí una operación pequeña con una etiqueta reconocible.",
+          "code": "console.time(\"ordenar lista\");\nconst ordenados = [9, 2, 7, 1].toSorted((a, b) => a - b);\nconsole.timeEnd(\"ordenar lista\");\nconsole.log(ordenados);",
+          "explanation": "El temporizador incluye el tiempo entre sus llamadas; `toSorted` devuelve una copia ordenada en entornos que lo soportan."
+        },
+        {
+          "title": "Registrar un punto intermedio",
+          "description": "Usá `timeLog` para consultar un parcial antes de terminar.",
+          "code": "console.time(\"carga\");\nconsole.log(\"Paso 1 listo\");\nconsole.timeLog(\"carga\");\nconsole.log(\"Paso 2 listo\");\nconsole.timeEnd(\"carga\");",
+          "explanation": "`timeLog` no detiene el temporizador, por eso el tiempo final puede ser mayor."
+        }
+      ],
+      "exercise": "Medí la duración de una transformación de datos y compará dos implementaciones con la misma entrada.",
+      "hint": "Para comparar rendimiento real, repetí las pruebas y utilizá el panel Performance; una sola medición puede variar.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: métodos de Console",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        },
+        {
+          "label": "MDN: Console en Web Workers",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "trace-console",
+      "category": "console-control",
+      "title": "Trazas de pila con console.trace",
+      "level": "Intermedio",
+      "summary": "Averiguá qué cadena de llamadas condujo hasta una instrucción inesperada.",
+      "purpose": "`console.trace()` muestra una traza de pila en la consola del navegador. La traza ayuda a reconstruir qué funciones se llamaron antes de llegar al punto marcado. El formato y los enlaces a archivos dependen de DevTools y de los mapas de fuentes.",
+      "syntax": "function guardar() {\n  console.trace(\"Llegué a guardar\");\n}\nfunction enviarFormulario() {\n  guardar();\n}\nenviarFormulario();",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Seguir una llamada",
+          "description": "Marcá una función interna y observá desde dónde se invocó.",
+          "code": "function calcularTotal() {\n  console.trace(\"Origen del cálculo\");\n}\nfunction confirmarCompra() {\n  calcularTotal();\n}\nconfirmarCompra();",
+          "explanation": "La traza lista las funciones de la pila hasta el punto donde se registró el mensaje."
+        },
+        {
+          "title": "Localizar un camino de ejecución",
+          "description": "Insertá una traza temporal en una función que se ejecuta desde varios botones.",
+          "code": "function actualizarVista(origen) {\n  console.trace(\"Actualización solicitada por:\", origen);\n}\nactualizarVista(\"botón filtros\");",
+          "explanation": "El argumento identifica el motivo y la pila ayuda a encontrar el llamador."
+        }
+      ],
+      "exercise": "Agregá una traza a una función compartida y compará dos caminos que llegan a ella.",
+      "hint": "Retirá las trazas temporales cuando termines de investigar para no llenar la consola.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: métodos de Console",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        },
+        {
+          "label": "MDN: Console en Web Workers",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "clear-console",
+      "category": "console-control",
+      "title": "Limpiar la consola y preservar contexto",
+      "level": "Inicial",
+      "summary": "Gestioná el volumen de mensajes y entendé qué información se pierde al limpiar.",
+      "purpose": "`console.clear()` solicita limpiar la consola del navegador. El comportamiento puede variar si el usuario o DevTools bloquean la limpieza, por ejemplo al preservar el registro. Limpiar mensajes no reinicia el estado de la página ni borra almacenamiento.",
+      "syntax": "console.log(\"Mensaje anterior\");\nconsole.clear();\nconsole.log(\"Mensaje posterior\");",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Limpiar desde código",
+          "description": "Usá la limpieza como parte de una demostración local.",
+          "code": "console.clear();\nconsole.info(\"Comienza una nueva prueba\");",
+          "explanation": "Se solicita limpiar la superficie de la consola. No se borran variables, archivos ni el estado de la aplicación."
+        },
+        {
+          "title": "Preservar mensajes entre recargas",
+          "description": "Registrá una marca temporal antes de volver a cargar la página.",
+          "code": "console.log(\"Inicio de prueba\", new Date().toISOString());\n// En DevTools, activá Preserve log antes de recargar",
+          "explanation": "La opción Preserve log es una función de la interfaz de DevTools, no una propiedad del objeto `console`."
+        }
+      ],
+      "exercise": "Compará una recarga normal con la opción Preserve log activada en DevTools.",
+      "hint": "No uses `console.clear()` para ocultar errores: conservá evidencia durante el diagnóstico.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "MDN: métodos de Console",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/console"
+        },
+        {
+          "label": "MDN: Console en Web Workers",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/console"
+        }
+      ]
+    },
+    {
+      "id": "abrir-devtools",
+      "category": "devtools-debug",
+      "title": "Abrir DevTools y reconocer sus paneles",
+      "level": "Inicial",
+      "summary": "Aprendé a abrir las herramientas del navegador y ubicar la consola, el inspector y el depurador.",
+      "purpose": "Las DevTools permiten inspeccionar una página mientras se ejecuta. En Chrome, Windows/Linux suelen usar `F12` o `Ctrl+Shift+I`, y macOS `Cmd+Option+I`; Firefox tiene atajos equivalentes que pueden variar. La interfaz se organiza en paneles; el nombre y la ubicación cambian entre navegadores y versiones.",
+      "syntax": "// Escribí esto en la consola de DevTools:\nconsole.log(\"DevTools está abierta\");\nconsole.log(location.href);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Ejecutar una expresión",
+          "description": "Abrí DevTools, elegí Console y consultá la URL actual.",
+          "code": "location.href\n document.title",
+          "explanation": "La consola puede evaluar expresiones en el contexto del documento. El resultado aparece debajo de cada instrucción."
+        },
+        {
+          "title": "Ubicar paneles principales",
+          "description": "Identificá Console, Elements/Inspector, Sources/Debugger y Network.",
+          "code": "// En Console, probá una consulta de solo lectura:\ndocument.querySelectorAll(\"a\").length",
+          "explanation": "La consulta cuenta enlaces del documento y no modifica el contenido. Los nombres de paneles varían entre Chrome y Firefox."
+        }
+      ],
+      "exercise": "Abrí DevTools en una página propia y localizá Console, Elements, Sources y Network.",
+      "hint": "La consola de DevTools ejecuta código con el contexto y permisos de la página abierta; evitá pegar código desconocido.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools",
+          "url": "https://developer.chrome.com/docs/devtools/"
+        },
+        {
+          "label": "Firefox Developer Tools",
+          "url": "https://firefox-source-docs.mozilla.org/devtools-user/"
+        }
+      ]
+    },
+    {
+      "id": "panel-elements-dom",
+      "category": "devtools-debug",
+      "title": "Panel Elements e inspección del DOM",
+      "level": "Intermedio",
+      "summary": "Observá la estructura real del documento y comparala con el HTML que escribiste.",
+      "purpose": "El panel Elements de Chrome (Inspector en Firefox) muestra el DOM actual. El DOM es la estructura viva que el navegador construyó y que JavaScript puede modificar; no tiene por qué coincidir exactamente con el HTML original, especialmente después de ejecutar scripts.",
+      "syntax": "const titulo = document.querySelector(\"h1\");\nconsole.log(titulo);\nconsole.log(titulo?.textContent);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Inspeccionar un selector",
+          "description": "Consultá cuántos elementos de una clase existen.",
+          "code": "document.querySelectorAll(\".card\").length",
+          "explanation": "`querySelectorAll` devuelve una NodeList con los elementos que coinciden en el momento de la consulta."
+        },
+        {
+          "title": "Seleccionar un elemento",
+          "description": "Buscá un botón por su atributo y observá el nodo.",
+          "code": "const guardar = document.querySelector('[data-action=\"save\"]');\nconsole.dir(guardar);",
+          "explanation": "La consulta devuelve `null` si no encuentra coincidencias, por eso el encadenamiento opcional evita acceder a una propiedad inexistente."
+        }
+      ],
+      "exercise": "Elegí un elemento con el inspector y encontrá su etiqueta, clases, atributos y posición dentro del DOM.",
+      "hint": "Los cambios hechos desde Elements suelen ser temporales y no reescriben tu archivo fuente local.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools",
+          "url": "https://developer.chrome.com/docs/devtools/"
+        },
+        {
+          "label": "Firefox Developer Tools",
+          "url": "https://firefox-source-docs.mozilla.org/devtools-user/"
+        }
+      ]
+    },
+    {
+      "id": "panel-styles-css",
+      "category": "devtools-debug",
+      "title": "Inspeccionar y probar CSS con Styles",
+      "level": "Intermedio",
+      "summary": "Encontrá qué regla aplica a un elemento y probá cambios visuales sin tocar todavía el archivo.",
+      "purpose": "El panel Styles muestra reglas CSS coincidentes, declaraciones heredadas y propiedades anuladas. Podés activar/desactivar declaraciones y editar valores en vivo. Estos cambios sirven para experimentar, pero se pierden al recargar salvo que configures un Workspace o guardes el cambio en tu código.",
+      "syntax": "const tarjeta = document.querySelector(\".card\");\nconsole.log(getComputedStyle(tarjeta).display);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Leer un estilo calculado",
+          "description": "Consultá el valor efectivo de una propiedad.",
+          "code": "const boton = document.querySelector(\"button\");\nconsole.log(getComputedStyle(boton).backgroundColor);",
+          "explanation": "`getComputedStyle` informa valores calculados por el navegador; la regla que originó el valor se encuentra en el panel Styles."
+        },
+        {
+          "title": "Probar una clase desde Console",
+          "description": "Alterná una clase de depuración sin modificar el HTML original.",
+          "code": "const panel = document.querySelector(\".panel\");\npanel?.classList.toggle(\"debug-outline\");",
+          "explanation": "La clase solo tendrá efecto si existe una regla CSS que la defina. El cambio vive en el DOM actual."
+        }
+      ],
+      "exercise": "Usá Styles para modificar temporalmente margen y color de una tarjeta y luego llevá el cambio correcto a tu CSS.",
+      "hint": "No confundas una edición temporal en DevTools con un cambio guardado en el repositorio.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools",
+          "url": "https://developer.chrome.com/docs/devtools/"
+        },
+        {
+          "label": "Firefox Developer Tools",
+          "url": "https://firefox-source-docs.mozilla.org/devtools-user/"
+        }
+      ]
+    },
+    {
+      "id": "panel-sources",
+      "category": "devtools-debug",
+      "title": "Panel Sources y archivos de origen",
+      "level": "Intermedio",
+      "summary": "Localizá el archivo JavaScript que está ejecutando la página y recorré sus fuentes.",
+      "purpose": "El panel Sources de Chrome (Debugger en Firefox) permite abrir recursos, buscar texto, establecer puntos de interrupción y recorrer el código. En aplicaciones compiladas puede mostrar archivos transformados; los source maps ayudan a relacionarlos con las fuentes originales.",
+      "syntax": "console.log(\"Abrí Sources y buscá esta cadena\");\nfunction calcularPrecio(precio, iva) {\n  return precio * (1 + iva);\n}\nconsole.log(calcularPrecio(100, 0.21));",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Encontrar una función",
+          "description": "Usá la búsqueda global de DevTools para localizar una palabra del código.",
+          "code": "// En Sources, buscá:\nfunction calcularPrecio\n// Luego abrí el archivo encontrado",
+          "explanation": "La búsqueda global permite ubicar declaraciones o textos distribuidos entre recursos cargados."
+        },
+        {
+          "title": "Abrir el archivo desde la consola",
+          "description": "Consultá el origen de una función definida por tu aplicación.",
+          "code": "console.log(calcularPrecio.toString());",
+          "explanation": "`toString` muestra el texto de la función cuando el motor conserva su representación; no reemplaza la navegación al archivo fuente."
+        }
+      ],
+      "exercise": "Encontrá una función desde Sources, abrí el archivo y ubicá su línea de definición.",
+      "hint": "No edites directamente un archivo minificado si contás con fuentes originales y mapas de origen.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools",
+          "url": "https://developer.chrome.com/docs/devtools/"
+        },
+        {
+          "label": "Firefox Developer Tools",
+          "url": "https://firefox-source-docs.mozilla.org/devtools-user/"
+        }
+      ]
+    },
+    {
+      "id": "breakpoints",
+      "category": "devtools-debug",
+      "title": "Breakpoints y ejecución paso a paso",
+      "level": "Intermedio",
+      "summary": "Detené el programa en una línea para observar valores antes de que cambien.",
+      "purpose": "Un breakpoint pausa la ejecución cuando el flujo alcanza una línea marcada. Desde Sources/Debugger podés continuar, avanzar una línea, entrar en una función o salir de ella. Un breakpoint condicional pausa solo cuando una expresión se cumple; la sintaxis de la expresión depende del contexto JavaScript.",
+      "syntax": "function totalizar(items) {\n  let total = 0;\n  for (const item of items) {\n    total += item.precio;\n  }\n  return total;\n}\ntotalizar([{ precio: 10 }, { precio: 20 }]);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Detenerse en una línea",
+          "description": "Marcá la línea que suma el precio de un artículo y observá `total` e `item`.",
+          "code": "// Ejecutá esta función mientras el breakpoint está colocado:\ntotalizar([{ precio: 10 }, { precio: 20 }]);",
+          "explanation": "El depurador pausa en el punto marcado y permite inspeccionar los valores locales disponibles."
+        },
+        {
+          "title": "Usar una condición",
+          "description": "Probá un breakpoint condicional para detenerte solo con un precio alto.",
+          "code": "// En Sources, agregá condición:\nitem.precio > 100\n// Luego ejecutá:\ntotalizar([{ precio: 10 }, { precio: 150 }]);",
+          "explanation": "La condición se evalúa cada vez que se alcanza el punto. Si es verdadera, se pausa la ejecución."
+        }
+      ],
+      "exercise": "Colocá un breakpoint en un bucle y anotá cómo cambian el índice y el acumulador en cada iteración.",
+      "hint": "Quitá breakpoints temporales al terminar y evitá pausas dentro de código sensible a tiempos reales.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools",
+          "url": "https://developer.chrome.com/docs/devtools/"
+        },
+        {
+          "label": "Firefox Developer Tools",
+          "url": "https://firefox-source-docs.mozilla.org/devtools-user/"
+        }
+      ]
+    },
+    {
+      "id": "call-stack-scope",
+      "category": "devtools-debug",
+      "title": "Call Stack y Scope",
+      "level": "Intermedio",
+      "summary": "Reconstruí la cadena de llamadas y consultá variables locales, cierres y alcance global.",
+      "purpose": "Durante una pausa, el panel Call Stack muestra las llamadas que condujeron a la función actual. Scope presenta variables locales, de cierre y globales disponibles. La visibilidad de algunas variables depende de optimizaciones del motor y del código transformado.",
+      "syntax": "function multiplicar(a, b) {\n  const resultado = a * b;\n  debugger;\n  return resultado;\n}\nfunction calcular() {\n  return multiplicar(4, 5);\n}\ncalcular();",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Inspeccionar variables",
+          "description": "Colocá la pausa dentro de la función y consultá `a`, `b` y `resultado`.",
+          "code": "function crearMensaje(nombre) {\n  const saludo = \"Hola\";\n  debugger;\n  return `${saludo}, ${nombre}`;\n}\ncrearMensaje(\"Luz\");",
+          "explanation": "El panel Scope permite observar los valores disponibles en el marco de ejecución seleccionado."
+        },
+        {
+          "title": "Subir por la pila",
+          "description": "Ejecutá una cadena de tres funciones y observá el orden de llamadas.",
+          "code": "function inicio() { pasoUno(); }\nfunction pasoUno() { pasoDos(); }\nfunction pasoDos() { debugger; }\ninicio();",
+          "explanation": "La pila representa la secuencia de llamadas pendiente. Seleccionar otro marco permite cambiar el contexto de variables inspeccionado."
+        }
+      ],
+      "exercise": "Usá `debugger` de forma temporal y dibujá la secuencia de llamadas de una función anidada.",
+      "hint": "Retirá la instrucción `debugger` del código de producción después de finalizar la investigación.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools",
+          "url": "https://developer.chrome.com/docs/devtools/"
+        },
+        {
+          "label": "Firefox Developer Tools",
+          "url": "https://firefox-source-docs.mozilla.org/devtools-user/"
+        }
+      ]
+    },
+    {
+      "id": "network-panel",
+      "category": "devtools-network",
+      "title": "Panel Network: panorama de solicitudes",
+      "level": "Intermedio",
+      "summary": "Registrá recursos y solicitudes de una página para entender qué carga, cuánto tarda y qué falla.",
+      "purpose": "El panel Network registra actividad de red mientras está abierto. La tabla muestra recursos, estado, tipo, iniciador, tamaño y tiempo, según el navegador. Podés filtrar por Fetch/XHR, JS, CSS, Img u otros tipos, y recargar la página para capturar la carga inicial.",
+      "syntax": "fetch(\"../data/python.json\").then(response => {\n  console.log(\"Estado HTTP:\", response.status);\n  return response.json();\n}).then(console.log);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Identificar una solicitud Fetch",
+          "description": "Ejecutá una petición de lectura a un recurso público de tu aplicación.",
+          "code": "fetch(\"../data/java.json\").then(r => {\n  console.log(r.status, r.headers.get(\"content-type\"));\n  return r.json();\n}).then(data => console.log(data.articles.length));",
+          "explanation": "La petición aparece en Network como Fetch/XHR; la consola muestra el estado y un dato de la respuesta."
+        },
+        {
+          "title": "Comparar tipos de recursos",
+          "description": "Recargá la página con Network abierto y filtrá CSS, JS e imágenes.",
+          "code": "// Ver recursos cargados por Performance API:\nperformance.getEntriesByType(\"resource\").map(r => r.name)",
+          "explanation": "La API Resource Timing devuelve nombres y métricas de recursos, aunque DevTools muestra además encabezados y datos propios del protocolo."
+        }
+      ],
+      "exercise": "Abrí una página con Network, recargá y encontrá un archivo JSON, una hoja CSS y una imagen.",
+      "hint": "Network registra actividad observada mientras la herramienta está abierta; no es un historial completo de todas las sesiones anteriores.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Network",
+          "url": "https://developer.chrome.com/docs/devtools/network/overview/"
+        },
+        {
+          "label": "MDN: Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        }
+      ]
+    },
+    {
+      "id": "request-response",
+      "category": "devtools-network",
+      "title": "Inspeccionar headers, payload y response",
+      "level": "Intermedio",
+      "summary": "Encontrá los datos enviados y recibidos por una petición HTTP para diagnosticar diferencias entre cliente y servidor.",
+      "purpose": "Al seleccionar una solicitud, Network suele presentar encabezados de request y response, parámetros, payload, cookies, vista previa y cuerpo de respuesta. El detalle depende del tipo de petición y de las herramientas del navegador. Revisá el método, el estado, el tipo de contenido y el cuerpo real.",
+      "syntax": "fetch(\"https://jsonplaceholder.typicode.com/todos/1\")\n  .then(r => r.json())\n  .then(todo => console.log(todo));",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Leer una respuesta JSON",
+          "description": "Consultá una API de ejemplo y observá su cuerpo en la pestaña Response.",
+          "code": "fetch(\"https://jsonplaceholder.typicode.com/todos/1\")\n  .then(response => response.text())\n  .then(console.log);",
+          "explanation": "El método `text()` permite ver el cuerpo como cadena. En Network podés inspeccionar la misma respuesta sin cambiar tu código."
+        },
+        {
+          "title": "Enviar un payload JSON",
+          "description": "Mandá una petición POST de demostración y observá el request payload.",
+          "code": "fetch(\"https://jsonplaceholder.typicode.com/posts\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({ title: \"Prueba\", body: \"Hola\", userId: 1 })\n}).then(r => r.json()).then(console.log);",
+          "explanation": "`JSON.stringify` produce el cuerpo de texto; la cabecera declara el formato. El servicio de demostración no debe tratarse como almacenamiento persistente."
+        }
+      ],
+      "exercise": "Inspeccioná una petición GET y una POST. Identificá método, estado, headers y payload.",
+      "hint": "No publiques capturas de Network que incluyan cookies, tokens, encabezados de autorización o datos privados.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Network",
+          "url": "https://developer.chrome.com/docs/devtools/network/overview/"
+        },
+        {
+          "label": "MDN: Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        }
+      ]
+    },
+    {
+      "id": "errores-http-cors",
+      "category": "devtools-network",
+      "title": "Diagnosticar errores HTTP y CORS",
+      "level": "Intermedio",
+      "summary": "Separá errores de transporte, respuestas HTTP y bloqueos de seguridad entre orígenes.",
+      "purpose": "Un error de red, un estado HTTP 404/500 y un bloqueo CORS son situaciones diferentes. `fetch` normalmente resuelve su promesa cuando llega una respuesta HTTP incluso con estado 404; debés revisar `response.ok`. Un error CORS puede impedir que JavaScript lea la respuesta aunque el servidor haya recibido la petición.",
+      "syntax": "fetch(\"/api/elemento\")\n  .then(response => {\n    if (!response.ok) throw new Error(`HTTP ${response.status}`);\n    return response.json();\n  })\n  .catch(console.error);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Comprobar response.ok",
+          "description": "Rechazá explícitamente estados HTTP que no sean exitosos.",
+          "code": "fetch(\"/ruta-inexistente\")\n  .then(response => {\n    if (!response.ok) throw new Error(`HTTP ${response.status}`);\n    return response.text();\n  })\n  .catch(error => console.error(\"Solicitud fallida:\", error));",
+          "explanation": "`fetch` no rechaza automáticamente por 404 o 500. La comprobación transforma esos estados en un error que el código puede manejar."
+        },
+        {
+          "title": "Distinguir CORS",
+          "description": "Inspeccioná la solicitud y compará el origen de la página con el del servidor.",
+          "code": "console.log({\n  origenPagina: location.origin,\n  origenAPI: new URL(\"https://api.example.com\").origin\n});",
+          "explanation": "Los orígenes incluyen esquema, host y puerto. CORS es una política del navegador controlada principalmente por encabezados del servidor."
+        }
+      ],
+      "exercise": "Provocá una ruta 404 en un entorno de práctica y distinguí el estado HTTP del error de consola.",
+      "hint": "No intentes desactivar la seguridad del navegador como solución CORS. Configurá el servidor para autorizar el origen correcto.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Network",
+          "url": "https://developer.chrome.com/docs/devtools/network/overview/"
+        },
+        {
+          "label": "MDN: Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        }
+      ]
+    },
+    {
+      "id": "network-cache",
+      "category": "devtools-network",
+      "title": "Caché, recarga y throttling",
+      "level": "Intermedio",
+      "summary": "Compará solicitudes con y sin caché y simulá redes lentas para observar el comportamiento de la aplicación.",
+      "purpose": "Network permite deshabilitar caché mientras DevTools está abierto y aplicar condiciones de red simuladas. Una recarga normal, una recarga forzada y una navegación con caché deshabilitada pueden producir solicitudes distintas. El throttling es una simulación para pruebas, no una medición de la conexión real del usuario.",
+      "syntax": "// Ver recursos y tiempos del documento:\nperformance.getEntriesByType(\"resource\").map(({name, duration, transferSize}) => ({name, duration, transferSize}));",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Observar transferencia",
+          "description": "Compará métricas de recursos en una recarga con caché habitual y con Disable cache activado.",
+          "code": "performance.getEntriesByType(\"resource\").map(r => ({\n  name: r.name,\n  duration: r.duration,\n  transferSize: r.transferSize\n}));",
+          "explanation": "`transferSize` puede ser cero en ciertos escenarios de caché o por restricciones de timing; no lo interpretes como prueba única de que no hubo red."
+        },
+        {
+          "title": "Simular una red lenta",
+          "description": "Activá una condición de red en Network y recargá una página de prueba.",
+          "code": "// Este marcador registra el instante de tu prueba:\nconsole.timeStamp(\"inicio de prueba con red limitada\");",
+          "explanation": "La condición se configura desde la interfaz. El marcador puede ayudar a ubicar el momento en una grabación de rendimiento compatible."
+        }
+      ],
+      "exercise": "Compará una carga normal con una carga throttled y anotá diferencias en tiempo y recursos.",
+      "hint": "Desactivá throttling y Disable cache al terminar; estas opciones alteran las condiciones de prueba.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Network",
+          "url": "https://developer.chrome.com/docs/devtools/network/overview/"
+        },
+        {
+          "label": "MDN: Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        }
+      ]
+    },
+    {
+      "id": "panel-application-storage",
+      "category": "devtools-storage",
+      "title": "Panel Application y almacenamiento web",
+      "level": "Intermedio",
+      "summary": "Inspeccioná almacenamiento, Service Workers y datos asociados al origen de una aplicación.",
+      "purpose": "El panel Application de Chrome agrupa herramientas para almacenamiento, cookies, IndexedDB, Cache Storage, Service Workers y otros recursos del origen. Firefox distribuye funciones equivalentes en paneles como Storage. Los nombres y opciones dependen del navegador.",
+      "syntax": "localStorage.setItem(\"tema-demo\", \"oscuro\");\nconsole.log(localStorage.getItem(\"tema-demo\"));\n// Luego buscá el valor en Application > Local Storage",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Comprobar localStorage",
+          "description": "Guardá un dato no sensible y localizalo en DevTools.",
+          "code": "localStorage.setItem(\"preferencia-demo\", JSON.stringify({ tema: \"oscuro\" }));\nconsole.log(JSON.parse(localStorage.getItem(\"preferencia-demo\")));",
+          "explanation": "La consola usa el mismo almacenamiento de origen que la página. El panel permite revisar claves y valores."
+        },
+        {
+          "title": "Eliminar el dato de práctica",
+          "description": "Borrá únicamente la clave creada durante el ejercicio.",
+          "code": "localStorage.removeItem(\"preferencia-demo\");\nconsole.log(localStorage.getItem(\"preferencia-demo\"));",
+          "explanation": "`removeItem` elimina una clave específica. Evitá `clear()` si no querés borrar todas las claves del origen."
+        }
+      ],
+      "exercise": "Abrí Application o Storage y encontrá localStorage, IndexedDB, Cookies y Service Workers en una página de práctica.",
+      "hint": "No expongas valores de almacenamiento en capturas ni compartas datos de sesión.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Application",
+          "url": "https://developer.chrome.com/docs/devtools/application/"
+        },
+        {
+          "label": "MDN: Storage",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage"
+        }
+      ]
+    },
+    {
+      "id": "cookies-sessions",
+      "category": "devtools-storage",
+      "title": "Cookies, sesiones y datos de origen",
+      "level": "Intermedio",
+      "summary": "Entendé qué información puede guardarse en cookies y cómo inspeccionar sus atributos.",
+      "purpose": "Las cookies pueden incluir atributos como Domain, Path, Expires/Max-Age, Secure, HttpOnly y SameSite. JavaScript no puede leer cookies marcadas HttpOnly, aunque el navegador las envíe según las reglas aplicables. Las sesiones también pueden usar almacenamiento del servidor o tokens con otros mecanismos.",
+      "syntax": "document.cookie\n// Consultar cookies accesibles desde JavaScript",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Leer cookies accesibles",
+          "description": "Inspeccioná la cadena de cookies visible para el documento.",
+          "code": "console.log(document.cookie);",
+          "explanation": "`document.cookie` expone solo las cookies accesibles al contexto; no muestra las cookies HttpOnly y respeta políticas de origen y ruta."
+        },
+        {
+          "title": "Crear una cookie de laboratorio",
+          "description": "Establecé una cookie no sensible de corta duración en una página propia.",
+          "code": "document.cookie = \"demo=activo; Max-Age=300; Path=/; SameSite=Lax\";\nconsole.log(document.cookie);",
+          "explanation": "La cookie se crea para el host y ruta correspondientes. En entornos HTTPS, `Secure` restringe su envío a conexiones seguras."
+        }
+      ],
+      "exercise": "Inspeccioná en DevTools una cookie de prueba y anotá Domain, Path, SameSite y si tiene HttpOnly/Secure.",
+      "hint": "No guardes contraseñas ni tokens de sesión en cookies accesibles a JavaScript. Elegí atributos seguros del lado servidor.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Application",
+          "url": "https://developer.chrome.com/docs/devtools/application/"
+        },
+        {
+          "label": "MDN: Storage",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage"
+        }
+      ]
+    },
+    {
+      "id": "indexeddb-inspector",
+      "category": "devtools-storage",
+      "title": "Inspeccionar IndexedDB",
+      "level": "Intermedio",
+      "summary": "Revisá bases de datos locales y registros persistentes usados por aplicaciones web.",
+      "purpose": "IndexedDB es una API de almacenamiento estructurado del navegador. DevTools permite abrir bases, object stores, índices y registros. La interfaz es útil para inspección; los datos y su esquema dependen del código de la aplicación y del origen actual.",
+      "syntax": "const request = indexedDB.open(\"demo-devtools\", 1);\nrequest.onupgradeneeded = () => {\n  request.result.createObjectStore(\"notas\", { keyPath: \"id\", autoIncrement: true });\n};\nrequest.onsuccess = () => console.log(\"DB lista\");",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Crear una base de práctica",
+          "description": "Abrí una base de demostración y comprobá su creación.",
+          "code": "const openRequest = indexedDB.open(\"webdev-inspector\", 1);\nopenRequest.onupgradeneeded = event => {\n  event.target.result.createObjectStore(\"items\", { keyPath: \"id\" });\n};\nopenRequest.onsuccess = () => console.log(\"Base creada\");",
+          "explanation": "El evento `upgradeneeded` permite definir el esquema inicial. Luego podés verla en Application > IndexedDB."
+        },
+        {
+          "title": "Eliminar base de prueba",
+          "description": "Cerrá conexiones antes de solicitar que se elimine la base de laboratorio.",
+          "code": "indexedDB.deleteDatabase(\"webdev-inspector\").onsuccess = () => {\n  console.log(\"Solicitud de borrado completada\");\n};",
+          "explanation": "La eliminación puede quedar bloqueada si otras pestañas mantienen conexiones abiertas."
+        }
+      ],
+      "exercise": "Creá una base de prueba con un object store y localizá el nombre y sus registros desde DevTools.",
+      "hint": "No borres bases de producción desde DevTools sin respaldo y sin entender qué datos dependen de ellas.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Application",
+          "url": "https://developer.chrome.com/docs/devtools/application/"
+        },
+        {
+          "label": "MDN: Storage",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage"
+        }
+      ]
+    },
+    {
+      "id": "service-workers-cache",
+      "category": "devtools-storage",
+      "title": "Service Workers y Cache Storage",
+      "level": "Intermedio",
+      "summary": "Investigá cómo una PWA intercepta solicitudes y conserva recursos para trabajar sin conexión.",
+      "purpose": "Un Service Worker corre en un contexto separado y puede interceptar eventos fetch, entre otras tareas. DevTools permite revisar su estado, ciclo de vida, mensajes y cachés asociados. Un worker instalado no garantiza que todos los recursos estén almacenados ni que la estrategia offline sea correcta.",
+      "syntax": "navigator.serviceWorker.getRegistrations().then(registrations => {\n  console.table(registrations.map(r => ({ scope: r.scope, active: Boolean(r.active) })));\n});",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Listar registros",
+          "description": "Consultá Service Workers registrados para el origen actual.",
+          "code": "navigator.serviceWorker.getRegistrations().then(registrations => {\n  registrations.forEach(registration => console.log(registration.scope, registration.active?.state));\n});",
+          "explanation": "La API devuelve registros del origen actual. La pestaña Application permite inspeccionar cada uno con mayor detalle."
+        },
+        {
+          "title": "Listar cachés",
+          "description": "Consultá los nombres de Cache Storage sin borrar contenido.",
+          "code": "caches.keys().then(names => console.log(\"Cachés:\", names));",
+          "explanation": "`caches.keys()` devuelve nombres disponibles en el origen. La inspección no modifica los recursos guardados."
+        }
+      ],
+      "exercise": "Revisá un Service Worker y sus cachés. Determiná qué archivo se precarga y qué pasa cuando se actualiza la versión.",
+      "hint": "No uses los botones de unregister o clear storage como primer paso para depurar: podés perder evidencia y estado local.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Application",
+          "url": "https://developer.chrome.com/docs/devtools/application/"
+        },
+        {
+          "label": "MDN: Storage",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage"
+        }
+      ]
+    },
+    {
+      "id": "performance-panel",
+      "category": "devtools-quality",
+      "title": "Panel Performance y perfiles de ejecución",
+      "level": "Avanzado",
+      "summary": "Registrá una interacción para localizar tareas largas, trabajo de scripting y problemas de renderizado.",
+      "purpose": "El panel Performance graba una sesión y muestra una línea de tiempo con tareas, scripting, estilos, layout, pintura y otras actividades. Conviene reproducir un caso concreto y comparar perfiles bajo condiciones similares. Instrumentar la página puede afectar las mediciones.",
+      "syntax": "performance.mark(\"inicio-calculo\");\nconst suma = Array.from({ length: 10000 }, (_, i) => i).reduce((a, b) => a + b, 0);\nperformance.mark(\"fin-calculo\");\nperformance.measure(\"calculo\", \"inicio-calculo\", \"fin-calculo\");\nconsole.log(performance.getEntriesByName(\"calculo\"));",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Marcar una operación",
+          "description": "Medí un bloque de trabajo con User Timing API y revisalo en Performance.",
+          "code": "performance.mark(\"render-start\");\ndocument.querySelector(\"#app\")?.classList.add(\"ready\");\nperformance.mark(\"render-end\");\nperformance.measure(\"cambio-clase\", \"render-start\", \"render-end\");",
+          "explanation": "Las marcas y medidas personalizadas aparecen en herramientas compatibles y permiten vincular el tiempo con una operación de tu código."
+        },
+        {
+          "title": "Grabar una interacción",
+          "description": "Registrá un perfil mientras repetís una acción lenta de la aplicación.",
+          "code": "// Limpiá marcas previas antes de una nueva medición:\nperformance.clearMarks();\nperformance.clearMeasures();",
+          "explanation": "La grabación principal se inicia desde DevTools. Las marcas permiten anotar partes concretas del trabajo observado."
+        }
+      ],
+      "exercise": "Elegí una interacción lenta reproducible, grabala con Performance e identificá una tarea larga y su archivo de origen.",
+      "hint": "No optimices por intuición a partir de un solo perfil. Repetí y medí con la misma secuencia.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    },
+    {
+      "id": "memory-panel",
+      "category": "devtools-quality",
+      "title": "Panel Memory y detección de fugas",
+      "level": "Avanzado",
+      "summary": "Buscá objetos que permanecen en memoria cuando ya no deberían ser necesarios.",
+      "purpose": "El panel Memory permite tomar heap snapshots, comparar instantáneas y detectar objetos retenidos. Una fuga de memoria suele aparecer cuando referencias persistentes impiden liberar objetos que ya no se necesitan. Tomar una instantánea puede pausar o ralentizar temporalmente la aplicación.",
+      "syntax": "const datos = Array.from({ length: 1000 }, (_, id) => ({ id, valor: `item-${id}` }));\nwindow.demoRetencion = datos;\nconsole.log(window.demoRetencion.length);",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Crear una referencia retenida",
+          "description": "Guardá una colección en una propiedad global para que sea fácil localizarla durante la prueba.",
+          "code": "window.demoRetencion = Array.from({ length: 500 }, (_, id) => ({ id }));",
+          "explanation": "La propiedad global mantiene una referencia a la colección y puede ayudar a observar cómo aparece en una instantánea."
+        },
+        {
+          "title": "Liberar una referencia",
+          "description": "Eliminá la referencia global y tomá otra instantánea para comparar.",
+          "code": "delete window.demoRetencion;\nconsole.log(\"Referencia global eliminada\");",
+          "explanation": "Quitar una referencia puede permitir que el recolector libere memoria, aunque el momento exacto depende del motor."
+        }
+      ],
+      "exercise": "Tomá dos heap snapshots: uno con una referencia de prueba y otro después de quitarla. Compará los objetos retenidos.",
+      "hint": "No confundas el tamaño de una instantánea con el consumo total real del proceso o del dispositivo.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    },
+    {
+      "id": "responsive-mode",
+      "category": "devtools-quality",
+      "title": "Modo responsive y emulación de dispositivos",
+      "level": "Intermedio",
+      "summary": "Probá el diseño con distintos anchos, densidades y condiciones de dispositivo.",
+      "purpose": "El modo Device Toolbar permite emular dimensiones de viewport, orientación y ciertas capacidades del dispositivo. No reproduce cada detalle de un teléfono físico: siempre conviene validar en dispositivos y navegadores reales, especialmente para entrada táctil, rendimiento y comportamiento del sistema.",
+      "syntax": "console.log({\n  width: window.innerWidth,\n  height: window.innerHeight,\n  dpr: window.devicePixelRatio\n});",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Medir viewport",
+          "description": "Registrá ancho, alto y densidad de píxeles del contexto actual.",
+          "code": "window.addEventListener(\"resize\", () => {\n  console.log(\"Viewport:\", window.innerWidth, window.innerHeight);\n});",
+          "explanation": "Los valores cambian al modificar el viewport o redimensionar la ventana. Quitá el listener al terminar la práctica si ya no lo necesitás."
+        },
+        {
+          "title": "Comprobar una media query",
+          "description": "Consultá si se cumple un breakpoint de tu CSS.",
+          "code": "window.matchMedia(\"(max-width: 760px)\").matches",
+          "explanation": "`matchMedia` evalúa una media query y devuelve si coincide con el entorno actual."
+        }
+      ],
+      "exercise": "Probá la página a 360, 768 y 1280 píxeles y anotá dónde cambia la distribución de columnas.",
+      "hint": "La emulación es una aproximación. Revisá también scroll, foco, teclado y controles táctiles en un dispositivo real.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    },
+    {
+      "id": "accessibility-inspector",
+      "category": "devtools-quality",
+      "title": "Árbol de accesibilidad e inspección semántica",
+      "level": "Avanzado",
+      "summary": "Comprobá cómo la estructura y los nombres accesibles se exponen a tecnologías de asistencia.",
+      "purpose": "DevTools ofrece vistas de accesibilidad o del árbol de accesibilidad. Permiten inspeccionar roles, nombres y propiedades que el navegador expone. La vista no sustituye pruebas con teclado ni lectores de pantalla; la accesibilidad requiere semántica, interacción y contenido comprensible.",
+      "syntax": "const boton = document.querySelector(\"button\");\nconsole.log({\n  texto: boton?.textContent,\n  ariaLabel: boton?.getAttribute(\"aria-label\"),\n  disabled: boton?.disabled\n});",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Revisar un botón",
+          "description": "Seleccioná un botón y compará su texto visible con su nombre accesible configurado.",
+          "code": "const enlace = document.querySelector(\"a\");\nconsole.log({ texto: enlace?.textContent?.trim(), href: enlace?.getAttribute(\"href\") });",
+          "explanation": "La consola permite revisar atributos, pero el nombre accesible final depende de reglas de cómputo y del árbol del navegador."
+        },
+        {
+          "title": "Comprobar controles",
+          "description": "Buscá entradas sin etiqueta y revisalas en el inspector.",
+          "code": "[...document.querySelectorAll(\"input, select, textarea\")].map(el => ({\n  type: el.type,\n  id: el.id,\n  labels: el.labels?.length ?? 0\n}));",
+          "explanation": "La colección ayuda a encontrar controles sin etiquetas asociadas; revisá cada caso con el inspector de accesibilidad."
+        }
+      ],
+      "exercise": "Localizá un botón, una entrada y un enlace y revisá roles/nombres en la vista de accesibilidad del navegador.",
+      "hint": "No tomes la ausencia de errores automáticos como prueba de accesibilidad. Probá navegación por teclado y lector de pantalla.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    },
+    {
+      "id": "issues-security",
+      "category": "devtools-quality",
+      "title": "Issues, seguridad y errores del navegador",
+      "level": "Avanzado",
+      "summary": "Identificá avisos sobre cookies, contenido mixto, políticas y problemas de compatibilidad.",
+      "purpose": "Los paneles Issues y Privacy/Security pueden agrupar problemas detectados por el navegador, como cookies con atributos incorrectos, contenido mixto o detalles de seguridad de la conexión. Los mensajes ayudan a investigar; no todos implican una vulnerabilidad explotable, y su severidad depende del contexto.",
+      "syntax": "console.log({ protocol: location.protocol, origin: location.origin });\n// Revisá Issues y Security desde DevTools",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Comprobar el contexto",
+          "description": "Consultá protocolo y origen de la página abierta.",
+          "code": "console.table({\n  protocol: location.protocol,\n  hostname: location.hostname,\n  secureContext: window.isSecureContext\n});",
+          "explanation": "`isSecureContext` informa si el documento se considera contexto seguro según las reglas del navegador."
+        },
+        {
+          "title": "Revisar errores reportados",
+          "description": "Abrí Issues o Security y seguí un aviso hasta su recurso o encabezado relacionado.",
+          "code": "// Consultá si la página expone una política CSP mediante meta:\n[...document.querySelectorAll('meta[http-equiv=\"Content-Security-Policy\"]')]\n  .map(meta => meta.content);",
+          "explanation": "Una política puede establecerse mediante encabezados HTTP o meta tags permitidos. La consulta no ve todos los ajustes del servidor."
+        }
+      ],
+      "exercise": "Inspeccioná una página propia y clasificá un aviso como información, advertencia o problema que requiere corrección.",
+      "hint": "No copies excepciones de seguridad sin entender su alcance. Corrigí las cabeceras y la configuración del servidor.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    },
+    {
+      "id": "source-maps",
+      "category": "devtools-quality",
+      "title": "Source maps y código minificado",
+      "level": "Avanzado",
+      "summary": "Relacioná archivos transformados o minificados con las fuentes originales del proyecto.",
+      "purpose": "Los source maps conectan código generado —por ejemplo, bundles minificados— con archivos fuente originales. Cuando están disponibles y bien configurados, DevTools puede mostrar archivos legibles y líneas originales. No todos los entornos publican mapas, y exponerlos en producción puede revelar detalles del código fuente.",
+      "syntax": "//# sourceURL=prueba-console.js\nfunction sumar(a, b) { return a + b; }\nconsole.log(sumar(2, 3));",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Nombrar código evaluado",
+          "description": "Usá un sourceURL para identificar un fragmento ejecutado dinámicamente en DevTools compatibles.",
+          "code": "console.log(\"Buscá en Sources el archivo virtual prueba-console.js\");",
+          "explanation": "El comentario `sourceURL` puede asignar un nombre a scripts evaluados dinámicamente en herramientas compatibles."
+        },
+        {
+          "title": "Localizar un mapa de origen",
+          "description": "Inspeccioná la referencia a un archivo `.map` al final de un bundle de desarrollo.",
+          "code": "// Ejemplo de referencia al final de un bundle:\n//# sourceMappingURL=app.js.map",
+          "explanation": "La referencia indica la ubicación del mapa. DevTools necesita que el archivo sea accesible y válido."
+        }
+      ],
+      "exercise": "Abrí un proyecto compilado, encontrá el bundle y comprobá si DevTools muestra los archivos originales.",
+      "hint": "No asumas que un mapa está disponible solo porque el bundler puede generarlo; revisá la configuración de publicación.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    },
+    {
+      "id": "coverage-tools",
+      "category": "devtools-quality",
+      "title": "Coverage y recursos no utilizados",
+      "level": "Avanzado",
+      "summary": "Medí qué partes de CSS y JavaScript se ejecutaron durante un recorrido concreto.",
+      "purpose": "La herramienta Coverage de Chrome registra la cobertura de uso de recursos durante una sesión. Permite detectar fragmentos no utilizados en el escenario observado, pero un recorrido no cubre todas las rutas posibles. Antes de eliminar código, considerá otras páginas, estados y funcionalidades.",
+      "syntax": "// Consultá scripts cargados por la página:\n[...document.scripts].map(script => script.src || \"inline\")",
+      "syntaxLanguage": "javascript",
+      "extension": "js",
+      "examples": [
+        {
+          "title": "Inventariar scripts",
+          "description": "Listá los scripts presentes antes de iniciar la medición.",
+          "code": "[...document.scripts].map((script, index) => ({\n  index,\n  src: script.src || \"inline\",\n  type: script.type || \"classic\"\n}));",
+          "explanation": "Este inventario muestra scripts cargados, no cuánto código de cada archivo se usa realmente."
+        },
+        {
+          "title": "Medir una interacción",
+          "description": "Abrí Coverage, iniciá la captura, realizá un recorrido y detenela.",
+          "code": "// Marca el comienzo de la interacción para tener una referencia:\nconsole.timeStamp(\"inicio del recorrido Coverage\");",
+          "explanation": "La medición se inicia desde DevTools. La marca ayuda a ubicar el escenario si también se registra un perfil de rendimiento."
+        }
+      ],
+      "exercise": "Registrá Coverage al abrir una página y al completar una función secundaria; compará recursos y rangos sin ejecutar.",
+      "hint": "No elimines código basándote en un único recorrido de cobertura. Repetí para casos principales y secundarios.",
+      "bestPractices": [
+        "Usá mensajes claros y etiquetas que indiquen qué dato o etapa estás observando.",
+        "Quitá logs temporales, breakpoints y marcadores una vez resuelto el problema.",
+        "Reproducí el mismo escenario al comparar Network, Performance o Memory.",
+        "No compartas capturas que expongan cookies, tokens, datos personales o contenido privado."
+      ],
+      "commonMistakes": [
+        "Confundir métodos de la API `console` con funciones auxiliares específicas de un navegador.",
+        "Interpretar un estado HTTP 404/500 como rechazo automático de `fetch`.",
+        "Suponer que los cambios hechos desde DevTools se guardaron en los archivos del proyecto.",
+        "Tomar una medición aislada como prueba definitiva de rendimiento o memoria."
+      ],
+      "resources": [
+        {
+          "label": "Chrome DevTools: Performance",
+          "url": "https://developer.chrome.com/docs/devtools/performance/"
+        },
+        {
+          "label": "Chrome DevTools: Memory",
+          "url": "https://developer.chrome.com/docs/devtools/memory/"
+        }
+      ]
+    }
+  ]
+}
