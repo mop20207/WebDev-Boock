@@ -85,6 +85,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch(new URL("data/tools.json", root).href, { cache: "no-store" });
     if (!response.ok) throw new Error("No se pudo cargar data/tools.json (HTTP " + response.status + ").");
     const database = await response.json();
+
+    // Las bibliotecas agregadas al catálogo también aparecen en la navegación
+    // lateral sin tener que duplicar enlaces en cada plantilla HTML.
+    const mainNav = document.querySelector(".main-nav");
+    if (mainNav) {
+      const dynamicTools = [
+        { id: "apis", label: "APIs y comunicación web", symbol: "⇄" },
+        { id: "testing", label: "Testing", symbol: "✓" }
+      ];
+      dynamicTools.forEach(item => {
+        if (mainNav.querySelector('[data-tool-link="' + item.id + '"]')) return;
+        const link = node("a", "nav-link");
+        link.dataset.toolLink = item.id;
+        link.href = urlFor("tools.html", { tool: item.id });
+        link.append(node("span", "nav-icon", item.symbol), node("span", "", item.label));
+        mainNav.append(link);
+      });
+    }
+
     const tool = database.tools?.find(item => item.id === toolId);
 
     if (!tool) {
