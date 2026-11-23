@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v14";
+const CACHE_VERSION = "webdev-book-v15";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
