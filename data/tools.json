@@ -1,7 +1,7 @@
 {
-  "version": 25,
+  "version": 26,
   "articleCount": 387,
-  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías. Cada ficha tecnológica incluye muestras de código, entorno de ejecución, compatibilidad, ventajas, limitaciones y tecnologías complementarias. La tercera tanda profundiza SQL/PostgreSQL y MongoDB, comparando modelado relacional y documental con ejemplos, parámetros y decisiones de diseño.",
+  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías. Cada ficha tecnológica incluye muestras de código, entorno de ejecución, compatibilidad, ventajas, limitaciones y tecnologías complementarias. La tercera tanda profundiza SQL/PostgreSQL y MongoDB, comparando modelado relacional y documental con ejemplos, parámetros y decisiones de diseño. La cuarta tanda profundiza TypeScript y Next.js con contratos avanzados, composición servidor/cliente, datos, caché, acciones, APIs y seguridad.",
   "tools": [
     {
       "id": "terminal",
@@ -11844,16 +11844,35 @@
           ],
           "exercise": "Modelá el estado de una descarga con una unión de al menos cuatro estados y creá una función que reciba solo esos valores.",
           "hint": "Uniones describen alternativas; intersecciones combinan requisitos. No son operadores para sumar o mezclar objetos en runtime.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "|",
+              "description": "Construye una unión: el valor puede cumplir cualquiera de sus alternativas."
+            },
+            {
+              "name": "&",
+              "description": "Construye una intersección: el valor debe cumplir todos los contratos."
+            },
+            {
+              "name": "as const",
+              "description": "Conserva valores como tipos literales y crea propiedades readonly en el tipo inferido."
+            },
+            {
+              "name": "never",
+              "description": "Representa un valor imposible y sirve para comprobar exhaustividad."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Usá una propiedad discriminadora común para variantes relacionadas.",
+            "Preferí uniones de literales para estados finitos que también se serializan por JSON.",
+            "Comprobá exhaustividad con never en switches importantes.",
+            "No agregues variantes imposibles mediante combinaciones de booleanos independientes."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Usar `|` como si combinara todos los requisitos; eso lo hace `&`.",
+            "Confundir un tipo literal con un enum de runtime.",
+            "Asumir que una unión valida automáticamente una respuesta JSON.",
+            "Usar varios booleanos que permiten estados contradictorios."
           ],
           "resources": [
             {
@@ -11866,10 +11885,39 @@
             }
           ],
           "related": [
-            "ts-any-unknown-never",
-            "ts-tipos-objetos",
-            "ts-uniones-discriminadas"
-          ]
+            "ts-narrowing",
+            "ts-uniones-discriminadas",
+            "nextjs-validacion-datos"
+          ],
+          "deepDive": {
+            "model": "Una unión `A | B` significa que un valor puede pertenecer a cualquiera de sus alternativas; el código solo puede usar operaciones válidas para todas ellas hasta que una comprobación reduzca las posibilidades. Una intersección `A & B` exige que un valor cumpla ambos contratos. Los tipos literales restringen un tipo a valores exactos, por ejemplo estados conocidos de un flujo. Estas herramientas describen posibilidades estáticas: no crean validación en tiempo de ejecución.",
+            "flow": [
+              [
+                "Definir alternativas",
+                "La unión enumera los tipos o valores que una variable puede representar."
+              ],
+              [
+                "Comprobar la variante",
+                "typeof, in, igualdad de literales o un discriminador permiten identificar una alternativa."
+              ],
+              [
+                "Usar la intersección",
+                "A & B combina requisitos y hace que el objeto deba cumplir ambos contratos."
+              ],
+              [
+                "Exhaustividad",
+                "Un switch sobre un discriminador puede comprobar que todos los estados estén contemplados."
+              ]
+            ],
+            "decisions": [
+              "Preferí uniones de literales para estados finitos de una aplicación; son fáciles de leer, serializar y validar.",
+              "Usá una propiedad discriminadora común, como kind o status, cuando las variantes tengan estructuras diferentes.",
+              "Usá intersecciones para combinar capacidades compatibles; si dos tipos exigen propiedades homónimas incompatibles, el resultado puede ser imposible.",
+              "Para estados mutuamente excluyentes, evitá varios booleanos independientes que permitan combinaciones inválidas."
+            ],
+            "debugging": "Si no podés acceder a una propiedad de una unión, estrechá el tipo antes de utilizarla. Si una intersección se vuelve never, inspeccioná propiedades compartidas con tipos incompatibles. Si un estado inválido sigue llegando desde JSON, recordá que la unión no valida datos externos: comprobá el valor durante el runtime."
+          },
+          "whenToUse": "Usá uniones para representar alternativas conocidas, resultados de operación, roles o estados de UI. Las intersecciones sirven para combinar capacidades y contratos; los literales restringen valores permitidos."
         },
         {
           "id": "ts-tipos-objetos",
@@ -11952,16 +12000,35 @@
           ],
           "exercise": "Creá alias para Dirección, Cliente y EstadoCliente. Usalos en una función que reciba un cliente y devuelva su nombre y ciudad.",
           "hint": "Elegí nombres de dominio claros. Evitá alias crípticos que agregan una capa de lectura innecesaria.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "type",
+              "description": "Declara un alias para una expresión de tipo."
+            },
+            {
+              "name": "|",
+              "description": "Combina alternativas de tipos."
+            },
+            {
+              "name": "&",
+              "description": "Combina requisitos de tipos."
+            },
+            {
+              "name": "keyof",
+              "description": "Obtiene la unión de claves conocidas de un tipo."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Creá alias con nombres de dominio comprensibles.",
+            "Reutilizá contratos compartidos mediante módulos de tipos.",
+            "Elegí interface para contratos de objetos extensibles y type para composiciones más generales.",
+            "Recordá que el alias desaparece en JavaScript y no valida datos."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Creer que type crea una clase o constructor.",
+            "Usar aserciones para fingir que datos externos cumplen el alias.",
+            "Duplicar tipos en varios archivos y dejar que diverjan.",
+            "Crear alias opacos con nombres genéricos como Data o Info."
           ],
           "resources": [
             {
@@ -11970,10 +12037,39 @@
             }
           ],
           "related": [
-            "ts-tipos-objetos",
             "ts-interfaces",
-            "ts-uniones-literales"
-          ]
+            "ts-utility-types",
+            "nextjs-route-handlers"
+          ],
+          "deepDive": {
+            "model": "`type` asigna un nombre a una expresión de tipo. Puede representar un objeto, unión, intersección, tupla, firma de función o tipo derivado. No crea una clase ni transforma un valor en ejecución. Los alias ayudan a expresar el vocabulario del dominio y a compartir contratos entre módulos. A diferencia de una interface, un alias puede describir tipos que no son solo objetos y no participa en declaration merging.",
+            "flow": [
+              [
+                "Describir una forma",
+                "Un alias puede nombrar la estructura de un objeto y sus propiedades."
+              ],
+              [
+                "Componer tipos",
+                "El alias puede combinar contratos con unión, intersección o tipos utilitarios."
+              ],
+              [
+                "Reutilizar el contrato",
+                "Funciones, parámetros y resultados usan el mismo nombre de tipo."
+              ],
+              [
+                "Comprobar estáticamente",
+                "TypeScript compara los valores asignados con la estructura definida; el alias desaparece al emitir JavaScript."
+              ]
+            ],
+            "decisions": [
+              "Usá alias para uniones, tipos primitivos nominales ligeros, tuplas, callbacks y transformaciones de tipos.",
+              "Preferí nombres de dominio como NovelaId o EstadoLectura cuando aclaren la intención, aunque el tipo subyacente siga siendo string.",
+              "No dupliques un mismo objeto en distintos archivos: importá el contrato compartido desde un módulo de tipos.",
+              "Elegí interface para contratos de objetos que necesitan extensión o declaration merging; elegí type cuando necesitás composición más amplia."
+            ],
+            "debugging": "Si un tipo alias parece no validar una respuesta del servidor, es normal: solo actúa durante la comprobación estática. Si los alias se vuelven difíciles de leer, separá transformaciones en nombres intermedios. Si hay incompatibilidad entre tipos estructuralmente parecidos, compará opcionales, readonly, uniones y tipos de retorno."
+          },
+          "whenToUse": "Usá alias cuando una estructura, una unión, una tupla o una firma se repite o representa un concepto del dominio. Son especialmente útiles para contratos compartidos entre frontend, backend y servicios."
         },
         {
           "id": "ts-interfaces",
@@ -12004,16 +12100,35 @@
           ],
           "exercise": "Definí una interfaz Publicacion y otra PublicacionDestacada que la extienda. Creá un objeto válido y comprobá qué ocurre al eliminar una propiedad.",
           "hint": "No uses interface o type como si fueran validadores de datos: ambos describen contratos durante el desarrollo.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "interface",
+              "description": "Declara un contrato estructural para objetos."
+            },
+            {
+              "name": "extends",
+              "description": "Extiende uno o más contratos compatibles."
+            },
+            {
+              "name": "implements",
+              "description": "Comprueba que una clase cumple una interface."
+            },
+            {
+              "name": "readonly",
+              "description": "Impide reasignar la propiedad desde el tipo, sin congelar runtime."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Definí contratos pequeños y orientados a capacidades.",
+            "Usá extends para reutilizar propiedades comunes cuando la relación sea clara.",
+            "Usá implements como comprobación estática de clases.",
+            "Evitá declaration merging accidental en nombres globales o paquetes compartidos."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Creer que interface existe en runtime.",
+            "Pensar que implements genera métodos automáticamente.",
+            "Usar declaration merging de forma accidental.",
+            "Confundir readonly estático con congelar profundamente un objeto."
           ],
           "resources": [
             {
@@ -12023,9 +12138,38 @@
           ],
           "related": [
             "ts-type-alias",
-            "ts-tipos-objetos",
-            "ts-clases-abstractas"
-          ]
+            "ts-generics-interfaces-classes",
+            "nextjs-data-fetching"
+          ],
+          "deepDive": {
+            "model": "Una interface define un contrato estructural para objetos. TypeScript comprueba si una variable o clase proporciona las propiedades y métodos requeridos. `extends` compone contratos de objetos; `implements` hace que el compilador compruebe una clase contra una interface. Ninguna de esas palabras clave genera validación automática ni código de instancia en JavaScript. Las interfaces también pueden ampliarse mediante declaration merging, una característica útil y que debe usarse con intención.",
+            "flow": [
+              [
+                "Declarar el contrato",
+                "La interface enumera propiedades, métodos, opcionales y modificadores readonly."
+              ],
+              [
+                "Componer estructuras",
+                "Otra interface puede extender una o varias interfaces compatibles."
+              ],
+              [
+                "Implementar una clase",
+                "implements pide al compilador que compruebe la forma de la instancia."
+              ],
+              [
+                "Consumir por estructura",
+                "Cualquier objeto compatible puede satisfacer el contrato sin heredar de una clase concreta."
+              ]
+            ],
+            "decisions": [
+              "Usá interfaces para contratos de objetos públicos, modelos de dominio y APIs que puedan extenderse.",
+              "Usá propiedades readonly para restringir reasignaciones desde el punto de vista del tipo; no es una congelación profunda del objeto en runtime.",
+              "Preferí composición de interfaces pequeñas cuando una clase reúne varias capacidades independientes.",
+              "Evitá utilizar implements como mecanismo de seguridad: los datos externos todavía necesitan validación."
+            ],
+            "debugging": "Si una clase no cumple implements, compará cada propiedad y firma de método, incluyendo parámetros opcionales y retorno. Si una propiedad falta, decidí si debe ser opcional o si el consumidor debe construirla. Si una interface cambia sin que el objeto se actualice, recordá que la comprobación depende del flujo TypeScript y no modifica datos reales."
+          },
+          "whenToUse": "Usá interfaces para describir contratos de objetos que otros módulos o consumidores pueden extender. Resultan útiles en modelos públicos, servicios, adaptadores y clases que deben cumplir una estructura."
         },
         {
           "id": "ts-funciones-tipadas",
@@ -12056,16 +12200,35 @@
           ],
           "exercise": "Escribí aplicarDescuento que reciba precio, porcentaje y un callback que informe el precio final. Tipá parámetros y retorno.",
           "hint": "No es obligatorio repetir un retorno inferible en cada función privada. Anotá especialmente los contratos que utiliza el resto del programa.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "param?: T",
+              "description": "Declara un parámetro opcional."
+            },
+            {
+              "name": "param = valor",
+              "description": "Declara un valor predeterminado."
+            },
+            {
+              "name": "...args: T[]",
+              "description": "Acepta un número variable de argumentos del tipo indicado."
+            },
+            {
+              "name": "(valor: T) => R",
+              "description": "Describe una firma de función con entrada T y retorno R."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Tipá explícitamente los límites públicos de módulos y servicios.",
+            "Aprovechá inferencia contextual para callbacks sencillos.",
+            "Diferenciá void, undefined y Promise<void> según el contrato real.",
+            "Validá datos en runtime aunque la función tenga parámetros tipados."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Usar any para evitar definir una firma de callback.",
+            "Confundir void con una promesa sin resultado.",
+            "Olvidar que async siempre devuelve Promise.",
+            "Anotar un tipo de retorno incompatible con alguna rama."
           ],
           "resources": [
             {
@@ -12074,10 +12237,39 @@
             }
           ],
           "related": [
-            "ts-inferencia",
-            "ts-parametros-overloads",
-            "ts-generics-funciones"
-          ]
+            "ts-generics-funciones",
+            "ts-async-api",
+            "nextjs-server-functions-actions"
+          ],
+          "deepDive": {
+            "model": "Una firma de función describe parámetros, opcionalidad, valores predeterminados, parámetros rest y retorno. TypeScript puede inferir tipos de callbacks a partir del contexto, pero conviene escribir el contrato en los límites públicos del sistema. La firma de retorno se comprueba estáticamente; si una función devuelve Promise<T>, el tipo T describe el resultado que llegará cuando la promesa se resuelva, no un valor inmediato.",
+            "flow": [
+              [
+                "Definir entradas",
+                "Los parámetros indican tipos, orden, opcionalidad y valores por defecto."
+              ],
+              [
+                "Inferir el contexto",
+                "Callbacks pasados a métodos tipados reciben tipos inferidos desde la firma esperada."
+              ],
+              [
+                "Comprobar el retorno",
+                "El compilador verifica que cada camino retorne un valor compatible o no retorne cuando el tipo lo permite."
+              ],
+              [
+                "Pasar funciones como valores",
+                "Una firma reutilizable expresa qué callbacks pueden intercambiarse sin depender del nombre de su implementación."
+              ]
+            ],
+            "decisions": [
+              "Anotá el retorno de funciones públicas o de dominio cuando facilite comprender el contrato; dejá inferir funciones locales simples cuando sea evidente.",
+              "Preferí callbacks con nombres de tipo reutilizables si se repiten en más de un módulo.",
+              "Usá `void` para callbacks cuyo consumidor ignora el valor devuelto; no significa que la función no pueda devolver nada en JavaScript.",
+              "En funciones async, anotá Promise<T> cuando el contrato resulte más claro y manejá rechazos por separado."
+            ],
+            "debugging": "Si un callback no coincide, revisá contravarianza/compatibilidad de parámetros, cantidad de argumentos y tipo de retorno. Si TypeScript infiere any, habilitá noImplicitAny y tipá el límite. Si una función declara un retorno pero no cubre todos los caminos, comprobá el flujo de control y los retornos tempranos."
+          },
+          "whenToUse": "Usá firmas tipadas en callbacks, servicios, validadores y APIs públicas para que el contrato de entradas y resultados sea visible y comprobable."
         },
         {
           "id": "ts-parametros-overloads",
@@ -12155,20 +12347,50 @@
               "description": "Descartá un tipo antes de llegar a la lógica principal.",
               "code": "function longitud(valor: string | string[] | null): number {\n  if (valor === null) return 0;\n  if (typeof valor === \"string\") return valor.length;\n  return valor.length;\n}",
               "explanation": "Después del primer retorno, valor ya no puede ser null. La segunda comprobación separa string de string[]."
+            },
+            {
+              "title": "Narrowing de una respuesta de API",
+              "description": "Comprobá que el valor recibido sea un objeto con el discriminador y los campos que necesita la interfaz.",
+              "language": "typescript",
+              "code": "type ApiResult =\n  | { ok: true; data: { id: number; titulo: string } }\n  | { ok: false; error: string };\n\nfunction resumir(resultado: ApiResult) {\n  if (!resultado.ok) {\n    return `Error: ${resultado.error}`;\n  }\n  return `#${resultado.data.id} ${resultado.data.titulo}`;\n}",
+              "explanation": "La propiedad ok discrimina las dos variantes. Este ejemplo muestra narrowing después de que los datos ya tienen el tipo ApiResult; si el origen es JSON externo, primero hay que validarlo en runtime."
             }
           ],
           "exercise": "Escribí mostrarDato que reciba string | number | Date | null y devuelva una descripción según el tipo.",
           "hint": "No fuerces un tipo con as cuando podés realizar una comprobación real que permita estrecharlo.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "typeof",
+              "description": "Comprueba tipos primitivos como string, number y boolean."
+            },
+            {
+              "name": "instanceof",
+              "description": "Comprueba una relación con una clase o constructor en runtime."
+            },
+            {
+              "name": "in",
+              "description": "Comprueba presencia de una propiedad en un objeto."
+            },
+            {
+              "name": "discriminador",
+              "description": "Propiedad literal compartida que distingue variantes de una unión."
+            },
+            {
+              "name": "never",
+              "description": "Permite comprobar que no quedan variantes sin manejar."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Usá discriminadores estables para uniones de objetos.",
+            "Preferí retornos tempranos para eliminar casos inválidos.",
+            "Evitá aserciones `as` cuando una comprobación real es posible.",
+            "Probá ramas de error y estados futuros al cambiar el dominio."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Usar `typeof null === 'object'` sin comprobar null.",
+            "Asumir que dos tipos de unión se distinguen solo por una propiedad opcional.",
+            "Silenciar errores con `as` en lugar de estrechar.",
+            "Dejar variantes nuevas sin manejar por usar un default amplio."
           ],
           "resources": [
             {
@@ -12177,10 +12399,39 @@
             }
           ],
           "related": [
-            "ts-any-unknown-never",
             "ts-type-guards",
-            "ts-uniones-discriminadas"
-          ]
+            "ts-uniones-discriminadas",
+            "nextjs-validacion-datos"
+          ],
+          "deepDive": {
+            "model": "Narrowing es el análisis de flujo de control mediante el cual TypeScript reduce una unión a un tipo más concreto después de una comprobación. `typeof`, `instanceof`, `in`, comparaciones de literales, checks de null y predicados personalizados pueden actuar como guards. El compilador analiza cada rama y también entiende cuándo una rama termina con return, throw o una condición imposible.",
+            "flow": [
+              [
+                "Partir de una unión",
+                "Una variable puede contener uno de varios tipos posibles."
+              ],
+              [
+                "Comprobar una condición",
+                "Una guard establece qué alternativa es posible en una rama del código."
+              ],
+              [
+                "Analizar la rama contraria",
+                "TypeScript elimina las alternativas incompatibles y puede continuar con un tipo más específico."
+              ],
+              [
+                "Usar el tipo refinado",
+                "Dentro de cada rama se permiten propiedades y métodos propios de la variante identificada."
+              ]
+            ],
+            "decisions": [
+              "Usá discriminated unions con una propiedad como kind para estados y mensajes de diferentes formas.",
+              "Preferí retornar temprano ante null o casos inválidos para simplificar el tipo del resto de la función.",
+              "Usá `in` cuando la presencia de una propiedad diferencie variantes; recordá que las propiedades opcionales pueden existir en más de una alternativa.",
+              "Usá `never` en un caso exhaustivo para que el compilador avise si una nueva variante queda sin tratar."
+            ],
+            "debugging": "Si una propiedad continúa inaccesible, verificá que la condición realmente discrimine todas las variantes. Si una comparación con null no estrecha como esperabas, revisá strictNullChecks. Si un nuevo estado no genera error en el switch, agregá una comprobación exhaustiva con never en lugar de un default que oculte variantes."
+          },
+          "whenToUse": "Usá narrowing cuando un valor pueda tener varias formas o incluir null/undefined y necesites operar con una variante específica de forma segura."
         },
         {
           "id": "ts-type-guards",
@@ -12207,20 +12458,46 @@
               "description": "Asegurate de comprobar todos los elementos.",
               "code": "function esArrayDeNumeros(valor: unknown): valor is number[] {\n  return Array.isArray(valor) && valor.every(item => typeof item === \"number\");\n}\n\nconst entrada: unknown = [2, 4, 6];\nif (esArrayDeNumeros(entrada)) {\n  console.log(entrada.reduce((total, n) => total + n, 0));\n}",
               "explanation": "Array.isArray comprueba que sea un array y every verifica cada elemento."
+            },
+            {
+              "title": "Guard para un parámetro de ruta",
+              "description": "Convertí un valor desconocido a un identificador válido sin confiar en la URL.",
+              "language": "typescript",
+              "code": "function esSlug(valor: unknown): valor is string {\n  return typeof valor === 'string'\n    && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(valor)\n    && valor.length <= 80;\n}\n\nfunction cargarRuta(valor: unknown) {\n  if (!esSlug(valor)) return null;\n  return `/novelas/${valor}`;\n}",
+              "explanation": "El guard valida tipo, formato y longitud. Un slug correcto no concede acceso al recurso: el backend todavía debe comprobar que existe y que el usuario tiene permiso para verlo."
             }
           ],
           "exercise": "Implementá esProducto(valor: unknown): valor is Producto y comprobá id, nombre y precio con datos correctos e incorrectos.",
           "hint": "Una anotación is no realiza validación por sí misma: la función debe comprobar las condiciones que declara.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "value is T",
+              "description": "Predicado de tipo que comunica el resultado de una comprobación."
+            },
+            {
+              "name": "unknown",
+              "description": "Tipo seguro para valores aún no validados."
+            },
+            {
+              "name": "Array.isArray",
+              "description": "Comprueba si un valor es un array en runtime."
+            },
+            {
+              "name": "every",
+              "description": "Comprueba que todos los elementos satisfagan un predicado."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Empezá los límites externos con unknown.",
+            "Comprobá null antes de acceder a propiedades.",
+            "Validá tipos y valores de las propiedades, no solamente su presencia.",
+            "Usá schemas runtime para objetos complejos y mensajes consistentes."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Escribir `valor is T` sin comprobar realmente T.",
+            "Comprobar solo `typeof valor === 'object'` y olvidar null.",
+            "Comprobar un array pero no sus elementos.",
+            "Suponer que el tipo de retorno del guard garantiza seguridad por sí solo."
           ],
           "resources": [
             {
@@ -12230,9 +12507,38 @@
           ],
           "related": [
             "ts-narrowing",
-            "ts-any-unknown-never",
-            "ts-async-api"
-          ]
+            "ts-async-api",
+            "nextjs-validacion-datos"
+          ],
+          "deepDive": {
+            "model": "Un type guard es una comprobación que permite usar un valor con un tipo más específico. TypeScript reconoce guards incorporados y también funciones que retornan un predicado como `valor is Usuario`. Un predicado personalizado no es una prueba formal: el compilador confía en su declaración, incluso si la implementación es incorrecta. Por eso la lógica del guard debe verificar realmente las propiedades que afirma.",
+            "flow": [
+              [
+                "Recibir un valor desconocido",
+                "La entrada externa se trata como unknown porque todavía no se conoce su estructura."
+              ],
+              [
+                "Comprobar requisitos",
+                "El guard revisa null, tipos primitivos, propiedades y, si corresponde, elementos de arrays."
+              ],
+              [
+                "Comunicar el predicado",
+                "La firma `valor is T` declara que true significa que el valor cumple T."
+              ],
+              [
+                "Usar el valor refinado",
+                "Después de la comprobación, el código puede usar las propiedades y métodos incluidos en T."
+              ]
+            ],
+            "decisions": [
+              "Usá unknown para datos externos y estrechá con guards antes de operar sobre ellos.",
+              "Para estructuras anidadas, preferí una biblioteca de esquemas como Zod cuando la validación manual se vuelve extensa.",
+              "Escribí guards como funciones puras y probá tanto casos válidos como valores malformados.",
+              "No uses `as T` para reemplazar una comprobación: una aserción solo silencia el sistema de tipos."
+            ],
+            "debugging": "Si un guard acepta un objeto incompleto, revisá cada propiedad y su tipo, no solo que exista. Si `typeof null === 'object'` causa una excepción, comprobá null por separado. Si un array contiene elementos incorrectos, Array.isArray no basta: validá cada elemento."
+          },
+          "whenToUse": "Usá guards al recibir datos desconocidos de JSON, formularios, almacenamiento, eventos o integraciones externas. Para esquemas complejos, combiná TypeScript con validación runtime."
         },
         {
           "id": "ts-uniones-discriminadas",
@@ -12427,16 +12733,35 @@
           ],
           "exercise": "Escribí envolver<T> que reciba un dato y devuelva { valor, creadoEn: Date }. Comprobá que conserva el tipo del dato.",
           "hint": "Empezá con un solo parámetro de tipo. Agregá genéricos cuando exista una relación real entre entradas y salidas.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "<T>",
+              "description": "Declara un parámetro de tipo genérico."
+            },
+            {
+              "name": "T[]",
+              "description": "Array de valores del tipo T."
+            },
+            {
+              "name": "Promise<T>",
+              "description": "Promesa cuyo valor resuelto tiene tipo T."
+            },
+            {
+              "name": "inferir T",
+              "description": "El compilador deduce el parámetro de tipo a partir de argumentos."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Relacioná T entre entrada y salida cuando esa relación importe.",
+            "Usá nombres de parámetros de tipo claros en APIs públicas.",
+            "Permití inferencia en los call sites cuando sea posible.",
+            "No agregues parámetros genéricos que no restringen ni relacionan valores."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Usar any en vez de conectar entrada y salida con T.",
+            "Agregar genéricos que no aportan información.",
+            "Asumir propiedades que T no garantiza.",
+            "Forzar argumentos genéricos cuando la inferencia ya es correcta."
           ],
           "resources": [
             {
@@ -12445,10 +12770,39 @@
             }
           ],
           "related": [
-            "ts-funciones-tipadas",
             "ts-generics-constraints",
-            "ts-generics-interfaces-classes"
-          ]
+            "ts-generics-interfaces-classes",
+            "ts-utility-types"
+          ],
+          "deepDive": {
+            "model": "Un genérico representa un tipo que se determina al invocar o instanciar una función. El parámetro de tipo conecta entradas y salidas para conservar la información concreta. Si una función recibe T y devuelve T, TypeScript puede inferir el mismo tipo en el resultado. Los genéricos no son `any`: el compilador conserva la identidad de T y comprueba que la implementación funcione para cualquier T permitido.",
+            "flow": [
+              [
+                "Declarar un parámetro de tipo",
+                "La función incorpora un identificador como T en su firma."
+              ],
+              [
+                "Inferir o indicar T",
+                "TypeScript obtiene el tipo desde los argumentos o el consumidor lo proporciona explícitamente."
+              ],
+              [
+                "Aplicar restricciones implícitas",
+                "El cuerpo solo puede realizar operaciones válidas para todos los tipos que podrían ser T."
+              ],
+              [
+                "Conservar la relación",
+                "La salida mantiene el tipo relacionado con la entrada, en vez de perder precisión como con any."
+              ]
+            ],
+            "decisions": [
+              "Usá genéricos cuando una función deba conservar una relación entre el tipo de entrada y el de salida.",
+              "Preferí una firma genérica simple antes que sobrecargas repetidas si una misma regla cubre varias entradas.",
+              "No agregues T cuando el tipo no aparece relacionado con argumentos o resultado; puede complicar la inferencia sin aportar seguridad.",
+              "Si la función necesita una propiedad de T, agregá una constraint explícita en vez de asumir que todos los tipos la tienen."
+            ],
+            "debugging": "Si el tipo inferido termina como unknown o una unión amplia, revisá qué información aportan los argumentos y si un literal se está ampliando. Si el cuerpo no puede acceder a una propiedad, añadí una restricción apropiada. Si el genérico no mejora la API, quizá una firma no genérica sea más clara."
+          },
+          "whenToUse": "Usá genéricos cuando una función reutilizable deba conservar la relación entre el tipo recibido y el resultado, como helpers de colecciones, respuestas o repositorios."
         },
         {
           "id": "ts-generics-constraints",
@@ -12475,20 +12829,46 @@
               "description": "El consumidor puede omitir el tipo si el valor por defecto es adecuado.",
               "code": "type Respuesta<T = string> = { datos: T; correcto: boolean };\n\nconst texto: Respuesta = { datos: \"Listo\", correcto: true };\nconst cantidad: Respuesta<number> = { datos: 3, correcto: true };",
               "explanation": "Respuesta sin argumento usa string. La segunda declaración elige number explícitamente."
+            },
+            {
+              "title": "Actualizar una propiedad manteniendo su tipo",
+              "description": "Usá keyof y T[K] para construir un helper que solo acepte claves válidas y el tipo de valor correspondiente.",
+              "language": "typescript",
+              "code": "function actualizar<T, K extends keyof T>(\n  objeto: T,\n  clave: K,\n  valor: T[K]\n): T {\n  return { ...objeto, [clave]: valor };\n}\n\nconst novela = { id: 7, titulo: 'Overlord', publicada: true };\nconst nueva = actualizar(novela, 'publicada', false);\n// actualizar(novela, 'id', 'siete'); // Error",
+              "explanation": "K se limita a las claves del objeto y T[K] obtiene el tipo de esa propiedad. La función devuelve una copia y evita mutar la referencia original."
             }
           ],
           "exercise": "Creá obtenerPropiedad que reciba un objeto y una clave válida de ese objeto. El retorno debe corresponder al tipo real de la propiedad.",
           "hint": "La restricción debe describir las capacidades que la implementación realmente utiliza.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "extends",
+              "description": "Limita los tipos que pueden utilizarse como argumento genérico."
+            },
+            {
+              "name": "keyof T",
+              "description": "Obtiene las claves válidas de T."
+            },
+            {
+              "name": "T[K]",
+              "description": "Obtiene el tipo asociado a una clave K de T."
+            },
+            {
+              "name": "T = Tipo",
+              "description": "Proporciona un valor por defecto para el parámetro genérico."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Exigí solo las propiedades necesarias mediante extends.",
+            "Usá keyof y T[K] para acceder a propiedades con tipo seguro.",
+            "Separá varias constraints complejas en nombres auxiliares.",
+            "Comprobá cómo se infiere K cuando se permiten claves múltiples."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Usar una constraint excesivamente amplia o innecesaria.",
+            "Confundir keyof T con las claves de un valor de runtime no validado.",
+            "Olvidar que K puede ser una unión de varias claves.",
+            "Usar T[K] sin asegurar que K pertenece a keyof T."
           ],
           "resources": [
             {
@@ -12502,8 +12882,38 @@
           ],
           "related": [
             "ts-generics-funciones",
-            "ts-keyof-typeof-indexed"
-          ]
+            "ts-keyof-typeof-indexed",
+            "ts-utility-types"
+          ],
+          "deepDive": {
+            "model": "Una constraint restringe los tipos que pueden ocupar un parámetro genérico. `T extends { length: number }` permite leer length porque todos los tipos admitidos deben tener esa propiedad. `keyof T` produce la unión de claves de T, y `T[K]` obtiene el tipo del valor correspondiente a una clave. Los valores predeterminados permiten omitir argumentos de tipo cuando existe una opción común.",
+            "flow": [
+              [
+                "Definir el universo permitido",
+                "La constraint `extends` declara qué estructura mínima debe tener T."
+              ],
+              [
+                "Relacionar claves y valores",
+                "keyof produce claves válidas y T[K] recupera el tipo exacto de una propiedad."
+              ],
+              [
+                "Inferir parámetros relacionados",
+                "El compilador determina T y K a partir de los argumentos compatibles."
+              ],
+              [
+                "Aplicar un valor por defecto",
+                "Un parámetro de tipo puede tener un default cuando el consumidor no proporciona uno."
+              ]
+            ],
+            "decisions": [
+              "Usá constraints mínimas: exigí solo las propiedades que la función realmente necesita.",
+              "Combiná K extends keyof T con T[K] para getters, setters y helpers de propiedades seguros.",
+              "Preferí inferencia cuando los argumentos revelan el tipo; usá defaults para llamadas genéricas comunes y simples.",
+              "No afirmes que una constraint valida datos externos: solo limita valores que ya pasan por el sistema de tipos."
+            ],
+            "debugging": "Si una clave no se acepta, comprobá que K esté limitado a keyof T y que el nombre exista realmente. Si una constraint es demasiado amplia o estrecha, revisá la estructura que requiere la función. Si T[K] resulta una unión inesperada, inspeccioná si K puede representar más de una clave."
+          },
+          "whenToUse": "Usá constraints cuando una función genérica necesita una capacidad mínima o relaciona claves con valores de un objeto sin perder el tipo concreto."
         },
         {
           "id": "ts-generics-interfaces-classes",
@@ -12646,16 +13056,39 @@
           ],
           "exercise": "Modelá una ficha de producto, ProductoPublico que exponga solo nombre y precio, y ProductoActualizacion con campos editables opcionales.",
           "hint": "Las utilidades transforman contratos estáticos, no modifican ni filtran objetos en runtime.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "Partial<T>",
+              "description": "Convierte todas las propiedades de T en opcionales."
+            },
+            {
+              "name": "Pick<T, K>",
+              "description": "Conserva un conjunto de propiedades."
+            },
+            {
+              "name": "Omit<T, K>",
+              "description": "Excluye un conjunto de propiedades del tipo."
+            },
+            {
+              "name": "Record<K, V>",
+              "description": "Construye un mapa cuyas claves son K y valores V."
+            },
+            {
+              "name": "ReturnType / Parameters",
+              "description": "Extrae el tipo de retorno o la tupla de parámetros de una función."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Usá Pick/Omit para contratos derivados y DTOs.",
+            "Usá Partial solo si el dominio permite actualizaciones parciales.",
+            "Usá Record para mapas exhaustivos de uniones finitas.",
+            "Construí objetos de salida explícitamente para excluir secretos en runtime."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Pensar que Omit filtra un objeto real.",
+            "Usar Partial para permitir cualquier cambio aunque el dominio prohíba algunos.",
+            "Exponer campos privados porque se devolvió el registro completo.",
+            "Encadenar utilidades sin nombres intermedios y volver ilegible el contrato."
           ],
           "resources": [
             {
@@ -12664,10 +13097,39 @@
             }
           ],
           "related": [
-            "ts-generics-interfaces-classes",
-            "ts-keyof-typeof-indexed",
-            "ts-mapped-conditional-types"
-          ]
+            "ts-type-alias",
+            "ts-interfaces",
+            "nextjs-validacion-datos"
+          ],
+          "deepDive": {
+            "model": "Los Utility Types son transformaciones del sistema de tipos que reutilizan estructuras existentes. Partial, Required, Readonly, Pick, Omit y Record modifican la forma de un contrato; ReturnType y Parameters extraen partes de una firma; Awaited resuelve el tipo esperado de una Promise. Funcionan durante la comprobación y no editan ni filtran el objeto real en ejecución.",
+            "flow": [
+              [
+                "Partir de un tipo fuente",
+                "Se define una interfaz o alias con el contrato principal."
+              ],
+              [
+                "Aplicar una transformación",
+                "Se eligen claves, se marcan como opcionales o se crea un mapa de valores."
+              ],
+              [
+                "Derivar una vista",
+                "El tipo resultante representa una forma específica para formularios, actualizaciones o respuestas."
+              ],
+              [
+                "Mantener la frontera runtime",
+                "La aplicación todavía debe construir, validar y filtrar objetos reales al enviar o recibir datos."
+              ]
+            ],
+            "decisions": [
+              "Usá Pick y Omit para definir DTOs claros, pero construí explícitamente el objeto que vas a enviar para no filtrar secretos.",
+              "Usá Partial para actualizaciones parciales solo cuando sus reglas de negocio permitan omitir campos.",
+              "Usá Record para mapas exhaustivos de claves conocidas, como etiquetas por estado.",
+              "Evitá encadenar transformaciones complejas sin nombres intermedios; un tipo legible es más mantenible que uno compacto pero críptico."
+            ],
+            "debugging": "Si un tipo utilitario parece no eliminar una propiedad de un objeto, recordá que solo transforma el tipo, no el valor. Si Record marca claves faltantes, comprobá que cubriste toda la unión. Si ReturnType o Parameters producen any, revisá la firma original y la sobrecarga seleccionada."
+          },
+          "whenToUse": "Usá Utility Types para crear contratos de lectura, actualización, formularios y DTOs a partir de estructuras existentes, evitando duplicar definiciones."
         },
         {
           "id": "ts-mapped-conditional-types",
@@ -13009,16 +13471,43 @@
           ],
           "exercise": "Creá un tsconfig.json para un proyecto Node pequeño. Explicá por qué elegiste module, moduleResolution, target, rootDir, outDir y strict.",
           "hint": "Copiá una configuración solo después de saber si el proyecto compila para navegador, Node, bundler o framework.",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "target",
+              "description": "Versión de JavaScript que se emite al compilar."
+            },
+            {
+              "name": "module",
+              "description": "Sistema de módulos esperado o emitido."
+            },
+            {
+              "name": "moduleResolution",
+              "description": "Estrategia para resolver imports."
+            },
+            {
+              "name": "strict",
+              "description": "Activa un conjunto de comprobaciones estrictas."
+            },
+            {
+              "name": "noEmit",
+              "description": "Evita que tsc genere archivos de salida."
+            },
+            {
+              "name": "include / exclude",
+              "description": "Controlan qué archivos entran en el proyecto."
+            }
+          ],
           "bestPractices": [
-            "Mantené activado strict y resolvé las incompatibilidades en vez de silenciarlas.",
-            "Usá inferencia cuando el tipo sea evidente y anotaciones cuando documenten un contrato importante.",
-            "Recordá que los tipos se eliminan al generar JavaScript: validá los datos externos durante la ejecución."
+            "Alineá module y moduleResolution con Node o con el bundler elegido.",
+            "Usá strict en proyectos nuevos y tratá sus errores como parte del contrato.",
+            "Separá configuración base de frontend y backend si sus runtimes difieren.",
+            "Usá noEmit cuando otra herramienta realiza la transformación."
           ],
           "commonMistakes": [
-            "Usar any para ocultar un tipo desconocido o un error que todavía no entendiste.",
-            "Creer que una anotación TypeScript valida automáticamente un dato recibido desde una API.",
-            "Forzar un tipo mediante as sin comprobar que el valor realmente cumple ese contrato."
+            "Copiar moduleResolution sin considerar el runtime real.",
+            "Creer que target instala polyfills para APIs faltantes.",
+            "Suponer que skipLibCheck ignora errores de la aplicación.",
+            "No incluir carpetas fuente por una configuración include/exclude incorrecta."
           ],
           "resources": [
             {
@@ -13031,10 +13520,39 @@
             }
           ],
           "related": [
-            "ts-instalacion-primer-proyecto",
             "ts-cli-compilation",
-            "ts-modulos-import-export"
-          ]
+            "ts-react-node",
+            "nextjs-typescript"
+          ],
+          "deepDive": {
+            "model": "tsconfig.json define el proyecto de comprobación y emisión de TypeScript. El archivo establece qué fuentes forman parte del proyecto, qué módulos y sintaxis se esperan, dónde se generan archivos y qué verificaciones estrictas aplicar. `target` determina la versión de JavaScript emitida cuando TypeScript transpila; `module` y `moduleResolution` deben coincidir con Node o con el bundler. Algunos entornos modernos solo usan TypeScript para comprobar tipos y dejan la transformación a Vite, Next.js u otra herramienta.",
+            "flow": [
+              [
+                "Localizar el proyecto",
+                "tsc busca tsconfig.json y usa include, exclude y files para determinar archivos."
+              ],
+              [
+                "Interpretar el entorno",
+                "target, module, moduleResolution y lib describen el runtime y la estrategia de módulos."
+              ],
+              [
+                "Comprobar tipos",
+                "strict y otras opciones controlan qué errores estáticos se detectan."
+              ],
+              [
+                "Emitir o solo comprobar",
+                "outDir/rootDir organizan la salida; noEmit permite delegar el build a otra herramienta."
+              ]
+            ],
+            "decisions": [
+              "Usá una configuración distinta cuando frontend y backend tengan runtimes o resoluciones de módulos diferentes; podés compartir un tsconfig base.",
+              "Activá strict en proyectos nuevos y agregá opciones adicionales de forma gradual y deliberada.",
+              "Para Node moderno, elegí una estrategia ESM/CommonJS coherente con package.json y moduleResolution; no copies NodeNext a un proyecto bundler sin motivo.",
+              "En proyectos Vite/Next, normalmente el bundler hace el build y TypeScript se ejecuta para comprobación con noEmit."
+            ],
+            "debugging": "Si importaciones funcionan en el editor pero fallan en Node, compará module, moduleResolution, extensiones y type de package.json. Si archivos no se comprueban, revisá include, exclude y references. Si se generan archivos fuera de lugar, verificá rootDir y outDir. Recordá que skipLibCheck no corrige errores de tu código fuente."
+          },
+          "whenToUse": "Usá tsconfig para definir qué archivos se comprueban, qué módulos espera tu entorno, qué JavaScript se emite y qué reglas de seguridad estática se aplican."
         },
         {
           "id": "ts-cli-compilation",
@@ -13904,7 +14422,7 @@
           "category": "fundamentos",
           "summary": "Construí la raíz de la aplicación, layouts anidados y páginas que cambian según la ruta.",
           "purpose": "Un layout envuelve a una página y a los segmentos descendientes. El root layout es obligatorio en App Router y debe incluir html y body. Los layouts anidados conservan su estado y no se vuelven a renderizar necesariamente en cada navegación, mientras que page.tsx representa el contenido principal del segmento.",
-          "whenToUse": "Usá layouts para encabezados, navegación, paneles o estructuras persistentes. Reservá page.tsx para el contenido específico de la URL.",
+          "whenToUse": "Usá layouts para estructuras compartidas entre páginas y page.tsx para el contenido propio de una ruta. Es la base para organizar catálogos, paneles y sitios con varias secciones.",
           "syntax": "export default function RootLayout({ children }: { children: React.ReactNode }) {\n  return <html lang=\"es\"><body>{children}</body></html>;\n}",
           "level": "Inicial",
           "examples": [
@@ -13931,27 +14449,33 @@
           "hint": "El layout raíz se aplica a toda la aplicación; cada layout anidado agrega una capa a partir de su segmento.",
           "parameters": [
             {
+              "name": "layout.tsx",
+              "description": "Define una estructura compartida que envuelve segmentos descendientes."
+            },
+            {
+              "name": "page.tsx",
+              "description": "Define la interfaz específica de la ruta."
+            },
+            {
               "name": "children",
-              "description": "Contenido React que Next.js inserta dentro del layout correspondiente."
+              "description": "Contenido anidado que recibe el layout."
             },
             {
-              "name": "Root Layout",
-              "description": "Layout obligatorio que define las etiquetas html y body del documento."
-            },
-            {
-              "name": "Nested Layout",
-              "description": "Layout anidado que comparte estructura entre rutas descendientes."
+              "name": "Route Groups (carpeta entre paréntesis)",
+              "description": "Organiza rutas sin añadir el nombre de la carpeta a la URL."
             }
           ],
           "bestPractices": [
-            "Colocá en layouts solo la UI realmente compartida por sus páginas hijas.",
-            "Usá componentes reutilizables para tarjetas, menús y formularios.",
-            "Definí lang en el documento según el idioma real del sitio."
+            "Ubicá estructura compartida en layouts y contenido de URL en pages.",
+            "Mantené el layout raíz como documento HTML único.",
+            "Anidá layouts cuando una sección tenga navegación o estructura propia.",
+            "No uses layouts como única barrera de autorización."
           ],
           "commonMistakes": [
-            "Agregar html o body dentro de una página en vez de root layout.",
-            "Usar un layout para contenido que debería cambiar entre páginas y luego sorprenderse porque conserva estado.",
-            "Duplicar el encabezado en todas las rutas."
+            "Repetir html y body en layouts descendientes.",
+            "Poner todo el contenido específico dentro del layout.",
+            "Esperar que un layout compruebe permisos en cada navegación.",
+            "Crear dos layouts raíz sin comprender los cambios de navegación completa."
           ],
           "resources": [
             {
@@ -13960,10 +14484,38 @@
             }
           ],
           "related": [
-            "nextjs-estructura-proyecto",
             "nextjs-enrutamiento-app",
-            "nextjs-server-client-components"
-          ]
+            "nextjs-server-client-components",
+            "nextjs-rutas-dinamicas"
+          ],
+          "deepDive": {
+            "model": "En App Router, carpetas y archivos definen segmentos de ruta. `page.tsx` crea la UI específica de una URL; `layout.tsx` envuelve páginas y segmentos descendientes y conserva estado e interactividad durante navegación cuando se mantiene montado. El layout raíz es obligatorio y establece html y body. Los layouts anidados permiten organizar áreas con estructura compartida sin duplicar encabezados y navegación.",
+            "flow": [
+              [
+                "Resolver segmentos",
+                "Next.js interpreta la estructura de app y encuentra el page y los layouts de la ruta."
+              ],
+              [
+                "Componer layouts",
+                "Los layouts anidados envuelven el contenido de sus segmentos descendientes."
+              ],
+              [
+                "Renderizar la página",
+                "page.tsx produce el contenido específico de la ruta y puede obtener datos en el servidor."
+              ],
+              [
+                "Navegar conservando estructura",
+                "La navegación entre páginas del mismo layout puede preservar la estructura compartida y su estado."
+              ]
+            ],
+            "decisions": [
+              "Poné en el layout solo elementos realmente compartidos; el contenido propio de una página debe permanecer en page.tsx o en componentes.",
+              "Usá layouts anidados para áreas con navegación distinta, como dashboard, catálogo o administración.",
+              "No asumas que un layout se vuelve a ejecutar en cada cambio de ruta para verificar permisos; la autorización debe proteger los datos y acciones.",
+              "Mantené el layout raíz como Server Component salvo que una necesidad real requiera una frontera cliente pequeña dentro de él."
+            ],
+            "debugging": "Si un header se duplica, revisá qué layouts envuelven la página. Si una navegación conserva un estado que querías reiniciar, considerá el límite del layout y la identidad del componente. Si una página no se encuentra, confirmá el nombre page.tsx y la posición de la carpeta dentro de app."
+          }
         },
         {
           "id": "nextjs-estilos-css",
@@ -14108,7 +14660,7 @@
           "category": "routing",
           "summary": "Creá páginas para identificadores variables como /novelas/[slug] y generá rutas conocidas durante el build.",
           "purpose": "Los segmentos entre corchetes representan parámetros de ruta. [slug] captura un segmento; [...slug] captura varios; y [[...slug]] permite que el catch-all también esté vacío. En App Router actual, params es una Promise y debe resolverse con await. generateStaticParams permite listar segmentos que se quieren generar en build.",
-          "whenToUse": "Usalas para artículos, productos, perfiles, categorías o cualquier recurso identificado por una parte variable de la URL.",
+          "whenToUse": "Usá rutas dinámicas para páginas de detalle como /novelas/[slug], perfiles, productos y documentación jerárquica. Validá parámetros como cualquier entrada externa.",
           "syntax": "app/novelas/[slug]/page.tsx\nparams: Promise<{ slug: string }>",
           "level": "Intermedio",
           "examples": [
@@ -14129,6 +14681,13 @@
               "description": "Una ruta catch-all recibe un array de segmentos.",
               "code": "// app/docs/[...slug]/page.tsx\nexport default async function DocsPage({ params }: { params: Promise<{ slug: string[] }> }) {\n  const { slug } = await params;\n  return <p>Ruta: {slug.join(\" / \")}</p>;\n}",
               "explanation": "Una URL como /docs/guias/instalacion produce slug igual a [\"guias\", \"instalacion\"]."
+            },
+            {
+              "title": "Validar un slug y devolver 404 si no existe",
+              "description": "Esperá los parámetros, validá el formato y tratá la ausencia del recurso como un 404.",
+              "language": "tsx",
+              "code": "import { notFound } from 'next/navigation';\n\nexport default async function Page({ params }: {\n  params: Promise<{ slug: string }>;\n}) {\n  const { slug } = await params;\n  if (!/^[a-z0-9-]{1,80}$/.test(slug)) notFound();\n\n  const novela = await obtenerNovelaPorSlug(slug);\n  if (!novela) notFound();\n\n  return <h1>{novela.titulo}</h1>;\n}",
+              "explanation": "El formato se valida antes de consultar. notFound muestra la UI 404 del segmento; en una aplicación privada, la consulta también debe comprobar autorización."
             }
           ],
           "exercise": "Creá una ruta /libros/[id] que espere params y muestre el identificador. Después agregá generateStaticParams para dos libros.",
@@ -14136,30 +14695,36 @@
           "parameters": [
             {
               "name": "[slug]",
-              "description": "Segmento dinámico que captura un valor."
+              "description": "Captura un segmento dinámico de URL."
             },
             {
               "name": "[...slug]",
-              "description": "Segmento catch-all que captura uno o más segmentos y los entrega como array."
+              "description": "Captura uno o más segmentos en un array."
             },
             {
               "name": "[[...slug]]",
-              "description": "Catch-all opcional que también admite ausencia de segmentos."
+              "description": "Captura cero o más segmentos."
             },
             {
-              "name": "generateStaticParams()",
-              "description": "Devuelve parámetros para prerenderizar rutas dinámicas durante la compilación."
+              "name": "params",
+              "description": "Promesa de parámetros de ruta que debe esperarse en Next.js 16."
+            },
+            {
+              "name": "generateStaticParams",
+              "description": "Enumera parámetros conocidos para prerenderizar rutas."
             }
           ],
           "bestPractices": [
-            "Validá el parámetro antes de consultar la base de datos.",
-            "Usá generateStaticParams cuando conocés de antemano parte o todos los segmentos.",
-            "Combiná notFound con búsquedas que pueden no encontrar el recurso."
+            "Validá slug, id y parámetros antes de consultar datos.",
+            "Usá notFound cuando el recurso no existe.",
+            "Usá generateStaticParams solo cuando el conjunto de rutas se conoce o conviene prerenderizar.",
+            "En Next.js 16 esperá params antes de leer sus propiedades."
           ],
           "commonMistakes": [
-            "Desestructurar params sin await en Next.js 16.",
-            "Devolver objetos con una propiedad cuyo nombre no coincide con el segmento dinámico.",
-            "Tratar un catch-all como string cuando su valor es un array."
+            "Leer params de forma síncrona en Next.js 16.",
+            "Confiar en un slug como prueba de autorización.",
+            "No tratar un recurso inexistente con 404/notFound.",
+            "Usar catch-all para ocultar un esquema de rutas mal organizado."
           ],
           "resources": [
             {
@@ -14172,10 +14737,38 @@
             }
           ],
           "related": [
-            "nextjs-enrutamiento-app",
-            "nextjs-errores-not-found",
-            "nextjs-typescript"
-          ]
+            "nextjs-search-params",
+            "nextjs-route-handlers",
+            "ts-narrowing"
+          ],
+          "deepDive": {
+            "model": "Las rutas dinámicas usan segmentos de carpeta con corchetes, como [slug], para obtener valores variables de una URL. Los parámetros forman parte del input de la página y deben tratarse como datos externos. En Next.js 16 params es una Promise y debe esperarse; los catch-all producen arrays de segmentos y los opcionales permiten que la ruta también coincida sin segmentos adicionales. generateStaticParams puede enumerar rutas conocidas durante el build, pero no sustituye validación ni autorización.",
+            "flow": [
+              [
+                "Definir el segmento",
+                "Una carpeta [slug] marca una parte variable; [...slug] captura múltiples segmentos."
+              ],
+              [
+                "Recibir los parámetros",
+                "La página, layout o Route Handler recibe params de forma asíncrona en Next.js 16."
+              ],
+              [
+                "Validar y consultar",
+                "El valor debe validarse y usarse para buscar un recurso; un resultado inexistente conduce a notFound o a una respuesta 404."
+              ],
+              [
+                "Elegir estrategia de generación",
+                "generateStaticParams enumera segmentos conocidos cuando conviene prerenderizar rutas durante el build."
+              ]
+            ],
+            "decisions": [
+              "Usá slugs estables y legibles para páginas de detalle; validá formato y longitud antes de consultar.",
+              "Usá catch-all para rutas jerárquicas como documentación, no para evitar diseñar una estructura clara.",
+              "Usá generateStaticParams cuando el conjunto de rutas se conoce o puede enumerarse en build; no la confundas con autorización.",
+              "Comprobá que el recurso pertenece al usuario autenticado antes de mostrarlo, aunque el slug sea difícil de adivinar."
+            ],
+            "debugging": "Si params.slug no es un string, verificá si la carpeta usa [...slug], que devuelve un array. Si Next.js 16 indica que params debe esperarse, usá await params o los helpers de tipos generados. Si una ruta existe pero el recurso no, usá notFound o una respuesta 404 en vez de devolver datos vacíos sin explicación."
+          }
         },
         {
           "id": "nextjs-search-params",
@@ -14540,7 +15133,7 @@
           "category": "rendering-data",
           "summary": "Comprendé la diferencia entre componentes que se ejecutan en el servidor y componentes que necesitan el navegador.",
           "purpose": "En App Router, layouts y páginas son Server Components por defecto. Pueden consultar datos desde el servidor y no agregan por sí solos su código de interacción al bundle del navegador. Los Client Components se usan cuando necesitás estado, efectos, eventos o APIs del navegador. Ambos tipos pueden convivir en una misma pantalla.",
-          "whenToUse": "Elegí Server Components para contenido, acceso seguro a servicios del servidor y reducción de JavaScript enviado al cliente. Elegí Client Components para controles interactivos y estado local.",
+          "whenToUse": "Usá Server Components para contenido, lectura de datos y acceso seguro a servicios; usá Client Components solo para estado, eventos y APIs del navegador.",
           "syntax": "// Server Component por defecto\nexport default async function Page() {\n  const datos = await obtenerDatos();\n  return <h1>{datos.titulo}</h1>;\n}",
           "level": "Intermedio",
           "examples": [
@@ -14568,26 +15161,32 @@
           "parameters": [
             {
               "name": "Server Component",
-              "description": "Componente renderizado en el servidor; predeterminado en App Router."
+              "description": "Componente que se ejecuta en el servidor y es el valor predeterminado en App Router."
             },
             {
-              "name": "Client Component",
-              "description": "Componente que participa en el entorno cliente y puede usar estado, efectos y APIs del navegador."
+              "name": "'use client'",
+              "description": "Marca la frontera de un módulo que necesita capacidades cliente."
             },
             {
-              "name": "use client",
-              "description": "Directiva que crea un límite de módulo para el bundle cliente."
+              "name": "serializable props",
+              "description": "Datos que pueden cruzar el límite servidor/cliente."
+            },
+            {
+              "name": "useState / useEffect",
+              "description": "Hooks que requieren un Client Component."
             }
           ],
           "bestPractices": [
-            "Preferí Server Components cuando no necesitás interacción.",
-            "Mantené los límites cliente lo más pequeños posible.",
-            "Pasá datos serializables del servidor al cliente y no objetos internos sensibles."
+            "Empezá con Server Components por defecto.",
+            "Reducí la frontera `use client` a los componentes que realmente interactúan.",
+            "No importes módulos con secretos desde el grafo cliente.",
+            "Pasá props serializables y mantené acceso a datos sensible en servidor."
           ],
           "commonMistakes": [
-            "Agregar use client a todo el árbol por comodidad.",
-            "Intentar usar useState o window directamente en un Server Component.",
-            "Creer que Client Component significa que nunca se renderiza HTML en el servidor."
+            "Poner use client en todo el árbol por un solo botón.",
+            "Importar un módulo de servidor desde un Client Component.",
+            "Pasar funciones o conexiones no serializables como props.",
+            "Acceder a window durante renderizado de servidor."
           ],
           "resources": [
             {
@@ -14598,8 +15197,36 @@
           "related": [
             "nextjs-client-components-use-client",
             "nextjs-composicion-server-client",
-            "nextjs-data-fetching"
-          ]
+            "react-state"
+          ],
+          "deepDive": {
+            "model": "En App Router, layouts y páginas son Server Components por defecto. Los Server Components pueden acceder a recursos del servidor y preparar HTML sin enviar su implementación al navegador. Los Client Components se marcan con `use client` y habilitan estado, eventos, efectos y APIs del navegador. La directiva define una frontera de módulo: los imports que parten de ese archivo forman parte del grafo cliente. No es necesario marcar toda la página como cliente para añadir una interacción pequeña.",
+            "flow": [
+              [
+                "Comenzar en servidor",
+                "El árbol de rutas utiliza Server Components por defecto y puede obtener datos desde el servidor."
+              ],
+              [
+                "Identificar interacción",
+                "Estado local, eventos, efectos o APIs del navegador señalan una necesidad de Client Component."
+              ],
+              [
+                "Marcar frontera",
+                "`use client` se coloca al inicio del módulo que necesita ejecutarse en el cliente."
+              ],
+              [
+                "Hidratar la interacción",
+                "El navegador recibe el código cliente necesario y conecta eventos con el HTML renderizado."
+              ]
+            ],
+            "decisions": [
+              "Mantené componentes de servidor como opción predeterminada para contenido, lecturas y acceso a secretos.",
+              "Aislá la interacción en componentes pequeños en lugar de marcar el layout o toda la página como cliente.",
+              "No importes módulos con secretos o conexiones de base de datos desde el grafo cliente.",
+              "Recordá que las props que cruzan la frontera deben ser serializables; pasá datos, no conexiones ni funciones arbitrarias de servidor."
+            ],
+            "debugging": "Si window o localStorage no existen, el código se está evaluando en servidor o fuera del momento adecuado. Si aparece un error de serialización, revisá props que cruzan la frontera. Si el bundle cliente crece demasiado, inspeccioná imports y mové lógica que no necesita interacción al servidor."
+          }
         },
         {
           "id": "nextjs-client-components-use-client",
@@ -14677,7 +15304,7 @@
           "category": "rendering-data",
           "summary": "Organizá límites cliente sin perder la capacidad de renderizar contenido desde el servidor.",
           "purpose": "Un Server Component puede renderizar un Client Component y pasarle valores serializables. Para conservar composición de servidor dentro de una interfaz interactiva, podés pasar el contenido como prop children en lugar de importar directamente el componente servidor desde el módulo cliente. Así reducís el código cliente y mantenés el acceso a datos del servidor.",
-          "whenToUse": "Usalo cuando un menú, modal, pestaña o panel interactivo necesita envolver contenido que ya se prepara en el servidor.",
+          "whenToUse": "Usá composición children cuando un componente interactivo de cliente deba envolver contenido generado por el servidor sin convertir toda la rama en cliente.",
           "syntax": "// El servidor prepara contenido y lo pasa como children\n<PanelInteractivo><ContenidoServidor /></PanelInteractivo>",
           "level": "Avanzado",
           "examples": [
@@ -14705,22 +15332,32 @@
           "parameters": [
             {
               "name": "children",
-              "description": "Prop React que permite componer contenido dentro de un componente cliente."
+              "description": "Slot de composición que permite pasar contenido al componente cliente."
             },
             {
-              "name": "Serialización",
-              "description": "Los props que cruzan la frontera deben poder representarse en el payload de React."
+              "name": "Provider",
+              "description": "Componente que comparte contexto dentro de una zona del árbol."
+            },
+            {
+              "name": "server-only",
+              "description": "Import que ayuda a impedir que un módulo de servidor se incluya en el cliente."
+            },
+            {
+              "name": "serialización",
+              "description": "Reglas de datos que pueden cruzar la frontera entre entornos."
             }
           ],
           "bestPractices": [
-            "Pasá el mínimo de datos necesario al cliente.",
-            "Mantené las consultas a base de datos en componentes o módulos de servidor.",
-            "Diseñá los componentes interactivos para recibir children cuando deban envolver contenido servidor."
+            "Componé contenido de servidor como children de un contenedor cliente.",
+            "Pasá datos serializables a través de la frontera.",
+            "Mantené providers cerca de la zona que los necesita.",
+            "Evitá importar Server Components dentro de un módulo cliente."
           ],
           "commonMistakes": [
-            "Importar una función de base de datos directamente desde un Client Component.",
-            "Pasar instancias complejas o secretos como props al navegador.",
-            "Asumir que un componente servidor puede importarse de forma arbitraria dentro de un módulo cliente."
+            "Intentar importar un Server Component desde un archivo cliente.",
+            "Pasar objetos internos o conexiones como props.",
+            "Mover todo el provider global a la raíz sin necesidad.",
+            "Confundir children compuesto por servidor con ejecución de servidor dentro del cliente."
           ],
           "resources": [
             {
@@ -14731,8 +15368,36 @@
           "related": [
             "nextjs-server-client-components",
             "nextjs-client-components-use-client",
-            "nextjs-data-fetching"
-          ]
+            "wc-slots"
+          ],
+          "deepDive": {
+            "model": "La composición entre Server y Client Components permite que una zona interactiva controle cómo se presenta contenido preparado en servidor. Una página de servidor puede importar un Client Component y pasarle contenido como children. El componente cliente no importa ni ejecuta el componente servidor: recibe un slot de React ya compuesto. Esta distinción mantiene la frontera clara y evita trasladar al navegador módulos que requieren acceso privado.",
+            "flow": [
+              [
+                "Preparar contenido en servidor",
+                "La página obtiene datos y compone un árbol de elementos con contenido seguro para mostrar."
+              ],
+              [
+                "Crear una frontera cliente",
+                "Un Client Component gestiona la interacción, como abrir un acordeón o mostrar un diálogo."
+              ],
+              [
+                "Pasar composición serializable",
+                "El contenido servidor se pasa como children u otro slot admitido, sin pasar servicios internos."
+              ],
+              [
+                "Controlar la presentación",
+                "El componente cliente decide cuándo mostrar u ocultar ese contenido sin asumir su lógica privada."
+              ]
+            ],
+            "decisions": [
+              "Usá children para que un contenedor interactivo envuelva contenido que no necesita convertirse en cliente.",
+              "Pasá datos serializables y elementos compuestos; nunca una conexión de base de datos, token secreto o instancia no serializable.",
+              "Separá los providers cliente de la estructura de servidor y colocalos tan abajo como sea razonable.",
+              "Si un módulo necesita APIs del navegador, aislá esa dependencia en una pequeña capa cliente."
+            ],
+            "debugging": "Si un componente de servidor se importa desde un módulo marcado use client, reorganizá la composición: el padre de servidor debe pasar el resultado como children. Si falla serialización, inspeccioná clases, funciones y objetos especiales. Si un provider provoca que todo el árbol sea cliente, movelo a una frontera más pequeña."
+          }
         },
         {
           "id": "nextjs-data-fetching",
@@ -14740,7 +15405,7 @@
           "category": "rendering-data",
           "summary": "Consultá APIs y bases de datos desde Server Components utilizando async/await y manejando respuestas fallidas.",
           "purpose": "Los Server Components pueden ser funciones asíncronas. Pueden llamar fetch, acceder a un ORM o ejecutar funciones del servidor antes de devolver JSX. Las solicitudes fetch idénticas dentro de un mismo árbol se memoizan, pero no se debe asumir que toda respuesta queda cacheada permanentemente: en el modelo actual fetch no está cacheado por defecto.",
-          "whenToUse": "Usalo para cargar información inicial y renderizar contenido directamente desde el servidor, evitando efectos del cliente innecesarios.",
+          "whenToUse": "Usá obtención de datos desde Server Components para renderizar información inicial con menos viajes de red y mantener secretos en el servidor.",
           "syntax": "export default async function Page() {\n  const response = await fetch(\"https://api.example.com/posts\");\n  const posts = await response.json();\n  return <Lista posts={posts} />;\n}",
           "level": "Intermedio",
           "examples": [
@@ -14761,33 +15426,50 @@
               "description": "Separá error de transporte de una colección vacía.",
               "code": "const response = await fetch(\"https://api.example.com/novelas\");\nif (!response.ok) {\n  return <p>No pudimos cargar el catálogo.</p>;\n}\nconst novelas = await response.json();\nif (novelas.length === 0) return <p>Todavía no hay novelas.</p>;\nreturn <Lista novelas={novelas} />;",
               "explanation": "Una respuesta HTTP fallida y una respuesta correcta sin elementos son estados distintos y deberían mostrar mensajes diferentes."
+            },
+            {
+              "title": "Ejecutar lecturas independientes en paralelo",
+              "description": "No esperes una consulta antes de iniciar otra cuando ambas son independientes.",
+              "language": "tsx",
+              "code": "export default async function Page() {\n  const [novelas, etiquetas] = await Promise.all([\n    obtenerNovelas(),\n    obtenerEtiquetas()\n  ]);\n\n  return <Catalogo novelas={novelas} etiquetas={etiquetas} />;\n}",
+              "explanation": "Promise.all inicia ambas operaciones y espera sus resultados. Si una falla, rechaza el conjunto; cuando cada bloque puede fallar independientemente, modelá estados y errores por separado."
             }
           ],
           "exercise": "Creá una página de productos que use fetch, compruebe response.ok, tipifique el resultado y muestre un estado vacío.",
           "hint": "El componente servidor puede ser async. Recordá que fetch no rechaza automáticamente cuando el servidor responde con HTTP 404 o 500.",
           "parameters": [
             {
-              "name": "fetch(url, options)",
-              "description": "API estándar para realizar solicitudes HTTP desde el servidor o el cliente."
+              "name": "fetch",
+              "description": "Inicia una solicitud y devuelve Promise<Response>."
             },
             {
               "name": "response.ok",
-              "description": "Indica si el status HTTP está en el rango exitoso 200–299."
+              "description": "Indica si el status HTTP está en el rango 200–299."
             },
             {
               "name": "response.json()",
-              "description": "Lee el cuerpo de la respuesta y lo convierte a un valor JavaScript."
+              "description": "Lee y analiza el cuerpo como JSON."
+            },
+            {
+              "name": "Promise.all",
+              "description": "Permite ejecutar en paralelo lecturas independientes."
+            },
+            {
+              "name": "server-only",
+              "description": "Protege módulos que contienen acceso privado a datos."
             }
           ],
           "bestPractices": [
-            "Tipá o validá los datos recibidos antes de usarlos.",
-            "Comprobá response.ok y tratá respuestas vacías.",
-            "Mantené el acceso a servicios privados en módulos de servidor."
+            "Consultá la base directamente desde una capa de servidor cuando corresponda.",
+            "Comprobá response.ok antes de leer JSON.",
+            "Diferenciá errores HTTP de colecciones vacías.",
+            "Definí explícitamente caché y frescura de acuerdo con el modelo Next.js del proyecto."
           ],
           "commonMistakes": [
-            "Esperar que fetch lance una excepción por HTTP 404 o 500.",
-            "Enviar tokens privados desde un Server Component al cliente por props.",
-            "Hacer una segunda petición HTTP al propio Route Handler para consultar la base de datos cuando una función interna puede resolverlo."
+            "Asumir que fetch lanza automáticamente por HTTP 404 o 500.",
+            "Hacer fetch desde servidor a un Route Handler propio sin necesidad.",
+            "Tratar lista vacía y error como el mismo estado.",
+            "Asumir una política de caché idéntica entre versiones del framework."
           ],
           "resources": [
             {
@@ -14796,11 +15478,38 @@
             }
           ],
           "related": [
-            "nextjs-server-client-components",
             "nextjs-cache-components",
-            "nextjs-loading-streaming",
-            "nextjs-route-handlers"
-          ]
+            "nextjs-route-handlers",
+            "api-fetch"
+          ],
+          "deepDive": {
+            "model": "En App Router, un Server Component puede ser una función async que consulta una fuente directamente y devuelve UI. Esto evita un viaje adicional del navegador a un Route Handler propio cuando el componente ya se ejecuta en servidor. Fetch devuelve Response; un status 404 o 500 no rechaza la Promise, por lo que debe revisarse response.ok. El tratamiento de caché depende de la configuración y el modelo de Next.js habilitado; no conviene asumir que cada fetch se cachea igual en todas las versiones.",
+            "flow": [
+              [
+                "Solicitar datos",
+                "La página o función de datos inicia fetch, una consulta ORM o una llamada a un servicio."
+              ],
+              [
+                "Esperar y validar resultado",
+                "Se espera la operación, se revisa status y se transforma la respuesta a un contrato interno."
+              ],
+              [
+                "Preparar estados de UI",
+                "La página distingue datos encontrados, colección vacía, error esperado y carga de segmentos suspendidos."
+              ],
+              [
+                "Renderizar en servidor",
+                "El resultado se incorpora al árbol de Server Components y se envía la representación correspondiente."
+              ]
+            ],
+            "decisions": [
+              "En Server Components, llamá directamente a la capa de datos o al servicio; evitá hacer fetch a un Route Handler del mismo proyecto sin necesidad.",
+              "Comprobá response.ok antes de interpretar JSON; tratá 404, 500 y una lista vacía como situaciones diferentes.",
+              "Mantené secretos y drivers en módulos de servidor, usando `server-only` como guard de importación cuando corresponda.",
+              "Definí explícitamente la estrategia de caché y frescura para la versión del framework que usa el proyecto."
+            ],
+            "debugging": "Si el servidor recibe HTML en vez de JSON, revisá URL y respuesta antes de llamar response.json. Si la página queda bloqueada, separá solicitudes paralelas independientes con Promise.all. Si se filtran credenciales, mové la llamada al servidor y revisá qué props se envían al cliente."
+          }
         },
         {
           "id": "nextjs-rendering-static-dynamic",
@@ -14879,7 +15588,7 @@
           "category": "rendering-data",
           "summary": "Aprendé el modelo de Cache Components y cómo reutilizar resultados de funciones y componentes.",
           "purpose": "En Next.js 16, Cache Components se activa en la configuración con cacheComponents: true. La directiva use cache permite cachear rutas, componentes o funciones. cacheLife personaliza la duración y cacheTag asocia datos con etiquetas que luego pueden invalidarse. Es un modelo explícito: no des por hecho que toda consulta fetch se cachea automáticamente.",
-          "whenToUse": "Usalo en catálogos, contenido editorial y funciones cuya salida puede compartirse entre visitantes durante un período definido. No caches datos personales sin incluir correctamente su contexto ni exponerlos.",
+          "whenToUse": "Usá Cache Components para reutilizar resultados de datos compartibles y definir frescura o invalidación cuando el catálogo cambia. Evitá compartir datos privados sin una clave y política de seguridad correctas.",
           "syntax": "// next.config.ts\nconst nextConfig: NextConfig = { cacheComponents: true };",
           "level": "Avanzado",
           "examples": [
@@ -14907,30 +15616,36 @@
           "parameters": [
             {
               "name": "cacheComponents",
-              "description": "Opción de next.config.ts que activa Cache Components."
+              "description": "Activa el modelo Cache Components en next.config.ts."
             },
             {
-              "name": "use cache",
-              "description": "Directiva para marcar una ruta, componente o función como cacheable."
+              "name": "'use cache'",
+              "description": "Marca una función, componente o ruta como cacheable."
             },
             {
-              "name": "cacheLife(profile)",
-              "description": "Configura la duración de vida de un resultado cacheado."
+              "name": "cacheLife",
+              "description": "Establece frescura, revalidación y expiración."
             },
             {
-              "name": "cacheTag(tag)",
-              "description": "Asocia una etiqueta al resultado para invalidarlo después."
+              "name": "cacheTag",
+              "description": "Asigna etiquetas a entradas de caché."
+            },
+            {
+              "name": "updateTag / revalidateTag",
+              "description": "Invalida o revalida entradas etiquetadas con semánticas distintas."
             }
           ],
           "bestPractices": [
-            "Cacheá datos públicos o compartibles y separá los personalizados.",
-            "Elegí una duración acorde a la frecuencia de actualización del dato.",
-            "Asociá etiquetas con unidades de contenido para invalidación específica."
+            "Activá cacheComponents antes de usar `use cache`.",
+            "Leé cookies y headers fuera del scope cacheado y pasá parámetros seguros.",
+            "Usá cacheLife y cacheTag para expresar frescura e invalidación.",
+            "Nunca caches datos privados sin incorporar la identidad o el contexto correspondiente en la clave y el diseño."
           ],
           "commonMistakes": [
-            "Creer que use cache valida o anonimiza datos personales automáticamente.",
-            "Leer cookies o headers dentro de un ámbito cacheado en vez de resolverlos fuera y pasar los valores necesarios como argumentos.",
-            "Activar Cache Components sin revisar cómo afecta a las APIs y convenciones de caché existentes."
+            "Usar use cache sin habilitar cacheComponents.",
+            "Leer cookies o headers directamente dentro de un scope cacheado.",
+            "Compartir respuestas personalizadas sin separar la clave por usuario.",
+            "Invalidar toda la ruta cuando bastaría una etiqueta específica."
           ],
           "resources": [
             {
@@ -14943,10 +15658,38 @@
             }
           ],
           "related": [
-            "nextjs-data-fetching",
             "nextjs-revalidacion",
-            "nextjs-rendering-static-dynamic"
-          ]
+            "nextjs-data-fetching",
+            "nextjs-server-functions-actions"
+          ],
+          "deepDive": {
+            "model": "En Next.js 16, Cache Components se habilita con `cacheComponents: true`. Dentro de un alcance `use cache`, Next puede reutilizar la salida de una función, componente o ruta según la clave construida a partir del build, la función y sus argumentos serializables. `cacheLife` define frescura y expiración; `cacheTag` asigna etiquetas para invalidar entradas relacionadas. Los datos de request como cookies y headers deben leerse fuera del ámbito cacheado y pasarse como argumentos cuando su contexto sea parte de la clave.",
+            "flow": [
+              [
+                "Habilitar el modelo",
+                "La configuración del proyecto activa cacheComponents en next.config.ts."
+              ],
+              [
+                "Marcar salida reutilizable",
+                "`use cache` define una función, componente o ruta cuyo resultado puede almacenarse."
+              ],
+              [
+                "Definir duración y etiquetas",
+                "cacheLife controla la vida de la entrada; cacheTag permite localizarla para invalidación."
+              ],
+              [
+                "Invalidar cuando cambian datos",
+                "Una acción o Route Handler usa updateTag, revalidateTag o revalidatePath según el comportamiento deseado."
+              ]
+            ],
+            "decisions": [
+              "Cacheá datos compartibles y relativamente estables, como catálogos públicos; no cachees datos privados sin incorporar correctamente el contexto del usuario.",
+              "Leé cookies y headers fuera de la función cacheada y pasá solo los valores necesarios como argumentos serializables.",
+              "Usá cacheTag para invalidar un grupo de datos relacionado después de una mutación.",
+              "Elegí entre updateTag (lectura inmediata de lo recién escrito en Server Actions), revalidateTag (stale-while-revalidate) y revalidatePath según la experiencia requerida."
+            ],
+            "debugging": "Si Next.js rechaza cookies o headers dentro de `use cache`, mové la lectura fuera del alcance y pasá valores explícitos. Si un cambio no aparece, comprobá tags y función de invalidación. Si datos de usuarios se mezclan, revisá la clave y asegurate de que el contexto de autorización no se haya omitido."
+          }
         },
         {
           "id": "nextjs-revalidacion",
@@ -15029,7 +15772,7 @@
           "category": "backend",
           "summary": "Ejecutá funciones asíncronas en el servidor y llamalas desde formularios o componentes cliente.",
           "purpose": "Una Server Function es una función asíncrona que se ejecuta en el servidor. La directiva use server marca una función o módulo para ese entorno. Cuando una Server Function se conecta a un formulario o a formAction, suele llamarse Server Action. Internamente se invoca mediante una solicitud POST, por lo que debe tratarse como una superficie pública de entrada.",
-          "whenToUse": "Usalas para operaciones como crear, editar o eliminar datos. Verificá identidad, permisos y datos recibidos en cada acción; no confíes solamente en que el botón esté oculto en la UI.",
+          "whenToUse": "Usá Server Actions para mutaciones desde formularios o controles de la propia aplicación; validá y autorizá dentro de cada acción.",
           "syntax": "// app/actions.ts\n\"use server\";\nexport async function crearNovela(formData: FormData) { /* servidor */ }",
           "level": "Avanzado",
           "examples": [
@@ -15056,27 +15799,37 @@
           "hint": "Una Server Action no es privada por estar importada desde el frontend: puede recibirse una solicitud POST directa.",
           "parameters": [
             {
-              "name": "\"use server\"",
-              "description": "Directiva de React para declarar funciones que se ejecutan en el servidor."
+              "name": "'use server'",
+              "description": "Marca una función asíncrona para ejecutarse en servidor."
             },
             {
               "name": "FormData",
-              "description": "Objeto que contiene los campos de un formulario enviado."
+              "description": "Contiene campos enviados por el formulario."
             },
             {
-              "name": "Server Action",
-              "description": "Server Function utilizada en un contexto de mutación o acción."
+              "name": "useActionState",
+              "description": "Conecta acción, estado de respuesta y estado pendiente en el cliente."
+            },
+            {
+              "name": "redirect",
+              "description": "Redirige después de una operación cuando corresponde."
+            },
+            {
+              "name": "revalidatePath / updateTag",
+              "description": "Actualiza contenido o caché después de una mutación."
             }
           ],
           "bestPractices": [
-            "Verificá la sesión y los permisos dentro de cada función de servidor.",
-            "Validá en servidor todos los datos provenientes del formulario.",
-            "Devolvé estados claros para errores esperados y registrá los errores técnicos por separado."
+            "Validá FormData y tipos de entrada en servidor.",
+            "Autorizá cada acción aunque el botón esté oculto en el cliente.",
+            "Delegá la lógica de negocio a servicios o DAL.",
+            "Usá Route Handlers para contratos HTTP externos y acciones para mutaciones de UI internas."
           ],
           "commonMistakes": [
-            "Confiar en que el usuario no puede invocar una acción oculta.",
-            "Aceptar IDs o roles sin autorización en el servidor.",
-            "Exponer secretos importando módulos de servidor desde código cliente."
+            "Confiar en required del HTML como validación de seguridad.",
+            "No comprobar permisos dentro de la acción.",
+            "Aceptar FormData sin validar tipo o tamaño.",
+            "Poner toda la lógica de dominio dentro de la función de acción."
           ],
           "resources": [
             {
@@ -15090,9 +15843,37 @@
           ],
           "related": [
             "nextjs-formularios-useactionstate",
-            "nextjs-server-security",
-            "nextjs-revalidacion"
-          ]
+            "nextjs-validacion-datos",
+            "nextjs-authentication-authorization"
+          ],
+          "deepDive": {
+            "model": "Una Server Function es una función asíncrona que se ejecuta en el servidor. Cuando se expone mediante `use server`, Next puede crear un mecanismo de invocación desde el cliente; una Server Action es el uso de esa función para una mutación o interacción. No debe tratarse como una función local privada: sus argumentos son entrada controlada por el cliente y cada acción tiene que validar datos, autenticar y autorizar antes de mutar.",
+            "flow": [
+              [
+                "Declarar ejecución server",
+                "La directiva `use server` se coloca al inicio de un archivo o del cuerpo de una función async."
+              ],
+              [
+                "Invocar desde formulario o cliente",
+                "Un formulario puede usar action y un Client Component puede manejar estado pendiente o errores."
+              ],
+              [
+                "Validar y autorizar",
+                "La acción valida FormData y confirma que el usuario actual puede realizar esa operación."
+              ],
+              [
+                "Mutar y sincronizar UI",
+                "La operación persiste datos y luego devuelve estado o redirige e invalida caché relevante."
+              ]
+            ],
+            "decisions": [
+              "Usá Server Actions para mutaciones vinculadas a una experiencia de formulario dentro de la aplicación; usá Route Handlers cuando necesites una API HTTP pública o integración externa.",
+              "Validá cada campo en el servidor, aunque el formulario tenga required, type o validación cliente.",
+              "Comprobá autorización dentro de cada acción; ocultar un botón en la UI no protege la operación.",
+              "Mantené las acciones pequeñas y delegá reglas de negocio y acceso a datos a servicios o una Data Access Layer."
+            ],
+            "debugging": "Si la acción no se invoca, revisá que sea async y que `use server` esté en la posición correcta. Si FormData entrega null, comprobá los atributos name. Si el usuario puede ejecutar una acción manipulando la solicitud, faltó autorización del lado servidor. Si la UI muestra datos viejos, revisá revalidación y estado retornado."
+          }
         },
         {
           "id": "nextjs-formularios-useactionstate",
@@ -15175,7 +15956,7 @@
           "category": "backend",
           "summary": "Creá endpoints con route.ts usando los métodos GET, POST, PUT, PATCH y DELETE.",
           "purpose": "Un Route Handler es un endpoint definido mediante route.ts dentro de app. Utiliza las APIs Web Request y Response, puede leer parámetros URL y devolver JSON, texto o respuestas personalizadas. Es el equivalente del App Router a las API Routes de pages/api, por lo que normalmente no necesitás mantener ambos para el mismo endpoint.",
-          "whenToUse": "Usalo cuando necesitás una API consumible desde otras aplicaciones, webhooks o clientes externos. Para mutaciones internas de formularios, una Server Action puede ser más directa.",
+          "whenToUse": "Usá Route Handlers para endpoints HTTP que consumen otros clientes, webhooks o integraciones. Definí métodos, status, validación y autorización explícitos.",
           "syntax": "// app/api/novelas/route.ts\nexport async function GET() {\n  return Response.json({ novelas: [] });\n}",
           "level": "Intermedio",
           "examples": [
@@ -15202,31 +15983,37 @@
           "hint": "El nombre del archivo es route.ts. Exportá funciones nombradas para cada método HTTP compatible.",
           "parameters": [
             {
-              "name": "GET / POST / PUT / PATCH / DELETE",
-              "description": "Métodos HTTP que se exportan como funciones nombradas desde route.ts."
+              "name": "route.ts",
+              "description": "Archivo que define el handler HTTP del segmento."
             },
             {
-              "name": "request.json()",
-              "description": "Lee el cuerpo de una solicitud JSON."
+              "name": "GET / POST / PATCH / DELETE",
+              "description": "Métodos HTTP exportados como funciones."
             },
             {
-              "name": "Response.json(data, init)",
-              "description": "Construye una respuesta JSON con encabezados y status opcionales."
+              "name": "Request",
+              "description": "Objeto estándar con método, URL, headers y body."
             },
             {
-              "name": "NextRequest",
-              "description": "Extensión de Request con utilidades Next.js como nextUrl."
+              "name": "Response.json",
+              "description": "Construye una respuesta con JSON y headers apropiados."
+            },
+            {
+              "name": "params",
+              "description": "Parámetros dinámicos que se esperan en Next.js 16."
             }
           ],
           "bestPractices": [
-            "Validá tamaño, formato y campos permitidos del body.",
-            "Autenticá y autorizá cada operación sensible.",
-            "Devolvé status HTTP coherentes: 200, 201, 400, 401, 403, 404 o 500 según corresponda."
+            "Exportá solo los métodos HTTP que el endpoint admite.",
+            "Validá params, headers y body antes de usarlos.",
+            "Devuelve status correctos y errores normalizados.",
+            "Centralizá la lógica de dominio fuera del archivo route.ts cuando crezca."
           ],
           "commonMistakes": [
-            "Suponer que Next.js valida automáticamente el JSON entrante.",
-            "Usar route.ts junto con page.tsx en el mismo segmento para la misma URL.",
-            "Exponer errores internos o datos privados en la respuesta."
+            "Asumir que route.ts puede coexistir con page.tsx en el mismo segmento.",
+            "No validar JSON recibido ni controlar errores de parseo.",
+            "Responder 200 para cualquier resultado.",
+            "Exponer stack traces, tokens o detalles de base de datos."
           ],
           "resources": [
             {
@@ -15239,10 +16026,38 @@
             }
           ],
           "related": [
-            "nextjs-server-functions-actions",
-            "nextjs-validacion-datos",
-            "nextjs-pages-router-api"
-          ]
+            "express-routes-basics",
+            "api-rest",
+            "nextjs-validacion-datos"
+          ],
+          "deepDive": {
+            "model": "Route Handlers son puntos de entrada HTTP definidos mediante route.ts dentro de app. Usan las APIs estándar Request y Response y exportan funciones por método, como GET, POST, PATCH o DELETE. No pueden coexistir con page.tsx en el mismo segmento de ruta. Un handler es un límite de confianza: debe validar URL, headers, body, sesión y permisos, y devolver status y headers apropiados.",
+            "flow": [
+              [
+                "Resolver el endpoint",
+                "La ruta app/api/.../route.ts define la URL y los métodos disponibles."
+              ],
+              [
+                "Recibir la solicitud",
+                "El handler recibe Request y, para rutas dinámicas, params asíncronos según la versión actual."
+              ],
+              [
+                "Validar y ejecutar",
+                "Se comprueba entrada y autorización y se delega la operación al servicio de dominio."
+              ],
+              [
+                "Construir la respuesta",
+                "Response.json o Response devuelven status, headers y representación al cliente."
+              ]
+            ],
+            "decisions": [
+              "Usá Route Handlers para webhooks, endpoints consumibles por otros clientes y contratos HTTP explícitos.",
+              "Usá Server Actions para mutaciones internas de UI cuando no necesitás una API separada.",
+              "No devuelvas errores internos ni stack traces; normalizá respuestas de validación, autenticación y fallos inesperados.",
+              "Definí métodos permitidos, status, formato de error, caché y límites de body como parte del contrato."
+            ],
+            "debugging": "Si el endpoint devuelve 405, comprobá que exportaste el método HTTP correcto. Si una ruta dinámica no lee params, usá await params en Next.js 16. Si el body no se puede parsear, inspeccioná Content-Type y el JSON enviado. Si el handler comparte segmento con page.tsx, separá la URL."
+          }
         },
         {
           "id": "nextjs-cookies-headers",
@@ -15927,7 +16742,7 @@
           "category": "security-types",
           "summary": "Separá la identificación del usuario de los permisos que puede ejercer dentro de la aplicación.",
           "purpose": "Autenticación responde quién es el usuario; autorización determina qué puede hacer. Next.js permite integrar proveedores de autenticación, sesiones en cookies y capas de acceso a datos. La documentación recomienda verificar permisos en el servidor, junto al dato o la operación sensible, y no depender solo de una redirección visual.",
-          "whenToUse": "Usalo en paneles, cuentas, contenido privado y funciones con roles. Para proyectos reales, considerá una biblioteca o proveedor de autenticación en lugar de diseñar desde cero el almacenamiento y renovación de credenciales.",
+          "whenToUse": "Usá autenticación y autorización cuando haya cuentas, datos privados, roles o acciones protegidas. Centralizá las comprobaciones de datos en una DAL y preferí bibliotecas de autenticación mantenidas.",
           "syntax": "solicitud → verificar sesión → verificar permisos → consultar o modificar datos",
           "level": "Avanzado",
           "examples": [
@@ -15955,31 +16770,36 @@
           "parameters": [
             {
               "name": "Autenticación",
-              "description": "Proceso que identifica al usuario y establece una sesión."
+              "description": "Verifica la identidad del usuario."
+            },
+            {
+              "name": "Sesión",
+              "description": "Mantiene el contexto de identidad entre solicitudes."
             },
             {
               "name": "Autorización",
-              "description": "Comprobación de que el usuario puede realizar una operación concreta."
+              "description": "Verifica si la identidad puede realizar una acción sobre un recurso."
             },
             {
-              "name": "DAL (Data Access Layer)",
-              "description": "Capa de servidor que centraliza acceso a datos y verificaciones de permisos."
+              "name": "Data Access Layer",
+              "description": "Centraliza acceso y comprobaciones de permisos junto a los datos."
             },
             {
-              "name": "server-only",
-              "description": "Paquete marcador para evitar importar un módulo sensible desde código cliente."
+              "name": "DTO",
+              "description": "Devuelve solo los campos que el consumidor necesita."
             }
           ],
           "bestPractices": [
-            "Verificá permisos junto a las consultas o mutaciones sensibles.",
-            "Mantené el código de sesión en módulos server-only.",
-            "Usá cookies seguras y expiraciones adecuadas.",
-            "Considerá un proveedor de autenticación probado para producción."
+            "Usá bibliotecas mantenidas para gestión de identidad y sesiones en producción.",
+            "Aplicá autorización cerca de cada consulta y mutación.",
+            "Usá DAL y DTOs para centralizar acceso y exposición mínima de datos.",
+            "Configurá cookies seguras y nunca almacenes contraseñas en texto plano."
           ],
           "commonMistakes": [
-            "Proteger una ruta solo ocultando el enlace en el frontend.",
-            "Confiar en que Proxy detiene todas las solicitudes directas a acciones y APIs.",
-            "Aceptar un userId enviado por el navegador sin compararlo con la sesión."
+            "Ocultar un botón y asumir que la acción está protegida.",
+            "Comprobar sesión sin comprobar propiedad o rol del recurso.",
+            "Guardar contraseñas en texto plano o inventar criptografía propia.",
+            "Devolver objetos completos de base de datos que contienen campos privados."
           ],
           "resources": [
             {
@@ -15993,10 +16813,37 @@
           ],
           "related": [
             "nextjs-server-security",
-            "nextjs-cookies-headers",
-            "nextjs-proxy",
-            "nextjs-server-functions-actions"
-          ]
+            "nextjs-server-functions-actions",
+            "nextjs-validacion-datos"
+          ],
+          "deepDive": {
+            "model": "Autenticación responde quién es el usuario; administración de sesión conserva esa identidad entre solicitudes; autorización decide qué datos y acciones puede utilizar. Un control de interfaz o una redirección mejora la experiencia, pero la protección real debe ejecutarse cerca de la fuente de datos y dentro de cada mutación. La documentación actual de Next recomienda una Data Access Layer centralizada y DTOs que devuelvan solo los campos necesarios; para producción suele ser más seguro utilizar una biblioteca de autenticación.",
+            "flow": [
+              [
+                "Autenticar identidad",
+                "El proveedor verifica credenciales y devuelve una identidad o mecanismo de sesión."
+              ],
+              [
+                "Mantener sesión",
+                "La aplicación conserva una sesión en cookie segura o almacenamiento de sesión apropiado."
+              ],
+              [
+                "Autorizar operación",
+                "La DAL comprueba identidad, roles y permisos para acceder a datos o realizar una mutación."
+              ],
+              [
+                "Devolver datos mínimos",
+                "Un DTO expone únicamente los campos que el consumidor necesita y nunca secretos internos."
+              ]
+            ],
+            "decisions": [
+              "Preferí una biblioteca de autenticación mantenida para login, proveedores externos, MFA, renovación y revocación de sesiones.",
+              "Centralizá lecturas protegidas en una Data Access Layer marcada `server-only` y aplicá permisos cerca de la fuente de datos.",
+              "Verificá autorización de nuevo dentro de cada Server Action y Route Handler; no confíes en ocultar botones ni en checks de Proxy como única barrera.",
+              "Usá cookies con httpOnly, secure en HTTPS, sameSite y path apropiados; no guardes contraseñas en texto plano y utiliza hash resistente mediante una solución apropiada."
+            ],
+            "debugging": "Si un usuario ve datos ajenos, revisá que cada consulta filtre por la identidad autorizada y no solo por un ID recibido. Si una sesión no persiste, comprobá atributos de cookie, dominio, HTTPS y expiración. Si un layout parece no revalidar permisos en cada navegación, mové el control seguro a la DAL o al acceso a datos."
+          }
         },
         {
           "id": "nextjs-server-security",
@@ -16077,7 +16924,7 @@
           "category": "security-types",
           "summary": "Validá entradas de formularios y APIs en tiempo de ejecución, además de utilizar TypeScript.",
           "purpose": "TypeScript verifica relaciones entre tipos durante el desarrollo, pero no transforma automáticamente datos JSON, FormData o parámetros externos en valores confiables. Una biblioteca de esquemas como Zod valida los datos en runtime y puede inferir tipos estáticos a partir del esquema. La validación debe ocurrir en el servidor antes de guardar o ejecutar acciones.",
-          "whenToUse": "Usalo para formularios, APIs, filtros y cualquier entrada externa. Definí esquemas reutilizables para evitar que la misma regla se copie en múltiples rutas.",
+          "whenToUse": "Usá validación runtime en cada frontera de datos: formularios, query strings, params, JSON y headers. TypeScript por sí solo no valida información en ejecución.",
           "syntax": "const resultado = esquema.safeParse(valor);\nif (!resultado.success) { /* errores */ }",
           "level": "Intermedio",
           "examples": [
@@ -16098,37 +16945,50 @@
               "description": "El mismo esquema puede aportar un tipo de TypeScript.",
               "code": "type NuevaNovela = z.infer<typeof NovelaSchema>;\n\nfunction mostrarResumen(novela: NuevaNovela) {\n  return novela.titulo + \" · \" + novela.volumenes + \" volúmenes\";\n}",
               "explanation": "El tipo inferido evita duplicar la definición en el código estático. La validación real sigue realizándose con parse o safeParse."
+            },
+            {
+              "title": "Inferir el tipo validado para un servicio",
+              "description": "Reutilizá un esquema como fuente de verdad para validación runtime y tipado estático.",
+              "language": "typescript",
+              "code": "import { z } from 'zod';\n\nexport const CrearNovelaSchema = z.object({\n  titulo: z.string().trim().min(1).max(120),\n  autorId: z.string().uuid(),\n  publicada: z.boolean().default(false)\n});\n\nexport type CrearNovelaInput = z.infer<typeof CrearNovelaSchema>;\n\nexport function validarCrearNovela(input: unknown) {\n  return CrearNovelaSchema.safeParse(input);\n}",
+              "explanation": "El esquema valida en runtime y z.infer deriva el contrato estático. El servicio debe usar parsed.data únicamente cuando success sea true; no conviertas un objeto desconocido con as CrearNovelaInput."
             }
           ],
           "exercise": "Creá un esquema para un formulario de registro y validá los datos en una Server Action antes de insertarlos.",
           "hint": "TypeScript no valida datos externos durante la ejecución. Usá safeParse y revisá success antes de leer data.",
           "parameters": [
             {
-              "name": "z.object()",
-              "description": "Define un esquema de objeto con propiedades validables."
+              "name": "z.object",
+              "description": "Declara un esquema de objeto."
             },
             {
-              "name": "z.string().min().max()",
-              "description": "Valida que una cadena cumpla límites de longitud."
+              "name": "safeParse",
+              "description": "Devuelve success/data o error sin lanzar por validación fallida."
             },
             {
-              "name": "safeParse(value)",
-              "description": "Devuelve un objeto con success y data o errores de validación."
+              "name": "z.coerce",
+              "description": "Convierte una entrada antes de aplicar validaciones."
             },
             {
-              "name": "z.infer<typeof Schema>",
-              "description": "Extrae el tipo estático que corresponde a un esquema Zod."
+              "name": "z.infer",
+              "description": "Obtiene el tipo TypeScript derivado de un esquema Zod."
+            },
+            {
+              "name": "FormData.get",
+              "description": "Lee el valor enviado por un control con atributo name."
             }
           ],
           "bestPractices": [
-            "Centralizá esquemas reutilizables para compartir reglas entre formularios y APIs.",
-            "Validá en servidor aunque también uses restricciones HTML en cliente.",
-            "Mostrá errores comprensibles sin filtrar detalles internos."
+            "Validá toda entrada externa en runtime.",
+            "Reutilizá esquemas para formularios y servicios cuando el contrato sea compartido.",
+            "Limitá longitud, rangos y formatos, no solo tipos primitivos.",
+            "No expongas detalles internos del validador o del servidor en respuestas públicas."
           ],
           "commonMistakes": [
-            "Creer que una interfaz TypeScript valida una respuesta JSON en runtime.",
-            "Usar parse sin manejar excepciones cuando el error es un resultado esperado del formulario.",
-            "Validar campos en cliente y olvidar repetir la comprobación en servidor."
+            "Confundir anotaciones TypeScript con validación runtime.",
+            "Convertir strings a números sin revisar NaN y rangos.",
+            "Validar solo el cliente y confiar en sus resultados.",
+            "Devolver detalles internos del esquema o servidor a visitantes."
           ],
           "resources": [
             {
@@ -16141,10 +17001,38 @@
             }
           ],
           "related": [
-            "nextjs-formularios-useactionstate",
-            "nextjs-route-handlers",
-            "nextjs-server-security"
-          ]
+            "ts-type-guards",
+            "express-validation",
+            "nextjs-route-handlers"
+          ],
+          "deepDive": {
+            "model": "TypeScript describe datos esperados durante el desarrollo, pero los formularios, URLs, headers y bodies llegan en runtime y pueden contener cualquier valor. Un esquema Zod valida la entrada y produce un resultado discriminado: si safeParse tiene éxito, data cumple el contrato; si falla, error contiene los detalles. El esquema puede inferir un tipo estático para evitar duplicar la definición, pero la validación debe ejecutarse en cada límite externo.",
+            "flow": [
+              [
+                "Recibir entrada no confiable",
+                "FormData, parámetros, JSON y headers se consideran datos controlados por el cliente."
+              ],
+              [
+                "Validar con esquema",
+                "safeParse o parse comprueban tipos, formato, rangos, tamaño y campos requeridos."
+              ],
+              [
+                "Normalizar entrada",
+                "El código puede trim, coercionar valores permitidos y eliminar campos que no forman parte del contrato."
+              ],
+              [
+                "Ejecutar lógica segura",
+                "Solo los datos validados se envían a los servicios y a la capa de persistencia."
+              ]
+            ],
+            "decisions": [
+              "Usá `safeParse` cuando quieras devolver errores de formulario sin lanzar una excepción; usá `parse` cuando un fallo de validación deba propagarse.",
+              "Definí esquemas compartidos cerca de la capa de dominio o en un módulo que puedan importar tanto cliente como servidor sin secretos.",
+              "Validá también los parámetros de ruta y query; no confíes en que solo el body necesita validación.",
+              "No uses tipos TypeScript como reemplazo de Zod: el tipo desaparece en runtime y no comprueba los datos recibidos."
+            ],
+            "debugging": "Si un campo requerido falla aunque el formulario lo muestre, comprobá el atributo name y el valor real de FormData. Si un número llega como string, aplicá una conversión validada en el esquema. Si el cliente ve un mensaje genérico, devolvé errores de campo seguros sin revelar detalles internos."
+          }
         },
         {
           "id": "nextjs-typescript",
