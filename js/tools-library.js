@@ -91,14 +91,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const list = node("ol", className);
     (steps || []).forEach((step, index) => {
       const item = node("li", "tools-flow-step");
-      item.append(
-        node("span", "tools-flow-number", String(index + 1).padStart(2, "0")),
-        node("span", "tools-flow-copy",
-          ""
-        )
-      );
-      const copy = item.querySelector(".tools-flow-copy");
-      copy.append(node("strong", "", step.title || ""), node("span", "", step.detail || ""));
+      item.append(node("span", "tools-flow-number", String(index + 1).padStart(2, "0")));
+      const copy = node("span", "tools-flow-copy");
+      const title = Array.isArray(step) ? step[0] : step.title;
+      const detail = Array.isArray(step) ? step[1] : step.detail;
+      copy.append(node("strong", "", title || ""), node("span", "", detail || ""));
+      item.append(copy);
       list.append(item);
     });
     return list;
