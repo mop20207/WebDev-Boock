@@ -1,7 +1,7 @@
 {
-  "version": 21,
+  "version": 22,
   "articleCount": 387,
-  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web.",
+  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías.",
   "tools": [
     {
       "id": "terminal",
@@ -107,6 +107,13 @@
               "description": "Dos comandos sencillos para inspeccionar el entorno.",
               "code": "whoami\\nuname -s",
               "explanation": "whoami muestra el usuario actual; uname -s indica el nombre del sistema operativo o núcleo."
+            },
+            {
+              "title": "Preparar una carpeta y comprobar dónde estás",
+              "description": "Encadená creación de directorio, cambio de ubicación y salida informativa sin depender de una ruta escrita a mano.",
+              "language": "bash",
+              "code": "# Crear la carpeta si todavía no existe y entrar\nmkdir -p webdev-lab && cd webdev-lab\n\n# Mostrar la ruta actual\nprintf 'Proyecto actual: %s\\n' \"$PWD\"",
+              "explanation": "mkdir -p evita un error si la carpeta ya existe. && ejecuta cd solo si mkdir terminó correctamente. PWD suele contener el directorio actual y printf permite mostrarlo con formato."
             }
           ],
           "exercise": "Abrí una terminal y ejecutá pwd, whoami y uname -a. Anotá qué información devuelve cada uno.",
@@ -131,7 +138,30 @@
           "related": [
             "terminal-ayuda",
             "terminal-shell"
-          ]
+          ],
+          "deepDive": {
+            "model": "Pensá en tres capas: la terminal es la ventana donde escribís y ves resultados; la shell es el programa que interpreta ese texto; y el sistema operativo ejecuta los procesos solicitados. Por eso, escribir un comando no equivale a ejecutar una función de JavaScript: la shell primero interpreta reglas como comillas, variables, tuberías y redirecciones.",
+            "flow": [
+              [
+                "Preparación del contexto",
+                "La shell mantiene un directorio actual, variables de entorno y una configuración. PATH indica en qué carpetas buscar ejecutables cuando escribís un nombre sin ruta."
+              ],
+              [
+                "Interpretación",
+                "La shell separa argumentos, expande variables y comodines y conecta comandos mediante operadores como |, > y &&."
+              ],
+              [
+                "Ejecución y salida",
+                "El programa recibe argumentos y flujos estándar. El código de salida permite encadenar operaciones o detectar fallos."
+              ]
+            ],
+            "decisions": [
+              "Usá rutas relativas cuando el comando deba trabajar dentro del proyecto y rutas absolutas cuando necesites evitar ambigüedades.",
+              "Antes de ejecutar comandos destructivos, comprobá pwd y ls; el mismo comando puede afectar archivos distintos según el directorio actual."
+            ],
+            "debugging": "Si aparece 'command not found', comprobá el nombre, la instalación y PATH. Si aparece 'permission denied', revisá permisos y propietario antes de recurrir a privilegios elevados."
+          },
+          "whenToUse": "Usá la terminal cuando necesites ejecutar herramientas, automatizar tareas, inspeccionar archivos, iniciar servidores o repetir operaciones de forma precisa. Es especialmente útil en proyectos porque muchos procesos de desarrollo, pruebas y despliegue se ejecutan desde comandos."
         },
         {
           "id": "terminal-ayuda",
@@ -800,7 +830,30 @@
             "terminal-tuberias"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Del comando al resultado",
+        "summary": "La terminal muestra una interfaz de texto; la shell interpreta lo que escribís y solicita al sistema operativo que ejecute procesos.",
+        "steps": [
+          [
+            "Escribís un comando",
+            "La terminal recibe texto y lo entrega a la shell junto con el directorio actual y las variables de entorno."
+          ],
+          [
+            "La shell lo interpreta",
+            "Resuelve expansiones, comillas, tuberías, redirecciones y búsqueda del ejecutable mediante PATH."
+          ],
+          [
+            "El sistema crea el proceso",
+            "El sistema operativo inicia el programa y conecta su entrada, salida y salida de error."
+          ],
+          [
+            "Vuelve el resultado",
+            "La shell muestra stdout o stderr y conserva el código de salida para saber si la operación terminó correctamente."
+          ]
+        ],
+        "note": "Terminal, shell y proceso son piezas distintas. Un error puede venir de la sintaxis de la shell, de un programa o de permisos del sistema."
+      }
     },
     {
       "id": "git",
@@ -878,6 +931,13 @@
               "description": "Abrí la ayuda general o la de un comando específico.",
               "code": "git help\\ngit help commit",
               "explanation": "La ayuda describe la sintaxis y las opciones disponibles."
+            },
+            {
+              "title": "Revisar antes de preparar un commit",
+              "description": "Inspeccioná qué cambió y evitá incluir archivos por accidente.",
+              "language": "bash",
+              "code": "# Resumen corto de archivos modificados\ngit status --short\n\n# Diferencias que todavía no están preparadas\ngit diff",
+              "explanation": "git status --short ofrece un resumen compacto. git diff muestra cambios del working tree que todavía no están en staging. Después podés decidir qué agregar con git add; revisar antes reduce commits con archivos temporales o secretos."
             }
           ],
           "exercise": "Explicá qué problema resuelve el control de versiones y por qué puede ser útil recuperar una versión anterior.",
@@ -902,7 +962,30 @@
           "related": [
             "git-github",
             "git-config"
-          ]
+          ],
+          "deepDive": {
+            "model": "Git puede entenderse como una máquina de instantáneas conectadas. El working tree contiene lo que editás, el staging area selecciona qué entrará en el próximo commit y el commit guarda una instantánea identificada por su hash. Una rama es una referencia que apunta a un commit; al crear otro commit, esa referencia avanza.",
+            "flow": [
+              [
+                "Comparar estados",
+                "git status resume diferencias y git diff permite inspeccionar cambios que todavía no están preparados."
+              ],
+              [
+                "Seleccionar contenido",
+                "git add copia al índice la versión de los cambios que querés incluir; podés preparar archivos o partes concretas."
+              ],
+              [
+                "Crear historia",
+                "git commit crea una nueva instantánea vinculada con su commit padre y actualiza la rama actual."
+              ]
+            ],
+            "decisions": [
+              "Hacé commits pequeños y con una intención comprensible; facilitan revisar y revertir cambios.",
+              "Usá ramas para aislar trabajo. fetch trae información del remoto sin integrar cambios automáticamente; pull combina descarga e integración."
+            ],
+            "debugging": "Si un archivo no aparece en el commit, revisá el staging con git status y git diff --staged. Si hay conflictos, resolvé los marcadores y verificá el resultado antes de crear el commit de merge."
+          },
+          "whenToUse": "Usá Git desde el primer momento en que un proyecto tenga cambios que quieras conservar, comparar o compartir. También permite experimentar en ramas, revisar contribuciones y recuperar estados anteriores sin depender de copias manuales de carpetas."
         },
         {
           "id": "git-config",
@@ -1364,7 +1447,30 @@
             "git-add-commit"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo se guarda el historial",
+        "summary": "Git construye un historial de instantáneas; el área de preparación permite elegir qué cambios entran en cada commit.",
+        "steps": [
+          [
+            "Working tree",
+            "Editás archivos del proyecto. Git compara su estado con el último commit."
+          ],
+          [
+            "Staging area",
+            "Con git add seleccionás exactamente qué cambios formarán parte de la próxima instantánea."
+          ],
+          [
+            "Commit",
+            "Git crea un objeto commit que apunta a un árbol de archivos y al commit padre."
+          ],
+          [
+            "Ramas y remoto",
+            "Las ramas son referencias móviles. Push y fetch sincronizan referencias y objetos con otro repositorio."
+          ]
+        ],
+        "note": "Git no guarda simplemente una lista de diferencias: cada commit representa una instantánea y se conecta con su historia mediante referencias."
+      }
     },
     {
       "id": "npm",
@@ -1427,6 +1533,13 @@
               "description": "La ayuda puede abrirse para comandos concretos.",
               "code": "npm help install\\nnpm help scripts",
               "explanation": "La documentación explica opciones y comportamientos."
+            },
+            {
+              "title": "Crear un proyecto con Vite",
+              "description": "Generá una aplicación base, instalá dependencias y ejecutá el servidor de desarrollo.",
+              "language": "bash",
+              "code": "# Crear un proyecto JavaScript con Vite\nnpm create vite@latest mi-app -- --template vanilla\ncd mi-app\nnpm install\nnpm run dev",
+              "explanation": "El generador crea el manifiesto y los archivos iniciales. npm install instala lo declarado en el proyecto. npm run dev ejecuta el script definido por la plantilla; la terminal muestra la URL local disponible."
             }
           ],
           "exercise": "Verificá las versiones instaladas y explicá qué papel cumple Node.js y cuál cumple NPM.",
@@ -1451,7 +1564,30 @@
           "related": [
             "npm-node",
             "npm-package-json"
-          ]
+          ],
+          "deepDive": {
+            "model": "NPM no es solo un comando para descargar librerías. Mantiene el contrato de dependencias del proyecto, calcula una resolución compatible de versiones, instala paquetes y ejecuta scripts. El manifiesto describe lo que necesita el proyecto; el lockfile registra una resolución concreta para que otros entornos puedan reproducirla.",
+            "flow": [
+              [
+                "Declarar",
+                "package.json enumera dependencias, rangos de versión y comandos repetibles en scripts."
+              ],
+              [
+                "Resolver",
+                "El gestor construye un árbol compatible teniendo en cuenta dependencias directas, transitivas y restricciones."
+              ],
+              [
+                "Reproducir",
+                "package-lock.json fija la resolución. npm ci instala desde ese lockfile y falla si no coincide con el manifiesto."
+              ]
+            ],
+            "decisions": [
+              "Usá dependencias de desarrollo para herramientas que no forman parte del runtime de producción, como linters y bundlers.",
+              "Preferí npm ci en automatizaciones que requieren instalación reproducible desde un lockfile comprometido."
+            ],
+            "debugging": "Si una dependencia no se encuentra, confirmá el nombre del paquete y el registro configurado. Si el proyecto se comporta distinto en otra máquina, compará Node, NPM y el lockfile antes de borrar node_modules."
+          },
+          "whenToUse": "Usá NPM para instalar y actualizar paquetes, mantener dependencias del proyecto, ejecutar scripts y compartir una instalación reproducible mediante package.json y package-lock.json. Es la herramienta habitual cuando trabajás con proyectos JavaScript y Node.js."
         },
         {
           "id": "npm-node",
@@ -1960,7 +2096,30 @@
             "npm-update"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "De una dependencia a un proyecto ejecutable",
+        "summary": "NPM administra dependencias, versiones, scripts y la instalación reproducible de paquetes de JavaScript.",
+        "steps": [
+          [
+            "package.json",
+            "El manifiesto declara nombre, scripts y rangos de versiones de dependencias."
+          ],
+          [
+            "Resolución de versiones",
+            "NPM consulta el registro y resuelve el árbol compatible con las reglas declaradas."
+          ],
+          [
+            "package-lock.json",
+            "El lockfile registra las versiones concretas y metadatos para repetir la instalación."
+          ],
+          [
+            "node_modules y scripts",
+            "Los paquetes quedan disponibles para el proyecto y npm run ejecuta los scripts definidos."
+          ]
+        ],
+        "note": "package.json expresa lo que el proyecto necesita; package-lock.json fija la resolución obtenida. No conviene editar manualmente node_modules."
+      }
     },
     {
       "id": "react",
@@ -2071,6 +2230,32 @@
               "label": "React — Tu primera aplicación",
               "url": "https://react.dev/learn"
             }
+          ],
+          "deepDive": {
+            "model": "El componente describe qué debería verse para un conjunto de props, estado y contexto. No es una plantilla que se modifica línea por línea: es una función declarativa que React vuelve a ejecutar cuando sus entradas cambian. El estado pertenece a la posición del componente en el árbol, no a una variable mutable común.",
+            "flow": [
+              [
+                "Entrada",
+                "Props llegan del componente padre; el estado local y el contexto aportan los demás datos reactivos."
+              ],
+              [
+                "Render",
+                "React ejecuta el componente para calcular los elementos que describen la interfaz."
+              ],
+              [
+                "Commit y efectos",
+                "React aplica cambios al DOM y luego gestiona efectos que sincronizan con sistemas externos."
+              ]
+            ],
+            "decisions": [
+              "Separá componentes según responsabilidades y datos que cambian juntos; no dividas cada etiqueta en un componente sin motivo.",
+              "Usá estado para información cambiante; calculá valores derivados durante el render en vez de duplicarlos en useState."
+            ],
+            "debugging": "Si la UI no cambia, comprobá que uses el setter y no mutés objetos o arreglos. Si un efecto se repite, revisá sus dependencias y si realmente sincroniza con un sistema externo."
+          },
+          "related": [
+            "ts-que-es-typescript",
+            "api-http"
           ]
         },
         {
@@ -2476,7 +2661,30 @@
             }
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Del estado a la interfaz",
+        "summary": "React describe la UI como una función de props, estado y contexto. Un cambio de datos provoca un nuevo renderizado y una actualización del DOM cuando corresponde.",
+        "steps": [
+          [
+            "Interacción o nueva prop",
+            "Un evento, un setter o un padre produce una nueva entrada para el componente."
+          ],
+          [
+            "Renderizado",
+            "React vuelve a ejecutar los componentes afectados para calcular qué UI describen los nuevos datos."
+          ],
+          [
+            "Reconciliación",
+            "Compara el nuevo árbol de elementos con el anterior para determinar qué debe cambiar."
+          ],
+          [
+            "Commit al DOM",
+            "Aplica las mutaciones necesarias al DOM y ejecuta los efectos correspondientes al ciclo de commit."
+          ]
+        ],
+        "note": "Renderizar no significa necesariamente reemplazar todo el DOM. React calcula y aplica los cambios necesarios; los efectos no deben usarse para calcular datos derivados."
+      }
     },
     {
       "id": "webcomponents",
@@ -2608,6 +2816,32 @@
               "label": "web.dev — Custom elements",
               "url": "https://web.dev/articles/custom-elements-v1"
             }
+          ],
+          "deepDive": {
+            "model": "Web Components reúne estándares del navegador, no un framework único. Custom Elements define etiquetas con comportamiento propio; Shadow DOM encapsula una parte del árbol y sus estilos; HTML templates y slots ayudan a reutilizar estructura y contenido. El contrato del componente lo diseñás vos mediante atributos, propiedades, métodos y eventos.",
+            "flow": [
+              [
+                "Registro",
+                "La clase se registra una sola vez con un nombre válido que contiene guion."
+              ],
+              [
+                "Ciclo de vida",
+                "connectedCallback y disconnectedCallback permiten iniciar y limpiar recursos al entrar o salir del documento."
+              ],
+              [
+                "API pública",
+                "observedAttributes y attributeChangedCallback reaccionan a atributos; CustomEvent comunica cambios hacia afuera."
+              ]
+            ],
+            "decisions": [
+              "Preferí atributos para configuración serializable en HTML y propiedades para objetos o valores complejos.",
+              "Usá Shadow DOM cuando el encapsulamiento de estilos y estructura aporte valor; no es obligatorio para cada elemento personalizado."
+            ],
+            "debugging": "Si el elemento no se reconoce, verificá que el script se ejecute antes o después del marcado de forma controlada y que el nombre incluya guion. Si registrás dos veces el mismo nombre, el navegador lanza una excepción."
+          },
+          "related": [
+            "api-http",
+            "ts-que-es-typescript"
           ]
         },
         {
@@ -3084,7 +3318,30 @@
             }
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo cobra vida una etiqueta personalizada",
+        "summary": "Las APIs nativas del navegador permiten registrar elementos propios, encapsular estructura y estilos y reaccionar a su ciclo de vida.",
+        "steps": [
+          [
+            "Definir la clase",
+            "Una clase extiende HTMLElement y describe el comportamiento del elemento."
+          ],
+          [
+            "Registrar el nombre",
+            "customElements.define vincula un nombre con guion a esa clase en el registro del navegador."
+          ],
+          [
+            "Conectar al documento",
+            "Cuando aparece en el DOM, connectedCallback permite inicializar comportamiento y estructura."
+          ],
+          [
+            "Encapsular y comunicar",
+            "Shadow DOM y slots organizan el contenido; atributos y eventos personalizados permiten configurar y comunicar el componente."
+          ]
+        ],
+        "note": "Un Custom Element no necesita un framework. El Shadow DOM ofrece encapsulación, pero no reemplaza la necesidad de definir una API clara para atributos, propiedades y eventos."
+      }
     },
     {
       "id": "vuejs",
@@ -3222,6 +3479,32 @@
               "label": "Vue — Comparación de API styles",
               "url": "https://vuejs.org/guide/introduction.html#api-styles"
             }
+          ],
+          "deepDive": {
+            "model": "La reactividad es el mecanismo central de Vue 3. ref crea una referencia reactiva y reactive envuelve un objeto; al leer sus propiedades durante el render o un efecto, Vue registra dependencias. Cuando una dependencia cambia, Vue programa las actualizaciones necesarias. Así no tenés que reconstruir manualmente la interfaz.",
+            "flow": [
+              [
+                "Declarar estado",
+                "ref funciona bien para valores individuales y reactive para estructuras de objetos."
+              ],
+              [
+                "Derivar y observar",
+                "computed calcula un valor derivado; watch permite reaccionar a cambios cuando existe un efecto secundario que ejecutar."
+              ],
+              [
+                "Renderizar",
+                "Las plantillas se compilan y Vue actualiza las partes de la vista que dependen de los datos modificados."
+              ]
+            ],
+            "decisions": [
+              "Elegí Composition API para lógica organizada por características y reutilización mediante composables; Options API sigue siendo válida en proyectos que la usan.",
+              "No uses watch para algo que computed puede expresar como valor derivado."
+            ],
+            "debugging": "En JavaScript, recordá acceder a .value cuando trabajás directamente con un ref fuera de la plantilla. Si una vista no reacciona, comprobá que no hayas perdido la referencia al desestructurar objetos reactivos."
+          },
+          "related": [
+            "api-http",
+            "test-que-es"
           ]
         },
         {
@@ -4419,7 +4702,30 @@
             }
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo funciona la reactividad de Vue",
+        "summary": "Vue registra qué parte de la interfaz utiliza cada dato reactivo y vuelve a ejecutar los efectos necesarios cuando ese dato cambia.",
+        "steps": [
+          [
+            "Crear estado reactivo",
+            "ref y reactive exponen valores que Vue puede observar."
+          ],
+          [
+            "Registrar dependencias",
+            "Durante el render o un efecto, Vue registra qué propiedades reactivas fueron leídas."
+          ],
+          [
+            "Detectar el cambio",
+            "Al modificar un ref o una propiedad observada, Vue notifica los efectos dependientes."
+          ],
+          [
+            "Actualizar la vista",
+            "Vue programa la actualización y aplica los cambios al DOM mediante su sistema de renderizado."
+          ]
+        ],
+        "note": "computed representa valores derivados y watch observa cambios para ejecutar efectos. No todo dato tiene que convertirse en estado reactivo."
+      }
     },
     {
       "id": "nodejs",
@@ -4557,7 +4863,29 @@
             "node-instalacion",
             "node-process",
             "node-modulos"
-          ]
+          ],
+          "deepDive": {
+            "model": "Node.js es un entorno de ejecución construido sobre V8 y bibliotecas de sistema. El código JavaScript de una operación síncrona se ejecuta en el hilo principal; las operaciones de entrada/salida pueden delegarse al sistema operativo o al pool de libuv. Cuando terminan, sus callbacks quedan listos para que el event loop los procese.",
+            "flow": [
+              [
+                "Callback inicial",
+                "El event loop ejecuta una función JavaScript y esta puede realizar trabajo síncrono."
+              ],
+              [
+                "I/O no bloqueante",
+                "La operación de red o archivo se inicia sin mantener ocupado el hilo JavaScript durante toda la espera."
+              ],
+              [
+                "Continuación",
+                "Al completarse la operación, Node procesa la continuación en la fase correspondiente del event loop."
+              ]
+            ],
+            "decisions": [
+              "Usá streams para procesar archivos o respuestas grandes sin cargar todo el contenido en memoria.",
+              "Separá tareas intensivas de CPU mediante worker_threads o procesos cuando bloqueen el event loop."
+            ],
+            "debugging": "Una API marcada async no vuelve no bloqueante a cualquier función que contenga. Medí latencia y uso de CPU; una transformación pesada en un callback puede retrasar todas las solicitudes."
+          }
         },
         {
           "id": "node-instalacion",
@@ -6120,7 +6448,30 @@
             "node-testing"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo procesa trabajo Node.js",
+        "summary": "Node.js ejecuta JavaScript en un hilo principal por entorno, delega operaciones de I/O y procesa sus callbacks cuando los resultados están disponibles.",
+        "steps": [
+          [
+            "Llega una solicitud o evento",
+            "El servidor recibe trabajo y ejecuta el callback asociado."
+          ],
+          [
+            "JavaScript ejecuta lo síncrono",
+            "El código ocupa el hilo de JavaScript hasta terminar; una tarea CPU-intensiva puede bloquear otras solicitudes."
+          ],
+          [
+            "Se delega I/O",
+            "Operaciones de red, archivos y temporizadores se coordinan mediante APIs del entorno y libuv/operating system."
+          ],
+          [
+            "El event loop retoma callbacks",
+            "Cuando una operación está lista, Node programa y ejecuta su continuación en el momento correspondiente."
+          ]
+        ],
+        "note": "Asíncrono no significa que todo JavaScript corra en paralelo. Evitá bloquear el hilo principal; para trabajo CPU-intensivo evaluá workers o procesos separados."
+      }
     },
     {
       "id": "astro",
@@ -6250,7 +6601,29 @@
             "astro-instalacion",
             "astro-paginas",
             "astro-islas"
-          ]
+          ],
+          "deepDive": {
+            "model": "Astro está pensado para enviar HTML útil primero. Los componentes Astro se procesan en el servidor o durante el build y no envían automáticamente un runtime de interfaz al navegador. Cuando una zona necesita interacción, una directiva client:* crea una isla que hidrata ese componente de manera selectiva.",
+            "flow": [
+              [
+                "Render del servidor/build",
+                "Se ejecuta el frontmatter y se construye la estructura HTML."
+              ],
+              [
+                "Entrega del contenido",
+                "El navegador puede mostrar el HTML sin esperar que se hidrate una aplicación JavaScript completa."
+              ],
+              [
+                "Hidratación selectiva",
+                "Solo los componentes marcados con directivas de cliente cargan el runtime y su comportamiento interactivo."
+              ]
+            ],
+            "decisions": [
+              "Es ideal para documentación, blogs, catálogos y sitios de contenido con interacción acotada.",
+              "Si toda la aplicación depende de estado cliente compartido y navegación altamente dinámica, compará si un framework SPA o Next.js encaja mejor."
+            ],
+            "debugging": "Si un componente de framework se ve pero no responde, comprobá que tenga la directiva client:* adecuada. Si el HTML no cambia según un usuario, distinguí entre contenido estático, render del servidor y datos que deben obtenerse en tiempo de petición."
+          }
         },
         {
           "id": "astro-instalacion",
@@ -7776,7 +8149,30 @@
             "astro-endpoints"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "De una página estática a islas interactivas",
+        "summary": "Astro prioriza HTML generado y agrega JavaScript en forma selectiva para las partes que realmente necesitan interacción.",
+        "steps": [
+          [
+            "Se procesa la página",
+            "Astro resuelve la ruta y ejecuta el frontmatter del componente en el servidor o durante el build."
+          ],
+          [
+            "Se genera HTML",
+            "Los componentes Astro producen marcado y el navegador puede mostrar contenido sin un runtime global de UI."
+          ],
+          [
+            "Se detectan las islas",
+            "Los componentes de UI que lo necesitan reciben directivas client:*."
+          ],
+          [
+            "Se hidrata lo necesario",
+            "Cada isla carga e hidrata su JavaScript según la estrategia elegida, sin volver interactiva toda la página."
+          ]
+        ],
+        "note": "La arquitectura de islas reduce JavaScript innecesario. Una isla cliente debe justificarse por interacción real; el contenido estático no necesita hidratarse."
+      }
     },
     {
       "id": "phaser",
@@ -7921,6 +8317,32 @@
               "label": "Phaser — Game Objects",
               "url": "https://docs.phaser.io/phaser/concepts/gameobjects"
             }
+          ],
+          "deepDive": {
+            "model": "Phaser mantiene un ciclo de juego que se repite muchas veces por segundo. Las escenas agrupan objetos, entrada, cámaras y sistemas; preload carga recursos, create prepara el mundo y update ejecuta la lógica en cada paso. El renderizado dibuja el estado resultante.",
+            "flow": [
+              [
+                "Preparar escena",
+                "preload carga assets antes de que la escena dependa de ellos."
+              ],
+              [
+                "Construir mundo",
+                "create crea sprites, grupos, animaciones, físicas y cámaras."
+              ],
+              [
+                "Simular",
+                "update procesa controles, reglas del juego, colisiones y cambios de estado."
+              ]
+            ],
+            "decisions": [
+              "Separá escenas cuando existan pantallas con ciclo de vida distinto, como menú, nivel y game over.",
+              "Usá Arcade Physics para físicas arcade sencillas; evaluá Matter si necesitás cuerpos y restricciones más avanzadas."
+            ],
+            "debugging": "Si un sprite no aparece, verificá que el asset se haya cargado con la misma clave que se usa al crearlo, su posición, profundidad y cámara activa. Evitá crear objetos nuevos en cada update sin necesidad."
+          },
+          "related": [
+            "test-que-es",
+            "ts-que-es-typescript"
           ]
         },
         {
@@ -9418,7 +9840,30 @@
             }
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Del arranque al siguiente frame del juego",
+        "summary": "Phaser organiza el juego en escenas y repite un ciclo de actualización y renderizado mientras las escenas están activas.",
+        "steps": [
+          [
+            "Arranca el juego",
+            "La configuración inicializa Phaser y registra las escenas disponibles."
+          ],
+          [
+            "Preload",
+            "La escena carga imágenes, audio, mapas y otros recursos necesarios."
+          ],
+          [
+            "Create",
+            "Se crean sprites, grupos, cámaras, animaciones, interfaces y sistemas de la escena."
+          ],
+          [
+            "Update y render",
+            "Cada paso del juego procesa entrada, lógica y físicas; después Phaser dibuja el frame."
+          ]
+        ],
+        "note": "Separá menú, juego y pantalla final en escenas cuando tengan responsabilidades distintas. Una escena puede pausarse, dormirse, reiniciarse o destruirse."
+      }
     },
     {
       "id": "typescript",
@@ -9576,7 +10021,30 @@
           "related": [
             "ts-diferencias-javascript",
             "ts-checking-static-runtime"
-          ]
+          ],
+          "deepDive": {
+            "model": "TypeScript agrega un sistema de tipos estático a JavaScript. El compilador analiza si los valores y operaciones encajan con los contratos declarados y puede emitir JavaScript. Los tipos desaparecen del código emitido: no verifican por sí mismos los datos que llegan por HTTP, formularios o archivos en tiempo de ejecución.",
+            "flow": [
+              [
+                "Describir contratos",
+                "Tipos, interfaces y anotaciones expresan la forma esperada de datos y funciones."
+              ],
+              [
+                "Comprobar",
+                "tsc detecta incompatibilidades antes de ejecutar, según las opciones del tsconfig."
+              ],
+              [
+                "Emitir JavaScript",
+                "Las anotaciones se eliminan y el código queda preparado para el runtime objetivo."
+              ]
+            ],
+            "decisions": [
+              "Activá strict y corregí los errores en vez de ocultarlos con any; unknown obliga a comprobar el valor antes de usarlo.",
+              "Validá en runtime toda entrada externa: un tipo TypeScript no convierte ni valida automáticamente un JSON."
+            ],
+            "debugging": "Si un error aparece solo en producción, revisá la diferencia entre comprobación estática y comportamiento runtime. Comprobá también target, module y la herramienta que realmente ejecuta o transpila los archivos."
+          },
+          "whenToUse": "Usá TypeScript cuando el proyecto tenga estructuras de datos, módulos o equipos que se beneficien de contratos explícitos y comprobaciones estáticas. Aporta especial valor a aplicaciones medianas o grandes, APIs y componentes reutilizables; no reemplaza la validación de datos en tiempo de ejecución."
         },
         {
           "id": "ts-diferencias-javascript",
@@ -11516,7 +11984,30 @@
             "ts-tipos-objetos"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Del código tipado al JavaScript ejecutable",
+        "summary": "TypeScript analiza tipos durante el desarrollo y la compilación; el navegador o Node.js ejecutan JavaScript, no los tipos de TypeScript.",
+        "steps": [
+          [
+            "Escribís archivos .ts",
+            "Declarás datos, funciones, interfaces, tipos y restricciones."
+          ],
+          [
+            "Comprobación estática",
+            "El compilador analiza compatibilidad y detecta ciertos errores antes de ejecutar."
+          ],
+          [
+            "Transpilación o emisión",
+            "Las anotaciones de tipos se eliminan y se genera JavaScript según la configuración."
+          ],
+          [
+            "Runtime de JavaScript",
+            "Node.js o el navegador ejecuta el resultado. Los datos externos aún deben validarse en tiempo de ejecución."
+          ]
+        ],
+        "note": "Los tipos no validan automáticamente JSON, respuestas HTTP ni datos del usuario. Para eso necesitás validación runtime, por ejemplo con esquemas."
+      }
     },
     {
       "id": "nextjs",
@@ -11653,6 +12144,13 @@
               "description": "Con App Router, la ubicación de page.tsx define la URL.",
               "code": "// app/page.tsx\nexport default function HomePage() {\n  return <h1>Inicio de WebDev Book</h1>;\n}\n\n// app/contacto/page.tsx → /contacto",
               "explanation": "Next.js conecta estructura de carpetas y rutas. No tenés que configurar manualmente un router para este caso."
+            },
+            {
+              "title": "Cargar datos en una página del servidor",
+              "description": "Un Server Component puede solicitar datos en el servidor y generar el contenido inicial sin convertir toda la página en interactiva.",
+              "language": "tsx",
+              "code": "export default async function Page() {\n  const response = await fetch(\n    'https://jsonplaceholder.typicode.com/posts/1',\n    { cache: 'no-store' }\n  );\n\n  if (!response.ok) {\n    throw new Error('No se pudo cargar la publicación');\n  }\n\n  const post = await response.json();\n  return <article>\n    <h1>{post.title}</h1>\n    <p>{post.body}</p>\n  </article>;\n}",
+              "explanation": "La función de la página es asíncrona y se ejecuta como componente del servidor en App Router. La opción no-store solicita datos frescos en cada petición. La comprobación response.ok convierte los estados HTTP de error en un fallo que puede gestionar el boundary correspondiente."
             }
           ],
           "exercise": "Explicá qué tareas seguirían a tu cargo si usaras React sin framework y cuáles puede resolver Next.js.",
@@ -11681,7 +12179,29 @@
             "nextjs-instalacion",
             "nextjs-server-client-components",
             "nextjs-pages-router-comparison"
-          ]
+          ],
+          "deepDive": {
+            "model": "Next.js amplía React con convenciones de aplicación: rutas, layouts, carga de datos, renderizado y optimizaciones. En App Router, los Server Components son el punto de partida; una frontera 'use client' marca módulos que necesitan estado, eventos o APIs del navegador.",
+            "flow": [
+              [
+                "Ruta y layout",
+                "El árbol de archivos dentro de app determina qué página y layouts corresponden a la URL."
+              ],
+              [
+                "Servidor",
+                "Los Server Components pueden acceder a datos y preparar la salida sin enviar toda su lógica al cliente."
+              ],
+              [
+                "Cliente",
+                "Los Client Components habilitan interacción. Props que cruzan la frontera deben poder serializarse."
+              ]
+            ],
+            "decisions": [
+              "Mantené en servidor los componentes que no necesitan interactividad para reducir JavaScript enviado al navegador.",
+              "Elegí explícitamente la política de caché de fetch y revalidación de datos según la frescura que requiere cada pantalla."
+            ],
+            "debugging": "Si aparece un error de window o localStorage, probablemente el código se esté ejecutando en servidor. Aislá ese comportamiento en un Client Component y evitá pasar funciones no serializables a través de la frontera."
+          }
         },
         {
           "id": "nextjs-instalacion",
@@ -14833,7 +15353,30 @@
             "nextjs-pages-router-data-fetching"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Recorrido de una ruta en Next.js",
+        "summary": "En App Router, Next.js combina rutas, componentes de servidor, carga de datos y componentes de cliente donde hace falta interactividad.",
+        "steps": [
+          [
+            "Se resuelve la ruta",
+            "El sistema de archivos de app define segmentos, layouts y la página solicitada."
+          ],
+          [
+            "Se ejecuta el servidor",
+            "Los Server Components pueden leer datos y preparar la estructura sin enviar su lógica al navegador."
+          ],
+          [
+            "Se entrega la respuesta",
+            "Next.js envía el HTML inicial y el payload necesario para continuar la navegación y el renderizado."
+          ],
+          [
+            "Se activan las zonas cliente",
+            "Los Client Components hidratan la interactividad que necesita APIs del navegador o estado del lado del cliente."
+          ]
+        ],
+        "note": "La frontera 'use client' define un límite de módulo. No conviertas toda la aplicación en Client Components si solo una parte necesita interacción."
+      }
     },
     {
       "id": "express",
@@ -14968,6 +15511,13 @@
               "description": "Express también puede responder datos.",
               "code": "app.get(\"/api/estado\", (_req, res) => {\n  res.json({ estado: \"ok\", servicio: \"catalogo\" });\n});",
               "explanation": "res.json serializa el objeto y configura el tipo de contenido apropiado. El cliente puede consumirlo con fetch."
+            },
+            {
+              "title": "Crear una ruta parametrizada",
+              "description": "Leé un parámetro de la URL y devolvé una respuesta JSON con un estado HTTP explícito.",
+              "language": "javascript",
+              "code": "import express from 'express';\n\nconst app = express();\napp.get('/api/saludo/:nombre', (req, res) => {\n  const nombre = req.params.nombre;\n  res.status(200).json({ mensaje: `Hola, ${nombre}` });\n});\n\napp.listen(3000, () => {\n  console.log('Servidor en http://localhost:3000');\n});",
+              "explanation": "La ruta :nombre captura un segmento de la URL y Express lo expone en req.params. res.status(200) establece el código y res.json serializa el objeto y envía la respuesta. En una API real también validarías el valor recibido."
             }
           ],
           "exercise": "Explicá qué resuelve Express y qué sigue siendo responsabilidad del proyecto: base de datos, autenticación y validación.",
@@ -15007,7 +15557,33 @@
           "related": [
             "express-installation",
             "express-app-listen"
-          ]
+          ],
+          "deepDive": {
+            "model": "Express organiza el servidor como una cadena de funciones. Cada middleware recibe request, response y next; puede modificar el contexto, responder o pasar el control. Un router agrupa rutas y la lógica de negocio suele vivir mejor en servicios separados que dentro de callbacks largos.",
+            "flow": [
+              [
+                "Middleware transversal",
+                "Parseo de JSON, logs, CORS y autenticación pueden ejecutarse antes de las rutas."
+              ],
+              [
+                "Controlador",
+                "Valida parámetros y coordina la operación solicitada."
+              ],
+              [
+                "Servicio y persistencia",
+                "La lógica de negocio se separa del transporte HTTP y consulta la base de datos mediante una capa adecuada."
+              ],
+              [
+                "Respuesta/errores",
+                "La ruta responde con el estado correcto o propaga fallos al middleware de errores."
+              ]
+            ],
+            "decisions": [
+              "Separá router, controlador y servicio cuando la API crece; una ruta pequeña puede seguir siendo directa.",
+              "En Express 5, las funciones async que devuelven Promise propagan rechazos automáticamente; seguí manejando errores de validación y respuestas HTTP explícitas."
+            ],
+            "debugging": "Si una petición queda pendiente, buscá un middleware que no respondió ni llamó next(). Si la ruta no se ejecuta, revisá orden de registro, método, prefijo del router y parámetros."
+          }
         },
         {
           "id": "express-installation",
@@ -17713,7 +18289,30 @@
             "express-testing-supertest"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "El recorrido de una solicitud en Express",
+        "summary": "Express procesa cada solicitud mediante una cadena ordenada de middleware y rutas; cada función debe responder o ceder el control.",
+        "steps": [
+          [
+            "Llega la petición HTTP",
+            "Express recibe método, URL, cabeceras y cuerpo."
+          ],
+          [
+            "Middleware de aplicación",
+            "Se pueden analizar JSON, registrar la solicitud, habilitar CORS o aplicar autenticación."
+          ],
+          [
+            "Router y controlador",
+            "La ruta valida parámetros, ejecuta la lógica y coordina acceso a servicios o persistencia."
+          ],
+          [
+            "Respuesta o middleware de error",
+            "Se devuelve estado, cabeceras y cuerpo; los errores pasan a manejadores de error."
+          ]
+        ],
+        "note": "Un middleware que no termina la respuesta debe llamar next(). En Express 5 los handlers que devuelven Promises propagan rechazos al flujo de errores."
+      }
     },
     {
       "id": "sql-postgres",
@@ -17851,6 +18450,13 @@
               "code": "-- Ejemplo práctico:\nCREATE TABLE etiquetas (\n  id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL\n);\n\nSELECT id, nombre FROM etiquetas;",
               "explanation": "CREATE TABLE define la estructura; SELECT consulta las filas creadas.",
               "language": "sql"
+            },
+            {
+              "title": "Filtrar y ordenar resultados",
+              "description": "Consultá solo las novelas que están en lectura y ordenalas por título.",
+              "language": "sql",
+              "code": "SELECT titulo, autor, estado\nFROM novelas\nWHERE estado = 'leyendo'\nORDER BY titulo ASC;",
+              "explanation": "SELECT enumera las columnas que querés devolver; FROM identifica la tabla; WHERE filtra filas y ORDER BY define el orden. El punto y coma termina la sentencia. La tabla y columnas deben existir en el esquema de tu base."
             }
           ],
           "parameters": [],
@@ -17879,7 +18485,33 @@
           "related": [
             "express-database-integration",
             "node-pg-instalacion-conexion"
-          ]
+          ],
+          "deepDive": {
+            "model": "SQL describe qué resultado querés obtener, no cada paso físico para conseguirlo. PostgreSQL parsea la consulta, el planificador evalúa alternativas y el ejecutor usa operaciones como scans y joins. Las restricciones protegen la integridad y las transacciones agrupan operaciones para que se comporten como una unidad.",
+            "flow": [
+              [
+                "Modelo relacional",
+                "Tablas, claves primarias, claves foráneas y restricciones expresan relaciones e invariantes."
+              ],
+              [
+                "Consulta declarativa",
+                "SELECT, JOIN, WHERE y GROUP BY describen el resultado requerido."
+              ],
+              [
+                "Plan y ejecución",
+                "El planner estima costos y elige scans, índices y algoritmos de join."
+              ],
+              [
+                "Transacción",
+                "BEGIN, COMMIT y ROLLBACK delimitan cambios que deben conservar consistencia."
+              ]
+            ],
+            "decisions": [
+              "Normalizá para evitar duplicación y anomalías; desnormalizá solo cuando exista una razón medida.",
+              "Usá índices para consultas frecuentes y selectivas, pero evaluá el costo adicional sobre INSERT, UPDATE, DELETE y almacenamiento."
+            ],
+            "debugging": "Cuando una consulta sea lenta, inspeccioná EXPLAIN (ANALYZE, BUFFERS) en un entorno seguro y revisá cardinalidad, filtros, joins e índices. No asumas que agregar un índice siempre mejora el plan."
+          }
         },
         {
           "id": "postgres-arquitectura-database-schema",
@@ -20106,7 +20738,30 @@
             "node-pg-transacciones"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo se ejecuta una consulta SQL",
+        "summary": "PostgreSQL interpreta una consulta declarativa, prepara un plan y lo ejecuta respetando restricciones y transacciones.",
+        "steps": [
+          [
+            "La aplicación envía SQL",
+            "El cliente envía la consulta y sus parámetros al servidor de PostgreSQL."
+          ],
+          [
+            "Parseo y planificación",
+            "PostgreSQL analiza sintaxis, resuelve objetos y estima un plan de ejecución."
+          ],
+          [
+            "Ejecución y acceso a datos",
+            "El motor combina filtros, joins, índices y lecturas de páginas según el plan elegido."
+          ],
+          [
+            "Transacción y resultado",
+            "Se devuelven filas o estado de escritura manteniendo las reglas de integridad y aislamiento configuradas."
+          ]
+        ],
+        "note": "Un índice puede acelerar lecturas, pero añade costo a escrituras y almacenamiento. EXPLAIN ayuda a estudiar el plan real."
+      }
     },
     {
       "id": "mongodb",
@@ -20244,6 +20899,13 @@
               "code": "// Encontrá productos activos por debajo del presupuesto.\ndb.productos.find({ activo: true, precio: { $lt: 100000 } });",
               "explanation": "find devuelve un cursor con las coincidencias y puede aprovechar índices.",
               "language": "javascript"
+            },
+            {
+              "title": "Insertar y después consultar documentos",
+              "description": "Guardá una novela y recuperá solo los campos necesarios para una lista.",
+              "language": "javascript",
+              "code": "db.novelas.insertOne({\n  titulo: 'Re:Zero',\n  autor: 'Tappei Nagatsuki',\n  estado: 'leyendo'\n});\n\ndb.novelas.find(\n  { estado: 'leyendo' },\n  { _id: 0, titulo: 1, autor: 1 }\n).sort({ titulo: 1 });",
+              "explanation": "insertOne agrega un documento a la colección. find recibe un filtro y una proyección: 1 incluye un campo y _id: 0 lo excluye. sort ordena ascendentemente por título. El ejemplo usa mongosh."
             }
           ],
           "parameters": [],
@@ -20273,7 +20935,29 @@
             "sql-que-es",
             "sql-modelo-relacional",
             "mongodb-modelado-embed-reference"
-          ]
+          ],
+          "deepDive": {
+            "model": "MongoDB almacena documentos BSON dentro de colecciones. El documento suele representar una unidad de lectura de la aplicación; su estructura puede evolucionar, pero eso no significa que el diseño sea libre de reglas. Los patrones de acceso determinan cuándo conviene incrustar datos o mantener referencias.",
+            "flow": [
+              [
+                "Diseñar documentos",
+                "Definí qué datos suelen leerse y actualizarse juntos."
+              ],
+              [
+                "Elegir incrustar o referenciar",
+                "Embebé subdocumentos acotados que pertenecen al agregado; usá referencias cuando los datos se comparten o crecen sin límite."
+              ],
+              [
+                "Consultar e indexar",
+                "Los filtros y proyecciones deben alinearse con índices y patrones reales de consulta."
+              ]
+            ],
+            "decisions": [
+              "Preferí documentos que resuelvan lecturas frecuentes sin duplicar datos que cambian constantemente.",
+              "Usá agregaciones para procesamientos por etapas y mantené índices ajustados al workload real."
+            ],
+            "debugging": "Si una consulta es lenta, inspeccioná explain() y verificá si el índice coincide con el filtro y el ordenamiento. Si el documento crece sin control, revisá arrays ilimitados y el patrón de referencias."
+          }
         },
         {
           "id": "mongodb-bson-documentos",
@@ -22462,7 +23146,30 @@
             "mongodb-backup-restore"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo MongoDB encuentra documentos",
+        "summary": "MongoDB consulta colecciones de documentos BSON; los filtros, proyecciones e índices determinan qué documentos se recuperan.",
+        "steps": [
+          [
+            "La aplicación construye el filtro",
+            "El driver envía una operación con colección, filtro, proyección y opciones."
+          ],
+          [
+            "Se selecciona el plan",
+            "El motor evalúa índices disponibles y decide cómo localizar documentos coincidentes."
+          ],
+          [
+            "Se recuperan y transforman datos",
+            "La consulta devuelve documentos; una agregación puede encadenar etapas para filtrar, agrupar o proyectar."
+          ],
+          [
+            "El cursor entrega resultados",
+            "El cliente consume los documentos por lotes cuando corresponde."
+          ]
+        ],
+        "note": "El diseño de documentos debe responder a los patrones de lectura y escritura. Incrustar evita joins en ciertos casos; referenciar ayuda cuando los datos crecen o se comparten."
+      }
     },
     {
       "id": "apis",
@@ -22552,6 +23259,13 @@
               "description": "curl permite consultar una URL y mostrar cabeceras de respuesta.",
               "code": "curl -i https://jsonplaceholder.typicode.com/posts/1",
               "explanation": "-i incluye las cabeceras HTTP junto con el cuerpo. Es útil para inspeccionar el protocolo sin depender de la interfaz del navegador."
+            },
+            {
+              "title": "Consumir una API y comprobar el estado HTTP",
+              "description": "Fetch devuelve una respuesta incluso cuando el servidor responde con un estado 404 o 500; por eso hay que revisar response.ok.",
+              "language": "javascript",
+              "code": "async function cargarNovelas() {\n  const response = await fetch('/api/novelas', {\n    headers: { Accept: 'application/json' }\n  });\n\n  if (!response.ok) {\n    throw new Error(`HTTP ${response.status}`);\n  }\n\n  return response.json();\n}\n\ncargarNovelas()\n  .then(novelas => console.log(novelas))\n  .catch(error => console.error('No se pudieron cargar:', error));",
+              "explanation": "fetch rechaza la promesa principalmente ante fallos de red, no por cada estado HTTP de error. response.ok permite detectar respuestas fuera del rango 200–299. response.json() también es asíncrono porque debe leer y analizar el cuerpo."
             }
           ],
           "parameters": [
@@ -22597,7 +23311,33 @@
           "related": [
             "api-metodos",
             "api-status"
-          ]
+          ],
+          "deepDive": {
+            "model": "HTTP organiza la conversación entre cliente y servidor. El cliente envía método, destino, cabeceras y un cuerpo opcional; el servidor responde con un status code, cabeceras y una representación. Una API define qué operaciones están disponibles, qué datos aceptan y cómo expresan errores.",
+            "flow": [
+              [
+                "Contrato",
+                "Definí rutas, métodos, parámetros, esquema de datos y formato de errores."
+              ],
+              [
+                "Solicitud",
+                "El cliente envía la operación y el servidor autentica y valida la entrada."
+              ],
+              [
+                "Procesamiento",
+                "La aplicación ejecuta la lógica y accede a los recursos necesarios."
+              ],
+              [
+                "Respuesta",
+                "El status comunica el resultado general; el cuerpo incluye datos o detalles útiles del error."
+              ]
+            ],
+            "decisions": [
+              "Usá 2xx para resultados satisfactorios, 4xx para problemas atribuibles a la solicitud y 5xx para fallos del servidor.",
+              "Validá toda entrada y no confundas CORS con autenticación: CORS es una política del navegador, no un mecanismo de control de acceso del servidor."
+            ],
+            "debugging": "Ante un fallo, inspeccioná primero URL, método, status, cabeceras y cuerpo de respuesta. Después verificá red, CORS, autenticación y logs del servidor para ubicar la capa que falla."
+          }
         },
         {
           "id": "api-metodos",
@@ -23507,7 +24247,30 @@
             "api-status"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "El ciclo de una comunicación HTTP",
+        "summary": "Un cliente formula una solicitud HTTP y el servidor devuelve una respuesta con estado, cabeceras y un cuerpo opcional.",
+        "steps": [
+          [
+            "El cliente prepara la solicitud",
+            "Define método, URL, cabeceras y, cuando corresponde, cuerpo."
+          ],
+          [
+            "La red transporta el mensaje",
+            "DNS, conexión y TLS permiten llegar al servidor de destino."
+          ],
+          [
+            "El servidor procesa",
+            "Enruta, autentica, valida y ejecuta la operación solicitada."
+          ],
+          [
+            "El servidor responde",
+            "Devuelve un código de estado, cabeceras y representación; el cliente interpreta éxito o error."
+          ]
+        ],
+        "note": "HTTP es un protocolo de solicitud-respuesta. JSON es un formato frecuente para el cuerpo, no el protocolo mismo."
+      }
     },
     {
       "id": "testing",
@@ -23597,6 +24360,13 @@
               "description": "No alcanza con probar un único caso exitoso.",
               "code": "calcularTotal(100, 3); // caso normal\ncalcularTotal(0, 5);   // precio cero\ncalcularTotal(100, 0); // cantidad cero\ncalcularTotal(-1, 2);  // entrada inválida",
               "explanation": "Los casos límite suelen revelar errores que no aparecen con datos típicos. También conviene probar tipos incorrectos si la función los puede recibir."
+            },
+            {
+              "title": "Probar una función con una expectativa",
+              "description": "Definí un caso pequeño y comprobá tanto el resultado esperado como un caso límite.",
+              "language": "javascript",
+              "code": "import { describe, expect, it } from 'vitest';\n\nfunction calcularTotal(precios) {\n  return precios.reduce((total, precio) => total + precio, 0);\n}\n\ndescribe('calcularTotal', () => {\n  it('suma los precios', () => {\n    expect(calcularTotal([10, 15, 20])).toBe(45);\n  });\n\n  it('devuelve cero para una lista vacía', () => {\n    expect(calcularTotal([])).toBe(0);\n  });\n});",
+              "explanation": "describe agrupa casos relacionados, it define un comportamiento y expect compara el resultado real con la expectativa. La función se incluye para que el ejemplo sea autocontenido; en un proyecto real la importarías desde el módulo de producción."
             }
           ],
           "parameters": [
@@ -23642,7 +24412,33 @@
           "related": [
             "test-piramide",
             "test-aaa"
-          ]
+          ],
+          "deepDive": {
+            "model": "Una prueba automatizada convierte una expectativa en una verificación repetible. El patrón Arrange–Act–Assert separa preparación, acción y comprobación. La calidad no depende de tener muchos tests, sino de cubrir comportamientos importantes, límites y regresiones de manera confiable.",
+            "flow": [
+              [
+                "Arrange",
+                "Construí el estado inicial, datos de entrada y dependencias controladas."
+              ],
+              [
+                "Act",
+                "Ejecutá la unidad o flujo bajo prueba una sola vez cuando sea posible."
+              ],
+              [
+                "Assert",
+                "Verificá resultados observables, efectos y errores esperados."
+              ],
+              [
+                "Feedback",
+                "El runner informa fallos y CI puede impedir que un cambio defectuoso continúe."
+              ]
+            ],
+            "decisions": [
+              "Empezá por pruebas unitarias rápidas y agregá integración y E2E en los límites de mayor riesgo.",
+              "Preferí verificar comportamiento visible al usuario sobre detalles internos frágiles de implementación."
+            ],
+            "debugging": "Una prueba inestable puede depender de reloj, red, orden global o datos compartidos. Aislá esas dependencias, controlá el tiempo y asegurá que cada prueba prepare y limpie su propio escenario."
+          }
         },
         {
           "id": "test-piramide",
@@ -24518,7 +25314,30 @@
             "test-flaky"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "Cómo una prueba verifica comportamiento",
+        "summary": "El runner ejecuta casos reproducibles, compara resultados observados con expectativas y reporta fallos.",
+        "steps": [
+          [
+            "Preparar el escenario",
+            "Arrange: crear datos, dobles o estado inicial necesario."
+          ],
+          [
+            "Ejecutar la acción",
+            "Act: llamar a la función, componente, endpoint o flujo que se quiere verificar."
+          ],
+          [
+            "Comprobar la expectativa",
+            "Assert: comparar el resultado o efecto observado con el contrato esperado."
+          ],
+          [
+            "Informar el resultado",
+            "El runner reporta éxito, fallo y contexto para que CI pueda detener una entrega defectuosa."
+          ]
+        ],
+        "note": "Las pruebas detectan regresiones en comportamientos cubiertos. No demuestran que el sistema esté libre de errores; los casos deben reflejar riesgos reales."
+      }
     },
     {
       "id": "docker-deploy",
@@ -24642,6 +25461,13 @@
               "code": "docker run --rm hello-world",
               "language": "bash",
               "explanation": "run crea y ejecuta un contenedor desde la imagen. Si no está disponible localmente, Docker la descarga. --rm elimina el contenedor cuando termina; la imagen permanece en caché."
+            },
+            {
+              "title": "Ejecutar un servidor web en un contenedor",
+              "description": "Levantá Nginx publicando el puerto 80 del contenedor en el 8080 de tu máquina.",
+              "language": "bash",
+              "code": "# Ejecutar y eliminar el contenedor al detenerlo\ndocker run --rm --name webdev-demo -p 8080:80 nginx:alpine",
+              "explanation": "docker run crea un contenedor desde la imagen nginx:alpine. -p 8080:80 publica el puerto 80 del contenedor en el 8080 del host. --rm elimina el contenedor al detenerlo; no elimina la imagen descargada."
             }
           ],
           "parameters": [
@@ -24687,7 +25513,33 @@
           "related": [
             "docker-instalacion",
             "docker-imagenes"
-          ]
+          ],
+          "deepDive": {
+            "model": "Una imagen es una plantilla construida por capas; un contenedor es un proceso aislado creado a partir de esa imagen. La imagen debería contener la aplicación y sus dependencias, mientras que la configuración y los datos persistentes se suministran al ejecutar el servicio.",
+            "flow": [
+              [
+                "Construcción",
+                "Dockerfile define el contexto, las instrucciones y las capas cacheables."
+              ],
+              [
+                "Ejecución",
+                "docker run crea un contenedor con variables, puertos y límites configurados."
+              ],
+              [
+                "Persistencia y red",
+                "Volúmenes conservan datos y redes conectan servicios sin exponerlos todos al host."
+              ],
+              [
+                "Orquestación local",
+                "Compose describe servicios, dependencias, redes y volúmenes como un conjunto reproducible."
+              ]
+            ],
+            "decisions": [
+              "Usá imágenes base pequeñas y builds multi-stage cuando reduzcan superficie y tamaño sin complicar innecesariamente.",
+              "Guardá secretos fuera de la imagen y montá datos que deban sobrevivir al ciclo de vida del contenedor."
+            ],
+            "debugging": "Ante un servicio inaccesible, revisá logs, estado del contenedor, puerto publicado y conectividad entre servicios. Dentro de Compose, los servicios suelen encontrarse por su nombre, no por localhost."
+          }
         },
         {
           "id": "docker-instalacion",
@@ -26656,7 +27508,324 @@
             "docker-proxy-tls"
           ]
         }
-      ]
+      ],
+      "architecture": {
+        "title": "De una imagen a una aplicación en ejecución",
+        "summary": "Docker construye imágenes a partir de instrucciones y crea contenedores aislados; Compose conecta varios servicios.",
+        "steps": [
+          [
+            "Dockerfile",
+            "Describe los pasos reproducibles para construir la imagen y sus capas."
+          ],
+          [
+            "Imagen",
+            "El resultado empaqueta filesystem, runtime y configuración por defecto; funciona como plantilla inmutable."
+          ],
+          [
+            "Contenedor",
+            "Docker crea un proceso aislado a partir de la imagen, con puertos, variables, límites y montajes."
+          ],
+          [
+            "Compose y despliegue",
+            "Servicios, redes y volúmenes conectan la aplicación con sus dependencias y datos persistentes."
+          ]
+        ],
+        "note": "Los datos que deban sobrevivir a la eliminación de un contenedor necesitan volúmenes o almacenamiento externo. No incluyas secretos dentro de una imagen."
+      }
+    }
+  ],
+  "integrations": [
+    {
+      "id": "biblioteca-novelas",
+      "title": "Biblioteca de novelas ligeras",
+      "level": "Intermedio a avanzado",
+      "outcome": "Una aplicación de catálogo con páginas públicas, filtros interactivos y una API que organiza novelas, volúmenes, capítulos e ilustraciones.",
+      "summary": "Evolucioná un catálogo estático hacia una aplicación completa. Astro sirve las páginas de lectura y contenido, React resuelve filtros interactivos, Express expone la API y PostgreSQL mantiene las relaciones del catálogo.",
+      "stack": [
+        {
+          "tool": "astro",
+          "role": "Páginas públicas, layouts y contenido renderizado en servidor."
+        },
+        {
+          "tool": "react",
+          "role": "Filtros, búsqueda y controles interactivos como islas."
+        },
+        {
+          "tool": "typescript",
+          "role": "Contratos de datos compartidos y tipos de respuestas."
+        },
+        {
+          "tool": "express",
+          "role": "API REST para novelas, volúmenes, capítulos e ilustraciones."
+        },
+        {
+          "tool": "sql-postgres",
+          "role": "Modelo relacional y consultas del catálogo."
+        },
+        {
+          "tool": "testing",
+          "role": "Pruebas de servicios, rutas y flujos principales."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Entorno reproducible para API y base de datos."
+        },
+        {
+          "tool": "git",
+          "role": "Historial, ramas y revisión de cambios."
+        }
+      ],
+      "flow": [
+        [
+          "Lector",
+          "Abre el catálogo, aplica filtros o entra al detalle de una novela."
+        ],
+        [
+          "Astro + React",
+          "Astro presenta páginas y React hidrata únicamente los controles que necesitan interacción."
+        ],
+        [
+          "API Express",
+          "Valida parámetros y consulta los servicios de catálogo."
+        ],
+        [
+          "PostgreSQL",
+          "Relaciona novelas, volúmenes, capítulos e ilustraciones y devuelve los datos solicitados."
+        ]
+      ],
+      "milestones": [
+        [
+          "Modelo de datos",
+          "Diseñá novelas, volúmenes, capítulos e ilustraciones con claves primarias, foráneas y restricciones."
+        ],
+        [
+          "API",
+          "Construí GET /api/novelas, GET /api/novelas/:slug y rutas para volúmenes e ilustraciones; agregá validación y errores coherentes."
+        ],
+        [
+          "Interfaz",
+          "Creá páginas Astro para navegación y detalle; agregá una isla React para búsqueda, filtros y estado de lectura local."
+        ],
+        [
+          "Calidad y entrega",
+          "Probá consultas y endpoints, levantá API y PostgreSQL con Compose y documentá variables de entorno."
+        ]
+      ],
+      "dataModel": "novelas(id, slug, titulo, autor, sinopsis, portada_url, estado) · volumenes(id, novela_id, numero, titulo) · capitulos(id, volumen_id, numero, titulo, recurso_url) · ilustraciones(id, capitulo_id, orden, imagen_url, texto_alternativo)",
+      "endpoints": "GET /api/novelas?buscar=&estado= · GET /api/novelas/:slug · GET /api/novelas/:slug/volumenes · GET /api/volumenes/:id/ilustraciones"
+    },
+    {
+      "id": "panel-tareas",
+      "title": "Panel de tareas y seguimiento",
+      "level": "Intermedio",
+      "outcome": "Un panel CRUD con filtros, estados, fechas y persistencia en una base documental.",
+      "summary": "Construí una aplicación donde los usuarios puedan crear tareas, actualizar su estado, filtrar por prioridad y consultar actividad. Vue administra la interfaz reactiva y Express conecta el frontend con MongoDB.",
+      "stack": [
+        {
+          "tool": "vuejs",
+          "role": "Componentes, estado reactivo, formularios y filtros."
+        },
+        {
+          "tool": "typescript",
+          "role": "Tipos para tareas, filtros y respuestas de la API."
+        },
+        {
+          "tool": "express",
+          "role": "Rutas CRUD, middleware de validación y errores."
+        },
+        {
+          "tool": "mongodb",
+          "role": "Documentos de tareas y consultas por estado o fecha."
+        },
+        {
+          "tool": "testing",
+          "role": "Pruebas de validación, servicios y API."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Servicios locales reproducibles."
+        }
+      ],
+      "flow": [
+        [
+          "Usuario",
+          "Completa un formulario o cambia el estado de una tarea."
+        ],
+        [
+          "Vue",
+          "Actualiza la interfaz, valida campos y envía una solicitud HTTP."
+        ],
+        [
+          "Express",
+          "Valida el payload, aplica reglas de negocio y llama al repositorio."
+        ],
+        [
+          "MongoDB",
+          "Guarda el documento y devuelve el resultado para actualizar la vista."
+        ]
+      ],
+      "milestones": [
+        [
+          "Dominio",
+          "Definí tarea, prioridad, estado, fecha límite y reglas de transición."
+        ],
+        [
+          "Persistencia y API",
+          "Diseñá documentos e índices; implementá crear, listar, editar y eliminar."
+        ],
+        [
+          "Interfaz",
+          "Separá formulario, lista, tarjeta y filtros en componentes; gestioná carga y errores."
+        ],
+        [
+          "Verificación",
+          "Probá casos válidos, datos inválidos, tareas inexistentes y filtros combinados."
+        ]
+      ],
+      "dataModel": "Una tarea puede incluir _id, titulo, descripcion, estado, prioridad, fechaLimite, etiquetas y createdAt. Evitá arrays ilimitados de historial dentro del mismo documento.",
+      "endpoints": "GET /api/tareas · POST /api/tareas · PATCH /api/tareas/:id · DELETE /api/tareas/:id"
+    },
+    {
+      "id": "arcade-ranking",
+      "title": "Juego arcade con tabla de posiciones",
+      "level": "Intermedio a avanzado",
+      "outcome": "Un juego 2D que registra puntuaciones en un servidor y muestra un ranking persistente.",
+      "summary": "Phaser se ocupa del ciclo de juego y la entrada; una API Node/Express recibe las puntuaciones y PostgreSQL conserva resultados y jugadores.",
+      "stack": [
+        {
+          "tool": "phaser",
+          "role": "Escenas, sprites, input, física y lógica del juego."
+        },
+        {
+          "tool": "nodejs",
+          "role": "Entorno de ejecución para el servidor."
+        },
+        {
+          "tool": "express",
+          "role": "Endpoints para registrar y consultar puntuaciones."
+        },
+        {
+          "tool": "sql-postgres",
+          "role": "Jugadores, partidas y clasificación."
+        },
+        {
+          "tool": "testing",
+          "role": "Pruebas de reglas de puntuación y endpoints."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Servidor y base de datos reproducibles."
+        }
+      ],
+      "flow": [
+        [
+          "Juego Phaser",
+          "Procesa controles, colisiones y estado de la partida."
+        ],
+        [
+          "Fin de partida",
+          "El cliente prepara puntuación y metadatos permitidos."
+        ],
+        [
+          "API Express",
+          "Valida tipo, rango y límites antes de registrar el resultado."
+        ],
+        [
+          "PostgreSQL",
+          "Guarda la partida y consulta el top de puntuaciones."
+        ]
+      ],
+      "milestones": [
+        [
+          "Prototipo",
+          "Creá menú, nivel, jugador, obstáculos y pantalla de resultado."
+        ],
+        [
+          "API y esquema",
+          "Definí jugadores y partidas; implementá POST /api/scores y GET /api/leaderboard."
+        ],
+        [
+          "Integración",
+          "Enviá la puntuación al finalizar y mostrá el ranking sin bloquear el loop del juego."
+        ],
+        [
+          "Seguridad y calidad",
+          "Validá entradas en servidor, limita frecuencia de escritura y probá reglas de puntuación."
+        ]
+      ],
+      "dataModel": "jugadores(id, alias, creado_en) · partidas(id, jugador_id, puntuacion, duracion_ms, creada_en). El servidor debe calcular o verificar reglas importantes; no confíes ciegamente en el cliente.",
+      "endpoints": "POST /api/scores · GET /api/leaderboard?limit=10"
+    },
+    {
+      "id": "sitio-documentacion",
+      "title": "Portal de documentación interactiva",
+      "level": "Inicial a intermedio",
+      "outcome": "Un sitio de documentación rápido con buscador, componentes reutilizables y ejemplos que pueden probarse.",
+      "summary": "Astro genera páginas de contenido; Web Components encapsula widgets independientes; una API ofrece búsqueda y el pipeline de pruebas verifica enlaces y comportamiento antes de publicar.",
+      "stack": [
+        {
+          "tool": "astro",
+          "role": "Rutas de documentación y páginas generadas desde contenido."
+        },
+        {
+          "tool": "webcomponents",
+          "role": "Widgets reutilizables como pestañas, avisos y tarjetas."
+        },
+        {
+          "tool": "apis",
+          "role": "Contrato HTTP para búsqueda y sugerencias."
+        },
+        {
+          "tool": "testing",
+          "role": "Verificación de componentes, enlaces y recorridos."
+        },
+        {
+          "tool": "git",
+          "role": "Control de versiones y revisión."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Ejecución reproducible del servicio de búsqueda si se necesita backend."
+        }
+      ],
+      "flow": [
+        [
+          "Autor",
+          "Escribe contenido estructurado y ejemplos."
+        ],
+        [
+          "Astro",
+          "Genera páginas HTML y deja estático el contenido que no requiere interacción."
+        ],
+        [
+          "Web Components",
+          "Añade widgets encapsulados cuando el lector necesita pestañas, copiar o expandir."
+        ],
+        [
+          "API y pruebas",
+          "La búsqueda consulta el servicio y las pruebas revisan rutas, enlaces y controles."
+        ]
+      ],
+      "milestones": [
+        [
+          "Contenido",
+          "Definí estructura de secciones, slugs, metadatos y navegación."
+        ],
+        [
+          "Componentes",
+          "Creá widgets nativos con atributos claros, slots y eventos personalizados."
+        ],
+        [
+          "Búsqueda",
+          "Definí un endpoint de consulta y estados de carga, vacío y error."
+        ],
+        [
+          "Publicación",
+          "Automatizá pruebas de rutas y enlaces; desplegá las páginas estáticas."
+        ]
+      ],
+      "dataModel": "Documento de contenido: slug, titulo, resumen, seccion, etiquetas y cuerpo. La API de búsqueda puede indexar texto y etiquetas sin almacenar la presentación visual.",
+      "endpoints": "GET /api/search?q=react · GET /api/suggestions?q=comp"
     }
   ]
 }
