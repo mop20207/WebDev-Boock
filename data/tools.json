@@ -11882,6 +11882,10 @@
             {
               "label": "Object Types",
               "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            },
+            {
+              "label": "Handbook: Narrowing",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
             }
           ],
           "related": [
@@ -12034,6 +12038,10 @@
             {
               "label": "Object Types",
               "url": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+            },
+            {
+              "label": "Handbook: Creating Types from Types",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html"
             }
           ],
           "related": [
@@ -12503,6 +12511,10 @@
             {
               "label": "Handbook: Narrowing y predicados",
               "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+            },
+            {
+              "label": "Handbook: Type Predicates",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates"
             }
           ],
           "related": [
@@ -12878,6 +12890,10 @@
             {
               "label": "Keyof Type Operator",
               "url": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html"
+            },
+            {
+              "label": "Handbook: Generic Constraints",
+              "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints"
             }
           ],
           "related": [
@@ -14734,6 +14750,14 @@
             {
               "label": "generateStaticParams",
               "url": "https://nextjs.org/docs/app/api-reference/functions/generate-static-params"
+            },
+            {
+              "label": "Next.js: Dynamic Segments",
+              "url": "https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes"
+            },
+            {
+              "label": "Next.js 16 Upgrade Guide",
+              "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
             }
           ],
           "related": [
@@ -15655,6 +15679,10 @@
             {
               "label": "use cache",
               "url": "https://nextjs.org/docs/app/api-reference/directives/use-cache"
+            },
+            {
+              "label": "cacheLife",
+              "url": "https://nextjs.org/docs/app/api-reference/functions/cacheLife"
             }
           ],
           "related": [
@@ -15839,6 +15867,10 @@
             {
               "label": "use server",
               "url": "https://nextjs.org/docs/app/api-reference/directives/use-server"
+            },
+            {
+              "label": "Next.js: Updating Data",
+              "url": "https://nextjs.org/docs/app/getting-started/updating-data"
             }
           ],
           "related": [
