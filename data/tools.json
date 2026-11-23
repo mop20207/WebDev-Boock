@@ -1,5 +1,5 @@
 {
-  "version": 22,
+  "version": 23,
   "articleCount": 387,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías.",
   "tools": [
@@ -2339,7 +2339,35 @@
               "label": "React — Renderizado condicional",
               "url": "https://react.dev/learn/conditional-rendering"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "JSX es una sintaxis para describir elementos de React dentro de JavaScript. El compilador transforma esa sintaxis en llamadas que crean elementos; no convierte el navegador en un intérprete de JSX. La expresión dentro de las llaves se evalúa durante el render, por eso debe producir un valor y no ejecutar instrucciones de control como if o for. React recibe un árbol de elementos y lo compara con el árbol anterior.",
+            "flow": [
+              [
+                "El componente ejecuta JavaScript",
+                "React llama al componente y este calcula valores, condiciones y colecciones para el render actual."
+              ],
+              [
+                "JSX produce elementos",
+                "Las etiquetas, atributos y expresiones se transforman en elementos React; las mayúsculas distinguen componentes propios de etiquetas HTML."
+              ],
+              [
+                "React reconcilia el árbol",
+                "Las keys estables permiten identificar elementos de listas aunque se inserten, eliminen o reordenen."
+              ],
+              [
+                "Se actualiza la interfaz",
+                "React aplica al DOM los cambios necesarios. El JSX describe el resultado, no instrucciones directas para modificar nodos."
+              ]
+            ],
+            "decisions": [
+              "Usá una expresión ternaria para elegir entre dos resultados y una variable calculada antes del return cuando la condición sea compleja.",
+              "Preferí map para transformar datos en elementos y asigná una key estable basada en el identificador del registro.",
+              "Usá Fragment para agrupar hermanos sin agregar un nodo innecesario; usá un elemento semántico cuando el grupo tenga significado.",
+              "No insertes HTML de cadenas externas con dangerouslySetInnerHTML; renderizá texto normalmente o sanitizá contenido confiable con una política explícita."
+            ],
+            "debugging": "Si aparece un error de JSX, revisá primero etiquetas sin cerrar, llaves desbalanceadas y atributos como className. Si React muestra una advertencia sobre keys, verificá que cada hermano de la lista tenga un identificador estable y único. Si la interfaz muestra un 0 inesperado, revisá expresiones con &&: la expresión 0 && <Panel /> devuelve 0, y React lo representa como texto."
+          }
         },
         {
           "id": "react-props",
@@ -2417,7 +2445,35 @@
               "label": "React — Pasar JSX como children",
               "url": "https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Las props son la entrada de un componente para un render determinado. El padre las proporciona y el hijo las recibe como un objeto de solo lectura. Cuando el padre vuelve a renderizar con otros valores, el hijo recibe una nueva instantánea de props. Las props pueden transportar datos, contenido JSX y funciones de callback; la función permite que el hijo comunique una intención sin apropiarse del estado del padre.",
+            "flow": [
+              [
+                "El padre conserva el estado",
+                "El componente propietario decide cuál es el valor verdadero y cómo se modifica."
+              ],
+              [
+                "El padre configura al hijo",
+                "Envía valores mediante atributos JSX, expresiones, spread o contenido anidado en children."
+              ],
+              [
+                "El hijo presenta o solicita acciones",
+                "El hijo lee las props y, ante una interacción, llama a una función callback recibida."
+              ],
+              [
+                "El padre actualiza y propaga",
+                "El padre cambia su estado; React renderiza de nuevo con las props actualizadas."
+              ]
+            ],
+            "decisions": [
+              "Si un valor debe cambiar y varios componentes lo comparten, mantené el estado en el ancestro común y pasá hacia abajo el valor y las acciones.",
+              "Usá children cuando el padre deba decidir la composición interna de un contenedor.",
+              "Usá valores predeterminados en la desestructuración para props opcionales; recordá que el default se aplica cuando el valor es undefined, no cuando es null.",
+              "Usá el spread de props con moderación: pasar explícitamente las props importantes hace más legible el contrato del componente."
+            ],
+            "debugging": "Si una prop parece tener el valor anterior, revisá qué componente es dueño del estado y si el setter se está llamando. No intentes corregirlo mutando props. Si una prop booleana se comporta distinto, comprobá si enviaste una expresión booleana (: en HTML no aplica; en JSX usar destacado o destacado={condicion}) o una cadena literal."
+          }
         },
         {
           "id": "react-state",
@@ -2501,7 +2557,35 @@
               "label": "React — Actualizar arreglos en estado",
               "url": "https://react.dev/learn/updating-arrays-in-state"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "El estado no es una variable mutable común: React conserva su valor entre renderizados y cada render recibe una instantánea. El setter solicita una actualización; React puede agrupar varias actualizaciones y procesarlas después del evento. Por eso, cuando la próxima actualización depende del valor pendiente anterior, conviene pasar una función actualizadora. Objetos y arreglos deben reemplazarse por nuevas referencias en vez de mutarse.",
+            "flow": [
+              [
+                "Inicialización",
+                "useState recibe el valor inicial o una función inicializadora que React ejecuta para obtenerlo."
+              ],
+              [
+                "Render actual",
+                "El componente lee la instantánea de estado correspondiente a ese render."
+              ],
+              [
+                "Solicitud de cambio",
+                "Un evento llama al setter. React encola la actualización y puede agrupar varias solicitudes."
+              ],
+              [
+                "Nuevo estado y render",
+                "React procesa la cola, obtiene el siguiente valor y vuelve a ejecutar el componente si corresponde."
+              ]
+            ],
+            "decisions": [
+              "Elegí la forma funcional setValor(anterior => siguiente) cuando la actualización dependa del valor previo o haya varias actualizaciones en una misma acción.",
+              "Para arreglos, usá map, filter y spread según necesites modificar, eliminar o agregar elementos; para objetos, creá una copia y sobrescribí las propiedades necesarias.",
+              "No guardes valores que puedas derivar de otros estados: calculalos durante el render o usá useMemo si la medición demuestra que el cálculo es costoso.",
+              "Cuando un componente represente una entidad distinta, una key distinta puede reiniciar su estado; no cambies keys accidentalmente porque React interpreta que se trata de otra instancia."
+            ],
+            "debugging": "Si el contador suma menos de lo esperado, revisá si varias llamadas usan el mismo valor capturado en lugar de actualizadores funcionales. Si una lista no se actualiza, buscá mutaciones como push o asignaciones directas y reemplazá el arreglo. Si el estado se reinicia inesperadamente, inspeccioná la posición del componente y sus keys en el árbol."
+          }
         },
         {
           "id": "react-useeffect",
@@ -2585,7 +2669,35 @@
               "label": "React — You might not need an Effect",
               "url": "https://react.dev/learn/you-might-not-need-an-effect"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "useEffect sincroniza un componente con un sistema externo después de que React confirma la actualización de la interfaz. Un efecto puede crear un listener, temporizador, conexión o solicitud; la función que devuelve es la limpieza del efecto anterior. React compara dependencias con Object.is. Cuando alguna cambia, limpia la sincronización anterior y ejecuta la nueva. En desarrollo, Strict Mode puede repetir un ciclo adicional de configuración y limpieza para detectar efectos que no se limpian correctamente.",
+            "flow": [
+              [
+                "Render puro",
+                "React calcula la interfaz sin crear listeners, temporizadores ni modificar sistemas externos."
+              ],
+              [
+                "Commit",
+                "React aplica la actualización al DOM."
+              ],
+              [
+                "Setup del efecto",
+                "useEffect conecta con el sistema externo usando los valores del render confirmado."
+              ],
+              [
+                "Cambio o desmontaje",
+                "React ejecuta cleanup antes de repetir el efecto o al desmontar; luego configura la sincronización que corresponda."
+              ]
+            ],
+            "decisions": [
+              "Si una acción ocurre por un clic, ejecutala en el event handler; no uses un efecto para observar un estado que solo sirve como señal de ese clic.",
+              "Si un valor se calcula desde props y estado, calculalo durante el render; no lo copies a otro estado mediante un efecto.",
+              "Incluí todas las dependencias reactivas leídas por el efecto. Para evitar re-ejecuciones innecesarias, cambiá la estructura del código en vez de ocultar dependencias.",
+              "Para solicitudes que pueden quedar obsoletas, cancelá con AbortController o ignorá el resultado de la ejecución anterior y representá explícitamente loading, error y data."
+            ],
+            "debugging": "Ante un efecto repetido, revisá primero sus dependencias: objetos y funciones creados durante cada render tienen referencias nuevas. Ante listeners duplicados o intervalos que siguen activos, comprobá que cleanup retire exactamente el mismo recurso. Si una respuesta anterior pisa una más reciente, cancelá la solicitud anterior y asegurate de distinguir AbortError de fallos reales."
+          }
         },
         {
           "id": "react-usecontext",
@@ -2614,6 +2726,13 @@
               "description": "Centralizá la lectura del contexto y mostrá un error claro si falta el proveedor.",
               "code": "const SesionContext = createContext(null);\n\nfunction useSesion() {\n  const sesion = useContext(SesionContext);\n  if (sesion === null) {\n    throw new Error('useSesion debe utilizarse dentro de SesionProvider');\n  }\n  return sesion;\n}\n\nfunction UsuarioActual() {\n  const { nombre } = useSesion();\n  return <p>Conectado: {nombre}</p>;\n}",
               "explanation": "El Hook personalizado useSesion encapsula el acceso al contexto. Si el componente se renderiza fuera del proveedor, el error indica qué falta. El Hook debe llamarse desde un componente o desde otro Hook personalizado."
+            },
+            {
+              "title": "Separar el contexto de lectura y el de acciones",
+              "description": "Dividí datos que cambian con frecuencia de las acciones estables para que los consumidores se suscriban solo a lo que necesitan.",
+              "language": "jsx",
+              "code": "import { createContext, useContext, useMemo, useState } from 'react';\n\nconst FiltroContext = createContext(null);\nconst AccionesFiltroContext = createContext(null);\n\nfunction FiltroProvider({ children }) {\n  const [estado, setEstado] = useState('todos');\n  const acciones = useMemo(() => ({\n    mostrarTodos: () => setEstado('todos'),\n    mostrarLeidos: () => setEstado('leidos')\n  }), []);\n\n  return (\n    <AccionesFiltroContext.Provider value={acciones}>\n      <FiltroContext.Provider value={estado}>\n        {children}\n      </FiltroContext.Provider>\n    </AccionesFiltroContext.Provider>\n  );\n}\n\nfunction Resumen() {\n  const estado = useContext(FiltroContext);\n  return <p>Filtro actual: {estado}</p>;\n}\n\nfunction BotonesFiltro() {\n  const acciones = useContext(AccionesFiltroContext);\n  return <>\n    <button onClick={acciones.mostrarTodos}>Todos</button>\n    <button onClick={acciones.mostrarLeidos}>Leídos</button>\n  </>;\n}",
+              "explanation": "FiltroProvider es dueño del estado. El contexto de lectura comparte el string estado; el de acciones comparte funciones memorizadas que no cambian de referencia entre renders. Así un consumidor que solo necesita las acciones no recibe actualizaciones del contexto de lectura. Es una optimización de diseño que conviene aplicar cuando hay una razón de rendimiento, no como regla automática."
             }
           ],
           "bestPractices": [
@@ -2659,7 +2778,35 @@
               "label": "React — Pasar datos profundamente con Context",
               "url": "https://react.dev/learn/passing-data-deeply-with-context"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Context permite compartir un valor con componentes descendientes sin pasar props por cada nivel. createContext crea el canal; el Provider más cercano por encima del consumidor determina el valor que devuelve useContext. Un cambio de value se compara con Object.is y vuelve a renderizar a los consumidores que leen ese contexto. Context evita el prop drilling, pero no convierte automáticamente cada dato global en una buena opción de contexto.",
+            "flow": [
+              [
+                "Crear el contexto",
+                "createContext define un objeto que identifica el dato compartido y un valor por defecto para cuando no hay Provider."
+              ],
+              [
+                "Ubicar el Provider",
+                "Un ancestro envuelve la parte del árbol que necesita compartir el valor."
+              ],
+              [
+                "Consumir el valor",
+                "useContext lee el Provider más cercano por encima del componente consumidor."
+              ],
+              [
+                "Actualizar el Provider",
+                "Cuando cambia value, React vuelve a renderizar los consumidores de ese contexto."
+              ]
+            ],
+            "decisions": [
+              "Usá contextos para datos transversales como tema, idioma o sesión; mantené local el estado que solo necesita una rama pequeña.",
+              "Separá contextos con frecuencias o responsabilidades distintas para evitar que consumidores no relacionados reciban actualizaciones.",
+              "Si value es un objeto o función creado en cada render, considerá useMemo y useCallback cuando las mediciones muestren renderizados evitables.",
+              "Creá un Hook personalizado como useSesion para centralizar el consumo y mostrar un error claro cuando falta el Provider."
+            ],
+            "debugging": "Si useContext devuelve el valor por defecto, comprobá que el Provider esté por encima del consumidor y que se esté usando exactamente el mismo objeto de contexto. Si muchos componentes se renderizan al cambiar un dato, inspeccioná si el Provider crea un objeto nuevo y si conviene dividir el contexto. Un memo en el consumidor no bloquea una actualización recibida desde el contexto que consume."
+          }
         }
       ],
       "architecture": {
@@ -2935,7 +3082,35 @@
               "label": "MDN — Node.isConnected",
               "url": "https://developer.mozilla.org/es/docs/Web/API/Node/isConnected"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "El navegador controla la vida de cada Custom Element registrado. El constructor debe preparar la instancia, pero el elemento puede conectarse, desconectarse y volver a conectarse varias veces. connectedCallback y disconnectedCallback forman una pareja para recursos vinculados a la presencia en el documento. attributeChangedCallback observa solo los nombres declarados en observedAttributes y puede notificarse durante la inicialización si el atributo ya estaba presente.",
+            "flow": [
+              [
+                "Construcción y registro",
+                "La clase extiende HTMLElement y se registra mediante customElements.define con un nombre que contiene guion."
+              ],
+              [
+                "Conexión",
+                "connectedCallback se ejecuta cuando el elemento entra en el documento; es el lugar habitual para configurar la vista dependiente del DOM."
+              ],
+              [
+                "Cambio de atributos",
+                "El navegador llama attributeChangedCallback para cada atributo observado que cambia, incluyendo cambios iniciales cuando corresponda."
+              ],
+              [
+                "Desconexión o adopción",
+                "disconnectedCallback limpia recursos; adoptedCallback permite reaccionar cuando la instancia pasa a otro documento."
+              ]
+            ],
+            "decisions": [
+              "Dejá el constructor para inicializar propiedades internas y, cuando corresponda, adjuntar Shadow DOM; evitá asumir que los atributos y el contenido ya están disponibles allí.",
+              "Hacé connectedCallback idempotente: una instancia puede desconectarse y conectarse de nuevo.",
+              "Guardá una referencia estable a cada listener que luego debas retirar.",
+              "Diferenciá atributos serializables de propiedades JavaScript; observedAttributes no detecta asignaciones directas a propiedades."
+            ],
+            "debugging": "Si un temporizador se duplica, verificá que disconnectedCallback lo cancele y restablezca el identificador. Si un atributo no dispara el callback, agregalo a observedAttributes con el nombre exacto. Si el callback inicializa datos dos veces, recordá que la conexión puede repetirse después de mover el nodo: protegé la inicialización o separá la configuración de la limpieza."
+          }
         },
         {
           "id": "wc-shadow-dom",
@@ -3028,7 +3203,35 @@
               "label": "MDN — ShadowRoot",
               "url": "https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Shadow DOM crea una raíz interna asociada a un elemento anfitrión. La página ve el host como parte del DOM normal, mientras que los nodos dentro de la raíz forman un árbol encapsulado con reglas de estilo y selección propias. El modo open permite acceder a host.shadowRoot; el modo closed no expone esa referencia por esa propiedad, pero no debe considerarse una frontera de seguridad. Los slots permiten componer contenido de luz dentro de la presentación interna.",
+            "flow": [
+              [
+                "Crear el host",
+                "El Custom Element representa el punto de integración con el documento."
+              ],
+              [
+                "Adjuntar la raíz",
+                "attachShadow({ mode: 'open' }) crea el Shadow Root una sola vez."
+              ],
+              [
+                "Construir contenido encapsulado",
+                "La raíz recibe nodos y estilos que no colisionan normalmente con reglas globales."
+              ],
+              [
+                "Componer contenido externo",
+                "Los slots proyectan nodos del light DOM en posiciones definidas por el Shadow DOM."
+              ]
+            ],
+            "decisions": [
+              "Usá Shadow DOM cuando el componente necesite aislar estilos y estructura; para elementos simples puede alcanzar con Custom Elements sin raíz de sombra.",
+              "Preferí open si integraciones, pruebas o herramientas necesitan inspeccionar la raíz; closed no protege información sensible.",
+              "Exponé personalización mediante propiedades CSS, partes públicas o atributos documentados en vez de depender de acceder a nodos internos.",
+              "Definí una política de foco, teclado y nombres accesibles: la encapsulación no resuelve por sí sola la accesibilidad."
+            ],
+            "debugging": "Si un selector global no encuentra un nodo interno, comprobá si está dentro de shadowRoot: document.querySelector no atraviesa esa frontera. Si attachShadow lanza una excepción, verificá que no intentes adjuntar una segunda raíz al mismo host. Si un evento no alcanza al documento, revisá bubbles y composed; los eventos sintéticos no cruzan la frontera por defecto."
+          }
         },
         {
           "id": "wc-templates",
@@ -3121,7 +3324,35 @@
               "label": "MDN — DocumentFragment",
               "url": "https://developer.mozilla.org/es/docs/Web/API/DocumentFragment"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "El elemento <template> contiene un DocumentFragment inerte: sus nodos no se renderizan como parte de la página hasta que se clona y se inserta. template.content es el fragmento reutilizable y cloneNode(true) copia la estructura y sus descendientes. Se puede usar sin Custom Elements, aunque combinado con Shadow DOM permite separar el marcado de la lógica de la clase.",
+            "flow": [
+              [
+                "Declarar el fragmento",
+                "El HTML dentro de <template> permanece inerte y no forma parte del árbol visible."
+              ],
+              [
+                "Obtener su contenido",
+                "JavaScript lee template.content, que es un DocumentFragment."
+              ],
+              [
+                "Clonar por instancia",
+                "cloneNode(true) crea una copia profunda para evitar mover el mismo fragmento entre instancias."
+              ],
+              [
+                "Insertar en el destino",
+                "El clon se agrega al DOM o a un Shadow Root; a partir de ese momento los nodos participan en la página."
+              ]
+            ],
+            "decisions": [
+              "Usá template para estructuras repetidas con marcado legible; si solo necesitás crear un nodo simple, createElement puede ser más directo.",
+              "Cloná el contenido para cada instancia. Al insertar el mismo DocumentFragment, sus nodos se mueven y dejan de estar en el fragmento original.",
+              "Usá document.importNode cuando el contenido proviene de otro documento y querés importar nodos al documento actual.",
+              "Evitá IDs duplicados si el template se instancia varias veces; preferí atributos data-* y referencias internas."
+            ],
+            "debugging": "Si no aparece nada, comprobá que estés insertando template.content.cloneNode(true) y no solo leyendo el template. Si solo la primera instancia funciona, probablemente estés moviendo el mismo fragmento en vez de clonarlo. Si estilos o listeners no se comportan como esperás, recordá que clonar nodos no copia listeners agregados con addEventListener a la instancia original: registralos por instancia o usá delegación."
+          }
         },
         {
           "id": "wc-slots",
@@ -3214,7 +3445,35 @@
               "label": "MDN — Element: evento slotchange",
               "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLSlotElement/slotchange_event"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Los slots son puntos de composición definidos dentro del Shadow DOM. El contenido escrito entre las etiquetas del Custom Element permanece en su light DOM y se proyecta en el slot correspondiente. El slot default recibe nodos sin atributo slot; los slots con name reciben nodos cuyo atributo slot coincide. El contenido de respaldo se muestra cuando no hay nodos asignados al slot.",
+            "flow": [
+              [
+                "El componente define ranuras",
+                "Su Shadow Root contiene <slot> y, opcionalmente, slots con nombre."
+              ],
+              [
+                "El consumidor aporta contenido",
+                "La página coloca nodos dentro del Custom Element y puede marcar algunos con slot='nombre'."
+              ],
+              [
+                "El navegador distribuye nodos",
+                "Los nodos asignados se muestran en la posición de su slot sin trasladar físicamente su propiedad al Shadow DOM."
+              ],
+              [
+                "La composición se actualiza",
+                "slotchange notifica cambios en los nodos asignados, cuando el componente necesita reaccionar a ellos."
+              ]
+            ],
+            "decisions": [
+              "Usá slot default para contenido principal y slots nombrados para regiones semánticas como título, acciones o pie.",
+              "Incluí texto o marcado de respaldo para mantener un componente útil cuando el consumidor no proporciona ese fragmento.",
+              "Usá assignedElements({ flatten: true }) o assignedNodes() solo cuando el componente deba inspeccionar el contenido proyectado.",
+              "Recordá que los estilos del Shadow DOM no seleccionan libremente nodos del light DOM; usá las herramientas de estilo de slots previstas por CSS."
+            ],
+            "debugging": "Si un fragmento no aparece, revisá que el nombre del atributo slot coincida exactamente con el name del slot y que exista una raíz de sombra con ese slot. Si se ve el fallback además del contenido, comprobá qué nodos fueron realmente asignados. Si necesitás reaccionar a cambios del contenido externo, escuchá slotchange en vez de observar el DOM entero sin necesidad."
+          }
         },
         {
           "id": "wc-eventos",
@@ -3249,6 +3508,13 @@
               "description": "Usá cancelable y preventDefault cuando el componente deba ofrecer la posibilidad de rechazar una operación.",
               "code": "class MiAccionCancelable extends HTMLElement {\n  connectedCallback() {\n    this.textContent = 'Intentar eliminar';\n    this.addEventListener('click', () => {\n      const permitido = this.dispatchEvent(new CustomEvent('antes-de-eliminar', {\n        detail: { id: 17 },\n        bubbles: true,\n        cancelable: true\n      }));\n\n      if (permitido) {\n        console.log('Se continúa con la eliminación');\n      } else {\n        console.log('La eliminación fue cancelada');\n      }\n    });\n  }\n}\n\ncustomElements.define('mi-accion-cancelable', MiAccionCancelable);\n\ndocument.addEventListener('antes-de-eliminar', evento => {\n  const confirmar = confirm('¿Seguro que querés continuar?');\n  if (!confirmar) evento.preventDefault();\n});",
               "explanation": "El evento se crea con cancelable: true. dispatchEvent devuelve true si no se canceló y false si algún listener llamó preventDefault. Esto permite que la página anfitriona participe de una decisión antes de que el componente ejecute una acción. preventDefault no detiene automáticamente la propagación; su función aquí es marcar el evento como cancelado."
+            },
+            {
+              "title": "Emitir una selección desde dentro de Shadow DOM",
+              "description": "Publicá el identificador seleccionado para que la aplicación anfitriona pueda escuchar el evento fuera del componente.",
+              "language": "javascript",
+              "code": "class SelectorNovela extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    const boton = document.createElement('button');\n    boton.textContent = 'Elegir Re:Zero';\n    boton.addEventListener('click', () => {\n      const evento = new CustomEvent('novela-seleccionada', {\n        detail: { slug: 're-zero' },\n        bubbles: true,\n        composed: true\n      });\n      boton.dispatchEvent(evento);\n    });\n    root.append(boton);\n  }\n}\n\ncustomElements.define('selector-novela', SelectorNovela);\n\ndocument.addEventListener('novela-seleccionada', evento => {\n  console.log(evento.detail.slug);\n});",
+              "explanation": "El evento se despacha desde el botón interno del Shadow DOM. bubbles permite que ascienda y composed permite atravesar la frontera de Shadow DOM hasta que el listener externo lo reciba; el navegador puede retargetear event.target al host para ocultar detalles internos. detail publica un contrato de datos pequeño y estable. En componentes grandes, evitá exponer nodos privados."
             }
           ],
           "bestPractices": [
@@ -3316,7 +3582,35 @@
               "label": "MDN — Event.preventDefault()",
               "url": "https://developer.mozilla.org/es/docs/Web/API/Event/preventDefault"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "CustomEvent permite que un componente publique un evento propio con datos en detail. dispatchEvent inicia la propagación del evento desde el nodo que lo emite. Para que un listener externo lo reciba a través del árbol, el evento suele necesitar bubbles: true; si el componente usa Shadow DOM y debe cruzar esa frontera, también necesita composed: true. cancelable: true permite que el consumidor llame preventDefault y que el emisor compruebe si la acción fue cancelada.",
+            "flow": [
+              [
+                "El componente detecta una acción",
+                "Un clic, una selección o una modificación produce un cambio que el componente quiere comunicar."
+              ],
+              [
+                "Se crea un CustomEvent",
+                "El evento recibe un nombre estable y detail con los datos públicos necesarios."
+              ],
+              [
+                "Se despacha",
+                "dispatchEvent emite el evento; bubbles controla propagación ascendente y composed permite cruzar Shadow DOM."
+              ],
+              [
+                "La página escucha y decide",
+                "El consumidor recibe detail y puede llamar preventDefault cuando el evento es cancelable."
+              ]
+            ],
+            "decisions": [
+              "Elegí nombres de eventos claros y estables, normalmente en minúsculas con guiones, como novela-seleccionada.",
+              "En detail enviá identificadores o datos de contrato; evitá exponer referencias internas que la página no debería modificar.",
+              "Usá bubbles y composed solo cuando el contrato del componente requiera que el evento llegue a ancestros fuera de su host.",
+              "Usá cancelable si el componente debe permitir que el consumidor rechace una acción antes de completarla."
+            ],
+            "debugging": "Si el listener del documento no recibe el evento, revisá dónde se ejecuta dispatchEvent, si bubbles está activo y si el evento necesita composed para salir del Shadow DOM. Si event.detail es undefined, comprobá que el dato se haya enviado dentro de detail. Si preventDefault no surte efecto, el evento debe crearse con cancelable: true y el emisor debe comprobar el resultado de dispatchEvent o defaultPrevented."
+          }
         }
       ],
       "architecture": {
@@ -3587,7 +3881,35 @@
               "label": "Vue — Enlace de clases y estilos",
               "url": "https://vuejs.org/guide/essentials/class-and-style.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Las plantillas de Vue son HTML declarativo que el compilador transforma en funciones de render optimizadas. La interpolación {{ }} produce texto y escapa HTML por defecto; las directivas conectan atributos, clases, estilos y eventos con valores reactivos. Cada binding admite una expresión, no una instrucción completa, y las funciones llamadas desde la plantilla deberían ser puras porque pueden ejecutarse durante actualizaciones.",
+            "flow": [
+              [
+                "La plantilla declara la vista",
+                "El marcado HTML describe el resultado deseado para los datos actuales del componente."
+              ],
+              [
+                "El compilador analiza bindings",
+                "Interpolaciones y directivas se convierten en instrucciones de render optimizadas."
+              ],
+              [
+                "La reactividad rastrea dependencias",
+                "Vue registra qué valores se usan y programa actualizaciones cuando cambian."
+              ],
+              [
+                "El renderer actualiza el DOM",
+                "Vue aplica los cambios necesarios a los nodos que dependen de esos datos."
+              ]
+            ],
+            "decisions": [
+              "Usá {{ valor }} para texto y :atributo para enlazar atributos; si el valor es null o undefined, Vue puede retirar el atributo enlazado.",
+              "Usá expresiones pequeñas en la plantilla y trasladá reglas complejas a computed o funciones puras.",
+              "Evitá v-html con contenido del usuario: insertar HTML sin sanitización abre una vía de XSS.",
+              "No llames desde una expresión de plantilla a una función que modifique estado, haga fetch o produzca efectos secundarios."
+            ],
+            "debugging": "Si el atributo no cambia, comprobá que usaste :atributo y no interpolación dentro de un atributo. Si una expresión no compila, verificá que sea una expresión y no un bloque if/for. Si el contenido HTML aparece como texto, es el comportamiento seguro de la interpolación; v-html solo debe usarse con contenido confiable y sanitizado."
+          }
         },
         {
           "id": "vue-directivas",
@@ -3669,7 +3991,35 @@
               "label": "Vue — Manejo de eventos",
               "url": "https://vuejs.org/guide/essentials/event-handling.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Las directivas son atributos especiales con prefijo v- que conectan el DOM con el estado del componente. v-if y v-show no hacen lo mismo: v-if crea o destruye el bloque, mientras que v-show mantiene el elemento y controla su display. v-bind aplica valores reactivos a atributos, clases y estilos; v-on conecta eventos y admite modificadores para controlar su comportamiento.",
+            "flow": [
+              [
+                "Vue evalúa la expresión",
+                "La directiva lee el estado reactivo del componente."
+              ],
+              [
+                "Se elige la operación DOM",
+                "v-if decide crear o retirar; v-show alterna visibilidad; v-bind actualiza atributos; v-on registra comportamiento."
+              ],
+              [
+                "Se actualiza la dependencia",
+                "Cuando cambia el dato reactivo, Vue vuelve a evaluar la directiva afectada."
+              ],
+              [
+                "El DOM refleja el resultado",
+                "El renderer cambia la presencia, estilo, atributo o listener sin que el código manipule nodos manualmente."
+              ]
+            ],
+            "decisions": [
+              "Elegí v-if para condiciones que cambian poco o bloques cuyo contenido debe crearse solo cuando se necesita; elegí v-show para alternancias frecuentes.",
+              "Usá :class y :style con objetos o arreglos cuando el aspecto dependa del estado, manteniendo las reglas de presentación en CSS.",
+              "Usá @submit.prevent para formularios y @click.stop solo cuando necesites detener propagación; no agregues modificadores por costumbre.",
+              "No combines v-if y v-for en el mismo nodo cuando la condición depende del elemento; filtrá primero con computed o colocá v-if en un contenedor template."
+            ],
+            "debugging": "Si un bloque desaparece del DOM, puede ser v-if; si sigue presente con display:none, es v-show. Si un clic no ejecuta el handler, verificá el nombre del evento y que no haya un modificador .stop en un ancestro. Si una clase no se aplica, inspeccioná la forma del objeto o arreglo pasado a :class y los nombres de las clases."
+          }
         },
         {
           "id": "vue-listas",
@@ -3752,7 +4102,35 @@
               "label": "Vue — Renderizado condicional",
               "url": "https://vuejs.org/guide/essentials/conditional.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "v-for crea una instancia de marcado por cada elemento de una colección. La key ayuda a Vue a mantener la identidad entre los nodos anteriores y los nuevos: no es solo un número de orden, sino una señal para saber qué instancia corresponde a cada registro. Cuando los elementos pueden cambiar de posición, tener estado propio o contener inputs, una key estable es fundamental.",
+            "flow": [
+              [
+                "Se obtiene la colección",
+                "El componente prepara una lista o un valor derivado, a menudo mediante computed."
+              ],
+              [
+                "v-for itera elementos",
+                "La plantilla crea un bloque por entrada y puede exponer valor, clave e índice."
+              ],
+              [
+                "key identifica cada entrada",
+                "Vue compara claves estables para conservar la identidad del componente o elemento correcto."
+              ],
+              [
+                "Se aplica el cambio mínimo",
+                "Al agregar, quitar o reordenar, Vue reutiliza y mueve nodos según sus identidades."
+              ]
+            ],
+            "decisions": [
+              "Usá un id permanente de la base de datos o un identificador creado al insertar el registro como key; evitá el índice cuando la lista cambia.",
+              "Usá template v-for cuando cada dato deba producir varios nodos hermanos y colocá key en ese template.",
+              "Filtrá y ordená con computed para mantener la colección original y separar datos de presentación.",
+              "Aplicá v-for con v-if en un wrapper o computed, no ambos en el mismo elemento cuando la condición necesite acceder al alias de la iteración."
+            ],
+            "debugging": "Si al borrar una fila el input de otra conserva el texto equivocado, revisá las keys: un índice puede hacer que Vue reutilice el nodo de otra entidad. Si una lista filtrada no se actualiza, asegurate de que el filtro lea valores reactivos. Si un método como sort altera el orden original, ordená una copia para no mutar accidentalmente el estado fuente."
+          }
         },
         {
           "id": "vue-ref",
@@ -3838,7 +4216,35 @@
               "label": "Vue — nextTick",
               "url": "https://vuejs.org/api/general.html#nexttick"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "ref crea un contenedor reactivo cuya propiedad .value contiene el valor actual. Vue intercepta la lectura y escritura de .value para rastrear dependencias y activar efectos. Si el valor es un objeto, ref lo convierte profundamente en reactivo. En las plantillas, los refs de nivel superior suelen desenvolverse automáticamente; en JavaScript se accede mediante .value.",
+            "flow": [
+              [
+                "Crear la referencia",
+                "ref(valorInicial) devuelve un objeto Ref que conserva el valor."
+              ],
+              [
+                "Leer durante render o efecto",
+                "La lectura de .value registra una dependencia para los consumidores reactivos."
+              ],
+              [
+                "Actualizar el valor",
+                "Asignar a .value notifica a los efectos que dependen de ese ref."
+              ],
+              [
+                "Actualizar la interfaz",
+                "Vue programa el render y actualiza los nodos que muestran ese valor."
+              ]
+            ],
+            "decisions": [
+              "Usá ref para valores primitivos y para estado que pueda reemplazarse por completo, como el usuario seleccionado o la respuesta actual de una API.",
+              "Usá reactive cuando el estado sea un objeto con propiedades relacionadas que se editan como un conjunto.",
+              "Usá nextTick solo cuando necesites medir o manipular el DOM después de que Vue aplique una actualización pendiente.",
+              "No confundas una template ref, que permite acceder a un nodo o instancia, con un ref de estado; ambos usan la misma API pero resuelven necesidades diferentes."
+            ],
+            "debugging": "Si el valor cambia en JavaScript pero no en la interfaz, revisá que estés modificando .value de la misma referencia consumida por la plantilla. Si se trata de una propiedad anidada, comprobá si el valor es un objeto convertido profundamente o un objeto no reactivo especial. Si el DOM todavía muestra el valor anterior justo después de cambiarlo, esperá nextTick antes de leer la salida actualizada."
+          }
         },
         {
           "id": "vue-reactive",
@@ -3924,7 +4330,35 @@
               "label": "Vue — Reactividad en profundidad",
               "url": "https://vuejs.org/guide/extras/reactivity-in-depth.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "reactive devuelve un Proxy que intercepta accesos y escrituras a las propiedades de un objeto. Vue usa esas operaciones para rastrear qué efectos dependen de cada propiedad y notificar cambios. El Proxy no es el mismo objeto que el original. Si desestructurás una propiedad primitiva, obtenés un valor independiente y perdés la conexión con el proxy; toRef y toRefs ayudan a preservar esa conexión.",
+            "flow": [
+              [
+                "Crear el Proxy",
+                "reactive(objeto) devuelve una envoltura reactiva para el objeto y sus estructuras anidadas."
+              ],
+              [
+                "Rastrear lecturas",
+                "Cuando un efecto accede a pedido.estado, Vue registra esa propiedad como dependencia."
+              ],
+              [
+                "Detectar escrituras",
+                "Al cambiar una propiedad mediante el Proxy, Vue notifica los efectos que la utilizan."
+              ],
+              [
+                "Volver a renderizar",
+                "Los consumidores afectados se actualizan; las propiedades no utilizadas no necesitan activar ese mismo efecto."
+              ]
+            ],
+            "decisions": [
+              "Usá reactive para un grupo estable de propiedades relacionadas; usá ref si necesitás reemplazar el objeto completo.",
+              "Accedé a través del objeto reactivo cuando sea posible; usá toRef o toRefs al extraer campos que deben conservar reactividad.",
+              "No uses reactive con un primitivo y no reasignes la variable que guarda el Proxy esperando que Vue siga el nuevo objeto.",
+              "Evitá mezclar el objeto original y el Proxy: leé y escribí a través de la referencia reactiva."
+            ],
+            "debugging": "Si una variable desestructurada deja de actualizarse, revisá si se tomó directamente desde reactive. Convertí la propiedad con toRef(pedido, 'estado') o generá refs con toRefs(pedido). Si un watcher no detecta cambios, confirmá que esté observando una fuente reactiva y no una copia primitiva. Recordá que toRaw sirve para casos de integración específicos y no para la lógica diaria."
+          }
         },
         {
           "id": "vue-computed",
@@ -4002,7 +4436,35 @@
               "label": "Vue — API computed",
               "url": "https://vuejs.org/api/reactivity-core.html#computed"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "computed crea un ref derivado a partir de una función getter. Vue rastrea las dependencias reactivas que el getter lee y almacena el resultado hasta que alguna cambia. El getter se evalúa de forma perezosa cuando se necesita el valor; un computed no es una función que se ejecuta cada vez que la plantilla lo consulta. El resultado debería ser puro y no modificar sus propias fuentes.",
+            "flow": [
+              [
+                "Declarar el getter",
+                "computed recibe una función que calcula un valor a partir de refs o propiedades reactivas."
+              ],
+              [
+                "Registrar dependencias",
+                "Las lecturas que ocurren dentro del getter quedan registradas."
+              ],
+              [
+                "Conservar el resultado",
+                "Mientras no cambien las dependencias, las lecturas reutilizan el valor almacenado."
+              ],
+              [
+                "Invalidar y recalcular",
+                "Un cambio en una dependencia invalida la caché; el próximo acceso vuelve a ejecutar el getter."
+              ]
+            ],
+            "decisions": [
+              "Usá computed para totales, filtros, etiquetas y valores que se derivan de otros datos.",
+              "Usá watch cuando el cambio deba iniciar un efecto externo, como una solicitud, almacenamiento o temporizador.",
+              "Mantené el getter puro: no hagas fetch, no cambies refs y no modifiques arreglos de origen.",
+              "Un computed escribible debe tener un setter con una regla clara para convertir el valor derivado en cambios sobre las fuentes."
+            ],
+            "debugging": "Si computed no cambia, comprobá que el getter lea al menos una dependencia reactiva y que no estés usando una copia primitiva tomada antes. Si el getter se ejecuta más de lo esperado, revisá si depende de valores que cambian constantemente. Si no se puede asignar el resultado, es normal: un computed con solo getter es de solo lectura."
+          }
         },
         {
           "id": "vue-watchers",
@@ -4037,6 +4499,13 @@
               "description": "Evitá que una respuesta vieja se procese después de que cambie el identificador observado.",
               "code": "<script setup>\nimport { ref, watch } from 'vue';\nconst usuarioId = ref(1);\nconst usuario = ref(null);\nconst error = ref('');\n\nwatch(usuarioId, async (id, anterior, onCleanup) => {\n  const controller = new AbortController();\n  onCleanup(() => controller.abort());\n  error.value = '';\n  try {\n    const respuesta = await fetch(\n      `https://jsonplaceholder.typicode.com/users/${id}`,\n      { signal: controller.signal }\n    );\n    if (!respuesta.ok) throw new Error('No se pudo cargar el usuario');\n    usuario.value = await respuesta.json();\n  } catch (e) {\n    if (e.name !== 'AbortError') error.value = e.message;\n  }\n}, { immediate: true });\n</script>",
               "explanation": "Cada ejecución crea un AbortController. onCleanup registra una función que cancela esa solicitud antes de que el watcher vuelva a ejecutarse o se detenga. Así no se mantiene trabajo obsoleto cuando cambia usuarioId. El manejo de AbortError evita mostrar como fallo una cancelación esperada."
+            },
+            {
+              "title": "Búsqueda con debounce y cancelación",
+              "description": "Esperá a que el usuario deje de escribir y cancelá tanto el temporizador como la solicitud anterior si la consulta cambia.",
+              "language": "vue",
+              "code": "<script setup>\nimport { ref, watch } from 'vue';\n\nconst consulta = ref('');\nconst resultados = ref([]);\nconst cargando = ref(false);\nconst error = ref('');\n\nwatch(consulta, (texto, anterior, onCleanup) => {\n  const controller = new AbortController();\n  const timer = setTimeout(async () => {\n    if (!texto.trim()) {\n      resultados.value = [];\n      cargando.value = false;\n      return;\n    }\n\n    cargando.value = true;\n    error.value = '';\n    try {\n      const response = await fetch(\n        `/api/novelas?buscar=${encodeURIComponent(texto.trim())}`,\n        { signal: controller.signal }\n      );\n      if (!response.ok) throw new Error(`HTTP ${response.status}`);\n      resultados.value = await response.json();\n    } catch (err) {\n      if (err.name !== 'AbortError') error.value = err.message;\n    } finally {\n      if (!controller.signal.aborted) cargando.value = false;\n    }\n  }, 400);\n\n  onCleanup(() => {\n    clearTimeout(timer);\n    controller.abort();\n  });\n}, { immediate: true });\n</script>",
+              "explanation": "Cada ejecución posee su propio temporizador y AbortController. Cuando consulta cambia, Vue ejecuta la limpieza anterior: evita que se dispare el timer viejo y cancela el fetch que ya había comenzado. encodeURIComponent protege el texto al construir el parámetro de URL. La API debe validar el parámetro en el servidor."
             }
           ],
           "bestPractices": [
@@ -4093,7 +4562,35 @@
               "label": "Vue — API watchEffect",
               "url": "https://vuejs.org/api/reactivity-core.html#watcheffect"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "watch y watchEffect ejecutan efectos secundarios cuando cambian fuentes reactivas. watch recibe fuentes explícitas y permite comparar valores nuevo y anterior; watchEffect descubre dependencias leyendo valores reactivos durante su ejecución síncrona. Los watchers son adecuados para sincronizar con APIs, almacenamiento, temporizadores o solicitudes, no para calcular datos que deberían ser computed. Una limpieza permite cancelar el trabajo asociado a una ejecución que quedó obsoleta.",
+            "flow": [
+              [
+                "Elegir la fuente",
+                "watch observa un ref, getter o arreglo de fuentes; watchEffect comienza sin una lista explícita."
+              ],
+              [
+                "Ejecutar el callback",
+                "watch es perezoso por defecto; watchEffect corre inmediatamente y registra dependencias que lee."
+              ],
+              [
+                "Registrar limpieza",
+                "La función onCleanup permite cancelar temporizadores, listeners o solicitudes de esa ejecución."
+              ],
+              [
+                "Cambio posterior",
+                "Antes de volver a ejecutar o detener el watcher, Vue ejecuta la limpieza registrada."
+              ]
+            ],
+            "decisions": [
+              "Preferí watch cuando importa exactamente qué dato dispara el efecto; preferí watchEffect para efectos cortos cuya lista de dependencias se entiende mejor por sus lecturas.",
+              "Para una consulta de búsqueda, aplicá debounce y AbortController; el resultado anterior no debe sobrescribir el actual.",
+              "No uses deep: true en objetos grandes sin necesidad: puede aumentar el costo y oldValue/newValue pueden ser la misma referencia en cambios anidados.",
+              "Usá computed para datos derivados y watchers para efectos secundarios reales."
+            ],
+            "debugging": "Si el callback no se ejecuta, comprobá que pasaste la fuente reactiva y no busqueda.value, que sería solo el valor actual. Si un efecto asíncrono observa datos antiguos, revisá qué dependencias lee antes del primer await. Si llegan resultados fuera de orden, cancelá la solicitud anterior con AbortController desde onCleanup."
+          }
         },
         {
           "id": "vue-forms",
@@ -4181,7 +4678,35 @@
               "label": "Vue — v-model en componentes",
               "url": "https://vuejs.org/guide/components/v-model.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "v-model es una convención de compilación que conecta el valor de un control con un dato reactivo y envía los cambios de vuelta al estado. En inputs de texto usa value e input; en checkbox y radio usa checked y change; en select usa value y change. Los modificadores transforman cuándo o cómo se normaliza el dato. En componentes propios, v-model se expresa mediante una prop y un evento de actualización; defineModel simplifica ese contrato en versiones actuales.",
+            "flow": [
+              [
+                "Estado inicial",
+                "El componente define el valor del campo mediante ref o reactive."
+              ],
+              [
+                "Binding al control",
+                "v-model conecta el estado con el valor o selección correspondiente al tipo de elemento."
+              ],
+              [
+                "Interacción del usuario",
+                "Vue recibe el evento del control, normaliza el valor y actualiza el estado."
+              ],
+              [
+                "Render y validación",
+                "La plantilla refleja el nuevo valor y puede mostrar errores, resúmenes o disponibilidad del envío."
+              ]
+            ],
+            "decisions": [
+              "Usá .trim para normalizar espacios exteriores, .number cuando el dato deba ser numérico y .lazy cuando convenga actualizar en change en vez de cada input.",
+              "Para grupos de checkbox usá un arreglo reactivo; para una casilla de aceptación usá un booleano.",
+              "Validá en la aplicación y en el servidor: los modificadores no sustituyen una validación de negocio.",
+              "Asociá label y mensajes de error a cada control y exponé estados de error con texto, no solo con color."
+            ],
+            "debugging": "Si el input no refleja el valor, comprobá que el estado esté inicializado y que no estés mezclando v-model con bindings manuales contradictorios. Si .number devuelve una cadena vacía para un campo vacío, manejá ese caso explícitamente. Si un select o checkbox no se sincroniza, verificá los value de las opciones y el tipo del modelo."
+          }
         },
         {
           "id": "vue-componentes",
@@ -4269,7 +4794,35 @@
               "label": "Vue — <script setup>",
               "url": "https://vuejs.org/api/sfc-script-setup.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Un Single-File Component reúne script, template y style en un archivo .vue que debe procesar el compilador de Vue. <script setup> es una sintaxis de compilación que expone variables y funciones directamente a la plantilla. El componente se importa como un módulo y se usa como una etiqueta. style scoped transforma los selectores para limitar su alcance, pero no crea un Shadow Root ni aísla el DOM como Web Components.",
+            "flow": [
+              [
+                "Escribir el SFC",
+                "El archivo define lógica, estructura y estilos en bloques reconocidos por el compilador."
+              ],
+              [
+                "Compilar",
+                "Vite y el plugin de Vue transforman la plantilla y el script en JavaScript ejecutable."
+              ],
+              [
+                "Importar y componer",
+                "El componente se importa desde otro módulo y se instancia dentro de la plantilla de un padre."
+              ],
+              [
+                "Aplicar estilos",
+                "Los estilos scoped reciben atributos de alcance; las reglas globales siguen administrándose desde hojas compartidas."
+              ]
+            ],
+            "decisions": [
+              "Separá un componente cuando tenga una responsabilidad reconocible, pueda reutilizarse o su lógica y presentación se entiendan mejor de forma independiente.",
+              "Preferí <script setup> para componentes nuevos con Composition API; mantené una sola fuente clara para props, emits y estado.",
+              "Usá scoped para estilos locales y CSS global para variables, reset y reglas compartidas.",
+              "Si el componente crece demasiado, extraé lógica reactiva a un composable y estructura visual a componentes hijos."
+            ],
+            "debugging": "Si el navegador muestra el archivo .vue como texto o no reconoce la sintaxis, comprobá que estés trabajando mediante Vite o una configuración de compilación de Vue. Si una variable no aparece en template, revisá que esté declarada en el nivel superior de script setup. Si un estilo scoped no alcanza a un nodo de un componente hijo, revisá los límites de alcance y decidí si necesitás una clase pública o :deep() con moderación."
+          }
         },
         {
           "id": "vue-props",
@@ -4304,6 +4857,13 @@
               "description": "Cuando una prop Array u Object necesita un valor predeterminado en la declaración de opciones, utilizá una función que devuelva una instancia nueva.",
               "code": "<script>\nexport default {\n  props: {\n    etiquetas: {\n      type: Array,\n      default: () => []\n    },\n    configuracion: {\n      type: Object,\n      default: () => ({ tema: 'claro' })\n    }\n  }\n};\n</script>",
               "explanation": "La función default se ejecuta para producir un valor nuevo por instancia. Esto evita que varias instancias compartan accidentalmente el mismo arreglo u objeto predeterminado. En el formato de objeto de defineProps dentro de script setup se aplican las mismas reglas de declaración."
+            },
+            {
+              "title": "Desestructurar props conservando reactividad (Vue 3.5+)",
+              "description": "La transformación de Vue 3.5 mantiene las props reactivas dentro del mismo bloque script setup.",
+              "language": "vue",
+              "code": "<script setup>\nimport { watch } from 'vue';\n\nconst { titulo, estado } = defineProps({\n  titulo: { type: String, default: 'Sin título' },\n  estado: { type: String, required: true }\n});\n\nwatch(() => estado, (nuevoEstado, anterior) => {\n  console.log('Estado:', anterior, '→', nuevoEstado);\n});\n</script>\n\n<template>\n  <article>\n    <h2>{{ titulo }}</h2>\n    <p>{{ estado }}</p>\n  </article>\n</template>",
+              "explanation": "En Vue 3.5+, las variables desestructuradas de defineProps se transforman para seguir leyendo la propiedad actual. El getter () => estado es importante al pasar la fuente a watch: watch(estado, ...) pasaría el valor actual, no una fuente reactiva. En Vue 3.4 y anteriores, conservá el objeto props o usá toRefs para mantener la conexión."
             }
           ],
           "bestPractices": [
@@ -4353,7 +4913,35 @@
               "label": "Vue — Atributos fallthrough",
               "url": "https://vuejs.org/guide/components/attrs.html"
             }
-          ]
+          ],
+          "deepDive": {
+            "model": "Las props forman el canal de datos descendente entre padre e hijo. defineProps declara qué entradas acepta el componente y permite a Vue distinguirlas de atributos que no son props. El hijo recibe los valores y no debe mutarlos; para pedir un cambio emite un evento. En Vue 3.5 o superior, la desestructuración directa de defineProps dentro de script setup mantiene reactividad gracias a una transformación del compilador; en versiones anteriores esa desestructuración no se actualiza automáticamente.",
+            "flow": [
+              [
+                "Declarar el contrato",
+                "defineProps especifica nombres, tipos, valores requeridos y defaults."
+              ],
+              [
+                "El padre envía datos",
+                "Atributos estáticos envían cadenas; :prop enlaza expresiones y objetos reactivos."
+              ],
+              [
+                "El hijo consume props",
+                "El componente usa las props como entradas de solo lectura para presentar su UI."
+              ],
+              [
+                "El hijo emite una intención",
+                "El evento informa una acción al padre, que actualiza su estado y vuelve a enviar el valor nuevo."
+              ]
+            ],
+            "decisions": [
+              "Usá declaraciones tipadas o de opciones según el proyecto; mantené el contrato claro y documentá defaults.",
+              "En Vue 3.5+ podés desestructurar defineProps manteniendo reactividad; en versiones anteriores accedé como props.nombre o usá toRefs cuando corresponda.",
+              "Para Array y Object, definí defaults mediante una factory en la declaración de opciones o el mecanismo compatible con el formato usado.",
+              "No uses una prop como estado editable local si debe mantenerse sincronizada: emití eventos o definí explícitamente una copia inicial cuando la semántica sea independiente."
+            ],
+            "debugging": "Si el padre cambia una prop y el hijo no refleja el nuevo valor, comprobá si la desestructuraste en Vue anterior a 3.5 o si copiaste props.valor a una variable primitiva durante setup. Si el hijo intenta cambiarla directamente, modelá el flujo con emits. Si required no evita datos inválidos, recordá que la declaración de props no reemplaza la validación de negocio ni la validación del servidor."
+          }
         },
         {
           "id": "vue-emits",
