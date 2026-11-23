@@ -86,6 +86,91 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
 
+
+  const makeFlowSteps = (steps, className = "tools-flow-steps") => {
+    const list = node("ol", className);
+    (steps || []).forEach((step, index) => {
+      const item = node("li", "tools-flow-step");
+      item.append(
+        node("span", "tools-flow-number", String(index + 1).padStart(2, "0")),
+        node("span", "tools-flow-copy",
+          ""
+        )
+      );
+      const copy = item.querySelector(".tools-flow-copy");
+      copy.append(node("strong", "", step.title || ""), node("span", "", step.detail || ""));
+      list.append(item);
+    });
+    return list;
+  };
+
+  const renderArchitecture = (root, architecture) => {
+    if (!root || !architecture) return;
+    root.replaceChildren();
+    root.append(
+      node("div", "eyebrow", "MAPA VISUAL DE FUNCIONAMIENTO"),
+      node("h2", "", architecture.title),
+      node("p", "tools-architecture-summary", architecture.summary || ""),
+      makeFlowSteps(architecture.steps, "tools-flow-steps"),
+      node("p", "tools-architecture-note", architecture.note || "")
+    );
+    root.hidden = false;
+  };
+
+  const renderIntegrations = (root, projects, tools) => {
+    if (!root || !Array.isArray(projects) || !projects.length) return;
+    root.replaceChildren();
+    root.append(
+      node("div", "eyebrow", "CONEXIONES ENTRE TECNOLOGÍAS"),
+      node("h2", "", "Proyectos integradores"),
+      node("p", "tools-integrations-intro", "No son tecnologías aisladas: estos recorridos muestran cómo se conectan para construir aplicaciones completas.")
+    );
+    const grid = node("div", "tools-integrations-grid");
+    projects.forEach(project => {
+      const card = node("details", "tools-integration-card");
+      const summary = node("summary", "tools-integration-summary");
+      summary.append(
+        node("span", "tools-integration-level", project.level || "Proyecto"),
+        node("span", "tools-integration-title", project.title),
+        node("span", "tools-integration-outcome", project.outcome || "Proyecto práctico")
+      );
+      const body = node("div", "tools-integration-body");
+      body.append(node("p", "", project.summary || ""));
+      const stackTitle = node("h3", "", "Tecnologías y responsabilidades");
+      const stack = node("div", "tools-integration-stack");
+      (project.stack || []).forEach(item => {
+        const tech = tools.find(candidate => candidate.id === item.tool);
+        if (!tech) return;
+        const link = makeLink(tech.title, urlFor("tools.html", {tool: tech.id}), "tools-integration-tech");
+        link.title = item.role || tech.title;
+        link.append(node("small", "", item.role || ""));
+        stack.append(link);
+      });
+      body.append(stackTitle, stack);
+      if (project.flow?.length) {
+        body.append(node("h3", "", "Arquitectura del proyecto"), makeFlowSteps(project.flow, "tools-flow-steps tools-integration-flow"));
+      }
+      if (project.milestones?.length) {
+        const phases = node("div", "tools-integration-phases");
+        phases.append(node("h3", "", "Etapas de construcción"));
+        const list = node("ol");
+        project.milestones.forEach((milestone, index) => {
+          const item = node("li");
+          item.append(node("strong", "", (index + 1) + ". " + milestone[0]), node("p", "", milestone[1]));
+          list.append(item);
+        });
+        phases.append(list);
+        body.append(phases);
+      }
+      if (project.dataModel) body.append(node("h3", "", "Modelo de datos"), node("p", "tools-integration-technical", project.dataModel));
+      if (project.endpoints) body.append(node("h3", "", "Rutas de ejemplo"), node("p", "tools-integration-technical", project.endpoints));
+      card.append(summary, body);
+      grid.append(card);
+    });
+    root.append(grid);
+    root.hidden = false;
+  };
+
   const brands = {
     terminal:["#59B99A","SHELL","$ pwd\n$ ls -la\n$ find . -name '*.js'"],
     git:["#F05032","GIT","git status\ngit add .\ngit commit -m \"primer cambio\""],
@@ -263,6 +348,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const firstArticle = tool.articles[0];
       const starter = makeStarter(tool, firstArticle, "EMPEZÁ POR ACÁ", firstArticle ? urlFor("tools-article.html", {tool: tool.id, id: firstArticle.id}) : "#");
       insertAfter(document.querySelector(".tools-categories-section"), starter);
+      renderArchitecture(document.getElementById("toolsArchitecture"), tool.architecture);
+      renderIntegrations(document.getElementById("toolsIntegrations"), database.integrations, database.tools);
     }
 
     if (page === "tools-category") {
@@ -356,6 +443,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       let section = addArticleSection(body, toc, "concepto", "¿Qué es y para qué sirve?");
       section.append(node("p", "", article.purpose));
       if (article.whenToUse) section.append(node("h3", "", "Cuándo utilizarlo"), node("p", "", article.whenToUse));
+
+      if (article.deepDive) {
+        section = addArticleSection(body, toc, "profundizacion", "Cómo funciona por dentro");
+        section.append(node("p", "tools-deep-model", article.deepDive.model || ""));
+        if (article.deepDive.flow?.length) {
+          section.append(node("h3", "", "El proceso paso a paso"));
+          section.append(makeFlowSteps(article.deepDive.flow, "tools-flow-steps tools-deep-flow"));
+        }
+        if (article.deepDive.decisions?.length) {
+          section.append(node("h3", "", "Decisiones de diseño"));
+          const decisions = node("ul", "tools-detail-list");
+          article.deepDive.decisions.forEach(item => decisions.append(node("li", "", item)));
+          section.append(decisions);
+        }
+        if (article.deepDive.debugging) {
+          section.append(node("h3", "", "Cómo razonar ante un problema"), node("p", "tools-deep-debugging", article.deepDive.debugging));
+        }
+      }
 
       const syntaxLanguage = article.syntaxLanguage || tool.syntaxLanguage || ({
         terminal: "bash", git: "bash", npm: "bash",
