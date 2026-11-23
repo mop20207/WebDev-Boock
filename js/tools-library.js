@@ -73,12 +73,123 @@ document.addEventListener("DOMContentLoaded", async () => {
     const list = node("div", "tools-resource-list");
     resources.forEach(resource => {
       if (!resource.url) return;
-      const link = makeLink(resource.label || resource.url, resource.url);
+      const link = makeLink("", resource.url, "tools-resource-card");
+      link.append(node("span", "tools-resource-mark", "↗"));
+      const copy = node("span", "tools-resource-copy");
+      copy.append(node("strong", "", resource.label || "Recurso externo"), node("small", "", "Abrir documentación o referencia"));
+      link.append(copy, node("span", "tools-resource-arrow", "↗"));
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       list.append(link);
     });
     if (list.childElementCount) parent.append(list);
+  };
+
+
+  const brands = {
+    terminal:["#59B99A","SHELL","$ pwd\n$ ls -la\n$ find . -name '*.js'"],
+    git:["#F05032","GIT","git status\ngit add .\ngit commit -m \"primer cambio\""],
+    npm:["#CB3837","NPM","npm install vite\nnpm run dev\nnpm run build"],
+    react:["#61DAFB","JSX · REACT","function Contador() {\n  const [n, setN] = useState(0);\n  return <button onClick={() => setN(n + 1)}>{n}</button>;\n}"],
+    webcomponents:["#E49B58","CUSTOM ELEMENT","class SaludoBox extends HTMLElement {\n  connectedCallback() {\n    this.textContent = 'Hola';\n  }\n}\ncustomElements.define('saludo-box', SaludoBox);"],
+    vuejs:["#41B883","VUE · COMPONENT","<script setup>\nimport { ref } from 'vue'\nconst count = ref(0)\n</script>\n\n<button @click=\"count++\">{{ count }}</button>"],
+    nodejs:["#68A063","NODE.JS","import { createServer } from 'node:http';\ncreateServer((req, res) => {\n  res.end('Hola desde Node.js');\n}).listen(3000);"],
+    astro:["#FF5D01","ASTRO","---\nconst title = 'Mi sitio';\n---\n\n<html lang=\"es\">\n  <h1>{title}</h1>\n</html>"],
+    phaser:["#8B5CF6","PHASER","create() {\n  this.add.text(40, 40, 'Mi juego', {\n    fontSize: '28px'\n  });\n}"],
+    typescript:["#3178C6","TYPESCRIPT","type Usuario = {\n  id: number;\n  nombre: string;\n};\n\nfunction saludar(user: Usuario) {\n  return 'Hola, ' + user.nombre;\n}"],
+    nextjs:["#D9E0EA","NEXT.JS","export default function Page() {\n  return <main><h1>Hola, Next.js</h1></main>;\n}"],
+    express:["#A8B2C0","EXPRESS","app.get('/api/saludo', (req, res) => {\n  res.json({ mensaje: 'Hola' });\n});"],
+    "sql-postgres":["#6697C8","SQL · POSTGRESQL","SELECT nombre, email\nFROM usuarios\nWHERE activo = TRUE\nORDER BY nombre;"],
+    mongodb:["#47A248","MONGODB","db.usuarios.find({ activo: true })\n  .sort({ nombre: 1 })\n  .limit(10);"],
+    apis:["#D6A33C","HTTP · API","const response = await fetch('/api/usuarios');\nconst usuarios = await response.json();\nconsole.log(usuarios);"],
+    testing:["#38A889","TESTING","test('suma dos valores', () => {\n  expect(sumar(2, 3)).toBe(5);\n});"],
+    "docker-deploy":["#2496ED","DOCKER","FROM node:22-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nCMD [\"npm\", \"start\"]"]
+  };
+  const toolColor = id => brands[id]?.[0] || "#8EA8FF";
+  const brandSvg = id => {
+    const start = '<svg viewBox="0 0 80 80" aria-hidden="true">';
+    const end = '</svg>';
+    const icons = {
+      react:'<g fill="none" stroke="currentColor" stroke-width="4"><ellipse cx="40" cy="40" rx="34" ry="13"/><ellipse cx="40" cy="40" rx="34" ry="13" transform="rotate(60 40 40)"/><ellipse cx="40" cy="40" rx="34" ry="13" transform="rotate(120 40 40)"/></g><circle cx="40" cy="40" r="5" fill="currentColor"/>',
+      vuejs:'<path d="M5 10h22L40 34 53 10h22L40 73z" fill="currentColor"/><path d="m27 10 13 24 13-24H40z" fill="#35495E"/>',
+      nodejs:'<path d="M40 5 70 22v36L40 75 10 58V22z" fill="none" stroke="currentColor" stroke-width="5"/><text x="40" y="47" text-anchor="middle" font-size="20" font-weight="800" fill="currentColor">JS</text>',
+      typescript:'<rect x="6" y="6" width="68" height="68" rx="10" fill="currentColor"/><text x="40" y="52" text-anchor="middle" font-size="30" font-weight="800" fill="#fff">TS</text>',
+      git:'<path d="M35 5a7 7 0 0 1 10 0l30 30a7 7 0 0 1 0 10L45 75a7 7 0 0 1-10 0L5 45a7 7 0 0 1 0-10z" fill="currentColor"/><path d="M27 23v34m0-17h26v17" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="23" r="4" fill="#fff"/><circle cx="27" cy="57" r="4" fill="#fff"/><circle cx="53" cy="57" r="4" fill="#fff"/>',
+      npm:'<path d="M5 16h70v48H5z" fill="currentColor"/><path d="M15 26h50v28H47V36H35v18H15z" fill="#fff"/>',
+      astro:'<path d="m40 4 8 25 27-8-22 19 17 25-26-12-4 22-8-22L5 65l20-25L5 21l27 8z" fill="currentColor"/>',
+      phaser:'<path d="M16 24h48a12 12 0 0 1 11 17l-6 15a8 8 0 0 1-13 2L47 49H33l-9 9a8 8 0 0 1-13-2L5 41a12 12 0 0 1 11-17Z" fill="currentColor"/><path d="M22 31v17m-8-8h16m20-4h1m9 9h1" stroke="#fff" stroke-width="4" stroke-linecap="round"/>',
+      mongodb:'<path d="M42 5C22 25 16 41 27 59c4 7 10 12 15 16 7-11 19-21 18-38C59 23 51 12 42 5Z" fill="currentColor"/><path d="M42 25v49" stroke="#fff" stroke-width="3"/>',
+      "sql-postgres":'<ellipse cx="40" cy="17" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="4"/><path d="M12 17v45c0 6 13 11 28 11s28-5 28-11V17M12 39c0 6 13 11 28 11s28-5 28-11" fill="none" stroke="currentColor" stroke-width="4"/>',
+      "docker-deploy":'<g fill="currentColor"><rect x="14" y="31" width="16" height="13" rx="2"/><rect x="34" y="31" width="16" height="13" rx="2"/><rect x="54" y="31" width="16" height="13" rx="2"/><rect x="34" y="14" width="16" height="13" rx="2"/><rect x="54" y="14" width="16" height="13" rx="2"/><path d="M9 48h80C83 64 69 72 49 72 28 72 14 63 9 48Z"/></g>'
+    };
+    if (icons[id]) return start + icons[id] + end;
+    if (id === "webcomponents") return start + '<path d="M40 5 72 23v34L40 75 8 57V23z" fill="none" stroke="currentColor" stroke-width="4"/><path d="m30 29-12 11 12 11m20-22 12 11-12 11" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' + end;
+    if (id === "apis") return start + '<circle cx="15" cy="40" r="8" fill="currentColor"/><circle cx="65" cy="18" r="8" fill="currentColor"/><circle cx="65" cy="62" r="8" fill="currentColor"/><path d="m23 37 34-16M23 43l34 16" stroke="currentColor" stroke-width="4"/>' + end;
+    if (id === "testing") return start + '<circle cx="40" cy="40" r="32" fill="none" stroke="currentColor" stroke-width="5"/><path d="m23 41 11 11 24-26" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>' + end;
+    if (id === "express") return start + '<rect x="7" y="7" width="66" height="66" rx="12" fill="none" stroke="currentColor" stroke-width="4"/><path d="M22 28h36M22 40h28M22 52h36" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>' + end;
+    if (id === "nextjs") return start + '<circle cx="40" cy="40" r="33" fill="none" stroke="currentColor" stroke-width="4"/><path d="M25 57V23l31 35V23" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>' + end;
+    return start + '<rect x="7" y="12" width="66" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="4"/><path d="m22 31 12 10-12 10m20 0h17" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' + end;
+  };
+  const categorySvg = title => {
+    const t = (title || "").toLowerCase();
+    if (/estado|state|reactiv|variable/.test(t)) return '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 25h8l5-12 8 23 5-11h6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    if (/componente|element|template|layout/.test(t)) return '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="7" width="36" height="34" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><path d="M6 17h36M17 17v24" fill="none" stroke="currentColor" stroke-width="3"/></svg>';
+    if (/consulta|query|sql|datos|documento|base/.test(t)) return '<svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="10" rx="15" ry="6" fill="none" stroke="currentColor" stroke-width="3"/><path d="M9 10v27c0 4 30 4 30 0V10M9 22c0 5 30 5 30 0" fill="none" stroke="currentColor" stroke-width="3"/></svg>';
+    if (/red|petici|http|api|ruta|endpoint/.test(t)) return '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="10" cy="24" r="5" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="38" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="38" cy="38" r="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="m15 22 18-10M15 26l18 10" stroke="currentColor" stroke-width="3"/></svg>';
+    if (/prueba|test|valid|error/.test(t)) return '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 25 19 35 40 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    if (/archivo|estructura|directorio|módulo|modulo/.test(t)) return '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 13h14l4 5h16v20H7z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>';
+    return '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m24 5 18 10v18L24 43 6 33V15z" fill="none" stroke="currentColor" stroke-width="3"/><path d="m17 19-6 5 6 5m14-10 6 5-6 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  };
+  const applyToolBrand = tool => {
+    const accent = toolColor(tool.id);
+    document.querySelector(".tools-content")?.style.setProperty("--tool-accent", accent);
+    const symbol = document.getElementById("toolSymbol");
+    if (symbol) { symbol.innerHTML = brandSvg(tool.id); symbol.classList.add("tools-symbol-svg"); symbol.setAttribute("aria-hidden", "true"); }
+    const art = document.querySelector(".tools-hero-art");
+    if (art) {
+      art.replaceChildren();
+      const mark = node("div", "tools-hero-brand-mark");
+      mark.innerHTML = brandSvg(tool.id);
+      const panel = node("div", "tools-hero-code-panel");
+      const bar = node("div", "tools-hero-code-bar");
+      bar.append(node("span", "", tool.title), node("span", "", brands[tool.id]?.[1] || "EJEMPLO"));
+      const pre = node("pre");
+      pre.append(node("code", "", brands[tool.id]?.[2] || tool.articles?.[0]?.syntax || ""));
+      panel.append(bar, pre);
+      art.append(mark, panel);
+      art.classList.add("tools-hero-brand-art");
+    }
+  };
+  const makeStarter = (tool, article, caption, href) => {
+    if (!article) return null;
+    const section = node("section", "tools-starter-panel");
+    const info = node("div", "tools-starter-copy");
+    info.append(node("span", "tools-starter-eyebrow", caption || "EMPEZÁ POR ACÁ"));
+    info.append(node("h2", "", article.title));
+    info.append(node("p", "", article.summary || article.purpose || tool.description));
+    info.append(makeLink("Abrir guía completa ↗", href, "tools-starter-link"));
+    const sample = String(article.examples?.[0]?.code || article.syntax || brands[tool.id]?.[2] || "");
+    const snippet = sample.length > 650 ? sample.slice(0, 650) + "\n…" : sample;
+    const codePanel = node("div", "tools-starter-code");
+    const header = node("div", "tools-starter-code-header");
+    header.append(node("span", "", "EJEMPLO DE CÓDIGO"), node("span", "", (article.examples?.[0]?.language || article.syntaxLanguage || tool.syntaxLanguage || "code").toUpperCase()));
+    const pre = node("pre");
+    const code = node("code", "language-" + (article.examples?.[0]?.language || article.syntaxLanguage || tool.syntaxLanguage || "plaintext"), snippet);
+    pre.append(code);
+    const copy = node("button", "tools-copy-sample", "Copiar código");
+    copy.type = "button";
+    copy.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(snippet); copy.textContent = "Copiado ✓"; }
+      catch { copy.textContent = "No disponible"; }
+      window.setTimeout(() => { copy.textContent = "Copiar código"; }, 1800);
+    });
+    codePanel.append(header, pre, copy);
+    section.append(info, codePanel);
+    if (window.hljs) window.hljs.highlightElement(code);
+    return section;
+  };
+  const insertAfter = (reference, element) => {
+    if (reference?.parentNode && element) reference.parentNode.insertBefore(element, reference.nextSibling);
   };
 
   try {
@@ -117,6 +228,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (page === "tools-index") {
+      applyToolBrand(tool);
       document.title = tool.title + " | WebDev Book";
       setText("toolBreadcrumb", tool.title);
       setText("toolEyebrow", tool.eyebrow);
@@ -134,8 +246,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         grid.replaceChildren();
         tool.categories.forEach((category, index) => {
           const card = makeLink("", urlFor("tools-category.html", {tool: tool.id, category: category.id}), "tools-category-card tools-accent-" + tool.accent);
+          card.style.setProperty("--tool-accent", toolColor(tool.id));
           const top = node("span", "tools-category-card-top");
-          top.append(node("span", "tools-category-icon", category.icon || "▦"), node("span", "tools-card-arrow", "↗"));
+          const categoryMark = node("span", "tools-category-icon");
+          categoryMark.innerHTML = categorySvg(category.title);
+          categoryMark.setAttribute("aria-hidden", "true");
+          top.append(categoryMark, node("span", "tools-card-arrow", "↗"));
           const copy = node("span", "tools-category-copy");
           copy.append(node("span", "tools-kicker", "CATEGORÍA " + String(index + 1).padStart(2, "0")), node("h3", "", category.title), node("p", "", category.description));
           const bottom = node("span", "tools-category-bottom");
@@ -144,6 +260,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           grid.append(card);
         });
       }
+      const firstArticle = tool.articles[0];
+      const starter = makeStarter(tool, firstArticle, "EMPEZÁ POR ACÁ", firstArticle ? urlFor("tools-article.html", {tool: tool.id, id: firstArticle.id}) : "#");
+      insertAfter(document.querySelector(".tools-categories-section"), starter);
     }
 
     if (page === "tools-category") {
@@ -155,9 +274,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
       document.title = category.title + " | " + tool.title + " | WebDev Book";
+      applyToolBrand(tool);
+      document.querySelector(".tools-category-hero")?.style.setProperty("--tool-accent", toolColor(tool.id));
       setText("toolBreadcrumb", tool.title);
       setText("toolsCategoryEyebrow", tool.title.toUpperCase() + " / CATEGORÍA");
-      setText("toolsCategorySymbol", category.icon || tool.symbol);
+      const categorySymbol = document.getElementById("toolsCategorySymbol");
+      if (categorySymbol) { categorySymbol.innerHTML = categorySvg(category.title); categorySymbol.classList.add("tools-symbol-svg"); categorySymbol.style.setProperty("--tool-accent", toolColor(tool.id)); categorySymbol.setAttribute("aria-hidden", "true"); }
       setText("toolsCategoryCount", category.articles.length + (category.articles.length === 1 ? " ARTÍCULO" : " ARTÍCULOS"));
       setText("toolsCategoryTitle", category.title);
       setText("toolsCategoryDescription", category.description);
@@ -176,13 +298,20 @@ document.addEventListener("DOMContentLoaded", async () => {
           const article = tool.articles.find(item => item.id === id);
           if (!article) return;
           const link = makeLink("", urlFor("tools-article.html", {tool: tool.id, id: article.id}), "tools-topic-link");
-          link.append(node("span", "tools-topic-number", String(index + 1).padStart(2, "0")));
+          link.style.setProperty("--tool-accent", toolColor(tool.id));
+          const visual = node("span", "tools-topic-art");
+          visual.innerHTML = categorySvg(article.title + " " + (article.summary || ""));
+          visual.setAttribute("aria-hidden", "true");
           const copy = node("span", "tools-topic-copy");
-          copy.append(node("h3", "", article.title), node("p", "", article.summary));
-          link.append(copy, node("span", "tools-topic-open", "LEER ARTÍCULO ↗"));
+          copy.append(node("span", "tools-topic-index", "TEMA " + String(index + 1).padStart(2, "0")), node("h3", "", article.title), node("p", "", article.summary));
+          link.append(visual, copy, node("span", "tools-topic-open", "LEER GUÍA ↗"));
           list.append(link);
         });
       }
+      const firstId = category.articles[0];
+      const firstArticle = tool.articles.find(item => item.id === firstId);
+      const starter = makeStarter(tool, firstArticle, "PUNTO DE PARTIDA · " + category.title.toUpperCase(), firstArticle ? urlFor("tools-article.html", {tool: tool.id, id: firstArticle.id}) : "#");
+      insertAfter(document.querySelector(".tools-category-hero"), starter);
     }
 
     if (page === "tools-article") {
@@ -196,6 +325,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       const category = tool.categories.find(item => item.id === article.category);
       const categoryUrl = urlFor("tools-category.html", {tool: tool.id, category: article.category});
       document.title = article.title + " | " + tool.title + " | WebDev Book";
+      applyToolBrand(tool);
+      const articleHero = document.querySelector(".tools-article-hero");
+      articleHero?.style.setProperty("--tool-accent", toolColor(tool.id));
+      if (articleHero && !articleHero.querySelector(".tools-article-brand-art")) {
+        const art = node("div", "tools-article-brand-art");
+        art.innerHTML = brandSvg(tool.id);
+        art.setAttribute("aria-hidden", "true");
+        articleHero.insertBefore(art, document.getElementById("toolsArticleEyebrow"));
+      }
       setText("toolBreadcrumb", tool.title);
       setText("toolsArticleEyebrow", tool.title.toUpperCase() + " / DOCUMENTACIÓN");
       setText("toolsArticleKicker", category?.title.toUpperCase() || "GUÍA PRÁCTICA");
