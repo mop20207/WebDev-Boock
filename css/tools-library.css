@@ -190,3 +190,55 @@ body.light .tools-reference-note{background:#fff}
  .tools-article-navigation .article-step-links{grid-template-columns:1fr}
  .tools-article-navigation .article-step-links a{text-align:left}
 }
+
+
+/* Tarjetas de herramientas: paleta de marca, SVG y ejemplos de sintaxis. */
+.tools-home-section{
+ background:linear-gradient(135deg,var(--surface),color-mix(in srgb,var(--blue) 5%,var(--surface)));
+}
+.tools-home-card{
+ --tool-accent:#668cff;position:relative;overflow:hidden;min-height:252px;
+ padding:18px;border-color:color-mix(in srgb,var(--tool-accent) 34%,var(--line));
+ background:linear-gradient(145deg,color-mix(in srgb,var(--tool-accent) 10%,var(--surface)),var(--surface) 76%);
+ box-shadow:0 10px 26px color-mix(in srgb,var(--tool-accent) 7%,transparent);
+}
+.tools-home-card::before{
+ content:"";position:absolute;inset:0 0 auto;height:3px;
+ background:linear-gradient(90deg,var(--tool-accent),color-mix(in srgb,var(--tool-accent) 12%,transparent));
+}
+.tools-home-card:hover{transform:translateY(-4px);border-color:var(--tool-accent);box-shadow:0 15px 30px color-mix(in srgb,var(--tool-accent) 14%,transparent)}
+.tools-home-icon{
+ width:48px;height:48px;border:1px solid color-mix(in srgb,var(--tool-accent) 35%,transparent);
+ border-radius:14px;background:color-mix(in srgb,var(--tool-accent) 14%,var(--surface));
+ color:var(--tool-accent);font-size:16px;
+}
+.tools-home-icon svg{display:block;width:30px;height:30px;max-width:100%;max-height:100%}
+.tools-home-card h3{color:var(--text);margin:12px 0 5px;font-size:17px}
+.tools-home-card p{color:var(--muted);font-size:12px;line-height:1.6}
+.tools-home-preview{
+ margin-top:12px;padding:9px 11px;min-width:0;border:1px solid color-mix(in srgb,var(--tool-accent) 24%,var(--line));
+ border-radius:10px;background:color-mix(in srgb,var(--tool-accent) 7%,var(--surface));
+}
+.tools-preview-label{display:block;margin-bottom:5px;color:var(--tool-accent);font-size:8px;font-weight:900;letter-spacing:1px}
+.tools-home-preview pre{margin:0;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
+.tools-home-preview code{color:var(--text);font:10px/1.55 "DejaVu Sans Mono",monospace}
+.tools-home-progress{color:var(--muted);margin-top:13px}
+.tools-home-progress b{color:var(--tool-accent)}
+.tools-progress-track{background:color-mix(in srgb,var(--tool-accent) 15%,var(--surface-3))}
+.tools-progress-track i{background:linear-gradient(90deg,var(--tool-accent),color-mix(in srgb,var(--tool-accent) 55%,#fff))}
+.tools-home-card .tools-home-cta{color:var(--tool-accent);font-size:11px}
+body.light .tools-home-section{background:linear-gradient(135deg,#fff,#f3f7ff);border-color:#dfe7f4}
+body.light .tools-home-card{background:linear-gradient(145deg,color-mix(in srgb,var(--tool-accent) 8%,#fff),#fff 78%);border-color:color-mix(in srgb,var(--tool-accent) 28%,#dfe6f1)}
+body.light .tools-home-card h3{color:#192943}
+body.light .tools-home-card p{color:#66758d}
+body.light .tools-home-preview{background:color-mix(in srgb,var(--tool-accent) 6%,#fff)}
+body.light .tools-home-preview code{color:#26364f}
+@media(max-width:950px){
+ .tools-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .tools-home-card{min-height:246px}
+}
+@media(max-width:680px){
+ .tools-home-grid{grid-template-columns:1fr}
+ .tools-home-card{min-height:0}
+ .tools-home-preview code{font-size:10px}
+}
