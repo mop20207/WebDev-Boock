@@ -1,5 +1,5 @@
 {
-  "version": 22,
+  "version": 23,
   "articleCount": 387,
   "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías.",
   "tools": [
@@ -3513,8 +3513,8 @@
               "title": "Emitir una selección desde dentro de Shadow DOM",
               "description": "Publicá el identificador seleccionado para que la aplicación anfitriona pueda escuchar el evento fuera del componente.",
               "language": "javascript",
-              "code": "class SelectorNovela extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    const boton = document.createElement('button');\n    boton.textContent = 'Elegir Re:Zero';\n    boton.addEventListener('click', () => {\n      const evento = new CustomEvent('novela-seleccionada', {\n        detail: { slug: 're-zero' },\n        bubbles: true,\n        composed: true\n      });\n      this.dispatchEvent(evento);\n    });\n    root.append(boton);\n  }\n}\n\ncustomElements.define('selector-novela', SelectorNovela);\n\ndocument.addEventListener('novela-seleccionada', evento => {\n  console.log(evento.detail.slug);\n});",
-              "explanation": "El evento se despacha desde el host, aunque la acción ocurrió en un botón interno. bubbles permite que ascienda por el DOM y composed permite atravesar la frontera de Shadow DOM. detail publica un contrato de datos pequeño y estable. En componentes grandes, despachá eventos desde el host para no exponer nodos privados."
+              "code": "class SelectorNovela extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    const boton = document.createElement('button');\n    boton.textContent = 'Elegir Re:Zero';\n    boton.addEventListener('click', () => {\n      const evento = new CustomEvent('novela-seleccionada', {\n        detail: { slug: 're-zero' },\n        bubbles: true,\n        composed: true\n      });\n      boton.dispatchEvent(evento);\n    });\n    root.append(boton);\n  }\n}\n\ncustomElements.define('selector-novela', SelectorNovela);\n\ndocument.addEventListener('novela-seleccionada', evento => {\n  console.log(evento.detail.slug);\n});",
+              "explanation": "El evento se despacha desde el botón interno del Shadow DOM. bubbles permite que ascienda y composed permite atravesar la frontera de Shadow DOM hasta que el listener externo lo reciba; el navegador puede retargetear event.target al host para ocultar detalles internos. detail publica un contrato de datos pequeño y estable. En componentes grandes, evitá exponer nodos privados."
             }
           ],
           "bestPractices": [
@@ -4862,7 +4862,7 @@
               "title": "Desestructurar props conservando reactividad (Vue 3.5+)",
               "description": "La transformación de Vue 3.5 mantiene las props reactivas dentro del mismo bloque script setup.",
               "language": "vue",
-              "code": "<script setup>\nimport { watch } from 'vue';\n\nconst { titulo = 'Sin título', estado } = defineProps({\n  titulo: { type: String, default: 'Sin título' },\n  estado: { type: String, required: true }\n});\n\nwatch(() => estado, (nuevoEstado, anterior) => {\n  console.log('Estado:', anterior, '→', nuevoEstado);\n});\n</script>\n\n<template>\n  <article>\n    <h2>{{ titulo }}</h2>\n    <p>{{ estado }}</p>\n  </article>\n</template>",
+              "code": "<script setup>\nimport { watch } from 'vue';\n\nconst { titulo, estado } = defineProps({\n  titulo: { type: String, default: 'Sin título' },\n  estado: { type: String, required: true }\n});\n\nwatch(() => estado, (nuevoEstado, anterior) => {\n  console.log('Estado:', anterior, '→', nuevoEstado);\n});\n</script>\n\n<template>\n  <article>\n    <h2>{{ titulo }}</h2>\n    <p>{{ estado }}</p>\n  </article>\n</template>",
               "explanation": "En Vue 3.5+, las variables desestructuradas de defineProps se transforman para seguir leyendo la propiedad actual. El getter () => estado es importante al pasar la fuente a watch: watch(estado, ...) pasaría el valor actual, no una fuente reactiva. En Vue 3.4 y anteriores, conservá el objeto props o usá toRefs para mantener la conexión."
             }
           ],
