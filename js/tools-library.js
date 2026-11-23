@@ -246,8 +246,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         grid.replaceChildren();
         tool.categories.forEach((category, index) => {
           const card = makeLink("", urlFor("tools-category.html", {tool: tool.id, category: category.id}), "tools-category-card tools-accent-" + tool.accent);
+          card.style.setProperty("--tool-accent", toolColor(tool.id));
           const top = node("span", "tools-category-card-top");
-          top.append(node("span", "tools-category-icon", category.icon || "▦"), node("span", "tools-card-arrow", "↗"));
+          const categoryMark = node("span", "tools-category-icon");
+          categoryMark.innerHTML = categorySvg(category.title);
+          categoryMark.setAttribute("aria-hidden", "true");
+          top.append(categoryMark, node("span", "tools-card-arrow", "↗"));
           const copy = node("span", "tools-category-copy");
           copy.append(node("span", "tools-kicker", "CATEGORÍA " + String(index + 1).padStart(2, "0")), node("h3", "", category.title), node("p", "", category.description));
           const bottom = node("span", "tools-category-bottom");
