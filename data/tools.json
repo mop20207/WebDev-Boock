@@ -1,7 +1,7 @@
 {
-  "version": 23,
+  "version": 24,
   "articleCount": 387,
-  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías.",
+  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías. Cada ficha tecnológica incluye muestras de código, entorno de ejecución, compatibilidad, ventajas, limitaciones y tecnologías complementarias.",
   "tools": [
     {
       "id": "terminal",
@@ -853,6 +853,61 @@
           ]
         ],
         "note": "Terminal, shell y proceso son piezas distintas. Un error puede venir de la sintaxis de la shell, de un programa o de permisos del sistema."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "terminal-pwd-cd",
+          "terminal-crear",
+          "terminal-tuberias"
+        ],
+        "execution": {
+          "kind": "cli",
+          "label": "Terminal / shell",
+          "description": "Se ejecuta en la terminal del sistema operativo. No se ejecuta dentro del navegador del catálogo. Los comandos y opciones dependen de la shell y del sistema (Linux, macOS, WSL o Windows)."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica al runtime: Terminal es una interfaz de comandos, no una tecnología que ejecute el navegador.",
+          "note": "El navegador puede mostrar documentación o una aplicación construida con herramientas de terminal, pero no ejecuta una shell local por seguridad."
+        },
+        "advantages": [
+          "Permite automatizar tareas y repetir procesos con precisión.",
+          "Conecta herramientas de desarrollo, administración, pruebas y despliegue.",
+          "Es útil para trabajar con archivos, procesos, servidores y scripts."
+        ],
+        "limitations": [
+          "Los comandos pueden variar entre Bash, Zsh, PowerShell y CMD.",
+          "Un comando mal dirigido puede modificar o borrar archivos; comprobá la ruta antes de operaciones destructivas.",
+          "No sustituye una interfaz gráfica cuando el usuario final necesita explorar o editar visualmente."
+        ],
+        "complements": [
+          [
+            "git",
+            "Control de versiones y trabajo con repositorios."
+          ],
+          [
+            "npm",
+            "Instalar paquetes y ejecutar scripts de proyectos JavaScript."
+          ],
+          [
+            "nodejs",
+            "Ejecutar programas y herramientas escritas en JavaScript."
+          ],
+          [
+            "docker-deploy",
+            "Construir y administrar contenedores desde la línea de comandos."
+          ]
+        ],
+        "docs": [
+          [
+            "GNU Bash — manual",
+            "https://www.gnu.org/software/bash/manual/"
+          ],
+          [
+            "MDN — línea de comandos",
+            "https://developer.mozilla.org/es/docs/Learn_web_development/Getting_started/Environment_setup/Command_line"
+          ]
+        ]
       }
     },
     {
@@ -1470,6 +1525,61 @@
           ]
         ],
         "note": "Git no guarda simplemente una lista de diferencias: cada commit representa una instantánea y se conecta con su historia mediante referencias."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "git-init",
+          "git-add-commit",
+          "git-branch"
+        ],
+        "execution": {
+          "kind": "cli",
+          "label": "Terminal / herramienta de control de versiones",
+          "description": "Git se ejecuta como programa local o en entornos de CI. GitHub y otros servicios alojan repositorios remotos; no son lo mismo que el programa Git."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica al navegador: Git gestiona versiones de archivos y commits fuera del runtime web.",
+          "note": "El navegador puede abrir repositorios y pull requests en GitHub, pero los comandos Git se ejecutan en la terminal o en herramientas integradas."
+        },
+        "advantages": [
+          "Conserva el historial de cambios y permite comparar versiones.",
+          "Las ramas aíslan experimentos y trabajo paralelo.",
+          "Facilita revisión, colaboración y recuperación de estados anteriores."
+        ],
+        "limitations": [
+          "Necesita una estrategia de commits, ramas y resolución de conflictos.",
+          "No reemplaza copias de seguridad de servicios externos ni guarda por sí solo datos de bases remotas.",
+          "Los secretos no deben agregarse al repositorio, incluso si luego se borran del último commit."
+        ],
+        "complements": [
+          [
+            "terminal",
+            "Ejecutar comandos Git y automatizar tareas."
+          ],
+          [
+            "npm",
+            "Versionar manifiestos, lockfiles y scripts del proyecto."
+          ],
+          [
+            "testing",
+            "Revisar cambios con pruebas antes de integrar."
+          ],
+          [
+            "docker-deploy",
+            "Versionar Dockerfiles y configuración de despliegue."
+          ]
+        ],
+        "docs": [
+          [
+            "Git — documentación oficial",
+            "https://git-scm.com/doc"
+          ],
+          [
+            "GitHub Skills",
+            "https://skills.github.com/"
+          ]
+        ]
       }
     },
     {
@@ -2119,6 +2229,61 @@
           ]
         ],
         "note": "package.json expresa lo que el proyecto necesita; package-lock.json fija la resolución obtenida. No conviene editar manualmente node_modules."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "npm-init",
+          "npm-install",
+          "npm-scripts"
+        ],
+        "execution": {
+          "kind": "cli",
+          "label": "Node.js + terminal",
+          "description": "NPM se ejecuta en Node.js desde una terminal. Administra dependencias del proyecto, el lockfile y los scripts; no se ejecuta como biblioteca dentro del navegador."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica directamente: npm es un gestor de paquetes y scripts del entorno de desarrollo.",
+          "note": "Los paquetes instalados pueden terminar formando parte de una aplicación web; la compatibilidad de esa aplicación depende del código generado y sus objetivos de navegador."
+        },
+        "advantages": [
+          "Resuelve e instala dependencias del ecosistema JavaScript.",
+          "package.json documenta scripts y dependencias del proyecto.",
+          "package-lock.json ayuda a reproducir instalaciones."
+        ],
+        "limitations": [
+          "Las versiones y dependencias transitivas pueden introducir cambios o vulnerabilidades.",
+          "node_modules no debe subirse normalmente al repositorio.",
+          "La compatibilidad final del paquete depende de su runtime y del proceso de build."
+        ],
+        "complements": [
+          [
+            "nodejs",
+            "NPM necesita Node.js para ejecutarse."
+          ],
+          [
+            "typescript",
+            "Instalar compilador y utilidades del proyecto."
+          ],
+          [
+            "react",
+            "Gestionar librerías y herramientas de React."
+          ],
+          [
+            "testing",
+            "Ejecutar runners y herramientas de pruebas."
+          ]
+        ],
+        "docs": [
+          [
+            "NPM — documentación",
+            "https://docs.npmjs.com/"
+          ],
+          [
+            "NPM — package.json",
+            "https://docs.npmjs.com/cli/v11/configuring-npm/package-json"
+          ]
+        ]
       }
     },
     {
@@ -2831,6 +2996,87 @@
           ]
         ],
         "note": "Renderizar no significa necesariamente reemplazar todo el DOM. React calcula y aplica los cambios necesarios; los efectos no deben usarse para calcular datos derivados."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "react-jsx",
+          "react-state",
+          "react-props"
+        ],
+        "execution": {
+          "kind": "browser-build",
+          "label": "Navegador + build de JavaScript",
+          "description": "React se desarrolla con JSX y módulos, y normalmente se compila con Vite, Next.js u otra herramienta. El navegador ejecuta el JavaScript generado, no el JSX sin transformar."
+        },
+        "compatibility": {
+          "kind": "build-target",
+          "summary": "Amplio soporte en navegadores modernos cuando el build y las APIs utilizadas apuntan a esos navegadores.",
+          "rows": [
+            [
+              "Chrome",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Firefox",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Edge",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Safari",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Opera / Chromium",
+              "Generalmente compatible; verificá APIs y versión"
+            ],
+            [
+              "Internet Explorer",
+              "No es un objetivo actual de React moderno"
+            ]
+          ],
+          "note": "La compatibilidad exacta depende de la versión de React, el JavaScript emitido, las dependencias y las APIs del navegador que use la aplicación. Configurá el target y verificá funciones concretas."
+        },
+        "advantages": [
+          "Componentes reutilizables y composición declarativa.",
+          "Estado y renderizado coordinados sin manipular manualmente cada nodo del DOM.",
+          "Ecosistema amplio de herramientas, pruebas y bibliotecas."
+        ],
+        "limitations": [
+          "Requiere aprender JSX, estado, props y el modelo de renderizado.",
+          "Las aplicaciones necesitan una configuración de build y decisiones de routing/datos.",
+          "Un uso indiscriminado de estado global o efectos puede complicar el mantenimiento."
+        ],
+        "complements": [
+          [
+            "typescript",
+            "Contratos tipados para props, estado y datos."
+          ],
+          [
+            "nextjs",
+            "Enrutamiento y renderizado de aplicaciones React."
+          ],
+          [
+            "apis",
+            "Consumir servicios HTTP desde la interfaz."
+          ],
+          [
+            "testing",
+            "Probar componentes e interacciones."
+          ]
+        ],
+        "docs": [
+          [
+            "React — documentación oficial",
+            "https://react.dev/learn"
+          ],
+          [
+            "MDN — compatibilidad de APIs web",
+            "https://developer.mozilla.org/es/docs/Web/Guide/Browser_compatibility"
+          ]
+        ]
       }
     },
     {
@@ -3635,6 +3881,87 @@
           ]
         ],
         "note": "Un Custom Element no necesita un framework. El Shadow DOM ofrece encapsulación, pero no reemplaza la necesidad de definir una API clara para atributos, propiedades y eventos."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "wc-ciclo-vida",
+          "wc-shadow-dom",
+          "wc-eventos"
+        ],
+        "execution": {
+          "kind": "browser-native",
+          "label": "Navegador / APIs nativas",
+          "description": "Custom Elements, Shadow DOM, templates y slots son estándares de la plataforma web. Se ejecutan en navegadores que implementan esas APIs, sin necesitar un framework para el runtime básico."
+        },
+        "compatibility": {
+          "kind": "browser-native",
+          "summary": "Las funciones principales de Web Components tienen soporte amplio en navegadores modernos.",
+          "rows": [
+            [
+              "Chrome",
+              "Amplio"
+            ],
+            [
+              "Firefox",
+              "Amplio"
+            ],
+            [
+              "Edge",
+              "Amplio"
+            ],
+            [
+              "Safari",
+              "Amplio con diferencias puntuales"
+            ],
+            [
+              "Opera",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Internet Explorer",
+              "Sin soporte nativo moderno; no recomendado"
+            ]
+          ],
+          "note": "La compatibilidad es por API: Custom Elements, Shadow DOM, templates y slots deben revisarse por separado. Safari no soporta customized built-in elements; los autonomous custom elements son la opción interoperable habitual."
+        },
+        "advantages": [
+          "Usa estándares nativos y no obliga a elegir un framework.",
+          "Encapsula estilos y estructura con Shadow DOM cuando hace falta.",
+          "Permite crear componentes reutilizables que se pueden integrar con React, Vue y HTML común."
+        ],
+        "limitations": [
+          "El ciclo de vida y la comunicación mediante propiedades/eventos requieren diseñar una API pública clara.",
+          "La encapsulación introduce detalles de estilos, foco, eventos y accesibilidad que deben comprenderse.",
+          "No todas las extensiones de Custom Elements tienen el mismo soporte; verificá cada API."
+        ],
+        "complements": [
+          [
+            "react",
+            "Consumir componentes web desde interfaces React."
+          ],
+          [
+            "vuejs",
+            "Integrar etiquetas personalizadas con aplicaciones Vue."
+          ],
+          [
+            "typescript",
+            "Tipar propiedades, eventos y contratos de componentes."
+          ],
+          [
+            "testing",
+            "Verificar comportamiento y accesibilidad de componentes."
+          ]
+        ],
+        "docs": [
+          [
+            "MDN — Web Components",
+            "https://developer.mozilla.org/es/docs/Web/API/Web_components"
+          ],
+          [
+            "HTML Standard — Custom Elements",
+            "https://html.spec.whatwg.org/multipage/custom-elements.html"
+          ]
+        ]
       }
     },
     {
@@ -5313,6 +5640,87 @@
           ]
         ],
         "note": "computed representa valores derivados y watch observa cambios para ejecutar efectos. No todo dato tiene que convertirse en estado reactivo."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "vue-template",
+          "vue-directivas",
+          "vue-computed"
+        ],
+        "execution": {
+          "kind": "browser-build",
+          "label": "Navegador + build de JavaScript",
+          "description": "Los componentes .vue se procesan mediante Vite y el compilador de Vue. El navegador recibe HTML, CSS y JavaScript generado."
+        },
+        "compatibility": {
+          "kind": "build-target",
+          "summary": "Vue 3 requiere navegadores con soporte nativo de ES2016 o superior. Internet Explorer 11 queda excluido.",
+          "rows": [
+            [
+              "Chrome",
+              "Compatible en versiones con ES2016 nativo"
+            ],
+            [
+              "Firefox",
+              "Compatible en versiones con ES2016 nativo"
+            ],
+            [
+              "Edge",
+              "Compatible en versiones con ES2016 nativo"
+            ],
+            [
+              "Safari",
+              "Compatible en versiones con ES2016 nativo"
+            ],
+            [
+              "Opera / Chromium",
+              "Compatible si cumple el target de JavaScript"
+            ],
+            [
+              "Internet Explorer 11",
+              "No compatible con Vue 3"
+            ]
+          ],
+          "note": "La FAQ oficial de Vue 3 indica soporte para navegadores con ES2016 nativo. Si necesitás entornos heredados, debés evaluar otra estrategia o una versión anterior con su matriz de soporte."
+        },
+        "advantages": [
+          "Reactividad declarativa y plantillas legibles.",
+          "Composition API y composables permiten reutilizar lógica.",
+          "Incluye una experiencia integrada para componentes, formularios y transiciones."
+        ],
+        "limitations": [
+          "Los archivos .vue necesitan un compilador y un entorno de proyecto.",
+          "Hay que entender cuándo usar ref, reactive, computed y watch.",
+          "La compatibilidad del producto final también depende de las APIs y dependencias utilizadas."
+        ],
+        "complements": [
+          [
+            "typescript",
+            "Tipar props, emits y modelos de datos."
+          ],
+          [
+            "apis",
+            "Obtener y enviar datos al backend."
+          ],
+          [
+            "testing",
+            "Probar componentes y flujos de interacción."
+          ],
+          [
+            "express",
+            "Construir una API que consuma la aplicación Vue."
+          ]
+        ],
+        "docs": [
+          [
+            "Vue — documentación oficial",
+            "https://vuejs.org/guide/introduction.html"
+          ],
+          [
+            "Vue — preguntas frecuentes y navegadores",
+            "https://vuejs.org/about/faq.html"
+          ]
+        ]
       }
     },
     {
@@ -5556,7 +5964,35 @@
             "node-que-es",
             "node-npm",
             "node-modulos"
-          ]
+          ],
+          "deepDive": {
+            "model": "Node.js es un runtime que instala un ejecutable llamado node y, normalmente, npm. La terminal localiza ese ejecutable mediante PATH y crea un proceso para ejecutar el archivo indicado. El REPL es otro modo de uso: en vez de cargar un archivo completo, evalúa las expresiones que escribís una por una dentro de una sesión.",
+            "flow": [
+              [
+                "Instalar el runtime",
+                "Instalás Node desde una distribución oficial o un administrador de versiones."
+              ],
+              [
+                "Resolver el ejecutable",
+                "La terminal busca node y npm en PATH; la versión depende del entorno activo."
+              ],
+              [
+                "Ejecutar un archivo",
+                "node app.js inicia un proceso que carga el módulo y ejecuta su código."
+              ],
+              [
+                "Usar el REPL",
+                "node sin archivo abre una sesión interactiva; .exit termina esa sesión."
+              ]
+            ],
+            "decisions": [
+              "Usá un administrador de versiones si trabajás en proyectos que requieren distintas versiones de Node.",
+              "Guardá programas repetibles en archivos; reservá el REPL para explorar expresiones y probar ideas.",
+              "Comprobá node --version y npm --version en la misma terminal donde vas a ejecutar el proyecto.",
+              "Descargá Node desde fuentes oficiales y evitá instaladores de procedencia desconocida."
+            ],
+            "debugging": "Si el comando no se encuentra, revisá PATH y reiniciá la terminal después de instalar. Si la versión no coincide, comprobá qué ejecutable resuelve which node, where node o el comando equivalente de tu sistema. Si el archivo no aparece, confirmá la carpeta actual con pwd o cd."
+          }
         },
         {
           "id": "node-modulos",
@@ -5651,7 +6087,35 @@
             "node-que-es",
             "node-npm",
             "node-fs"
-          ]
+          ],
+          "deepDive": {
+            "model": "Un módulo establece un límite entre archivos y define qué valores se hacen visibles a otros módulos. Node mantiene dos sistemas históricos: ECMAScript Modules (ESM), con import/export, y CommonJS, con require/module.exports. La interpretación de un archivo depende de su extensión, del package.json más cercano y de las reglas del runtime.",
+            "flow": [
+              [
+                "Elegir el formato",
+                "Definí ESM con .mjs o type: module; CommonJS puede usar .cjs o type: commonjs."
+              ],
+              [
+                "Exportar una API",
+                "El módulo decide qué funciones, clases o valores estarán disponibles desde afuera."
+              ],
+              [
+                "Resolver la importación",
+                "Node resuelve rutas relativas, módulos integrados node:* y paquetes instalados."
+              ],
+              [
+                "Evaluar y reutilizar",
+                "El módulo se carga y su resultado queda en caché según las reglas del sistema de módulos."
+              ]
+            ],
+            "decisions": [
+              "En proyectos nuevos, mantené un único sistema principal salvo que exista una razón para interoperar.",
+              "En ESM usá rutas relativas explícitas con la extensión que requiere Node.",
+              "Usá exportaciones nombradas cuando un módulo expone varias responsabilidades relacionadas.",
+              "Separá módulos por responsabilidad y evitá ciclos innecesarios de importación."
+            ],
+            "debugging": "Si aparece require is not defined, probablemente estés ejecutando ESM. Si import no se reconoce, revisá extensión y type del package.json. Si no encuentra un módulo relativo, comprobá la ruta y su extensión; un paquete no instalado no se resuelve como módulo integrado."
+          }
         },
         {
           "id": "node-npm",
@@ -5924,7 +6388,35 @@
             "node-process",
             "node-http",
             "node-errores"
-          ]
+          ],
+          "deepDive": {
+            "model": "process.env es una vista de las variables de entorno heredadas por el proceso. Los valores llegan como texto, incluso cuando representan puertos o booleanos. El proceso debe convertirlos, validarlos y decidir qué hacer si faltan. Un archivo .env es una conveniencia de desarrollo; no convierte automáticamente un secreto en seguro.",
+            "flow": [
+              [
+                "Entregar configuración",
+                "El sistema, plataforma o archivo de entorno aporta pares clave-valor al iniciar Node."
+              ],
+              [
+                "Leer desde process.env",
+                "El código accede a cada clave como string o undefined."
+              ],
+              [
+                "Normalizar y validar",
+                "Se convierten números y booleanos y se comprueban rangos, formatos y valores obligatorios."
+              ],
+              [
+                "Inyectar en servicios",
+                "La configuración validada se utiliza al iniciar servidores, clientes y conexiones."
+              ]
+            ],
+            "decisions": [
+              "Validá configuración una sola vez al iniciar; fallá temprano si una variable indispensable no existe.",
+              "No imprimas ni envíes secretos en logs, mensajes de error o respuestas HTTP.",
+              "Mantené .env fuera del repositorio y versioná un .env.example sin valores sensibles.",
+              "Diferenciá la configuración del servidor de las variables públicas que el bundler inserta en el frontend."
+            ],
+            "debugging": "Si PORT es NaN, recordá que process.env entrega texto y comprobá el valor antes de convertirlo. Si una variable no aparece, verificá que se haya cargado antes del primer acceso y que el nombre coincida exactamente. Si una clave queda expuesta, rotala; quitarla del archivo actual no la elimina del historial."
+          }
         },
         {
           "id": "node-path",
@@ -6108,7 +6600,35 @@
             "node-async",
             "node-streams",
             "node-errores"
-          ]
+          ],
+          "deepDive": {
+            "model": "node:fs conecta el proceso con el sistema de archivos del host. La API de promesas permite escribir código secuencial con await, mientras que las operaciones de bajo nivel pueden usar callbacks o streams. Leer un archivo entero crea un valor en memoria; los streams permiten procesar fragmentos y ejercer backpressure cuando la velocidad de lectura y escritura no coincide.",
+            "flow": [
+              [
+                "Resolver una ruta",
+                "El módulo recibe una ruta y el sistema comprueba su resolución relativa, permisos y existencia."
+              ],
+              [
+                "Iniciar la operación",
+                "readFile, writeFile o las funciones de directorio solicitan la operación al entorno de Node."
+              ],
+              [
+                "Resolver la Promise",
+                "Cuando la operación termina, la promesa se cumple o rechaza con un error del sistema."
+              ],
+              [
+                "Procesar el contenido",
+                "El programa interpreta el Buffer o texto y maneja resultados, permisos y posibles fallos."
+              ]
+            ],
+            "decisions": [
+              "Para archivos pequeños y medianos, readFile/writeFile suelen ser simples y legibles.",
+              "Para archivos grandes, preferí streams para no cargar todo el archivo en memoria.",
+              "Usá rutas absolutas o resolvelas desde import.meta.url cuando el directorio actual pueda cambiar.",
+              "Comprobá permisos y errores; no confíes en una validación previa de existencia como garantía contra condiciones de carrera."
+            ],
+            "debugging": "ENOENT indica que la ruta no existe desde el contexto del proceso; EACCES o EPERM señalan permisos. Si un JSON no se analiza, verificá encoding y contenido. Si el servidor se vuelve lento al leer archivos grandes, evaluá streams en vez de readFile."
+          }
         },
         {
           "id": "node-async",
@@ -6199,7 +6719,35 @@
             "node-fs",
             "node-events",
             "node-errores"
-          ]
+          ],
+          "deepDive": {
+            "model": "Una Promise representa un resultado que puede cumplirse, rechazarse o permanecer pendiente. async siempre devuelve una Promise; await suspende la continuación de esa función sin bloquear el hilo principal durante la espera. Las operaciones independientes pueden iniciarse en paralelo, pero las operaciones dependientes deben esperar el resultado previo.",
+            "flow": [
+              [
+                "Crear tareas",
+                "Una API inicia I/O y devuelve una Promise que representa su resultado futuro."
+              ],
+              [
+                "Esperar o combinar",
+                "await espera una operación; Promise.all inicia varias tareas y espera a que todas se cumplan."
+              ],
+              [
+                "Retomar la función",
+                "La ejecución continúa cuando la promesa se resuelve y el valor queda disponible."
+              ],
+              [
+                "Manejar fallos",
+                "Los rechazos llegan al catch de try/catch o al consumidor de la Promise."
+              ]
+            ],
+            "decisions": [
+              "Usá await secuencial cuando la segunda operación necesite el resultado de la primera.",
+              "Usá Promise.all para trabajo independiente cuando el fallo de una tarea deba fallar el conjunto.",
+              "Usá Promise.allSettled cuando necesites inspeccionar el resultado de cada tarea aunque alguna falle.",
+              "No confundas asincronía con paralelismo de CPU: el código JavaScript sigue ejecutándose en el hilo correspondiente."
+            ],
+            "debugging": "Si el resultado es Promise { <pending> }, quizá olvidaste await o devolver la promesa. Si una tarea falla sin ser detectada, revisá que el rechazo se espere o capture. Si las operaciones tardan demasiado, medí si se están ejecutando secuencialmente aunque podrían iniciar en paralelo."
+          }
         },
         {
           "id": "node-events",
@@ -6650,7 +7198,35 @@
             "node-api-rest",
             "node-env",
             "node-errores"
-          ]
+          ],
+          "deepDive": {
+            "model": "node:http implementa el protocolo HTTP a bajo nivel. El servidor recibe una solicitud como flujo de datos y entrega un objeto IncomingMessage; la respuesta ServerResponse permite escribir estado, encabezados y cuerpo. A diferencia de Express, Node no agrega routers, parsers JSON ni middleware: esos contratos se construyen explícitamente.",
+            "flow": [
+              [
+                "Crear el servidor",
+                "createServer registra una función que recibirá cada solicitud HTTP."
+              ],
+              [
+                "Inspeccionar la petición",
+                "El handler revisa método, URL, headers y, si hace falta, consume el body como stream."
+              ],
+              [
+                "Construir la respuesta",
+                "Se fija statusCode y Content-Type y se escribe el cuerpo."
+              ],
+              [
+                "Finalizar el ciclo",
+                "res.end cierra la respuesta; listen enlaza el servidor al puerto y host elegidos."
+              ]
+            ],
+            "decisions": [
+              "Usá node:http para aprender el protocolo o construir un servidor pequeño; para aplicaciones amplias, evaluá Express u otro framework.",
+              "Parseá y limitá el body de entrada; no acumules indefinidamente datos enviados por un cliente.",
+              "Usá URL para separar pathname y query string en vez de comparar req.url completa.",
+              "Establecé Content-Type, status y respuestas de error coherentes en cada ruta."
+            ],
+            "debugging": "Si el navegador queda cargando, verificá que todas las rutas llamen res.end o finalicen la respuesta. Si JSON aparece como texto extraño, fijá Content-Type y serializá con JSON.stringify. Si el puerto está ocupado, revisá procesos existentes y el error EADDRINUSE."
+          }
         },
         {
           "id": "node-api-rest",
@@ -7059,6 +7635,65 @@
           ]
         ],
         "note": "Asíncrono no significa que todo JavaScript corra en paralelo. Evitá bloquear el hilo principal; para trabajo CPU-intensivo evaluá workers o procesos separados."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "node-modulos",
+          "node-fs",
+          "node-http"
+        ],
+        "execution": {
+          "kind": "server-runtime",
+          "label": "Runtime de servidor / escritorio",
+          "description": "Node.js ejecuta JavaScript fuera de una página web, normalmente en servidores, scripts y herramientas locales. No proporciona el DOM del navegador por defecto."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "Node.js no se ejecuta como runtime dentro de Chrome, Firefox o Safari.",
+          "note": "Los navegadores pueden consumir servicios creados con Node.js. El código del servidor corre en Node; el frontend se compila y ejecuta en el navegador como una aplicación separada."
+        },
+        "advantages": [
+          "Permite usar JavaScript para backend, automatización y herramientas.",
+          "Su modelo de I/O asíncrono encaja con servidores y servicios de red.",
+          "Tiene un ecosistema amplio de paquetes y APIs integradas."
+        ],
+        "limitations": [
+          "El trabajo síncrono intensivo puede bloquear el event loop.",
+          "Las APIs de Node y del navegador no son intercambiables.",
+          "Hay que gestionar errores, dependencias, seguridad y recursos del proceso."
+        ],
+        "complements": [
+          [
+            "npm",
+            "Instalar paquetes y ejecutar scripts."
+          ],
+          [
+            "express",
+            "Crear rutas HTTP y APIs."
+          ],
+          [
+            "typescript",
+            "Agregar tipos estáticos a proyectos Node."
+          ],
+          [
+            "sql-postgres",
+            "Persistir datos relacionales desde el servidor."
+          ],
+          [
+            "mongodb",
+            "Persistir documentos desde el servidor."
+          ]
+        ],
+        "docs": [
+          [
+            "Node.js — documentación oficial",
+            "https://nodejs.org/docs/latest/api/"
+          ],
+          [
+            "MDN — introducción a Express y Node",
+            "https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction"
+          ]
+        ]
       }
     },
     {
@@ -8760,6 +9395,91 @@
           ]
         ],
         "note": "La arquitectura de islas reduce JavaScript innecesario. Una isla cliente debe justificarse por interacción real; el contenido estático no necesita hidratarse."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "astro-paginas",
+          "astro-componentes",
+          "astro-islas"
+        ],
+        "execution": {
+          "kind": "hybrid",
+          "label": "Build / servidor + navegador",
+          "description": "Astro genera HTML desde el servidor o durante el build. Los componentes interactivos marcados con client:* cargan JavaScript en el navegador."
+        },
+        "compatibility": {
+          "kind": "build-target",
+          "summary": "Astro usa Vite y apunta por defecto a navegadores con soporte moderno de JavaScript.",
+          "rows": [
+            [
+              "Chrome",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Firefox",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Edge",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Safari",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Opera / Chromium",
+              "Amplio en versiones modernas"
+            ],
+            [
+              "Internet Explorer",
+              "No es objetivo del target moderno por defecto"
+            ]
+          ],
+          "note": "La compatibilidad del HTML generado puede ser amplia, pero el JavaScript de las islas depende del target de Vite, las dependencias y las APIs que se utilicen."
+        },
+        "advantages": [
+          "Entrega HTML útil con poco JavaScript cuando el contenido no necesita interacción.",
+          "Permite usar islas de React, Vue y otros componentes de UI.",
+          "Encaja bien en documentación, blogs, catálogos y sitios centrados en contenido."
+        ],
+        "limitations": [
+          "La arquitectura híbrida requiere entender qué se ejecuta en servidor y qué en cliente.",
+          "Las islas y sus dependencias agregan JavaScript cuando se hidratan.",
+          "No reemplaza un backend completo si el proyecto necesita servicios persistentes o reglas de negocio."
+        ],
+        "complements": [
+          [
+            "react",
+            "Crear islas interactivas con React."
+          ],
+          [
+            "vuejs",
+            "Usar componentes Vue en zonas interactivas."
+          ],
+          [
+            "typescript",
+            "Tipar datos y utilidades."
+          ],
+          [
+            "apis",
+            "Obtener contenido de servicios externos."
+          ],
+          [
+            "docker-deploy",
+            "Desplegar endpoints o servicios auxiliares."
+          ]
+        ],
+        "docs": [
+          [
+            "Astro — documentación oficial",
+            "https://docs.astro.build/"
+          ],
+          [
+            "Astro — compatibilidad de navegador",
+            "https://docs.astro.build/en/install-and-setup/"
+          ]
+        ]
       }
     },
     {
@@ -10451,6 +11171,91 @@
           ]
         ],
         "note": "Separá menú, juego y pantalla final en escenas cuando tengan responsabilidades distintas. Una escena puede pausarse, dormirse, reiniciarse o destruirse."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "phaser-escenas",
+          "phaser-gameobjects",
+          "phaser-input"
+        ],
+        "execution": {
+          "kind": "browser-game",
+          "label": "Navegador / Canvas o WebGL",
+          "description": "Phaser es un framework de juegos HTML5. El juego se ejecuta en un navegador de escritorio o móvil y usa Canvas o WebGL según la configuración y las capacidades disponibles."
+        },
+        "compatibility": {
+          "kind": "browser-native",
+          "summary": "Phaser ofrece renderizado WebGL y Canvas en navegadores web de escritorio y móviles.",
+          "rows": [
+            [
+              "Chrome",
+              "Compatible; rendimiento según dispositivo y GPU"
+            ],
+            [
+              "Firefox",
+              "Compatible; rendimiento según dispositivo y GPU"
+            ],
+            [
+              "Edge",
+              "Compatible; rendimiento según dispositivo y GPU"
+            ],
+            [
+              "Safari",
+              "Compatible con diferencias de rendimiento/API según dispositivo"
+            ],
+            [
+              "Navegadores móviles",
+              "Compatible; probar controles táctiles y memoria"
+            ],
+            [
+              "Navegadores muy antiguos",
+              "Puede faltar WebGL o rendimiento suficiente"
+            ]
+          ],
+          "note": "La compatibilidad de un juego también depende de WebGL/Canvas, audio, memoria, tamaño de pantalla y hardware. Probá en dispositivos reales; no hay un único porcentaje que describa todos los juegos."
+        },
+        "advantages": [
+          "Pensado para juegos 2D y ofrece escenas, sprites, animación y físicas.",
+          "Tiene renderizado WebGL y Canvas.",
+          "Puede desarrollarse con JavaScript o TypeScript e integrarse con interfaces web."
+        ],
+        "limitations": [
+          "El rendimiento depende del dispositivo, GPU y cantidad de objetos/efectos.",
+          "Los recursos de imagen y audio deben optimizarse.",
+          "La lógica del juego exige gestionar escenas, tiempos, colisiones y estados."
+        ],
+        "complements": [
+          [
+            "typescript",
+            "Estructurar tipos para entidades y escenas."
+          ],
+          [
+            "apis",
+            "Guardar puntuaciones y consultar rankings."
+          ],
+          [
+            "nodejs",
+            "Desarrollar servicios de juego o backend."
+          ],
+          [
+            "testing",
+            "Verificar reglas y flujos importantes."
+          ],
+          [
+            "docker-deploy",
+            "Desplegar servicios de puntuación."
+          ]
+        ],
+        "docs": [
+          [
+            "Phaser — documentación",
+            "https://docs.phaser.io/"
+          ],
+          [
+            "Phaser — introducción y navegadores",
+            "https://phaser.io/oss/docs/phaser/getting-started/what-is-phaser"
+          ]
+        ]
       }
     },
     {
@@ -12595,6 +13400,91 @@
           ]
         ],
         "note": "Los tipos no validan automáticamente JSON, respuestas HTTP ni datos del usuario. Para eso necesitás validación runtime, por ejemplo con esquemas."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "ts-tipos-primitivos",
+          "ts-uniones-literales",
+          "ts-funciones-tipadas"
+        ],
+        "execution": {
+          "kind": "transpiled",
+          "label": "Compilador + runtime de destino",
+          "description": "TypeScript se comprueba y transforma a JavaScript. El navegador o Node.js ejecutan el JavaScript generado; los tipos se eliminan y no validan datos externos en runtime."
+        },
+        "compatibility": {
+          "kind": "build-target",
+          "summary": "La compatibilidad depende del JavaScript emitido por tsconfig.json, especialmente de target y de los polyfills necesarios.",
+          "rows": [
+            [
+              "Chrome",
+              "Depende del target y APIs"
+            ],
+            [
+              "Firefox",
+              "Depende del target y APIs"
+            ],
+            [
+              "Edge",
+              "Depende del target y APIs"
+            ],
+            [
+              "Safari",
+              "Depende del target y APIs"
+            ],
+            [
+              "Opera / Chromium",
+              "Depende del target y APIs"
+            ],
+            [
+              "Internet Explorer",
+              "Solo con target/transpilación y polyfills adecuados; no garantizado"
+            ]
+          ],
+          "note": "TypeScript no determina por sí mismo qué navegador se soporta. Configurá target/lib, el bundler y los polyfills según el público y probá las APIs usadas."
+        },
+        "advantages": [
+          "Detecta incompatibilidades de tipos antes de ejecutar.",
+          "Mejora autocompletado, refactorización y documentación de contratos.",
+          "Escala bien en bases de código y equipos grandes."
+        ],
+        "limitations": [
+          "Requiere compilación o una herramienta que transpile/ejecute el proyecto.",
+          "Los tipos se eliminan: no validan JSON, formularios ni datos de red en tiempo de ejecución.",
+          "Puede introducir complejidad si se usan tipos excesivamente abstractos o any."
+        ],
+        "complements": [
+          [
+            "react",
+            "Tipar componentes, props y estado."
+          ],
+          [
+            "vuejs",
+            "Tipar props, emits y composables."
+          ],
+          [
+            "nodejs",
+            "Desarrollar servicios Node tipados."
+          ],
+          [
+            "express",
+            "Tipar request, response y middleware."
+          ],
+          [
+            "testing",
+            "Comprobar contratos y casos límite."
+          ]
+        ],
+        "docs": [
+          [
+            "TypeScript — documentación",
+            "https://www.typescriptlang.org/docs/"
+          ],
+          [
+            "TSConfig — target",
+            "https://www.typescriptlang.org/tsconfig/target.html"
+          ]
+        ]
       }
     },
     {
@@ -15964,6 +16854,91 @@
           ]
         ],
         "note": "La frontera 'use client' define un límite de módulo. No conviertas toda la aplicación en Client Components si solo una parte necesita interacción."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "nextjs-layouts-pages",
+          "nextjs-server-client-components",
+          "nextjs-data-fetching"
+        ],
+        "execution": {
+          "kind": "hybrid",
+          "label": "Servidor Node.js + navegador",
+          "description": "Next.js puede ejecutar componentes y cargar datos en el servidor, y enviar Client Components para interactividad en el navegador."
+        },
+        "compatibility": {
+          "kind": "version-specific",
+          "summary": "Next.js 16 documenta compatibilidad moderna por defecto: Chrome 111+, Edge 111+, Firefox 111+ y Safari 16.4+.",
+          "rows": [
+            [
+              "Chrome",
+              "111+"
+            ],
+            [
+              "Firefox",
+              "111+"
+            ],
+            [
+              "Edge",
+              "111+"
+            ],
+            [
+              "Safari",
+              "16.4+"
+            ],
+            [
+              "Opera",
+              "No figura como target independiente; comprobar compatibilidad Chromium"
+            ],
+            [
+              "Internet Explorer",
+              "No compatible con target moderno"
+            ]
+          ],
+          "note": "Esta matriz corresponde a la documentación actual de Next.js 16 y puede cambiar en versiones posteriores. El proyecto también requiere un runtime Node compatible."
+        },
+        "advantages": [
+          "Combina React con routing, layouts y renderizado en servidor.",
+          "Server Components pueden reducir JavaScript enviado al cliente.",
+          "Incluye mecanismos de carga de datos, streaming y optimizaciones."
+        ],
+        "limitations": [
+          "La separación servidor/cliente requiere entender serialización y límites de módulos.",
+          "Caché, renderizado y revalidación añaden decisiones de arquitectura.",
+          "La versión de Next.js y Node.js condiciona requisitos y compatibilidad."
+        ],
+        "complements": [
+          [
+            "react",
+            "Base de componentes y composición de interfaces."
+          ],
+          [
+            "typescript",
+            "Tipar páginas, componentes y datos."
+          ],
+          [
+            "express",
+            "Servicios externos cuando una API separada es conveniente."
+          ],
+          [
+            "sql-postgres",
+            "Persistencia relacional para aplicaciones."
+          ],
+          [
+            "testing",
+            "Pruebas de rutas, componentes y navegación."
+          ]
+        ],
+        "docs": [
+          [
+            "Next.js — documentación",
+            "https://nextjs.org/docs"
+          ],
+          [
+            "Next.js — navegadores soportados",
+            "https://nextjs.org/docs/architecture/supported-browsers"
+          ]
+        ]
       }
     },
     {
@@ -16316,6 +17291,13 @@
               "description": "Separá reemplazo, cambio parcial y eliminación.",
               "code": "app.put(\"/api/novelas/:id\", actualizarCompleta);\napp.patch(\"/api/novelas/:id\", actualizarParcial);\napp.delete(\"/api/novelas/:id\", eliminarNovela);",
               "explanation": "PUT representa reemplazo; PATCH una modificación parcial; DELETE solicita eliminar el recurso."
+            },
+            {
+              "title": "Una colección con lectura, creación y eliminación",
+              "description": "Concentrá las rutas de un recurso y diferenciá la respuesta de creación de una eliminación sin cuerpo.",
+              "language": "javascript",
+              "code": "import express from 'express';\nconst app = express();\napp.use(express.json());\n\nconst novelas = [{ id: 1, titulo: 'Overlord' }];\nlet siguienteId = 2;\n\napp.get('/api/novelas', (_req, res) => res.json(novelas));\napp.post('/api/novelas', (req, res) => {\n  const nueva = { id: siguienteId++, titulo: req.body.titulo };\n  novelas.push(nueva);\n  res.status(201).location(`/api/novelas/${nueva.id}`).json(nueva);\n});\napp.delete('/api/novelas/:id', (req, res) => {\n  const indice = novelas.findIndex(n => n.id === Number(req.params.id));\n  if (indice === -1) return res.status(404).json({ error: 'No encontrada' });\n  novelas.splice(indice, 1);\n  res.status(204).end();\n});",
+              "explanation": "Es un ejemplo didáctico en memoria: los datos se pierden al reiniciar el proceso. POST devuelve 201 y Location para la nueva novela; DELETE devuelve 204 cuando la eliminación terminó y no hay cuerpo de respuesta. Una aplicación real debe validar el body y persistir en una base de datos."
             }
           ],
           "exercise": "Diseñá las rutas CRUD de /api/novelas e indicá qué método usarías en cada operación.",
@@ -16361,7 +17343,35 @@
           "related": [
             "express-req-res",
             "express-rest-crud-api"
-          ]
+          ],
+          "deepDive": {
+            "model": "Una ruta Express se identifica por un método HTTP y un path. Express compara la solicitud entrante con las rutas en el orden en que fueron registradas y ejecuta sus handlers cuando hay coincidencia. El método describe la intención de la operación, pero la lógica de negocio y la persistencia deben permanecer en servicios separados a medida que el proyecto crece.",
+            "flow": [
+              [
+                "Llega la solicitud",
+                "Express recibe método, path y datos de la petición."
+              ],
+              [
+                "Se busca una coincidencia",
+                "El router compara método y patrón de ruta, respetando el orden de registro."
+              ],
+              [
+                "Se ejecuta el handler",
+                "El handler valida datos y decide responder o pasar el control."
+              ],
+              [
+                "Se devuelve HTTP",
+                "La respuesta comunica estado, headers y cuerpo al cliente."
+              ]
+            ],
+            "decisions": [
+              "Usá GET para lecturas sin efectos secundarios; evitá modificar datos mediante GET.",
+              "Usá POST para crear recursos o iniciar operaciones; devolvé 201 cuando creás un recurso.",
+              "Usá PUT para reemplazo completo y PATCH para modificación parcial según el contrato de tu API.",
+              "Usá DELETE para solicitar eliminación y documentá si responde 204 o una representación."
+            ],
+            "debugging": "Si una ruta no coincide, verificá método, path, prefijos y orden de registro. Si la solicitud queda pendiente, asegurate de responder o llamar next. Si una ruta genérica captura una ruta específica, reordená o refiná los patrones."
+          }
         },
         {
           "id": "express-req-res",
@@ -16384,6 +17394,13 @@
               "description": "Respondé JSON, texto o redirigí a otra URL.",
               "code": "app.get(\"/texto\", (_req, res) => res.type(\"text/plain\").send(\"Hola\"));\napp.get(\"/json\", (_req, res) => res.json({ mensaje: \"Hola\" }));\napp.get(\"/mover\", (_req, res) => res.redirect(302, \"/json\"));",
               "explanation": "type define Content-Type; json serializa datos; redirect envía un status de redirección."
+            },
+            {
+              "title": "Leer parámetros, query y body sin confundirlos",
+              "description": "Los tres orígenes representan partes diferentes de la solicitud HTTP.",
+              "language": "javascript",
+              "code": "app.use(express.json());\n\napp.patch('/api/novelas/:id', (req, res) => {\n  const id = req.params.id;              // segmento de ruta\n  const incluirCapitulos = req.query.detalle === 'completo';\n  const { titulo } = req.body ?? {};     // JSON parseado\n\n  res.json({ id, titulo, incluirCapitulos });\n});\n\n// PATCH /api/novelas/12?detalle=completo\n// Body: { \"titulo\": \"Re:Zero\" }",
+              "explanation": "req.params identifica el recurso; req.query contiene filtros de la URL; req.body contiene los datos enviados en el cuerpo y necesita el parser apropiado. Los valores recibidos deben validarse y normalizarse antes de enviarlos al servicio."
             }
           ],
           "exercise": "Creá /api/perfil que lea un header opcional y devuelva JSON con status 200. Agregá otra ruta que responda texto plano.",
@@ -16440,7 +17457,35 @@
           "related": [
             "express-body-parsing",
             "express-route-params-query"
-          ]
+          ],
+          "deepDive": {
+            "model": "req y res representan dos mitades del ciclo HTTP. req expone método, ruta, params, query, headers y body parseado por middleware; res construye la respuesta con status, headers y representación. La solicitud puede leerse una sola vez como flujo y la respuesta debe finalizarse una vez. No todos los datos están disponibles antes de configurar los parsers.",
+            "flow": [
+              [
+                "Se recibe req",
+                "Express entrega el objeto de solicitud con URL, método, headers y parámetros."
+              ],
+              [
+                "Middleware prepara datos",
+                "Los parsers y middleware agregan body parseado o contexto autenticado."
+              ],
+              [
+                "El handler decide",
+                "La ruta valida los datos y llama a un servicio o crea una respuesta."
+              ],
+              [
+                "res finaliza",
+                "send, json, end o redirect termina el ciclo con un estado y cabeceras."
+              ]
+            ],
+            "decisions": [
+              "Usá req.params para segmentos identificadores, req.query para filtros y req.body para contenido parseado.",
+              "Comprobá que un parser esté registrado antes de leer req.body.",
+              "Usá res.status(...).json(...) para respuestas JSON con estado explícito.",
+              "Después de enviar una respuesta, retorná o evitá que el handler continúe y trate de responder por segunda vez."
+            ],
+            "debugging": "Si req.body es undefined, revisá express.json o express.urlencoded y el Content-Type. Si aparece ERR_HTTP_HEADERS_SENT, buscá dos caminos que envían respuesta o falta un return después de responder. Si los query params no tienen el tipo esperado, recordá que llegan como texto y deben validarse."
+          }
         },
         {
           "id": "express-route-params-query",
@@ -16635,7 +17680,35 @@
           "related": [
             "express-custom-middleware",
             "express-error-handling"
-          ]
+          ],
+          "deepDive": {
+            "model": "El middleware forma una cadena ordenada por la que avanza una solicitud. Cada función recibe req, res y next. Puede adjuntar contexto a req, terminar la respuesta o transferir el control con next. La posición del middleware determina qué rutas afecta y qué datos están disponibles cuando se ejecuta.",
+            "flow": [
+              [
+                "Registro",
+                "app.use o router.use añade middleware a una posición del stack."
+              ],
+              [
+                "Ejecución",
+                "Express ejecuta las funciones que coinciden con el path y método."
+              ],
+              [
+                "Continuación o respuesta",
+                "next pasa a la siguiente capa; res termina la solicitud."
+              ],
+              [
+                "Ruta o error",
+                "La cadena llega a un handler final o se desvía al middleware de errores."
+              ]
+            ],
+            "decisions": [
+              "Registrá primero parsers y logs que deban aplicarse a muchas rutas; luego autenticación y routers.",
+              "Montá middleware con prefijo cuando solo deba aplicarse a una parte de la API.",
+              "Llamá next(err) para propagar errores desde callbacks o lógica que no devuelve una Promise.",
+              "Evitá middleware global que haga trabajo costoso si la ruta no lo necesita."
+            ],
+            "debugging": "Si el request queda colgado, localizá un middleware que no llama next ni responde. Si next se llama dos veces, la cadena puede avanzar de forma inesperada. Si un middleware de error no se ejecuta, comprobá la firma de cuatro argumentos y que esté registrado después de las rutas."
+          }
         },
         {
           "id": "express-built-in-middleware",
@@ -16709,7 +17782,35 @@
           "related": [
             "express-body-parsing",
             "express-static-files"
-          ]
+          ],
+          "deepDive": {
+            "model": "Los middleware integrados resuelven tareas comunes sin dependencias adicionales: express.json interpreta cuerpos JSON, express.urlencoded interpreta formularios URL-encoded y express.static expone archivos de una carpeta. Se instalan en el stack y se ejecutan según el orden de registro, por eso las rutas deben venir después de los parsers que utilizan req.body.",
+            "flow": [
+              [
+                "Registrar parser",
+                "app.use(express.json()) o express.urlencoded(...) se coloca antes de las rutas."
+              ],
+              [
+                "Coincidir Content-Type",
+                "El parser analiza solo los tipos de contenido que reconoce y respeta los límites configurados."
+              ],
+              [
+                "Preparar req.body",
+                "La ruta recibe una representación JavaScript cuando el cuerpo pudo parsearse."
+              ],
+              [
+                "Servir recursos",
+                "express.static responde por archivos públicos que coinciden con la ruta solicitada."
+              ]
+            ],
+            "decisions": [
+              "Configurá límites de tamaño razonables para cuerpos JSON y formularios.",
+              "Usá extended según el formato de formulario que necesite la aplicación.",
+              "Serví solo carpetas públicas; no montes por accidente directorios con secretos o archivos internos.",
+              "Colocá middleware específicos antes de rutas que dependen de ellos."
+            ],
+            "debugging": "Si req.body es undefined, comprobá orden y Content-Type. Si un cuerpo es rechazado por tamaño o JSON inválido, revisá el límite y el formato enviado. Si un archivo no se sirve, confirmá la raíz de express.static y la URL relativa que se solicita."
+          }
         },
         {
           "id": "express-custom-middleware",
@@ -16929,6 +18030,13 @@
               "description": "POST suele responder 201 y puede indicar la URL del nuevo recurso.",
               "code": "app.post(\"/api/novelas\", async (req, res) => {\n  const nueva = await servicio.crear(req.body);\n  res.status(201).location(`/api/novelas/${nueva.id}`).json(nueva);\n});",
               "explanation": "201 Created indica que se creó un recurso; Location puede señalar su URL."
+            },
+            {
+              "title": "Controlador pequeño que delega la lógica",
+              "description": "El router describe HTTP y un servicio conserva la operación de negocio.",
+              "language": "javascript",
+              "code": "app.get('/api/novelas/:id', async (req, res) => {\n  const novela = await servicioNovelas.buscarPorId(req.params.id);\n  if (!novela) {\n    return res.status(404).json({ error: 'Novela no encontrada' });\n  }\n  res.json(novela);\n});\n\napp.patch('/api/novelas/:id', validarNovelaParcial, async (req, res) => {\n  const actualizada = await servicioNovelas.actualizar(req.params.id, req.body);\n  if (!actualizada) {\n    return res.status(404).json({ error: 'Novela no encontrada' });\n  }\n  res.json(actualizada);\n});",
+              "explanation": "El router se ocupa del transporte HTTP. La validación y el servicio se separan para reutilizar reglas y facilitar pruebas. Con Express 5, si un handler async rechaza, el error pasa al middleware central; los errores esperados como recurso inexistente pueden responderse de forma explícita."
             }
           ],
           "exercise": "Diseñá una API CRUD de novelas con rutas, métodos, códigos HTTP y un formato uniforme de error.",
@@ -16978,7 +18086,35 @@
           "related": [
             "express-routes-basics",
             "express-validation"
-          ]
+          ],
+          "deepDive": {
+            "model": "Una API CRUD organiza operaciones alrededor de un recurso, por ejemplo novelas. La colección tiene una ruta base y cada elemento se identifica con un segmento como /:id. Express recibe HTTP, pero el servicio decide reglas de negocio y el repositorio consulta la base de datos. El router no debería convertirse en una capa que mezcle validación, persistencia y presentación.",
+            "flow": [
+              [
+                "Definir recursos",
+                "Se identifican colecciones y recursos individuales con rutas consistentes."
+              ],
+              [
+                "Asignar métodos",
+                "GET lista/consulta, POST crea, PUT reemplaza, PATCH modifica y DELETE elimina."
+              ],
+              [
+                "Procesar la operación",
+                "El controlador valida la entrada y delega reglas al servicio."
+              ],
+              [
+                "Responder con contrato",
+                "Se devuelven estado HTTP, datos, ubicación del nuevo recurso o error normalizado."
+              ]
+            ],
+            "decisions": [
+              "Diseñá rutas con sustantivos y mantén los métodos como semántica de operación.",
+              "Paginá colecciones y limitá el tamaño de las respuestas.",
+              "Devolvé 201 y Location al crear; usá 404 para recursos inexistentes y 204 cuando no haya cuerpo de respuesta.",
+              "Hacé coherentes los esquemas de éxito y error y documentalos con OpenAPI."
+            ],
+            "debugging": "Si una creación duplica datos al reintentar, revisá la idempotencia y los identificadores de solicitud. Si un listado es lento o enorme, agregá paginación y filtros. Si todas las respuestas devuelven 200, corregí los códigos para reflejar el resultado real."
+          }
         },
         {
           "id": "express-body-parsing",
@@ -17068,6 +18204,13 @@
               "description": "Una función basada en callback debe transferir errores explícitamente.",
               "code": "app.get(\"/archivo\", (req, res, next) => {\n  leerArchivo((error, contenido) => {\n    if (error) return next(error);\n    res.type(\"text/plain\").send(contenido);\n  });\n});",
               "explanation": "Express no puede detectar un error que ocurre dentro de una API callback si no lo transferís a next."
+            },
+            {
+              "title": "Capturar un error en Express 5 y dejar que llegue al manejador central",
+              "description": "Los errores de handlers asíncronos pasan automáticamente al flujo de errores en Express 5.",
+              "language": "javascript",
+              "code": "app.get('/api/novelas/:id', async (req, res) => {\n  const novela = await repositorio.buscar(req.params.id);\n  if (!novela) {\n    return res.status(404).json({ error: 'No encontrada' });\n  }\n  res.json(novela);\n});\n\napp.use((err, req, res, next) => {\n  console.error(err);\n  if (res.headersSent) return next(err);\n  res.status(500).json({ error: 'Error interno' });\n});",
+              "explanation": "La consulta puede rechazar su Promise y Express 5 invoca el middleware de errores. El manejador no muestra el detalle interno al cliente y comprueba headersSent antes de intentar enviar otra respuesta. El 404 es un resultado esperado, no un error interno."
             }
           ],
           "exercise": "Escribí una ruta async que consulte un servicio y responda 404 cuando el recurso no exista. Comparala con una callback API.",
@@ -17108,7 +18251,35 @@
           "related": [
             "express-error-handling",
             "express-rest-crud-api"
-          ]
+          ],
+          "deepDive": {
+            "model": "En Express 5, los handlers y middleware que devuelven una Promise propagan automáticamente los rechazos al flujo de errores. async devuelve una Promise aun cuando se escribe un return simple. Las APIs antiguas basadas en callbacks no generan automáticamente una Promise, por lo que sus errores deben pasar explícitamente con next(err).",
+            "flow": [
+              [
+                "La ruta inicia trabajo async",
+                "El handler async llama una base de datos, servicio o API externa."
+              ],
+              [
+                "Se espera el resultado",
+                "await suspende la continuación mientras Node procesa otras tareas."
+              ],
+              [
+                "Promesa resuelta o rechazada",
+                "Un resultado exitoso permite construir la respuesta; un rechazo pasa al middleware de errores en Express 5."
+              ],
+              [
+                "El middleware normaliza",
+                "El handler central decide status y mensaje sin filtrar detalles internos."
+              ]
+            ],
+            "decisions": [
+              "En Express 5, evitá wrappers de Express 4 que solo repetían next(catch).",
+              "Usá try/catch local solo cuando puedas recuperarte o traducir el error con contexto útil.",
+              "Asegurá que una ruta devuelva o espere la Promise que representa el trabajo asincrónico.",
+              "En callbacks Node tradicionales, llamá next(err) si ocurre un error."
+            ],
+            "debugging": "Si un error async no llega al middleware, comprobá que la función efectivamente devuelva la Promise y que se ejecute bajo Express 5. Si una ruta termina antes de la consulta, revisá que uses await o return. Si capturás una excepción y no hacés nada, la petición puede quedar sin respuesta."
+          }
         },
         {
           "id": "express-validation",
@@ -17131,6 +18302,13 @@
               "description": "El esquema aporta reglas runtime y tipos inferidos.",
               "code": "import { z } from \"zod\";\nconst Schema = z.object({ titulo: z.string().trim().min(1).max(120) });\nconst parsed = Schema.safeParse(req.body);\nif (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });\nconst datos = parsed.data;",
               "explanation": "safeParse evita una excepción para errores normales de validación. Usá parsed.data solo cuando success sea true."
+            },
+            {
+              "title": "Validar parámetros con un esquema reutilizable",
+              "description": "Validá la entrada antes de usarla en la lógica del endpoint.",
+              "language": "javascript",
+              "code": "import { z } from 'zod';\n\nconst CrearNovela = z.object({\n  titulo: z.string().trim().min(1).max(120),\n  volumenes: z.number().int().min(1).max(200)\n}).strict();\n\nfunction validarCrearNovela(req, res, next) {\n  const resultado = CrearNovela.safeParse(req.body);\n  if (!resultado.success) {\n    return res.status(400).json({\n      error: 'Datos inválidos',\n      detalles: resultado.error.flatten().fieldErrors\n    });\n  }\n  req.datosValidados = resultado.data;\n  next();\n}",
+              "explanation": "safeParse devuelve success y datos tipados si el esquema se cumple. strict() rechaza propiedades que no forman parte del contrato. El middleware puede continuar con next() solo después de validar; en un proyecto TypeScript habría que extender el tipo de Request para datosValidados."
             }
           ],
           "exercise": "Definí un esquema de novela con título obligatorio, género y número de volúmenes. Devolvé 400 ante datos inválidos.",
@@ -17172,7 +18350,35 @@
           "related": [
             "express-body-parsing",
             "express-authentication"
-          ]
+          ],
+          "deepDive": {
+            "model": "Express recibe datos externos que deben tratarse como no confiables. TypeScript puede describir la forma esperada durante el desarrollo, pero no valida lo que llega por la red. La validación en runtime comprueba estructura, tipos, rangos, longitud y reglas de negocio antes de que el servicio utilice esos valores.",
+            "flow": [
+              [
+                "Recibir entrada",
+                "La API obtiene params, query o body de una fuente controlada por el cliente."
+              ],
+              [
+                "Validar estructura",
+                "Se comprueban tipos, campos requeridos, límites y formatos."
+              ],
+              [
+                "Normalizar datos",
+                "Se recortan espacios, convierten valores y se descartan campos no permitidos según la política."
+              ],
+              [
+                "Delegar datos confiables",
+                "El servicio recibe un objeto validado y la API responde con error 400/422 si falla el contrato."
+              ]
+            ],
+            "decisions": [
+              "Validá en servidor aunque el frontend valide los formularios; el cliente puede saltarse sus controles.",
+              "Preferí esquemas declarativos para contratos compartidos y mantenibles.",
+              "Distinguí errores de sintaxis/entrada inválida de errores internos del servidor.",
+              "Controlá tamaño, longitud y tipos de archivos, no solamente que los campos existan."
+            ],
+            "debugging": "Si una validación pasa datos inesperados, revisá coerciones y si usaste parse en vez de safeParse. Si el cliente recibe detalles internos, normalizá el error antes de responder. Si TypeScript acepta el objeto pero la entrada real falla, recordá que los tipos desaparecen en runtime."
+          }
         },
         {
           "id": "express-cors",
@@ -17330,6 +18536,13 @@
               "description": "Usá propiedades conocidas para definir el status sin exponer detalles internos.",
               "code": "app.use((err, _req, res, next) => {\n  if (res.headersSent) return next(err);\n  const status = Number.isInteger(err.status) ? err.status : 500;\n  const mensaje = status < 500 ? err.message : \"Error interno\";\n  res.status(status).json({ error: mensaje });\n});",
               "explanation": "No envíes cualquier detalle técnico al usuario. Definí qué mensajes pueden considerarse públicos."
+            },
+            {
+              "title": "Crear un error de negocio con status controlado",
+              "description": "Conservá un status esperado y ocultá detalles inesperados.",
+              "language": "javascript",
+              "code": "function noEncontrada(mensaje = 'Recurso no encontrado') {\n  const error = new Error(mensaje);\n  error.status = 404;\n  return error;\n}\n\napp.get('/api/novelas/:id', async (req, res) => {\n  const novela = await repositorio.buscar(req.params.id);\n  if (!novela) throw noEncontrada('Novela no encontrada');\n  res.json(novela);\n});\n\napp.use((err, req, res, next) => {\n  if (res.headersSent) return next(err);\n  const status = Number.isInteger(err.status) ? err.status : 500;\n  res.status(status).json({\n    error: status === 500 ? 'Error interno' : err.message\n  });\n});",
+              "explanation": "En Express 5 el throw dentro del handler async se propaga. El middleware final traduce errores con status conocido y presenta un mensaje genérico para fallos 500. En aplicaciones reales conviene modelar tipos de error y no confiar ciegamente en propiedades arbitrarias del objeto Error."
             }
           ],
           "exercise": "Implementá un middleware final que registre el error, controle headersSent y devuelva JSON sin stack trace en producción.",
@@ -17367,7 +18580,35 @@
           "related": [
             "express-async-handlers",
             "express-404-handler"
-          ]
+          ],
+          "deepDive": {
+            "model": "Express distingue middleware normal de middleware de error por su firma de cuatro parámetros. Las rutas y middleware pueden propagar fallos con next(err); Express 5 también dirige rechazos de Promises al flujo de error. Un manejador centralizado registra el detalle interno y devuelve al cliente un contrato seguro y consistente.",
+            "flow": [
+              [
+                "Se produce el error",
+                "Un handler arroja una excepción, rechaza una Promise o llama next(err)."
+              ],
+              [
+                "Express salta al flujo de errores",
+                "Las capas normales se omiten y se buscan middleware con firma de error."
+              ],
+              [
+                "Se registra y clasifica",
+                "La aplicación conserva detalles internos en logs y determina status/categoría."
+              ],
+              [
+                "Se responde con seguridad",
+                "El cliente recibe un mensaje público y un identificador de seguimiento, sin stack trace sensible."
+              ]
+            ],
+            "decisions": [
+              "Registrá el middleware de errores después de routers y rutas.",
+              "Comprobá res.headersSent y delegá con next(err) si ya comenzó la respuesta.",
+              "No envíes stack traces, secretos ni SQL al cliente en producción.",
+              "Definí errores esperados de negocio y diferenciálos de fallos inesperados."
+            ],
+            "debugging": "Si el handler no se ejecuta, verificá firma, orden y que el error llegue por throw o next(err). Si aparece ERR_HTTP_HEADERS_SENT, revisá si la ruta respondió antes de propagar. Si el cliente ve demasiado detalle, centralizá la serialización y desactivá información interna en producción."
+          }
         },
         {
           "id": "express-404-handler",
@@ -18900,6 +20141,69 @@
           ]
         ],
         "note": "Un middleware que no termina la respuesta debe llamar next(). En Express 5 los handlers que devuelven Promises propagan rechazos al flujo de errores."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "express-routes-basics",
+          "express-middleware",
+          "express-rest-crud-api"
+        ],
+        "execution": {
+          "kind": "server-runtime",
+          "label": "Servidor Node.js",
+          "description": "Express es un framework backend que procesa solicitudes HTTP en Node.js. Los navegadores consumen las rutas de la API; no ejecutan Express como código cliente."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica al runtime del navegador: Express 5 funciona en Node.js, no en Chrome, Firefox o Safari.",
+          "note": "Express 5 requiere Node.js 18 o superior. La interfaz que consume la API se ejecuta en los navegadores y debe implementar Fetch, CORS y el contrato HTTP correspondiente."
+        },
+        "advantages": [
+          "Permite organizar rutas, middleware y respuestas HTTP.",
+          "El estilo minimalista permite elegir base de datos y herramientas complementarias.",
+          "Express 5 propaga rechazos de handlers que devuelven Promise al flujo de errores."
+        ],
+        "limitations": [
+          "No incluye un ORM ni validación de negocio de forma automática.",
+          "El orden de middleware y el cierre de respuestas deben controlarse.",
+          "La seguridad, autenticación, logs, rate limit y despliegue requieren configuración explícita."
+        ],
+        "complements": [
+          [
+            "nodejs",
+            "Runtime donde se ejecuta Express."
+          ],
+          [
+            "apis",
+            "Diseñar contratos HTTP y REST."
+          ],
+          [
+            "typescript",
+            "Tipar handlers y middleware."
+          ],
+          [
+            "sql-postgres",
+            "Persistencia relacional."
+          ],
+          [
+            "mongodb",
+            "Persistencia documental."
+          ],
+          [
+            "testing",
+            "Pruebas de rutas y respuestas HTTP."
+          ]
+        ],
+        "docs": [
+          [
+            "Express 5 — documentación",
+            "https://expressjs.com/en/5x/"
+          ],
+          [
+            "Express — compatibilidad de versiones",
+            "https://expressjs.com/en/support/"
+          ]
+        ]
       }
     },
     {
@@ -21349,6 +22653,61 @@
           ]
         ],
         "note": "Un índice puede acelerar lecturas, pero añade costo a escrituras y almacenamiento. EXPLAIN ayuda a estudiar el plan real."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "sql-select-basico",
+          "sql-where",
+          "sql-inner-join"
+        ],
+        "execution": {
+          "kind": "database",
+          "label": "Servidor PostgreSQL / cliente SQL",
+          "description": "SQL se envía a un motor de base de datos como PostgreSQL desde un cliente, una aplicación backend o herramientas de administración. El navegador no ejecuta PostgreSQL directamente."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica a navegadores: PostgreSQL es un servidor de base de datos y SQL es el lenguaje de consulta.",
+          "note": "Una aplicación web puede mostrar datos que obtuvo desde una API backend que consulta PostgreSQL. No expongas credenciales de base de datos en el navegador."
+        },
+        "advantages": [
+          "Las relaciones y restricciones ayudan a mantener integridad de datos.",
+          "SQL permite consultas, agregaciones y joins expresivos.",
+          "PostgreSQL ofrece transacciones, índices, JSONB y extensiones."
+        ],
+        "limitations": [
+          "Hay que diseñar esquema, relaciones, migraciones y permisos.",
+          "Las consultas ineficientes pueden degradar rendimiento con datos grandes.",
+          "Concurrencia y transacciones exigen comprender aislamiento y bloqueos."
+        ],
+        "complements": [
+          [
+            "nodejs",
+            "Conectar aplicaciones mediante drivers."
+          ],
+          [
+            "express",
+            "Exponer operaciones de base de datos a través de una API."
+          ],
+          [
+            "testing",
+            "Probar consultas, transacciones y servicios."
+          ],
+          [
+            "docker-deploy",
+            "Levantar PostgreSQL en entornos reproducibles."
+          ]
+        ],
+        "docs": [
+          [
+            "PostgreSQL — documentación oficial",
+            "https://www.postgresql.org/docs/"
+          ],
+          [
+            "PostgreSQL — tutorial SQL",
+            "https://www.postgresql.org/docs/current/tutorial-sql.html"
+          ]
+        ]
       }
     },
     {
@@ -23757,6 +25116,65 @@
           ]
         ],
         "note": "El diseño de documentos debe responder a los patrones de lectura y escritura. Incrustar evita joins en ciertos casos; referenciar ayuda cuando los datos crecen o se comparten."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "mongodb-insert-documents",
+          "mongodb-find-filters",
+          "mongodb-aggregation-pipeline"
+        ],
+        "execution": {
+          "kind": "database",
+          "label": "Servidor MongoDB / mongosh / driver",
+          "description": "MongoDB se ejecuta como servidor o servicio administrado. Las consultas se envían desde mongosh o desde el driver del backend; no desde el runtime normal del navegador."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica a navegadores: MongoDB es un motor de base de datos documental.",
+          "note": "El frontend debe comunicarse con una API segura. No conectes una aplicación pública directamente con credenciales privilegiadas de MongoDB."
+        },
+        "advantages": [
+          "El modelo documental resulta flexible para estructuras anidadas.",
+          "Puede reducir joins en patrones de lectura adecuados.",
+          "Aggregation Pipeline permite transformar y resumir documentos."
+        ],
+        "limitations": [
+          "Un esquema flexible no evita la necesidad de reglas de validación y modelado.",
+          "Los arrays sin límite y documentos excesivos pueden generar problemas.",
+          "Índices y consultas deben alinearse con los patrones de acceso."
+        ],
+        "complements": [
+          [
+            "nodejs",
+            "Usar el driver oficial desde el servidor."
+          ],
+          [
+            "express",
+            "Exponer CRUD y operaciones de documentos mediante API."
+          ],
+          [
+            "typescript",
+            "Definir modelos y contratos de datos."
+          ],
+          [
+            "testing",
+            "Probar consultas y servicios."
+          ],
+          [
+            "docker-deploy",
+            "Ejecutar servicios y entornos locales."
+          ]
+        ],
+        "docs": [
+          [
+            "MongoDB — documentación",
+            "https://www.mongodb.com/docs/"
+          ],
+          [
+            "MongoDB — Node.js Driver",
+            "https://www.mongodb.com/docs/drivers/node/current/"
+          ]
+        ]
       }
     },
     {
@@ -23999,7 +25417,35 @@
           "related": [
             "api-http",
             "api-rest"
-          ]
+          ],
+          "deepDive": {
+            "model": "Un método HTTP expresa la semántica de la solicitud. Safe significa que el cliente no solicita cambios de estado; idempotent significa que varias solicitudes iguales tienen el mismo efecto previsto que una sola. GET es seguro e idempotente; PUT y DELETE son idempotentes según su semántica; POST no lo es necesariamente; PATCH no es necesariamente idempotente.",
+            "flow": [
+              [
+                "Cliente elige intención",
+                "La aplicación decide si necesita leer, crear, reemplazar, modificar parcialmente o eliminar un recurso."
+              ],
+              [
+                "Método y URL",
+                "Se envían método, path, headers y un body cuando corresponde."
+              ],
+              [
+                "Servidor aplica contrato",
+                "La API interpreta la intención, valida entrada y ejecuta la operación."
+              ],
+              [
+                "Respuesta y repetición",
+                "El código y la representación indican resultado; la idempotencia determina cómo pensar reintentos."
+              ]
+            ],
+            "decisions": [
+              "Usá GET solo para lecturas; los crawlers, caches y prefetchers pueden repetir solicitudes seguras.",
+              "Usá PUT cuando el contrato represente reemplazo del recurso y PATCH para cambios parciales.",
+              "Usá POST para crear o iniciar una operación y considerá claves de idempotencia en operaciones sensibles que puedan reintentarse.",
+              "No deduzcas el comportamiento de una API solo por su nombre de ruta: documentá semántica, body y respuestas."
+            ],
+            "debugging": "Si un proxy o cliente reintenta una petición, revisá si el método es idempotente y si la operación puede duplicarse. Si GET cambia datos, corregí el diseño porque la semántica segura queda rota. Si PUT y PATCH se comportan igual, documentá qué campos reemplazan o modifican."
+          }
         },
         {
           "id": "api-status",
@@ -24022,6 +25468,13 @@
               "description": "Un servidor puede indicar creación y ausencia de contenido.",
               "code": "app.post('/api/libros', async (req, res) => {\n  const libro = await guardarLibro(req.body);\n  res.status(201).json(libro);\n});\n\napp.delete('/api/libros/:id', async (req, res) => {\n  await borrarLibro(req.params.id);\n  res.status(204).end();\n});",
               "explanation": "201 comunica que se creó un recurso. 204 comunica éxito sin cuerpo; por eso se usa end() y no se envía JSON."
+            },
+            {
+              "title": "Distinguir 201, 204 y 404 en una API",
+              "description": "El status expresa el resultado y cambia qué cuerpo debería esperar el cliente.",
+              "language": "javascript",
+              "code": "// Crear un recurso\nres.status(201).location('/api/novelas/12').json({ id: 12, titulo: 'Re:Zero' });\n\n// Eliminar sin devolver representación\nres.status(204).end();\n\n// Recurso inexistente\nres.status(404).json({ error: 'No encontrada' });",
+              "explanation": "201 indica que se creó un recurso; Location puede señalar su URL. 204 indica éxito sin cuerpo. 404 informa que el recurso solicitado no existe. No uses 204 si necesitás enviar un JSON de confirmación."
             }
           ],
           "parameters": [
@@ -24071,7 +25524,35 @@
           "related": [
             "api-http",
             "api-fetch"
-          ]
+          ],
+          "deepDive": {
+            "model": "El status code es una señal protocolaria de la respuesta. La primera cifra agrupa la clase, pero el código específico ayuda a que un cliente decida qué hacer. Los headers y body pueden complementar la información. La respuesta no debe devolver siempre 200 ante errores de validación, autenticación o fallos internos.",
+            "flow": [
+              [
+                "El servidor procesa",
+                "La API ejecuta la operación y detecta su resultado."
+              ],
+              [
+                "Se asigna la clase",
+                "2xx expresa éxito, 3xx redirección, 4xx problema de solicitud y 5xx fallo del servidor."
+              ],
+              [
+                "Se define el código preciso",
+                "201 representa creación, 204 éxito sin contenido, 400 entrada inválida y 404 recurso ausente, entre otros."
+              ],
+              [
+                "El cliente interpreta",
+                "Fetch no rechaza automáticamente por 404/500: la aplicación debe comprobar response.ok o status."
+              ]
+            ],
+            "decisions": [
+              "Usá 201 cuando se crea un recurso y, si corresponde, enviá Location.",
+              "Usá 204 cuando la operación fue exitosa y no necesitás devolver un cuerpo.",
+              "Usá 400/422 según el contrato para entradas inválidas y 401/403 para problemas de autenticación/autorización.",
+              "No devuelvas 500 por errores esperables de validación o recursos inexistentes."
+            ],
+            "debugging": "Si fetch entra en then aunque la API devolvió 404, es el comportamiento esperado: comprobá response.ok. Si el cliente no distingue ausencia y error interno, revisá status y esquema de error. Si devolvés 204 con JSON, quitá el body: una respuesta sin contenido no debe incluirlo."
+          }
         },
         {
           "id": "api-headers",
@@ -24094,6 +25575,13 @@
               "description": "Response.headers permite consultar metadatos.",
               "code": "const respuesta = await fetch('/api/perfil');\nconst tipo = respuesta.headers.get('content-type');\nconsole.log(tipo);",
               "explanation": "Headers.get devuelve el valor o null si no existe. Los nombres de cabeceras no distinguen mayúsculas y minúsculas."
+            },
+            {
+              "title": "Configurar caché para una respuesta",
+              "description": "Controlá cuánto tiempo puede reutilizarse una respuesta pública.",
+              "language": "javascript",
+              "code": "app.get('/api/catalogo-version', (req, res) => {\n  res.set('Cache-Control', 'public, max-age=60');\n  res.type('application/json').json({ version: 23 });\n});",
+              "explanation": "public permite que caches compartidas almacenen la respuesta y max-age establece 60 segundos de frescura. No copies esta política para datos privados o sensibles; en esos casos la estrategia puede requerir private, no-store o revalidación."
             }
           ],
           "parameters": [
@@ -24143,7 +25631,35 @@
           "related": [
             "api-http",
             "api-fetch"
-          ]
+          ],
+          "deepDive": {
+            "model": "Los headers son metadatos que acompañan la solicitud y la respuesta. Content-Type describe el formato del cuerpo que se envía; Accept comunica los formatos que el cliente puede procesar; Authorization transporta credenciales según un esquema; Cache-Control define directivas de caché. No son equivalentes al body y no deben contener secretos sin el canal de transporte adecuado.",
+            "flow": [
+              [
+                "Preparar solicitud",
+                "El cliente elige método, URL y headers que describen formato, preferencias o credenciales."
+              ],
+              [
+                "Servidor interpreta",
+                "El servidor inspecciona headers para parsear body, autorizar, negociar contenido o decidir caché."
+              ],
+              [
+                "Servidor responde",
+                "La respuesta incluye status, headers como Content-Type y un cuerpo opcional."
+              ],
+              [
+                "Cliente consume",
+                "El cliente verifica status y headers antes de interpretar el cuerpo con json(), text() o blob()."
+              ]
+            ],
+            "decisions": [
+              "Definí Content-Type cuando enviás un body y Accept cuando esperás un formato específico.",
+              "No establezcas manualmente Content-Length en Fetch; el runtime administra el framing.",
+              "Protegé tokens en Authorization y evitá escribirlos en logs.",
+              "Usá Cache-Control según la sensibilidad y frescura de los datos, no como un valor copiado genéricamente."
+            ],
+            "debugging": "Si el servidor no parsea JSON, verificá Content-Type y el middleware parser. Si response.json falla, comprobá si la respuesta realmente contiene JSON o si un 204 no tiene cuerpo. Si headers no están disponibles desde otro origen, revisá CORS y Access-Control-Expose-Headers."
+          }
         },
         {
           "id": "api-rest",
@@ -24166,6 +25682,13 @@
               "description": "Los parámetros de consulta sirven para filtros y ordenamiento.",
               "code": "GET /api/novelas?genero=fantasia&orden= titulo",
               "explanation": "Los query parameters refinan la colección sin convertir cada filtro en una ruta diferente. En una API real, documentá los valores admitidos y cómo se combinan."
+            },
+            {
+              "title": "Diseñar rutas coherentes para recursos relacionados",
+              "description": "Las rutas expresan relaciones del dominio sin convertir cada operación en un verbo arbitrario.",
+              "language": "http",
+              "code": "GET    /api/novelas\nGET    /api/novelas/:slug\nGET    /api/novelas/:slug/volumenes\nPOST   /api/novelas/:slug/volumenes\nPATCH  /api/volumenes/:id\nDELETE /api/volumenes/:id",
+              "explanation": "Las rutas identifican colecciones y recursos individuales. Los métodos expresan las operaciones y los parámetros identifican entidades. El contrato también debe definir paginación, status, body, autenticación y formato de error."
             }
           ],
           "parameters": [
@@ -24212,7 +25735,35 @@
             "api-metodos",
             "api-json",
             "api-paginacion"
-          ]
+          ],
+          "deepDive": {
+            "model": "REST es un estilo arquitectónico basado en recursos, representaciones y una interfaz uniforme. Las URL identifican recursos; los métodos HTTP expresan acciones semánticas; los status y headers forman parte del contrato. Una API que entrega JSON puede no seguir REST si sus rutas y operaciones no mantienen una semántica coherente.",
+            "flow": [
+              [
+                "Modelar recursos",
+                "Se identifican entidades y colecciones del dominio, como /novelas y /novelas/:id."
+              ],
+              [
+                "Definir representaciones",
+                "Se decide qué campos expone cada recurso y cómo se relacionan."
+              ],
+              [
+                "Mapear métodos HTTP",
+                "GET, POST, PUT, PATCH y DELETE se asignan a operaciones con semántica consistente."
+              ],
+              [
+                "Definir respuestas",
+                "Status, headers, paginación y errores documentan el contrato que consumen los clientes."
+              ]
+            ],
+            "decisions": [
+              "Preferí nombres de recursos y rutas predecibles, evitando verbos arbitrarios en cada endpoint.",
+              "Definí paginación, filtros, ordenamiento y límites para colecciones.",
+              "Documentá qué campos se pueden escribir, cuáles son de solo lectura y cómo se informa un error.",
+              "No asumas que toda API HTTP debe ser REST; elegí el estilo según integración y necesidades."
+            ],
+            "debugging": "Si un cliente no entiende una respuesta, compará el contrato documentado con status, headers y JSON real. Si las rutas se vuelven inconsistentes, agrupá por recurso y definí reglas de pluralización e identificadores. Si hay cambios incompatibles, versioná y comunicá migraciones."
+          }
         },
         {
           "id": "api-json",
@@ -24371,6 +25922,13 @@
               "description": "Enviá un objeto como cuerpo de una solicitud.",
               "code": "const respuesta = await fetch('/api/novelas', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ titulo: 'Fundación', autor: 'Isaac Asimov' })\n});\n\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst nuevaNovela = await respuesta.json();",
               "explanation": "method selecciona POST; headers describe el cuerpo; JSON.stringify serializa el objeto. El servidor debe validar los datos recibidos."
+            },
+            {
+              "title": "Cancelar una solicitud cuando el usuario cambia de pantalla",
+              "description": "AbortController permite dejar de esperar una solicitud que ya no se necesita.",
+              "language": "javascript",
+              "code": "const controller = new AbortController();\n\ntry {\n  const response = await fetch('/api/novelas', {\n    signal: controller.signal\n  });\n  if (!response.ok) throw new Error(`HTTP ${response.status}`);\n  const novelas = await response.json();\n  console.log(novelas);\n} catch (error) {\n  if (error.name === 'AbortError') {\n    console.log('Solicitud cancelada');\n  } else {\n    console.error('Error de carga:', error);\n  }\n}\n\n// Cuando ya no se necesita el resultado:\ncontroller.abort();",
+              "explanation": "El signal conecta Fetch con el AbortController. abort() cancela el trabajo pendiente y la promesa rechaza con AbortError. Una cancelación esperada no debería mostrarse como un error de red para el usuario."
             }
           ],
           "parameters": [
@@ -24421,7 +25979,35 @@
             "api-response",
             "api-status",
             "api-abort"
-          ]
+          ],
+          "deepDive": {
+            "model": "fetch inicia una solicitud y devuelve una Promise que se resuelve cuando la respuesta y sus headers están disponibles. El objeto Response contiene status, headers y métodos para consumir el body. Una respuesta HTTP 404 o 500 sigue siendo una respuesta válida del protocolo y no rechaza la Promise por sí sola; los errores de red o abortos sí pueden rechazarla.",
+            "flow": [
+              [
+                "Construir solicitud",
+                "Se indica URL y, opcionalmente, método, headers, body, signal y credenciales."
+              ],
+              [
+                "Esperar respuesta",
+                "fetch resuelve con Response cuando la respuesta HTTP está disponible."
+              ],
+              [
+                "Comprobar resultado",
+                "Se revisan response.ok, status y headers antes de leer el cuerpo."
+              ],
+              [
+                "Consumir y manejar",
+                "json(), text() o blob() leen el body; errores y cancelaciones se manejan por separado."
+              ]
+            ],
+            "decisions": [
+              "Usá JSON.stringify al enviar objetos y Content-Type: application/json.",
+              "Comprobá response.ok antes de asumir que la operación fue exitosa.",
+              "Consumí el body una sola vez; si necesitás leerlo de dos maneras, cloná Response antes de consumirlo.",
+              "Usá AbortController para cancelar solicitudes que quedaron obsoletas o excedieron un timeout."
+            ],
+            "debugging": "Si fetch no rechaza ante un 500, recordá revisar response.ok. Si response.json falla, quizá el servidor devolvió HTML o un body vacío. Si aparece un error CORS, revisá el servidor y el origen; no intentes solucionarlo desactivando la seguridad del navegador."
+          }
         },
         {
           "id": "api-response",
@@ -24588,6 +26174,13 @@
               "description": "El navegador puede preguntar antes si el servidor acepta el método y las cabeceras.",
               "code": "OPTIONS /api/novelas\nOrigin: http://localhost:5173\nAccess-Control-Request-Method: PATCH\nAccess-Control-Request-Headers: content-type, authorization",
               "explanation": "El navegador envía OPTIONS para consultar permisos. El servidor debe responder con las cabeceras CORS adecuadas antes de que el navegador envíe la solicitud real."
+            },
+            {
+              "title": "Responder correctamente a una solicitud con credenciales",
+              "description": "Para cookies o credenciales, el servidor debe permitir un origen concreto y declarar que acepta credenciales.",
+              "language": "javascript",
+              "code": "import cors from 'cors';\n\napp.use(cors({\n  origin: 'https://mi-frontend.example',\n  credentials: true,\n  methods: ['GET', 'POST', 'PATCH'],\n  allowedHeaders: ['Content-Type', 'Authorization']\n}));",
+              "explanation": "No se puede combinar Access-Control-Allow-Credentials: true con Access-Control-Allow-Origin: *. La política debe enumerar el origen permitido. CORS no autentica por sí mismo: cada ruta debe verificar identidad y permisos."
             }
           ],
           "parameters": [
@@ -24633,7 +26226,35 @@
           "related": [
             "api-http",
             "api-headers"
-          ]
+          ],
+          "deepDive": {
+            "model": "CORS es un mecanismo aplicado por navegadores para controlar si una página de un origen puede leer una respuesta de otro origen. Un origen combina esquema, host y puerto. En solicitudes no simples, el navegador puede enviar primero OPTIONS (preflight) para preguntar si método y headers están permitidos. CORS no autentica a los usuarios y no impide que servidores o herramientas fuera del navegador llamen a la API.",
+            "flow": [
+              [
+                "La página hace fetch",
+                "Un script de un origen solicita un recurso en otro origen."
+              ],
+              [
+                "El navegador evalúa CORS",
+                "Según el método y headers, decide si puede enviar directamente o necesita preflight."
+              ],
+              [
+                "El servidor autoriza el origen",
+                "La respuesta incluye Access-Control-Allow-Origin y, si hace falta, métodos/headers permitidos."
+              ],
+              [
+                "El navegador expone o bloquea",
+                "Si las cabeceras no satisfacen la política, el script no puede leer la respuesta aunque el servidor haya recibido la solicitud."
+              ]
+            ],
+            "decisions": [
+              "Configurá una lista explícita de orígenes permitidos en producción.",
+              "Si usás cookies o credenciales, no combines credentials con un Allow-Origin comodín; devolvé un origen concreto y configurá Vary cuando corresponda.",
+              "Permití solo métodos y headers que la API necesita.",
+              "No uses CORS como sustituto de autenticación, autorización, validación o protección CSRF."
+            ],
+            "debugging": "Si ves un error CORS en consola, inspeccioná OPTIONS y la respuesta de preflight en Network. Confirmá origen exacto, método, headers y credenciales. Si el servidor devuelve 200 pero el navegador bloquea el script, puede faltar Allow-Origin: CORS decide qué respuesta puede exponer el navegador, no si el servidor ejecutó la operación."
+          }
         },
         {
           "id": "api-auth",
@@ -24858,6 +26479,95 @@
           ]
         ],
         "note": "HTTP es un protocolo de solicitud-respuesta. JSON es un formato frecuente para el cuerpo, no el protocolo mismo."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "api-metodos",
+          "api-fetch",
+          "api-cors"
+        ],
+        "execution": {
+          "kind": "protocol-client-server",
+          "label": "Cliente y servidor HTTP",
+          "description": "HTTP es un protocolo de comunicación. Una API puede estar en un servidor y ser consumida desde navegadores, aplicaciones móviles, scripts o servicios backend."
+        },
+        "compatibility": {
+          "kind": "browser-api",
+          "summary": "Las APIs HTTP no se ejecutan como framework en el navegador; el consumo desde el navegador utiliza Fetch/XHR y está sujeto a CORS y políticas de seguridad.",
+          "rows": [
+            [
+              "Chrome",
+              "Fetch y HTTP modernos: amplio"
+            ],
+            [
+              "Firefox",
+              "Fetch y HTTP modernos: amplio"
+            ],
+            [
+              "Edge",
+              "Fetch y HTTP modernos: amplio"
+            ],
+            [
+              "Safari",
+              "Fetch y HTTP modernos: amplio"
+            ],
+            [
+              "Navegadores móviles",
+              "Amplio; verificar APIs concretas"
+            ],
+            [
+              "Internet Explorer",
+              "Fetch moderno no nativo; requeriría alternativa/polyfill"
+            ]
+          ],
+          "note": "No existe una compatibilidad única para todas las APIs: cada endpoint y cada API del navegador deben verificarse por separado. MDN Browser Compatibility Data mantiene datos por función."
+        },
+        "advantages": [
+          "Permite separar frontend y backend mediante contratos estables.",
+          "HTTP funciona entre lenguajes y plataformas diferentes.",
+          "REST y OpenAPI facilitan documentación e integración."
+        ],
+        "limitations": [
+          "Red, latencia, autenticación, errores y CORS deben manejarse explícitamente.",
+          "Un JSON válido no garantiza que cumpla el contrato de negocio.",
+          "Las APIs públicas necesitan límites, validación y políticas de seguridad."
+        ],
+        "complements": [
+          [
+            "express",
+            "Crear endpoints HTTP desde Node."
+          ],
+          [
+            "nodejs",
+            "Implementar servicios y procesos cliente/servidor."
+          ],
+          [
+            "react",
+            "Consumir APIs desde interfaces interactivas."
+          ],
+          [
+            "vuejs",
+            "Consumir endpoints desde aplicaciones Vue."
+          ],
+          [
+            "testing",
+            "Probar contratos y respuestas HTTP."
+          ]
+        ],
+        "docs": [
+          [
+            "MDN — HTTP",
+            "https://developer.mozilla.org/es/docs/Web/HTTP"
+          ],
+          [
+            "MDN — Fetch API",
+            "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+          ],
+          [
+            "MDN — compatibilidad de navegadores",
+            "https://developer.mozilla.org/es/docs/Web/Guide/Browser_compatibility"
+          ]
+        ]
       }
     },
     {
@@ -25925,6 +27635,91 @@
           ]
         ],
         "note": "Las pruebas detectan regresiones en comportamientos cubiertos. No demuestran que el sistema esté libre de errores; los casos deben reflejar riesgos reales."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "test-vitest",
+          "test-async",
+          "test-playwright"
+        ],
+        "execution": {
+          "kind": "mixed",
+          "label": "Node.js y/o navegador según el runner",
+          "description": "Las pruebas unitarias suelen correr en Node.js; las pruebas de componentes pueden usar DOM simulado o navegador; las E2E ejecutan navegadores reales o motores automatizados."
+        },
+        "compatibility": {
+          "kind": "test-target",
+          "summary": "No hay una única matriz: depende del runner, del entorno y de los navegadores instalados para E2E.",
+          "rows": [
+            [
+              "Chrome / Chromium",
+              "Según runner y versión instalada"
+            ],
+            [
+              "Firefox",
+              "Según runner y versión instalada"
+            ],
+            [
+              "Edge",
+              "Según runner y versión instalada"
+            ],
+            [
+              "Safari / WebKit",
+              "Según runner; WebKit automatizado no equivale a probar cada Safari real"
+            ],
+            [
+              "Móvil",
+              "Requiere emulación o dispositivos reales"
+            ],
+            [
+              "Internet Explorer",
+              "Solo con herramientas y entornos heredados específicos"
+            ]
+          ],
+          "note": "Una suite de pruebas debe declarar qué navegadores y versiones verifica. Un test unitario de Node no prueba compatibilidad visual de navegador."
+        },
+        "advantages": [
+          "Detecta regresiones y hace repetible la verificación.",
+          "Las pruebas unitarias dan feedback rápido; integración y E2E cubren fronteras reales.",
+          "CI puede impedir que cambios que rompen comportamientos importantes lleguen a producción."
+        ],
+        "limitations": [
+          "Una suite grande o mal aislada puede ser lenta e inestable.",
+          "La cobertura porcentual no garantiza calidad.",
+          "Las pruebas E2E necesitan mantenimiento de datos, selectores y ambientes."
+        ],
+        "complements": [
+          [
+            "react",
+            "Probar componentes e interacciones."
+          ],
+          [
+            "vuejs",
+            "Probar componentes y composables."
+          ],
+          [
+            "express",
+            "Probar endpoints HTTP."
+          ],
+          [
+            "apis",
+            "Validar contratos y respuestas."
+          ],
+          [
+            "docker-deploy",
+            "Reproducir entornos de integración."
+          ]
+        ],
+        "docs": [
+          [
+            "Vitest — documentación",
+            "https://vitest.dev/guide/"
+          ],
+          [
+            "Playwright — documentación",
+            "https://playwright.dev/docs/intro"
+          ]
+        ]
       }
     },
     {
@@ -28119,6 +29914,65 @@
           ]
         ],
         "note": "Los datos que deban sobrevivir a la eliminación de un contenedor necesitan volúmenes o almacenamiento externo. No incluyas secretos dentro de una imagen."
+      },
+      "catalogProfile": {
+        "sampleArticleIds": [
+          "dockerfile-estructura",
+          "docker-run",
+          "compose-intro"
+        ],
+        "execution": {
+          "kind": "container-host",
+          "label": "Motor Docker / sistema host",
+          "description": "Docker CLI y Engine se ejecutan en un host o entorno de contenedores. Las aplicaciones dentro del contenedor pueden exponer servicios web que después consumen los navegadores."
+        },
+        "compatibility": {
+          "kind": "not-browser",
+          "summary": "No aplica al navegador: Docker administra imágenes, contenedores, redes y volúmenes en el sistema host.",
+          "note": "El navegador puede conectarse a un servicio publicado por un contenedor. La compatibilidad del sitio o API dentro del contenedor depende de su propio runtime y build."
+        },
+        "advantages": [
+          "Empaqueta aplicaciones y dependencias en imágenes reproducibles.",
+          "Compose permite levantar varios servicios relacionados.",
+          "Aísla procesos y ayuda a reproducir entornos de desarrollo y pruebas."
+        ],
+        "limitations": [
+          "Contenedores comparten el kernel del host y no equivalen a máquinas virtuales completas.",
+          "Persistencia, redes y secretos requieren configuración cuidadosa.",
+          "Una imagen insegura o excesiva también puede propagar vulnerabilidades."
+        ],
+        "complements": [
+          [
+            "nodejs",
+            "Ejecutar servicios Node dentro de contenedores."
+          ],
+          [
+            "express",
+            "Empaquetar APIs backend."
+          ],
+          [
+            "sql-postgres",
+            "Levantar una base PostgreSQL para desarrollo."
+          ],
+          [
+            "mongodb",
+            "Levantar una base MongoDB reproducible."
+          ],
+          [
+            "git",
+            "Versionar Dockerfiles y Compose."
+          ]
+        ],
+        "docs": [
+          [
+            "Docker — documentación",
+            "https://docs.docker.com/"
+          ],
+          [
+            "Docker Compose — documentación",
+            "https://docs.docker.com/compose/"
+          ]
+        ]
       }
     }
   ],
