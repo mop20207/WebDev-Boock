@@ -102,6 +102,163 @@ document.addEventListener("DOMContentLoaded", async () => {
     return list;
   };
 
+
+  const renderCatalogProfile = (root, tool, tools) => {
+    const profile = tool.catalogProfile;
+    if (!root || !profile) return;
+    root.replaceChildren();
+    root.append(
+      node("div", "eyebrow", "FICHA DE TECNOLOGÍA"),
+      node("h2", "", "Ejemplos, compatibilidad y ecosistema"),
+      node("p", "tools-catalog-lead", "Consultá una muestra práctica, dónde se ejecuta esta tecnología, sus ventajas y las herramientas con las que suele trabajar.")
+    );
+
+    const samples = (profile.sampleArticleIds || []).flatMap(id => {
+      const article = tool.articles.find(item => item.id === id);
+      if (!article) return [];
+      const example = article.examples?.[0];
+      if (!example?.code) return [];
+      return [{
+        title: article.title + " · " + example.title,
+        language: example.language || article.syntaxLanguage || tool.syntaxLanguage || ({
+          terminal:"bash",git:"bash",npm:"bash",react:"jsx",webcomponents:"javascript",
+          vuejs:"vue",nodejs:"javascript",astro:"astro",phaser:"javascript",
+          typescript:"typescript",nextjs:"tsx",express:"javascript",
+          "sql-postgres":"sql",mongodb:"javascript",apis:"http",testing:"javascript",
+          "docker-deploy":"dockerfile"
+        }[tool.id] || "plaintext"),
+        code: example.code,
+        description: example.description || article.summary,
+        explanation: example.explanation || article.purpose
+      }];
+    });
+
+    if (samples.length) {
+      const lab = node("section", "tools-catalog-lab");
+      const labHeader = node("div", "tools-catalog-lab-heading");
+      const labTitle = node("div");
+      labTitle.append(node("span", "tools-catalog-label", "MUESTRAS DE CÓDIGO"), node("h3", "", "Explorá ejemplos de " + tool.title));
+      const selectLabel = node("label", "tools-catalog-select-label", "Elegí un ejemplo");
+      const select = node("select", "tools-catalog-select");
+      select.setAttribute("aria-label", "Elegir ejemplo de código");
+      samples.forEach((sample,index)=>{
+        const option=document.createElement("option");
+        option.value=String(index);
+        option.textContent=sample.title;
+        select.append(option);
+      });
+      selectLabel.append(select);
+      labHeader.append(labTitle,selectLabel);
+
+      const codePanel = node("div", "tools-catalog-code-panel");
+      const codeBar = node("div", "tools-catalog-code-bar");
+      const fileName = node("strong", "", "Ejemplo");
+      const languageTag = node("span", "tools-catalog-language", "");
+      codeBar.append(fileName,languageTag);
+      const pre=node("pre");
+      const code=node("code");
+      pre.append(code);
+      const copy=node("button","tools-catalog-copy","Copiar código");
+      copy.type="button";
+      const detail=node("div","tools-catalog-example-detail");
+      const description=node("p","tools-catalog-example-description");
+      const explanation=node("p","tools-catalog-example-explanation");
+      detail.append(description,explanation);
+      const executionNote=node("div","tools-catalog-execution-note");
+      executionNote.append(node("strong","","Dónde probarlo"),node("p","",profile.execution.description));
+      codePanel.append(codeBar,pre,copy);
+      lab.append(labHeader,codePanel,detail,executionNote);
+
+      let currentCode="";
+      const showSample = index => {
+        const sample=samples[index] || samples[0];
+        currentCode=sample.code;
+        fileName.textContent=sample.title;
+        languageTag.textContent=sample.language.toUpperCase();
+        code.className="language-"+sample.language;
+        code.textContent=sample.code;
+        description.textContent=sample.description || "";
+        explanation.textContent=sample.explanation || "";
+        copy.textContent="Copiar código";
+        if(window.hljs) {
+          delete code.dataset.highlighted;
+          window.hljs.highlightElement(code);
+        }
+      };
+      select.addEventListener("change",()=>showSample(Number(select.value)));
+      copy.addEventListener("click",async()=>{
+        try {
+          await navigator.clipboard.writeText(currentCode);
+          copy.textContent="Copiado ✓";
+        } catch {
+          copy.textContent="No disponible";
+        }
+        window.setTimeout(()=>{copy.textContent="Copiar código";},1600);
+      });
+      showSample(0);
+      root.append(lab);
+    }
+
+    const environment=node("section","tools-catalog-environment");
+    const environmentHeader=node("div","tools-catalog-subheading");
+    environmentHeader.append(node("div","eyebrow","ENTORNO Y COMPATIBILIDAD"),node("h3","",profile.execution.label));
+    environment.append(environmentHeader,node("p","tools-catalog-env-description",profile.execution.description));
+    const compatibility=node("div","tools-compatibility-card");
+    compatibility.append(node("h4","","¿En qué navegadores funciona?"),node("p","",profile.compatibility.summary));
+    if(Array.isArray(profile.compatibility.rows) && profile.compatibility.rows.length) {
+      const table=node("div","tools-compatibility-grid");
+      profile.compatibility.rows.forEach(([browser,status])=>{
+        const row=node("div","tools-compatibility-row");
+        row.append(node("strong","",browser),node("span","",status));
+        table.append(row);
+      });
+      compatibility.append(table);
+    } else {
+      compatibility.append(node("div","tools-no-browser-runtime","No se ejecuta directamente en un navegador"));
+    }
+    compatibility.append(node("p","tools-compatibility-note",profile.compatibility.note || "Comprobá siempre la compatibilidad de las APIs y funciones concretas que utilice tu proyecto."));
+    if(profile.docs?.length) {
+      const links=node("div","tools-catalog-doc-links");
+      profile.docs.forEach(([label,url])=>{
+        const link=makeLink(label+" ↗",url,"tools-catalog-doc-link");
+        link.target="_blank";
+        link.rel="noopener noreferrer";
+        links.append(link);
+      });
+      compatibility.append(links);
+    }
+    environment.append(compatibility);
+    root.append(environment);
+
+    const benefits=node("div","tools-catalog-benefits");
+    const advantageCard=node("section","tools-catalog-info-card");
+    advantageCard.append(node("h3","","Ventajas"));
+    const advantageList=node("ul");
+    (profile.advantages||[]).forEach(value=>advantageList.append(node("li","",value)));
+    advantageCard.append(advantageList);
+    const limitsCard=node("section","tools-catalog-info-card");
+    limitsCard.append(node("h3","","Limitaciones y cuidados"));
+    const limitsList=node("ul");
+    (profile.limitations||[]).forEach(value=>limitsList.append(node("li","",value)));
+    limitsCard.append(limitsList);
+    benefits.append(advantageCard,limitsCard);
+    root.append(benefits);
+
+    const complements=node("section","tools-catalog-complements");
+    complements.append(node("h3","","¿Con qué se complementa?"));
+    const complementGrid=node("div","tools-catalog-complement-grid");
+    (profile.complements||[]).forEach(([id,reason])=>{
+      const related=tools.find(item=>item.id===id);
+      if(!related) return;
+      const link=makeLink("",urlFor("tools.html",{tool:related.id}),"tools-catalog-complement");
+      link.append(node("strong","",related.title),node("span","",reason));
+      complementGrid.append(link);
+    });
+    complements.append(complementGrid);
+    root.append(complements);
+    root.hidden=false;
+  };
+
   const renderArchitecture = (root, architecture) => {
     if (!root || !architecture) return;
     root.replaceChildren();
@@ -346,6 +503,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const firstArticle = tool.articles[0];
       const starter = makeStarter(tool, firstArticle, "EMPEZÁ POR ACÁ", firstArticle ? urlFor("tools-article.html", {tool: tool.id, id: firstArticle.id}) : "#");
       insertAfter(document.querySelector(".tools-categories-section"), starter);
+      renderCatalogProfile(document.getElementById("toolsCatalogProfile"), tool, database.tools);
       renderArchitecture(document.getElementById("toolsArchitecture"), tool.architecture);
       renderIntegrations(document.getElementById("toolsIntegrations"), database.integrations, database.tools);
     }
