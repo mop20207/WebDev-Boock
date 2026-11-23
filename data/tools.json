@@ -1,7 +1,7 @@
 {
-  "version": 24,
+  "version": 25,
   "articleCount": 387,
-  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías. Cada ficha tecnológica incluye muestras de código, entorno de ejecución, compatibilidad, ventajas, limitaciones y tecnologías complementarias.",
+  "description": "Biblioteca didáctica de tecnologías, herramientas y lenguajes para el desarrollo web. Incluye mapas de arquitectura, explicaciones profundas y rutas de integración entre tecnologías. Cada ficha tecnológica incluye muestras de código, entorno de ejecución, compatibilidad, ventajas, limitaciones y tecnologías complementarias. La tercera tanda profundiza SQL/PostgreSQL y MongoDB, comparando modelado relacional y documental con ejemplos, parámetros y decisiones de diseño.",
   "tools": [
     {
       "id": "terminal",
@@ -20411,7 +20411,7 @@
           "title": "Servidor, base de datos y esquema en PostgreSQL",
           "summary": "Comprendé la jerarquía clúster, base, esquema, tabla y conexión.",
           "purpose": "Una instalación administra un clúster con varias bases. Cada base contiene esquemas; un esquema agrupa tablas, vistas, secuencias y funciones. Una conexión trabaja dentro de una base concreta.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá este concepto al configurar PostgreSQL, diseñar ambientes separados o resolver por qué un objeto no aparece en una consulta. Es fundamental para entender a qué base se conecta un backend y cómo se resuelven nombres de tablas.",
           "syntax": "Clúster → base → esquema → tablas, vistas y funciones",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20429,20 +20429,46 @@
               "code": "-- Ejemplo práctico:\nSELECT id, nombre\nFROM catalogo.productos;",
               "explanation": "El nombre esquema.tabla evita ambigüedades cuando existen objetos con el mismo nombre.",
               "language": "sql"
+            },
+            {
+              "title": "Confirmar la base y el esquema actuales",
+              "description": "Comprobá el contexto de la sesión antes de consultar o modificar objetos.",
+              "language": "sql",
+              "code": "SELECT current_database() AS base_actual,\n       current_schema() AS esquema_actual,\n       current_user AS rol_actual;\n\n-- En psql también podés inspeccionar los esquemas:\n-- \\dn+",
+              "explanation": "current_database identifica la base de la conexión; current_schema informa el esquema actual de resolución y current_user muestra el rol efectivo. \\dn+ es un metacomando de psql, no una sentencia SQL."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "current_database()",
+              "description": "Devuelve el nombre de la base de datos de la conexión actual."
+            },
+            {
+              "name": "current_schema()",
+              "description": "Devuelve el esquema actual utilizado para la resolución de nombres."
+            },
+            {
+              "name": "search_path",
+              "description": "Define el orden de esquemas en los que PostgreSQL busca nombres no calificados."
+            },
+            {
+              "name": "GRANT",
+              "description": "Concede privilegios sobre bases, esquemas y objetos."
+            }
+          ],
           "exercise": "¿Qué diferencia hay entre conectarte a tienda_dev y consultar catalogo.productos?",
           "hint": "La conexión selecciona la base; el nombre calificado identifica un objeto dentro de ella.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Verificá la base y el rol activos antes de ejecutar una migración o comando administrativo.",
+            "Usá esquemas para ordenar objetos relacionados y calificá nombres en scripts de despliegue.",
+            "Separá roles de administración y roles de aplicación con privilegios mínimos.",
+            "Documentá qué esquema utiliza cada servicio y cómo se configura search_path."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Creer que una conexión a una base permite consultar directamente tablas de otra base del mismo clúster.",
+            "Confundir esquema con base de datos.",
+            "Suponer que una tabla está ausente cuando en realidad está en otro esquema.",
+            "Conceder permisos de superusuario a una aplicación para resolver un problema de acceso."
           ],
           "resources": [
             {
@@ -20456,8 +20482,36 @@
           ],
           "related": [
             "postgres-psql",
-            "sql-que-es"
-          ]
+            "express-database-integration"
+          ],
+          "deepDive": {
+            "model": "PostgreSQL organiza el servicio en varios niveles. Un clúster es el conjunto de datos administrado por una instancia del servidor; dentro de él existen bases de datos. Una conexión se abre contra una base concreta. Dentro de esa base, los esquemas agrupan objetos como tablas, vistas, secuencias y funciones. Por eso una tabla se puede identificar como esquema.tabla y la búsqueda de nombres no depende solamente de la base seleccionada.",
+            "flow": [
+              [
+                "Servidor y clúster",
+                "El proceso PostgreSQL administra un directorio de datos y los recursos compartidos de la instancia."
+              ],
+              [
+                "Base de datos",
+                "El cliente se conecta a una base determinada dentro del clúster; una sesión no consulta libremente otra base como si fuera un esquema."
+              ],
+              [
+                "Esquema",
+                "La base contiene esquemas que organizan y califican nombres de objetos."
+              ],
+              [
+                "Objeto y permisos",
+                "La tabla, vista o función se resuelve por su nombre y esquema; los permisos controlan qué puede hacer el rol conectado."
+              ]
+            ],
+            "decisions": [
+              "Separá bases cuando necesitás aislamiento operativo fuerte o aplicaciones independientes; usá esquemas cuando los objetos pertenecen a una misma base y necesitan organización.",
+              "Calificá nombres con esquema.tabla en scripts importantes para evitar ambigüedad con search_path.",
+              "Creá roles de aplicación con permisos mínimos y evitá conectar el backend como superusuario.",
+              "No confundas CREATE DATABASE con CREATE SCHEMA: la base se selecciona al conectar y el esquema se usa dentro de esa base."
+            ],
+            "debugging": "Si una tabla existe pero PostgreSQL dice que no existe, comprobá la base actual con current_database(), el esquema con current_schema() y el search_path. Si aparece permission denied, revisá privilegios sobre la base, esquema y tabla; poder conectarse no implica poder consultar todos los objetos."
+          }
         },
         {
           "id": "sql-modelo-relacional",
@@ -20465,7 +20519,7 @@
           "title": "El modelo relacional: tablas, filas y columnas",
           "summary": "Entendé cómo una tabla representa entidades y cómo se vinculan mediante claves.",
           "purpose": "En el modelo relacional, una tabla representa una relación; las columnas describen atributos y las filas representan registros. Las claves identifican filas y permiten expresar vínculos. Un buen diseño evita listas repetidas dentro de una sola celda.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá el modelo relacional cuando los datos tienen entidades identificables, reglas de integridad y relaciones que necesitás consultar de forma consistente, como novelas, autores, volúmenes y capítulos.",
           "syntax": "Entidad → tabla · atributo → columna · registro → fila · relación → clave",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20483,20 +20537,46 @@
               "code": "-- Ejemplo práctico:\nSELECT id, total\nFROM pedidos\nWHERE cliente_id = 7;",
               "explanation": "La clave foránea permite encontrar registros relacionados.",
               "language": "sql"
+            },
+            {
+              "title": "Representar una relación muchos a muchos",
+              "description": "Usá una tabla intermedia cuando una novela pueda tener varias etiquetas y una etiqueta pertenezca a muchas novelas.",
+              "language": "sql",
+              "code": "CREATE TABLE novelas (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  titulo text NOT NULL\n);\n\nCREATE TABLE etiquetas (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL UNIQUE\n);\n\nCREATE TABLE novela_etiquetas (\n  novela_id bigint NOT NULL REFERENCES novelas(id),\n  etiqueta_id bigint NOT NULL REFERENCES etiquetas(id),\n  PRIMARY KEY (novela_id, etiqueta_id)\n);",
+              "explanation": "La tabla intermedia materializa la relación muchos-a-muchos. La clave primaria compuesta impide asignar la misma etiqueta dos veces a una novela."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "PRIMARY KEY",
+              "description": "Identifica de forma única cada fila de una tabla."
+            },
+            {
+              "name": "FOREIGN KEY",
+              "description": "Mantiene una referencia válida a una clave de otra tabla."
+            },
+            {
+              "name": "UNIQUE",
+              "description": "Impide que se repita un valor o combinación de columnas."
+            },
+            {
+              "name": "tabla intermedia",
+              "description": "Representa una relación muchos-a-muchos entre dos entidades."
+            }
+          ],
           "exercise": "¿Por qué conviene separar clientes y pedidos?",
           "hint": "Pensá cuántos lugares habría que corregir si cambia el email del cliente.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Identificá entidades y relaciones antes de crear tablas.",
+            "Usá claves primarias estables y claves foráneas para expresar vínculos.",
+            "Creá tablas intermedias para relaciones muchos-a-muchos.",
+            "Evitá duplicar atributos de una entidad en todas las filas que la referencian."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Guardar varias entidades o valores repetidos en una sola columna de texto.",
+            "Duplicar datos del autor en cada novela sin una regla de sincronización.",
+            "Confundir una relación uno-a-muchos con muchos-a-muchos.",
+            "Agregar tablas sin pensar qué consultas y operaciones necesita la aplicación."
           ],
           "resources": [
             {
@@ -20509,10 +20589,37 @@
             }
           ],
           "related": [
-            "sql-claves-restricciones",
-            "sql-relaciones-tablas-puente",
-            "mongodb-modelado-embed-reference"
-          ]
+            "mongodb-modelado-embed-reference",
+            "sql-inner-join"
+          ],
+          "deepDive": {
+            "model": "El modelo relacional representa información mediante relaciones, que en la práctica se implementan como tablas. Una fila describe una instancia; las columnas expresan atributos y las claves definen identidad y vínculos. Una clave primaria identifica una fila; una clave foránea conecta una fila con otra. La normalización busca reducir duplicación y anomalías de inserción, actualización y borrado, aunque las consultas pueden combinar tablas mediante JOIN.",
+            "flow": [
+              [
+                "Identificar entidades",
+                "Detectá conceptos del dominio con identidad y ciclo de vida propio, como novelas, autores y volúmenes."
+              ],
+              [
+                "Definir atributos",
+                "Elegí columnas atómicas y tipos adecuados para los datos que pertenecen a cada entidad."
+              ],
+              [
+                "Asignar claves",
+                "La clave primaria identifica cada fila; las claves foráneas representan relaciones entre entidades."
+              ],
+              [
+                "Consultar relaciones",
+                "JOIN reconstruye vistas de negocio combinando registros vinculados sin duplicar innecesariamente los datos fuente."
+              ]
+            ],
+            "decisions": [
+              "Separá entidades cuando tengan identidad propia o se repitan en muchos registros; evitá guardar listas de valores separados por comas en una columna.",
+              "Usá una tabla intermedia para relaciones muchos-a-muchos, por ejemplo novelas y etiquetas.",
+              "Elegí claves naturales solo cuando sean estables; un identificador técnico puede simplificar referencias y cambios de negocio.",
+              "Normalizá primero y desnormalizá únicamente cuando exista una necesidad de rendimiento medida y una estrategia de consistencia."
+            ],
+            "debugging": "Si una consulta duplica filas después de un JOIN, comprobá la cardinalidad de la relación: una fila del lado izquierdo puede coincidir con varias del derecho. Si no podés insertar un registro, revisá claves foráneas y restricciones. Si actualizar un dato requiere modificar muchas filas, quizá el diseño esté duplicando una entidad que debería tener tabla propia."
+          }
         },
         {
           "id": "postgres-psql",
@@ -20520,7 +20627,7 @@
           "title": "Conectarse a PostgreSQL con psql",
           "summary": "Usá el cliente de terminal psql para conectarte, explorar bases y ejecutar consultas.",
           "purpose": "psql es el cliente de línea de comandos de PostgreSQL. Permite conectarse, ejecutar SQL y usar metacomandos que comienzan con barra invertida. \\dt pertenece a psql, no al lenguaje SQL.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá psql para conectarte a un PostgreSQL local o remoto, explorar esquemas, ejecutar consultas, revisar errores y probar scripts SQL antes de integrarlos desde Node.js u otra aplicación.",
           "syntax": "psql -h host -p puerto -U usuario -d base",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "bash",
@@ -20538,20 +20645,50 @@
               "code": "# Ejemplo práctico:\n\\conninfo\n\\d pedidos\n\\q",
               "explanation": "\\conninfo, \\d y \\q son metacomandos del cliente; un driver Node.js no los ejecuta como SQL.",
               "language": "bash"
+            },
+            {
+              "title": "Medir consultas y ver el contexto",
+              "description": "Activá el tiempo de ejecución en psql y ejecutá una consulta de práctica.",
+              "language": "bash",
+              "code": "psql \"$DATABASE_URL\"\n\n-- Dentro de psql:\n\\conninfo\n\\timing on\nSELECT id, titulo FROM novelas ORDER BY id LIMIT 5;\n\\q",
+              "explanation": "La variable DATABASE_URL evita escribir credenciales directamente en el comando. \\timing muestra duración aproximada de consultas dentro de esa sesión; no es un benchmark de producción."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "-h",
+              "description": "Host o dirección del servidor PostgreSQL."
+            },
+            {
+              "name": "-p",
+              "description": "Puerto TCP del servidor; el valor habitual es 5432."
+            },
+            {
+              "name": "-U",
+              "description": "Rol de PostgreSQL utilizado para autenticarse."
+            },
+            {
+              "name": "-d",
+              "description": "Base de datos a la que se conecta psql."
+            },
+            {
+              "name": "\\dt / \\d / \\q",
+              "description": "Metacomandos para listar tablas, describir objetos y salir de psql."
+            }
+          ],
           "exercise": "Conectate a una base de práctica y listá las tablas sin modificar datos.",
           "hint": "Usá \\l, \\c, \\dt y \\d.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Confirmá conexión, base y usuario con \\conninfo y SELECT current_database().",
+            "Usá variables de entorno o mecanismos seguros para credenciales.",
+            "Guardá consultas repetibles en archivos SQL y versioná migraciones.",
+            "Diferenciá metacomandos de psql de sentencias que ejecuta el servidor."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Ejecutar \\dt desde un driver como si fuera SQL.",
+            "Suponer que estar conectado implica tener permisos sobre todas las tablas.",
+            "Pegar contraseñas reales en comandos que quedan guardados en el historial.",
+            "Ejecutar UPDATE o DELETE sin revisar primero el filtro con un SELECT."
           ],
           "resources": [
             {
@@ -20564,10 +20701,37 @@
             }
           ],
           "related": [
-            "terminal-que-es",
             "postgres-arquitectura-database-schema",
-            "node-pg-instalacion-conexion"
-          ]
+            "sql-select-basico"
+          ],
+          "deepDive": {
+            "model": "psql es un cliente de terminal que mantiene una conexión con PostgreSQL y permite enviar sentencias SQL. Además incorpora metacomandos que comienzan con barra invertida, como \\dt, \\d y \\conninfo. Esos comandos pertenecen al cliente psql; no son SQL y no se pueden enviar sin más desde un driver de Node.js.",
+            "flow": [
+              [
+                "Abrir el cliente",
+                "psql recibe host, puerto, usuario y base o usa variables y servicios configurados."
+              ],
+              [
+                "Establecer conexión",
+                "El cliente autentica el rol y abre una sesión con la base solicitada."
+              ],
+              [
+                "Explorar y consultar",
+                "Se pueden ejecutar sentencias SQL y metacomandos propios de psql."
+              ],
+              [
+                "Cerrar la sesión",
+                "\\q termina el cliente; el servidor continúa funcionando si es un servicio independiente."
+              ]
+            ],
+            "decisions": [
+              "Usá psql para aprender, inspeccionar y diagnosticar; guardá consultas repetibles en archivos .sql.",
+              "Preferí variables de entorno o un archivo de servicio protegido para credenciales, no contraseñas en comandos guardados en el historial.",
+              "Usá \\timing para observar duración aproximada y EXPLAIN para estudiar planes; no confundas el tiempo de una prueba pequeña con rendimiento de producción.",
+              "Revisá la base y el usuario antes de ejecutar UPDATE, DELETE o DDL; los metacomandos \\conninfo y SELECT current_database() ayudan a confirmar el contexto."
+            ],
+            "debugging": "Si psql no conecta, separá los posibles puntos: servidor encendido, host/puerto accesible, base existente, usuario y método de autenticación. Si \\dt no muestra una tabla, comprobá el esquema y search_path; la tabla puede existir en otro esquema."
+          }
         },
         {
           "id": "sql-tipos-datos",
@@ -20575,7 +20739,7 @@
           "title": "Tipos de datos habituales en PostgreSQL",
           "summary": "Elegí tipos para texto, cantidades, fechas, identificadores y valores lógicos.",
           "purpose": "El tipo define qué valores puede guardar una columna. PostgreSQL ofrece tipos numéricos, texto, booleanos, fecha/hora, UUID, arrays y JSONB. Para importes exactos suele convenir numeric; para aproximaciones científicas, punto flotante.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Elegí tipos de datos al diseñar tablas o al modificar columnas. La decisión afecta precisión, validación, orden, índices, almacenamiento y cómo el backend convierte los valores.",
           "syntax": "numeric · integer · text · boolean · date · timestamptz · uuid · jsonb",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20593,20 +20757,50 @@
               "code": "-- Ejemplo práctico:\nALTER TABLE productos ADD COLUMN vence_el date;\n\nSELECT id, nombre\nFROM productos\nWHERE creado_en >= date_trunc('day', now());",
               "explanation": "DATE y TIMESTAMPTZ tienen significados distintos; elegí según el dato.",
               "language": "sql"
+            },
+            {
+              "title": "Guardar un importe y un instante sin perder semántica",
+              "description": "Elegí numeric para el valor monetario y timestamptz para el momento de creación.",
+              "language": "sql",
+              "code": "CREATE TABLE pagos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  total numeric(12,2) NOT NULL CHECK (total >= 0),\n  creado_en timestamptz NOT NULL DEFAULT now(),\n  dia_vencimiento date\n);\n\nINSERT INTO pagos (total, dia_vencimiento)\nVALUES (1250.50, DATE '2026-12-15');",
+              "explanation": "numeric(12,2) conserva dos decimales exactos. timestamptz representa un instante; date representa una fecha civil sin hora."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "numeric(p,s)",
+              "description": "Decimal exacto con precisión p y escala s."
+            },
+            {
+              "name": "integer / bigint",
+              "description": "Tipos enteros para cantidades y contadores."
+            },
+            {
+              "name": "date",
+              "description": "Fecha civil sin hora ni zona horaria."
+            },
+            {
+              "name": "timestamptz",
+              "description": "Instante temporal que PostgreSQL normaliza internamente."
+            },
+            {
+              "name": "jsonb",
+              "description": "Documento JSON binario consultable dentro de una columna."
+            }
+          ],
           "exercise": "Elegí tipos para precio, cantidad, fecha de nacimiento e instante de creación.",
           "hint": "Precio: numeric; cantidad: integer; fecha civil: date; instante: timestamptz.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Modelá el significado del dato, no solo el formato que muestra la interfaz.",
+            "Usá numeric para valores monetarios exactos y date/timestamptz según el significado temporal.",
+            "Definí NOT NULL, DEFAULT y CHECK cuando formen parte de las reglas del dominio.",
+            "Probá conversiones desde el lenguaje y driver de la aplicación."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Usar float para importes que deben ser exactos.",
+            "Guardar fechas e instantes como texto sin una convención clara.",
+            "Tratar timestamptz como si conservara literalmente la zona horaria original.",
+            "Elegir jsonb para reemplazar columnas estables y relaciones que necesitan integridad."
           ],
           "resources": [
             {
@@ -20619,10 +20813,37 @@
             }
           ],
           "related": [
-            "postgres-jsonb",
-            "postgres-funciones-fechas-texto",
-            "sql-claves-restricciones"
-          ]
+            "sql-claves-restricciones",
+            "mongodb-bson-documentos"
+          ],
+          "deepDive": {
+            "model": "El tipo de una columna define qué valores acepta, cómo se representan y qué operaciones tienen sentido. PostgreSQL dispone de enteros, decimales exactos, punto flotante, texto, booleanos, fechas, instantes, UUID, arrays y JSONB, entre otros. Elegir el tipo correcto protege la integridad y evita conversiones ambiguas en consultas y aplicaciones.",
+            "flow": [
+              [
+                "Definir el significado",
+                "Decidí si el dato representa cantidad, importe, fecha civil, instante global, identificador o estructura flexible."
+              ],
+              [
+                "Elegir representación",
+                "Seleccioná un tipo que conserve precisión y permita las operaciones requeridas."
+              ],
+              [
+                "Aplicar límites",
+                "Usá NOT NULL, CHECK, DEFAULT y precisión/escala cuando formen parte de las reglas del dominio."
+              ],
+              [
+                "Convertir en las fronteras",
+                "Validá y convertí los datos que llegan desde formularios, JSON o drivers antes de persistirlos."
+              ]
+            ],
+            "decisions": [
+              "Usá numeric para importes que requieren exactitud decimal; evitá real/double precision para cálculos monetarios exactos.",
+              "Usá date para una fecha civil y timestamptz para un instante; definí además la política de zona horaria de la aplicación.",
+              "Preferí text para cadenas cuando no haya una razón concreta para limitar longitud con varchar(n).",
+              "Usá JSONB cuando una parte del documento sea flexible y consultable; no lo conviertas en excusa para ocultar relaciones y atributos estables."
+            ],
+            "debugging": "Si una suma monetaria presenta diferencias, revisá si se eligió un tipo de punto flotante. Si una fecha aparece desplazada, comprobá si representa un día civil o un instante con zona horaria. Si un INSERT falla por tipo, inspeccioná el valor real que envía el driver y no solo el tipo que declara TypeScript."
+          }
         },
         {
           "id": "sql-claves-restricciones",
@@ -20630,7 +20851,7 @@
           "title": "Claves y restricciones: PRIMARY KEY, FOREIGN KEY, UNIQUE y CHECK",
           "summary": "Protegé la integridad mediante claves y reglas que se aplican en la base.",
           "purpose": "PRIMARY KEY identifica filas; FOREIGN KEY exige referencias existentes; UNIQUE evita duplicados; NOT NULL exige un valor; CHECK verifica condiciones. Las restricciones protegen datos aunque provengan de distintos clientes.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá restricciones cuando una regla de datos deba cumplirse sin importar qué cliente escriba en la base: unicidad, referencias válidas, campos obligatorios y rangos admitidos.",
           "syntax": "PRIMARY KEY · FOREIGN KEY · UNIQUE · NOT NULL · CHECK · DEFAULT",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20648,20 +20869,50 @@
               "code": "-- Ejemplo práctico:\nCREATE TABLE pedidos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  cliente_id bigint NOT NULL,\n  CONSTRAINT fk_pedido_cliente\n    FOREIGN KEY (cliente_id) REFERENCES clientes(id)\n    ON DELETE RESTRICT\n);",
               "explanation": "RESTRICT evita borrar un cliente que tenga pedidos relacionados.",
               "language": "sql"
+            },
+            {
+              "title": "Impedir números de volumen repetidos dentro de una novela",
+              "description": "Una restricción compuesta expresa que el número solo debe ser único dentro de cada novela.",
+              "language": "sql",
+              "code": "CREATE TABLE volumenes (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  novela_id bigint NOT NULL REFERENCES novelas(id),\n  numero integer NOT NULL CHECK (numero > 0),\n  titulo text,\n  CONSTRAINT uq_volumen_por_novela UNIQUE (novela_id, numero)\n);",
+              "explanation": "La clave única compuesta permite que distintas novelas tengan un volumen 1, pero impide duplicar el volumen 1 dentro de una misma novela. CHECK valida el rango y la clave foránea protege la relación."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "PRIMARY KEY",
+              "description": "Clave única y no nula que identifica filas."
+            },
+            {
+              "name": "FOREIGN KEY",
+              "description": "Exige que la referencia cumpla la relación definida."
+            },
+            {
+              "name": "UNIQUE",
+              "description": "Impide duplicados en una columna o combinación."
+            },
+            {
+              "name": "NOT NULL",
+              "description": "Rechaza valores NULL."
+            },
+            {
+              "name": "CHECK",
+              "description": "Exige que una expresión de validación sea verdadera o no falsa."
+            }
+          ],
           "exercise": "Agregá una regla para impedir stock negativo y otra para que email sea único.",
           "hint": "Usá CHECK (stock >= 0) y UNIQUE (email).",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Declarà restricciones en la base y reflejalas también en la validación de la API.",
+            "Nombrá las restricciones para facilitar diagnóstico y migraciones.",
+            "Definí acciones ON DELETE de acuerdo con el ciclo de vida del dato relacionado.",
+            "Usá claves únicas compuestas si la regla depende de más de una columna."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Confiar solo en la validación del formulario frontend.",
+            "Elegir ON DELETE CASCADE sin evaluar qué datos podrían borrarse en cadena.",
+            "Pensar que CHECK reemplaza una validación entre tablas.",
+            "Capturar una violación de unicidad y continuar como si la inserción hubiera sido exitosa."
           ],
           "resources": [
             {
@@ -20675,9 +20926,36 @@
           ],
           "related": [
             "sql-modelo-relacional",
-            "sql-normalizacion",
-            "mongodb-validacion-esquema"
-          ]
+            "express-validation"
+          ],
+          "deepDive": {
+            "model": "Las restricciones son reglas aplicadas por PostgreSQL en el momento de escribir datos. PRIMARY KEY exige identidad única y no nula; FOREIGN KEY mantiene referencias válidas; UNIQUE impide duplicados; NOT NULL exige presencia; CHECK evalúa una condición y DEFAULT proporciona un valor cuando la columna se omite. Al residir en la base, las reglas protegen datos aunque existan varios clientes o servicios.",
+            "flow": [
+              [
+                "Definir la identidad",
+                "PRIMARY KEY establece qué columnas identifican una fila de forma única."
+              ],
+              [
+                "Expresar relaciones",
+                "FOREIGN KEY obliga a que la referencia exista o cumpla la política de borrado configurada."
+              ],
+              [
+                "Proteger invariantes",
+                "UNIQUE, NOT NULL y CHECK expresan reglas que deben cumplirse siempre."
+              ],
+              [
+                "Validar al escribir",
+                "PostgreSQL rechaza operaciones que violan las restricciones, manteniendo la integridad."
+              ]
+            ],
+            "decisions": [
+              "Implementá reglas esenciales en la base además de validarlas en el frontend y backend.",
+              "Nombrá restricciones para que los errores y las migraciones sean más comprensibles.",
+              "Elegí ON DELETE RESTRICT, CASCADE o SET NULL según la semántica real del dominio, no por comodidad.",
+              "Usá UNIQUE compuesto cuando la unicidad depende de una combinación, por ejemplo (novela_id, numero_volumen)."
+            ],
+            "debugging": "Ante duplicate key, identificá la restricción UNIQUE o PRIMARY KEY y decidí si el flujo debe actualizar, rechazar o usar una estrategia de upsert. Ante foreign key violation, comprobá el registro padre y el orden de inserción. Ante CHECK violation, compará el valor con la regla definida."
+          }
         },
         {
           "id": "sql-select-basico",
@@ -20685,7 +20963,7 @@
           "title": "SELECT: recuperar columnas y filas",
           "summary": "Construí consultas que devuelvan solo los datos necesarios.",
           "purpose": "SELECT define columnas y expresiones; FROM indica la fuente. WHERE filtra, ORDER BY ordena y LIMIT limita resultados. Evitá SELECT * en endpoints cuando conocés las columnas necesarias.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá SELECT para recuperar la información que necesita una pantalla, un informe, una API o un proceso. Es la operación central de lectura en SQL.",
           "syntax": "SELECT columnas FROM tabla WHERE condición;",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20703,20 +20981,50 @@
               "code": "-- Ejemplo práctico:\nSELECT id, nombre, stock\nFROM productos\nWHERE activo = true AND stock > 0;",
               "explanation": "WHERE descarta filas que no cumplen la condición.",
               "language": "sql"
+            },
+            {
+              "title": "Crear una columna calculada y ponerle alias",
+              "description": "Seleccioná los campos que necesita una tarjeta y construí una expresión para mostrar un texto alternativo.",
+              "language": "sql",
+              "code": "SELECT id,\n       titulo AS nombre_novela,\n       COALESCE(sinopsis, 'Sin sinopsis disponible') AS resumen\nFROM novelas\nWHERE publicada = true\nORDER BY titulo ASC;",
+              "explanation": "AS establece nombres de salida. COALESCE devuelve el primer argumento no NULL, así que la consulta puede crear una representación útil sin modificar el dato almacenado."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "SELECT",
+              "description": "Define columnas y expresiones que devuelve la consulta."
+            },
+            {
+              "name": "FROM",
+              "description": "Indica la tabla o fuente de datos."
+            },
+            {
+              "name": "WHERE",
+              "description": "Filtra filas antes de agrupar."
+            },
+            {
+              "name": "ORDER BY",
+              "description": "Ordena las filas del resultado."
+            },
+            {
+              "name": "LIMIT / OFFSET",
+              "description": "Controlan el tamaño y desplazamiento del conjunto devuelto."
+            }
+          ],
           "exercise": "Mostrá nombre y email de usuarios activos.",
           "hint": "Elegí las columnas requeridas y filtrá por activo.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Seleccioná solo las columnas que necesita el consumidor.",
+            "Usá alias y nombres calificados para que la consulta se lea con claridad.",
+            "Aplicá LIMIT cuando la pantalla no necesita toda la colección.",
+            "Agregá ORDER BY si el orden tiene significado para el usuario o para una paginación."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Usar SELECT * en endpoints estables y transferir campos innecesarios.",
+            "Esperar que una tabla devuelva filas en un orden natural estable.",
+            "Confundir un alias de salida con el nombre real de la columna.",
+            "Construir SQL concatenando directamente valores proporcionados por el usuario."
           ],
           "resources": [
             {
@@ -20730,9 +21038,36 @@
           ],
           "related": [
             "sql-where",
-            "sql-alias-expresiones",
-            "sql-order-limit-offset"
-          ]
+            "sql-inner-join"
+          ],
+          "deepDive": {
+            "model": "SELECT es una consulta declarativa: describe qué columnas y filas querés obtener, mientras que PostgreSQL decide cómo acceder a los datos. FROM define las fuentes, WHERE filtra filas, GROUP BY agrupa, ORDER BY ordena y LIMIT restringe el resultado. El orden escrito de las cláusulas no es el orden físico de ejecución; el planificador elige un plan adecuado.",
+            "flow": [
+              [
+                "Elegir fuente",
+                "FROM indica tabla, vista, subconsulta o combinación de fuentes."
+              ],
+              [
+                "Filtrar candidatos",
+                "WHERE elimina filas que no cumplen las condiciones."
+              ],
+              [
+                "Proyectar resultado",
+                "SELECT define columnas, expresiones y alias que se mostrarán."
+              ],
+              [
+                "Ordenar y limitar",
+                "ORDER BY define orden; LIMIT/FETCH limita la cantidad devuelta."
+              ]
+            ],
+            "decisions": [
+              "Seleccioná columnas necesarias en vez de SELECT * cuando construís endpoints o reportes estables.",
+              "Usá alias con AS para expresar nombres de salida claros.",
+              "Agregá un criterio de orden único cuando el resultado se pagina o debe ser reproducible.",
+              "Para saber cómo se ejecuta una consulta, inspeccioná EXPLAIN; no supongas que la escritura SQL determina el uso de índices."
+            ],
+            "debugging": "Si faltan filas, revisá filtros y valores NULL antes de revisar el JOIN. Si recibís columnas ambiguas, calificá con alias de tabla. Si los resultados cambian de orden entre ejecuciones, agregá ORDER BY: sin orden explícito no hay orden garantizado."
+          }
         },
         {
           "id": "sql-alias-expresiones",
@@ -20794,7 +21129,7 @@
           "title": "WHERE: filtrar filas con condiciones",
           "summary": "Seleccioná filas que cumplen una o varias condiciones lógicas.",
           "purpose": "WHERE evalúa condiciones por fila. Combiná expresiones con AND, OR y NOT; los paréntesis aclaran el orden. SQL usa lógica de tres valores cuando aparece NULL.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá WHERE para reducir las filas que una consulta lee, actualiza o elimina. En operaciones de escritura el filtro determina el alcance del cambio, por lo que debe comprobarse con especial cuidado.",
           "syntax": "SELECT ... FROM tabla WHERE condición;",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20812,20 +21147,50 @@
               "code": "-- Ejemplo práctico:\nSELECT id, nombre, categoria_id\nFROM productos\nWHERE activo = true\n  AND (categoria_id = 2 OR categoria_id = 4);",
               "explanation": "Los paréntesis agrupan alternativas antes de combinarlas con activo.",
               "language": "sql"
+            },
+            {
+              "title": "Combinar rango, alternativas y valores NULL",
+              "description": "Filtrá registros usando condiciones que consideran correctamente los valores ausentes.",
+              "language": "sql",
+              "code": "SELECT id, titulo, anio_publicacion\nFROM novelas\nWHERE anio_publicacion BETWEEN 2015 AND 2025\n  AND estado IN ('publicada', 'en-lectura')\n  AND sinopsis IS NOT NULL;",
+              "explanation": "BETWEEN incluye ambos extremos; IN comprueba pertenencia a la lista; IS NOT NULL selecciona filas donde la sinopsis está presente. No reemplaces esa última condición por sinopsis <> NULL."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "AND",
+              "description": "Exige que todas las condiciones sean TRUE."
+            },
+            {
+              "name": "OR",
+              "description": "Acepta si al menos una condición es TRUE."
+            },
+            {
+              "name": "IN",
+              "description": "Comprueba pertenencia a una lista de valores."
+            },
+            {
+              "name": "BETWEEN",
+              "description": "Comprueba un rango inclusivo."
+            },
+            {
+              "name": "IS NULL",
+              "description": "Comprueba si un valor es NULL sin usar igualdad."
+            }
+          ],
           "exercise": "Buscá pedidos pendientes de un cliente y excluí los cancelados.",
           "hint": "Combiná cliente_id y estado con AND.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Usá paréntesis para expresar claramente condiciones mixtas.",
+            "Usá IS NULL/IS NOT NULL para valores NULL.",
+            "Parametrizá valores desde el backend en lugar de concatenar texto SQL.",
+            "Antes de UPDATE o DELETE, ejecutá un SELECT con el mismo WHERE para revisar las filas afectadas."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Comparar una columna con NULL mediante = o <>.",
+            "Olvidar precedencia de AND y OR.",
+            "Usar un filtro demasiado amplio en UPDATE o DELETE.",
+            "Asumir que UNKNOWN se comporta como TRUE."
           ],
           "resources": [
             {
@@ -20834,10 +21199,37 @@
             }
           ],
           "related": [
-            "sql-operadores-filtros",
-            "sql-null",
-            "sql-select-basico"
-          ]
+            "sql-select-basico",
+            "mongodb-query-operators"
+          ],
+          "deepDive": {
+            "model": "WHERE evalúa una condición para cada fila candidata y conserva las filas cuya expresión resulta TRUE. SQL usa lógica de tres valores: TRUE, FALSE y UNKNOWN; las comparaciones con NULL suelen producir UNKNOWN, no TRUE ni FALSE. AND, OR y NOT combinan condiciones, y los paréntesis hacen explícita la intención cuando se mezclan operadores.",
+            "flow": [
+              [
+                "Evaluar una fila",
+                "Cada comparación produce TRUE, FALSE o UNKNOWN."
+              ],
+              [
+                "Combinar condiciones",
+                "AND, OR y NOT aplican la lógica booleana SQL a los resultados."
+              ],
+              [
+                "Conservar coincidencias",
+                "WHERE deja pasar solo filas cuya condición final es TRUE."
+              ],
+              [
+                "Devolver el conjunto",
+                "Las filas FALSE o UNKNOWN quedan fuera del resultado."
+              ]
+            ],
+            "decisions": [
+              "Usá paréntesis cuando mezcles AND y OR para que la intención del filtro sea inequívoca.",
+              "Usá IS NULL e IS NOT NULL para campos ausentes; no compares con = NULL.",
+              "Preferí IN para listas pequeñas de valores y BETWEEN cuando ambos límites sean inclusivos.",
+              "Validá parámetros y usá consultas parametrizadas desde la aplicación; no concatentes texto del usuario en SQL."
+            ],
+            "debugging": "Si las filas con NULL no aparecen, recordá que una comparación común produce UNKNOWN. Si el filtro con AND/OR devuelve más filas de las esperadas, agregá paréntesis. Si una consulta falla al mezclar texto y número, comprobá el tipo y el valor recibido antes de convertirlo."
+          }
         },
         {
           "id": "sql-operadores-filtros",
@@ -20954,7 +21346,7 @@
           "title": "ORDER BY, LIMIT y OFFSET: ordenar y paginar",
           "summary": "Ordená resultados y construí paginación para interfaces y endpoints.",
           "purpose": "ORDER BY define el orden; LIMIT limita filas y OFFSET salta un tramo. Para paginar de forma determinista agregá una clave única como desempate. En conjuntos grandes, la paginación por cursor puede escalar mejor.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá ORDER BY, LIMIT y OFFSET para mostrar listas ordenadas y paginadas. Si el catálogo crece mucho o recibe inserciones frecuentes, evaluá paginación por cursor.",
           "syntax": "ORDER BY columna DESC, id ASC LIMIT n OFFSET desplazamiento",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -20972,20 +21364,50 @@
               "code": "-- Ejemplo práctico:\nSELECT id, nombre\nFROM productos\nORDER BY nombre ASC, id ASC\nLIMIT 10 OFFSET 20;",
               "explanation": "OFFSET omite veinte filas; puede costar más al aumentar mucho el desplazamiento.",
               "language": "sql"
+            },
+            {
+              "title": "Continuar con paginación por cursor",
+              "description": "En una lista ordenada por fecha descendente, pedí los registros anteriores al último elemento de la página.",
+              "language": "sql",
+              "code": "SELECT id, titulo, creado_en\nFROM novelas\nWHERE (creado_en, id) < (TIMESTAMPTZ '2026-10-01 12:00:00+00', 120)\nORDER BY creado_en DESC, id DESC\nLIMIT 20;",
+              "explanation": "El cursor conserva los dos valores del último registro de la página anterior. La comparación por tupla mantiene el mismo orden descendente y evita saltar un OFFSET cada vez mayor. El filtro y el ORDER BY deben usar exactamente las mismas claves y direcciones."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "ASC / DESC",
+              "description": "Orden ascendente o descendente."
+            },
+            {
+              "name": "LIMIT",
+              "description": "Máximo de filas que devuelve la consulta."
+            },
+            {
+              "name": "OFFSET",
+              "description": "Cantidad de filas que se omite antes de devolver resultados."
+            },
+            {
+              "name": "keyset pagination",
+              "description": "Paginación que continúa desde la última clave recibida."
+            },
+            {
+              "name": "ORDER BY compuesto",
+              "description": "Orden con varias columnas para resolver empates."
+            }
+          ],
           "exercise": "Diseñá página 4 con 15 resultados y orden estable.",
           "hint": "OFFSET = (página - 1) × tamaño; agregá clave única al ORDER BY.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Incluí una columna única al final de ORDER BY para desempatar.",
+            "Mantén el orden consistente entre solicitudes de página.",
+            "Limitá tamaños máximos de página desde la API.",
+            "Medí paginación profunda y evaluá keyset pagination si OFFSET se vuelve costoso."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Usar LIMIT sin ORDER BY y esperar resultados repetibles.",
+            "Ordenar por una fecha que puede repetirse sin un segundo criterio único.",
+            "Calcular OFFSET con base cero cuando la interfaz cuenta desde página uno.",
+            "Mezclar filtros distintos entre solicitudes de una misma navegación."
           ],
           "resources": [
             {
@@ -20998,10 +21420,37 @@
             }
           ],
           "related": [
-            "sql-select-basico",
-            "postgres-indices",
-            "node-pg-consultas-parametrizadas"
-          ]
+            "api-paginacion",
+            "mongodb-projection-sort-limit"
+          ],
+          "deepDive": {
+            "model": "ORDER BY define el orden de salida; LIMIT o FETCH FIRST determina cuántas filas devuelve la consulta; OFFSET omite un número de filas. Para paginar de forma estable, el orden debe ser determinista e incluir un desempate único. OFFSET resulta sencillo para páginas pequeñas, pero los desplazamientos grandes pueden exigir recorrer y descartar muchas filas.",
+            "flow": [
+              [
+                "Definir orden",
+                "ORDER BY usa una o más expresiones y direcciones ASC/DESC."
+              ],
+              [
+                "Resolver empates",
+                "Una clave única adicional crea un orden determinista entre valores iguales."
+              ],
+              [
+                "Seleccionar ventana",
+                "LIMIT/FETCH define el tamaño de página y OFFSET el desplazamiento."
+              ],
+              [
+                "Continuar la navegación",
+                "Para colecciones grandes, un cursor basado en la última clave puede evitar offsets muy profundos."
+              ]
+            ],
+            "decisions": [
+              "Usá ORDER BY antes de confiar en el resultado de LIMIT; sin orden, las filas elegidas no están garantizadas.",
+              "Incluí una clave única como criterio final de orden para evitar que filas con valores iguales salten o se repitan.",
+              "Usá OFFSET para páginas pequeñas y navegaciones directas; evaluá keyset pagination para feeds o conjuntos grandes.",
+              "Mantené el mismo filtro y orden entre páginas; una inserción concurrente puede cambiar la posición de filas en paginación por offset."
+            ],
+            "debugging": "Si aparecen duplicados o faltantes al pasar de página, comprobá si el ORDER BY incluye un desempate único y si los datos cambian entre solicitudes. Si páginas profundas son lentas, evaluá paginación por cursor y revisá el índice que acompaña el filtro y el orden."
+          }
         },
         {
           "id": "sql-inner-join",
@@ -21009,7 +21458,7 @@
           "title": "INNER JOIN: combinar filas relacionadas",
           "summary": "Combiná registros de dos tablas cuando existe coincidencia entre sus claves.",
           "purpose": "INNER JOIN produce una fila por cada pareja que satisface ON. Es habitual para mostrar pedidos junto a clientes cuando solo interesan filas con relación coincidente.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá INNER JOIN cuando necesites devolver información combinada y solo tengan sentido los registros que poseen una coincidencia en las tablas relacionadas.",
           "syntax": "FROM tabla_a INNER JOIN tabla_b ON tabla_a.clave = tabla_b.clave",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -21027,20 +21476,46 @@
               "code": "-- Ejemplo práctico:\nSELECT pi.pedido_id, pr.nombre, pi.cantidad\nFROM pedido_items AS pi\nJOIN productos AS pr ON pr.id = pi.producto_id;",
               "explanation": "JOIN sin LEFT o RIGHT equivale a INNER JOIN.",
               "language": "sql"
+            },
+            {
+              "title": "Unir tres tablas para reconstruir el detalle de un pedido",
+              "description": "Combiná pedidos, sus líneas y los productos correspondientes.",
+              "language": "sql",
+              "code": "SELECT p.id AS pedido_id,\n       pr.nombre AS producto,\n       pi.cantidad,\n       pi.precio_unitario\nFROM pedidos AS p\nINNER JOIN pedido_items AS pi ON pi.pedido_id = p.id\nINNER JOIN productos AS pr ON pr.id = pi.producto_id\nWHERE p.id = 42;",
+              "explanation": "Cada JOIN agrega una relación adicional. Si un pedido contiene varios productos, aparecerá una fila por línea; esa multiplicidad es esperada y no debe eliminarse con DISTINCT sin entender el resultado."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "INNER JOIN",
+              "description": "Devuelve parejas de filas que satisfacen ON."
+            },
+            {
+              "name": "ON",
+              "description": "Define la condición de coincidencia entre las fuentes."
+            },
+            {
+              "name": "alias",
+              "description": "Nombre corto para referirse a una tabla o expresión."
+            },
+            {
+              "name": "cardinalidad",
+              "description": "Describe si una relación es uno-a-uno, uno-a-muchos o muchos-a-muchos."
+            }
+          ],
           "exercise": "Listá pedidos junto con su dirección de envío.",
           "hint": "Uní pedidos y direcciones mediante la clave foránea.",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Escribí la condición ON de manera explícita y usa alias claros.",
+            "Revisá cardinalidad uno-a-uno, uno-a-muchos o muchos-a-muchos.",
+            "Elegí LEFT JOIN cuando debas conservar filas sin coincidencia.",
+            "Examiná el plan de ejecución ante joins grandes o lentos."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Olvidar la condición ON y producir un producto cartesiano.",
+            "Esperar una fila por cada fila de la tabla principal en una relación uno-a-muchos.",
+            "Agregar DISTINCT para ocultar duplicados sin entender su origen.",
+            "Poner filtros sobre la tabla derecha en WHERE cuando se necesita conservar filas sin coincidencia mediante LEFT JOIN."
           ],
           "resources": [
             {
@@ -21053,10 +21528,37 @@
             }
           ],
           "related": [
-            "sql-left-join",
-            "sql-otros-joins",
-            "sql-group-by-agregaciones"
-          ]
+            "sql-modelo-relacional",
+            "mongodb-modelado-embed-reference"
+          ],
+          "deepDive": {
+            "model": "INNER JOIN combina filas de dos fuentes cuando la expresión ON resulta verdadera. Cada coincidencia produce una fila en el resultado; por eso una fila puede repetirse si coincide con varias filas del otro lado. La condición ON expresa la relación entre las fuentes y el conjunto devuelto contiene únicamente coincidencias, a diferencia de LEFT JOIN que conserva filas del lado izquierdo sin pareja.",
+            "flow": [
+              [
+                "Elegir las fuentes",
+                "FROM y JOIN identifican tablas o resultados que se quieren combinar."
+              ],
+              [
+                "Definir la relación",
+                "ON especifica las columnas y condiciones que conectan cada fila."
+              ],
+              [
+                "Encontrar coincidencias",
+                "El motor ejecuta el algoritmo de join elegido por el planificador."
+              ],
+              [
+                "Construir filas combinadas",
+                "El resultado incluye una fila por cada pareja que satisface ON."
+              ]
+            ],
+            "decisions": [
+              "Usá alias cortos y calificá las columnas cuando más de una tabla tenga nombres iguales.",
+              "Elegí INNER JOIN cuando solo tengan sentido las filas con pareja; usá LEFT JOIN si debés conservar los elementos sin relación.",
+              "Comprobá la cardinalidad antes de usar DISTINCT para ocultar duplicados; una relación uno-a-muchos produce varias filas legítimas.",
+              "Asegurá tipos compatibles y claves bien definidas en las columnas de relación."
+            ],
+            "debugging": "Si el resultado tiene más filas que la tabla inicial, comprobá si la relación es uno-a-muchos o muchos-a-muchos. Si faltan filas, quizás la ausencia de coincidencia sea esperada y necesites LEFT JOIN. Si el join es lento, estudiá EXPLAIN y la selectividad de las condiciones."
+          }
         },
         {
           "id": "sql-left-join",
@@ -21165,7 +21667,7 @@
           "title": "GROUP BY y funciones de agregación",
           "summary": "Calculá sumas, promedios, mínimos, máximos y cantidades por grupo.",
           "purpose": "GROUP BY agrupa filas que comparten valores. COUNT, SUM, AVG, MIN y MAX producen un resultado por grupo. Las columnas seleccionadas deben estar agrupadas o agregadas.",
-          "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+          "whenToUse": "Usá agrupaciones para informes y métricas, por ejemplo cantidad de volúmenes por novela, pedidos por cliente o ventas por mes.",
           "syntax": "SELECT clave, COUNT(*), SUM(valor) FROM tabla GROUP BY clave",
           "level": "Inicial a avanzado",
           "syntaxLanguage": "sql",
@@ -21183,20 +21685,50 @@
               "code": "-- Ejemplo práctico:\nSELECT categoria_id, AVG(precio) AS promedio,\n       MIN(precio) AS minimo, MAX(precio) AS maximo\nFROM productos\nGROUP BY categoria_id;",
               "explanation": "Las funciones se calculan para cada categoría.",
               "language": "sql"
+            },
+            {
+              "title": "Filtrar grupos después de calcular sus totales",
+              "description": "Mostrá solo los clientes con al menos tres pedidos y un gasto acumulado relevante.",
+              "language": "sql",
+              "code": "SELECT cliente_id,\n       COUNT(*) AS cantidad_pedidos,\n       SUM(total) AS gasto_total\nFROM pedidos\nWHERE estado <> 'cancelado'\nGROUP BY cliente_id\nHAVING COUNT(*) >= 3 AND SUM(total) >= 10000\nORDER BY gasto_total DESC;",
+              "explanation": "WHERE elimina pedidos cancelados antes de agrupar. HAVING filtra los grupos después de calcular COUNT y SUM. ORDER BY usa el agregado para ordenar los clientes."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "GROUP BY",
+              "description": "Agrupa filas por valores comunes."
+            },
+            {
+              "name": "COUNT(*)",
+              "description": "Cuenta filas del grupo."
+            },
+            {
+              "name": "COUNT(columna)",
+              "description": "Cuenta valores no NULL de una columna."
+            },
+            {
+              "name": "SUM / AVG",
+              "description": "Suma y promedio de los valores de cada grupo."
+            },
+            {
+              "name": "HAVING",
+              "description": "Filtra grupos después de calcular agregados."
+            }
+          ],
           "exercise": "Contá pedidos y sumá importes por estado.",
           "hint": "Agrupá por estado y combiná COUNT(*) con SUM(total).",
           "bestPractices": [
-            "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
-            "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
-            "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+            "Definí con claridad qué representa cada grupo antes de elegir columnas.",
+            "Usá WHERE para filtrar filas y HAVING para filtrar resultados agregados.",
+            "Elegí COUNT(*) o COUNT(columna) según debas incluir o excluir NULLs.",
+            "Probá las agregaciones con datos pequeños cuyo resultado puedas calcular manualmente."
           ],
           "commonMistakes": [
-            "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
-            "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
-            "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+            "Seleccionar columnas que no están agrupadas ni agregadas.",
+            "Usar HAVING para filtros simples que deberían estar en WHERE.",
+            "Contar una columna nullable y asumir que equivale a COUNT(*).",
+            "Sumar filas después de un JOIN que multiplica registros."
           ],
           "resources": [
             {
@@ -21209,10 +21741,37 @@
             }
           ],
           "related": [
-            "sql-having",
             "sql-inner-join",
-            "postgres-window-functions"
-          ]
+            "mongodb-aggregation-pipeline"
+          ],
+          "deepDive": {
+            "model": "GROUP BY particiona las filas en grupos que comparten los valores indicados. Funciones agregadas como COUNT, SUM, AVG, MIN y MAX calculan un resultado por grupo. HAVING filtra grupos después de agregarlos; WHERE filtra filas antes de agruparlas. Los valores NULL y el modo en que COUNT los cuenta importan al interpretar resultados.",
+            "flow": [
+              [
+                "Filtrar filas base",
+                "WHERE reduce las filas que participarán en los grupos."
+              ],
+              [
+                "Formar grupos",
+                "GROUP BY reúne filas con valores iguales en las claves indicadas."
+              ],
+              [
+                "Calcular agregados",
+                "COUNT, SUM, AVG, MIN y MAX producen métricas para cada grupo."
+              ],
+              [
+                "Filtrar grupos",
+                "HAVING descarta grupos que no satisfacen la condición agregada."
+              ]
+            ],
+            "decisions": [
+              "Usá WHERE para condiciones sobre filas y HAVING para condiciones sobre resultados agregados.",
+              "Recordá que COUNT(*) cuenta filas y COUNT(columna) ignora valores NULL de esa columna.",
+              "Agrupá solo por columnas que definan el nivel de detalle esperado; agregar una columna extra puede dividir los grupos.",
+              "Validá cómo se tratan valores NULL y filas sin coincidencia antes de interpretar sumas o promedios."
+            ],
+            "debugging": "Si la consulta rechaza una columna en SELECT, verificá que esté agrupada o agregada. Si COUNT(columna) es menor que COUNT(*), comprobá NULLs. Si los totales se multiplican, revisá joins previos al GROUP BY: una relación uno-a-muchos puede multiplicar filas."
+          }
         },
         {
           "id": "sql-having",
@@ -22912,7 +23471,7 @@
           "title": "BSON, documentos y tipos de datos",
           "summary": "Reconocé la representación BSON y los tipos que no son simples cadenas JSON.",
           "purpose": "BSON es la representación binaria que MongoDB utiliza para almacenar documentos. Añade tipos como ObjectId, Date, Decimal128 y binarios. Un documento contiene pares campo-valor y puede anidar objetos y arrays.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Comprendé BSON antes de modelar datos, trabajar con identificadores, fechas, importes o arrays desde mongosh y desde el driver de Node.js.",
           "syntax": "{ campo: valor, objeto: { ... }, lista: [ ... ] }",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -22930,20 +23489,50 @@
               "code": "// Decimal128 mantiene representación decimal.\ndb.pagos.insertOne({ total: NumberDecimal(\"1250.50\"), moneda: \"ARS\" });",
               "explanation": "Decimal128 permite exactitud decimal apropiada para importes; mantené una política consistente de conversiones.",
               "language": "javascript"
+            },
+            {
+              "title": "Combinar identificador, fecha y decimal BSON",
+              "description": "Guardá una novela con tipos BSON apropiados para identidad, instante e importe.",
+              "language": "javascript",
+              "code": "db.ediciones.insertOne({\n  novelaId: ObjectId(),\n  titulo: 'Edición coleccionista',\n  publicadoEn: new Date('2026-10-15T12:00:00Z'),\n  precio: NumberDecimal('1250.50'),\n  etiquetas: ['tapa-dura', 'limitada']\n});",
+              "explanation": "ObjectId identifica la novela relacionada; Date representa el instante y Decimal128 conserva el valor decimal. Los arrays pueden almacenar varias etiquetas en el mismo documento."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "ObjectId",
+              "description": "Tipo BSON usado habitualmente como identificador."
+            },
+            {
+              "name": "Date",
+              "description": "Tipo BSON que representa un instante temporal."
+            },
+            {
+              "name": "Decimal128",
+              "description": "Tipo decimal de precisión adecuada para importes."
+            },
+            {
+              "name": "_id",
+              "description": "Campo identificador único de cada documento."
+            },
+            {
+              "name": "BSON",
+              "description": "Representación binaria serializada que MongoDB usa para documentos."
+            }
+          ],
           "exercise": "Elegí un tipo BSON para id, fecha de creación, importe monetario y lista de etiquetas.",
           "hint": "ObjectId, Date, Decimal128 y Array son opciones adecuadas.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Mantené el mismo tipo BSON para un mismo campo en todos los documentos.",
+            "Usá ObjectId para referencias Mongo y convertí strings de ruta en el backend.",
+            "Usá Decimal128 cuando la precisión decimal sea importante.",
+            "Controlá el tamaño y crecimiento de documentos antes de incrustar grandes colecciones."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Comparar un ObjectId con una cadena sin convertir el tipo.",
+            "Guardar importes decimales como números binarios de punto flotante sin evaluar precisión.",
+            "Guardar fechas como texto y perder consultas cronológicas adecuadas.",
+            "Suponer que un documento BSON puede crecer sin límite."
           ],
           "resources": [
             {
@@ -22956,10 +23545,37 @@
             }
           ],
           "related": [
-            "mongodb-intro",
-            "sql-tipos-datos",
-            "postgres-jsonb"
-          ]
+            "mongodb-insert-documents",
+            "sql-tipos-datos"
+          ],
+          "deepDive": {
+            "model": "MongoDB almacena documentos en BSON, una representación binaria con tipos que no existen como primitivos JSON, entre ellos ObjectId, Date, Decimal128 y datos binarios. Un documento es un conjunto de campos con valores; puede anidar documentos y arrays. Aunque el documento se parezca a un objeto JavaScript, los tipos BSON y las reglas de serialización del driver deben tenerse en cuenta.",
+            "flow": [
+              [
+                "Crear el objeto de datos",
+                "La aplicación o mongosh prepara un documento con campos y valores."
+              ],
+              [
+                "Serializar a BSON",
+                "El driver convierte los valores compatibles a la representación BSON que MongoDB almacena."
+              ],
+              [
+                "Persistir el documento",
+                "MongoDB guarda el documento e incluye _id si no se proporcionó."
+              ],
+              [
+                "Deserializar al cliente",
+                "El driver reconstruye valores JavaScript; tipos como ObjectId y Decimal128 conservan su semántica específica."
+              ]
+            ],
+            "decisions": [
+              "Usá Date para instantes temporales y definí una convención de zona horaria en toda la aplicación.",
+              "Usá Decimal128 cuando necesitás decimales exactos, por ejemplo importes, y mantené conversiones coherentes en el frontend/backend.",
+              "No conviertas ObjectId a string prematuramente si después lo necesitás como tipo BSON en filtros.",
+              "Recordá el límite de 16 MiB por documento y diseñá arrays y contenido binario con límites conocidos."
+            ],
+            "debugging": "Si una consulta por _id no coincide, verificá que envíes ObjectId y no una cadena con el mismo texto. Si los valores decimales pierden precisión, revisá si fueron guardados como Number de punto flotante. Si una fecha se desplaza, verificá el instante UTC almacenado y la zona en la que la interfaz lo presenta."
+          }
         },
         {
           "id": "mongodb-db-collections",
@@ -22967,7 +23583,7 @@
           "title": "Bases de datos y colecciones",
           "summary": "Organizá namespaces de MongoDB y entendé cómo nacen las colecciones.",
           "purpose": "Una base contiene colecciones y cada colección contiene documentos. MongoDB puede crear una colección implícitamente al insertar el primer documento o de forma explícita con createCollection y opciones como validación.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá bases y colecciones para separar áreas de datos, definir permisos, administrar índices y establecer validadores. Es parte de la configuración inicial de un entorno MongoDB.",
           "syntax": "use tienda · db.createCollection(\"productos\") · db.productos",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -22985,20 +23601,50 @@
               "code": "// Si categorias no existe, la inserción crea la colección.\ndb.categorias.insertOne({ nombre: \"Periféricos\", activa: true });\nshow collections;",
               "explanation": "La creación implícita es cómoda al comenzar; en entornos controlados puede convenir crear colecciones con validadores.",
               "language": "javascript"
+            },
+            {
+              "title": "Crear una colección con validación básica",
+              "description": "Definí una estructura mínima para impedir que se inserten novelas sin título o con campos de tipo inesperado.",
+              "language": "javascript",
+              "code": "db.createCollection('novelas', {\n  validator: {\n    $jsonSchema: {\n      bsonType: 'object',\n      required: ['titulo', 'estado'],\n      properties: {\n        titulo: { bsonType: 'string', minLength: 1 },\n        estado: { bsonType: 'string' }\n      }\n    }\n  }\n});",
+              "explanation": "createCollection permite configurar un validador JSON Schema. La colección sigue siendo flexible en los campos no declarados, pero las reglas definidas se aplican a las escrituras."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "use nombreBase",
+              "description": "Selecciona la base activa en mongosh."
+            },
+            {
+              "name": "db.createCollection()",
+              "description": "Crea una colección y permite configurar opciones."
+            },
+            {
+              "name": "show dbs",
+              "description": "Lista las bases visibles para el usuario."
+            },
+            {
+              "name": "show collections",
+              "description": "Lista colecciones de la base activa."
+            },
+            {
+              "name": "validator",
+              "description": "Reglas de validación aplicadas a los documentos escritos."
+            }
+          ],
           "exercise": "Organizá una base de biblioteca digital con usuarios, novelas, volúmenes y lecturas.",
           "hint": "Pensá qué representa cada conjunto y cuáles son sus patrones de consulta.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Separá bases o despliegues por entorno cuando sea necesario aislar permisos y configuración.",
+            "Usá createCollection con validador cuando el contrato de datos ya esté definido.",
+            "Comprobá la base activa antes de ejecutar scripts de carga o limpieza.",
+            "Definí nombres consistentes y permisos mínimos por colección."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Ejecutar un script en la base equivocada porque olvidaste revisar use o db.getName().",
+            "Confundir una colección con una tabla SQL en cuanto a estructura y restricciones.",
+            "Creer que crear una colección automáticamente define un esquema estricto.",
+            "Dar acceso de escritura a todas las bases cuando el proceso solo necesita una."
           ],
           "resources": [
             {
@@ -23007,10 +23653,37 @@
             }
           ],
           "related": [
-            "mongodb-intro",
             "mongodb-atlas-mongosh",
-            "sql-modelo-relacional"
-          ]
+            "mongodb-modelado-flexible"
+          ],
+          "deepDive": {
+            "model": "MongoDB organiza datos en bases de datos y colecciones. Una colección agrupa documentos y puede crearse implícitamente con la primera inserción o explícitamente con createCollection para definir opciones, validadores y otros ajustes. Los nombres de base y colección, los permisos y los índices forman parte del diseño operativo, no solo de la presentación de datos.",
+            "flow": [
+              [
+                "Elegir la base",
+                "mongosh usa use nombreBase para seleccionar el contexto de trabajo."
+              ],
+              [
+                "Crear o abrir colección",
+                "La colección puede existir previamente o crearse explícitamente con createCollection."
+              ],
+              [
+                "Insertar documentos",
+                "Las operaciones de escritura agregan documentos y pueden crear una colección si no existe."
+              ],
+              [
+                "Administrar estructura",
+                "Se inspeccionan colecciones, validadores e índices y se otorgan permisos mínimos."
+              ]
+            ],
+            "decisions": [
+              "Usá una colección por tipo de entidad o agregado cuando sus patrones de acceso y ciclo de vida lo justifiquen.",
+              "Creá colecciones explícitamente cuando necesitás validadores, índices iniciales, opciones o configuración reproducible.",
+              "No crees colecciones por cada usuario o pequeña variación de dato sin una necesidad clara.",
+              "Separá entornos de desarrollo y producción y verificá la base seleccionada antes de hacer cambios."
+            ],
+            "debugging": "Si una colección no aparece, confirmá la base actual con db.getName() y la lista con show collections. Si createCollection informa que ya existe, revisá sus opciones en vez de recrearla. Si una escritura está rechazada, comprobá permisos, validadores y la colección a la que apunta el contexto actual."
+          }
         },
         {
           "id": "mongodb-modelado-flexible",
@@ -23018,7 +23691,7 @@
           "title": "Esquema flexible y evolución de documentos",
           "summary": "Comprendé la flexibilidad y cómo mantener consistentes los documentos.",
           "purpose": "Los documentos de una colección pueden tener campos diferentes, pero las aplicaciones suelen necesitar una estructura común. La flexibilidad permite agregar atributos y evolucionar el modelo; validadores y convenciones protegen campos esenciales.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá el esquema flexible cuando los documentos evolucionan o tienen campos opcionales, pero establecé convenciones y validadores para mantener una forma consistente a medida que crece la aplicación.",
           "syntax": "Documento v1 → documento v2 · campos opcionales · versionado",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23036,20 +23709,50 @@
               "code": "// En JavaScript, asigná un valor de respaldo.\nconst idioma = novela.idioma ?? \"desconocido\";\nconsole.log(idioma);",
               "explanation": "La compatibilidad evita que un despliegue dependa de una migración instantánea.",
               "language": "javascript"
+            },
+            {
+              "title": "Versionar un documento durante una evolución",
+              "description": "Agregá un campo nuevo por lotes y registrá qué versión de estructura usa cada documento.",
+              "language": "javascript",
+              "code": "db.novelas.updateMany(\n  { schemaVersion: { $exists: false } },\n  {\n    $set: {\n      idioma: 'desconocido',\n      schemaVersion: 2\n    }\n  }\n);\n\n// La aplicación nueva puede leer documentos v1 y v2 durante la transición.",
+              "explanation": "El filtro limita el backfill a documentos anteriores. En colecciones grandes, ejecutá migraciones en lotes y medí el impacto. La lectura compatible evita exigir que todos los documentos cambien en un único despliegue."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "$jsonSchema",
+              "description": "Define validación de tipos, campos requeridos y reglas de estructura."
+            },
+            {
+              "name": "schemaVersion",
+              "description": "Campo de aplicación para identificar versión del documento."
+            },
+            {
+              "name": "$exists",
+              "description": "Filtra documentos según presencia de un campo."
+            },
+            {
+              "name": "updateMany()",
+              "description": "Actualiza todos los documentos coincidentes."
+            },
+            {
+              "name": "backfill",
+              "description": "Proceso de completar o transformar datos existentes."
+            }
+          ],
           "exercise": "¿Qué harías si agregás idioma a millones de documentos existentes?",
           "hint": "Evaluá lectura compatible, backfill por lotes, validación y monitoreo.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Diseñá según patrones de lectura y escritura reales, no solo según las entidades.",
+            "Planificá cómo leerán los documentos antiguos las versiones nuevas del backend.",
+            "Aplicá backfills por lotes y monitoreá errores y carga.",
+            "Usá validación de esquema para los campos cuyo tipo y presencia sean invariantes."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Confundir esquema flexible con ausencia total de contrato.",
+            "Cambiar el formato de un campo sin migrar ni soportar documentos antiguos.",
+            "Realizar un updateMany masivo sin medir impacto o preparar una estrategia de recuperación.",
+            "Dejar indefinidamente varias versiones de documento sin un plan de normalización."
           ],
           "resources": [
             {
@@ -23062,10 +23765,37 @@
             }
           ],
           "related": [
-            "mongodb-validacion-esquema",
-            "mongodb-migrations",
-            "postgres-migraciones"
-          ]
+            "mongodb-db-collections",
+            "mongodb-bson-documentos"
+          ],
+          "deepDive": {
+            "model": "El esquema flexible permite que documentos de una colección tengan campos opcionales o estructuras distintas, pero la aplicación sigue necesitando un contrato coherente. La evolución del modelo debe contemplar documentos antiguos y nuevos coexistiendo durante una migración. Los validadores de colección pueden exigir campos, tipos y rangos para evitar que la flexibilidad se convierta en datos inconsistentes.",
+            "flow": [
+              [
+                "Definir una versión del modelo",
+                "La aplicación establece qué campos y tipos espera para cada documento."
+              ],
+              [
+                "Introducir el cambio",
+                "Se agrega un campo o se modifica la estructura sin asumir que todos los documentos se actualizan a la vez."
+              ],
+              [
+                "Leer de forma compatible",
+                "El código soporta temporalmente documentos antiguos y nuevos mientras se ejecuta el backfill."
+              ],
+              [
+                "Validar el estado final",
+                "Se normalizan documentos y se aplican validadores cuando el contrato se estabiliza."
+              ]
+            ],
+            "decisions": [
+              "Diseñá según patrones de lectura y escritura; flexible no significa arbitrario ni libre de reglas.",
+              "Planeá migraciones por lotes cuando la colección es grande, controlando carga y progreso.",
+              "Usá schema validation para exigir campos y tipos que ya son invariantes del dominio.",
+              "Versioná documentos cuando los cambios estructurales requieren lecturas o conversiones distintas."
+            ],
+            "debugging": "Si un documento antiguo rompe el código nuevo, comprobá si falta un campo y si el consumidor tiene un valor de respaldo. Si una escritura falla, inspeccioná el validador de colección. Si un backfill actualiza demasiados documentos, refiná el filtro, limita lotes y registra el avance."
+          }
         },
         {
           "id": "mongodb-modelado-embed-reference",
@@ -23073,7 +23803,7 @@
           "title": "Modelar con documentos embebidos o referencias",
           "summary": "Elegí entre anidar datos en un documento o relacionarlos mediante identificadores.",
           "purpose": "Embeber datos que se leen juntos, tienen ciclo de vida cercano y tamaño controlado. Referenciá entidades compartidas, relaciones grandes o datos que cambian independientemente. Considerá el límite de tamaño BSON y el patrón de actualización.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá esta decisión cuando diseñes relaciones entre novelas, autores, volúmenes, reseñas, etiquetas y usuarios. La estructura debe responder a qué se consulta junto, qué crece y qué se actualiza de forma independiente.",
           "syntax": "Embed: padre { hijos: [...] } · Reference: { hijoId: ObjectId(...) }",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23091,20 +23821,50 @@
               "code": "// El usuario conserva su propia colección y ciclo de vida.\ndb.pedidos.insertOne({ usuarioId: ObjectId(\"64b000000000000000000001\"), total: 12000, estado: \"pendiente\" });",
               "explanation": "La referencia evita repetir toda la ficha del usuario; podés usar $lookup para combinar datos.",
               "language": "javascript"
+            },
+            {
+              "title": "Diseñar una vista híbrida con referencia y resumen",
+              "description": "Guardá el identificador del autor y un nombre visible para reducir lecturas frecuentes, definiendo quién actualiza la copia.",
+              "language": "javascript",
+              "code": "db.novelas.insertOne({\n  titulo: 'Re:Zero',\n  autorId: ObjectId('64b000000000000000000001'),\n  autorResumen: {\n    nombre: 'Tappei Nagatsuki'\n  },\n  estado: 'publicada'\n});",
+              "explanation": "autorId conserva la referencia a la entidad fuente; autorResumen es una copia denormalizada para una lectura común. Si cambia el nombre del autor, la aplicación debe decidir si actualiza los resúmenes, los tolera temporalmente o consulta la colección relacionada."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "embedding",
+              "description": "Guardar datos relacionados dentro de un documento padre."
+            },
+            {
+              "name": "reference",
+              "description": "Guardar el identificador de otro documento."
+            },
+            {
+              "name": "$lookup",
+              "description": "Combina documentos de colecciones en una agregación."
+            },
+            {
+              "name": "cardinalidad",
+              "description": "Cantidad de elementos relacionados en una relación."
+            },
+            {
+              "name": "16 MiB",
+              "description": "Tamaño máximo de un documento BSON de MongoDB."
+            }
+          ],
           "exercise": "Modelá una biblioteca: ¿embeberías las últimas lecturas o usarías una colección separada?",
           "hint": "Considerá tamaño, frecuencia de actualización y cómo se consulta.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Embeber datos relacionados que se recuperan juntos y tienen tamaño acotado.",
+            "Referenciar entidades compartidas o conjuntos que crecen sin límite.",
+            "Documentá cómo se mantiene la consistencia de los datos duplicados.",
+            "Considerá el límite de tamaño del documento y la frecuencia de actualizaciones."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Embeber un historial ilimitado dentro de un único documento.",
+            "Referenciar todo por costumbre y forzar múltiples consultas para cada pantalla.",
+            "Duplicar campos compartidos sin decidir cómo sincronizarlos.",
+            "Usar transacciones distribuidas como sustituto de un modelo de datos mal diseñado."
           ],
           "resources": [
             {
@@ -23117,10 +23877,37 @@
             }
           ],
           "related": [
-            "sql-modelo-relacional",
-            "sql-relaciones-tablas-puente",
-            "mongodb-aggregation-group-lookup"
-          ]
+            "mongodb-aggregation-group-lookup",
+            "sql-modelo-relacional"
+          ],
+          "deepDive": {
+            "model": "El modelo documental permite representar relaciones mediante subdocumentos embebidos o referencias entre colecciones. Embeber facilita recuperar datos relacionados en una operación y permite actualizar atómicamente el documento; referenciar reduce duplicación y encaja con entidades compartidas o colecciones que crecen sin límite. La elección depende de cómo la aplicación lee y modifica esos datos.",
+            "flow": [
+              [
+                "Estudiar el patrón de acceso",
+                "Identificá qué datos se leen juntos, con qué frecuencia cambian y si existen de forma independiente."
+              ],
+              [
+                "Evaluar embedding",
+                "Embeber los datos cuando el conjunto está acotado, pertenece al padre y suele consultarse junto."
+              ],
+              [
+                "Evaluar referencias",
+                "Separar documentos cuando son compartidos, tienen alta cardinalidad o se actualizan independientemente."
+              ],
+              [
+                "Medir la solución",
+                "Probá consultas e índices reales; usá $lookup o varias lecturas cuando se necesita combinar referencias."
+              ]
+            ],
+            "decisions": [
+              "Embeber datos pequeños y acotados que comparten el ciclo de vida del documento padre.",
+              "Referenciar grandes colecciones hijas, relaciones muchos-a-muchos o entidades que se consultan y actualizan por separado.",
+              "Evitá arrays que crecen ilimitadamente dentro de un documento; considerá documentos hijos con una referencia al padre.",
+              "Si duplicás un resumen para acelerar lecturas, definí qué proceso mantiene esa copia sincronizada."
+            ],
+            "debugging": "Si el documento crece demasiado, revisá arrays ilimitados y considera referencias. Si una lectura necesita muchas operaciones adicionales, quizá datos consultados juntos deban embeberse. Si datos duplicados quedan desactualizados, definí fuente de verdad y estrategia de sincronización."
+          }
         },
         {
           "id": "mongodb-atlas-mongosh",
@@ -23128,7 +23915,7 @@
           "title": "MongoDB Atlas y mongosh",
           "summary": "Prepará un entorno local o remoto y conectate con la shell oficial.",
           "purpose": "MongoDB Atlas es un servicio administrado; mongosh es la shell para interactuar con despliegues MongoDB. La URI identifica clúster y credenciales, por lo que debe mantenerse en secreto. El acceso de red y el usuario se configuran por separado.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá Atlas para practicar con un cluster administrado y mongosh para explorar, consultar y administrar una base. Es el paso previo a conectar la aplicación mediante el driver.",
           "syntax": "mongosh \"$MONGODB_URI\" · db · show collections",
           "syntaxLanguage": "bash",
           "level": "Inicial a avanzado",
@@ -23146,20 +23933,50 @@
               "code": "// En mongosh:\ndb.getName();\nshow collections;\ndb.productos.findOne();",
               "explanation": "findOne devuelve un documento o null y permite comprobar el acceso.",
               "language": "javascript"
+            },
+            {
+              "title": "Verificar conexión y base activa",
+              "description": "Comprobá que mongosh alcanzó el servidor y que estás trabajando en la base esperada.",
+              "language": "javascript",
+              "code": "// En mongosh:\ndb.runCommand({ ping: 1 });\nprint('Base activa:', db.getName());\nshow collections;",
+              "explanation": "ping comprueba que el servidor responde; getName muestra el contexto activo y show collections permite revisar las colecciones visibles para el usuario conectado. La conexión correcta no implica permisos de escritura."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "MongoDB Atlas",
+              "description": "Servicio administrado para desplegar bases MongoDB."
+            },
+            {
+              "name": "mongosh",
+              "description": "Shell interactiva oficial para consultar y administrar MongoDB."
+            },
+            {
+              "name": "URI",
+              "description": "Cadena de conexión con destino y opciones de autenticación."
+            },
+            {
+              "name": "network access",
+              "description": "Reglas que controlan desde qué redes se permite conectar."
+            },
+            {
+              "name": "roles",
+              "description": "Privilegios asignados a un usuario de base de datos."
+            }
+          ],
           "exercise": "Prepará una cuenta de práctica con permisos solo sobre tu base.",
           "hint": "Creá un usuario de privilegios mínimos, permití la red necesaria y guardá la URI en variables de entorno.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Usá usuarios distintos por aplicación y concede solo permisos necesarios.",
+            "Restringí el acceso de red al entorno que realmente necesita conectarse.",
+            "Mantené la URI en variables de entorno y rotá credenciales expuestas.",
+            "Comprobá conexión, base activa y permisos con operaciones de solo lectura antes de escribir."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Publicar la cadena de conexión o capturar una URI con contraseña.",
+            "Abrir acceso a cualquier IP como solución permanente.",
+            "Confundir autenticación correcta con permisos suficientes.",
+            "Usar un usuario administrador desde el backend de una aplicación normal."
           ],
           "resources": [
             {
@@ -23172,10 +23989,37 @@
             }
           ],
           "related": [
-            "mongodb-node-driver-connect",
-            "node-env",
-            "postgres-psql"
-          ]
+            "mongodb-db-collections",
+            "node-env"
+          ],
+          "deepDive": {
+            "model": "MongoDB Atlas es una plataforma administrada para desplegar y operar clusters; mongosh es el cliente interactivo que ejecuta comandos y consultas contra un despliegue. La conexión depende de una URI, credenciales, reglas de acceso de red y permisos del usuario. Tener una URI válida no concede por sí solo permisos sobre todas las bases.",
+            "flow": [
+              [
+                "Preparar el despliegue",
+                "Se crea un cluster local o administrado y se configura el acceso de red."
+              ],
+              [
+                "Crear el usuario",
+                "Se asignan credenciales y roles con los permisos mínimos necesarios."
+              ],
+              [
+                "Conectar mongosh",
+                "El cliente usa la URI para negociar conexión y autenticarse."
+              ],
+              [
+                "Verificar el contexto",
+                "Se comprueba la base activa, las colecciones y los permisos antes de consultar o modificar datos."
+              ]
+            ],
+            "decisions": [
+              "Usá usuarios separados por aplicación y entorno, con roles mínimos sobre las bases necesarias.",
+              "Guardá la URI en una variable de entorno o gestor de secretos; no la subas al repositorio ni la incluyas en capturas.",
+              "Restringí acceso de red al origen necesario y evitá abrir el cluster globalmente por comodidad.",
+              "Usá mongosh para exploración y administración; en una aplicación, conectá mediante el driver oficial y administra el ciclo de vida del cliente."
+            ],
+            "debugging": "Si hay timeout, revisá conectividad y reglas de red antes de cambiar credenciales. Si authentication failed, verificá usuario, contraseña codificada en URI y mecanismo de autenticación. Si la conexión funciona pero una colección devuelve unauthorized, el usuario puede carecer de privilegios para esa operación."
+          }
         },
         {
           "id": "mongodb-insert-documents",
@@ -23183,7 +24027,7 @@
           "title": "insertOne e insertMany: insertar documentos",
           "summary": "Agregá documentos individuales o lotes y reconocé los identificadores generados.",
           "purpose": "insertOne agrega un documento; insertMany acepta un array. MongoDB genera _id cuando no se proporciona uno. La opción ordered determina si el lote se detiene ante el primer error.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá insertOne para una escritura individual e insertMany para lotes, importaciones o cargas iniciales. Validá los documentos antes de insertarlos y prepará el código para errores parciales.",
           "syntax": "insertOne(documento) · insertMany([...])",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23201,20 +24045,50 @@
               "code": "// ordered true procesa el lote en orden.\ndb.productos.insertMany([{ nombre: \"Teclado\", precio: 65000 }, { nombre: \"Mouse\", precio: 22000 }], { ordered: true });",
               "explanation": "Con ordered true, el lote se detiene ante el primer error de escritura.",
               "language": "javascript"
+            },
+            {
+              "title": "Insertar un lote y continuar ante errores individuales",
+              "description": "Usá ordered:false cuando quieras intentar insertar los demás documentos aunque uno falle.",
+              "language": "javascript",
+              "code": "db.novelas.insertMany([\n  { slug: 'overlord', titulo: 'Overlord' },\n  { slug: 're-zero', titulo: 'Re:Zero' },\n  { slug: 'goblin-slayer', titulo: 'Goblin Slayer' }\n], { ordered: false });",
+              "explanation": "Con ordered:false MongoDB intenta continuar con el resto del lote si una escritura individual falla. La operación aún puede devolver errores parciales; revisá el resultado y los índices únicos para saber qué documentos se insertaron."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "insertOne()",
+              "description": "Inserta un documento individual."
+            },
+            {
+              "name": "insertMany()",
+              "description": "Inserta un conjunto de documentos."
+            },
+            {
+              "name": "_id",
+              "description": "Identificador único del documento; se genera si falta."
+            },
+            {
+              "name": "ordered",
+              "description": "Controla si el lote se detiene en el primer error individual."
+            },
+            {
+              "name": "insertedIds",
+              "description": "Identificadores de los documentos insertados."
+            }
+          ],
           "exercise": "Insertá tres novelas con título, autor y año.",
           "hint": "Usá insertMany y dejá que MongoDB asigne _id.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Dejá que MongoDB genere _id o definí identificadores con una política consistente.",
+            "Usá ordered:false solo si la aplicación sabe tratar inserciones parciales.",
+            "Definí índices únicos para slugs y otros campos que no deban repetirse.",
+            "Validá tipos y campos antes de enviar lotes grandes."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Asumir que todos los documentos de insertMany se guardaron cuando hubo writeErrors.",
+            "Repetir un lote después de un timeout sin estrategia contra duplicados.",
+            "Guardar documentos gigantes con arrays sin límite.",
+            "Ignorar el resultado de insertedIds o writeErrors."
           ],
           "resources": [
             {
@@ -23228,9 +24102,36 @@
           ],
           "related": [
             "mongodb-find-filters",
-            "mongodb-bson-documentos",
-            "mongodb-node-crud"
-          ]
+            "mongodb-update-operators"
+          ],
+          "deepDive": {
+            "model": "Las operaciones de inserción agregan documentos a una colección. insertOne crea un único documento y insertMany acepta un lote; cuando falta _id, MongoDB genera un ObjectId. Las escrituras son atómicas a nivel de un documento. En los lotes, ordered determina si el procesamiento se detiene ante el primer error o continúa intentando los documentos restantes.",
+            "flow": [
+              [
+                "Preparar documentos",
+                "La aplicación valida y construye los objetos que representan entidades del dominio."
+              ],
+              [
+                "Enviar la escritura",
+                "insertOne o insertMany envían uno o varios documentos al servidor."
+              ],
+              [
+                "Asignar identidad y validar",
+                "MongoDB genera _id si hace falta y comprueba reglas de validación e índices únicos."
+              ],
+              [
+                "Interpretar resultado",
+                "El cliente obtiene identificadores insertados o errores de escritura que debe procesar."
+              ]
+            ],
+            "decisions": [
+              "Validá el payload en la API antes de insertar; el hecho de que MongoDB acepte un documento no significa que cumpla todas las reglas del negocio.",
+              "Usá insertMany para lotes y elegí ordered según la necesidad de detener o continuar ante errores individuales.",
+              "Diseñá índices únicos para invariantes como slug o email, además de comprobar duplicados en la aplicación.",
+              "No guardes datos derivados sensibles enviados por el cliente sin recalcularlos o verificarlos en el servidor."
+            ],
+            "debugging": "Si aparece duplicate key, identificá el índice único y decidí si el conflicto debe rechazarse o actualizarse. Si insertMany informa errores parciales con ordered:false, revisá insertedIds y writeErrors. Si el documento es rechazado por validación, compará los tipos BSON reales con el validador."
+          }
         },
         {
           "id": "mongodb-find-filters",
@@ -23238,7 +24139,7 @@
           "title": "find y findOne: consultar documentos",
           "summary": "Recuperá documentos mediante filtros por igualdad y condiciones.",
           "purpose": "find devuelve un cursor; findOne devuelve un documento o null. Un filtro vacío coincide con todos los documentos, así que en colecciones grandes combiná filtros selectivos con límite y proyección.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá find para colecciones de resultados y findOne cuando buscás un único documento. Los filtros deben corresponder al tipo BSON almacenado y a los parámetros validados que recibe tu API.",
           "syntax": "find(filtro) · findOne(filtro)",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23256,20 +24157,50 @@
               "code": "// findOne devuelve un documento o null.\ndb.novelas.findOne({ _id: ObjectId(\"64b000000000000000000001\") });",
               "explanation": "_id tiene un índice único automático. Si no coincide, findOne devuelve null.",
               "language": "javascript"
+            },
+            {
+              "title": "Consultar campos anidados y una etiqueta",
+              "description": "La notación de punto permite filtrar campos de un subdocumento y los arrays pueden coincidir con uno de sus valores.",
+              "language": "javascript",
+              "code": "db.novelas.find({\n  'autor.nombre': 'Tappei Nagatsuki',\n  etiquetas: 'fantasia'\n}, {\n  titulo: 1,\n  autor: 1,\n  _id: 0\n});",
+              "explanation": "'autor.nombre' consulta un campo anidado. La condición etiquetas:'fantasia' coincide con documentos cuyo array contiene ese valor. La proyección limita los campos devueltos."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "find()",
+              "description": "Devuelve un cursor para documentos coincidentes."
+            },
+            {
+              "name": "findOne()",
+              "description": "Devuelve un documento o null."
+            },
+            {
+              "name": "filtro {}",
+              "description": "Un filtro vacío coincide con todos los documentos."
+            },
+            {
+              "name": "notación de punto",
+              "description": "Permite filtrar campos dentro de subdocumentos."
+            },
+            {
+              "name": "cursor",
+              "description": "Objeto que permite recorrer resultados de consulta."
+            }
+          ],
           "exercise": "Buscá volúmenes de una novela y luego un volumen por número.",
           "hint": "Usá novelaId y numero, cuidando que el tipo coincida.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Usá filtros concretos y evita find({}) en rutas públicas sin límite.",
+            "Convertí los identificadores y valores de fecha al tipo BSON esperado.",
+            "Combiná proyección y limit para controlar cantidad y tamaño de resultados.",
+            "Revisá explain cuando una consulta frecuente no escala."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Olvidar que find devuelve un cursor y tratarlo como un arreglo ya materializado.",
+            "Comparar ObjectId con string.",
+            "Devolver una colección completa sin filtro ni límite.",
+            "Usar campos anidados con nombres incorrectos o sin notación de punto."
           ],
           "resources": [
             {
@@ -23279,9 +24210,36 @@
           ],
           "related": [
             "mongodb-query-operators",
-            "mongodb-projection-sort-limit",
-            "sql-where"
-          ]
+            "mongodb-projection-sort-limit"
+          ],
+          "deepDive": {
+            "model": "find y findOne reciben un filtro que determina qué documentos coinciden. find devuelve un cursor que puede combinarse con proyección, orden y límites; findOne devuelve un documento o null. Los filtros pueden consultar igualdad, operadores, campos anidados y arrays. Un filtro vacío coincide con todos los documentos, por eso las consultas deben ser intencionales y acotadas.",
+            "flow": [
+              [
+                "Construir el filtro",
+                "La aplicación define campos y operadores que describen los documentos buscados."
+              ],
+              [
+                "Planificar la consulta",
+                "MongoDB evalúa índices disponibles y decide cómo localizar coincidencias."
+              ],
+              [
+                "Obtener documentos",
+                "find crea un cursor; findOne devuelve un único documento o null."
+              ],
+              [
+                "Consumir resultados",
+                "El cliente recorre o limita el cursor y maneja el caso sin coincidencias."
+              ]
+            ],
+            "decisions": [
+              "Usá findOne para búsquedas de un único documento y find cuando esperás una colección de resultados.",
+              "Usá filtros selectivos, proyección y límite en endpoints para evitar transferir colecciones enteras.",
+              "Recordá que ObjectId, Date y otros tipos BSON deben coincidir con el tipo almacenado.",
+              "Diseñá índices a partir de consultas frecuentes, filtros y ordenamientos observados."
+            ],
+            "debugging": "Si findOne devuelve null, comprobá nombre del campo, tipo del valor y base/colección activas. Si find trae demasiados documentos, agrega filtro y limit. Si una consulta anidada no coincide, verificá la notación de punto y si el campo está dentro de un array."
+          }
         },
         {
           "id": "mongodb-projection-sort-limit",
@@ -23289,7 +24247,7 @@
           "title": "Proyección, sort, limit y skip",
           "summary": "Controlá los campos devueltos y el orden y tamaño de los resultados.",
           "purpose": "La proyección incluye o excluye campos; sort establece el orden; limit restringe la cantidad; skip salta resultados. No mezcles inclusión y exclusión salvo _id. Para desplazamientos grandes, considerá paginación por clave.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá proyección, orden y límites cuando construyas listados, paneles o endpoints paginados. Estos recursos reducen la transferencia de datos y hacen más predecible la respuesta de una API.",
           "syntax": "find(filtro, proyección).sort(...).limit(n).skip(n)",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23307,20 +24265,50 @@
               "code": "// El id sirve como desempate para mantener orden estable.\ndb.volumenes.find({ novelaId: \"rezero\" }).sort({ publicadoEn: -1, _id: 1 }).limit(5);",
               "explanation": "El segundo criterio resuelve empates en la fecha.",
               "language": "javascript"
+            },
+            {
+              "title": "Continuar la página con un cursor compuesto",
+              "description": "Recuperá la siguiente página a partir de fecha e identificador del último documento anterior.",
+              "language": "javascript",
+              "code": "const fechaCursor = ISODate('2026-10-01T12:00:00Z');\nconst idCursor = ObjectId('64b000000000000000000001');\n\ndb.novelas.find({\n  estado: 'publicada',\n  $or: [\n    { creadoEn: { $lt: fechaCursor } },\n    { creadoEn: fechaCursor, _id: { $gt: idCursor } }\n  ]\n}, { titulo: 1, creadoEn: 1 })\n.sort({ creadoEn: -1, _id: 1 })\n.limit(20);",
+              "explanation": "La condición retoma la navegación con el mismo orden: creadoEn descendente y _id ascendente. El cursor compuesto evita saltar muchos documentos con skip; el filtro, el sort y el índice deben alinearse."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "proyección",
+              "description": "Define qué campos se incluyen o excluyen."
+            },
+            {
+              "name": "sort()",
+              "description": "Ordena los documentos por uno o varios campos."
+            },
+            {
+              "name": "limit()",
+              "description": "Limita la cantidad de documentos devueltos."
+            },
+            {
+              "name": "skip()",
+              "description": "Omite un número de documentos antes de devolver resultados."
+            },
+            {
+              "name": "keyset pagination",
+              "description": "Continúa usando el valor de la última clave procesada."
+            }
+          ],
           "exercise": "Diseñá una consulta con título y autor de los diez libros mejor valorados.",
           "hint": "Usá proyección, sort descendente y limit(10).",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Excluí campos grandes que el consumidor no necesita.",
+            "Usá sort con un campo de desempate único.",
+            "Elegí limit de tamaño moderado y valida el máximo en la API.",
+            "Para colecciones grandes, usa cursor compuesto y un índice que apoye filtro y orden."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Mezclar inclusión y exclusión de campos de forma inválida en una proyección.",
+            "Usar skip profundo sin evaluar rendimiento.",
+            "Ordenar por una clave no única y sufrir páginas inestables.",
+            "Suponer que limit mejora una consulta si el filtro sigue examinando una gran parte de la colección."
           ],
           "resources": [
             {
@@ -23334,9 +24322,36 @@
           ],
           "related": [
             "mongodb-find-filters",
-            "mongodb-pagination-cursors",
-            "sql-order-limit-offset"
-          ]
+            "api-paginacion"
+          ],
+          "deepDive": {
+            "model": "Una consulta find puede controlar los campos devueltos mediante proyección y el orden y cantidad de documentos mediante sort, limit y skip. La proyección reduce datos transferidos; sort define un orden explícito; limit restringe el tamaño; skip permite paginar por desplazamiento, aunque puede volverse costoso en páginas profundas. Una clave de desempate hace estable el orden.",
+            "flow": [
+              [
+                "Filtrar documentos",
+                "El filtro determina qué registros pertenecen al resultado."
+              ],
+              [
+                "Proyectar campos",
+                "La proyección decide qué propiedades se incluyen o excluyen."
+              ],
+              [
+                "Ordenar y limitar",
+                "sort establece orden y limit acota el tamaño del conjunto."
+              ],
+              [
+                "Paginar",
+                "skip puede servir para páginas pequeñas; un cursor por clave suele escalar mejor."
+              ]
+            ],
+            "decisions": [
+              "Usá proyección para no devolver campos grandes o sensibles que el cliente no necesita.",
+              "No mezcles inclusión y exclusión en una misma proyección salvo la excepción de _id.",
+              "Agregá un criterio único al sort para que el orden sea determinista.",
+              "Para listas grandes, considerá paginación por cursor con una clave de orden y un identificador de desempate."
+            ],
+            "debugging": "Si desaparece un campo, comprobá la proyección y si elegiste modo de inclusión o exclusión. Si las páginas repiten resultados, revisá el sort y la clave de desempate. Si páginas profundas tardan, reemplazá skip grande por un filtro que continúe desde el último valor recibido."
+          }
         },
         {
           "id": "mongodb-query-operators",
@@ -23344,7 +24359,7 @@
           "title": "Operadores de consulta: comparación, lógica y existencia",
           "summary": "Combiná criterios numéricos, alternativas, rangos y campos opcionales.",
           "purpose": "MongoDB usa operadores como $gt, $gte, $lt, $in, $ne, $and, $or y $exists. Permiten expresar condiciones sobre campos y arrays; filtros selectivos ayudan a usar índices.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá operadores para expresar filtros con rangos, alternativas, campos opcionales, estructuras anidadas y arrays. Son especialmente útiles al implementar filtros de catálogo y búsquedas en la API.",
           "syntax": "{ precio: { $gte: 100, $lt: 500 } } · { $or: [...] }",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23362,20 +24377,50 @@
               "code": "// $or expresa alternativas y $exists comprueba presencia.\ndb.productos.find({ $or: [{ descuento: { $gt: 0 } }, { descuento: { $exists: false } }] });",
               "explanation": "$exists comprueba si el campo existe, no si su valor es útil.",
               "language": "javascript"
+            },
+            {
+              "title": "Exigir que varias condiciones coincidan en el mismo elemento",
+              "description": "$elemMatch evita que dos condiciones sobre un array se cumplan en subdocumentos distintos.",
+              "language": "javascript",
+              "code": "db.novelas.find({\n  reseñas: {\n    $elemMatch: {\n      usuario: 'Ana',\n      estrellas: { $gte: 4 }\n    }\n  }\n});",
+              "explanation": "Sin $elemMatch, las condiciones sobre rutas de arrays pueden satisfacerse por elementos diferentes. Con $elemMatch, usuario y estrellas deben coincidir dentro del mismo subdocumento de reseña."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "$gt / $gte / $lt / $lte",
+              "description": "Operadores de comparación de rangos."
+            },
+            {
+              "name": "$in",
+              "description": "Coincide con cualquiera de los valores indicados."
+            },
+            {
+              "name": "$or",
+              "description": "Combina alternativas de filtro."
+            },
+            {
+              "name": "$exists",
+              "description": "Comprueba presencia de un campo."
+            },
+            {
+              "name": "$elemMatch",
+              "description": "Exige que varias condiciones coincidan en el mismo elemento de un array."
+            }
+          ],
           "exercise": "Buscá novelas de un rango de años o destacadas.",
           "hint": "Combiná comparaciones con $or y verificá el filtro.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Usá $elemMatch si varias condiciones deben corresponder al mismo elemento de un array.",
+            "Validá los operadores permitidos: no aceptes filtros Mongo arbitrarios directamente desde el cliente.",
+            "Usá $exists para presencia y comprueba por separado el valor null.",
+            "Diseñá índices a partir de filtros comunes y revisá explain."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Suponer que dos condiciones sobre un array siempre se aplican al mismo subdocumento.",
+            "Usar $exists como si comprobara que el campo no sea null.",
+            "Construir filtros con objetos completos enviados por el usuario sin validación.",
+            "Combinar muchos operadores sin comprobar qué documentos coinciden realmente."
           ],
           "resources": [
             {
@@ -23385,9 +24430,36 @@
           ],
           "related": [
             "mongodb-find-filters",
-            "mongodb-arrays-embedded",
-            "sql-operadores-filtros"
-          ]
+            "mongodb-elemmatch"
+          ],
+          "deepDive": {
+            "model": "Los operadores de consulta extienden los filtros más allá de la igualdad. Los operadores de comparación como $gt y $gte expresan rangos; $in busca alternativas; $exists comprueba presencia; $or combina condiciones; $elemMatch aplica varias condiciones a un mismo elemento de array. La estructura del filtro afecta tanto a la semántica como al uso de índices.",
+            "flow": [
+              [
+                "Definir la condición",
+                "Se construye un documento de filtro con campos y operadores."
+              ],
+              [
+                "Combinar expresiones",
+                "MongoDB combina condiciones de campos y operadores lógicos."
+              ],
+              [
+                "Evaluar arrays y subdocumentos",
+                "La notación de punto y $elemMatch determinan cómo se interpreta la estructura anidada."
+              ],
+              [
+                "Ejecutar y revisar",
+                "El motor usa el plan disponible; explain permite estudiar si la consulta aprovecha índices."
+              ]
+            ],
+            "decisions": [
+              "Usá $in para un conjunto pequeño de alternativas y $or cuando las expresiones completas son diferentes.",
+              "Usá $elemMatch cuando varias condiciones deban cumplirse en el mismo elemento de un array de documentos.",
+              "Distinguí campo ausente de campo con valor null; $exists solo comprueba presencia.",
+              "Validá tipos y valores de filtros antes de construir consultas a partir de parámetros del usuario."
+            ],
+            "debugging": "Si una consulta con arrays devuelve coincidencias inesperadas, comprobá si las condiciones están coincidiendo en elementos diferentes; quizá necesites $elemMatch. Si $exists:true incluye campos con null, es normal porque el campo está presente. Si la consulta es lenta, inspeccioná explain y el índice adecuado."
+          }
         },
         {
           "id": "mongodb-update-operators",
@@ -23395,7 +24467,7 @@
           "title": "Operadores de actualización: $set, $inc, $unset",
           "summary": "Modificá campos sin reemplazar todo el documento.",
           "purpose": "updateOne y updateMany reciben un filtro y un documento de actualización. $set cambia valores, $inc incrementa, $unset elimina campos y $currentDate actualiza fechas. También existen pipelines de actualización.",
-          "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+          "whenToUse": "Usá operadores para cambiar campos específicos, actualizar contadores, fechas y arrays sin reemplazar el documento completo. Es preferible a leer todo el documento y escribirlo de nuevo desde la aplicación cuando el cambio puede expresarse como una operación atómica.",
           "syntax": "$set · $inc · $unset · $currentDate",
           "syntaxLanguage": "javascript",
           "level": "Inicial a avanzado",
@@ -23413,20 +24485,50 @@
               "code": "// $unset elimina el campo; no lo reemplaza por null.\ndb.novelas.updateMany({ formatoAntiguo: { $exists: true } }, { $unset: { formatoAntiguo: \"\" } });",
               "explanation": "El filtro limita el alcance y $unset elimina la propiedad.",
               "language": "javascript"
+            },
+            {
+              "title": "Incrementar una lectura y actualizar la fecha",
+              "description": "Combiná operadores para modificar campos distintos en una sola operación.",
+              "language": "javascript",
+              "code": "db.novelas.updateOne(\n  { slug: 're-zero' },\n  {\n    $inc: { lecturas: 1 },\n    $set: { estado: 'en-lectura' },\n    $currentDate: { actualizadoEn: true },\n    $addToSet: { etiquetas: 'seguimiento' }\n  }\n);",
+              "explanation": "$inc modifica un contador, $set asigna el estado, $currentDate registra la fecha actual y $addToSet agrega la etiqueta solo si no está presente. matchedCount y modifiedCount permiten inspeccionar el resultado."
             }
           ],
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "$set",
+              "description": "Asigna un valor a uno o varios campos."
+            },
+            {
+              "name": "$inc",
+              "description": "Incrementa o decrementa un campo numérico."
+            },
+            {
+              "name": "$unset",
+              "description": "Elimina campos del documento."
+            },
+            {
+              "name": "$addToSet",
+              "description": "Agrega un valor a un array si todavía no existe."
+            },
+            {
+              "name": "$currentDate",
+              "description": "Asigna la fecha/hora actual del servidor a un campo."
+            }
+          ],
           "exercise": "Actualizá el stock e incrementá un contador de lectura sin reemplazar el documento.",
           "hint": "Combiná $set y $inc en la misma actualización.",
           "bestPractices": [
-            "Modelá los documentos según los patrones reales de lectura y escritura.",
-            "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
-            "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+            "Comprobá el filtro con find antes de un updateMany.",
+            "Usá $inc para contadores y operaciones aritméticas atómicas.",
+            "Usá $addToSet cuando no deban repetirse valores y $push cuando la repetición sea válida.",
+            "Revisá matchedCount y modifiedCount para verificar el efecto de la actualización."
           ],
           "commonMistakes": [
-            "Confundir esquema flexible con ausencia de diseño o validación.",
-            "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
-            "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+            "Ejecutar updateMany con un filtro demasiado amplio o vacío.",
+            "Confundir $set con reemplazar el documento completo.",
+            "Usar $push cuando el array debe mantener valores únicos.",
+            "Ignorar modifiedCount y asumir que un filtro encontró documentos."
           ],
           "resources": [
             {
@@ -23435,10 +24537,37 @@
             }
           ],
           "related": [
-            "mongodb-delete-replace-upsert",
-            "mongodb-array-updates",
-            "mongodb-node-crud"
-          ]
+            "mongodb-insert-documents",
+            "mongodb-array-updates"
+          ],
+          "deepDive": {
+            "model": "updateOne y updateMany reciben un filtro y una especificación de actualización. Los operadores como $set, $inc, $unset, $addToSet y $currentDate modifican campos concretos sin reemplazar el documento completo. Las escrituras son atómicas a nivel de un documento; el filtro también puede actuar como condición para impedir actualizaciones si el estado actual no es el esperado.",
+            "flow": [
+              [
+                "Seleccionar documentos",
+                "El filtro determina qué documento o conjunto puede actualizarse."
+              ],
+              [
+                "Describir cambios",
+                "Los operadores especifican campos que se asignan, incrementan, eliminan o modifican."
+              ],
+              [
+                "Aplicar operación atómica",
+                "MongoDB aplica los cambios a cada documento de forma atómica a nivel individual."
+              ],
+              [
+                "Revisar resultado",
+                "matchedCount y modifiedCount ayudan a distinguir si hubo coincidencia y si cambió el documento."
+              ]
+            ],
+            "decisions": [
+              "Preferí update operators cuando solo cambian algunos campos; replaceOne sustituye la representación completa.",
+              "Usá filtros suficientemente específicos y comprobá matchedCount; un updateMany puede afectar muchos documentos.",
+              "Combiná $inc para contadores numéricos y $set para valores asignados; evitá leer-modificar-escribir desde la aplicación cuando la operación puede resolverse atómicamente.",
+              "Usá $addToSet para evitar duplicados en arrays cuando la igualdad del valor completo sea el criterio correcto."
+            ],
+            "debugging": "Si modifiedCount es cero, comprobá si el filtro coincidió y si el nuevo valor realmente difiere. Si cambiaste un campo anidado, usá notación de punto con cuidado. Antes de updateMany, ejecutá el mismo filtro con find para revisar el alcance."
+          }
         },
         {
           "id": "mongodb-delete-replace-upsert",
