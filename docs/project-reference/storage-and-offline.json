@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "title": "Almacenamiento local, descargas y funcionamiento sin conexión",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "indexedDB": [
+    {
+      "name": "webdev-book-modules",
+      "version": 1,
+      "stores": [
+        {
+          "name": "modules",
+          "key": "id",
+          "role": "registros de módulos/paquetes instalados"
+        },
+        {
+          "name": "files",
+          "key": "path",
+          "role": "archivos JSON descargados de bibliotecas y laboratorios"
+        },
+        {
+          "name": "meta",
+          "key": "key",
+          "role": "metadatos internos de administración/versión"
+        },
+        {
+          "name": "preferences",
+          "key": "id",
+          "role": "preferencias y prioridades de módulos"
+        }
+      ],
+      "consumers": [
+        "js/module-manager.js",
+        "js/library-packages.js",
+        "js/lab-packages.js"
+      ],
+      "namespaces": [
+        "library:<id>",
+        "lab:<id>"
+      ],
+      "separation": "No es la base de datos de proyectos del editor ni la base del actualizador OTA.",
+      "removalEffect": "Quitar un paquete elimina su copia y registro de instalación; no debe borrar progreso, favoritos, archivos del editor ni proyectos."
+    },
+    {
+      "name": "webdev-book-content",
+      "version": 1,
+      "stores": [
+        {
+          "name": "files",
+          "key": "path",
+          "role": "JSON de contenido descargados para actualización"
+        },
+        {
+          "name": "meta",
+          "key": "key",
+          "role": "versión, fecha y estado de actualización"
+        }
+      ],
+      "consumer": "js/content-updates.js",
+      "role": "Copia los JSON de contenido verificados para que Android pueda leer una versión nueva sin recompilar la APK.",
+      "atomicity": "Los archivos de un conjunto se guardan en una transacción; una descarga/validación fallida debe conservar la versión previa."
+    },
+    {
+      "name": "WebDevBookEditor",
+      "version": 1,
+      "stores": [
+        {
+          "name": "projects",
+          "key": "id",
+          "role": "snapshots de proyectos del editor y sus archivos"
+        }
+      ],
+      "consumer": "js/editor-app.js",
+      "role": "Almacena los proyectos editables localmente.",
+      "fallback": "localStorage si IndexedDB no está disponible o no puede utilizarse.",
+      "protection": "No alterar esta base ni las claves de proyectos al mantener paquetes educativos."
+    }
+  ],
+  "localStorageKeys": [
+    {
+      "key": "webdev-theme",
+      "consumer": "js/theme.js",
+      "purpose": "tema oscuro/claro"
+    },
+    {
+      "key": "webdevbook.learning.v1",
+      "consumer": "js/learning-progress.js",
+      "purpose": "progreso de aprendizaje general"
+    },
+    {
+      "key": "webdevbook.challenges.v1",
+      "consumer": "js/challenges.js",
+      "purpose": "intentos/progreso de retos"
+    },
+    {
+      "key": "webdevbook.projects.v1",
+      "consumer": "js/projects.js",
+      "purpose": "progreso de biblioteca de proyectos"
+    },
+    {
+      "key": "webdevbook.multimedia-favorites.v1",
+      "consumer": "js/multimedia-library.js",
+      "purpose": "favoritos de recursos multimedia"
+    },
+    {
+      "key": "webdevbook.module-preferences.v1",
+      "consumer": "js/module-manager.js",
+      "purpose": "respaldo de prioridades del Centro de módulos"
+    },
+    {
+      "key": "webdev-editor-project-v1",
+      "consumer": "js/editor-app.js",
+      "purpose": "respaldo/compatibilidad del proyecto principal del editor"
+    },
+    {
+      "key": "webdev-project-<id>",
+      "consumer": "js/editor-app.js",
+      "purpose": "respaldo local de snapshots por proyecto"
+    },
+    {
+      "key": "webdev-project-catalog",
+      "consumer": "js/editor-app.js",
+      "purpose": "catálogo de proyectos del editor"
+    },
+    {
+      "key": "webdev-project-active",
+      "consumer": "js/editor-app.js",
+      "purpose": "proyecto activo del editor"
+    },
+    {
+      "key": "webdev-editor-settings-v1",
+      "consumer": "js/editor-app.js",
+      "purpose": "configuración visual y de edición del workbench"
+    }
+  ],
+  "cacheStorage": [
+    {
+      "name": "webdev-book-v24-shell",
+      "createdFrom": "service-worker.js, CACHE_VERSION = webdev-book-v24",
+      "purpose": "archivos principales de aplicación precargados para la PWA web"
+    },
+    {
+      "name": "webdev-book-v24-runtime",
+      "createdFrom": "service-worker.js",
+      "purpose": "respuestas dinámicas guardadas durante el uso de la PWA"
+    },
+    {
+      "name": "webdev-media-assets-v1",
+      "consumer": "js/multimedia-library.js",
+      "purpose": "recursos multimedia descargados explícitamente para consulta local",
+      "integrity": "Al recuperar una copia compara la cabecera X-WebDev-SHA256 con el hash del manifiesto; si no coincide, invalida la copia."
+    }
+  ],
+  "offlineBehavior": {
+    "webPwa": "El service worker usa un shell de versión webdev-book-v24 y una caché runtime. El contenido depende de lo que esté precargado o se haya solicitado antes.",
+    "android": "Android usa archivos locales empaquetados y descargas locales administradas por IndexedDB/Cache Storage; el service worker de GitHub Pages no se registra en la app nativa.",
+    "libraries": "Se pueden instalar paquetes de tecnología bajo demanda, verificar integridad y abrir la copia instalada.",
+    "labs": "Los retos pertenecientes a laboratorios instalados se pueden consultar offline cuando el motor/recursos requeridos están disponibles localmente.",
+    "multimedia": "Los recursos descargados se guardan en una caché propia; no se deben asumir descargados automáticamente."
+  },
+  "updateChannels": [
+    {
+      "channel": "Contenido JSON base",
+      "mechanism": "Manifiesto updates/content-manifest.json, SHA-256 y DB webdev-book-content.",
+      "automaticCheck": "Cada 12 horas en el actualizador nativo y también mediante comprobación manual.",
+      "doesUpdate": [
+        "archivos JSON de data incluidos en el manifiesto"
+      ],
+      "doesNotUpdate": [
+        "HTML",
+        "CSS",
+        "JavaScript de funcionamiento",
+        "service-worker.js",
+        "assets de código o configuración",
+        "funciones nativas"
+      ]
+    },
+    {
+      "channel": "Bibliotecas de tecnologías",
+      "mechanism": "Descarga desde modules/libraries/manifest.json y paquetes JSON independientes.",
+      "doesUpdate": [
+        "paquete tecnológico solicitado y su copia local"
+      ],
+      "integrity": "Tamaño, SHA-256, JSON, ID y referencias se verifican antes de instalar."
+    },
+    {
+      "channel": "Laboratorios",
+      "mechanism": "Descarga desde modules/labs/manifest.json.",
+      "doesUpdate": [
+        "paquete del laboratorio solicitado"
+      ],
+      "integrity": "Verificación de tamaño/hash y estructura; el progreso de retos usa una clave independiente."
+    },
+    {
+      "channel": "Multimedia",
+      "mechanism": "Catálogo y manifiesto de multimedia, descarga selectiva y Cache Storage.",
+      "doesUpdate": [
+        "archivos de medios descargados explícitamente"
+      ],
+      "integrity": "Tamaño y SHA-256 comprobados antes de almacenar."
+    }
+  ],
+  "criticalSafetyRulesForChanges": [
+    "No reutilizar webdev-book-content para guardar bibliotecas; se mantienen bases separadas.",
+    "No usar la eliminación de módulos para borrar datos del editor o de progreso.",
+    "No borrar localStorage completo como mecanismo de limpieza de paquetes.",
+    "Cuando se cambie una estructura de IndexedDB, revisar todos sus consumidores y la versión de la base.",
+    "Antes de aplicar actualizaciones JSON, guardar el trabajo que esté abierto en el editor."
+  ]
+}

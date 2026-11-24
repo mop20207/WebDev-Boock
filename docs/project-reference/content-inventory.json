@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "title": "Inventario de contenidos, módulos y prácticas",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "summary": {
+    "foundationAreas": 3,
+    "downloadableTechnologyLibraries": 17,
+    "downloadableLibraryArticles": 387,
+    "interactiveChallenges": 52,
+    "challengeTechnologies": 13,
+    "downloadableLabs": 6,
+    "exampleProjects": 15,
+    "visualResources": 15
+  },
+  "foundation": [
+    {
+      "id": "html",
+      "page": "pages/html.html",
+      "source": [
+        "data/html.json",
+        "data/html-articulos.json",
+        "data/html/"
+      ],
+      "topics": [
+        "estructura y semántica",
+        "etiquetas y atributos",
+        "formularios",
+        "accesibilidad",
+        "SVG y multimedia"
+      ]
+    },
+    {
+      "id": "css",
+      "page": "pages/css.html",
+      "source": [
+        "data/css.json",
+        "data/css-articulos.json",
+        "data/css-categorias.json",
+        "data/css/"
+      ],
+      "topics": [
+        "selectores y propiedades",
+        "modelo de caja",
+        "Flexbox",
+        "Grid",
+        "responsive",
+        "animaciones"
+      ]
+    },
+    {
+      "id": "javascript",
+      "page": "pages/javascript.html",
+      "source": [
+        "data/javascript.json",
+        "data/javascript/index.json",
+        "data/javascript/"
+      ],
+      "topics": [
+        "fundamentos",
+        "funciones",
+        "arrays y objetos",
+        "DOM y eventos",
+        "asincronía",
+        "Fetch y APIs",
+        "almacenamiento"
+      ]
+    }
+  ],
+  "technologyLibraries": {
+    "sourceOfTruth": "data/tools.json",
+    "generatedDirectory": "modules/libraries/packages/",
+    "catalogFiles": [
+      "modules/libraries/manifest.json",
+      "modules/libraries/ecosystem.json",
+      "modules/libraries/search-index.json"
+    ],
+    "totalLibraries": 17,
+    "totalArticles": 387,
+    "downloadMechanism": "Cada biblioteca se descarga como un JSON independiente; el buscador global utiliza un índice compacto.",
+    "validation": "npm run validate:libraries",
+    "packages": [
+      {
+        "id": "terminal",
+        "title": "Terminal Linux",
+        "articles": 16,
+        "categories": 7
+      },
+      {
+        "id": "git",
+        "title": "Git y GitHub",
+        "articles": 12,
+        "categories": 4
+      },
+      {
+        "id": "npm",
+        "title": "NPM y paquetes",
+        "articles": 13,
+        "categories": 2
+      },
+      {
+        "id": "react",
+        "title": "React",
+        "articles": 6,
+        "categories": 3
+      },
+      {
+        "id": "webcomponents",
+        "title": "Web Components",
+        "articles": 6,
+        "categories": 3
+      },
+      {
+        "id": "vuejs",
+        "title": "Vue.js",
+        "articles": 15,
+        "categories": 3
+      },
+      {
+        "id": "nodejs",
+        "title": "Node.js",
+        "articles": 18,
+        "categories": 3
+      },
+      {
+        "id": "astro",
+        "title": "Astro",
+        "articles": 20,
+        "categories": 3
+      },
+      {
+        "id": "phaser",
+        "title": "Phaser",
+        "articles": 18,
+        "categories": 3
+      },
+      {
+        "id": "typescript",
+        "title": "TypeScript",
+        "articles": 37,
+        "categories": 7
+      },
+      {
+        "id": "nextjs",
+        "title": "Next.js",
+        "articles": 44,
+        "categories": 7
+      },
+      {
+        "id": "express",
+        "title": "Express.js",
+        "articles": 42,
+        "categories": 7
+      },
+      {
+        "id": "sql-postgres",
+        "title": "SQL y PostgreSQL",
+        "articles": 42,
+        "categories": 7
+      },
+      {
+        "id": "mongodb",
+        "title": "MongoDB",
+        "articles": 42,
+        "categories": 7
+      },
+      {
+        "id": "apis",
+        "title": "APIs y comunicación web",
+        "articles": 14,
+        "categories": 5
+      },
+      {
+        "id": "testing",
+        "title": "Testing",
+        "articles": 14,
+        "categories": 5
+      },
+      {
+        "id": "docker-deploy",
+        "title": "Docker y despliegue",
+        "articles": 28,
+        "categories": 7
+      }
+    ]
+  },
+  "challenges": {
+    "catalog": "data/challenges.json",
+    "page": "pages/challenges.html",
+    "detailPagesDirectory": "pages/retos/",
+    "total": 52,
+    "technologies": [
+      "HTML/CSS",
+      "JavaScript",
+      "React",
+      "Web Components",
+      "Vue.js",
+      "Node.js",
+      "Astro",
+      "TypeScript",
+      "SQL/PostgreSQL",
+      "MongoDB",
+      "APIs y comunicación web",
+      "Testing",
+      "Docker y despliegue"
+    ],
+    "perTechnology": 4,
+    "difficulties": [
+      "principiante",
+      "intermedio",
+      "avanzado",
+      "experto"
+    ],
+    "packageNote": "Los seis laboratorios redistribuyen estos retos en paquetes; no duplican un segundo catálogo de ejercicios independiente.",
+    "progressStorage": "localStorage:webdevbook.challenges.v1",
+    "executionNotes": [
+      "HTML/CSS y JavaScript disponen de editores/vistas previas aisladas.",
+      "TypeScript se comprueba con el compilador disponible en el navegador.",
+      "React utiliza Babel y React 18; Vue usa Vue 3; Web Components usa APIs del navegador.",
+      "Node.js tiene un simulador educativo en memoria para process, path, events y fs/promises.",
+      "Astro y Docker/Compose se validan estáticamente; no levantan un proyecto Astro o Docker Engine real.",
+      "PostgreSQL se ejecuta en el navegador con PGlite/WebAssembly y una base temporal por ejercicio.",
+      "MongoDB, APIs y Testing utilizan simuladores educativos aislados, no instancias reales ni servicios externos."
+    ]
+  },
+  "laboratories": {
+    "page": "pages/labs.html",
+    "manager": "js/lab-packages.js",
+    "sourceDefinition": "data/labs/catalog.json",
+    "generatedCatalog": "modules/labs/catalog.json",
+    "manifest": "modules/labs/manifest.json",
+    "packagesDirectory": "modules/labs/packages/",
+    "totalPackages": 6,
+    "totalChallenges": 52,
+    "packages": [
+      {
+        "id": "frontend",
+        "title": "Laboratorio Frontend",
+        "challenges": 24,
+        "technologies": [
+          "html-css",
+          "javascript",
+          "react",
+          "webcomponents",
+          "vuejs",
+          "astro"
+        ]
+      },
+      {
+        "id": "backend",
+        "title": "Laboratorio Backend y APIs",
+        "challenges": 8,
+        "technologies": [
+          "nodejs",
+          "apis"
+        ]
+      },
+      {
+        "id": "databases",
+        "title": "Laboratorio de bases de datos",
+        "challenges": 8,
+        "technologies": [
+          "sql-postgres",
+          "mongodb"
+        ]
+      },
+      {
+        "id": "typescript",
+        "title": "Laboratorio TypeScript",
+        "challenges": 4,
+        "technologies": [
+          "typescript"
+        ]
+      },
+      {
+        "id": "quality",
+        "title": "Laboratorio de Testing",
+        "challenges": 4,
+        "technologies": [
+          "testing"
+        ]
+      },
+      {
+        "id": "devops",
+        "title": "Laboratorio DevOps",
+        "challenges": 4,
+        "technologies": [
+          "docker-deploy"
+        ]
+      }
+    ],
+    "downloadedContentIncludes": [
+      "objetivo",
+      "requisitos",
+      "código inicial",
+      "pruebas",
+      "pistas",
+      "soluciones y explicaciones, según cada reto"
+    ],
+    "offlineCaveat": "La descarga del paquete no garantiza que toda dependencia externa del motor esté disponible offline; algunos motores CDN/WebAssembly pueden requerir una primera conexión."
+  },
+  "projects": {
+    "page": "pages/projects.html",
+    "catalog": "data/projects.json",
+    "filesRoot": "projects/",
+    "total": 15,
+    "levels": {
+      "beginner": 5,
+      "intermediate": 5,
+      "advanced": 5
+    },
+    "items": [
+      {
+        "id": "tarjeta-interactiva",
+        "title": "Tarjeta interactiva",
+        "level": "principiante"
+      },
+      {
+        "id": "formulario-validacion",
+        "title": "Formulario con validación",
+        "level": "principiante"
+      },
+      {
+        "id": "calculadora",
+        "title": "Calculadora básica",
+        "level": "principiante"
+      },
+      {
+        "id": "reloj-temporizador",
+        "title": "Reloj y temporizador",
+        "level": "principiante"
+      },
+      {
+        "id": "lista-tareas",
+        "title": "Lista de tareas",
+        "level": "principiante"
+      },
+      {
+        "id": "buscador-peliculas",
+        "title": "Buscador de películas",
+        "level": "intermedio"
+      },
+      {
+        "id": "catalogo-productos",
+        "title": "Catálogo de productos",
+        "level": "intermedio"
+      },
+      {
+        "id": "aplicacion-clima",
+        "title": "Aplicación del clima",
+        "level": "intermedio"
+      },
+      {
+        "id": "panel-administracion",
+        "title": "Panel de administración",
+        "level": "intermedio"
+      },
+      {
+        "id": "sistema-usuarios-demo",
+        "title": "Sistema de usuarios (demo)",
+        "level": "intermedio"
+      },
+      {
+        "id": "autenticacion-segura",
+        "title": "Autenticación segura con Express y PostgreSQL",
+        "level": "avanzado"
+      },
+      {
+        "id": "tienda-online",
+        "title": "Tienda online con Next.js y TypeScript",
+        "level": "avanzado"
+      },
+      {
+        "id": "blog-postgres",
+        "title": "Blog con PostgreSQL",
+        "level": "avanzado"
+      },
+      {
+        "id": "api-rest-propia",
+        "title": "API REST propia de tareas",
+        "level": "avanzado"
+      },
+      {
+        "id": "gestor-fullstack",
+        "title": "Gestor de proyectos full-stack",
+        "level": "avanzado"
+      }
+    ],
+    "notes": [
+      "Cada proyecto posee una carpeta con fuentes y README.",
+      "Los proyectos frontend pueden ofrecer vista previa aislada.",
+      "Los proyectos avanzados de backend se entregan como código y documentación: GitHub Pages no los ejecuta como servicios reales."
+    ]
+  },
+  "multimedia": {
+    "page": "pages/multimedia.html",
+    "frontend": "js/multimedia-library.js",
+    "catalog": "modules/multimedia/catalog.json",
+    "manifest": "modules/multimedia/manifest.json",
+    "assetsDirectory": "modules/multimedia/assets/",
+    "totalResources": 15,
+    "currentMediaTypes": [
+      "image"
+    ],
+    "formatsPresent": [
+      "SVG"
+    ],
+    "categories": {
+      "diagram": 7,
+      "illustration": 2,
+      "infographic": 4,
+      "animation": 2
+    },
+    "items": [
+      {
+        "id": "html-document-tree",
+        "title": "Estructura de documento HTML",
+        "category": "diagram"
+      },
+      {
+        "id": "html-accessible-form",
+        "title": "Formulario HTML accesible",
+        "category": "illustration"
+      },
+      {
+        "id": "css-box-model",
+        "title": "Modelo de caja CSS",
+        "category": "infographic"
+      },
+      {
+        "id": "css-flexbox-axis",
+        "title": "Ejes de Flexbox",
+        "category": "diagram"
+      },
+      {
+        "id": "css-grid-layout",
+        "title": "CSS Grid: filas y columnas",
+        "category": "diagram"
+      },
+      {
+        "id": "js-event-loop",
+        "title": "Event loop de JavaScript",
+        "category": "infographic"
+      },
+      {
+        "id": "dom-rendering-pipeline",
+        "title": "Del DOM al píxel",
+        "category": "diagram"
+      },
+      {
+        "id": "http-request-cycle",
+        "title": "Ciclo de una petición HTTP",
+        "category": "animation"
+      },
+      {
+        "id": "api-rest-architecture",
+        "title": "Arquitectura de una API REST",
+        "category": "diagram"
+      },
+      {
+        "id": "sql-relational-model",
+        "title": "Modelo relacional y JOIN",
+        "category": "diagram"
+      },
+      {
+        "id": "mongodb-document-model",
+        "title": "Documento MongoDB",
+        "category": "illustration"
+      },
+      {
+        "id": "react-state-flow",
+        "title": "Estado y renderizado en React",
+        "category": "diagram"
+      },
+      {
+        "id": "vue-reactivity-flow",
+        "title": "Reactividad de Vue",
+        "category": "animation"
+      },
+      {
+        "id": "node-event-loop",
+        "title": "Event loop de Node.js",
+        "category": "infographic"
+      },
+      {
+        "id": "web-accessibility-map",
+        "title": "Mapa de accesibilidad web",
+        "category": "infographic"
+      }
+    ],
+    "planned": [
+      "MP4/WebM y subtítulos WebVTT",
+      "MP3/OGG y transcripciones"
+    ],
+    "rightsPolicy": "Los próximos videos/audio deben ser propios o tener derechos/licencia comprobados y metadatos de atribución."
+  },
+  "moduleCatalogSummary": {
+    "file": "modules/catalog.json",
+    "moduleKinds": {
+      "core": 1,
+      "foundation": 3,
+      "technologyLibraries": 17,
+      "laboratories": 6,
+      "multimedia": 5
+    },
+    "multimediaStatuses": {
+      "integrated": [
+        "media-diagrams",
+        "media-illustrations",
+        "media-animations"
+      ],
+      "planned": [
+        "media-videos",
+        "media-audio"
+      ]
+    },
+    "note": "El catálogo central es el inventario de módulos que presenta el Centro de módulos; no reemplaza las fuentes detalladas ni los manifiestos de paquetes."
+  }
+}

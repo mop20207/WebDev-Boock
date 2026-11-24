@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "title": "Diseño general, identidad visual y responsive",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "visualDirection": {
+    "name": "Panel de aprendizaje/desarrollo",
+    "tone": [
+      "técnico",
+      "limpio",
+      "oscuro por defecto",
+      "orientado a tarjetas y paneles",
+      "jerarquía clara"
+    ],
+    "primaryFonts": [
+      {
+        "family": "DM Sans",
+        "use": "texto general y controles",
+        "source": "Google Fonts"
+      },
+      {
+        "family": "Space Grotesk",
+        "use": "títulos, marca y encabezados de sección",
+        "source": "Google Fonts"
+      },
+      {
+        "family": "Consolas / DejaVu Sans Mono",
+        "use": "bloques de código y terminal"
+      }
+    ],
+    "colorTokens": {
+      "background": "#080d18",
+      "surface": "#101827",
+      "surface2": "#151f31",
+      "surface3": "#1b2940",
+      "text": "#edf3ff",
+      "muted": "#8998b2",
+      "line": "#223047",
+      "blue": "#668cff",
+      "blue2": "#426be5",
+      "sidebar": "250px en escritorio"
+    },
+    "theme": {
+      "default": "dark",
+      "lightModeClass": "body.light",
+      "persistence": "localStorage:webdev-theme",
+      "controller": "js/theme.js"
+    }
+  },
+  "sharedLayout": {
+    "desktop": [
+      "sidebar fija a la izquierda",
+      "topbar sticky",
+      "área principal desplazable",
+      "contenido centrado con ancho máximo aproximado de 1250px"
+    ],
+    "mobile": [
+      "sidebar fuera de pantalla hasta abrir el menú",
+      "topbar compacta",
+      "menú desplegable con fondo/backdrop",
+      "tarjetas y columnas reacomodadas a una sola columna donde corresponde"
+    ],
+    "keyFiles": [
+      "css/global.css",
+      "js/navigation.js",
+      "js/theme.js"
+    ]
+  },
+  "responsiveBreakpoints": [
+    {
+      "maxWidth": "1050px",
+      "effects": [
+        "reduce padding de topbar y contenido",
+        "ajusta grids y anchuras"
+      ]
+    },
+    {
+      "maxWidth": "760px",
+      "effects": [
+        "colapsa sidebar",
+        "muestra botón de menú móvil",
+        "quita margen lateral de main",
+        "compacta topbar",
+        "apila tarjetas y paneles",
+        "reorganiza el editor"
+      ]
+    },
+    {
+      "maxWidth": "650px",
+      "effects": [
+        "ajustes adicionales en algunos componentes de búsqueda y filtros"
+      ]
+    },
+    {
+      "maxWidth": "390px",
+      "effects": [
+        "reduce tamaños, paddings y controles para teléfonos estrechos"
+      ]
+    }
+  ],
+  "pageStyles": [
+    {
+      "page": "Inicio",
+      "html": "index.html",
+      "css": [
+        "css/global.css",
+        "css/home.css"
+      ]
+    },
+    {
+      "page": "HTML",
+      "html": "pages/html.html",
+      "css": [
+        "css/global.css",
+        "css/html.css"
+      ]
+    },
+    {
+      "page": "CSS",
+      "html": "pages/css.html",
+      "css": [
+        "css/global.css",
+        "css/css.css"
+      ]
+    },
+    {
+      "page": "JavaScript",
+      "html": "pages/javascript.html",
+      "css": [
+        "css/global.css",
+        "css/javascript.css"
+      ]
+    },
+    {
+      "page": "Biblioteca de tecnologías",
+      "html": "pages/tools.html",
+      "css": [
+        "css/global.css",
+        "css/tools-library.css"
+      ]
+    },
+    {
+      "page": "Centro de módulos",
+      "html": "pages/modules.html",
+      "css": [
+        "css/global.css",
+        "css/module-center.css"
+      ]
+    },
+    {
+      "page": "Laboratorios",
+      "html": "pages/labs.html",
+      "css": [
+        "css/global.css",
+        "css/labs.css"
+      ]
+    },
+    {
+      "page": "Biblioteca visual",
+      "html": "pages/multimedia.html",
+      "css": [
+        "css/global.css",
+        "css/multimedia.css"
+      ]
+    },
+    {
+      "page": "Proyectos",
+      "html": "pages/projects.html",
+      "css": [
+        "css/global.css",
+        "css/projects.css"
+      ]
+    },
+    {
+      "page": "Editor",
+      "html": "pages/editor.html",
+      "css": [
+        "css/global.css",
+        "css/editor-app.css"
+      ]
+    }
+  ],
+  "editorVisualException": {
+    "reason": "El editor es una herramienta de trabajo y no una página de lectura convencional.",
+    "layout": [
+      "barra superior del workbench",
+      "explorador de archivos",
+      "pestañas de edición",
+      "área Monaco",
+      "vista previa",
+      "controles adaptados a móvil"
+    ],
+    "keyFiles": [
+      "pages/editor.html",
+      "css/editor-app.css",
+      "js/editor-app.js"
+    ],
+    "externalEditorLibraries": [
+      "Monaco Editor",
+      "JSZip",
+      "emmet-monaco"
+    ]
+  },
+  "accessibilityAndInteraction": [
+    "Las páginas recientes incluyen atributos y regiones de estado accesibles; comprobar cada pantalla al cambiar su HTML.",
+    "Hay controles de tema, navegación móvil y estados de carga/descarga.",
+    "La biblioteca visual incluye altText, caption, licencia y atribución por recurso.",
+    "Al rediseñar botones, formularios o diálogos, preservar foco de teclado, nombres accesibles y mensajes aria-live donde existan."
+  ],
+  "designStatus": {
+    "current": "Existe una base visual compartida y varias hojas específicas. El usuario ha señalado que algunas zonas todavía necesitan pulido visual.",
+    "recommendedNextWork": [
+      "auditar en móvil las páginas principales",
+      "armonizar espaciados, botones, tarjetas y estados",
+      "revisar desbordes horizontales",
+      "comprobar contraste y foco",
+      "mantener la identidad visual sin rediseñar funciones que ya trabajan"
+    ],
+    "doNotAssume": "La existencia de estilos responsive no significa que todas las páginas hayan sido probadas visualmente en todos los tamaños de pantalla."
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "title": "Mapa de impacto: qué archivo afecta a qué",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "changeMap": [
+    {
+      "path": "index.html",
+      "role": "entrada principal y home",
+      "affects": [
+        "página inicial",
+        "carga del núcleo",
+        "navegación hacia secciones"
+      ],
+      "test": [
+        "abrir home en móvil y escritorio",
+        "probar enlaces de navegación"
+      ]
+    },
+    {
+      "path": "pages/<seccion>.html",
+      "role": "estructura de una pantalla",
+      "affects": [
+        "scripts que buscan sus IDs/data-attributes",
+        "hojas CSS enlazadas",
+        "navegación y enlaces internos"
+      ],
+      "risk": "Cambiar IDs, atributos o rutas sin ajustar los scripts enlazados puede dejar controles sin funcionar."
+    },
+    {
+      "path": "css/global.css",
+      "role": "estilos compartidos, layout, colores, tipografía, controles y responsive general",
+      "affects": [
+        "home",
+        "páginas de contenido",
+        "bibliotecas",
+        "centro de módulos",
+        "laboratorios",
+        "proyectos y varias pantallas"
+      ],
+      "risk": "Un cambio global puede crear regresiones en muchas secciones. Revisar al menos escritorio y móvil."
+    },
+    {
+      "path": "css/<pagina>.css",
+      "role": "estilos específicos de una página o sección",
+      "affects": [
+        "solo las páginas que enlazan esa hoja",
+        "estados y componentes propios de la sección"
+      ]
+    },
+    {
+      "path": "js/navigation.js",
+      "role": "menú responsive, enlaces activos y coordinación del fetch nativo de contenido",
+      "affects": [
+        "sidebar",
+        "navegación entre páginas",
+        "interceptor de contenido JSON dentro de Capacitor"
+      ],
+      "risk": "Revisar tanto PWA como Android porque el interceptor solo se activa en plataforma nativa."
+    },
+    {
+      "path": "js/theme.js",
+      "role": "cambio de tema",
+      "affects": [
+        "botones de tema",
+        "clase body.light",
+        "persistencia webdev-theme"
+      ]
+    },
+    {
+      "path": "data/html*.json y data/html/",
+      "role": "contenido fuente de HTML",
+      "affects": [
+        "pages/html.html",
+        "categorías y páginas de artículo de HTML",
+        "manifiesto de actualizaciones de contenido"
+      ],
+      "requires": [
+        "revisar estructura/IDs de categoría",
+        "actualizar manifiesto de contenido mediante workflow"
+      ]
+    },
+    {
+      "path": "data/css*.json y data/css/",
+      "role": "contenido fuente de CSS",
+      "affects": [
+        "pages/css.html",
+        "categorías y artículos CSS",
+        "manifiesto de actualizaciones de contenido"
+      ]
+    },
+    {
+      "path": "data/javascript*.json y data/javascript/",
+      "role": "contenido fuente de JavaScript",
+      "affects": [
+        "pages/javascript.html",
+        "categorías y artículos JavaScript",
+        "manifiesto de actualizaciones de contenido"
+      ]
+    },
+    {
+      "path": "data/tools.json",
+      "role": "fuente canónica de las 17 bibliotecas tecnológicas",
+      "affects": [
+        "paquetes JSON",
+        "manifest.json",
+        "ecosystem.json",
+        "search-index.json",
+        "biblioteca tools y centro de módulos"
+      ],
+      "requires": [
+        "npm run generate:libraries",
+        "npm run validate:libraries"
+      ],
+      "workflow": ".github/workflows/publish-library-packages.yml",
+      "risk": "No editar solo los paquetes generados: el generador los volverá a crear desde data/tools.json."
+    },
+    {
+      "path": "data/challenges.json",
+      "role": "fuente canónica de los 52 retos",
+      "affects": [
+        "página de retos",
+        "páginas individuales en pages/retos/",
+        "paquetes de laboratorios"
+      ],
+      "requires": [
+        "npm run generate:labs",
+        "npm run validate:labs"
+      ],
+      "workflow": ".github/workflows/publish-lab-packages.yml"
+    },
+    {
+      "path": "data/labs/catalog.json",
+      "role": "asignación de tecnologías y agrupación de retos en seis laboratorios",
+      "affects": [
+        "catálogo visible de labs",
+        "paquetes y manifiesto de laboratorios"
+      ],
+      "requires": [
+        "npm run generate:labs",
+        "npm run validate:labs"
+      ]
+    },
+    {
+      "path": "data/projects.json",
+      "role": "catálogo de los 15 proyectos",
+      "affects": [
+        "tarjetas, niveles, objetivos y lista de archivos de la Biblioteca de proyectos"
+      ],
+      "pairedFiles": [
+        "projects/<id>/",
+        "js/projects.js",
+        "pages/projects.html"
+      ]
+    },
+    {
+      "path": "projects/<id>/**",
+      "role": "archivos reales de cada proyecto de ejemplo",
+      "affects": [
+        "archivos que muestra/descarga la biblioteca",
+        "vista previa para proyectos compatibles",
+        "documentación README de ese ejemplo"
+      ],
+      "risk": "Mantener las rutas de data/projects.json sincronizadas con los archivos reales."
+    },
+    {
+      "path": "modules/catalog.json",
+      "role": "inventario central del Centro de módulos",
+      "affects": [
+        "nombre",
+        "tipo",
+        "etapa",
+        "estado y ruta de cada módulo"
+      ],
+      "requires": [
+        "npm run validate:modules",
+        "comprobar que href corresponde a una ruta real"
+      ],
+      "risk": "Marcar como integrated no crea por sí mismo contenido ni paquetes; debe existir el recurso enlazado."
+    },
+    {
+      "path": "modules/libraries/packages/** y modules/libraries/*.json",
+      "role": "paquetes publicados e índices de las bibliotecas tecnológicas",
+      "affects": [
+        "descarga, integridad, instalación, apertura y búsqueda global"
+      ],
+      "requires": [
+        "validar hashes, conteo y referencias"
+      ],
+      "warning": "Son artefactos derivados de data/tools.json."
+    },
+    {
+      "path": "modules/labs/packages/** y modules/labs/*.json",
+      "role": "paquetes listos para instalar por laboratorio",
+      "affects": [
+        "catálogo, tamaños, instalación y retos disponibles offline"
+      ],
+      "warning": "Son artefactos derivados de data/challenges.json y data/labs/catalog.json."
+    },
+    {
+      "path": "modules/multimedia/catalog.json",
+      "role": "metadatos visibles de cada recurso multimedia",
+      "affects": [
+        "tarjeta, título, búsqueda, filtros, texto alternativo, licencia, atribución y enlaces relacionados"
+      ],
+      "requires": [
+        "npm run generate:multimedia",
+        "npm run validate:multimedia"
+      ]
+    },
+    {
+      "path": "modules/multimedia/assets/**",
+      "role": "archivos multimedia reales",
+      "affects": [
+        "miniaturas y visor",
+        "descargas",
+        "caché offline y hashes"
+      ],
+      "requires": [
+        "regenerar manifest.json y validar tamaño/MIME/SHA-256"
+      ],
+      "risk": "Los archivos se excluyen de la APK y se descargan desde GitHub; una ruta/hash incorrectos rompen su carga."
+    },
+    {
+      "path": "js/module-manager.js, js/library-packages.js, js/lab-packages.js",
+      "role": "administración de módulos y paquetes",
+      "affects": [
+        "pages/modules.html",
+        "pages/tools.html",
+        "pages/labs.html",
+        "IndexedDB webdev-book-modules"
+      ],
+      "risk": "Preservar nombres de DB, stores y namespaces al modificar el almacenamiento."
+    },
+    {
+      "path": "js/multimedia-library.js",
+      "role": "lógica de la biblioteca visual",
+      "affects": [
+        "pages/multimedia.html",
+        "Cache Storage webdev-media-assets-v1",
+        "favoritos multimedia",
+        "verificación de integridad"
+      ]
+    },
+    {
+      "path": "js/editor-app.js y css/editor-app.css",
+      "role": "editor principal y workbench",
+      "affects": [
+        "explorador de archivos",
+        "pestañas",
+        "guardado local",
+        "vista previa",
+        "importación/exportación ZIP",
+        "proyectos del usuario"
+      ],
+      "risk": "Zona sensible: no borrar ni reinicializar WebDevBookEditor o claves webdev-project-* sin una migración y respaldo explícitos."
+    },
+    {
+      "path": "js/learning-progress.js y js/challenges.js",
+      "role": "persistencia del aprendizaje y retos",
+      "affects": [
+        "marcas de avance",
+        "intentos",
+        "logros locales"
+      ],
+      "risk": "No acoplar estos datos a la instalación o eliminación de un paquete."
+    },
+    {
+      "path": "js/content-updates.js y updates/content-manifest.json",
+      "role": "actualizador OTA de JSON en Android",
+      "affects": [
+        "comprobación de versiones",
+        "descarga transaccional",
+        "lectura de contenido actualizado en la app nativa"
+      ],
+      "risk": "Solo actualiza JSON incluidos en el manifiesto; no reemplaza código de aplicación."
+    },
+    {
+      "path": "service-worker.js",
+      "role": "shell y caché runtime de la PWA web",
+      "affects": [
+        "precarga offline",
+        "rutas cacheadas",
+        "versión de caché"
+      ],
+      "risk": "Al añadir un archivo esencial nuevo, revisar CORE_FILES y política de caché; preservar la exclusión de multimedia si sigue siendo necesaria."
+    },
+    {
+      "path": "scripts/prepare-web.mjs",
+      "role": "selección de archivos que entran a www/ y a la APK",
+      "affects": [
+        "tamaño APK",
+        "disponibilidad local de archivos",
+        "rutas remotas de paquetes"
+      ],
+      "risk": "Cambiar filtros puede incluir archivos grandes de forma accidental o excluir recursos requeridos por Android."
+    },
+    {
+      "path": "capacitor.config.ts y package.json",
+      "role": "identidad/configuración Android y versiones/dependencias de build",
+      "affects": [
+        "applicationId",
+        "nombre, webDir, fondo",
+        "resolución de Capacitor y scripts npm"
+      ],
+      "risk": "Cambiar appId puede hacer que Android identifique la APK como otra aplicación."
+    },
+    {
+      "path": ".github/workflows/**",
+      "role": "compilación, publicación y automatización",
+      "affects": [
+        "cuándo se ejecutan validadores",
+        "commits automáticos",
+        "artefactos APK",
+        "publicación de Pages"
+      ],
+      "risk": "Revisar los filtros paths y branches si se añade una carpeta o módulo nuevo."
+    },
+    {
+      "path": "docs/project-reference/**",
+      "role": "documentación de referencia de mantenimiento",
+      "affects": [
+        "orientación de futuros desarrollos"
+      ],
+      "risk": "No tiene que ser importado por runtime; actualizarlo después de cambios arquitectónicos relevantes."
+    }
+  ],
+  "recommendedChangeOrder": [
+    "Localizar primero la fuente canónica de la información.",
+    "Identificar el generador/validador asociado.",
+    "Cambiar la fuente, no únicamente archivos derivados.",
+    "Ejecutar validadores y actualizar manifiestos.",
+    "Revisar las páginas, scripts y almacenes que consumen esa información.",
+    "Probar la ruta web y la ruta Android cuando la zona modificada las comparta."
+  ]
+}

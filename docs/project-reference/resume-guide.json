@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "title": "Estado actual y guía para continuar el desarrollo",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "stateAtSnapshot": {
+    "overall": "Las cuatro etapas planificadas están integradas en main. El proyecto se encuentra en fase de estabilización y pulido visual, no en una reescritura.",
+    "lastIntegratedMilestone": {
+      "stage": 4,
+      "pullRequest": 37,
+      "pullRequestUrl": "https://github.com/mop20207/WebDev-Boock/pull/37",
+      "mergeCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+      "title": "Recursos multimedia y biblioteca visual"
+    },
+    "ci": {
+      "androidDebugBuild": "success",
+      "githubPagesDeployment": "success",
+      "multimediaManifestPublication": "success"
+    }
+  },
+  "completed": [
+    "Núcleo y Centro de módulos.",
+    "17 bibliotecas descargables con 387 artículos.",
+    "52 retos interactivos en 13 tecnologías.",
+    "Seis laboratorios descargables con la cobertura de los 52 retos.",
+    "Biblioteca de 15 proyectos de ejemplo.",
+    "Biblioteca visual con 15 recursos SVG originales.",
+    "Descarga e integridad SHA-256 para paquetes y recursos que corresponden.",
+    "Preparación y compilación cloud de APK debug mediante GitHub Actions."
+  ],
+  "pendingOrNotVerified": [
+    {
+      "item": "Pulido visual de todas las secciones",
+      "status": "pending",
+      "detail": "El sistema visual compartido ya existe, pero algunas pantallas necesitan una revisión de consistencia y acabado."
+    },
+    {
+      "item": "Prueba real de APK en teléfono Android",
+      "status": "pending",
+      "detail": "CI construyó la APK y verificó firma/metadatos; la instalación, navegación y pruebas de interacción físicas no están verificadas."
+    },
+    {
+      "item": "Videos educativos y audio",
+      "status": "planned",
+      "detail": "El catálogo/visor contempla formatos de video/audio, pero no hay archivos MP4/WebM/MP3/OGG publicados en la colección."
+    },
+    {
+      "item": "APK release/AAB y firma de distribución",
+      "status": "not_documented",
+      "detail": "El workflow produce una APK debug; no hay procedimiento release/AAB documentado en el estado de referencia."
+    },
+    {
+      "item": "Validación exhaustiva de accesibilidad y tamaños de pantalla",
+      "status": "recommended",
+      "detail": "No asumir que el diseño está verificado en todos los dispositivos solo porque hay media queries."
+    }
+  ],
+  "suggestedNextPhase": {
+    "name": "Estabilización y pulido visual",
+    "principle": "Conservar el comportamiento que ya funciona y mejorar presentación, consistencia, accesibilidad y uso móvil antes de sumar otra gran etapa funcional.",
+    "order": [
+      "Auditar visualmente Inicio, Biblioteca de tecnologías, Centro de módulos, Laboratorios y Biblioteca visual en teléfono.",
+      "Anotar problemas concretos: desbordes, espacios, botones, jerarquía, tarjetas, encabezados y estados vacíos/de carga/error.",
+      "Crear una rama dedicada para los cambios visuales.",
+      "Corregir primero componentes compartidos y luego estilos particulares.",
+      "Ejecutar validaciones y compilar nueva APK debug.",
+      "Probarla en Android y registrar los resultados en esta guía."
+    ]
+  },
+  "safeResumeChecklist": [
+    "Abrir el repositorio y comprobar la rama main y su commit más reciente.",
+    "Leer primero docs/project-reference/index.json.",
+    "Comparar el commit actual con referenceSnapshot/snapshotCommit: si cambió, verificar las partes relacionadas antes de seguir.",
+    "Consultar file-impact-map.json antes de tocar una carpeta.",
+    "No modificar data generada sin revisar su fuente canónica y generador.",
+    "No mezclar los almacenes webdev-book-modules, webdev-book-content y WebDevBookEditor.",
+    "No borrar proyectos guardados ni progreso del usuario para solucionar problemas de paquetes.",
+    "Usar ramas y Pull Requests para cambios importantes.",
+    "Ejecutar validadores correspondientes y revisar GitHub Actions.",
+    "Diferenciar siempre entre compilación CI correcta y prueba física en Android."
+  ],
+  "usefulLinks": {
+    "repository": "https://github.com/mop20207/WebDev-Boock",
+    "actions": "https://github.com/mop20207/WebDev-Boock/actions",
+    "latestStage4PullRequest": "https://github.com/mop20207/WebDev-Boock/pull/37",
+    "androidBuildRun": "https://github.com/mop20207/WebDev-Boock/actions/runs/45458423617",
+    "liveSite": "https://mop20207.github.io/WebDev-Boock/"
+  }
+}
