@@ -83,13 +83,14 @@
       "version": "1.0.0",
       "articleCount": 16,
       "description": "Comandos, navegación, archivos, búsquedas, permisos y automatización.",
-      "details": "16 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "16 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=terminal",
       "capabilities": [
         "Comandos esenciales",
         "Archivos y permisos",
         "Pipes y automatización"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "git",
@@ -100,13 +101,14 @@
       "version": "1.0.0",
       "articleCount": 12,
       "description": "Control de versiones, ramas, commits, colaboración y repositorios remotos.",
-      "details": "12 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "12 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=git",
       "capabilities": [
         "Historial y commits",
         "Ramas y merge",
         "GitHub y colaboración"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "npm",
@@ -117,13 +119,14 @@
       "version": "1.0.0",
       "articleCount": 13,
       "description": "Paquetes, dependencias, scripts, package.json y entorno Node.js.",
-      "details": "13 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "13 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=npm",
       "capabilities": [
         "Instalación de paquetes",
         "Dependencias",
         "Scripts y configuración"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "react",
@@ -134,13 +137,14 @@
       "version": "1.0.0",
       "articleCount": 6,
       "description": "Componentes, JSX, props, estado y Hooks.",
-      "details": "6 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "6 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=react",
       "capabilities": [
         "Componentes y JSX",
         "Props y estado",
         "Hooks"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "webcomponents",
@@ -151,13 +155,14 @@
       "version": "1.0.0",
       "articleCount": 6,
       "description": "Custom Elements, Shadow DOM, templates, slots y eventos.",
-      "details": "6 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "6 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=webcomponents",
       "capabilities": [
         "Custom Elements",
         "Shadow DOM",
         "Templates y slots"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "vuejs",
@@ -168,13 +173,14 @@
       "version": "1.0.0",
       "articleCount": 15,
       "description": "Plantillas, directivas, reactividad, componentes y Composition API.",
-      "details": "15 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "15 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=vuejs",
       "capabilities": [
         "Plantillas y directivas",
         "Reactividad",
         "Componentes y Composition API"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "nodejs",
@@ -185,13 +191,14 @@
       "version": "1.0.0",
       "articleCount": 18,
       "description": "JavaScript en el servidor, módulos, archivos, procesos y servidores.",
-      "details": "18 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "18 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=nodejs",
       "capabilities": [
         "Módulos y NPM",
         "Sistema de archivos",
         "Servidores y procesos"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "astro",
@@ -202,13 +209,14 @@
       "version": "1.0.0",
       "articleCount": 20,
       "description": "Páginas, componentes, layouts, estilos e islas interactivas.",
-      "details": "20 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "20 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=astro",
       "capabilities": [
         "Componentes y layouts",
         "Islas de arquitectura",
         "Datos y despliegue"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "phaser",
@@ -219,13 +227,14 @@
       "version": "1.0.0",
       "articleCount": 18,
       "description": "Escenas, sprites, animaciones, movimiento, físicas, cámaras y efectos.",
-      "details": "18 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "18 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=phaser",
       "capabilities": [
         "Escenas y sprites",
         "Movimiento y físicas",
         "Cámaras y efectos"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "typescript",
@@ -236,13 +245,14 @@
       "version": "1.0.0",
       "articleCount": 37,
       "description": "Tipos, interfaces, genéricos, configuración e integración con JavaScript.",
-      "details": "37 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "37 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=typescript",
       "capabilities": [
         "Tipos e interfaces",
         "Genéricos",
         "Configuración e integración"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "nextjs",
@@ -253,13 +263,14 @@
       "version": "1.0.0",
       "articleCount": 44,
       "description": "App Router, Server Components, datos, caché, Server Actions y despliegue.",
-      "details": "44 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "44 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=nextjs",
       "capabilities": [
         "App Router",
         "Server y Client Components",
         "Datos y despliegue"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "express",
@@ -270,13 +281,14 @@
       "version": "1.0.0",
       "articleCount": 42,
       "description": "Rutas, middleware, APIs REST, validación, autenticación, testing y despliegue.",
-      "details": "42 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "42 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=express",
       "capabilities": [
         "Rutas y middleware",
         "APIs REST",
         "Seguridad y pruebas"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "sql-postgres",
@@ -287,13 +299,14 @@
       "version": "1.0.0",
       "articleCount": 42,
       "description": "Modelo relacional, consultas, JOIN, transacciones, JSONB e índices.",
-      "details": "42 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "42 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=sql-postgres",
       "capabilities": [
         "Diseño relacional",
         "Consultas y JOIN",
         "Transacciones e índices"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "mongodb",
@@ -304,13 +317,14 @@
       "version": "1.0.0",
       "articleCount": 42,
       "description": "Documentos BSON, modelado, CRUD, arrays, agregaciones e índices.",
-      "details": "42 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "42 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=mongodb",
       "capabilities": [
         "Modelado documental",
         "CRUD y agregaciones",
         "Índices y seguridad"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "apis",
@@ -321,13 +335,14 @@
       "version": "1.0.0",
       "articleCount": 14,
       "description": "HTTP, REST, JSON, Fetch, CORS, autenticación, OpenAPI y webhooks.",
-      "details": "14 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "14 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=apis",
       "capabilities": [
         "HTTP y REST",
         "Fetch y CORS",
         "Autenticación y OpenAPI"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "testing",
@@ -338,13 +353,14 @@
       "version": "1.0.0",
       "articleCount": 14,
       "description": "Pruebas unitarias, integración, componentes y E2E.",
-      "details": "14 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "14 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=testing",
       "capabilities": [
         "Pruebas unitarias",
         "Integración y componentes",
         "Pruebas E2E"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "docker-deploy",
@@ -355,13 +371,14 @@
       "version": "1.0.0",
       "articleCount": 28,
       "description": "Contenedores, imágenes, Compose, redes, volúmenes, seguridad y CI/CD.",
-      "details": "28 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "details": "28 artículos. Biblioteca descargable independiente: podés instalarla para usarla sin conexión, actualizarla o quitar su copia local sin borrar tu progreso.",
       "href": "tools.html?tool=docker-deploy",
       "capabilities": [
         "Dockerfile e imágenes",
         "Compose y redes",
         "Seguridad y CI/CD"
-      ]
+      ],
+      "delivery": "package"
     },
     {
       "id": "lab-frontend",
