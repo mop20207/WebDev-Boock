@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "id": "databases",
+  "title": "Laboratorio de bases de datos",
+  "description": "Practicá consultas relacionales y operaciones de documentos con motores o simuladores educativos.",
+  "technologies": [
+    "sql-postgres",
+    "mongodb"
+  ],
+  "challengeCount": 8,
+  "challenges": [
+    {
+      "id": "sql-consulta-filtro",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "principiante",
+      "title": "Consultá productos con poco stock",
+      "summary": "Usá SELECT, WHERE y ORDER BY para filtrar datos.",
+      "statement": "El esquema `productos` ya existe. Devolvé el nombre y el stock de los artículos con menos de 10 unidades, ordenados desde el stock más bajo al más alto.",
+      "objectives": [
+        "Seleccionar columnas concretas.",
+        "Filtrar filas con WHERE.",
+        "Ordenar resultados con ORDER BY."
+      ],
+      "requirements": [
+        "Usá SELECT y FROM productos.",
+        "Incluí únicamente nombre y stock.",
+        "Filtrá stock < 10.",
+        "Ordená por stock ascendente.",
+        "No uses SELECT *."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Devolvé nombre y stock de los productos con menos de 10 unidades.\n",
+      "tests": [
+        {
+          "label": "Devuelve los productos bajo el límite",
+          "sql": "SELECT nombre, stock FROM productos WHERE stock < 10 ORDER BY stock ASC",
+          "expected": [
+            {
+              "nombre": "Webcam",
+              "stock": 0
+            },
+            {
+              "nombre": "Mouse",
+              "stock": 3
+            },
+            {
+              "nombre": "Teclado",
+              "stock": 8
+            }
+          ]
+        },
+        {
+          "label": "La consulta del editor también devuelve las filas requeridas",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "nombre": "Webcam",
+              "stock": 0
+            },
+            {
+              "nombre": "Mouse",
+              "stock": 3
+            },
+            {
+              "nombre": "Teclado",
+              "stock": 8
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "SELECT define qué columnas querés recibir.",
+        "WHERE stock < 10 filtra los registros que cumplen la condición.",
+        "ORDER BY stock ASC ordena del valor menor al mayor."
+      ],
+      "solutionCode": "SELECT nombre, stock\nFROM productos\nWHERE stock < 10\nORDER BY stock ASC;",
+      "solutionExplanation": "El motor PostgreSQL ejecuta la consulta sobre una tabla de ejemplo. Se seleccionan solo las columnas necesarias, se filtra con WHERE y se ordena de forma ascendente con ORDER BY.",
+      "commonMistakes": [
+        "Usar HAVING para filtrar filas individuales en lugar de WHERE.",
+        "Olvidar FROM productos.",
+        "Usar SELECT * cuando se piden columnas concretas.",
+        "Ordenar en forma DESC por error."
+      ],
+      "estimatedMinutes": 12,
+      "setupSql": "CREATE TABLE productos (id integer PRIMARY KEY, nombre text NOT NULL, stock integer NOT NULL, precio numeric(10,2) NOT NULL); INSERT INTO productos VALUES (1,'Mouse',3,15.50),(2,'Teclado',8,35.00),(3,'Monitor',15,180.00),(4,'Webcam',0,42.00);",
+      "userQuery": true
+    },
+    {
+      "id": "sql-join-ventas",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "intermedio",
+      "title": "Relacioná pedidos con clientes",
+      "summary": "Combiná tablas con INNER JOIN y calculá el importe de cada pedido.",
+      "statement": "El esquema contiene `clientes` y `pedidos`. Obtené el nombre del cliente y el total de cada pedido, sin perder la relación entre las tablas.",
+      "objectives": [
+        "Relacionar claves primarias y foráneas.",
+        "Usar INNER JOIN con ON.",
+        "Calcular expresiones en SELECT."
+      ],
+      "requirements": [
+        "Uní pedidos con clientes mediante cliente_id.",
+        "Mostrá cliente y total.",
+        "Calculá total como cantidad * precio_unitario.",
+        "Ordená por id_pedido ascendente."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Relacioná pedidos con clientes y calculá el total.\n",
+      "tests": [
+        {
+          "label": "Resuelve la relación y el cálculo",
+          "sql": "SELECT c.nombre AS cliente, p.id AS id_pedido, p.cantidad * p.precio_unitario AS total FROM pedidos p INNER JOIN clientes c ON c.id = p.cliente_id ORDER BY p.id",
+          "expected": [
+            {
+              "cliente": "Ana",
+              "id_pedido": 101,
+              "total": "60.00"
+            },
+            {
+              "cliente": "Luis",
+              "id_pedido": 102,
+              "total": "45.00"
+            },
+            {
+              "cliente": "Ana",
+              "id_pedido": 103,
+              "total": "25.00"
+            }
+          ]
+        },
+        {
+          "label": "La consulta escrita resuelve el ejercicio",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "cliente": "Ana",
+              "id_pedido": 101,
+              "total": "60.00"
+            },
+            {
+              "cliente": "Luis",
+              "id_pedido": 102,
+              "total": "45.00"
+            },
+            {
+              "cliente": "Ana",
+              "id_pedido": 103,
+              "total": "25.00"
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "Usá alias para abreviar los nombres de las tablas.",
+        "La condición del JOIN conecta p.cliente_id con c.id.",
+        "Multiplicá cantidad por precio_unitario para obtener el importe."
+      ],
+      "solutionCode": "SELECT\n  c.nombre AS cliente,\n  p.id AS id_pedido,\n  p.cantidad * p.precio_unitario AS total\nFROM pedidos AS p\nINNER JOIN clientes AS c ON c.id = p.cliente_id\nORDER BY p.id ASC;",
+      "solutionExplanation": "INNER JOIN combina filas cuyos identificadores coinciden. Los alias hacen la consulta más legible y la expresión calculada devuelve el importe de cada pedido.",
+      "commonMistakes": [
+        "Unir las tablas sin condición y producir un producto cartesiano.",
+        "Comparar el nombre en vez de las claves.",
+        "Olvidar el alias de la columna calculada.",
+        "Usar LEFT JOIN cuando el requisito pide únicamente coincidencias."
+      ],
+      "estimatedMinutes": 18,
+      "setupSql": "CREATE TABLE clientes (id integer PRIMARY KEY, nombre text NOT NULL); CREATE TABLE pedidos (id integer PRIMARY KEY, cliente_id integer REFERENCES clientes(id), cantidad integer NOT NULL, precio_unitario numeric(10,2) NOT NULL); INSERT INTO clientes VALUES (1,'Ana'),(2,'Luis'),(3,'Mara'); INSERT INTO pedidos VALUES (101,1,2,30.00),(102,2,3,15.00),(103,1,1,25.00);",
+      "userQuery": true
+    },
+    {
+      "id": "sql-agrupacion-having",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "avanzado",
+      "title": "Encontrá clientes con varias compras",
+      "summary": "Agrupá registros y filtrá grupos con HAVING.",
+      "statement": "Construí un resumen de compras por cliente. Mostrá el número de pedidos y el importe acumulado, pero conservá solo los clientes con al menos dos pedidos.",
+      "objectives": [
+        "Agrupar filas con GROUP BY.",
+        "Calcular COUNT y SUM.",
+        "Filtrar grupos con HAVING."
+      ],
+      "requirements": [
+        "Usá pedidos y clientes.",
+        "Mostrá nombre como cliente, COUNT(*) como cantidad_pedidos y SUM(cantidad * precio_unitario) como total.",
+        "Agrupá por cliente.",
+        "Usá HAVING para pedir al menos dos pedidos.",
+        "Ordená por nombre."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Resumí los pedidos por cliente y conservá grupos con dos o más pedidos.\n",
+      "tests": [
+        {
+          "label": "Agrupa y filtra correctamente",
+          "sql": "SELECT c.nombre AS cliente, COUNT(*) AS cantidad_pedidos, SUM(p.cantidad * p.precio_unitario) AS total FROM pedidos p JOIN clientes c ON c.id=p.cliente_id GROUP BY c.id,c.nombre HAVING COUNT(*) >= 2 ORDER BY c.nombre",
+          "expected": [
+            {
+              "cliente": "Ana",
+              "cantidad_pedidos": "2",
+              "total": "85.00"
+            },
+            {
+              "cliente": "Luis",
+              "cantidad_pedidos": "2",
+              "total": "100.00"
+            }
+          ]
+        },
+        {
+          "label": "La consulta del editor cumple la agrupación",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "cliente": "Ana",
+              "cantidad_pedidos": "2",
+              "total": "85.00"
+            },
+            {
+              "cliente": "Luis",
+              "cantidad_pedidos": "2",
+              "total": "100.00"
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "GROUP BY crea un grupo para cada cliente.",
+        "COUNT(*) cuenta pedidos y SUM(...) acumula importes.",
+        "HAVING filtra los grupos luego de la agrupación; WHERE filtra filas antes."
+      ],
+      "solutionCode": "SELECT\n  c.nombre AS cliente,\n  COUNT(*) AS cantidad_pedidos,\n  SUM(p.cantidad * p.precio_unitario) AS total\nFROM pedidos AS p\nINNER JOIN clientes AS c ON c.id = p.cliente_id\nGROUP BY c.id, c.nombre\nHAVING COUNT(*) >= 2\nORDER BY c.nombre;",
+      "solutionExplanation": "GROUP BY combina pedidos por cliente. COUNT y SUM producen métricas del grupo. HAVING conserva solo los grupos cuyo conteo alcanza el mínimo solicitado.",
+      "commonMistakes": [
+        "Usar WHERE COUNT(*) >= 2, porque los agregados se filtran con HAVING.",
+        "Agrupar solo por el nombre cuando se necesita identificar la clave.",
+        "Sumar precio_unitario sin multiplicar por cantidad.",
+        "Olvidar incluir columnas no agregadas en GROUP BY."
+      ],
+      "estimatedMinutes": 25,
+      "setupSql": "CREATE TABLE clientes (id integer PRIMARY KEY, nombre text NOT NULL); CREATE TABLE pedidos (id integer PRIMARY KEY, cliente_id integer REFERENCES clientes(id), cantidad integer NOT NULL, precio_unitario numeric(10,2) NOT NULL); INSERT INTO clientes VALUES (1,'Ana'),(2,'Luis'),(3,'Mara'); INSERT INTO pedidos VALUES (101,1,2,30.00),(102,2,3,15.00),(103,1,1,25.00),(104,2,1,55.00),(105,3,1,10.00);",
+      "userQuery": true
+    },
+    {
+      "id": "sql-cte-window-jsonb",
+      "technology": "sql-postgres",
+      "technologyName": "SQL y PostgreSQL",
+      "difficulty": "experto",
+      "title": "Ranking de productos con CTE y JSONB",
+      "summary": "Combiná una CTE, funciones de ventana y operadores de PostgreSQL.",
+      "statement": "Tenés una tabla `eventos` con una columna JSONB `detalle`. Construí una consulta que extraiga la categoría, calcule el total por categoría y asigne un ranking por monto acumulado descendente.",
+      "objectives": [
+        "Crear una CTE con WITH.",
+        "Extraer datos de una columna JSONB.",
+        "Usar SUM como función de ventana y RANK."
+      ],
+      "requirements": [
+        "Usá detalle->>'categoria' para obtener la categoría.",
+        "Calculá SUM(monto) por categoría.",
+        "Aplicá RANK() OVER (ORDER BY total_categoria DESC).",
+        "Devolvé categoria, total_categoria y posicion.",
+        "Ordená por posicion."
+      ],
+      "language": "sql",
+      "runner": "postgres",
+      "starterCode": "-- Usá una CTE para agrupar por categoría y una función de ventana para el ranking.\n",
+      "tests": [
+        {
+          "label": "Extrae JSONB y calcula el ranking",
+          "sql": "WITH resumen AS (SELECT detalle->>'categoria' AS categoria, SUM(monto) AS total_categoria FROM eventos GROUP BY detalle->>'categoria') SELECT categoria, total_categoria, RANK() OVER (ORDER BY total_categoria DESC) AS posicion FROM resumen ORDER BY posicion",
+          "expected": [
+            {
+              "categoria": "libros",
+              "total_categoria": "150.00",
+              "posicion": "1"
+            },
+            {
+              "categoria": "cursos",
+              "total_categoria": "120.00",
+              "posicion": "2"
+            },
+            {
+              "categoria": "hardware",
+              "total_categoria": "80.00",
+              "posicion": "3"
+            }
+          ]
+        },
+        {
+          "label": "La consulta del editor aplica CTE y ranking",
+          "useUserQuery": true,
+          "expected": [
+            {
+              "categoria": "libros",
+              "total_categoria": "150.00",
+              "posicion": "1"
+            },
+            {
+              "categoria": "cursos",
+              "total_categoria": "120.00",
+              "posicion": "2"
+            },
+            {
+              "categoria": "hardware",
+              "total_categoria": "80.00",
+              "posicion": "3"
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "La CTE resumen separa la agregación del ranking final.",
+        "detalle->>'categoria' extrae un valor de texto desde JSONB.",
+        "RANK() OVER (ORDER BY ... DESC) asigna posiciones sin perder las filas."
+      ],
+      "solutionCode": "WITH resumen AS (\n  SELECT\n    detalle->>'categoria' AS categoria,\n    SUM(monto) AS total_categoria\n  FROM eventos\n  GROUP BY detalle->>'categoria'\n)\nSELECT\n  categoria,\n  total_categoria,\n  RANK() OVER (ORDER BY total_categoria DESC) AS posicion\nFROM resumen\nORDER BY posicion;",
+      "solutionExplanation": "PostgreSQL permite trabajar con JSONB mediante ->>. La CTE organiza el cálculo de totales y RANK como función de ventana asigna posiciones según la suma descendente.",
+      "commonMistakes": [
+        "Extraer categoría con -> en vez de ->> cuando se requiere texto.",
+        "Intentar usar un alias calculado en WHERE de la misma capa SELECT.",
+        "Confundir una función agregada con una función de ventana.",
+        "Omitir la CTE y duplicar subconsultas innecesariamente."
+      ],
+      "estimatedMinutes": 32,
+      "setupSql": "CREATE TABLE eventos (id integer PRIMARY KEY, monto numeric(10,2) NOT NULL, detalle jsonb NOT NULL); INSERT INTO eventos VALUES (1,100.00,'{\"categoria\":\"libros\"}'),(2,50.00,'{\"categoria\":\"libros\"}'),(3,120.00,'{\"categoria\":\"cursos\"}'),(4,80.00,'{\"categoria\":\"hardware\"}');",
+      "userQuery": true
+    },
+    {
+      "id": "mongo-find-filtro",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "principiante",
+      "title": "Buscá productos por precio",
+      "summary": "Usá find con operadores de comparación de MongoDB.",
+      "statement": "Tenés una colección `productos`. Implementá `buscarEconomicos(db)` para devolver productos cuyo precio sea menor o igual a 100, sin modificar los documentos.",
+      "objectives": [
+        "Consultar una colección con find.",
+        "Usar el operador $lte.",
+        "Convertir el cursor a un arreglo."
+      ],
+      "requirements": [
+        "Usá db.collection('productos').",
+        "Filtrá con { precio: { $lte: 100 } }.",
+        "Devolvé el resultado de toArray().",
+        "No modifiques ni ordenes el conjunto original."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function buscarEconomicos(db) {\n  // Buscá los productos cuyo precio sea menor o igual a 100.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve los productos dentro del presupuesto",
+          "expression": "await buscarEconomicos(db)",
+          "expected": [
+            {
+              "_id": 1,
+              "nombre": "Mouse",
+              "precio": 50
+            },
+            {
+              "_id": 2,
+              "nombre": "Teclado",
+              "precio": 100
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "find recibe un documento de consulta.",
+        "$lte significa menor o igual que.",
+        "El cursor puede convertirse en arreglo mediante toArray()."
+      ],
+      "solutionCode": "async function buscarEconomicos(db) {\n  return db.collection(\"productos\").find({ precio: { $lte: 100 } }).toArray();\n}",
+      "solutionExplanation": "find filtra documentos mediante un documento de consulta. $lte compara el valor de un campo con un límite y toArray obtiene una lista de los documentos coincidentes.",
+      "commonMistakes": [
+        "Usar $lt cuando también debe incluirse el límite.",
+        "Olvidar llamar toArray() en el cursor.",
+        "Modificar la colección antes de consultarla."
+      ],
+      "estimatedMinutes": 12,
+      "mongoData": {
+        "productos": [
+          {
+            "_id": 1,
+            "nombre": "Mouse",
+            "precio": 50
+          },
+          {
+            "_id": 2,
+            "nombre": "Teclado",
+            "precio": 100
+          },
+          {
+            "_id": 3,
+            "nombre": "Monitor",
+            "precio": 250
+          }
+        ]
+      },
+      "functionNames": [
+        "buscarEconomicos"
+      ]
+    },
+    {
+      "id": "mongo-crud-stock",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "intermedio",
+      "title": "Actualizá el stock de un producto",
+      "summary": "Combiná updateOne con $inc y $set.",
+      "statement": "Implementá `reponerProducto(db, id, unidades)` para aumentar el stock y marcar como disponible el producto que recibe una reposición.",
+      "objectives": [
+        "Actualizar un documento con updateOne.",
+        "Usar operadores $inc y $set.",
+        "Interpretar el resultado de una operación de escritura."
+      ],
+      "requirements": [
+        "Buscá por _id.",
+        "Incrementá stock en unidades usando $inc.",
+        "Establecé disponible en true con $set.",
+        "Devolvé el resultado de updateOne.",
+        "No reemplaces el documento entero."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function reponerProducto(db, id, unidades) {\n  // Actualizá el stock y el estado del producto.\n}\n",
+      "tests": [
+        {
+          "label": "Incrementa el stock en la cantidad recibida",
+          "expression": "await (async()=>{await reponerProducto(db,2,5);return db.collection('productos').findOne({_id:2})})()",
+          "expected": {
+            "_id": 2,
+            "nombre": "Teclado",
+            "stock": 8,
+            "disponible": true
+          }
+        },
+        {
+          "label": "Devuelve el resultado de la actualización",
+          "expression": "await reponerProducto(db,99,1)",
+          "expected": {
+            "acknowledged": true,
+            "matchedCount": 0,
+            "modifiedCount": 0
+          }
+        }
+      ],
+      "hints": [
+        "updateOne recibe un filtro y un documento de actualización.",
+        "$inc suma una cantidad al valor actual.",
+        "$set cambia una o más propiedades del documento."
+      ],
+      "solutionCode": "async function reponerProducto(db, id, unidades) {\n  return db.collection(\"productos\").updateOne(\n    { _id: id },\n    { $inc: { stock: unidades }, $set: { disponible: true } }\n  );\n}",
+      "solutionExplanation": "updateOne actualiza el primer documento que coincide con el filtro. Los operadores de actualización modifican campos concretos y devuelven contadores matchedCount y modifiedCount.",
+      "commonMistakes": [
+        "Pasar campos directos sin $inc o $set y terminar reemplazando el documento.",
+        "Usar updateMany cuando solo se pide un producto.",
+        "Olvidar devolver el resultado de la operación."
+      ],
+      "estimatedMinutes": 18,
+      "mongoData": {
+        "productos": [
+          {
+            "_id": 1,
+            "nombre": "Mouse",
+            "stock": 3,
+            "disponible": true
+          },
+          {
+            "_id": 2,
+            "nombre": "Teclado",
+            "stock": 3,
+            "disponible": false
+          }
+        ]
+      },
+      "functionNames": [
+        "reponerProducto"
+      ]
+    },
+    {
+      "id": "mongo-aggregate-resumen",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "avanzado",
+      "title": "Resumí ventas con aggregation",
+      "summary": "Construí un pipeline con $match, $group y $sort.",
+      "statement": "Una colección `ventas` contiene registros de operaciones. Implementá `resumirVentas(db)` para calcular el total vendido por categoría, contando cuántas operaciones se registraron y ordenando de mayor a menor importe.",
+      "objectives": [
+        "Encadenar etapas de agregación.",
+        "Filtrar documentos con $match.",
+        "Agrupar y acumular con $group.",
+        "Ordenar resultados con $sort."
+      ],
+      "requirements": [
+        "Filtrá ventas con estado 'pagada'.",
+        "Agrupá por categoria.",
+        "Calculá total con $sum sobre $importe.",
+        "Calculá operaciones con $sum: 1.",
+        "Ordená por total descendente."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function resumirVentas(db) {\n  // Devolvé un pipeline de agregación por categoría.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve categorías ordenadas por importe",
+          "expression": "await resumirVentas(db)",
+          "expected": [
+            {
+              "_id": "libros",
+              "total": 180,
+              "operaciones": 2
+            },
+            {
+              "_id": "cursos",
+              "total": 120,
+              "operaciones": 1
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "aggregate recibe un arreglo de etapas del pipeline.",
+        "$match conserva documentos que cumplen el filtro.",
+        "$group usa _id para la clave y $sum para acumular."
+      ],
+      "solutionCode": "async function resumirVentas(db) {\n  return db.collection(\"ventas\").aggregate([\n    { $match: { estado: \"pagada\" } },\n    { $group: { _id: \"$categoria\", total: { $sum: \"$importe\" }, operaciones: { $sum: 1 } } },\n    { $sort: { total: -1 } }\n  ]).toArray();\n}",
+      "solutionExplanation": "El pipeline filtra primero las ventas pagadas, agrupa por categoría y calcula dos acumuladores. La etapa $sort ordena el total de mayor a menor.",
+      "commonMistakes": [
+        "Usar find para un resumen que requiere agregación.",
+        "Agrupar por el campo equivocado.",
+        "Usar $sum: '$importe' como valor literal en lugar de objeto acumulador.",
+        "Ordenar antes de agrupar."
+      ],
+      "estimatedMinutes": 25,
+      "mongoData": {
+        "ventas": [
+          {
+            "_id": 1,
+            "categoria": "libros",
+            "importe": 100,
+            "estado": "pagada"
+          },
+          {
+            "_id": 2,
+            "categoria": "libros",
+            "importe": 80,
+            "estado": "pagada"
+          },
+          {
+            "_id": 3,
+            "categoria": "cursos",
+            "importe": 120,
+            "estado": "pagada"
+          },
+          {
+            "_id": 4,
+            "categoria": "libros",
+            "importe": 40,
+            "estado": "pendiente"
+          }
+        ]
+      },
+      "functionNames": [
+        "resumirVentas"
+      ]
+    },
+    {
+      "id": "mongo-arrays-proyeccion",
+      "technology": "mongodb",
+      "technologyName": "MongoDB",
+      "difficulty": "experto",
+      "title": "Actualizá etiquetas y proyectá resultados",
+      "summary": "Usá arrays, $addToSet y una proyección para evitar duplicados.",
+      "statement": "Tenés una colección de artículos. Implementá `agregarEtiqueta(db, id, etiqueta)` con $addToSet y `buscarEtiquetados(db, etiqueta)` para devolver solo nombre y etiquetas de los documentos que contienen esa etiqueta.",
+      "objectives": [
+        "Actualizar arreglos con $addToSet.",
+        "Consultar campos de arreglos.",
+        "Limitar campos mediante proyección."
+      ],
+      "requirements": [
+        "agregarEtiqueta debe usar updateOne y $addToSet.",
+        "buscarEtiquetados debe consultar etiquetas con el valor recibido.",
+        "Proyectá nombre y etiquetas, excluyendo _id.",
+        "Devolvé arreglos con toArray()."
+      ],
+      "language": "javascript",
+      "runner": "mongo-sim",
+      "starterCode": "async function agregarEtiqueta(db, id, etiqueta) {\n  // Agregá una etiqueta sin duplicados.\n}\n\nasync function buscarEtiquetados(db, etiqueta) {\n  // Buscá documentos y devolvé solo los campos solicitados.\n}\n",
+      "tests": [
+        {
+          "label": "Agrega una etiqueta nueva",
+          "expression": "await (async()=>{await agregarEtiqueta(db,1,'oferta');return db.collection('articulos').findOne({_id:1})})()",
+          "expected": {
+            "_id": 1,
+            "nombre": "Monitor",
+            "etiquetas": [
+              "hardware",
+              "oferta"
+            ]
+          }
+        },
+        {
+          "label": "No duplica una etiqueta existente",
+          "expression": "await (async()=>{await agregarEtiqueta(db,1,'hardware');return (await db.collection('articulos').findOne({_id:1})).etiquetas})()",
+          "expected": [
+            "hardware",
+            "oferta"
+          ]
+        },
+        {
+          "label": "Devuelve solo nombre y etiquetas",
+          "expression": "await buscarEtiquetados(db,'oferta')",
+          "expected": [
+            {
+              "nombre": "Monitor",
+              "etiquetas": [
+                "hardware",
+                "oferta"
+              ]
+            }
+          ]
+        }
+      ],
+      "hints": [
+        "$addToSet agrega un valor solo cuando todavía no existe.",
+        "MongoDB puede comparar un campo de arreglo con un valor para encontrar documentos que lo contienen.",
+        "El segundo argumento de find acepta una proyección de campos."
+      ],
+      "solutionCode": "async function agregarEtiqueta(db, id, etiqueta) {\n  return db.collection(\"articulos\").updateOne({ _id: id }, { $addToSet: { etiquetas: etiqueta } });\n}\n\nasync function buscarEtiquetados(db, etiqueta) {\n  return db.collection(\"articulos\").find({ etiquetas: etiqueta }, { projection: { _id: 0, nombre: 1, etiquetas: 1 } }).toArray();\n}",
+      "solutionExplanation": "$addToSet añade un valor a un arreglo sin repetirlo. La consulta por etiquetas encuentra documentos cuyo arreglo contiene el elemento y la proyección limita los campos devueltos.",
+      "commonMistakes": [
+        "Usar $push y crear duplicados.",
+        "Buscar etiquetas dentro de una cadena con includes.",
+        "Olvidar desactivar _id cuando la consigna pide solo nombre y etiquetas.",
+        "Reemplazar el arreglo completo en lugar de agregar un único valor."
+      ],
+      "estimatedMinutes": 32,
+      "mongoData": {
+        "articulos": [
+          {
+            "_id": 1,
+            "nombre": "Monitor",
+            "etiquetas": [
+              "hardware"
+            ]
+          },
+          {
+            "_id": 2,
+            "nombre": "Libro",
+            "etiquetas": [
+              "lectura"
+            ]
+          }
+        ]
+      },
+      "functionNames": [
+        "agregarEtiqueta",
+        "buscarEtiquetados"
+      ]
+    }
+  ]
+}

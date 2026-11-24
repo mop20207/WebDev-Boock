@@ -1,0 +1,554 @@
+{
+  "schemaVersion": 1,
+  "id": "backend",
+  "title": "Laboratorio Backend y APIs",
+  "description": "Trabajá con módulos de Node.js, rutas, servicios y comunicación HTTP mediante simulaciones controladas.",
+  "technologies": [
+    "nodejs",
+    "apis"
+  ],
+  "challengeCount": 8,
+  "challenges": [
+    {
+      "id": "node-config-entorno",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "principiante",
+      "title": "Leé la configuración del entorno",
+      "summary": "Usá process.env y convertí valores de configuración.",
+      "statement": "Implementá crearConfiguracion para obtener PORT, NODE_ENV y API_PREFIX desde el entorno. PORT debe convertirse a número y deben existir valores predeterminados.",
+      "objectives": [
+        "Reconocer process.env.",
+        "Convertir una variable de entorno numérica.",
+        "Definir valores predeterminados seguros."
+      ],
+      "requirements": [
+        "Exportá crearConfiguracion mediante module.exports.",
+        "PORT debe convertirse a number y usar 3000 como predeterminado.",
+        "production debe ser true solo cuando NODE_ENV sea production.",
+        "apiPrefix debe usar /api si no está definido."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "function crearConfiguracion(env = process.env) {\n  // Leé las variables y devolvé el objeto de configuración.\n}\nmodule.exports = { crearConfiguracion };",
+      "tests": [
+        {
+          "label": "Convierte y devuelve la configuración del entorno",
+          "expression": "module.exports.crearConfiguracion()",
+          "expected": {
+            "port": 4173,
+            "production": true,
+            "apiPrefix": "/api/v1"
+          }
+        }
+      ],
+      "hints": [
+        "process.env contiene valores de texto.",
+        "Convertí PORT usando Number(...).",
+        "Usá el operador || para proporcionar valores por defecto."
+      ],
+      "solutionCode": "function crearConfiguracion(env = process.env) {\n  return {\n    port: Number(env.PORT || 3000),\n    production: env.NODE_ENV === \"production\",\n    apiPrefix: env.API_PREFIX || \"/api\"\n  };\n}\nmodule.exports = { crearConfiguracion };",
+      "solutionExplanation": "process.env permite consultar variables definidas en el entorno donde se ejecuta Node.js. Como sus valores son cadenas, PORT se convierte explícitamente a number. Los valores predeterminados hacen que la aplicación pueda arrancar sin una configuración completa.",
+      "commonMistakes": [
+        "Tratar PORT como número sin convertirlo.",
+        "Comparar NODE_ENV con una cadena distinta de production.",
+        "Olvidar los valores predeterminados.",
+        "Usar variables globales del navegador en un módulo Node."
+      ],
+      "estimatedMinutes": 12,
+      "environment": {
+        "NODE_ENV": "production",
+        "PORT": "4173",
+        "API_PREFIX": "/api/v1"
+      }
+    },
+    {
+      "id": "node-path-modulos",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "intermedio",
+      "title": "Construí rutas de archivos con node:path",
+      "summary": "Practicá módulos CommonJS y utilidades de rutas.",
+      "statement": "Implementá funciones que construyan la ruta de un recurso dentro de la carpeta pública y obtengan la extensión de un archivo. Usá el módulo path en vez de concatenar separadores manualmente.",
+      "objectives": [
+        "Importar un módulo nativo con require.",
+        "Usar path.join y path.extname.",
+        "Exportar funciones mediante CommonJS."
+      ],
+      "requirements": [
+        "Importá node:path.",
+        "crearRutaAsset debe unir /srv/app/public con el nombre recibido.",
+        "obtenerExtension debe devolver la extensión, incluido el punto.",
+        "Exportá ambas funciones en module.exports."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "const path = require('node:path');\n\nfunction crearRutaAsset(nombre) {\n  // Construí una ruta dentro de public.\n}\n\nfunction obtenerExtension(nombre) {\n  // Devolvé la extensión del archivo.\n}\n\nmodule.exports = { crearRutaAsset, obtenerExtension };",
+      "tests": [
+        {
+          "label": "Construye una ruta con separadores del sistema",
+          "expression": "module.exports.crearRutaAsset('css/site.css')",
+          "expected": "/srv/app/public/css/site.css"
+        },
+        {
+          "label": "Obtiene la extensión final",
+          "expression": "module.exports.obtenerExtension('main.bundle.js')",
+          "expected": ".js"
+        },
+        {
+          "label": "Devuelve una cadena vacía si no hay extensión",
+          "expression": "module.exports.obtenerExtension('README')",
+          "expected": ""
+        }
+      ],
+      "hints": [
+        "require('node:path') carga el módulo nativo de rutas.",
+        "path.join combina segmentos y normaliza separadores.",
+        "path.extname devuelve la extensión del último segmento."
+      ],
+      "solutionCode": "const path = require(\"node:path\");\n\nfunction crearRutaAsset(nombre) {\n  if (path.isAbsolute(nombre)) throw new Error(\"La ruta debe ser relativa\");\n  return path.join(\"/srv/app/public\", nombre);\n}\n\nfunction obtenerExtension(nombre) {\n  return path.extname(nombre);\n}\n\nmodule.exports = { crearRutaAsset, obtenerExtension };",
+      "solutionExplanation": "CommonJS permite importar módulos con require y exportar valores mediante module.exports. path.join evita concatenaciones frágiles de barras y path.extname extrae la extensión del archivo.",
+      "commonMistakes": [
+        "Concatenar rutas con + en vez de usar path.",
+        "Olvidar exportar las funciones.",
+        "Confundir basename con extname.",
+        "No validar las rutas absolutas cuando la función requiere rutas relativas."
+      ],
+      "estimatedMinutes": 18,
+      "environment": {}
+    },
+    {
+      "id": "node-event-emitter",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "avanzado",
+      "title": "Organizá eventos con EventEmitter",
+      "summary": "Desacoplá la emisión de eventos de las funciones que los procesan.",
+      "statement": "Creá un canal de pedidos con EventEmitter. El canal debe contar cuántas veces se emite el evento pedido-creado y ofrecer un método para registrar un listener de una sola ejecución.",
+      "objectives": [
+        "Importar EventEmitter desde node:events.",
+        "Registrar listeners con on y once.",
+        "Emitir eventos y mantener contadores."
+      ],
+      "requirements": [
+        "Exportá crearCanalPedidos y contarUnaVez.",
+        "crearCanalPedidos debe devolver emitter y getNotificaciones.",
+        "Cada evento pedido-creado incrementa el contador.",
+        "contarUnaVez debe ejecutar su listener una sola vez aunque el evento se emita dos veces."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "const { EventEmitter } = require('node:events');\n\nfunction crearCanalPedidos() {\n  // Creá el emisor y el contador de notificaciones.\n}\n\nfunction contarUnaVez() {\n  // Registrá un listener que se ejecute una sola vez.\n}\n\nmodule.exports = { crearCanalPedidos, contarUnaVez };",
+      "tests": [
+        {
+          "label": "Cuenta los eventos recibidos",
+          "expression": "(function(){const canal=module.exports.crearCanalPedidos();canal.emitter.emit('pedido-creado');canal.emitter.emit('pedido-creado');return canal.getNotificaciones();})()",
+          "expected": 2
+        },
+        {
+          "label": "El listener once solo se ejecuta una vez",
+          "expression": "module.exports.contarUnaVez()",
+          "expected": 1
+        }
+      ],
+      "hints": [
+        "Instanciá EventEmitter con new EventEmitter().",
+        "Usá on para registrar un listener persistente.",
+        "Usá once para un listener que se elimina automáticamente después del primer evento."
+      ],
+      "solutionCode": "const { EventEmitter } = require(\"node:events\");\n\nfunction crearCanalPedidos() {\n  const emitter = new EventEmitter();\n  let notificaciones = 0;\n  emitter.on(\"pedido-creado\", () => { notificaciones += 1; });\n  return { emitter, getNotificaciones: () => notificaciones };\n}\n\nfunction contarUnaVez() {\n  const emitter = new EventEmitter();\n  let total = 0;\n  emitter.once(\"cerrar\", () => { total += 1; });\n  emitter.emit(\"cerrar\");\n  emitter.emit(\"cerrar\");\n  return total;\n}\n\nmodule.exports = { crearCanalPedidos, contarUnaVez };",
+      "solutionExplanation": "EventEmitter implementa el patrón observador. on registra una función que permanece activa y once registra una función de un único uso. El emisor no necesita conocer los detalles de quienes reaccionan al evento.",
+      "commonMistakes": [
+        "Invocar el listener directamente en vez de emitir el evento.",
+        "Usar on cuando se requiere una única ejecución.",
+        "No devolver el emisor desde la función de fábrica.",
+        "Compartir contadores globales entre instancias."
+      ],
+      "estimatedMinutes": 25,
+      "environment": {}
+    },
+    {
+      "id": "node-fs-promises",
+      "technology": "nodejs",
+      "technologyName": "Node.js",
+      "difficulty": "experto",
+      "title": "Guardá y leé un informe con fs/promises",
+      "summary": "Practicá operaciones asíncronas de archivos y manejo de errores.",
+      "statement": "Implementá guardarInforme y leerInforme usando node:fs/promises. La primera función debe crear el directorio si falta, escribir el contenido y devolver lo leído. La segunda debe devolver null cuando el archivo no exista.",
+      "objectives": [
+        "Importar fs/promises y path.",
+        "Usar async/await con operaciones de archivos.",
+        "Manejar errores identificando el código ENOENT."
+      ],
+      "requirements": [
+        "Importá node:fs/promises y node:path.",
+        "guardarInforme debe crear el directorio recursivamente.",
+        "Escribí y luego leé el archivo con codificación utf8.",
+        "leerInforme debe devolver null ante ENOENT y propagar otros errores.",
+        "Exportá ambas funciones mediante module.exports."
+      ],
+      "language": "javascript",
+      "runner": "node-sim",
+      "starterCode": "const fs = require('node:fs/promises');\nconst path = require('node:path');\n\nasync function guardarInforme(ruta, contenido) {\n  // Creá el directorio, escribí y volvé a leer el archivo.\n}\n\nasync function leerInforme(ruta) {\n  // Capturá solo el error de archivo inexistente.\n}\n\nmodule.exports = { guardarInforme, leerInforme };",
+      "tests": [
+        {
+          "label": "Crea el directorio y guarda el contenido",
+          "expression": "module.exports.guardarInforme('/workspace/reportes/ventas.txt', 'Ventas: 42')",
+          "expected": "Ventas: 42"
+        },
+        {
+          "label": "Devuelve null si el archivo no existe",
+          "expression": "module.exports.leerInforme('/workspace/no-existe.txt')",
+          "expected": null
+        }
+      ],
+      "hints": [
+        "path.dirname(ruta) obtiene el directorio padre.",
+        "await fs.mkdir(directorio, { recursive: true }) crea los directorios necesarios.",
+        "Leé el archivo con await fs.readFile(ruta, 'utf8') y capturá ENOENT."
+      ],
+      "solutionCode": "const fs = require(\"node:fs/promises\");\nconst path = require(\"node:path\");\n\nasync function guardarInforme(ruta, contenido) {\n  await fs.mkdir(path.dirname(ruta), { recursive: true });\n  await fs.writeFile(ruta, contenido, \"utf8\");\n  return fs.readFile(ruta, \"utf8\");\n}\n\nasync function leerInforme(ruta) {\n  try {\n    return await fs.readFile(ruta, \"utf8\");\n  } catch (error) {\n    if (error.code === \"ENOENT\") return null;\n    throw error;\n  }\n}\n\nmodule.exports = { guardarInforme, leerInforme };",
+      "solutionExplanation": "fs/promises ofrece operaciones asíncronas que devuelven promesas. mkdir con recursive evita fallar si el directorio ya existe o si faltan carpetas intermedias. leerInforme captura solo ENOENT: los demás errores deben propagarse para no ocultar fallos inesperados.",
+      "commonMistakes": [
+        "Usar las variantes síncronas en una operación asíncrona.",
+        "Olvidar await y devolver una promesa donde se espera contenido.",
+        "Capturar cualquier error y devolver null, ocultando errores reales.",
+        "No crear el directorio antes de escribir el archivo."
+      ],
+      "estimatedMinutes": 30,
+      "environment": {},
+      "virtualFiles": {}
+    },
+    {
+      "id": "api-get-json",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "principiante",
+      "title": "Consumí un endpoint JSON",
+      "summary": "Usá fetch, comprobá la respuesta y parseá el cuerpo.",
+      "statement": "Implementá `obtenerUsuarios()` para solicitar `/api/usuarios`. La API devuelve un objeto JSON con una propiedad data. Tu función debe devolver el arreglo y detectar respuestas HTTP fallidas.",
+      "objectives": [
+        "Realizar una petición GET con fetch.",
+        "Comprobar response.ok.",
+        "Parsear JSON de forma asíncrona."
+      ],
+      "requirements": [
+        "Usá fetch('/api/usuarios').",
+        "Si response.ok es false, lanzá un Error.",
+        "Devolvé el arreglo response.json().data.",
+        "No uses XMLHttpRequest."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function obtenerUsuarios() {\n  // Solicitá los usuarios y devolvé el arreglo data.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve el arreglo de usuarios",
+          "expression": "await api.obtenerUsuarios()",
+          "expected": [
+            {
+              "id": 1,
+              "nombre": "Ada"
+            },
+            {
+              "id": 2,
+              "nombre": "Linus"
+            }
+          ]
+        },
+        {
+          "label": "Usa GET para consultar el endpoint",
+          "expression": "api.fetch.requests[0].options.method",
+          "expected": "GET"
+        }
+      ],
+      "hints": [
+        "fetch devuelve una promesa con un objeto Response.",
+        "Comprobá response.ok antes de leer el resultado.",
+        "response.json() también devuelve una promesa, por eso necesitás await."
+      ],
+      "solutionCode": "async function obtenerUsuarios() {\n  const response = await fetch(\"/api/usuarios\");\n  if (!response.ok) throw new Error(\"No se pudieron obtener los usuarios\");\n  const body = await response.json();\n  return body.data;\n}",
+      "solutionExplanation": "fetch realiza la petición HTTP. response.ok permite distinguir respuestas satisfactorias de errores HTTP. json() convierte el cuerpo JSON en un objeto JavaScript y data contiene el arreglo solicitado.",
+      "commonMistakes": [
+        "Olvidar await antes de response.json().",
+        "No comprobar response.ok.",
+        "Devolver todo el objeto cuando se solicita data.",
+        "Usar console.log en lugar de return."
+      ],
+      "estimatedMinutes": 12,
+      "apiFixtures": {
+        "/api/usuarios": {
+          "status": 200,
+          "body": {
+            "data": [
+              {
+                "id": 1,
+                "nombre": "Ada"
+              },
+              {
+                "id": 2,
+                "nombre": "Linus"
+              }
+            ]
+          }
+        }
+      },
+      "functionName": "obtenerUsuarios"
+    },
+    {
+      "id": "api-post-json",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "intermedio",
+      "title": "Enviá datos con POST",
+      "summary": "Construí una petición con JSON y encabezados apropiados.",
+      "statement": "Implementá `crearTarea(tarea)` para enviar una nueva tarea a `/api/tareas`. Enviá JSON con Content-Type y devolvé el recurso creado.",
+      "objectives": [
+        "Elegir el método POST.",
+        "Serializar datos con JSON.stringify.",
+        "Configurar encabezados HTTP."
+      ],
+      "requirements": [
+        "Usá method: 'POST'.",
+        "Incluí Content-Type: application/json.",
+        "Serializá tarea en body.",
+        "Comprobá response.ok y devolvé el JSON creado."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function crearTarea(tarea) {\n  // Enviá la tarea como JSON.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve el recurso creado por el servidor",
+          "expression": "await api.crearTarea({titulo:'Estudiar Fetch'})",
+          "expected": {
+            "id": 31,
+            "titulo": "Estudiar Fetch",
+            "completada": false
+          }
+        },
+        {
+          "label": "Envía POST",
+          "expression": "api.fetch.requests[0].options.method",
+          "expected": "POST"
+        },
+        {
+          "label": "Serializa el cuerpo como JSON",
+          "expression": "api.fetch.requests[0].options.body",
+          "expected": "{\"titulo\":\"Estudiar Fetch\"}"
+        },
+        {
+          "label": "Incluye Content-Type JSON",
+          "expression": "api.fetch.requests[0].options.headers['Content-Type']",
+          "expected": "application/json"
+        }
+      ],
+      "hints": [
+        "El método se define en la propiedad method de las opciones de fetch.",
+        "JSON.stringify convierte el objeto en una cadena JSON.",
+        "Agregá Content-Type para que el servidor interprete el cuerpo como JSON."
+      ],
+      "solutionCode": "async function crearTarea(tarea) {\n  const response = await fetch(\"/api/tareas\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(tarea)\n  });\n  if (!response.ok) throw new Error(\"No se pudo crear la tarea\");\n  return response.json();\n}",
+      "solutionExplanation": "POST envía datos al servidor. JSON.stringify serializa el objeto y Content-Type informa el formato del cuerpo. La función comprueba la respuesta antes de devolver el recurso creado.",
+      "commonMistakes": [
+        "Enviar un objeto directamente en body.",
+        "Usar GET para crear datos.",
+        "Olvidar Content-Type.",
+        "No comprobar errores del servidor."
+      ],
+      "estimatedMinutes": 18,
+      "apiFixtures": {
+        "/api/tareas": {
+          "status": 201,
+          "body": {
+            "id": 31,
+            "titulo": "Estudiar Fetch",
+            "completada": false
+          }
+        }
+      },
+      "functionName": "crearTarea"
+    },
+    {
+      "id": "api-paginacion",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "avanzado",
+      "title": "Recorré una API paginada",
+      "summary": "Combiná query parameters y peticiones sucesivas.",
+      "statement": "Implementá `obtenerTodosLosLibros()` para recorrer las páginas de `/api/libros?page=N`. Cada respuesta incluye items y nextPage. Reuní todos los libros hasta que nextPage sea null.",
+      "objectives": [
+        "Construir query parameters.",
+        "Procesar respuestas por páginas.",
+        "Acumular resultados sin perder datos."
+      ],
+      "requirements": [
+        "Comenzá en la página 1.",
+        "Solicitá /api/libros?page=N.",
+        "Agregá items al arreglo acumulado.",
+        "Continuá usando nextPage mientras no sea null.",
+        "Devolvé todos los registros."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function obtenerTodosLosLibros() {\n  // Recorre todas las páginas y acumula items.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve los libros de las tres páginas",
+          "expression": "await api.obtenerTodosLosLibros()",
+          "expected": [
+            {
+              "id": 1,
+              "titulo": "Dune"
+            },
+            {
+              "id": 2,
+              "titulo": "Solaris"
+            },
+            {
+              "id": 3,
+              "titulo": "Fundación"
+            }
+          ]
+        },
+        {
+          "label": "Solicita la primera página",
+          "expression": "api.fetch.requests[0].url",
+          "expected": "/api/libros?page=1"
+        },
+        {
+          "label": "Consulta la última página",
+          "expression": "api.fetch.requests.map(item=>item.url)",
+          "expected": [
+            "/api/libros?page=1",
+            "/api/libros?page=2",
+            "/api/libros?page=3"
+          ]
+        }
+      ],
+      "hints": [
+        "Usá un arreglo acumulador iniciado en [].",
+        "La respuesta indica la siguiente página que existe.",
+        "Finalizá el ciclo cuando nextPage sea null."
+      ],
+      "solutionCode": "async function obtenerTodosLosLibros() {\n  const libros = [];\n  let pagina = 1;\n  while (pagina !== null) {\n    const response = await fetch(`/api/libros?page=${pagina}`);\n    if (!response.ok) throw new Error(\"Falló la consulta de libros\");\n    const body = await response.json();\n    libros.push(...body.items);\n    pagina = body.nextPage;\n  }\n  return libros;\n}",
+      "solutionExplanation": "Cada respuesta contiene items y nextPage. El ciclo agrega los elementos de la página y toma el número de la siguiente. Cuando nextPage vale null, el recorrido termina.",
+      "commonMistakes": [
+        "Fijar el número de páginas a mano.",
+        "Olvidar actualizar pagina y generar un ciclo infinito.",
+        "Sobrescribir el acumulador en cada vuelta.",
+        "No comprobar errores HTTP entre páginas."
+      ],
+      "estimatedMinutes": 25,
+      "apiFixtures": {
+        "/api/libros?page=1": {
+          "status": 200,
+          "body": {
+            "items": [
+              {
+                "id": 1,
+                "titulo": "Dune"
+              }
+            ],
+            "nextPage": 2
+          }
+        },
+        "/api/libros?page=2": {
+          "status": 200,
+          "body": {
+            "items": [
+              {
+                "id": 2,
+                "titulo": "Solaris"
+              }
+            ],
+            "nextPage": 3
+          }
+        },
+        "/api/libros?page=3": {
+          "status": 200,
+          "body": {
+            "items": [
+              {
+                "id": 3,
+                "titulo": "Fundación"
+              }
+            ],
+            "nextPage": null
+          }
+        }
+      },
+      "functionName": "obtenerTodosLosLibros"
+    },
+    {
+      "id": "api-auth-timeout-error",
+      "technology": "apis",
+      "technologyName": "APIs y comunicación web",
+      "difficulty": "experto",
+      "title": "ManejÁ token, timeout y errores HTTP",
+      "summary": "Centralizá peticiones autenticadas y respuestas fallidas.",
+      "statement": "Implementá `obtenerPerfil(token)` para solicitar `/api/perfil` con un token Bearer y un AbortSignal de timeout. Si el servidor responde con error, lanzá un mensaje claro sin filtrar datos sensibles.",
+      "objectives": [
+        "Construir encabezados de autenticación.",
+        "Controlar duración de una petición.",
+        "Distinguir errores HTTP de errores de red."
+      ],
+      "requirements": [
+        "Enviá Authorization: Bearer <token>.",
+        "Usá AbortController y configurá un timeout de 1000 ms.",
+        "Pasá signal a fetch.",
+        "Si response.ok es false, lanzá Error('No se pudo cargar el perfil').",
+        "Devolvé el JSON en caso de éxito."
+      ],
+      "language": "javascript",
+      "runner": "api-sim",
+      "starterCode": "async function obtenerPerfil(token) {\n  // Realizá la petición autenticada con timeout y manejo de errores.\n}\n",
+      "tests": [
+        {
+          "label": "Devuelve el perfil cuando la autenticación es válida",
+          "expression": "await api.obtenerPerfil('token-demo')",
+          "expected": {
+            "id": 7,
+            "nombre": "Ada",
+            "rol": "editora"
+          }
+        },
+        {
+          "label": "Envía el token Bearer",
+          "expression": "api.fetch.requests[0].options.headers.Authorization",
+          "expected": "Bearer token-demo"
+        },
+        {
+          "label": "Usa un AbortSignal",
+          "expression": "Boolean(api.fetch.requests[0].options.signal)",
+          "expected": true
+        }
+      ],
+      "hints": [
+        "Creá un AbortController antes de iniciar fetch.",
+        "Programá controller.abort() con setTimeout y pasá controller.signal.",
+        "Usá finally para limpiar el temporizador."
+      ],
+      "solutionCode": "async function obtenerPerfil(token) {\n  const controller = new AbortController();\n  const timeout = setTimeout(() => controller.abort(), 1000);\n  try {\n    const response = await fetch(\"/api/perfil\", {\n      headers: { Authorization: `Bearer ${token}` },\n      signal: controller.signal\n    });\n    if (!response.ok) throw new Error(\"No se pudo cargar el perfil\");\n    return await response.json();\n  } finally {\n    clearTimeout(timeout);\n  }\n}",
+      "solutionExplanation": "AbortController crea una señal que se pasa a fetch. El temporizador solicita la cancelación después del límite configurado y finally garantiza su limpieza tanto cuando la petición funciona como cuando falla. El mensaje de error no revela el token.",
+      "commonMistakes": [
+        "Enviar el token como query parameter y filtrarlo en URLs.",
+        "Olvidar limpiar el temporizador.",
+        "Ignorar response.ok.",
+        "Capturar cualquier error y devolver un objeto que parece válido."
+      ],
+      "estimatedMinutes": 32,
+      "apiFixtures": {
+        "/api/perfil": {
+          "status": 200,
+          "body": {
+            "id": 7,
+            "nombre": "Ada",
+            "rol": "editora"
+          }
+        }
+      },
+      "functionName": "obtenerPerfil"
+    }
+  ]
+}

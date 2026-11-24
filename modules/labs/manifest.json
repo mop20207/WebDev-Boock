@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "manifestVersion": "d278f13846c47b452d4db96e21b3b955c0170e58ed93c148caf47c61c30b6cfe",
+  "packages": [
+    {
+      "id": "frontend",
+      "path": "modules/labs/packages/frontend.json",
+      "version": "56d785242fea",
+      "sha256": "56d785242feaed924774a2c4f5f5f7c9e623a00afb3b1b9738adf85eb8965c02",
+      "sizeBytes": 76011,
+      "challengeCount": 24
+    },
+    {
+      "id": "backend",
+      "path": "modules/labs/packages/backend.json",
+      "version": "27eee134d414",
+      "sha256": "27eee134d4146ffe32866ad177127b77f3f16d1015131cf2c2bf00da54532980",
+      "sizeBytes": 26024,
+      "challengeCount": 8
+    },
+    {
+      "id": "databases",
+      "path": "modules/labs/packages/databases.json",
+      "version": "f8a12204b5c2",
+      "sha256": "f8a12204b5c24cfc307178858f819ddf96c109f5007ebff722da6b639d283e73",
+      "sizeBytes": 27401,
+      "challengeCount": 8
+    },
+    {
+      "id": "typescript",
+      "path": "modules/labs/packages/typescript.json",
+      "version": "28e41be213ac",
+      "sha256": "28e41be213ac55d02c9b0f0ae7000714a64a083fe0d179c5cbe425e53fd287d4",
+      "sizeBytes": 13015,
+      "challengeCount": 4
+    },
+    {
+      "id": "quality",
+      "path": "modules/labs/packages/quality.json",
+      "version": "f70965f4839c",
+      "sha256": "f70965f4839c9c299811e84dee526bf22211e42b010f59eecf9201c7429fc1c8",
+      "sizeBytes": 11652,
+      "challengeCount": 4
+    },
+    {
+      "id": "devops",
+      "path": "modules/labs/packages/devops.json",
+      "version": "1a0f04c0d614",
+      "sha256": "1a0f04c0d6146897bacfdf90d2d6eafde06582fcd7a158b4a7a908a14e40a5ce",
+      "sizeBytes": 14445,
+      "challengeCount": 4
+    }
+  ]
+}

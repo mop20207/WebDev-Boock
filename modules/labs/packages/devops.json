@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "id": "devops",
+  "title": "Laboratorio DevOps",
+  "description": "Interpretá Dockerfiles, Compose y configuraciones de entrega mediante validadores estáticos.",
+  "technologies": [
+    "docker-deploy"
+  ],
+  "challengeCount": 4,
+  "challenges": [
+    {
+      "id": "dockerfile-node-basico",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "principiante",
+      "title": "Escribí un Dockerfile para Node.js",
+      "summary": "Definí la imagen base, el directorio, dependencias y comando de inicio.",
+      "statement": "Completá un Dockerfile para una aplicación Node.js sencilla. La imagen debe instalar dependencias de forma reproducible y arrancar `server.js`.",
+      "objectives": [
+        "Elegir una imagen base.",
+        "Definir WORKDIR.",
+        "Instalar dependencias con npm ci.",
+        "Declarar el comando de arranque."
+      ],
+      "requirements": [
+        "Usá node:22-alpine como imagen base.",
+        "Definí WORKDIR /app.",
+        "Copiá package*.json antes del código.",
+        "Ejecutá npm ci.",
+        "Copiá el resto del proyecto.",
+        "Exponé el puerto 3000.",
+        "Definí CMD en formato exec."
+      ],
+      "language": "dockerfile",
+      "runner": "docker-static",
+      "starterCode": "FROM node:22-alpine\n# Configurá el directorio de trabajo.\n# Copiá manifiestos e instalá dependencias.\n# Copiá el código y definí el puerto y comando.",
+      "tests": [
+        {
+          "label": "Usa una imagen Node Alpine",
+          "pattern": "^FROM\\s+node:22-alpine",
+          "flags": "mi"
+        },
+        {
+          "label": "Define el directorio /app",
+          "pattern": "^WORKDIR\\s+/app\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Instala dependencias reproducibles",
+          "pattern": "^RUN\\s+npm\\s+ci\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Expone el puerto 3000",
+          "pattern": "^EXPOSE\\s+3000\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Arranca server.js con formato exec",
+          "pattern": "^CMD\\s+\\[\\s*\"node\"\\s*,\\s*\"server\\.js\"\\s*\\]",
+          "flags": "mi"
+        }
+      ],
+      "hints": [
+        "FROM define la imagen base.",
+        "npm ci usa el lockfile para instalar dependencias reproducibles.",
+        "El formato exec de CMD evita una shell innecesaria y entrega señales correctamente."
+      ],
+      "solutionCode": "FROM node:22-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
+      "solutionExplanation": "Cada instrucción crea una capa de imagen. Copiar primero los manifiestos permite reutilizar la capa de dependencias cuando solo cambia el código. CMD en formato exec inicia Node directamente.",
+      "commonMistakes": [
+        "Usar npm install cuando el proyecto cuenta con lockfile y se busca reproducibilidad.",
+        "Copiar todo antes de instalar dependencias y perder caché de capas.",
+        "Usar CMD como cadena de shell sin necesidad.",
+        "Creer que EXPOSE publica automáticamente el puerto en el host."
+      ],
+      "estimatedMinutes": 15,
+      "runnerNote": "El validador revisa el Dockerfile de manera estática. No construye ni ejecuta contenedores."
+    },
+    {
+      "id": "docker-multistage",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "intermedio",
+      "title": "Reducí una imagen con multi-stage build",
+      "summary": "Separá la etapa de instalación de dependencias del runtime.",
+      "statement": "Completá un Dockerfile multi-stage. La primera etapa prepara dependencias y la segunda copia solo lo necesario para ejecutar la aplicación. El contenedor final debe usar el usuario no privilegiado `node`.",
+      "objectives": [
+        "Nombrar etapas con AS.",
+        "Copiar artefactos entre etapas.",
+        "Reducir el contenido de la imagen final.",
+        "Evitar ejecutar como root."
+      ],
+      "requirements": [
+        "La primera etapa debe llamarse deps.",
+        "La segunda etapa debe partir de node:22-alpine.",
+        "Copiá node_modules desde --from=deps.",
+        "Copiá el código de la aplicación.",
+        "Definí USER node.",
+        "Usá CMD en formato exec."
+      ],
+      "language": "dockerfile",
+      "runner": "docker-static",
+      "starterCode": "FROM node:22-alpine AS deps\n# Instalá dependencias.\n\n# Segunda etapa de runtime.\n",
+      "tests": [
+        {
+          "label": "Declara etapa de dependencias",
+          "pattern": "^FROM\\s+node:22-alpine\\s+AS\\s+deps",
+          "flags": "mi"
+        },
+        {
+          "label": "Crea segunda etapa de runtime",
+          "pattern": "^FROM\\s+node:22-alpine",
+          "flags": "mi"
+        },
+        {
+          "label": "Copia dependencias desde deps",
+          "pattern": "^COPY\\s+--from=deps\\s+[^\\n]+",
+          "flags": "mi"
+        },
+        {
+          "label": "Usa usuario no privilegiado",
+          "pattern": "^USER\\s+node\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Declara comando de inicio",
+          "pattern": "^CMD\\s+\\[",
+          "flags": "mi"
+        }
+      ],
+      "hints": [
+        "Nombrá la primera etapa con AS deps; cada nueva instrucción FROM inicia otra etapa.",
+        "COPY --from=deps copia archivos desde la etapa de instalación a la etapa final.",
+        "USER node cambia al usuario sin privilegios para ejecutar la aplicación."
+      ],
+      "solutionCode": "FROM node:22-alpine AS deps\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\n\nFROM node:22-alpine AS runtime\nWORKDIR /app\nENV NODE_ENV=production\nCOPY --from=deps /app/node_modules ./node_modules\nCOPY --chown=node:node . .\nUSER node\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
+      "solutionExplanation": "El multi-stage build evita arrastrar herramientas de instalación a la imagen final. La segunda etapa recibe solo los archivos necesarios. USER node reduce los privilegios del proceso de la aplicación.",
+      "commonMistakes": [
+        "Copiar node_modules desde un contexto equivocado.",
+        "Olvidar que cada FROM inicia una etapa nueva.",
+        "Dejar el contenedor ejecutándose como root.",
+        "Copiar todo desde una etapa de build cuando solo se requieren artefactos concretos."
+      ],
+      "estimatedMinutes": 22,
+      "runnerNote": "Las reglas son validaciones estáticas de Dockerfile; la construcción debe probarse con Docker real."
+    },
+    {
+      "id": "docker-compose-postgres",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "avanzado",
+      "title": "Orquestá una API y PostgreSQL con Compose",
+      "summary": "Definí servicios, variables, healthcheck y volumen persistente.",
+      "statement": "Escribí un fragmento Compose con una API Node y una base PostgreSQL. La API debe esperar a que la base esté saludable y la base debe conservar sus datos en un volumen nombrado.",
+      "objectives": [
+        "Definir servicios en Compose.",
+        "Conectar servicios por nombre DNS interno.",
+        "Usar healthcheck y depends_on con condición healthy.",
+        "Persistir datos mediante volúmenes."
+      ],
+      "requirements": [
+        "Definí servicios api y db.",
+        "El servicio db debe usar postgres:17-alpine.",
+        "Definí POSTGRES_DB, POSTGRES_USER y POSTGRES_PASSWORD mediante variables.",
+        "Agregá healthcheck con pg_isready.",
+        "La API debe depender de db con condition: service_healthy.",
+        "Montá pgdata en /var/lib/postgresql/data."
+      ],
+      "language": "yaml",
+      "runner": "docker-static",
+      "starterCode": "services:\n  db:\n    image: postgres:17-alpine\n    # variables, healthcheck y volumen\n  api:\n    # build, depends_on y puerto\nvolumes:\n  # volumen persistente\n",
+      "tests": [
+        {
+          "label": "Define la base PostgreSQL",
+          "pattern": "db:\\s*\\n(?:\\s+.*\\n){0,4}\\s+image:\\s*postgres:17-alpine"
+        },
+        {
+          "label": "Configura variables de la base",
+          "pattern": "POSTGRES_DB:|POSTGRES_USER:|POSTGRES_PASSWORD:"
+        },
+        {
+          "label": "Agrega healthcheck con pg_isready",
+          "pattern": "healthcheck:[\\s\\S]*?pg_isready"
+        },
+        {
+          "label": "La API espera a que db esté saludable",
+          "pattern": "depends_on:[\\s\\S]*?db:[\\s\\S]*?condition:\\s*service_healthy"
+        },
+        {
+          "label": "Persiste los datos en un volumen nombrado",
+          "pattern": "pgdata:[\\s\\S]*?/var/lib/postgresql/data"
+        }
+      ],
+      "hints": [
+        "Compose define servicios dentro de services y permite conectarlos usando el nombre del servicio.",
+        "healthcheck puede verificar PostgreSQL con pg_isready; depends_on con service_healthy espera ese estado.",
+        "Un volumen nombrado, declarado al nivel raíz, conserva los datos entre recreaciones."
+      ],
+      "solutionCode": "services:\n  db:\n    image: postgres:17-alpine\n    environment:\n      POSTGRES_DB: webdev\n      POSTGRES_USER: app\n      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definí POSTGRES_PASSWORD}\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}\"]\n      interval: 5s\n      timeout: 3s\n      retries: 10\n  api:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      DATABASE_URL: postgres://app:$${POSTGRES_PASSWORD}@db:5432/webdev\n    depends_on:\n      db:\n        condition: service_healthy\nvolumes:\n  pgdata:",
+      "solutionExplanation": "Compose crea una red interna donde la API accede al servicio db por su nombre. healthcheck verifica que PostgreSQL acepte conexiones y service_healthy evita iniciar la API antes de tiempo. pgdata persiste los archivos de la base.",
+      "commonMistakes": [
+        "Usar localhost para conectar la API con el servicio de base dentro de Compose.",
+        "Poner depends_on sin condición y asumir que la base ya acepta conexiones.",
+        "Olvidar declarar el volumen en el nivel raíz.",
+        "Escribir contraseñas reales en el archivo Compose."
+      ],
+      "estimatedMinutes": 28,
+      "runnerNote": "Se validan patrones del YAML, no se ejecuta docker compose ni se valida el YAML con el parser oficial."
+    },
+    {
+      "id": "docker-seguridad-produccion",
+      "technology": "docker-deploy",
+      "technologyName": "Docker y despliegue",
+      "difficulty": "experto",
+      "title": "Endurecé una imagen de producción",
+      "summary": "Revisá usuario, secretos, señales y prácticas de construcción.",
+      "statement": "Construí una imagen de producción segura para una API Node. Debe ser multi-stage, evitar secretos dentro de la imagen, correr sin root, usar un healthcheck y ejecutar el proceso directamente.",
+      "objectives": [
+        "Aplicar multi-stage build.",
+        "Evitar secretos en capas de imagen.",
+        "Usar usuario no privilegiado.",
+        "Agregar healthcheck.",
+        "Preferir formato exec en CMD."
+      ],
+      "requirements": [
+        "Usá una etapa build y otra runtime.",
+        "No agregues ARG ni ENV para secretos o contraseñas.",
+        "Usá USER node.",
+        "Incluí HEALTHCHECK.",
+        "Usá CMD en formato exec.",
+        "Copiá archivos desde la etapa build en vez de copiar herramientas de compilación al runtime."
+      ],
+      "language": "dockerfile",
+      "runner": "docker-static",
+      "starterCode": "FROM node:22-alpine AS build\n# Instala y prepara la aplicación.\n\nFROM node:22-alpine AS runtime\n# Copia artefactos, configura usuario y healthcheck.\n",
+      "tests": [
+        {
+          "label": "Usa al menos dos etapas",
+          "pattern": "^FROM\\s+[^\\n]+\\s+AS\\s+build[\\s\\S]*?^FROM\\s+[^\\n]+\\s+AS\\s+runtime",
+          "flags": "mi"
+        },
+        {
+          "label": "Ejecuta como usuario node",
+          "pattern": "^USER\\s+node\\s*$",
+          "flags": "mi"
+        },
+        {
+          "label": "Incluye healthcheck",
+          "pattern": "^HEALTHCHECK\\s+",
+          "flags": "mi"
+        },
+        {
+          "label": "CMD utiliza formato exec",
+          "pattern": "^CMD\\s+\\[",
+          "flags": "mi"
+        },
+        {
+          "label": "No declara variables de entorno con nombres de secretos",
+          "pattern": "^\\s*(?:ARG|ENV)\\s+\\w*(?:PASSWORD|SECRET|TOKEN|API_KEY)\\b",
+          "flags": "gmi",
+          "negative": true
+        }
+      ],
+      "hints": [
+        "Separá build y runtime para reducir herramientas en la imagen final.",
+        "No copies secretos en capas de imagen; inyectalos al desplegar y ejecutá como USER node.",
+        "HEALTHCHECK define una señal de salud y CMD en formato exec ejecuta el proceso directamente."
+      ],
+      "solutionCode": "FROM node:22-alpine AS build\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nRUN npm run build\n\nFROM node:22-alpine AS runtime\nENV NODE_ENV=production\nWORKDIR /app\nCOPY --from=build --chown=node:node /app/dist ./dist\nCOPY --from=build --chown=node:node /app/node_modules ./node_modules\nUSER node\nEXPOSE 3000\nHEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD [\"node\", \"dist/healthcheck.js\"]\nCMD [\"node\", \"dist/server.js\"]",
+      "solutionExplanation": "Una imagen de producción separa el entorno de construcción del runtime. El proceso corre como node y los secretos se inyectan durante el despliegue, no en el Dockerfile. HEALTHCHECK permite al orquestador consultar el estado del servicio y CMD exec mejora el manejo de señales.",
+      "commonMistakes": [
+        "Guardar secretos con ARG o ENV y dejarlos en capas de la imagen.",
+        "Ejecutar como root sin una necesidad concreta.",
+        "Copiar compiladores y dependencias de desarrollo a runtime.",
+        "No definir un healthcheck realista.",
+        "Usar CMD en formato shell cuando se necesita manejo directo de señales."
+      ],
+      "estimatedMinutes": 32,
+      "runnerNote": "El analizador es estático y educativo. Para una auditoría real se requiere construir y escanear la imagen con herramientas del entorno de despliegue."
+    }
+  ]
+}

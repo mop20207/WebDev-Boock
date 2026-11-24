@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "id": "quality",
+  "title": "Laboratorio de Testing",
+  "description": "Aprendé a diseñar pruebas, interpretar resultados y detectar regresiones.",
+  "technologies": [
+    "testing"
+  ],
+  "challengeCount": 4,
+  "challenges": [
+    {
+      "id": "testing-primeras-aserciones",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "principiante",
+      "title": "Escribí pruebas para una función de suma",
+      "summary": "Usá un pequeño runner compatible con la forma básica de test y expect.",
+      "statement": "Completá `sumar(a, b)` y escribí al menos dos pruebas unitarias con `test()` y `expect().toBe()`. El runner ejecuta las pruebas que escribas y comprueba sus nombres.",
+      "objectives": [
+        "Separar código y pruebas.",
+        "Usar test para registrar casos.",
+        "Comparar resultados con toBe."
+      ],
+      "requirements": [
+        "Implementá sumar(a, b).",
+        "Registrá una prueba llamada 'suma positivos'.",
+        "Registrá otra prueba llamada 'suma con negativo'.",
+        "Cada prueba debe usar expect(...).toBe(...)."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "function sumar(a, b) {\n  // Devolvé la suma.\n}\n\ntest('suma positivos', () => {\n  // Escribí una aserción.\n});\n\ntest('suma con negativo', () => {\n  // Escribí una segunda aserción.\n});",
+      "tests": [
+        {
+          "label": "suma positivos",
+          "testName": "suma positivos"
+        },
+        {
+          "label": "suma con negativo",
+          "testName": "suma con negativo"
+        }
+      ],
+      "hints": [
+        "Una prueba registra el comportamiento esperado, no la implementación interna.",
+        "toBe compara valores primitivos con igualdad estricta.",
+        "Cada test debe tener un nombre descriptivo."
+      ],
+      "solutionCode": "function sumar(a, b) {\n  return a + b;\n}\n\ntest(\"suma positivos\", () => {\n  expect(sumar(2, 3)).toBe(5);\n});\n\ntest(\"suma con negativo\", () => {\n  expect(sumar(8, -3)).toBe(5);\n});",
+      "solutionExplanation": "Las pruebas unitarias verifican una unidad pequeña de comportamiento. test registra cada caso y expect(...).toBe(...) comprueba una igualdad estricta. Dos ejemplos cubren entradas positivas y negativas.",
+      "commonMistakes": [
+        "Escribir console.log en vez de una aserción.",
+        "Usar el resultado esperado como argumento de la función.",
+        "No llamar test y dejar las pruebas sin registrar.",
+        "Usar toBe para comparar objetos por contenido."
+      ],
+      "estimatedMinutes": 12,
+      "requiredTests": [
+        "suma positivos",
+        "suma con negativo"
+      ]
+    },
+    {
+      "id": "testing-casos-borde",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "intermedio",
+      "title": "Probá validaciones y casos límite",
+      "summary": "Verificá entradas válidas e inválidas con distintas aserciones.",
+      "statement": "Implementá `validarEdad(edad)` para aceptar únicamente enteros entre 18 y 120 inclusive. Escribí pruebas para límites y entradas inválidas.",
+      "objectives": [
+        "Identificar clases de equivalencia.",
+        "Probar límites inclusivos.",
+        "Usar aserciones booleanas y de igualdad."
+      ],
+      "requirements": [
+        "Implementá validarEdad.",
+        "Aceptá 18 y 120.",
+        "Rechazá 17, 121 y valores no enteros.",
+        "Escribí los tres tests requeridos.",
+        "Usá toBeTruthy y toBeFalsy o toBe."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "function validarEdad(edad) {\n  // Validá tipo, entero y rango.\n}\n\ntest('acepta limite inferior', () => {\n  // assertion\n});\n\ntest('acepta limite superior', () => {\n  // assertion\n});\n\ntest('rechaza valores fuera de rango', () => {\n  // assertion\n});",
+      "tests": [
+        {
+          "label": "acepta limite inferior",
+          "testName": "acepta limite inferior"
+        },
+        {
+          "label": "acepta limite superior",
+          "testName": "acepta limite superior"
+        },
+        {
+          "label": "rechaza valores fuera de rango",
+          "testName": "rechaza valores fuera de rango"
+        }
+      ],
+      "hints": [
+        "Number.isInteger permite comprobar que el dato sea entero.",
+        "El rango pedido incluye ambos extremos.",
+        "Podés combinar type checks y comparaciones con &&."
+      ],
+      "solutionCode": "function validarEdad(edad) {\n  return Number.isInteger(edad) && edad >= 18 && edad <= 120;\n}\n\ntest(\"acepta limite inferior\", () => {\n  expect(validarEdad(18)).toBeTruthy();\n});\n\ntest(\"acepta limite superior\", () => {\n  expect(validarEdad(120)).toBe(true);\n});\n\ntest(\"rechaza valores fuera de rango\", () => {\n  expect(validarEdad(17)).toBeFalsy();\n  expect(validarEdad(121)).toBe(false);\n  expect(validarEdad(18.5)).toBe(false);\n});",
+      "solutionExplanation": "Los casos límite verifican las fronteras del rango. Number.isInteger descarta decimales y la condición comprueba que la edad esté entre 18 y 120 inclusive.",
+      "commonMistakes": [
+        "Aceptar 17 o 121 por un operador incorrecto.",
+        "No validar el tipo ni los decimales.",
+        "Probar solo el caso habitual y no las fronteras.",
+        "Escribir una prueba que no ejecuta ninguna aserción."
+      ],
+      "estimatedMinutes": 18,
+      "requiredTests": [
+        "acepta limite inferior",
+        "acepta limite superior",
+        "rechaza valores fuera de rango"
+      ]
+    },
+    {
+      "id": "testing-asincrono",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "avanzado",
+      "title": "Probá una función asíncrona",
+      "summary": "Escribí tests que esperen promesas y validen resultados o errores.",
+      "statement": "Implementá `obtenerPrecio(catalogo, id)` para devolver el precio de un producto. Debe rechazar con Error cuando el producto no exista. Escribí pruebas asíncronas para ambos caminos.",
+      "objectives": [
+        "Probar promesas con pruebas asíncronas.",
+        "Usar async/await en el callback de test.",
+        "Verificar rechazos de promesas."
+      ],
+      "requirements": [
+        "La función debe ser async.",
+        "Si no existe el producto, lanzá Error('Producto inexistente').",
+        "Registrá los tests 'devuelve precio existente' y 'rechaza producto ausente'.",
+        "En la segunda prueba, comprobá el mensaje de error."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "async function obtenerPrecio(catalogo, id) {\n  // Buscá el producto o lanzá un error.\n}\n\ntest('devuelve precio existente', async () => {\n  // Esperá la promesa y comprobá el precio.\n});\n\ntest('rechaza producto ausente', async () => {\n  // Comprobá el rechazo y su mensaje.\n});",
+      "tests": [
+        {
+          "label": "devuelve precio existente",
+          "testName": "devuelve precio existente"
+        },
+        {
+          "label": "rechaza producto ausente",
+          "testName": "rechaza producto ausente"
+        }
+      ],
+      "hints": [
+        "Una función async siempre devuelve una promesa.",
+        "Usá await dentro del callback async de test.",
+        "Para comprobar el error podés usar try/catch y verificar error.message."
+      ],
+      "solutionCode": "async function obtenerPrecio(catalogo, id) {\n  const producto = catalogo.find(item => item.id === id);\n  if (!producto) throw new Error(\"Producto inexistente\");\n  return producto.precio;\n}\n\ntest(\"devuelve precio existente\", async () => {\n  const precio = await obtenerPrecio([{ id: 1, precio: 250 }], 1);\n  expect(precio).toBe(250);\n});\n\ntest(\"rechaza producto ausente\", async () => {\n  try {\n    await obtenerPrecio([], 99);\n    throw new Error(\"La promesa debía rechazarse\");\n  } catch (error) {\n    expect(error.message).toBe(\"Producto inexistente\");\n  }\n});",
+      "solutionExplanation": "Las pruebas asíncronas deben esperar la promesa; de lo contrario, el runner podría finalizar antes de conocer su resultado. La segunda prueba verifica que se produzca el error esperado, no solo que cualquier error ocurra.",
+      "commonMistakes": [
+        "No marcar el test como async.",
+        "Olvidar await y crear una prueba que termina demasiado pronto.",
+        "Capturar errores sin comprobar su mensaje.",
+        "Devolver un valor por defecto cuando la consigna requiere rechazo."
+      ],
+      "estimatedMinutes": 25,
+      "requiredTests": [
+        "devuelve precio existente",
+        "rechaza producto ausente"
+      ]
+    },
+    {
+      "id": "testing-mocks-spies",
+      "technology": "testing",
+      "technologyName": "Testing",
+      "difficulty": "experto",
+      "title": "Aislá una dependencia con un mock",
+      "summary": "Usá una función espía para comprobar la colaboración entre módulos.",
+      "statement": "Implementá `guardarPedido(pedido, repositorio)` para delegar el guardado en `repositorio.guardar`. Escribí una prueba que inyecte un spy, lo ejecute y compruebe tanto la llamada como el argumento.",
+      "objectives": [
+        "Aplicar inyección de dependencias.",
+        "Crear un mock/spy controlado.",
+        "Verificar llamadas y argumentos."
+      ],
+      "requirements": [
+        "guardarPedido debe invocar repositorio.guardar(pedido).",
+        "Debe devolver lo que retorne guardar.",
+        "Creá el doble con vi.fn().",
+        "Escribí el test 'delegar guardado al repositorio'.",
+        "Comprobá toHaveBeenCalledTimes(1) y toHaveBeenCalledWith(pedido)."
+      ],
+      "language": "javascript",
+      "runner": "testing-sim",
+      "starterCode": "async function guardarPedido(pedido, repositorio) {\n  // Delegá el guardado al repositorio.\n}\n\ntest('delegar guardado al repositorio', async () => {\n  // Creá un spy, invocá guardarPedido y verificá la llamada.\n});",
+      "tests": [
+        {
+          "label": "delegar guardado al repositorio",
+          "testName": "delegar guardado al repositorio"
+        }
+      ],
+      "hints": [
+        "La inyección de dependencias permite reemplazar el repositorio real por un spy.",
+        "vi.fn() crea una función registradora de llamadas.",
+        "toHaveBeenCalledWith comprueba los argumentos entregados al spy."
+      ],
+      "solutionCode": "async function guardarPedido(pedido, repositorio) {\n  return repositorio.guardar(pedido);\n}\n\ntest(\"delegar guardado al repositorio\", async () => {\n  const pedido = { id: 10, total: 99 };\n  const guardar = vi.fn(async valor => ({ ...valor, guardado: true }));\n  const resultado = await guardarPedido(pedido, { guardar });\n  expect(resultado.guardado).toBe(true);\n  expect(guardar).toHaveBeenCalledTimes(1);\n  expect(guardar).toHaveBeenCalledWith(pedido);\n});",
+      "solutionExplanation": "El repositorio se recibe como dependencia, lo que facilita sustituirlo en las pruebas. vi.fn registra las llamadas y permite verificar que guardarPedido delegue exactamente una vez y con el pedido correcto.",
+      "commonMistakes": [
+        "Crear el repositorio real durante una prueba unitaria.",
+        "Comprobar solo el resultado e ignorar si se llamó a la dependencia.",
+        "No pasar el argumento al spy.",
+        "Usar un mock global compartido que conserva llamadas entre pruebas."
+      ],
+      "estimatedMinutes": 30,
+      "requiredTests": [
+        "delegar guardado al repositorio"
+      ]
+    }
+  ]
+}
