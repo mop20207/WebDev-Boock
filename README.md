@@ -22,22 +22,9 @@ El catálogo de herramientas y tecnologías contiene **387 artículos distribuid
 
 ## Centro de módulos
 
-La página [Centro de módulos](pages/modules.html) muestra el núcleo de la aplicación, las 20 bibliotecas actuales (HTML, CSS, JavaScript y 17 bibliotecas tecnológicas), los laboratorios y los recursos multimedia planificados. En esta primera etapa administra el catálogo, marca prioridades locales y consulta el estado estimado del almacenamiento del navegador. Las bibliotecas existentes siguen integradas en la aplicación: todavía no se presentan como descargas independientes ni pueden desinstalarse. La etapa 2 incorporará paquetes descargables con manifiestos, dependencias, hashes de integridad y operaciones seguras; los laboratorios y los recursos multimedia se incorporarán después.
+La página [Centro de módulos](pages/modules.html) muestra el núcleo, las 20 bibliotecas (HTML, CSS, JavaScript y 17 bibliotecas tecnológicas), laboratorios y recursos multimedia. Permite buscar y filtrar módulos, marcar prioridades, consultar el almacenamiento y administrar cada paquete tecnológico. Los laboratorios y multimedia quedan reservados para las etapas 3 y 4.
 
-El módulo de administración utiliza una base IndexedDB separada (`webdev-book-modules`) para no modificar la base de actualizaciones de contenido existente (`webdev-book-content`). La estimación de almacenamiento del navegador es aproximada y corresponde al origen completo, no al tamaño individual de WebDev Book.
-
-## Bibliotecas descargables por tecnología
-
-Las 17 bibliotecas tecnológicas se distribuyen ahora como paquetes JSON independientes en `modules/libraries/packages/<id>.json`. El manifiesto `modules/libraries/manifest.json` registra la ruta, versión, cantidad de artículos, tamaño UTF-8 y hash SHA-256 de cada paquete. `modules/libraries/ecosystem.json` mantiene los metadatos resumidos necesarios para las relaciones entre tecnologías y los proyectos integradores; `modules/libraries/search-index.json` conserva la búsqueda global sin cargar el contenido completo de las 17 bibliotecas.
-
-El Centro de módulos permite descargar, actualizar, abrir y quitar la copia local de cada biblioteca. Al abrir una tecnología aún no instalada, la aplicación descarga únicamente ese paquete. La descarga se verifica en memoria antes de guardarse: tamaño esperado, hash SHA-256, JSON válido, ID de tecnología, número de artículos, categorías y referencias entre categorías. La escritura de archivo y metadatos es una única transacción IndexedDB. Si falla la red, la integridad o el espacio local, no se sustituye una versión instalada válida.
-
-Los paquetes se guardan en la base `webdev-book-modules`, en registros separados de los favoritos, progreso y proyectos. Quitar una biblioteca elimina solamente su paquete y su registro de instalación: no elimina el avance, los artículos favoritos, los archivos del editor ni los proyectos. El buscador global utiliza el índice compacto compartido; por eso puede seguir encontrando títulos y conceptos aunque una biblioteca no esté instalada.
-
-Para reducir el tamaño inicial, `data/tools.json` queda como fuente canónica de compilación y no se copia a la carpeta `www/` de Android ni se incluye en el manifiesto de actualizaciones de contenido. Los paquetes completos tampoco se incorporan a la APK: se descargan bajo demanda desde el repositorio. La aplicación incluye el manifiesto, el índice y los metadatos compactos para poder mostrar el catálogo y buscar. En el entorno web los paquetes se obtienen desde GitHub Pages; en Android se descargan desde el contenido publicado en GitHub.
-
-La generación reproducible se realiza con `npm run generate:libraries`; las comprobaciones estructurales y de integridad se ejecutan con `npm run validate:libraries`. Los tamaños del manifiesto son bytes UTF-8 sin compresión de transporte.
-
+El administrador usa IndexedDB `webdev-book-modules` para las preferencias y las instalaciones. Esta base no se mezcla con el actualizador de contenido `webdev-book-content`. La cuota estimada del navegador es orientativa y corresponde al origen completo, no a una medición exclusiva de WebDev Book.
 ## Biblioteca de proyectos
 
 La biblioteca reúne **15 proyectos completos y progresivos**: cinco principiantes, cinco intermedios y cinco avanzados. Incluye tarjetas interactivas, formularios validados, calculadora, reloj y temporizador, lista de tareas, buscador de películas, catálogo de productos, clima, panel administrativo, directorio de usuarios de demostración, autenticación segura, tienda online, blog con PostgreSQL, API REST propia y gestor full-stack.
