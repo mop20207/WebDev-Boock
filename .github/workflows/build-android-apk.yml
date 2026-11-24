@@ -74,6 +74,8 @@ jobs:
           node --check js/search.js
           node --check js/learning-progress.js
           node --check scripts/generate-library-packages.mjs
+          node --check scripts/generate-lab-packages.mjs
+          node --check scripts/validate-lab-packages.mjs
           node --check scripts/validate-library-packages.mjs
           node --check scripts/generate-content-manifest.mjs
           node scripts/generate-library-packages.mjs
