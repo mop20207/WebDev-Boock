@@ -36,6 +36,7 @@ Los paquetes se guardan en `webdev-book-modules`, separados de los favoritos, el
 Para reducir el tamaño inicial, `data/tools.json` se mantiene como fuente canónica de compilación, pero no se copia a `www/` para Android ni se incluye en el manifiesto de actualizaciones OTA. Los 17 paquetes completos tampoco se incorporan a la APK: se descargan bajo demanda desde GitHub. La aplicación incluye solamente el manifiesto, el índice global y los metadatos compactos. En GitHub Pages los paquetes se descargan desde el mismo sitio; en Android se obtienen desde el contenido publicado en GitHub.
 
 La generación reproducible se realiza con `npm run generate:libraries`; las comprobaciones de hashes, rutas y referencias se ejecutan con `npm run validate:libraries`. Los tamaños del manifiesto son bytes UTF-8 sin compresión de transporte.
+Cuando `data/tools.json` cambia en `main`, GitHub Actions regenera y valida los 17 paquetes y publica los archivos generados en un commit separado. El actualizador de contenidos JSON mantiene su manifiesto independiente y omite el antiguo catálogo monolítico.
 
 ## Biblioteca de proyectos
 
