@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "6d61ceb17789a8bd",
+  "version": "ea9aa5ea378d150f",
   "files": [
     {
       "path": "data/challenges.json",
@@ -177,6 +177,10 @@
     {
       "path": "data/laboratorio/index.json",
       "sha256": "559a262e16f95b3f221a98c561c6c33f560a9c0ecd6acdb53c2b57853eda1361"
+    },
+    {
+      "path": "data/labs/catalog.json",
+      "sha256": "0de2fd5f1e115a40d6315776d2aab78fff6b79e01a432d8fb89675862d662c78"
     },
     {
       "path": "data/projects.json",
