@@ -3,13 +3,15 @@ import { runInNewContext } from "node:vm";
 import { resolve } from "node:path";
 
 const source = await readFile(resolve("js/challenges.js"), "utf8");
-const matcher = /const script = ("(?:\\\\.|[^"\\\\])*")\\.replace\\("__PAYLOAD__", payload\\);/s;
-const match = source.match(matcher);
-if (!match) {
+const functionStart = source.indexOf("function terminalSimulationDocument");
+const scriptStart = source.indexOf("const script = ", functionStart);
+const literalStart = scriptStart + "const script = ".length;
+const literalEnd = source.indexOf('.replace("__PAYLOAD__", payload);', literalStart);
+if (functionStart < 0 || scriptStart < 0 || literalEnd < 0) {
   console.error("No se pudo localizar el runtime del simulador terminal.");
   process.exit(1);
 }
-const runtime = JSON.parse(match[1]);
+const runtime = JSON.parse(source.slice(literalStart, literalEnd).trim());
 const extras = JSON.parse(await readFile(resolve("data/lab-extras.json"), "utf8"));
 const terminalChallenges = extras.challenges.filter(challenge => challenge.runner === "terminal-sim");
 const failures = [];
