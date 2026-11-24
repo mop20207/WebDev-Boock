@@ -262,8 +262,8 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchCatalog("html-articulos.json", "HTML"),
       fetchCatalog("css-articulos.json", "CSS"),
       fetchCatalog("js-articulos.json", "JavaScript"),
-      fetch(new URL("data/tools.json", dataRoot).href, { cache: "no-store" }).then(response => {
-        if (!response.ok) throw new Error("Herramientas: HTTP " + response.status + " al cargar data/tools.json.");
+      fetch(new URL("modules/libraries/search-index.json", dataRoot).href, { cache: "no-store" }).then(response => {
+        if (!response.ok) throw new Error("Herramientas: HTTP " + response.status + " al cargar el índice de bibliotecas.");
         return response.json();
       })
     ]).then(results => {
@@ -305,25 +305,25 @@ document.addEventListener("DOMContentLoaded", () => {
         catalogWarnings.push("JavaScript: " + jsResult.reason.message);
       }
 
-      if (toolsResult.status === "fulfilled" && Array.isArray(toolsResult.value.tools)) {
-        toolsResult.value.tools.forEach(tool => {
-          (tool.categories || []).forEach(category => {
-            (category.articles || []).forEach(articleId => {
-              const article = (tool.articles || []).find(item => item.id === articleId);
-              if (!article) return;
-              const href = new URL(
-                "pages/tools-article.html?tool=" + encodeURIComponent(tool.id) + "&id=" + encodeURIComponent(article.id),
-                dataRoot
-              ).href;
-              const searchCategory = tool.title + " · " + category.title;
-              const aliases = tool.title + " " + (tool.shortTitle || "") + " " + category.title +
-                " terminal linux consola shell comandos control de versiones git github npm node paquetes dependencias";
-              entries.push(createEntry("Herramientas", searchCategory, article, href, aliases));
-            });
-          });
+      if (toolsResult.status === "fulfilled" && Array.isArray(toolsResult.value.entries)) {
+        toolsResult.value.entries.forEach(item => {
+          const article = {
+            id: item.articleId,
+            title: item.title,
+            summary: item.summary,
+            searchText: item.searchText
+          };
+          const href = new URL(
+            "pages/tools-article.html?tool=" + encodeURIComponent(item.toolId) + "&id=" + encodeURIComponent(item.articleId),
+            dataRoot
+          ).href;
+          const searchCategory = item.toolTitle + " · " + item.categoryTitle;
+          const aliases = item.toolTitle + " " + (item.toolShortTitle || "") + " " + item.categoryTitle +
+            " terminal linux consola shell comandos control de versiones git github npm node paquetes dependencias";
+          entries.push(createEntry("Herramientas", searchCategory, article, href, aliases));
         });
       } else {
-        catalogWarnings.push("Herramientas: " + (toolsResult.reason?.message || "el catálogo no tiene una estructura válida."));
+        catalogWarnings.push("Herramientas: " + (toolsResult.reason?.message || "el índice de búsqueda no tiene una estructura válida."));
       }
 
       if (!entries.length) {
