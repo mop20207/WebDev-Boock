@@ -1,0 +1,50 @@
+name: Publish interactive lab packages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/challenges.json'
+      - 'data/labs/catalog.json'
+      - 'scripts/generate-lab-packages.mjs'
+      - 'scripts/validate-lab-packages.mjs'
+      - '.github/workflows/publish-lab-packages.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: interactive-lab-packages-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Generate and publish lab packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate lab packages
+        run: node scripts/generate-lab-packages.mjs
+      - name: Validate package hashes, challenge coverage and references
+        run: node scripts/validate-lab-packages.mjs
+      - name: Commit generated packages when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- modules/labs; then
+            echo "Los paquetes de laboratorios ya están actualizados."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add modules/labs
+          git commit -m "chore(labs): publish interactive lab packages"
+          git push origin HEAD:main
