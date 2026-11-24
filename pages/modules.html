@@ -14,6 +14,7 @@
 <script defer src="../js/theme.js"></script>
 <script defer src="../js/navigation.js"></script>
 <script defer src="../js/library-packages.js"></script>
+<script defer src="../js/lab-packages.js"></script>
 <script defer src="../js/module-manager.js"></script>
 <link rel="manifest" href="../manifest.json">
 <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
@@ -54,10 +55,11 @@
     <div class="module-hero-copy">
       <div class="eyebrow"><span class="status-dot"></span> INFRAESTRUCTURA DE WEBDEV BOOK</div>
       <h1>Centro de módulos<span>.</span></h1>
-      <p>Administrá el núcleo de la aplicación y conocé qué bibliotecas ya están incluidas y qué paquetes se prepararán para descargar bajo demanda.</p>
+      <p>Administrá el núcleo, descargá bibliotecas y laboratorios por separado y conservá tus prácticas sin conexión.</p>
       <div class="module-hero-actions">
         <a class="button button-primary" href="#module-catalog">Explorar módulos <span>↓</span></a>
         <a class="button button-ghost" href="#module-architecture">Ver arquitectura</a>
+        <a class="button button-ghost" href="labs.html">Abrir laboratorios ↗</a>
       </div>
     </div>
     <div class="module-hero-visual" aria-hidden="true">
@@ -112,7 +114,7 @@
   </section>
 
   <section class="module-section" id="module-catalog" aria-labelledby="moduleCatalogHeading">
-    <div class="module-section-heading module-catalog-heading"><div><div class="eyebrow">CATÁLOGO Y ADMINISTRACIÓN</div><h2 id="moduleCatalogHeading">Todos los módulos</h2><p class="module-section-intro">Descargá solo las tecnologías que necesitás, abrí las bibliotecas instaladas y marcá tus prioridades. Laboratorios y multimedia se habilitarán en sus próximas etapas.</p></div><span class="module-result-count" id="moduleResultCount">— módulos</span></div>
+    <div class="module-section-heading module-catalog-heading"><div><div class="eyebrow">CATÁLOGO Y ADMINISTRACIÓN</div><h2 id="moduleCatalogHeading">Todos los módulos</h2><p class="module-section-intro">Descargá solo las tecnologías que necesitás, abrí las bibliotecas instaladas y marcá tus prioridades. Los laboratorios ya se pueden descargar por separado; multimedia llegará en la etapa 4.</p></div><span class="module-result-count" id="moduleResultCount">— módulos</span></div>
     <div class="module-filters" role="group" aria-label="Filtrar módulos">
       <button class="module-filter is-active" data-filter="all" type="button" aria-pressed="true">Todos</button>
       <button class="module-filter" data-filter="integrated" type="button" aria-pressed="false">Disponibles</button>
@@ -127,10 +129,10 @@
     <p class="module-empty" id="moduleEmpty" hidden>No hay módulos que coincidan con la búsqueda.</p>
   </section>
   <section class="module-note">
-    <strong>Etapa 2 · Bibliotecas independientes activas.</strong>
-    <p>Las 17 bibliotecas tecnológicas se pueden descargar, actualizar y quitar de forma independiente. La aplicación conserva en el núcleo el índice de búsqueda y los metadatos livianos; cada paquete completo se guarda en IndexedDB después de verificar SHA-256. Quitar una biblioteca no borra favoritos, progreso, proyectos ni archivos del editor.</p>
+    <strong>Etapa 3 · Laboratorios interactivos activos.</strong>
+    <p>Las 17 bibliotecas tecnológicas se pueden descargar, actualizar y quitar de forma independiente. Las 17 bibliotecas y cinco laboratorios se descargan y actualizan como paquetes independientes. Cada paquete se guarda en IndexedDB después de verificar SHA-256 y validar su estructura. Quitar un paquete no borra favoritos, progreso, proyectos ni archivos del editor. Los ejercicios de React, Vue y PGlite pueden necesitar conexión la primera vez para descargar sus motores; la terminal es una simulación segura y no ejecuta comandos reales del teléfono.</p>
   </section>
-  <footer class="module-footer"><span>WebDev Book · Núcleo y bibliotecas descargables</span><a href="../index.html">Volver al inicio ↑</a></footer>
+  <footer class="module-footer"><span>WebDev Book · Núcleo, bibliotecas y laboratorios</span><a href="../index.html">Volver al inicio ↑</a></footer>
 </div>
 </main>
 </div>
