@@ -122,6 +122,7 @@ for (const definition of definitions) {
     version: digest.slice(0, 12),
     sha256: digest,
     sizeBytes: Buffer.byteLength(content, "utf8"),
+    description: definition.description,
     challengeCount: challenges.length,
     technologyCount: definition.technologyIds.length,
     runnerTypes
@@ -130,7 +131,7 @@ for (const definition of definitions) {
 }
 
 const canonical = records.map(({ id, path, version, sha256: hash, sizeBytes, challengeCount, technologyCount, runnerTypes }) => ({
-  id, path, version, sha256: hash, sizeBytes, challengeCount, technologyCount, runnerTypes
+  id, path, version, sha256: hash, sizeBytes, description, challengeCount, technologyCount, runnerTypes
 }));
 const manifest = {
   schemaVersion: 1,
