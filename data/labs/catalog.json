@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "description": "Laboratorios prácticos descargables construidos a partir de los retos interactivos existentes.",
+  "labs": [
+    {
+      "id": "frontend",
+      "title": "Laboratorio Frontend",
+      "subtitle": "Interfaces y componentes",
+      "description": "Practicá estructura, estilos, JavaScript y componentes modernos en retos guiados.",
+      "icon": "◈",
+      "accent": "#63a6ff",
+      "technologies": [
+        "html-css",
+        "javascript",
+        "react",
+        "webcomponents",
+        "vuejs",
+        "astro"
+      ],
+      "outcomes": [
+        "Construir interfaces accesibles",
+        "Resolver interacciones del DOM",
+        "Crear y validar componentes"
+      ]
+    },
+    {
+      "id": "backend",
+      "title": "Laboratorio Backend y APIs",
+      "subtitle": "Lógica del servidor",
+      "description": "Trabajá con módulos de Node.js, rutas, servicios y comunicación HTTP mediante simulaciones controladas.",
+      "icon": "⌘",
+      "accent": "#55c89b",
+      "technologies": [
+        "nodejs",
+        "apis"
+      ],
+      "outcomes": [
+        "Comprender módulos y procesos",
+        "Diseñar endpoints",
+        "Manejar respuestas y errores HTTP"
+      ]
+    },
+    {
+      "id": "databases",
+      "title": "Laboratorio de bases de datos",
+      "subtitle": "SQL y documentos",
+      "description": "Practicá consultas relacionales y operaciones de documentos con motores o simuladores educativos.",
+      "icon": "▤",
+      "accent": "#e2b35c",
+      "technologies": [
+        "sql-postgres",
+        "mongodb"
+      ],
+      "outcomes": [
+        "Consultar y relacionar datos",
+        "Modelar documentos",
+        "Validar operaciones y resultados"
+      ]
+    },
+    {
+      "id": "typescript",
+      "title": "Laboratorio TypeScript",
+      "subtitle": "Tipado y diseño",
+      "description": "Convertí requisitos en tipos, interfaces y funciones comprobables.",
+      "icon": "TS",
+      "accent": "#5289d8",
+      "technologies": [
+        "typescript"
+      ],
+      "outcomes": [
+        "Diseñar contratos de datos",
+        "Usar uniones y genéricos",
+        "Detectar errores de tipos"
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "Laboratorio de Testing",
+      "subtitle": "Calidad de software",
+      "description": "Aprendé a diseñar pruebas, interpretar resultados y detectar regresiones.",
+      "icon": "✓",
+      "accent": "#b58ae8",
+      "technologies": [
+        "testing"
+      ],
+      "outcomes": [
+        "Escribir pruebas unitarias",
+        "Validar integración",
+        "Leer fallos y cobertura conceptual"
+      ]
+    },
+    {
+      "id": "devops",
+      "title": "Laboratorio DevOps",
+      "subtitle": "Contenedores y despliegue",
+      "description": "Interpretá Dockerfiles, Compose y configuraciones de entrega mediante validadores estáticos.",
+      "icon": "⬡",
+      "accent": "#e38d75",
+      "technologies": [
+        "docker-deploy"
+      ],
+      "outcomes": [
+        "Leer Dockerfiles",
+        "Configurar servicios Compose",
+        "Reconocer prácticas seguras de despliegue"
+      ]
+    }
+  ]
+}
