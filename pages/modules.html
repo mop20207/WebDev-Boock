@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="Centro de módulos de WebDev Book: núcleo, bibliotecas, laboratorios y recursos multimedia.">
+<title>Centro de módulos | WebDev Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/module-center.css">
+<script defer src="../js/theme.js"></script>
+<script defer src="../js/navigation.js"></script>
+<script defer src="../js/module-manager.js"></script>
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icons/icon.svg">
+<link rel="stylesheet" href="../css/pwa.css">
+<script defer src="../js/pwa.js"></script>
+</head>
+<body data-page="modules">
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+  <div class="sidebar-label">MENÚ PRINCIPAL</div>
+  <nav class="main-nav" aria-label="Navegación principal">
+    <a class="nav-link" href="../index.html">⌂ Inicio</a>
+    <a class="nav-link" href="html.html">5 HTML</a>
+    <a class="nav-link" href="css.html">✳ CSS</a>
+    <a class="nav-link" href="javascript.html">JS JavaScript</a>
+    <a class="nav-link" href="editor.html">⌘ Editor</a>
+    <div class="nav-divider"></div>
+    <a class="nav-link" href="tools.html">▦ Biblioteca de tecnologías</a>
+    <a class="nav-link" data-challenges-link href="challenges.html">⌁ Retos interactivos</a>
+    <a class="nav-link" href="projects.html">▣ Biblioteca de proyectos</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Aprendé a tu ritmo</strong><p>Instalá solo los recursos que necesites cuando los paquetes estén disponibles.</p></div>
+    <button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button>
+  </div>
+</aside>
+<main class="main-area">
+<header class="topbar">
+  <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú" aria-expanded="false">☰</button>
+  <div class="breadcrumb"><span>WebDev Book</span><b>/</b><strong>Centro de módulos</strong></div>
+  <label class="module-search"><span aria-hidden="true">⌕</span><input id="moduleSearch" type="search" placeholder="Buscar módulos..." autocomplete="off"></label>
+  <button class="top-icon" id="topThemeToggle" type="button" aria-label="Cambiar tema">◐</button>
+</header>
+<div class="page-content module-content">
+  <section class="module-hero">
+    <div class="module-hero-copy">
+      <div class="eyebrow"><span class="status-dot"></span> INFRAESTRUCTURA DE WEBDEV BOOK</div>
+      <h1>Centro de módulos<span>.</span></h1>
+      <p>Administrá el núcleo de la aplicación y conocé qué bibliotecas ya están incluidas y qué paquetes se prepararán para descargar bajo demanda.</p>
+      <div class="module-hero-actions">
+        <a class="button button-primary" href="#module-catalog">Explorar módulos <span>↓</span></a>
+        <a class="button button-ghost" href="#module-architecture">Ver arquitectura</a>
+      </div>
+    </div>
+    <div class="module-hero-visual" aria-hidden="true">
+      <div class="module-core-orbit orbit-a"></div><div class="module-core-orbit orbit-b"></div>
+      <div class="module-core-box"><span>CORE</span><strong>&lt;/&gt;</strong><small>WEBDEV BOOK</small></div>
+      <i class="orbit-node node-one">HTML</i><i class="orbit-node node-two">JS</i><i class="orbit-node node-three">LAB</i>
+    </div>
+    <div class="module-hero-foot"><span>Versión del catálogo <b id="catalogVersion">—</b></span><span id="catalogStatus" role="status">Cargando catálogo…</span></div>
+  </section>
+
+  <section class="module-stats" aria-label="Resumen del catálogo">
+    <article class="module-stat"><span class="module-stat-icon">⌂</span><div><small>NÚCLEO</small><strong id="statCore">1</strong><span>módulo esencial</span></div></article>
+    <article class="module-stat"><span class="module-stat-icon">▦</span><div><small>BIBLIOTECAS INTEGRADAS</small><strong id="statLibraries">20</strong><span>HTML, CSS, JS y tecnologías</span></div></article>
+    <article class="module-stat"><span class="module-stat-icon">⌘</span><div><small>ARTÍCULOS TECNOLÓGICOS</small><strong id="statArticles">387</strong><span>en 17 bibliotecas de herramientas</span></div></article>
+    <article class="module-stat"><span class="module-stat-icon">⇩</span><div><small>PAQUETES FUTUROS</small><strong id="statPlanned">8</strong><span>laboratorios y multimedia</span></div></article>
+  </section>
+
+  <section class="module-section core-panel" aria-labelledby="coreHeading">
+    <div class="module-section-heading"><div><div class="eyebrow">SIEMPRE ACTIVO</div><h2 id="coreHeading">Núcleo de la aplicación</h2></div><span class="module-status status-integrated">● Esencial · incluido</span></div>
+    <p class="module-section-intro">El núcleo contiene lo que necesitás para abrir WebDev Book, encontrar contenido y trabajar. No se elimina al administrar bibliotecas opcionales.</p>
+    <div class="core-capabilities">
+      <article><span>⌕</span><strong>Buscador y navegación</strong><small>Catálogo, filtros y acceso a cada tema.</small></article>
+      <article><span>⌘</span><strong>Editor y vista previa</strong><small>Archivos, proyectos y ejecución aislada.</small></article>
+      <article><span>◴</span><strong>Progreso y favoritos</strong><small>Preferencias y aprendizaje guardados localmente.</small></article>
+      <article><span>↻</span><strong>Actualizador de contenido</strong><small>Consulta versiones y valida los JSON descargados.</small></article>
+    </div>
+  </section>
+
+  <section class="module-section storage-panel" aria-labelledby="storageHeading">
+    <div class="module-section-heading"><div><div class="eyebrow">ALMACENAMIENTO DEL DISPOSITIVO</div><h2 id="storageHeading">Uso de espacio</h2></div><button class="module-small-button" id="refreshStorage" type="button">↻ Actualizar</button></div>
+    <p class="module-section-intro">El navegador informa una estimación del espacio usado y disponible para este origen. No representa exclusivamente el tamaño de los módulos.</p>
+    <div class="storage-summary">
+      <div class="storage-number"><strong id="storageUsed">—</strong><span>en uso</span></div>
+      <div class="storage-number"><strong id="storageQuota">—</strong><span>cuota estimada</span></div>
+      <div class="storage-number"><strong id="storagePersistence">—</strong><span>persistencia</span></div>
+    </div>
+    <div class="storage-meter" role="progressbar" aria-label="Uso estimado del almacenamiento" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="storageMeterFill"></i></div>
+    <div class="storage-foot"><p id="storageMessage" role="status">Consultando el almacenamiento disponible…</p><button class="module-small-button module-persist-button" id="requestPersistence" type="button">Solicitar protección de datos</button></div>
+  </section>
+
+  <section class="module-section" id="module-architecture" aria-labelledby="architectureHeading">
+    <div class="module-section-heading"><div><div class="eyebrow">DISEÑO POR CAPAS</div><h2 id="architectureHeading">Cómo se organiza la aplicación</h2></div></div>
+    <div class="architecture-stack">
+      <div class="architecture-layer architecture-core"><span>01</span><div><strong>NÚCLEO</strong><small>Interfaz, navegación, búsqueda, editor, progreso y actualizaciones.</small></div><b>Siempre disponible</b></div>
+      <div class="architecture-connector">↓ administra</div>
+      <div class="architecture-layer architecture-libraries"><span>02</span><div><strong>BIBLIOTECAS</strong><small>Paquetes de contenido por lenguaje y tecnología.</small></div><b>Etapa 2</b></div>
+      <div class="architecture-connector">↓ habilita</div>
+      <div class="architecture-layer architecture-labs"><span>03</span><div><strong>LABORATORIOS</strong><small>Entornos interactivos que se descargan cuando los necesitás.</small></div><b>Etapa 3</b></div>
+      <div class="architecture-connector">↓ complementa</div>
+      <div class="architecture-layer architecture-media"><span>04</span><div><strong>MULTIMEDIA</strong><small>Diagramas, ilustraciones y videos educativos opcionales.</small></div><b>Etapa 4</b></div>
+    </div>
+  </section>
+
+  <section class="module-section" id="module-catalog" aria-labelledby="moduleCatalogHeading">
+    <div class="module-section-heading module-catalog-heading"><div><div class="eyebrow">CATÁLOGO Y ADMINISTRACIÓN</div><h2 id="moduleCatalogHeading">Todos los módulos</h2><p class="module-section-intro">Podés abrir lo que ya forma parte de la aplicación y marcar lo que querés priorizar. Los paquetes futuros todavía no se ofrecen como descargas.</p></div><span class="module-result-count" id="moduleResultCount">— módulos</span></div>
+    <div class="module-filters" role="group" aria-label="Filtrar módulos">
+      <button class="module-filter is-active" data-filter="all" type="button" aria-pressed="true">Todos</button>
+      <button class="module-filter" data-filter="integrated" type="button" aria-pressed="false">Incluidos</button>
+      <button class="module-filter" data-filter="library" type="button" aria-pressed="false">Bibliotecas</button>
+      <button class="module-filter" data-filter="lab" type="button" aria-pressed="false">Laboratorios</button>
+      <button class="module-filter" data-filter="media" type="button" aria-pressed="false">Multimedia</button>
+      <button class="module-filter" data-filter="priority" type="button" aria-pressed="false">Prioritarios ☆</button>
+    </div>
+    <div class="module-grid" id="moduleGrid" aria-live="polite">
+      <div class="module-loading">Cargando catálogo de módulos…</div>
+    </div>
+    <p class="module-empty" id="moduleEmpty" hidden>No hay módulos que coincidan con la búsqueda.</p>
+  </section>
+  <section class="module-note">
+    <strong>Importante: esta es la primera etapa.</strong>
+    <p>Hoy las bibliotecas actuales siguen incluidas en el paquete principal. Este centro ya administra el catálogo y tus prioridades locales; todavía no descarga ni elimina paquetes. La descarga real con verificación de integridad, dependencias y recuperación ante errores se implementará en la etapa 2, sin poner en riesgo tus proyectos ni tu progreso.</p>
+  </section>
+  <footer class="module-footer"><span>WebDev Book · Núcleo y administración de módulos</span><a href="../index.html">Volver al inicio ↑</a></footer>
+</div>
+</main>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="module-toast" id="moduleToast" role="status" aria-live="polite"></div>
+</body>
+</html>
