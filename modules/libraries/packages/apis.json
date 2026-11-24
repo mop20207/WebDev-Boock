@@ -1,0 +1,1393 @@
+{
+  "id": "apis",
+  "title": "APIs y comunicación web",
+  "shortTitle": "APIs",
+  "symbol": "⇄",
+  "eyebrow": "HTTP / REST / FETCH",
+  "tagline": "Aprendé a diseñar, construir y consumir servicios web.",
+  "description": "Biblioteca práctica sobre HTTP, diseño REST, JSON, Fetch, seguridad, documentación e integración entre aplicaciones.",
+  "level": "Inicial a avanzado",
+  "accent": "apis",
+  "categories": [
+    {
+      "id": "fundamentos-http",
+      "title": "Fundamentos de HTTP",
+      "description": "Entendé cómo viajan las solicitudes y respuestas entre clientes y servidores.",
+      "icon": "⇄",
+      "articles": [
+        "api-http",
+        "api-metodos",
+        "api-status",
+        "api-headers"
+      ]
+    },
+    {
+      "id": "diseno-rest",
+      "title": "Diseño de APIs",
+      "description": "Diseñá recursos, contratos, validaciones y respuestas coherentes.",
+      "icon": "◇",
+      "articles": [
+        "api-rest",
+        "api-json",
+        "api-paginacion"
+      ]
+    },
+    {
+      "id": "consumo",
+      "title": "Consumo desde JavaScript",
+      "description": "Consumí servicios con Fetch y controlá errores, tiempos y datos.",
+      "icon": "↗",
+      "articles": [
+        "api-fetch",
+        "api-response",
+        "api-abort"
+      ]
+    },
+    {
+      "id": "seguridad",
+      "title": "Seguridad y comunicación",
+      "description": "Comprendé CORS, autenticación y protección de solicitudes.",
+      "icon": "⌑",
+      "articles": [
+        "api-cors",
+        "api-auth"
+      ]
+    },
+    {
+      "id": "integracion",
+      "title": "Integración y documentación",
+      "description": "Documentá contratos y conectá sistemas mediante eventos.",
+      "icon": "⌘",
+      "articles": [
+        "api-openapi",
+        "api-webhooks"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "api-http",
+      "title": "¿Qué es HTTP y cómo funciona una comunicación web?",
+      "category": "fundamentos-http",
+      "summary": "Conocé el protocolo que permite que navegadores, aplicaciones y servidores intercambien solicitudes y respuestas.",
+      "purpose": "HTTP es un protocolo de aplicación basado en mensajes. El cliente envía una solicitud con método, destino, cabeceras y, en algunos casos, cuerpo. El servidor responde con un código de estado, cabeceras y un cuerpo opcional. HTTPS protege ese intercambio mediante TLS.",
+      "whenToUse": "HTTP es un protocolo de aplicación basado en mensajes. El cliente envía una solicitud con método, destino, cabeceras y, en algunos casos, cuerpo. El servidor responde con un código de estado, cabeceras y un cuerpo opcional. HTTPS protege ese intercambio mediante TLS.",
+      "syntax": "Cliente → solicitud HTTP → servidor → respuesta HTTP → cliente",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Inspeccionar una solicitud con Fetch",
+          "description": "El navegador construye una solicitud HTTP al consultar un recurso.",
+          "code": "const respuesta = await fetch('https://jsonplaceholder.typicode.com/posts/1');\nconsole.log(respuesta.status); // 200\nconsole.log(respuesta.headers.get('content-type'));",
+          "explanation": "fetch inicia la comunicación. status expone el código HTTP y headers.get permite consultar una cabecera. La respuesta todavía debe leerse con json(), text() u otro método."
+        },
+        {
+          "title": "Ver el intercambio desde la terminal",
+          "description": "curl permite consultar una URL y mostrar cabeceras de respuesta.",
+          "code": "curl -i https://jsonplaceholder.typicode.com/posts/1",
+          "explanation": "-i incluye las cabeceras HTTP junto con el cuerpo. Es útil para inspeccionar el protocolo sin depender de la interfaz del navegador."
+        },
+        {
+          "title": "Consumir una API y comprobar el estado HTTP",
+          "description": "Fetch devuelve una respuesta incluso cuando el servidor responde con un estado 404 o 500; por eso hay que revisar response.ok.",
+          "language": "javascript",
+          "code": "async function cargarNovelas() {\n  const response = await fetch('/api/novelas', {\n    headers: { Accept: 'application/json' }\n  });\n\n  if (!response.ok) {\n    throw new Error(`HTTP ${response.status}`);\n  }\n\n  return response.json();\n}\n\ncargarNovelas()\n  .then(novelas => console.log(novelas))\n  .catch(error => console.error('No se pudieron cargar:', error));",
+          "explanation": "fetch rechaza la promesa principalmente ante fallos de red, no por cada estado HTTP de error. response.ok permite detectar respuestas fuera del rango 200–299. response.json() también es asíncrono porque debe leer y analizar el cuerpo."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Solicitud",
+          "description": "Mensaje que envía el cliente; incluye método, URL, cabeceras y, opcionalmente, cuerpo."
+        },
+        {
+          "name": "Respuesta",
+          "description": "Mensaje del servidor con código de estado, cabeceras y contenido."
+        },
+        {
+          "name": "HTTPS",
+          "description": "HTTP protegido por TLS, que aporta confidencialidad e integridad durante el transporte."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Explicá qué partes forman una solicitud y qué información devuelve una respuesta HTTP.",
+      "hint": "Identificá método, URL, cabeceras y cuerpo en la solicitud; luego status, headers y body en la respuesta.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-metodos",
+        "api-status"
+      ],
+      "deepDive": {
+        "model": "HTTP organiza la conversación entre cliente y servidor. El cliente envía método, destino, cabeceras y un cuerpo opcional; el servidor responde con un status code, cabeceras y una representación. Una API define qué operaciones están disponibles, qué datos aceptan y cómo expresan errores.",
+        "flow": [
+          [
+            "Contrato",
+            "Definí rutas, métodos, parámetros, esquema de datos y formato de errores."
+          ],
+          [
+            "Solicitud",
+            "El cliente envía la operación y el servidor autentica y valida la entrada."
+          ],
+          [
+            "Procesamiento",
+            "La aplicación ejecuta la lógica y accede a los recursos necesarios."
+          ],
+          [
+            "Respuesta",
+            "El status comunica el resultado general; el cuerpo incluye datos o detalles útiles del error."
+          ]
+        ],
+        "decisions": [
+          "Usá 2xx para resultados satisfactorios, 4xx para problemas atribuibles a la solicitud y 5xx para fallos del servidor.",
+          "Validá toda entrada y no confundas CORS con autenticación: CORS es una política del navegador, no un mecanismo de control de acceso del servidor."
+        ],
+        "debugging": "Ante un fallo, inspeccioná primero URL, método, status, cabeceras y cuerpo de respuesta. Después verificá red, CORS, autenticación y logs del servidor para ubicar la capa que falla."
+      }
+    },
+    {
+      "id": "api-metodos",
+      "title": "Métodos HTTP: GET, POST, PUT, PATCH y DELETE",
+      "category": "fundamentos-http",
+      "summary": "Elegí el método HTTP según la intención de la operación sobre un recurso.",
+      "purpose": "Los métodos describen la semántica de la solicitud. GET recupera; POST suele crear o ejecutar una operación; PUT reemplaza la representación de un recurso; PATCH aplica cambios parciales; DELETE solicita eliminarlo. La semántica importa para caché, reintentos e idempotencia.",
+      "whenToUse": "Los métodos describen la semántica de la solicitud. GET recupera; POST suele crear o ejecutar una operación; PUT reemplaza la representación de un recurso; PATCH aplica cambios parciales; DELETE solicita eliminarlo. La semántica importa para caché, reintentos e idempotencia.",
+      "syntax": "GET /api/libros\nPOST /api/libros\nPUT /api/libros/7\nPATCH /api/libros/7\nDELETE /api/libros/7",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Leer un recurso",
+          "description": "GET recupera datos sin pedir una modificación.",
+          "code": "const respuesta = await fetch('/api/libros/7');\nconst libro = await respuesta.json();\nconsole.log(libro.titulo);",
+          "explanation": "GET es seguro por definición: no debería producir cambios de negocio. Puede ser almacenado en caché según las cabeceras."
+        },
+        {
+          "title": "Crear un recurso",
+          "description": "POST envía los datos que el servidor usará para crear un registro.",
+          "code": "const respuesta = await fetch('/api/libros', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ titulo: 'Dune', autor: 'Frank Herbert' })\n});\nconst creado = await respuesta.json();",
+          "explanation": "method selecciona POST; Content-Type declara el formato del cuerpo; JSON.stringify convierte el objeto JavaScript en texto JSON."
+        },
+        {
+          "title": "Actualizar parcialmente",
+          "description": "PATCH cambia solo los campos indicados.",
+          "code": "await fetch('/api/libros/7', {\n  method: 'PATCH',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ disponible: false })\n});",
+          "explanation": "El ejemplo modifica disponible sin reenviar el resto del libro. El formato exacto de PATCH depende del contrato de la API."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "method",
+          "description": "Opción de fetch que indica el método HTTP, por ejemplo GET, POST o PATCH."
+        },
+        {
+          "name": "PUT",
+          "description": "Suele reemplazar la representación completa del recurso identificado."
+        },
+        {
+          "name": "PATCH",
+          "description": "Aplica una modificación parcial según el formato definido por la API."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Diseñá las solicitudes para listar libros, crear uno, cambiar su título y eliminarlo.",
+      "hint": "Pensá si la operación lee, crea, reemplaza, modifica parcialmente o elimina.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-http",
+        "api-rest"
+      ],
+      "deepDive": {
+        "model": "Un método HTTP expresa la semántica de la solicitud. Safe significa que el cliente no solicita cambios de estado; idempotent significa que varias solicitudes iguales tienen el mismo efecto previsto que una sola. GET es seguro e idempotente; PUT y DELETE son idempotentes según su semántica; POST no lo es necesariamente; PATCH no es necesariamente idempotente.",
+        "flow": [
+          [
+            "Cliente elige intención",
+            "La aplicación decide si necesita leer, crear, reemplazar, modificar parcialmente o eliminar un recurso."
+          ],
+          [
+            "Método y URL",
+            "Se envían método, path, headers y un body cuando corresponde."
+          ],
+          [
+            "Servidor aplica contrato",
+            "La API interpreta la intención, valida entrada y ejecuta la operación."
+          ],
+          [
+            "Respuesta y repetición",
+            "El código y la representación indican resultado; la idempotencia determina cómo pensar reintentos."
+          ]
+        ],
+        "decisions": [
+          "Usá GET solo para lecturas; los crawlers, caches y prefetchers pueden repetir solicitudes seguras.",
+          "Usá PUT cuando el contrato represente reemplazo del recurso y PATCH para cambios parciales.",
+          "Usá POST para crear o iniciar una operación y considerá claves de idempotencia en operaciones sensibles que puedan reintentarse.",
+          "No deduzcas el comportamiento de una API solo por su nombre de ruta: documentá semántica, body y respuestas."
+        ],
+        "debugging": "Si un proxy o cliente reintenta una petición, revisá si el método es idempotente y si la operación puede duplicarse. Si GET cambia datos, corregí el diseño porque la semántica segura queda rota. Si PUT y PATCH se comportan igual, documentá qué campos reemplazan o modifican."
+      }
+    },
+    {
+      "id": "api-status",
+      "title": "Códigos de estado HTTP: 2xx, 3xx, 4xx y 5xx",
+      "category": "fundamentos-http",
+      "summary": "Interpretá el resultado de una solicitud mediante su código de estado.",
+      "purpose": "Los códigos se agrupan por clase: 2xx indica éxito, 3xx redirección, 4xx un problema en la solicitud o autorización del cliente y 5xx un fallo del servidor o de un servicio aguas arriba. Elegir códigos precisos mejora la integración y el diagnóstico.",
+      "whenToUse": "Los códigos se agrupan por clase: 2xx indica éxito, 3xx redirección, 4xx un problema en la solicitud o autorización del cliente y 5xx un fallo del servidor o de un servicio aguas arriba. Elegir códigos precisos mejora la integración y el diagnóstico.",
+      "syntax": "200 OK · 201 Created · 204 No Content\n301/302 Redirect · 400 Bad Request · 401 Unauthorized\n403 Forbidden · 404 Not Found · 409 Conflict\n422 Unprocessable Content · 429 Too Many Requests\n500 Internal Server Error · 503 Service Unavailable",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Comprobar el estado",
+          "description": "fetch no rechaza automáticamente la promesa por respuestas 404 o 500.",
+          "code": "const respuesta = await fetch('/api/libros/999');\n\nif (!respuesta.ok) {\n  throw new Error(`La API respondió ${respuesta.status}`);\n}\n\nconst libro = await respuesta.json();",
+          "explanation": "ok es true para estados entre 200 y 299. Un 404 sigue siendo una respuesta HTTP válida a nivel de transporte; por eso hay que comprobar ok."
+        },
+        {
+          "title": "Responder desde Express",
+          "description": "Un servidor puede indicar creación y ausencia de contenido.",
+          "code": "app.post('/api/libros', async (req, res) => {\n  const libro = await guardarLibro(req.body);\n  res.status(201).json(libro);\n});\n\napp.delete('/api/libros/:id', async (req, res) => {\n  await borrarLibro(req.params.id);\n  res.status(204).end();\n});",
+          "explanation": "201 comunica que se creó un recurso. 204 comunica éxito sin cuerpo; por eso se usa end() y no se envía JSON."
+        },
+        {
+          "title": "Distinguir 201, 204 y 404 en una API",
+          "description": "El status expresa el resultado y cambia qué cuerpo debería esperar el cliente.",
+          "language": "javascript",
+          "code": "// Crear un recurso\nres.status(201).location('/api/novelas/12').json({ id: 12, titulo: 'Re:Zero' });\n\n// Eliminar sin devolver representación\nres.status(204).end();\n\n// Recurso inexistente\nres.status(404).json({ error: 'No encontrada' });",
+          "explanation": "201 indica que se creó un recurso; Location puede señalar su URL. 204 indica éxito sin cuerpo. 404 informa que el recurso solicitado no existe. No uses 204 si necesitás enviar un JSON de confirmación."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "response.ok",
+          "description": "Propiedad booleana de Response; indica si el estado está entre 200 y 299."
+        },
+        {
+          "name": "201 Created",
+          "description": "Éxito que indica que se creó un recurso."
+        },
+        {
+          "name": "204 No Content",
+          "description": "Éxito sin cuerpo de respuesta."
+        },
+        {
+          "name": "401 y 403",
+          "description": "401 indica falta de autenticación válida; 403 indica que el servidor entiende quién solicita, pero no permite la operación."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Elegí un código para: libro creado, libro inexistente, datos inválidos, conflicto de versión y error inesperado.",
+      "hint": "Separá errores del cliente (4xx) de errores del servidor (5xx) y distinguí éxito con cuerpo de éxito sin cuerpo.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-http",
+        "api-fetch"
+      ],
+      "deepDive": {
+        "model": "El status code es una señal protocolaria de la respuesta. La primera cifra agrupa la clase, pero el código específico ayuda a que un cliente decida qué hacer. Los headers y body pueden complementar la información. La respuesta no debe devolver siempre 200 ante errores de validación, autenticación o fallos internos.",
+        "flow": [
+          [
+            "El servidor procesa",
+            "La API ejecuta la operación y detecta su resultado."
+          ],
+          [
+            "Se asigna la clase",
+            "2xx expresa éxito, 3xx redirección, 4xx problema de solicitud y 5xx fallo del servidor."
+          ],
+          [
+            "Se define el código preciso",
+            "201 representa creación, 204 éxito sin contenido, 400 entrada inválida y 404 recurso ausente, entre otros."
+          ],
+          [
+            "El cliente interpreta",
+            "Fetch no rechaza automáticamente por 404/500: la aplicación debe comprobar response.ok o status."
+          ]
+        ],
+        "decisions": [
+          "Usá 201 cuando se crea un recurso y, si corresponde, enviá Location.",
+          "Usá 204 cuando la operación fue exitosa y no necesitás devolver un cuerpo.",
+          "Usá 400/422 según el contrato para entradas inválidas y 401/403 para problemas de autenticación/autorización.",
+          "No devuelvas 500 por errores esperables de validación o recursos inexistentes."
+        ],
+        "debugging": "Si fetch entra en then aunque la API devolvió 404, es el comportamiento esperado: comprobá response.ok. Si el cliente no distingue ausencia y error interno, revisá status y esquema de error. Si devolvés 204 con JSON, quitá el body: una respuesta sin contenido no debe incluirlo."
+      }
+    },
+    {
+      "id": "api-headers",
+      "title": "Cabeceras HTTP y negociación de contenido",
+      "category": "fundamentos-http",
+      "summary": "Usá cabeceras para describir el contenido, la autenticación, la caché y las preferencias del cliente.",
+      "purpose": "Las cabeceras son metadatos que acompañan solicitudes y respuestas. Content-Type describe el formato enviado; Accept expresa formatos aceptables; Authorization transporta credenciales; Cache-Control define directivas de caché. No reemplazan el cuerpo: explican cómo interpretarlo o procesarlo.",
+      "whenToUse": "Las cabeceras son metadatos que acompañan solicitudes y respuestas. Content-Type describe el formato enviado; Accept expresa formatos aceptables; Authorization transporta credenciales; Cache-Control define directivas de caché. No reemplazan el cuerpo: explican cómo interpretarlo o procesarlo.",
+      "syntax": "Content-Type: application/json\nAccept: application/json\nAuthorization: Bearer <token>\nCache-Control: no-store",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Enviar y leer JSON",
+          "description": "Declarar el tipo de contenido evita ambigüedades.",
+          "code": "const respuesta = await fetch('/api/perfil', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json'\n  },\n  body: JSON.stringify({ nombre: 'Ana' })\n});\nconsole.log(await respuesta.json());",
+          "explanation": "Content-Type describe el cuerpo que enviás. Accept indica qué formato preferís recibir. Son cabeceras distintas y cumplen funciones diferentes."
+        },
+        {
+          "title": "Leer una cabecera de respuesta",
+          "description": "Response.headers permite consultar metadatos.",
+          "code": "const respuesta = await fetch('/api/perfil');\nconst tipo = respuesta.headers.get('content-type');\nconsole.log(tipo);",
+          "explanation": "Headers.get devuelve el valor o null si no existe. Los nombres de cabeceras no distinguen mayúsculas y minúsculas."
+        },
+        {
+          "title": "Configurar caché para una respuesta",
+          "description": "Controlá cuánto tiempo puede reutilizarse una respuesta pública.",
+          "language": "javascript",
+          "code": "app.get('/api/catalogo-version', (req, res) => {\n  res.set('Cache-Control', 'public, max-age=60');\n  res.type('application/json').json({ version: 23 });\n});",
+          "explanation": "public permite que caches compartidas almacenen la respuesta y max-age establece 60 segundos de frescura. No copies esta política para datos privados o sensibles; en esos casos la estrategia puede requerir private, no-store o revalidación."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Content-Type",
+          "description": "Formato del cuerpo enviado o devuelto, como application/json."
+        },
+        {
+          "name": "Accept",
+          "description": "Tipos de contenido que el cliente puede procesar."
+        },
+        {
+          "name": "Authorization",
+          "description": "Cabecera habitual para enviar credenciales, por ejemplo un token Bearer."
+        },
+        {
+          "name": "Cache-Control",
+          "description": "Directivas que controlan almacenamiento y reutilización de respuestas."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Prepará una solicitud JSON y especificá qué formato enviás y cuál esperás recibir.",
+      "hint": "Usá Content-Type para el cuerpo que mandás y Accept para el formato que querés recibir.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-http",
+        "api-fetch"
+      ],
+      "deepDive": {
+        "model": "Los headers son metadatos que acompañan la solicitud y la respuesta. Content-Type describe el formato del cuerpo que se envía; Accept comunica los formatos que el cliente puede procesar; Authorization transporta credenciales según un esquema; Cache-Control define directivas de caché. No son equivalentes al body y no deben contener secretos sin el canal de transporte adecuado.",
+        "flow": [
+          [
+            "Preparar solicitud",
+            "El cliente elige método, URL y headers que describen formato, preferencias o credenciales."
+          ],
+          [
+            "Servidor interpreta",
+            "El servidor inspecciona headers para parsear body, autorizar, negociar contenido o decidir caché."
+          ],
+          [
+            "Servidor responde",
+            "La respuesta incluye status, headers como Content-Type y un cuerpo opcional."
+          ],
+          [
+            "Cliente consume",
+            "El cliente verifica status y headers antes de interpretar el cuerpo con json(), text() o blob()."
+          ]
+        ],
+        "decisions": [
+          "Definí Content-Type cuando enviás un body y Accept cuando esperás un formato específico.",
+          "No establezcas manualmente Content-Length en Fetch; el runtime administra el framing.",
+          "Protegé tokens en Authorization y evitá escribirlos en logs.",
+          "Usá Cache-Control según la sensibilidad y frescura de los datos, no como un valor copiado genéricamente."
+        ],
+        "debugging": "Si el servidor no parsea JSON, verificá Content-Type y el middleware parser. Si response.json falla, comprobá si la respuesta realmente contiene JSON o si un 204 no tiene cuerpo. Si headers no están disponibles desde otro origen, revisá CORS y Access-Control-Expose-Headers."
+      }
+    },
+    {
+      "id": "api-rest",
+      "title": "Diseño de APIs REST y recursos",
+      "category": "diseno-rest",
+      "summary": "Modelá una API alrededor de recursos, rutas predecibles y operaciones HTTP coherentes.",
+      "purpose": "REST es un estilo arquitectónico para sistemas distribuidos. En una API orientada a recursos, las URL identifican recursos y los métodos HTTP expresan operaciones. Una API REST bien diseñada mantiene convenciones consistentes, estados claros, validación y representaciones estables; no consiste simplemente en devolver JSON.",
+      "whenToUse": "REST es un estilo arquitectónico para sistemas distribuidos. En una API orientada a recursos, las URL identifican recursos y los métodos HTTP expresan operaciones. Una API REST bien diseñada mantiene convenciones consistentes, estados claros, validación y representaciones estables; no consiste simplemente en devolver JSON.",
+      "syntax": "GET /api/novelas\nGET /api/novelas/12\nPOST /api/novelas\nPATCH /api/novelas/12\nDELETE /api/novelas/12",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Rutas de una colección",
+          "description": "Una colección y un elemento individual tienen rutas distintas.",
+          "code": "app.get('/api/novelas', listarNovelas);\napp.get('/api/novelas/:id', obtenerNovela);\napp.post('/api/novelas', crearNovela);\napp.patch('/api/novelas/:id', actualizarNovela);\napp.delete('/api/novelas/:id', eliminarNovela);",
+          "explanation": "La colección /novelas representa el conjunto; /novelas/:id identifica un elemento. Los métodos expresan lectura, creación, modificación y eliminación."
+        },
+        {
+          "title": "Filtrar una colección",
+          "description": "Los parámetros de consulta sirven para filtros y ordenamiento.",
+          "code": "GET /api/novelas?genero=fantasia&orden= titulo",
+          "explanation": "Los query parameters refinan la colección sin convertir cada filtro en una ruta diferente. En una API real, documentá los valores admitidos y cómo se combinan."
+        },
+        {
+          "title": "Diseñar rutas coherentes para recursos relacionados",
+          "description": "Las rutas expresan relaciones del dominio sin convertir cada operación en un verbo arbitrario.",
+          "language": "http",
+          "code": "GET    /api/novelas\nGET    /api/novelas/:slug\nGET    /api/novelas/:slug/volumenes\nPOST   /api/novelas/:slug/volumenes\nPATCH  /api/volumenes/:id\nDELETE /api/volumenes/:id",
+          "explanation": "Las rutas identifican colecciones y recursos individuales. Los métodos expresan las operaciones y los parámetros identifican entidades. El contrato también debe definir paginación, status, body, autenticación y formato de error."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Recurso",
+          "description": "Entidad o concepto identificado por una URL, como una novela o un usuario."
+        },
+        {
+          "name": "Path parameter",
+          "description": "Parte de la ruta que identifica un recurso, como :id."
+        },
+        {
+          "name": "Query parameter",
+          "description": "Parámetro opcional que filtra, ordena o pagina resultados."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Diseñá cinco endpoints REST para consultar, crear, editar y borrar novelas, además de filtrar por género.",
+      "hint": "Nombrá recursos con sustantivos y dejá que el método HTTP exprese la operación.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-metodos",
+        "api-json",
+        "api-paginacion"
+      ],
+      "deepDive": {
+        "model": "REST es un estilo arquitectónico basado en recursos, representaciones y una interfaz uniforme. Las URL identifican recursos; los métodos HTTP expresan acciones semánticas; los status y headers forman parte del contrato. Una API que entrega JSON puede no seguir REST si sus rutas y operaciones no mantienen una semántica coherente.",
+        "flow": [
+          [
+            "Modelar recursos",
+            "Se identifican entidades y colecciones del dominio, como /novelas y /novelas/:id."
+          ],
+          [
+            "Definir representaciones",
+            "Se decide qué campos expone cada recurso y cómo se relacionan."
+          ],
+          [
+            "Mapear métodos HTTP",
+            "GET, POST, PUT, PATCH y DELETE se asignan a operaciones con semántica consistente."
+          ],
+          [
+            "Definir respuestas",
+            "Status, headers, paginación y errores documentan el contrato que consumen los clientes."
+          ]
+        ],
+        "decisions": [
+          "Preferí nombres de recursos y rutas predecibles, evitando verbos arbitrarios en cada endpoint.",
+          "Definí paginación, filtros, ordenamiento y límites para colecciones.",
+          "Documentá qué campos se pueden escribir, cuáles son de solo lectura y cómo se informa un error.",
+          "No asumas que toda API HTTP debe ser REST; elegí el estilo según integración y necesidades."
+        ],
+        "debugging": "Si un cliente no entiende una respuesta, compará el contrato documentado con status, headers y JSON real. Si las rutas se vuelven inconsistentes, agrupá por recurso y definí reglas de pluralización e identificadores. Si hay cambios incompatibles, versioná y comunicá migraciones."
+      }
+    },
+    {
+      "id": "api-json",
+      "title": "JSON, validación y contratos de datos",
+      "category": "diseno-rest",
+      "summary": "Comprendé cómo representar datos y validar lo que recibís de una API.",
+      "purpose": "JSON es un formato textual de intercambio que representa objetos, arreglos, cadenas, números, booleanos y null. Parsear JSON solo comprueba que el texto tenga sintaxis válida; no garantiza que los campos cumplan las reglas de tu aplicación. Validá estructura, tipos, rangos y campos permitidos.",
+      "whenToUse": "JSON es un formato textual de intercambio que representa objetos, arreglos, cadenas, números, booleanos y null. Parsear JSON solo comprueba que el texto tenga sintaxis válida; no garantiza que los campos cumplan las reglas de tu aplicación. Validá estructura, tipos, rangos y campos permitidos.",
+      "syntax": "JSON.stringify(objeto) → texto\nJSON.parse(texto) → valor JavaScript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Serializar y parsear",
+          "description": "Convertí un objeto a JSON y recuperalo.",
+          "code": "const novela = { titulo: 'Re:Zero', volumenes: 10 };\nconst texto = JSON.stringify(novela);\nconst recuperada = JSON.parse(texto);\nconsole.log(recuperada.titulo);",
+          "explanation": "stringify produce texto JSON. parse interpreta ese texto. parse puede lanzar SyntaxError si el texto está mal formado."
+        },
+        {
+          "title": "Validar campos manualmente",
+          "description": "No confíes en que el cliente envíe tipos correctos.",
+          "code": "function validarNovela(datos) {\n  if (typeof datos.titulo !== 'string' || !datos.titulo.trim()) {\n    throw new Error('El título es obligatorio');\n  }\n  if (!Number.isInteger(datos.volumenes) || datos.volumenes < 0) {\n    throw new Error('volumenes debe ser un entero no negativo');\n  }\n  return { titulo: datos.titulo.trim(), volumenes: datos.volumenes };\n}",
+          "explanation": "La función verifica tipos y reglas de negocio antes de persistir. En proyectos mayores se puede usar un validador de esquemas, manteniendo la misma idea."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "JSON.stringify(valor)",
+          "description": "Serializa un valor JavaScript compatible como texto JSON."
+        },
+        {
+          "name": "JSON.parse(texto)",
+          "description": "Interpreta texto JSON y devuelve el valor JavaScript correspondiente; puede lanzar SyntaxError."
+        },
+        {
+          "name": "Validación",
+          "description": "Comprueba reglas de forma y negocio; es distinta de verificar la sintaxis JSON."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Escribí un validador para un objeto usuario que exija email no vacío y edad entera mayor o igual a 18.",
+      "hint": "Primero verificá typeof y después las reglas de negocio; no confundas JSON válido con datos válidos.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-rest",
+        "api-fetch"
+      ]
+    },
+    {
+      "id": "api-paginacion",
+      "title": "Paginación, filtros y ordenamiento",
+      "category": "diseno-rest",
+      "summary": "Evitá respuestas enormes y diseñá colecciones fáciles de recorrer.",
+      "purpose": "La paginación divide una colección en porciones. Offset/limit es simple, pero puede volverse costoso y producir saltos cuando los datos cambian. La paginación por cursor usa un punto de continuación estable y suele ser adecuada para colecciones grandes o cambiantes. El contrato debe informar cómo continuar y cuándo termina.",
+      "whenToUse": "La paginación divide una colección en porciones. Offset/limit es simple, pero puede volverse costoso y producir saltos cuando los datos cambian. La paginación por cursor usa un punto de continuación estable y suele ser adecuada para colecciones grandes o cambiantes. El contrato debe informar cómo continuar y cuándo termina.",
+      "syntax": "GET /api/novelas?limit=20&offset=40\nGET /api/novelas?limit=20&cursor=eyJpZCI6... ",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Paginación con limit y offset",
+          "description": "El servidor limita la cantidad y calcula desde dónde comenzar.",
+          "code": "app.get('/api/novelas', async (req, res) => {\n  const limit = Math.min(Number(req.query.limit) || 20, 100);\n  const offset = Math.max(Number(req.query.offset) || 0, 0);\n  const items = await buscarNovelas({ limit, offset });\n  res.json({ items, limit, offset });\n});",
+          "explanation": "Se aplica un máximo para evitar que el cliente solicite cantidades desmedidas. También se normaliza offset para impedir valores negativos."
+        },
+        {
+          "title": "Respuesta con siguiente cursor",
+          "description": "Una API puede entregar un cursor para continuar la lectura.",
+          "code": "res.json({\n  items,\n  nextCursor: items.length === limit ? items.at(-1).id : null\n});",
+          "explanation": "El cursor debe representar un orden estable y validarse en el servidor. null indica que no hay una página siguiente según esta estrategia."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "limit",
+          "description": "Cantidad máxima de elementos de la página."
+        },
+        {
+          "name": "offset",
+          "description": "Cantidad de elementos que se omiten antes de devolver resultados."
+        },
+        {
+          "name": "cursor",
+          "description": "Marcador opaco que permite continuar desde una posición estable."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Diseñá una respuesta paginada para 250 novelas con 25 resultados por página.",
+      "hint": "Incluí items y metadatos para que el cliente sepa qué página recibió y cómo continuar.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-rest",
+        "api-json"
+      ]
+    },
+    {
+      "id": "api-fetch",
+      "title": "Fetch API: solicitudes GET y POST",
+      "category": "consumo",
+      "summary": "Consumí endpoints desde JavaScript usando la API nativa Fetch.",
+      "purpose": "fetch(url, options) inicia una solicitud y devuelve una Promise que se resuelve con un objeto Response cuando llegan las cabeceras. No convierte automáticamente el cuerpo a JSON ni rechaza la promesa por un estado 404/500. Debés comprobar response.ok y leer el cuerpo con el método adecuado.",
+      "whenToUse": "fetch(url, options) inicia una solicitud y devuelve una Promise que se resuelve con un objeto Response cuando llegan las cabeceras. No convierte automáticamente el cuerpo a JSON ni rechaza la promesa por un estado 404/500. Debés comprobar response.ok y leer el cuerpo con el método adecuado.",
+      "syntax": "const response = await fetch(url, options);\nconst data = await response.json();",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "GET con manejo de estado",
+          "description": "Consultá un endpoint y distinguí errores HTTP de errores de red.",
+          "code": "async function obtenerNovela(id) {\n  const respuesta = await fetch(`/api/novelas/${id}`);\n  if (!respuesta.ok) {\n    throw new Error(`HTTP ${respuesta.status}`);\n  }\n  return await respuesta.json();\n}\n\ntry {\n  console.log(await obtenerNovela(12));\n} catch (error) {\n  console.error('No se pudo cargar:', error.message);\n}",
+          "explanation": "async/await simplifica el uso de promesas. response.ok comprueba estados 2xx. try/catch captura fallos de red, parseo y el error que lanzamos ante estados no exitosos."
+        },
+        {
+          "title": "POST enviando JSON",
+          "description": "Enviá un objeto como cuerpo de una solicitud.",
+          "code": "const respuesta = await fetch('/api/novelas', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ titulo: 'Fundación', autor: 'Isaac Asimov' })\n});\n\nif (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\nconst nuevaNovela = await respuesta.json();",
+          "explanation": "method selecciona POST; headers describe el cuerpo; JSON.stringify serializa el objeto. El servidor debe validar los datos recibidos."
+        },
+        {
+          "title": "Cancelar una solicitud cuando el usuario cambia de pantalla",
+          "description": "AbortController permite dejar de esperar una solicitud que ya no se necesita.",
+          "language": "javascript",
+          "code": "const controller = new AbortController();\n\ntry {\n  const response = await fetch('/api/novelas', {\n    signal: controller.signal\n  });\n  if (!response.ok) throw new Error(`HTTP ${response.status}`);\n  const novelas = await response.json();\n  console.log(novelas);\n} catch (error) {\n  if (error.name === 'AbortError') {\n    console.log('Solicitud cancelada');\n  } else {\n    console.error('Error de carga:', error);\n  }\n}\n\n// Cuando ya no se necesita el resultado:\ncontroller.abort();",
+          "explanation": "El signal conecta Fetch con el AbortController. abort() cancela el trabajo pendiente y la promesa rechaza con AbortError. Una cancelación esperada no debería mostrarse como un error de red para el usuario."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "fetch(input, init)",
+          "description": "Inicia una solicitud; init puede incluir method, headers, body, signal, credentials y otras opciones."
+        },
+        {
+          "name": "response.ok",
+          "description": "Indica si el estado HTTP pertenece al rango 200–299."
+        },
+        {
+          "name": "response.json()",
+          "description": "Lee el cuerpo y lo interpreta como JSON; devuelve una Promise."
+        },
+        {
+          "name": "body",
+          "description": "Contenido enviado; para JSON se serializa con JSON.stringify."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Consumí un endpoint de prueba y mostrale al usuario un mensaje diferente si el servidor devuelve 404 o 500.",
+      "hint": "Comprobá response.ok antes de llamar a response.json y usá try/catch para errores de red.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-response",
+        "api-status",
+        "api-abort"
+      ],
+      "deepDive": {
+        "model": "fetch inicia una solicitud y devuelve una Promise que se resuelve cuando la respuesta y sus headers están disponibles. El objeto Response contiene status, headers y métodos para consumir el body. Una respuesta HTTP 404 o 500 sigue siendo una respuesta válida del protocolo y no rechaza la Promise por sí sola; los errores de red o abortos sí pueden rechazarla.",
+        "flow": [
+          [
+            "Construir solicitud",
+            "Se indica URL y, opcionalmente, método, headers, body, signal y credenciales."
+          ],
+          [
+            "Esperar respuesta",
+            "fetch resuelve con Response cuando la respuesta HTTP está disponible."
+          ],
+          [
+            "Comprobar resultado",
+            "Se revisan response.ok, status y headers antes de leer el cuerpo."
+          ],
+          [
+            "Consumir y manejar",
+            "json(), text() o blob() leen el body; errores y cancelaciones se manejan por separado."
+          ]
+        ],
+        "decisions": [
+          "Usá JSON.stringify al enviar objetos y Content-Type: application/json.",
+          "Comprobá response.ok antes de asumir que la operación fue exitosa.",
+          "Consumí el body una sola vez; si necesitás leerlo de dos maneras, cloná Response antes de consumirlo.",
+          "Usá AbortController para cancelar solicitudes que quedaron obsoletas o excedieron un timeout."
+        ],
+        "debugging": "Si fetch no rechaza ante un 500, recordá revisar response.ok. Si response.json falla, quizá el servidor devolvió HTML o un body vacío. Si aparece un error CORS, revisá el servidor y el origen; no intentes solucionarlo desactivando la seguridad del navegador."
+      }
+    },
+    {
+      "id": "api-response",
+      "title": "Response: leer JSON, texto, cabeceras y estado",
+      "category": "consumo",
+      "summary": "Aprendé a interpretar el objeto Response que devuelve Fetch.",
+      "purpose": "Response representa la respuesta recibida. Expone status, ok, statusText, headers y métodos para consumir el cuerpo, como json(), text(), blob(), arrayBuffer() y formData(). El cuerpo normalmente se consume una sola vez; si necesitás dos lecturas, cloná la respuesta antes.",
+      "whenToUse": "Response representa la respuesta recibida. Expone status, ok, statusText, headers y métodos para consumir el cuerpo, como json(), text(), blob(), arrayBuffer() y formData(). El cuerpo normalmente se consume una sola vez; si necesitás dos lecturas, cloná la respuesta antes.",
+      "syntax": "response.status · response.ok · response.headers\nawait response.json() · await response.text()",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Leer una respuesta JSON",
+          "description": "Interpretá un cuerpo JSON y consultá el estado.",
+          "code": "const response = await fetch('/api/estado');\nconsole.log(response.status, response.statusText);\nconsole.log(response.headers.get('content-type'));\nconst datos = await response.json();\nconsole.log(datos.estado);",
+          "explanation": "status devuelve el código numérico; statusText el texto asociado; headers.get consulta una cabecera; json() consume el cuerpo y lo convierte en un valor JavaScript."
+        },
+        {
+          "title": "Leer texto plano",
+          "description": "No todas las respuestas son JSON.",
+          "code": "const response = await fetch('/health');\nconst mensaje = await response.text();\nconsole.log(mensaje);",
+          "explanation": "text() es apropiado para texto plano, HTML o contenido textual que no querés parsear como JSON. Elegí el método según el Content-Type y el contrato."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "status",
+          "description": "Código HTTP numérico de la respuesta."
+        },
+        {
+          "name": "ok",
+          "description": "Booleano que indica un estado 2xx."
+        },
+        {
+          "name": "headers",
+          "description": "Colección Headers con metadatos de la respuesta."
+        },
+        {
+          "name": "json() / text()",
+          "description": "Métodos asíncronos que consumen el cuerpo y lo interpretan como JSON o texto."
+        },
+        {
+          "name": "clone()",
+          "description": "Crea una copia de Response antes de consumir el cuerpo, útil si dos procesos necesitan leerlo."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Obtené una respuesta y registrá status, content-type y el contenido usando el método de lectura adecuado.",
+      "hint": "Mirá Content-Type antes de decidir entre json(), text() o blob(). Recordá que el cuerpo se consume una vez.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-fetch",
+        "api-headers"
+      ]
+    },
+    {
+      "id": "api-abort",
+      "title": "AbortController: cancelar solicitudes y manejar timeouts",
+      "category": "consumo",
+      "summary": "Cancelá solicitudes que ya no hacen falta y evitá esperas indefinidas.",
+      "purpose": "AbortController permite cancelar operaciones compatibles mediante una señal AbortSignal. Fetch acepta signal en sus opciones. Es útil al cambiar de página, al escribir búsquedas sucesivas o al aplicar un límite de tiempo. La cancelación no garantiza deshacer una operación que el servidor ya procesó.",
+      "whenToUse": "AbortController permite cancelar operaciones compatibles mediante una señal AbortSignal. Fetch acepta signal en sus opciones. Es útil al cambiar de página, al escribir búsquedas sucesivas o al aplicar un límite de tiempo. La cancelación no garantiza deshacer una operación que el servidor ya procesó.",
+      "syntax": "const controller = new AbortController();\nfetch(url, { signal: controller.signal });\ncontroller.abort();",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Cancelar una búsqueda anterior",
+          "description": "Cuando llega una nueva búsqueda, cancelá la solicitud previa.",
+          "code": "let controlador;\n\nasync function buscar(texto) {\n  controlador?.abort();\n  controlador = new AbortController();\n\n  try {\n    const respuesta = await fetch(`/api/buscar?q=${encodeURIComponent(texto)}`, {\n      signal: controlador.signal\n    });\n    if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\n    return await respuesta.json();\n  } catch (error) {\n    if (error.name === 'AbortError') return null;\n    throw error;\n  }\n}",
+          "explanation": "Cada llamada cancela la anterior. encodeURIComponent protege el valor insertado en la query string. AbortError identifica una cancelación esperada y puede tratarse sin mostrar un error al usuario."
+        },
+        {
+          "title": "Aplicar un timeout",
+          "description": "Cancelá una consulta si supera un tiempo máximo.",
+          "code": "const controller = new AbortController();\nconst temporizador = setTimeout(() => controller.abort(), 5000);\n\ntry {\n  const respuesta = await fetch('/api/informes', { signal: controller.signal });\n  if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);\n  console.log(await respuesta.json());\n} finally {\n  clearTimeout(temporizador);\n}",
+          "explanation": "setTimeout aborta después de cinco segundos. finally limpia el temporizador tanto si la solicitud funciona como si falla. El timeout limita la espera del cliente, no revierte una operación del servidor."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "new AbortController()",
+          "description": "Crea un controlador con una propiedad signal y un método abort()."
+        },
+        {
+          "name": "controller.signal",
+          "description": "Señal que se pasa a fetch para permitir la cancelación."
+        },
+        {
+          "name": "controller.abort()",
+          "description": "Dispara la cancelación; Fetch suele rechazar con un error cuyo nombre es AbortError."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Implementá una búsqueda que cancele la solicitud anterior cuando el usuario escribe otro término.",
+      "hint": "Guardá el controlador fuera de la función para poder abortar la llamada anterior.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-fetch",
+        "api-response"
+      ]
+    },
+    {
+      "id": "api-cors",
+      "title": "CORS y solicitudes entre distintos orígenes",
+      "category": "seguridad",
+      "summary": "Comprendé por qué el navegador bloquea ciertas respuestas y cómo habilitar el acceso correctamente.",
+      "purpose": "CORS es un mecanismo del navegador basado en cabeceras HTTP que permite a un servidor indicar qué orígenes pueden leer sus respuestas. Un origen combina esquema, host y puerto. Algunas solicitudes generan una comprobación previa OPTIONS (preflight). CORS no es autenticación ni reemplaza controles de acceso del servidor.",
+      "whenToUse": "CORS es un mecanismo del navegador basado en cabeceras HTTP que permite a un servidor indicar qué orígenes pueden leer sus respuestas. Un origen combina esquema, host y puerto. Algunas solicitudes generan una comprobación previa OPTIONS (preflight). CORS no es autenticación ni reemplaza controles de acceso del servidor.",
+      "syntax": "Origin: https://app.ejemplo.com\nAccess-Control-Allow-Origin: https://app.ejemplo.com\nAccess-Control-Allow-Methods: GET, POST, OPTIONS",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Configurar CORS en Express",
+          "description": "Permití explícitamente el origen de tu frontend.",
+          "code": "import cors from 'cors';\nimport express from 'express';\n\nconst app = express();\napp.use(cors({\n  origin: 'http://localhost:5173',\n  methods: ['GET', 'POST', 'PATCH', 'DELETE'],\n  allowedHeaders: ['Content-Type', 'Authorization']\n}));",
+          "explanation": "El middleware agrega las cabeceras CORS necesarias y responde a preflight cuando corresponde. En producción configurá los orígenes reales; no uses un comodín indiscriminado."
+        },
+        {
+          "title": "Reconocer un preflight",
+          "description": "El navegador puede preguntar antes si el servidor acepta el método y las cabeceras.",
+          "code": "OPTIONS /api/novelas\nOrigin: http://localhost:5173\nAccess-Control-Request-Method: PATCH\nAccess-Control-Request-Headers: content-type, authorization",
+          "explanation": "El navegador envía OPTIONS para consultar permisos. El servidor debe responder con las cabeceras CORS adecuadas antes de que el navegador envíe la solicitud real."
+        },
+        {
+          "title": "Responder correctamente a una solicitud con credenciales",
+          "description": "Para cookies o credenciales, el servidor debe permitir un origen concreto y declarar que acepta credenciales.",
+          "language": "javascript",
+          "code": "import cors from 'cors';\n\napp.use(cors({\n  origin: 'https://mi-frontend.example',\n  credentials: true,\n  methods: ['GET', 'POST', 'PATCH'],\n  allowedHeaders: ['Content-Type', 'Authorization']\n}));",
+          "explanation": "No se puede combinar Access-Control-Allow-Credentials: true con Access-Control-Allow-Origin: *. La política debe enumerar el origen permitido. CORS no autentica por sí mismo: cada ruta debe verificar identidad y permisos."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Origin",
+          "description": "Origen que inicia la solicitud, formado por esquema, host y puerto."
+        },
+        {
+          "name": "Access-Control-Allow-Origin",
+          "description": "Orígenes autorizados por el servidor para leer la respuesta."
+        },
+        {
+          "name": "Preflight",
+          "description": "Solicitud OPTIONS que verifica permisos para ciertas solicitudes no simples."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Explicá por qué una petición desde localhost:5173 a localhost:3000 puede necesitar CORS.",
+      "hint": "Aunque ambas direcciones sean localhost, los puertos distintos forman orígenes distintos. La autorización se configura en el servidor.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-http",
+        "api-headers"
+      ],
+      "deepDive": {
+        "model": "CORS es un mecanismo aplicado por navegadores para controlar si una página de un origen puede leer una respuesta de otro origen. Un origen combina esquema, host y puerto. En solicitudes no simples, el navegador puede enviar primero OPTIONS (preflight) para preguntar si método y headers están permitidos. CORS no autentica a los usuarios y no impide que servidores o herramientas fuera del navegador llamen a la API.",
+        "flow": [
+          [
+            "La página hace fetch",
+            "Un script de un origen solicita un recurso en otro origen."
+          ],
+          [
+            "El navegador evalúa CORS",
+            "Según el método y headers, decide si puede enviar directamente o necesita preflight."
+          ],
+          [
+            "El servidor autoriza el origen",
+            "La respuesta incluye Access-Control-Allow-Origin y, si hace falta, métodos/headers permitidos."
+          ],
+          [
+            "El navegador expone o bloquea",
+            "Si las cabeceras no satisfacen la política, el script no puede leer la respuesta aunque el servidor haya recibido la solicitud."
+          ]
+        ],
+        "decisions": [
+          "Configurá una lista explícita de orígenes permitidos en producción.",
+          "Si usás cookies o credenciales, no combines credentials con un Allow-Origin comodín; devolvé un origen concreto y configurá Vary cuando corresponda.",
+          "Permití solo métodos y headers que la API necesita.",
+          "No uses CORS como sustituto de autenticación, autorización, validación o protección CSRF."
+        ],
+        "debugging": "Si ves un error CORS en consola, inspeccioná OPTIONS y la respuesta de preflight en Network. Confirmá origen exacto, método, headers y credenciales. Si el servidor devuelve 200 pero el navegador bloquea el script, puede faltar Allow-Origin: CORS decide qué respuesta puede exponer el navegador, no si el servidor ejecutó la operación."
+      }
+    },
+    {
+      "id": "api-auth",
+      "title": "Autenticación, autorización y tokens Bearer",
+      "category": "seguridad",
+      "summary": "Diferenciá identidad y permisos y aprendé el patrón de autenticación Bearer.",
+      "purpose": "Autenticación responde quién es el usuario; autorización determina qué puede hacer. Una API puede recibir un token de acceso mediante Authorization: Bearer. Los tokens deben protegerse, expirar, validarse en el servidor y tener permisos limitados. Nunca guardes secretos del servidor en el frontend ni registres tokens en logs.",
+      "whenToUse": "Autenticación responde quién es el usuario; autorización determina qué puede hacer. Una API puede recibir un token de acceso mediante Authorization: Bearer. Los tokens deben protegerse, expirar, validarse en el servidor y tener permisos limitados. Nunca guardes secretos del servidor en el frontend ni registres tokens en logs.",
+      "syntax": "Authorization: Bearer <access_token>",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Enviar un token",
+          "description": "El cliente adjunta el token a una solicitud protegida.",
+          "code": "const respuesta = await fetch('/api/perfil', {\n  headers: {\n    Authorization: `Bearer ${token}`,\n    Accept: 'application/json'\n  }\n});",
+          "explanation": "El cliente envía el token como credencial. El servidor debe verificar firma o introspección, expiración, emisor, audiencia y permisos según el sistema utilizado."
+        },
+        {
+          "title": "Proteger una ruta en Express (esquema)",
+          "description": "Un middleware valida la credencial antes de continuar.",
+          "code": "function requiereUsuario(req, res, next) {\n  const cabecera = req.headers.authorization || '';\n  const [tipo, token] = cabecera.split(' ');\n\n  if (tipo !== 'Bearer' || !token) {\n    return res.status(401).json({ error: 'Autenticación requerida' });\n  }\n\n  // Verificar token con la biblioteca y claves del servidor.\n  req.usuario = verificarToken(token);\n  next();\n}\n\napp.get('/api/perfil', requiereUsuario, mostrarPerfil);",
+          "explanation": "Este es un esquema didáctico: verificarToken debe ser una implementación real y segura, con una biblioteca mantenida. No aceptes un token solo porque existe ni implementes criptografía manualmente."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Authentication",
+          "description": "Proceso de verificar la identidad presentada."
+        },
+        {
+          "name": "Authorization",
+          "description": "Proceso de decidir si la identidad puede ejecutar una acción."
+        },
+        {
+          "name": "Bearer token",
+          "description": "Credencial que se envía en Authorization y debe tratarse como secreto."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Describí qué debería pasar si no hay token, si el token expiró y si el usuario no tiene permiso para borrar una novela.",
+      "hint": "401 suele indicar credenciales ausentes o inválidas; 403 indica que la identidad no tiene permiso para esa acción.",
+      "resources": [
+        {
+          "label": "MDN — HTTP",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP"
+        },
+        {
+          "label": "MDN — Fetch API",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "api-headers",
+        "api-cors"
+      ]
+    },
+    {
+      "id": "api-openapi",
+      "title": "OpenAPI: documentar contratos de una API",
+      "category": "integracion",
+      "summary": "Documentá rutas, parámetros, respuestas y esquemas con una especificación legible por personas y herramientas.",
+      "purpose": "OpenAPI es una especificación independiente del lenguaje para describir APIs HTTP. Permite documentar endpoints, métodos, parámetros, cuerpos, respuestas, autenticación y esquemas. Un contrato explícito ayuda a generar documentación interactiva, clientes y validaciones, y reduce malentendidos entre frontend y backend.",
+      "whenToUse": "OpenAPI es una especificación independiente del lenguaje para describir APIs HTTP. Permite documentar endpoints, métodos, parámetros, cuerpos, respuestas, autenticación y esquemas. Un contrato explícito ayuda a generar documentación interactiva, clientes y validaciones, y reduce malentendidos entre frontend y backend.",
+      "syntax": "openapi: 3.1.0\ninfo: { title: Catalog API, version: 1.0.0 }\npaths: /novelas: ...",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Describir un endpoint",
+          "description": "Este fragmento YAML define una operación GET.",
+          "code": "openapi: 3.1.0\ninfo:\n  title: WebDev Book API\n  version: 1.0.0\npaths:\n  /novelas/{id}:\n    get:\n      summary: Obtener una novela\n      parameters:\n        - name: id\n          in: path\n          required: true\n          schema:\n            type: integer\n      responses:\n        '200':\n          description: Novela encontrada\n        '404':\n          description: Novela inexistente",
+          "explanation": "paths declara rutas. get describe la operación. parameters documenta el identificador obligatorio y responses define resultados posibles. El documento completo también debería declarar schemas y servidores."
+        },
+        {
+          "title": "Describir el esquema de un recurso",
+          "description": "Los esquemas explican la forma de los datos.",
+          "code": "components:\n  schemas:\n    Novela:\n      type: object\n      required: [id, titulo]\n      properties:\n        id:\n          type: integer\n        titulo:\n          type: string\n        volumenes:\n          type: integer\n          minimum: 0",
+          "explanation": "required marca campos obligatorios; properties describe cada campo y sus restricciones. El esquema sirve como contrato documental y puede integrarse con validadores o generadores."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "openapi",
+          "description": "Versión de la especificación OpenAPI utilizada por el documento."
+        },
+        {
+          "name": "paths",
+          "description": "Mapa de rutas y operaciones HTTP disponibles."
+        },
+        {
+          "name": "components.schemas",
+          "description": "Modelos reutilizables de datos."
+        },
+        {
+          "name": "responses",
+          "description": "Estados y contenidos posibles de una operación."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Documentá un endpoint POST /novelas con cuerpo requerido y respuestas 201, 400 y 409.",
+      "hint": "Incluí el método, resumen, requestBody, esquema de entrada y respuestas posibles.",
+      "resources": [
+        {
+          "label": "OpenAPI Specification",
+          "url": "https://spec.openapis.org/oas/latest.html"
+        },
+        {
+          "label": "Swagger Docs",
+          "url": "https://swagger.io/docs/specification/v3_0/about/"
+        }
+      ],
+      "related": [
+        "api-rest",
+        "api-json"
+      ]
+    },
+    {
+      "id": "api-webhooks",
+      "title": "Webhooks: recibir eventos de otros servicios",
+      "category": "integracion",
+      "summary": "Usá webhooks para reaccionar a eventos sin consultar continuamente una API.",
+      "purpose": "Un webhook es una solicitud HTTP que un servicio envía a una URL registrada cuando ocurre un evento. El receptor debe verificar la autenticidad de la notificación, responder rápido, tolerar reintentos y evitar procesar dos veces el mismo evento. La entrega puede repetirse o demorarse; diseñá handlers idempotentes.",
+      "whenToUse": "Un webhook es una solicitud HTTP que un servicio envía a una URL registrada cuando ocurre un evento. El receptor debe verificar la autenticidad de la notificación, responder rápido, tolerar reintentos y evitar procesar dos veces el mismo evento. La entrega puede repetirse o demorarse; diseñá handlers idempotentes.",
+      "syntax": "Proveedor → POST /webhooks/pagos → validar firma → procesar evento → 2xx",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Recibir un evento",
+          "description": "El servidor verifica y registra el evento antes de responder.",
+          "code": "app.post('/webhooks/pagos', express.raw({ type: 'application/json' }), async (req, res) => {\n  const firma = req.headers['x-provider-signature'];\n  if (!verificarFirma(req.body, firma)) {\n    return res.status(401).end();\n  }\n\n  const evento = JSON.parse(req.body.toString('utf8'));\n  await guardarEventoSiNoExiste(evento.id, evento);\n  res.status(200).end();\n});",
+          "explanation": "La firma debe verificarse sobre el cuerpo original según el algoritmo oficial del proveedor. guardarEventoSiNoExiste evita procesar repetidamente un mismo ID. El ejemplo es un patrón, no una implementación criptográfica completa."
+        },
+        {
+          "title": "Hacer el procesamiento idempotente",
+          "description": "Una repetición del mismo evento no debe duplicar efectos.",
+          "code": "async function procesarPago(evento) {\n  const yaProcesado = await eventos.procesados.findOne({ id: evento.id });\n  if (yaProcesado) return;\n\n  await aplicarPago(evento.data);\n  await eventos.procesados.insertOne({ id: evento.id });\n}",
+          "explanation": "El identificador del evento permite detectar repeticiones. En producción, la comprobación y el registro deben ser atómicos o estar protegidos por una restricción única para evitar condiciones de carrera."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Endpoint webhook",
+          "description": "URL pública que recibe solicitudes de eventos."
+        },
+        {
+          "name": "Firma",
+          "description": "Prueba criptográfica para comprobar que el evento proviene del proveedor y no fue alterado."
+        },
+        {
+          "name": "Idempotencia",
+          "description": "Propiedad que evita duplicar efectos cuando una misma notificación se recibe más de una vez."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Diseñá un receptor de webhook que registre un evento de pago sin duplicarlo si el proveedor reintenta.",
+      "hint": "Validá la firma antes de confiar en el contenido y usá un ID de evento único para deduplicar.",
+      "resources": [
+        {
+          "label": "Stripe — Webhooks",
+          "url": "https://docs.stripe.com/webhooks"
+        },
+        {
+          "label": "GitHub — Webhooks",
+          "url": "https://docs.github.com/en/webhooks"
+        }
+      ],
+      "related": [
+        "api-auth",
+        "api-status"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "El ciclo de una comunicación HTTP",
+    "summary": "Un cliente formula una solicitud HTTP y el servidor devuelve una respuesta con estado, cabeceras y un cuerpo opcional.",
+    "steps": [
+      [
+        "El cliente prepara la solicitud",
+        "Define método, URL, cabeceras y, cuando corresponde, cuerpo."
+      ],
+      [
+        "La red transporta el mensaje",
+        "DNS, conexión y TLS permiten llegar al servidor de destino."
+      ],
+      [
+        "El servidor procesa",
+        "Enruta, autentica, valida y ejecuta la operación solicitada."
+      ],
+      [
+        "El servidor responde",
+        "Devuelve un código de estado, cabeceras y representación; el cliente interpreta éxito o error."
+      ]
+    ],
+    "note": "HTTP es un protocolo de solicitud-respuesta. JSON es un formato frecuente para el cuerpo, no el protocolo mismo."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "api-metodos",
+      "api-fetch",
+      "api-cors"
+    ],
+    "execution": {
+      "kind": "protocol-client-server",
+      "label": "Cliente y servidor HTTP",
+      "description": "HTTP es un protocolo de comunicación. Una API puede estar en un servidor y ser consumida desde navegadores, aplicaciones móviles, scripts o servicios backend."
+    },
+    "compatibility": {
+      "kind": "browser-api",
+      "summary": "Las APIs HTTP no se ejecutan como framework en el navegador; el consumo desde el navegador utiliza Fetch/XHR y está sujeto a CORS y políticas de seguridad.",
+      "rows": [
+        [
+          "Chrome",
+          "Fetch y HTTP modernos: amplio"
+        ],
+        [
+          "Firefox",
+          "Fetch y HTTP modernos: amplio"
+        ],
+        [
+          "Edge",
+          "Fetch y HTTP modernos: amplio"
+        ],
+        [
+          "Safari",
+          "Fetch y HTTP modernos: amplio"
+        ],
+        [
+          "Navegadores móviles",
+          "Amplio; verificar APIs concretas"
+        ],
+        [
+          "Internet Explorer",
+          "Fetch moderno no nativo; requeriría alternativa/polyfill"
+        ]
+      ],
+      "note": "No existe una compatibilidad única para todas las APIs: cada endpoint y cada API del navegador deben verificarse por separado. MDN Browser Compatibility Data mantiene datos por función."
+    },
+    "advantages": [
+      "Permite separar frontend y backend mediante contratos estables.",
+      "HTTP funciona entre lenguajes y plataformas diferentes.",
+      "REST y OpenAPI facilitan documentación e integración."
+    ],
+    "limitations": [
+      "Red, latencia, autenticación, errores y CORS deben manejarse explícitamente.",
+      "Un JSON válido no garantiza que cumpla el contrato de negocio.",
+      "Las APIs públicas necesitan límites, validación y políticas de seguridad."
+    ],
+    "complements": [
+      [
+        "express",
+        "Crear endpoints HTTP desde Node."
+      ],
+      [
+        "nodejs",
+        "Implementar servicios y procesos cliente/servidor."
+      ],
+      [
+        "react",
+        "Consumir APIs desde interfaces interactivas."
+      ],
+      [
+        "vuejs",
+        "Consumir endpoints desde aplicaciones Vue."
+      ],
+      [
+        "testing",
+        "Probar contratos y respuestas HTTP."
+      ]
+    ],
+    "docs": [
+      [
+        "MDN — HTTP",
+        "https://developer.mozilla.org/es/docs/Web/HTTP"
+      ],
+      [
+        "MDN — Fetch API",
+        "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+      ],
+      [
+        "MDN — compatibilidad de navegadores",
+        "https://developer.mozilla.org/es/docs/Web/Guide/Browser_compatibility"
+      ]
+    ]
+  }
+}
