@@ -38,5 +38,6 @@ for (const entry of manifest.packages) {
 if (seen.size !== source.challenges.length) errors.push("La cobertura de retos no coincide: " + seen.size + "/" + source.challenges.length);
 if (hash(JSON.stringify(canonical)) !== manifest.manifestVersion) errors.push("La huella del manifiesto no coincide.");
 if (catalog.labs.length !== manifest.packages.length) errors.push("El catálogo visible no coincide con los paquetes.");
+if (!catalog.catalogVersion || catalog.catalogVersion !== definitions.catalogVersion) errors.push("La versión del catálogo visible no coincide con la fuente.");
 if (errors.length) { console.error(errors.join("\n")); process.exitCode = 1; }
 else console.log("Laboratorios OK: " + manifest.packages.length + " paquetes; " + seen.size + " retos; cobertura completa.");
