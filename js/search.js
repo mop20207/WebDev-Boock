@@ -258,14 +258,36 @@ document.addEventListener("DOMContentLoaded", () => {
       return data;
     };
 
+    const fetchLibrarySearchIndex = async () => {
+      const localUrl = new URL("modules/libraries/search-index.json", dataRoot).href;
+      const urls = window.Capacitor?.isNativePlatform?.()
+        ? [
+            "https://raw.githubusercontent.com/mop20207/WebDev-Boock/main/modules/libraries/search-index.json",
+            localUrl
+          ]
+        : [localUrl];
+      let lastError;
+      for (const url of urls) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const index = await response.json();
+          if (!index || index.schemaVersion !== 1 || !Array.isArray(index.entries)) {
+            throw new Error("El índice de bibliotecas tiene un formato inválido.");
+          }
+          return index;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      throw lastError || new Error("No se pudo cargar el índice de bibliotecas.");
+    };
+
     catalogPromise = Promise.allSettled([
       fetchCatalog("html-articulos.json", "HTML"),
       fetchCatalog("css-articulos.json", "CSS"),
       fetchCatalog("js-articulos.json", "JavaScript"),
-      fetch(new URL("modules/libraries/search-index.json", dataRoot).href, { cache: "no-store" }).then(response => {
-        if (!response.ok) throw new Error("Herramientas: HTTP " + response.status + " al cargar el índice de bibliotecas.");
-        return response.json();
-      })
+      fetchLibrarySearchIndex()
     ]).then(results => {
       const entries = [];
       catalogWarnings.length = 0;
