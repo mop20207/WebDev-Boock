@@ -162,17 +162,20 @@
     card.dataset.moduleId = module.id;
 
     const isLibrary = module.category === "library";
+    const isLab = module.category === "lab";
+    const isPackage = isLibrary || isLab;
+    const packageApi = isLibrary ? window.WebDevLibraries : window.WebDevLabs;
     const packageState = packageStatus?.state || "missing";
     const hasLocalCopy = Boolean(packageStatus?.installed);
     const installed = packageState === "installed";
     const needsUpdate = packageState === "update";
     const top = document.createElement("div");
     top.className = "module-card-top";
-    const badge = isLibrary
+    const badge = isPackage
       ? (installed ? "Descargado" : needsUpdate ? "Actualización" : packageState === "unavailable" ? "No disponible" : "Descargable")
       : (module.status === "integrated" ? (module.essential ? "Esencial" : "Incluido") : "Etapa " + module.stage);
-    const badgeState = isLibrary
-      ? (installed ? "status-integrated" : needsUpdate ? "status-planned" : "status-planned")
+    const badgeState = isPackage
+      ? (installed ? "status-integrated" : "status-planned")
       : (module.status === "integrated" ? "status-integrated" : "status-planned");
     top.append(
       createText("span", "module-card-category", categoryLabel(module.category)),
@@ -184,10 +187,10 @@
     const details = createText("p", "module-card-details", module.details || "");
     const meta = document.createElement("div");
     meta.className = "module-card-meta";
-    meta.append(createText("span", "", "v" + (isLibrary ? packageStatus?.entry?.version || "—" : module.version)));
-    if (isLibrary && packageStatus?.entry) {
+    meta.append(createText("span", "", "v" + (isPackage ? packageStatus?.entry?.version || "—" : module.version)));
+    if (isPackage && packageStatus?.entry) {
       meta.append(createText("span", "", formatBytes(packageStatus.entry.sizeBytes)));
-      meta.append(createText("span", "", packageStatus.entry.articleCount + " artículos"));
+      meta.append(createText("span", "", (isLab ? packageStatus.entry.challengeCount : packageStatus.entry.articleCount) + (isLab ? " ejercicios" : " artículos")));
     } else if (Number.isInteger(module.articleCount)) {
       meta.append(createText("span", "", module.articleCount + " artículos"));
     } else if (module.category === "foundation") {
@@ -198,13 +201,13 @@
     const actions = document.createElement("div");
     actions.className = "module-card-actions";
 
-    if (isLibrary) {
-      const apiReady = Boolean(window.WebDevLibraries);
+    if (isPackage) {
+      const apiReady = Boolean(packageApi);
       if (hasLocalCopy && module.href) {
         const open = document.createElement("a");
         open.className = "module-card-open";
         open.href = module.href;
-        open.textContent = "Abrir biblioteca →";
+        open.textContent = isLab ? "Abrir laboratorio →" : "Abrir biblioteca →";
         actions.append(open);
       }
       if (!installed) {
@@ -213,7 +216,8 @@
           action.disabled = true;
           const initial = action.textContent;
           try {
-            await window.WebDevLibraries.downloadLibrary(module.id, {
+            const install = isLibrary ? packageApi.downloadLibrary : packageApi.downloadLab;
+            await install.call(packageApi, module.id, {
               onProgress(progress) {
                 action.textContent = progress.total > 0
                   ? "Descargando " + progress.percent + "%"
@@ -226,7 +230,7 @@
           } catch (error) {
             action.textContent = initial;
             action.disabled = false;
-            showToast(error?.message || "No se pudo instalar la biblioteca.");
+            showToast(error?.message || "No se pudo instalar el paquete.");
           }
         });
         action.disabled = !apiReady || Boolean(packageStatus?.error) || packageState === "unavailable";
@@ -236,16 +240,18 @@
 
       if (hasLocalCopy) {
         const remove = makeActionButton("Quitar", "module-priority", async () => {
+          const kind = isLab ? "laboratorio" : "biblioteca";
           if (!window.confirm("Se quitará la copia sin conexión de " + module.name + ". No se borrarán tus favoritos, progreso, proyectos ni archivos del editor. ¿Continuar?")) return;
           remove.disabled = true;
           try {
-            await window.WebDevLibraries.removeLibrary(module.id);
+            const uninstall = isLibrary ? packageApi.removeLibrary : packageApi.removeLab;
+            await uninstall.call(packageApi, module.id);
             showToast(module.name + " se quitó del almacenamiento local.");
             await renderCatalog();
             await updateStorage();
           } catch (error) {
             remove.disabled = false;
-            showToast(error?.message || "No se pudo quitar la biblioteca.");
+            showToast(error?.message || "No se pudo quitar el " + kind + ".");
           }
         });
         actions.append(remove);
@@ -299,13 +305,14 @@
     const grid = $("#moduleGrid");
     const empty = $("#moduleEmpty");
     const visible = getVisibleModules();
-    const packageEntries = visible.filter(module => module.category === "library");
+    const packageEntries = visible.filter(module => module.category === "library" || module.category === "lab");
     const statusPairs = await Promise.all(packageEntries.map(async module => {
       try {
-        if (!window.WebDevLibraries?.getPackageStatus) {
+        const api = module.category === "library" ? window.WebDevLibraries : window.WebDevLabs;
+        if (!api?.getPackageStatus) {
           return [module.id, { state: "unavailable", entry: null }];
         }
-        return [module.id, await window.WebDevLibraries.getPackageStatus(module.id)];
+        return [module.id, await api.getPackageStatus(module.id)];
       } catch (error) {
         console.warn("[WebDev Book] No se pudo consultar " + module.name + ":", error);
         return [module.id, { state: "unavailable", entry: null, error }];
