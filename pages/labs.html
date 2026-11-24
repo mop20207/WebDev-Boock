@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="Laboratorios interactivos descargables de WebDev Book: frontend, backend, bases de datos, terminal y lógica de videojuegos.">
+  <title>Laboratorios interactivos | WebDev Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/module-center.css">
+  <link rel="stylesheet" href="../css/labs.css">
+  <script defer src="../js/theme.js"></script>
+  <script defer src="../js/navigation.js"></script>
+  <script defer src="../js/lab-packages.js"></script>
+  <script defer src="../js/labs.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/icon.svg">
+  <link rel="stylesheet" href="../css/pwa.css">
+  <script defer src="../js/pwa.js"></script>
+</head>
+<body data-page="labs">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+    <div class="sidebar-label">MENÚ PRINCIPAL</div>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a class="nav-link" href="../index.html">⌂ Inicio</a>
+      <a class="nav-link" href="html.html">5 HTML</a>
+      <a class="nav-link" href="css.html">✳ CSS</a>
+      <a class="nav-link" href="javascript.html">JS JavaScript</a>
+      <a class="nav-link" href="editor.html">⌘ Editor</a>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="tools.html">▦ Biblioteca de tecnologías</a>
+      <a class="nav-link" href="modules.html">⬡ Centro de módulos</a>
+      <a class="nav-link" data-challenges-link href="challenges.html">⌁ Retos interactivos</a>
+      <a class="nav-link" href="projects.html">▣ Biblioteca de proyectos</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Practicá haciendo</strong><p>Instalá los entornos que quieras y usalos sin conexión cuando el runner no requiera un CDN externo.</p></div>
+      <button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <div class="breadcrumb"><span>WebDev Book</span><b>/</b><strong>Laboratorios</strong></div>
+      <a class="labs-top-link" href="modules.html">Administrar módulos ↗</a>
+      <button class="top-icon" id="topThemeToggle" type="button" aria-label="Cambiar tema">◐</button>
+    </header>
+    <div class="page-content labs-content">
+      <section class="labs-hero">
+        <div class="labs-hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span> ETAPA 3 · ENTORNOS DE PRÁCTICA</div>
+          <h1>Aprendé <span>experimentando.</span></h1>
+          <p>Instalá laboratorios independientes con ejercicios, pistas, pruebas automáticas y soluciones comentadas. Cada paquete se guarda en el dispositivo y puede abrirse sin conexión, salvo los motores que deban descargarse desde un CDN.</p>
+          <div class="labs-hero-actions">
+            <a class="button button-primary" href="#labsCatalog">Explorar laboratorios ↓</a>
+            <a class="button button-ghost" href="modules.html">Volver al Centro de módulos</a>
+          </div>
+        </div>
+        <div class="labs-hero-visual" aria-hidden="true">
+          <div class="labs-orbit labs-orbit-one"></div><div class="labs-orbit labs-orbit-two"></div>
+          <div class="labs-console"><span>WEBDEV LABS</span><strong>&gt;_</strong><small>RUN · TEST · LEARN</small></div>
+          <i class="labs-orbit-tag tag-a">HTML</i><i class="labs-orbit-tag tag-b">SQL</i><i class="labs-orbit-tag tag-c">2D</i>
+        </div>
+        <div class="labs-hero-foot"><span id="labsManifestVersion">Manifiesto —</span><span id="labsGlobalStatus" role="status">Consultando paquetes…</span></div>
+      </section>
+
+      <section class="labs-overview" aria-label="Resumen de laboratorios">
+        <article><span>▦</span><div><small>PAQUETES</small><strong id="labsTotal">5</strong><em>instalables por separado</em></div></article>
+        <article><span>⌨</span><div><small>EJERCICIOS</small><strong id="labsChallenges">—</strong><em>retos incluidos</em></div></article>
+        <article><span>⇩</span><div><small>INSTALADOS</small><strong id="labsInstalled">—</strong><em>guardados en el dispositivo</em></div></article>
+      </section>
+
+      <section class="labs-section" id="labsCatalog">
+        <div class="labs-section-heading">
+          <div><div class="eyebrow">CATÁLOGO DESCARGABLE</div><h2>Elegí tu entorno</h2><p>El paquete se verifica con SHA-256 antes de guardarse. Si falta espacio o falla la descarga, se conserva la versión anterior.</p></div>
+          <button class="labs-refresh" id="labsRefresh" type="button">↻ Comprobar</button>
+        </div>
+        <div class="labs-grid" id="labsGrid" aria-live="polite"><div class="labs-loading">Cargando laboratorios…</div></div>
+        <p class="labs-empty" id="labsEmpty" hidden>No hay laboratorios disponibles en este momento.</p>
+      </section>
+
+      <section class="labs-safety">
+        <div class="labs-safety-icon">⛨</div>
+        <div><strong>Qué hace cada entorno (y qué no hace)</strong><p>La terminal es un intérprete didáctico sobre un sistema de archivos virtual; no ejecuta comandos Linux ni accede a tus archivos reales. PostgreSQL usa PGlite en WebAssembly. MongoDB y APIs usan simuladores en memoria. React y Vue cargan sus motores desde CDN la primera vez. Los ejercicios de Phaser practican lógica 2D, pero no incluyen todavía el motor completo Phaser.</p></div>
+      </section>
+      <footer class="labs-footer"><span>WebDev Book · Laboratorios interactivos</span><a href="../index.html">Volver al inicio ↑</a></footer>
+    </div>
+  </main>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="module-toast" id="labsToast" role="status" aria-live="polite"></div>
+</body>
+</html>
