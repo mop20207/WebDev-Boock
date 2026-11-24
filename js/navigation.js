@@ -89,7 +89,7 @@
     phaser: "Phaser", typescript: "TypeScript", nextjs: "Next.js", express: "Express.js",
     "sql-postgres": "SQL y PostgreSQL", mongodb: "MongoDB", apis: "APIs y comunicación web",
     testing: "Testing", "docker-deploy": "Docker y despliegue", challenges: "Retos interactivos",
-    projects: "Biblioteca de proyectos", exercises: "Ejercicios", favorites: "Favoritos",
+    projects: "Biblioteca de proyectos", modules: "Centro de módulos", exercises: "Ejercicios", favorites: "Favoritos",
     resources: "Recursos", progress: "Mi progreso", tools: "Biblioteca de tecnologías"
   };
   const accents = {
