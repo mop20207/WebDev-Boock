@@ -163,6 +163,7 @@
 
     const isLibrary = module.category === "library";
     const packageState = packageStatus?.state || "missing";
+    const hasLocalCopy = Boolean(packageStatus?.installed);
     const installed = packageState === "installed";
     const needsUpdate = packageState === "update";
     const top = document.createElement("div");
@@ -199,15 +200,16 @@
 
     if (isLibrary) {
       const apiReady = Boolean(window.WebDevLibraries);
-      if (installed && module.href) {
+      if (hasLocalCopy && module.href) {
         const open = document.createElement("a");
         open.className = "module-card-open";
         open.href = module.href;
         open.textContent = "Abrir biblioteca →";
         actions.append(open);
-      } else {
+      }
+      if (!installed) {
         const label = needsUpdate ? "Actualizar" : "Descargar";
-        const action = makeActionButton(label, "module-card-open", async event => {
+        const action = makeActionButton(label, "module-card-open", async () => {
           action.disabled = true;
           const initial = action.textContent;
           try {
@@ -232,8 +234,8 @@
         actions.append(action);
       }
 
-      if (installed) {
-        const remove = makeActionButton("Quitar", "module-priority", async buttonEvent => {
+      if (hasLocalCopy) {
+        const remove = makeActionButton("Quitar", "module-priority", async () => {
           if (!window.confirm("Se quitará la copia sin conexión de " + module.name + ". No se borrarán tus favoritos, progreso, proyectos ni archivos del editor. ¿Continuar?")) return;
           remove.disabled = true;
           try {
