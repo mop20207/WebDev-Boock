@@ -90,7 +90,7 @@
           const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json" } });
           if (!response.ok) throw new Error("HTTP " + response.status + " al consultar el manifiesto.");
           const manifest = await response.json();
-          validateManifest(manifest);
+          await validateManifest(manifest);
           return manifest;
         } catch (error) {
           lastError = error;
@@ -104,7 +104,7 @@
     return manifestPromise;
   }
 
-  function validateManifest(manifest) {
+  async function validateManifest(manifest) {
     if (!manifest || manifest.schemaVersion !== 1 ||
         !/^[a-f0-9]{64}$/i.test(manifest.manifestVersion || "") ||
         !Array.isArray(manifest.packages)) {
@@ -127,6 +127,19 @@
           !Number.isInteger(entry.articleCount) || entry.articleCount < 1) {
         throw new Error("Los metadatos de " + entry.id + " están incompletos.");
       }
+    }
+    const canonicalPackages = manifest.packages.map(entry => ({
+      id: entry.id,
+      path: entry.path,
+      version: entry.version,
+      sha256: entry.sha256,
+      sizeBytes: entry.sizeBytes,
+      articleCount: entry.articleCount,
+      categoryCount: entry.categoryCount
+    }));
+    const calculatedVersion = await sha256(new TextEncoder().encode(JSON.stringify(canonicalPackages)));
+    if (calculatedVersion !== manifest.manifestVersion) {
+      throw new Error("La huella del manifiesto no coincide con sus paquetes.");
     }
   }
 
@@ -338,11 +351,12 @@
           articleCount: installed.articleCount || entry.articleCount
         });
         const localDigest = await sha256(new TextEncoder().encode(record.content));
-        if (localDigest === entry.sha256 &&
-            installed.sha256 === entry.sha256 && record.sha256 === entry.sha256) return cached;
+        const cachedIsTrusted = localDigest === installed.sha256 && localDigest === record.sha256;
+        if (cachedIsTrusted && localDigest === entry.sha256) return cached;
         try { return await downloadLibrary(id); }
         catch (error) {
-          console.warn("[WebDev Book] La actualización de " + id + " no pudo descargarse; se usará la copia instalada.", error);
+          if (!cachedIsTrusted) throw error;
+          console.warn("[WebDev Book] La actualización de " + id + " no pudo descargarse; se usará la copia instalada verificada.", error);
           return cached;
         }
       } catch (error) {
