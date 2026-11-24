@@ -149,8 +149,11 @@
       "mongo-sim", "api-sim", "testing-sim", "docker-static", "terminal-sim", "game-logic"
     ]);
     for (const challenge of pack.challenges) {
+      const hasTests = Array.isArray(challenge?.tests) && challenge.tests.length > 0;
+      const hasTerminalChecks = challenge?.runner === "terminal-sim" &&
+        Array.isArray(challenge.terminalChecks) && challenge.terminalChecks.length > 0;
       if (!challenge || typeof challenge.id !== "string" || ids.has(challenge.id) ||
-          !challenge.title || !challenge.statement || !Array.isArray(challenge.tests) || !challenge.tests.length ||
+          !challenge.title || !challenge.statement || (!hasTests && !hasTerminalChecks) ||
           !Array.isArray(challenge.hints) || !challenge.hints.length || !challenge.solutionCode) {
         throw new Error("El laboratorio contiene un ejercicio incompleto o duplicado.");
       }
