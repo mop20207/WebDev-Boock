@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: technology-library-packages-main
+  group: webdev-generated-packages-main
   cancel-in-progress: false
 
 jobs:
