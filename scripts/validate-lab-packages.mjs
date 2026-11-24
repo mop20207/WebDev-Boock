@@ -14,7 +14,10 @@ const sourceById = new Map();
 for (const challenge of all) {
   if (!challenge?.id || sourceById.has(challenge.id)) errors.push("ID de reto vacío o duplicado: " + challenge?.id);
   else sourceById.set(challenge.id, challenge);
-  if (!Array.isArray(challenge?.tests) || !challenge.tests.length) errors.push("Reto sin tests: " + challenge?.id);
+  const hasTests = Array.isArray(challenge?.tests) && challenge.tests.length > 0;
+  const hasTerminalChecks = challenge?.runner === "terminal-sim" &&
+    Array.isArray(challenge?.terminalChecks) && challenge.terminalChecks.length > 0;
+  if (!hasTests && !hasTerminalChecks) errors.push("Reto sin pruebas: " + challenge?.id);
   if (!Array.isArray(challenge?.hints) || !challenge.hints.length) errors.push("Reto sin pistas: " + challenge?.id);
   if (!challenge?.solutionCode) errors.push("Reto sin solución: " + challenge?.id);
 }
