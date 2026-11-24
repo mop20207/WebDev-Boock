@@ -1235,8 +1235,10 @@ const same = (a, b) => sameValue(normalize(a), normalize(b));
         if (!window.WebDevLabs) throw new Error("El administrador de laboratorios no está disponible.");
         const lab = await window.WebDevLabs.getLab(requestedLab);
         challenges = Array.isArray(lab.challenges) ? lab.challenges : [];
-        const heading = document.getElementById("challengePageHeading");
+        const heading = document.querySelector(".challenges-hero h1");
         if (heading) heading.textContent = lab.title || "Laboratorio interactivo";
+        const intro = document.querySelector(".challenges-hero > p");
+        if (intro) intro.textContent = "Resolvé los retos de este laboratorio. Tus intentos y avances se guardan en este dispositivo.";
         document.title = (lab.title || "Laboratorio") + " | WebDev Book";
       } else {
         const response = await fetch(DATA_URL, { cache: "no-store" });
