@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: interactive-lab-packages-main
+  group: webdev-generated-packages-main
   cancel-in-progress: false
 
 jobs:
