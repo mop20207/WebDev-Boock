@@ -304,6 +304,9 @@ self.addEventListener("fetch", event => {
   }
   if (!isAppRequest(url)) return;
 
+  // Los medios solo se conservan en la caché multimedia tras verificar su SHA-256.
+  if (url.pathname.includes("/modules/multimedia/assets/")) return;
+
   // Los paquetes de tecnología se almacenan una sola vez en IndexedDB después
   // de verificar tamaño, JSON y SHA-256. No duplicarlos en Cache Storage.
   if (url.pathname.includes("/modules/libraries/packages/")) return;
