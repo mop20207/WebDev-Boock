@@ -8,6 +8,10 @@ on:
     paths:
       - 'data/*.json'
       - 'data/**/*.json'
+      # Bootstrap the checksums after this updater is merged into main.
+      - '.github/workflows/publish-content-manifest.yml'
+      - 'scripts/generate-content-manifest.mjs'
+      - 'updates/content-manifest.json'
 
 permissions:
   contents: write
