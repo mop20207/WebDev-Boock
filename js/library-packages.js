@@ -133,14 +133,24 @@
   async function loadEcosystem() {
     if (ecosystemPromise) return ecosystemPromise;
     ecosystemPromise = (async () => {
-      const url = localUrl(ECOSYSTEM_PATH);
-      const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json" } });
-      if (!response.ok) throw new Error("No se pudo cargar el índice de tecnologías (HTTP " + response.status + ").");
-      const ecosystem = await response.json();
-      if (!ecosystem || ecosystem.schemaVersion !== 1 || !Array.isArray(ecosystem.tools)) {
-        throw new Error("El índice de tecnologías tiene un formato inválido.");
+      const urls = isNative()
+        ? [remoteUrl(ECOSYSTEM_PATH), localUrl(ECOSYSTEM_PATH)]
+        : [localUrl(ECOSYSTEM_PATH)];
+      let lastError;
+      for (const url of urls) {
+        try {
+          const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json" } });
+          if (!response.ok) throw new Error("HTTP " + response.status + " al cargar los metadatos.");
+          const ecosystem = await response.json();
+          if (!ecosystem || ecosystem.schemaVersion !== 1 || !Array.isArray(ecosystem.tools)) {
+            throw new Error("El índice de tecnologías tiene un formato inválido.");
+          }
+          return ecosystem;
+        } catch (error) {
+          lastError = error;
+        }
       }
-      return ecosystem;
+      throw lastError || new Error("No se pudo cargar el índice de tecnologías.");
     })().catch(error => {
       ecosystemPromise = null;
       throw error;
