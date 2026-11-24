@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "6295ac4a9f80df53",
+  "version": "6d61ceb17789a8bd",
   "files": [
     {
       "path": "data/challenges.json",
@@ -181,10 +181,6 @@
     {
       "path": "data/projects.json",
       "sha256": "ed0f0b0a007910fa315db4dd7fcdeaf7e186920bc9fd8bb5cc189cffab472412"
-    },
-    {
-      "path": "data/tools.json",
-      "sha256": "496f826d9d9480153284806dfac2956d01b0a81bfade235a6790434662898d86"
     }
   ]
 }
