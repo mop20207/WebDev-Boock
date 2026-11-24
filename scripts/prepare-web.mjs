@@ -34,6 +34,8 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
         if (relativePath === "data/tools.json") return false;
         if (relativePath.startsWith("modules/libraries/packages/")) return false;
         if (relativePath.startsWith("modules/labs/packages/")) return false;
+        // Multimedia assets se descargan bajo demanda y no se incluyen en la APK.
+        if (relativePath.startsWith("modules/multimedia/assets/")) return false;
         return true;
       }
     }

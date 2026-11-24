@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v23";
+const CACHE_VERSION = "webdev-book-v24";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -33,6 +33,11 @@ const CORE_FILES = [
   "js/module-manager.js",
   "js/library-packages.js",
   "pages/labs.html",
+  "pages/multimedia.html",
+  "css/multimedia.css",
+  "js/multimedia-library.js",
+  "modules/multimedia/catalog.json",
+  "modules/multimedia/manifest.json",
   "css/labs.css",
   "js/lab-packages.js",
   "js/labs.js",
@@ -298,6 +303,9 @@ self.addEventListener("fetch", event => {
     return;
   }
   if (!isAppRequest(url)) return;
+
+  // Los medios solo se conservan en la caché multimedia tras verificar su SHA-256.
+  if (url.pathname.includes("/modules/multimedia/assets/")) return;
 
   // Los paquetes de tecnología se almacenan una sola vez en IndexedDB después
   // de verificar tamaño, JSON y SHA-256. No duplicarlos en Cache Storage.

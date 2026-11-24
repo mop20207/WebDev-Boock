@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "1.0.0",
+  "manifestVersion": "7fc90f843d1cbf8d9e5e67f8a5f58e566f28e273794a8fc5100d40014a4318f9",
+  "resources": [
+    {
+      "id": "html-document-tree",
+      "path": "modules/multimedia/assets/html-document-tree.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "b0964409e199b844f7040dee5f4873118cdfd1fd1114f2124a46a4fef290d918",
+      "sizeBytes": 3706
+    },
+    {
+      "id": "html-accessible-form",
+      "path": "modules/multimedia/assets/html-accessible-form.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "illustration",
+      "version": "1.0.0",
+      "sha256": "89aab3197e183306093e08f21a7581a522bcd210f71656d3b264a1f1208fda29",
+      "sizeBytes": 3677
+    },
+    {
+      "id": "css-box-model",
+      "path": "modules/multimedia/assets/css-box-model.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "infographic",
+      "version": "1.0.0",
+      "sha256": "4b2b0a5ef9e2116d3027642dd22f01ca0e6f6d8e4af25ae6a398160f97599e64",
+      "sizeBytes": 3658
+    },
+    {
+      "id": "css-flexbox-axis",
+      "path": "modules/multimedia/assets/css-flexbox-axis.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "a0e24a5ac348483e93786fc3a4d7bc809496a2a517237fdcf1d9640ff5a9ef42",
+      "sizeBytes": 3674
+    },
+    {
+      "id": "css-grid-layout",
+      "path": "modules/multimedia/assets/css-grid-layout.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "ab01f000cbb46568f3baab005defcd1efd67d1bfb4578a02f20f8ce31b16bae8",
+      "sizeBytes": 3663
+    },
+    {
+      "id": "js-event-loop",
+      "path": "modules/multimedia/assets/js-event-loop.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "infographic",
+      "version": "1.0.0",
+      "sha256": "b12a346d366f9218f6e96d5f9582e93c22aef5cf185187a9127a5ccff243afa9",
+      "sizeBytes": 3666
+    },
+    {
+      "id": "dom-rendering-pipeline",
+      "path": "modules/multimedia/assets/dom-rendering-pipeline.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "7312d1439a8b3c0069ffeafb7121fcf43c7250788b5f04889f9d70196be6d81b",
+      "sizeBytes": 3701
+    },
+    {
+      "id": "http-request-cycle",
+      "path": "modules/multimedia/assets/http-request-cycle.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "animation",
+      "version": "1.0.0",
+      "sha256": "03afc98d06c412f3834bf8374447750f6eb39ad914a4fe9d58e49962bf23f687",
+      "sizeBytes": 4026
+    },
+    {
+      "id": "api-rest-architecture",
+      "path": "modules/multimedia/assets/api-rest-architecture.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "bbdfdc5bd62a9ca201a9298b7a9d2e820a3877c1386be24c7bf5f73b44a584d1",
+      "sizeBytes": 3677
+    },
+    {
+      "id": "sql-relational-model",
+      "path": "modules/multimedia/assets/sql-relational-model.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "3a03518e529475bf5510876d9dd77a8c16d8da8f6db27dc3a4cfcd3e17098db2",
+      "sizeBytes": 3678
+    },
+    {
+      "id": "mongodb-document-model",
+      "path": "modules/multimedia/assets/mongodb-document-model.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "illustration",
+      "version": "1.0.0",
+      "sha256": "9814ed47b07fdf6dbde88e728e71495492356ac0d7f2819a149b0dd263bf4945",
+      "sizeBytes": 3656
+    },
+    {
+      "id": "react-state-flow",
+      "path": "modules/multimedia/assets/react-state-flow.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "diagram",
+      "version": "1.0.0",
+      "sha256": "7400883ca46f603a99aa6bfe175727ef57e449e13179f3c066b5c78715421f6a",
+      "sizeBytes": 3667
+    },
+    {
+      "id": "vue-reactivity-flow",
+      "path": "modules/multimedia/assets/vue-reactivity-flow.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "animation",
+      "version": "1.0.0",
+      "sha256": "f8fb502b744f4e9867e55d684f08a4efc048faa09fa1db817df9f25ade709d4d",
+      "sizeBytes": 3995
+    },
+    {
+      "id": "node-event-loop",
+      "path": "modules/multimedia/assets/node-event-loop.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "infographic",
+      "version": "1.0.0",
+      "sha256": "245b6eae7bfa9ea790b4de3126ed604aca59e3a5bec73cd963e571b70724d2d0",
+      "sizeBytes": 3669
+    },
+    {
+      "id": "web-accessibility-map",
+      "path": "modules/multimedia/assets/web-accessibility-map.svg",
+      "mediaType": "image",
+      "mimeType": "image/svg+xml",
+      "category": "infographic",
+      "version": "1.0.0",
+      "sha256": "8c898d655643e5e6122c43fd1192503f89b9ae9b05dba4726cc32a8f8e6d7fcd",
+      "sizeBytes": 3724
+    }
+  ]
+}
