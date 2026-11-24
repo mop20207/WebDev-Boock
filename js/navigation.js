@@ -2,6 +2,46 @@
 (() => {
   "use strict";
 
+  // En Android, el interceptor permite leer desde IndexedDB los JSON que ya
+  // se actualizaron. El resto de las peticiones conserva fetch sin cambios.
+  if (window.Capacitor?.isNativePlatform?.() && typeof window.fetch === "function") {
+    const originalFetch = window.fetch.bind(window);
+    window.__webdevNativeFetch = originalFetch;
+    let resolveUpdater;
+    const updaterReady = new Promise(resolve => { resolveUpdater = resolve; });
+    const loader = document.createElement("script");
+    const currentScript = document.currentScript;
+    loader.src = new URL("content-updates.js", currentScript?.src || document.baseURI).href;
+    loader.onload = () => resolveUpdater(true);
+    loader.onerror = () => resolveUpdater(false);
+    document.head.appendChild(loader);
+
+    window.fetch = function (input, init) {
+      let contentPath = "";
+      try {
+        const source = typeof input === "string" || input instanceof URL ? input : input.url;
+        const url = new URL(source, document.baseURI);
+        const marker = url.pathname.lastIndexOf("/data/");
+        if (marker >= 0) contentPath = decodeURIComponent(url.pathname.slice(marker + 1));
+      } catch {
+        return originalFetch(input, init);
+      }
+
+      const isContentJson = contentPath.startsWith("data/") &&
+        contentPath.endsWith(".json") &&
+        !contentPath.split("/").some(part => !part || part === "." || part === "..");
+      if (!isContentJson) return originalFetch(input, init);
+
+      return updaterReady.then(loaded => {
+        const updater = window.WebDevContentUpdates;
+        if (loaded && updater?.fetchData) {
+          return updater.fetchData(contentPath, input, init, originalFetch);
+        }
+        return originalFetch(input, init);
+      }).catch(() => originalFetch(input, init));
+    };
+  }
+
   const toolMeta = {
     terminal: { label: "Terminal Linux", accent: "#71C9A8", language: "SHELL", snippet: "$ pwd\n$ ls -la" },
     git: { label: "Git y GitHub", accent: "#F05032", language: "GIT", snippet: "$ git status\n$ git add ." },

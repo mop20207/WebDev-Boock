@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "version": "bootstrap-v1",
+  "files": [
+    {
+      "path": "data/challenges.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css-articulos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css-categorias.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html-articulos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript.json",
+      "sha256": null
+    },
+    {
+      "path": "data/js-articulos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/js-categorias.json",
+      "sha256": null
+    },
+    {
+      "path": "data/projects.json",
+      "sha256": null
+    },
+    {
+      "path": "data/tools.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/accesibilidad.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/atributos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/estructura.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/etiquetas.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/formularios.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/fundamentos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/index.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/multimedia.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/retos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/semantica.json",
+      "sha256": null
+    },
+    {
+      "path": "data/html/svg.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/animaciones.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/flexbox.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/fundamentos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/grid.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/index.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/modelo-caja.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/propiedades.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/responsive.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/retos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/css/selectores.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/almacenamiento.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/arrays-objetos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/asincronia.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/dom.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/eventos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/fetch-api.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/funciones.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/fundamentos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/index.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/operadores.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/retos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/javascript/variables.json",
+      "sha256": null
+    },
+    {
+      "path": "data/laboratorio/ejemplos.json",
+      "sha256": null
+    },
+    {
+      "path": "data/laboratorio/index.json",
+      "sha256": null
+    }
+  ]
+}
