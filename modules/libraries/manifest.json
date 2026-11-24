@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "manifestVersion": "3e835f2e8bea85ff37e831eca4db5e99157da2bf3ece6645827d1ab4d4658494",
+  "source": "data/tools.json",
+  "generatedAt": "",
+  "packages": [
+    {
+      "id": "terminal",
+      "title": "Terminal Linux",
+      "path": "modules/libraries/packages/terminal.json",
+      "version": "fd4a87282fbb",
+      "sha256": "fd4a87282fbb0f26115215cefc524bdacfe9dcc886974ff7df4139fd9e68a592",
+      "sizeBytes": 41192,
+      "articleCount": 16,
+      "categoryCount": 7,
+      "description": "Una guía práctica para navegar por el sistema, organizar archivos, buscar información, administrar paquetes y automatizar tareas."
+    },
+    {
+      "id": "git",
+      "title": "Git y GitHub",
+      "path": "modules/libraries/packages/git.json",
+      "version": "4200e2ef6451",
+      "sha256": "4200e2ef64519149d9bf1ab1174edb43f0758e9703b1864c8ebfff06a9aa9936",
+      "sizeBytes": 30469,
+      "articleCount": 12,
+      "categoryCount": 4,
+      "description": "Aprendé a crear repositorios, guardar versiones, trabajar con ramas y compartir tus proyectos en GitHub."
+    },
+    {
+      "id": "npm",
+      "title": "NPM y paquetes",
+      "path": "modules/libraries/packages/npm.json",
+      "version": "a646e5d7ba88",
+      "sha256": "a646e5d7ba882e8ca8695e68bcd4b92199a43259155245eb2aac1a1b0046619c",
+      "sizeBytes": 32763,
+      "articleCount": 13,
+      "categoryCount": 2,
+      "description": "Aprendé a trabajar con Node.js, NPM, package.json y las herramientas del ecosistema JavaScript."
+    },
+    {
+      "id": "react",
+      "title": "React",
+      "path": "modules/libraries/packages/react.json",
+      "version": "8b7a768a94b1",
+      "sha256": "8b7a768a94b1f824fd88a198f94095f58490a5d21bf4727e669a3141ceea12a2",
+      "sizeBytes": 57896,
+      "articleCount": 6,
+      "categoryCount": 3,
+      "description": "Componentes, JSX, props, estado y Hooks."
+    },
+    {
+      "id": "webcomponents",
+      "title": "Web Components",
+      "path": "modules/libraries/packages/webcomponents.json",
+      "version": "eac220f7a5e9",
+      "sha256": "eac220f7a5e904184d6a77bd9334d9787687787c4d9fd59d53cb44ebc9786619",
+      "sizeBytes": 75861,
+      "articleCount": 6,
+      "categoryCount": 3,
+      "description": "Custom Elements, Shadow DOM, templates, slots y eventos."
+    },
+    {
+      "id": "vuejs",
+      "title": "Vue.js",
+      "path": "modules/libraries/packages/vuejs.json",
+      "version": "bcd435468867",
+      "sha256": "bcd4354688675f6977fb665d1472bc72125b6a9a598e626992f4541dad4d8d33",
+      "sizeBytes": 142407,
+      "articleCount": 15,
+      "categoryCount": 3,
+      "description": "Plantillas, directivas, reactividad, componentes y Composition API."
+    },
+    {
+      "id": "nodejs",
+      "title": "Node.js",
+      "path": "modules/libraries/packages/nodejs.json",
+      "version": "62539f04000a",
+      "sha256": "62539f04000a7de68b5ad99cae2ca371fed0dd6aa97201eac7beef02b7bb446b",
+      "sizeBytes": 119073,
+      "articleCount": 18,
+      "categoryCount": 3,
+      "description": "JavaScript en el servidor, módulos, archivos, procesos, servidores y APIs."
+    },
+    {
+      "id": "astro",
+      "title": "Astro",
+      "path": "modules/libraries/packages/astro.json",
+      "version": "e0e4bcf9902e",
+      "sha256": "e0e4bcf9902e4f748b1b584c321f4b391f148d0fd8e3ae239173ac22559e931e",
+      "sizeBytes": 77377,
+      "articleCount": 20,
+      "categoryCount": 3,
+      "description": "Aprendé a crear sitios rápidos y centrados en contenido con páginas, componentes, layouts, islas interactivas, colecciones y despliegue."
+    },
+    {
+      "id": "phaser",
+      "title": "Phaser",
+      "path": "modules/libraries/packages/phaser.json",
+      "version": "99587e8d73d9",
+      "sha256": "99587e8d73d97adb855fdb65237db3a19e9ed261c1b7e9ab185e1ea4c9caead6",
+      "sizeBytes": 120641,
+      "articleCount": 18,
+      "categoryCount": 3,
+      "description": "Aprendé a desarrollar juegos 2D con Phaser: escenas, sprites, animaciones, entrada, físicas, mapas, cámaras y efectos."
+    },
+    {
+      "id": "typescript",
+      "title": "TypeScript",
+      "path": "modules/libraries/packages/typescript.json",
+      "version": "0ab8b811713b",
+      "sha256": "0ab8b811713b18a4d8e1029643bd188dd0b0663e3c8845ec4b5a7f9883fe8d62",
+      "sizeBytes": 171139,
+      "articleCount": 37,
+      "categoryCount": 7,
+      "description": "Aprendé TypeScript desde sus fundamentos hasta genéricos, configuración e integración con el DOM, React y Node.js. Cada tema incluye ejemplos comentados, errores frecuentes y prácticas."
+    },
+    {
+      "id": "nextjs",
+      "title": "Next.js",
+      "path": "modules/libraries/packages/nextjs.json",
+      "version": "851fe1e8621e",
+      "sha256": "851fe1e8621e3887ae5533aa597839c9463089c90146508ba9313111208d0057",
+      "sizeBytes": 225526,
+      "articleCount": 44,
+      "categoryCount": 7,
+      "description": "Aprendé Next.js desde la instalación y App Router hasta Server Components, caché, Server Actions, APIs, seguridad, pruebas y despliegue. El recorrido prioriza las convenciones actuales de Next.js 16 y también cubre Pages Router para mantenimiento y migración."
+    },
+    {
+      "id": "express",
+      "title": "Express.js",
+      "path": "modules/libraries/packages/express.json",
+      "version": "7c371f5acff2",
+      "sha256": "7c371f5acff277efa808537c4f2357639554183c7b00f7296d6a8a71b7f61515",
+      "sizeBytes": 172604,
+      "articleCount": 42,
+      "categoryCount": 7,
+      "description": "Aprendé Express 5 desde las primeras rutas hasta middleware, APIs REST, autenticación, manejo de errores, pruebas y despliegue. Este recorrido se centra en los cambios de Express 5 y explica patrones heredados de Express 4."
+    },
+    {
+      "id": "sql-postgres",
+      "title": "SQL y PostgreSQL",
+      "path": "modules/libraries/packages/sql-postgres.json",
+      "version": "205a06e405a4",
+      "sha256": "205a06e405a4e15405010ab0da149e35fd390febd91dd1c29a3cd2f990879ae2",
+      "sizeBytes": 167905,
+      "articleCount": 42,
+      "categoryCount": 7,
+      "description": "Biblioteca práctica para aprender SQL y profundizar en PostgreSQL: diseño relacional, consultas, JOIN, transacciones, JSONB, índices, rendimiento y conexión segura desde Node.js."
+    },
+    {
+      "id": "mongodb",
+      "title": "MongoDB",
+      "path": "modules/libraries/packages/mongodb.json",
+      "version": "bb2c77a5c5cd",
+      "sha256": "bb2c77a5c5cd79f591323a1567e98f1176a0c87cadd258b5b024da197f8f738b",
+      "sizeBytes": 168226,
+      "articleCount": 42,
+      "categoryCount": 7,
+      "description": "Biblioteca práctica para aprender MongoDB: BSON, diseño con documentos embebidos o referencias, consultas CRUD, arrays, agregaciones, índices, consistencia, seguridad y driver oficial de Node.js."
+    },
+    {
+      "id": "apis",
+      "title": "APIs y comunicación web",
+      "path": "modules/libraries/packages/apis.json",
+      "version": "c6c0774e7fee",
+      "sha256": "c6c0774e7fee1d9802c4086b932d367d9a6cca462c3328f2f4e7f660085b5886",
+      "sizeBytes": 80865,
+      "articleCount": 14,
+      "categoryCount": 5,
+      "description": "Biblioteca práctica sobre HTTP, diseño REST, JSON, Fetch, seguridad, documentación e integración entre aplicaciones."
+    },
+    {
+      "id": "testing",
+      "title": "Testing",
+      "path": "modules/libraries/packages/testing.json",
+      "version": "6c241f0ff12c",
+      "sha256": "6c241f0ff12c52b66e5fcc2428939ab860dc77205ed47bb0670e1e54825d12f7",
+      "sizeBytes": 62423,
+      "articleCount": 14,
+      "categoryCount": 5,
+      "description": "Biblioteca práctica de pruebas unitarias, integración, componentes, E2E, cobertura y automatización de calidad."
+    },
+    {
+      "id": "docker-deploy",
+      "title": "Docker y despliegue",
+      "path": "modules/libraries/packages/docker-deploy.json",
+      "version": "2583122b7fa9",
+      "sha256": "2583122b7fa9061439d93e0a9fd7a524916f9e97a06fffa4e481dfa1ff0c71be",
+      "sizeBytes": 131406,
+      "articleCount": 28,
+      "categoryCount": 7,
+      "description": "Biblioteca práctica para aprender Docker, Dockerfile, Compose, redes, persistencia, seguridad, registros de imágenes, CI/CD y despliegues en servidores."
+    }
+  ]
+}
