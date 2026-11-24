@@ -1,190 +1,190 @@
 {
   "schemaVersion": 1,
-  "version": "bootstrap-v1",
+  "version": "6295ac4a9f80df53",
   "files": [
     {
       "path": "data/challenges.json",
-      "sha256": null
+      "sha256": "885e40f8d601ea739d60a3c41e1695ee9d8c79938a98f4956b27784caab3f1ba"
     },
     {
       "path": "data/css-articulos.json",
-      "sha256": null
+      "sha256": "4d4f97377ae16e8b3ae6810ca6b2b5023764936c2eb737812daf5a848d8e2ca0"
     },
     {
       "path": "data/css-categorias.json",
-      "sha256": null
+      "sha256": "1c8c74f5f48989886fa51795b1f77a3f72684bc38d95a98cb3900bc0c582820b"
     },
     {
       "path": "data/css.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html-articulos.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html.json",
-      "sha256": null
-    },
-    {
-      "path": "data/javascript.json",
-      "sha256": null
-    },
-    {
-      "path": "data/js-articulos.json",
-      "sha256": null
-    },
-    {
-      "path": "data/js-categorias.json",
-      "sha256": null
-    },
-    {
-      "path": "data/projects.json",
-      "sha256": null
-    },
-    {
-      "path": "data/tools.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/accesibilidad.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/atributos.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/estructura.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/etiquetas.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/formularios.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/fundamentos.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/index.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/multimedia.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/retos.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/semantica.json",
-      "sha256": null
-    },
-    {
-      "path": "data/html/svg.json",
-      "sha256": null
+      "sha256": "3cb199acbd89d9a21c60d83536b3f772019f13ad54eddb2099fd56db1f3a8e40"
     },
     {
       "path": "data/css/animaciones.json",
-      "sha256": null
+      "sha256": "60e1f7d44235b56ca065b5ec084f0f8a70ec4f130d6e824472f9fa2e1d502d12"
     },
     {
       "path": "data/css/flexbox.json",
-      "sha256": null
+      "sha256": "98e29e877e44eef5b687170859d10f79c9399089cc412862c68828764610cddb"
     },
     {
       "path": "data/css/fundamentos.json",
-      "sha256": null
+      "sha256": "db051366f8106edac59b50b842a4670aa1a4a9b2f6371338f1cf6109cc67db1d"
     },
     {
       "path": "data/css/grid.json",
-      "sha256": null
+      "sha256": "f84c403cd5ccb53399acf35beaaa1b46afd04f3e3177b2710afaf2d0bb918307"
     },
     {
       "path": "data/css/index.json",
-      "sha256": null
+      "sha256": "eee8b78b3d57cbbd70cee4fd4c26e72f2cc51922949d1704df3aa74388b1ef06"
     },
     {
       "path": "data/css/modelo-caja.json",
-      "sha256": null
+      "sha256": "6900ca74d16c841a89cbac23e1a65b1c8b5ba3b9901547fdcb41b0ed0ba2f62f"
     },
     {
       "path": "data/css/propiedades.json",
-      "sha256": null
+      "sha256": "c3774ffd1fdbfe303b820a6ac98bcc76306ca1ffe3380d36ad1c6211b1d096a7"
     },
     {
       "path": "data/css/responsive.json",
-      "sha256": null
+      "sha256": "9347af0e599508882f1863dc6bf8069e5143d4187c4d198278f4592f55e59363"
     },
     {
       "path": "data/css/retos.json",
-      "sha256": null
+      "sha256": "45f8705c2ba460bd3b8a4cd0044135a78d1a08c9789e7aeff70f4905b9b9d575"
     },
     {
       "path": "data/css/selectores.json",
-      "sha256": null
+      "sha256": "de2fc855b65598342d8a480902017604ff6a033e497789f7da90ff5078225be8"
+    },
+    {
+      "path": "data/html-articulos.json",
+      "sha256": "80a8d25e6191796de41b3d9ea08b34f2546fc4f94552c41405c9229a220a4181"
+    },
+    {
+      "path": "data/html.json",
+      "sha256": "bfebd2c405d4a7bf69202a076597c6f252a6e31b6ec0bd873092c99525ca157f"
+    },
+    {
+      "path": "data/html/accesibilidad.json",
+      "sha256": "9d4ac0714ffce6ac318c379e4a741a84f3c4d136378303db7552e99da62ae923"
+    },
+    {
+      "path": "data/html/atributos.json",
+      "sha256": "94a473bc5ce1a6718dd561bd5c2ab4b2517d6aba93b3ef64670a6fe15db1a13e"
+    },
+    {
+      "path": "data/html/estructura.json",
+      "sha256": "13aaed6a1f091f1327a1a2f93e443461e64497251bf4d459059b1745e647c4f0"
+    },
+    {
+      "path": "data/html/etiquetas.json",
+      "sha256": "69948bfc46380c124e600c872b9d075ed2b9af72c6afbf3025ade052768c6824"
+    },
+    {
+      "path": "data/html/formularios.json",
+      "sha256": "379fe45775708071e46e905d793d0e0b58b0ec14d7a6c33ff86be9cc239a3c38"
+    },
+    {
+      "path": "data/html/fundamentos.json",
+      "sha256": "f48eec7681e13e3d48bc005a3ccdeb6c768656230ec2ed98763de254f1b08e34"
+    },
+    {
+      "path": "data/html/index.json",
+      "sha256": "39c204e6fdb5b20a15a586250160c44e1a6f90d289cb81aa3ec1692e26aa7615"
+    },
+    {
+      "path": "data/html/multimedia.json",
+      "sha256": "4da1369a79adf1804909084baaab79a4f8b7e423bf176cb8137e986a2a520351"
+    },
+    {
+      "path": "data/html/retos.json",
+      "sha256": "a2c0b7efde598dd4e3a5ab775b946439b5033a05495c546a751f249bc72b22d2"
+    },
+    {
+      "path": "data/html/semantica.json",
+      "sha256": "7fe021aea3b7453032887f34fe8ec0c8907f7c2eb1292647f818011577cce296"
+    },
+    {
+      "path": "data/html/svg.json",
+      "sha256": "d850cc34a5be323689f9cf289daf389ec2951b7031c6db31b579d19b263af2db"
+    },
+    {
+      "path": "data/javascript.json",
+      "sha256": "6dfa99d86c7a6ac7b954961de342d4451b5ba662a2a166a6acb4b069a6cdba5b"
     },
     {
       "path": "data/javascript/almacenamiento.json",
-      "sha256": null
+      "sha256": "502aebdf97b8b1b30b63ca6511f9659d7b41485b5686f55b3989b464cffda291"
     },
     {
       "path": "data/javascript/arrays-objetos.json",
-      "sha256": null
+      "sha256": "9904ce7c80332e337a627a3a8f3b68d9b4250aeddd737e282524463ffd3e07aa"
     },
     {
       "path": "data/javascript/asincronia.json",
-      "sha256": null
+      "sha256": "f8b5262d44c158bf5dff19acb438b437eb9a2d02ee4b189f5aece3441fefda48"
     },
     {
       "path": "data/javascript/dom.json",
-      "sha256": null
+      "sha256": "c4d32d2e996a524e3682d544573ced1820008691d6c174a5e4101e1825ac05ea"
     },
     {
       "path": "data/javascript/eventos.json",
-      "sha256": null
+      "sha256": "426a472abc321866bb95446a69bb38afdf206416f669189dcab04f9a0622b02e"
     },
     {
       "path": "data/javascript/fetch-api.json",
-      "sha256": null
+      "sha256": "1da0a60e25ae5d197a04bbe214e7bda7972deb30bb5aa3cb0fbb21f4413aa913"
     },
     {
       "path": "data/javascript/funciones.json",
-      "sha256": null
+      "sha256": "24470cf7554a309b69d51dcf8cc16eb4d3d8d7ad1080d16989e65e9ff9c42cd5"
     },
     {
       "path": "data/javascript/fundamentos.json",
-      "sha256": null
+      "sha256": "7011861e7fb580a281300326b6f6c3f946eea034a30a7be13a1467013bf8d53e"
     },
     {
       "path": "data/javascript/index.json",
-      "sha256": null
+      "sha256": "2e12ef02a4a3cc03b4c9f174601cad7fe3710c5c0f5b2d8afb8a0bb4018e1003"
     },
     {
       "path": "data/javascript/operadores.json",
-      "sha256": null
+      "sha256": "29b98b008a4b678cd010ceeccaac087d9a41f270d4887fcdf624739f8f3b20c1"
     },
     {
       "path": "data/javascript/retos.json",
-      "sha256": null
+      "sha256": "37d86faa0dcb9def8c993bcf39291f97dddd885463c7dfe958df57cfee282db3"
     },
     {
       "path": "data/javascript/variables.json",
-      "sha256": null
+      "sha256": "18a80909cb6e431521f4e0a3d7d8e1e67255464695730ecc6b75b97a55e123fd"
+    },
+    {
+      "path": "data/js-articulos.json",
+      "sha256": "8f81e37d95c6debd788e9018db801efc5b500793ffee1eefae4ec9ca5f6673cb"
+    },
+    {
+      "path": "data/js-categorias.json",
+      "sha256": "73100e434d436506e648590d44409ab5c3112a4e37ab2f963fe5744a47932401"
     },
     {
       "path": "data/laboratorio/ejemplos.json",
-      "sha256": null
+      "sha256": "24c3eb7204d872d73b37936a819d3b256660ce0123000941b9dbfb8676c35d5c"
     },
     {
       "path": "data/laboratorio/index.json",
-      "sha256": null
+      "sha256": "559a262e16f95b3f221a98c561c6c33f560a9c0ecd6acdb53c2b57853eda1361"
+    },
+    {
+      "path": "data/projects.json",
+      "sha256": "ed0f0b0a007910fa315db4dd7fcdeaf7e186920bc9fd8bb5cc189cffab472412"
+    },
+    {
+      "path": "data/tools.json",
+      "sha256": "496f826d9d9480153284806dfac2956d01b0a81bfade235a6790434662898d86"
     }
   ]
 }
