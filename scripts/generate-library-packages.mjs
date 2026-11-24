@@ -19,16 +19,33 @@ const writeJson = async (path, value) => {
   await writeFile(path, content, "utf8");
   return content;
 };
+const collectText = value => {
+  const parts = [];
+  const visit = item => {
+    if (typeof item === "string" || typeof item === "number") parts.push(String(item));
+    else if (Array.isArray(item)) item.forEach(visit);
+    else if (item && typeof item === "object") Object.values(item).forEach(visit);
+  };
+  visit(value);
+  return parts;
+};
+const normalizeSearchText = value => String(value ?? "")
+  .normalize("NFD")
+  .replace(/[\\u0300-\\u036f]/g, "")
+  .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, " ")
+  .trim();
+
+// El buscador anterior recorría todos los campos del artículo. Conservamos
+// esa cobertura, pero almacenamos cada palabra una sola vez por artículo para
+// no duplicar ejemplos y explicaciones completas en el índice inicial.
 const collectSearchText = (article, tool, categoryTitle) => {
-  const parts = [
-    tool.title, tool.shortTitle || "", categoryTitle, article.id, article.title,
-    article.summary, article.purpose, article.whenToUse, article.syntax,
-    article.exercise, article.hint
-  ];
-  (article.parameters || []).forEach(item => parts.push(item.name, item.description));
-  (article.bestPractices || []).forEach(item => parts.push(item));
-  (article.commonMistakes || []).forEach(item => parts.push(item));
-  return parts.filter(value => typeof value === "string" && value.trim()).join(" ");
+  const words = new Set();
+  [tool.title, tool.shortTitle || "", categoryTitle, ...collectText(article)].forEach(value => {
+    normalizeSearchText(value).split(" ").filter(Boolean).forEach(word => words.add(word));
+  });
+  return Array.from(words).join(" ");
 };
 
 const packageRecords = [];
