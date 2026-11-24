@@ -101,7 +101,7 @@
       if (!Array.isArray(entry.runnerTypes) || !entry.runnerTypes.length) throw new Error("Faltan motores de ejecución en " + entry.id + ".");
       canonical.push({
         id: entry.id, path: entry.path, version: entry.version, sha256: entry.sha256,
-        sizeBytes: entry.sizeBytes, challengeCount: entry.challengeCount,
+        sizeBytes: entry.sizeBytes, description: entry.description, challengeCount: entry.challengeCount,
         technologyCount: entry.technologyCount, runnerTypes: entry.runnerTypes
       });
     }
