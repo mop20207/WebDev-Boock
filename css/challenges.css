@@ -119,3 +119,23 @@ body.light .challenge-code-pane{background:#0b1422}
 }
 
 .challenge-card{text-decoration:none}
+
+/* Terminal virtual de los laboratorios: salida visible y legible en móvil. */
+.lab-terminal-output{
+  display:block;
+  min-height:150px;
+  max-height:340px;
+  overflow:auto;
+  margin:0;
+  padding:15px 16px;
+  border-top:1px solid #243650;
+  background:#07111d;
+  color:#b7d7c5;
+  font:12px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  tab-size:2;
+}
+.lab-terminal-output[data-cwd]::after{content:"";display:block}
+body.light .lab-terminal-output{background:#101a27;color:#c8e4d4}
+@media(max-width:560px){.lab-terminal-output{min-height:125px;font-size:11px;padding:12px}}
