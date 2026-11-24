@@ -337,7 +337,9 @@
           ...entry,
           articleCount: installed.articleCount || entry.articleCount
         });
-        if (installed.sha256 === entry.sha256 && record.sha256 === entry.sha256) return cached;
+        const localDigest = await sha256(new TextEncoder().encode(record.content));
+        if (localDigest === entry.sha256 &&
+            installed.sha256 === entry.sha256 && record.sha256 === entry.sha256) return cached;
         try { return await downloadLibrary(id); }
         catch (error) {
           console.warn("[WebDev Book] La actualización de " + id + " no pudo descargarse; se usará la copia instalada.", error);
