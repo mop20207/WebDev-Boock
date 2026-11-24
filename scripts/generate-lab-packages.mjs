@@ -50,7 +50,7 @@ if (seenChallenges.size !== source.challenges.length) {
 }
 const canonical = JSON.stringify(records);
 const manifest = { schemaVersion: 1, manifestVersion: hash(canonical), packages: records };
-const catalog = { schemaVersion: 1, labs: summaries };
+const catalog = { schemaVersion: 1, catalogVersion: definitions.catalogVersion || "1.0.0", labs: summaries };
 await writeJson("modules/labs/manifest.json", manifest);
 await writeJson("modules/labs/catalog.json", catalog);
 console.log("Laboratorios generados: " + records.length + "; retos distribuidos: " + seenChallenges.size + "; manifiesto: " + manifest.manifestVersion);
