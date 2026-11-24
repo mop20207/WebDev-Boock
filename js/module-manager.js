@@ -168,7 +168,7 @@
     const top = document.createElement("div");
     top.className = "module-card-top";
     const badge = isLibrary
-      ? (installed ? "Descargado" : needsUpdate ? "Actualización" : "Descargable")
+      ? (installed ? "Descargado" : needsUpdate ? "Actualización" : packageState === "unavailable" ? "No disponible" : "Descargable")
       : (module.status === "integrated" ? (module.essential ? "Esencial" : "Incluido") : "Etapa " + module.stage);
     const badgeState = isLibrary
       ? (installed ? "status-integrated" : needsUpdate ? "status-planned" : "status-planned")
@@ -227,7 +227,7 @@
             showToast(error?.message || "No se pudo instalar la biblioteca.");
           }
         });
-        action.disabled = !apiReady || Boolean(packageStatus?.error);
+        action.disabled = !apiReady || Boolean(packageStatus?.error) || packageState === "unavailable";
         if (!apiReady) action.title = "El administrador de paquetes no está disponible.";
         actions.append(action);
       }
