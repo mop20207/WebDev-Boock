@@ -25,6 +25,18 @@ El catálogo de herramientas y tecnologías contiene **387 artículos distribuid
 La página [Centro de módulos](pages/modules.html) muestra el núcleo, las 20 bibliotecas (HTML, CSS, JavaScript y 17 bibliotecas tecnológicas), laboratorios y recursos multimedia. Permite buscar y filtrar módulos, marcar prioridades, consultar el almacenamiento y administrar cada paquete tecnológico. Los laboratorios y multimedia quedan reservados para las etapas 3 y 4.
 
 El administrador usa IndexedDB `webdev-book-modules` para las preferencias y las instalaciones. Esta base no se mezcla con el actualizador de contenido `webdev-book-content`. La cuota estimada del navegador es orientativa y corresponde al origen completo, no a una medición exclusiva de WebDev Book.
+## Bibliotecas descargables por tecnología
+
+Las 17 bibliotecas tecnológicas se distribuyen como paquetes JSON independientes en `modules/libraries/packages/<id>.json`. El manifiesto `modules/libraries/manifest.json` registra para cada paquete su ruta, versión, tamaño UTF-8, cantidad de artículos y hash SHA-256. `modules/libraries/ecosystem.json` conserva metadatos resumidos para relaciones entre tecnologías y proyectos integradores; `modules/libraries/search-index.json` mantiene el buscador global sin cargar todas las bibliotecas completas.
+
+El Centro de módulos permite descargar, actualizar, abrir y quitar la copia local de cada biblioteca. Al abrir una tecnología aún no instalada, se descarga únicamente ese paquete. Antes de instalarlo se comprueban el tamaño esperado, SHA-256, JSON, ID de tecnología, cantidad de artículos y referencias de categorías. La escritura del contenido y del registro de instalación se realiza en una única transacción IndexedDB. Si falla la red, la integridad o el almacenamiento, la versión instalada anterior permanece intacta.
+
+Los paquetes se guardan en `webdev-book-modules`, separados de los favoritos, el progreso y los proyectos. Quitar una biblioteca elimina solo sus archivos de paquete y su registro de instalación; no borra el avance, los artículos favoritos, los archivos del editor ni los proyectos. El buscador usa un índice compacto que conserva términos extraídos de todos los campos de los artículos, incluidos ejemplos, sintaxis y profundizaciones.
+
+Para reducir el tamaño inicial, `data/tools.json` se mantiene como fuente canónica de compilación, pero no se copia a `www/` para Android ni se incluye en el manifiesto de actualizaciones OTA. Los 17 paquetes completos tampoco se incorporan a la APK: se descargan bajo demanda desde GitHub. La aplicación incluye solamente el manifiesto, el índice global y los metadatos compactos. En GitHub Pages los paquetes se descargan desde el mismo sitio; en Android se obtienen desde el contenido publicado en GitHub.
+
+La generación reproducible se realiza con `npm run generate:libraries`; las comprobaciones de hashes, rutas y referencias se ejecutan con `npm run validate:libraries`. Los tamaños del manifiesto son bytes UTF-8 sin compresión de transporte.
+
 ## Biblioteca de proyectos
 
 La biblioteca reúne **15 proyectos completos y progresivos**: cinco principiantes, cinco intermedios y cinco avanzados. Incluye tarjetas interactivas, formularios validados, calculadora, reloj y temporizador, lista de tareas, buscador de películas, catálogo de productos, clima, panel administrativo, directorio de usuarios de demostración, autenticación segura, tienda online, blog con PostgreSQL, API REST propia y gestor full-stack.
