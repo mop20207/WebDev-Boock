@@ -8,6 +8,7 @@ on:
       - feat/capacitor-android-cloud-build
       - feat/module-center-core
       - feat/downloadable-library-packs
+      - feat/interactive-laboratories
     paths:
       - 'assets/**'
       - 'css/**'
@@ -78,6 +79,8 @@ jobs:
           node --check scripts/generate-content-manifest.mjs
           node scripts/generate-library-packages.mjs
           node scripts/validate-library-packages.mjs
+          node scripts/generate-lab-packages.mjs
+          node scripts/validate-lab-packages.mjs
           node scripts/generate-lab-packages.mjs
           node scripts/validate-lab-packages.mjs
           node scripts/validate-module-catalog.mjs
