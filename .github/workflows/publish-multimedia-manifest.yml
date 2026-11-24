@@ -2,16 +2,17 @@ name: Publish multimedia manifest
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, feat/multimedia-library]
     paths:
       - 'modules/multimedia/catalog.json'
       - 'modules/multimedia/assets/**'
       - 'scripts/generate-multimedia-manifest.mjs'
       - 'scripts/validate-multimedia.mjs'
+      - '.github/workflows/publish-multimedia-manifest.yml'
 permissions:
   contents: write
 concurrency:
-  group: multimedia-manifest-main
+  group: multimedia-manifest-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   publish:
@@ -19,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -34,4 +35,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add modules/multimedia/manifest.json
           git commit -m "chore(multimedia): refresh manifest"
-          git push origin HEAD:main
+          git push origin HEAD:${GITHUB_REF_NAME}

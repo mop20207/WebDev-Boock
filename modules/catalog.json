@@ -452,8 +452,7 @@
       ],
       "version": "1.0.0",
       "href": "multimedia.html?category=diagram",
-      "delivery": "cache",
-      "articleCount": 7
+      "delivery": "cache"
     },
     {
       "id": "media-illustrations",
@@ -470,8 +469,7 @@
       ],
       "version": "1.0.0",
       "href": "multimedia.html?category=illustration",
-      "delivery": "cache",
-      "articleCount": 5
+      "delivery": "cache"
     },
     {
       "id": "media-videos",
@@ -559,8 +557,7 @@
         "Movimiento reducido",
         "Uso sin conexión"
       ],
-      "delivery": "cache",
-      "articleCount": 2
+      "delivery": "cache"
     },
     {
       "id": "media-audio",
