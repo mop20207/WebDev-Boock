@@ -64,8 +64,9 @@
 
   async function readPrioritiesFromDatabase() {
     const tx = state.db.transaction(STORE.preferences, "readonly");
+    const done = transactionDone(tx);
     const records = await requestResult(tx.objectStore(STORE.preferences).getAll());
-    await transactionDone(tx);
+    await done;
     return records.filter(item => item && item.pinned === true).map(item => item.id);
   }
 
@@ -82,11 +83,12 @@
     const ids = Array.from(state.priorities);
     if (state.dbAvailable && state.db) {
       const tx = state.db.transaction(STORE.preferences, "readwrite");
+      const done = transactionDone(tx);
       const store = tx.objectStore(STORE.preferences);
       const current = await requestResult(store.getAll());
       current.forEach(record => store.delete(record.id));
       ids.forEach(id => store.put({ id, pinned: true, updatedAt: new Date().toISOString() }));
-      await transactionDone(tx);
+      await done;
       return;
     }
     try {
@@ -318,8 +320,12 @@
       if (!["integrated", "planned"].includes(module.status)) {
         throw new Error("Estado no reconocido en el módulo " + module.id + ".");
       }
-      if (module.status === "integrated" && module.href && !module.href.startsWith("../")) {
-        throw new Error("La ruta local del módulo " + module.id + " no es válida.");
+      if (module.status === "integrated" && module.href) {
+        const resolved = new URL(module.href, document.baseURI);
+        const appRoot = new URL("../", document.baseURI);
+        if (resolved.origin !== appRoot.origin || !resolved.pathname.startsWith(appRoot.pathname)) {
+          throw new Error("La ruta local del módulo " + module.id + " no es válida.");
+        }
       }
     }
     return catalog;
