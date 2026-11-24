@@ -19,6 +19,7 @@ on:
       - 'package.json'
       - 'capacitor.config.ts'
       - 'scripts/**'
+      - 'modules/**'
       - '.github/workflows/build-android-apk.yml'
 
 permissions:
@@ -61,7 +62,9 @@ jobs:
         run: |
           node --check js/navigation.js
           node --check js/content-updates.js
+          node --check js/module-manager.js
           node --check scripts/generate-content-manifest.mjs
+          node scripts/validate-module-catalog.mjs
           node scripts/generate-content-manifest.mjs
 
       - name: Prepare local web application
