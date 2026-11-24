@@ -20,6 +20,12 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 
 El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
+## Centro de módulos
+
+La página [Centro de módulos](pages/modules.html) muestra el núcleo de la aplicación, las 20 bibliotecas actuales (HTML, CSS, JavaScript y 17 bibliotecas tecnológicas), los laboratorios y los recursos multimedia planificados. En esta primera etapa administra el catálogo, marca prioridades locales y consulta el estado estimado del almacenamiento del navegador. Las bibliotecas existentes siguen integradas en la aplicación: todavía no se presentan como descargas independientes ni pueden desinstalarse. La etapa 2 incorporará paquetes descargables con manifiestos, dependencias, hashes de integridad y operaciones seguras; los laboratorios y los recursos multimedia se incorporarán después.
+
+El módulo de administración utiliza una base IndexedDB separada (`webdev-book-modules`) para no modificar la base de actualizaciones de contenido existente (`webdev-book-content`). La estimación de almacenamiento del navegador es aproximada y corresponde al origen completo, no al tamaño individual de WebDev Book.
+
 ## Biblioteca de proyectos
 
 La biblioteca reúne **15 proyectos completos y progresivos**: cinco principiantes, cinco intermedios y cinco avanzados. Incluye tarjetas interactivas, formularios validados, calculadora, reloj y temporizador, lista de tareas, buscador de películas, catálogo de productos, clima, panel administrativo, directorio de usuarios de demostración, autenticación segura, tienda online, blog con PostgreSQL, API REST propia y gestor full-stack.
