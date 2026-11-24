@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "1.0.0",
+  "title": "Catálogo de módulos de WebDev Book",
+  "description": "Inventario del núcleo, bibliotecas integradas y paquetes que se prepararán para descarga en etapas posteriores.",
+  "modules": [
+    {
+      "id": "core",
+      "name": "Núcleo de WebDev Book",
+      "category": "core",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "essential": true,
+      "description": "Navegación, búsqueda, lector, editor, vista previa, progreso, favoritos, proyectos y coordinación de actualizaciones.",
+      "details": "Es la aplicación principal. No se puede desinstalar ni depende de bibliotecas opcionales.",
+      "href": "../index.html",
+      "capabilities": [
+        "Navegación y catálogo",
+        "Buscador global",
+        "Editor y vista previa",
+        "Favoritos y progreso",
+        "Gestión de actualizaciones"
+      ]
+    },
+    {
+      "id": "html",
+      "name": "HTML",
+      "category": "foundation",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "essential": true,
+      "description": "Estructura semántica, formularios, accesibilidad, multimedia, SVG y buenas prácticas.",
+      "details": "El contenido está incluido en la versión actual; todavía no es un paquete independiente.",
+      "href": "html.html",
+      "capabilities": [
+        "Fundamentos y etiquetas",
+        "Atributos y formularios",
+        "Accesibilidad y semántica"
+      ]
+    },
+    {
+      "id": "css",
+      "name": "CSS",
+      "category": "foundation",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "essential": true,
+      "description": "Selectores, modelo de caja, Flexbox, Grid, responsive, animaciones y propiedades.",
+      "details": "El contenido está incluido en la versión actual; todavía no es un paquete independiente.",
+      "href": "css.html",
+      "capabilities": [
+        "Selectores y propiedades",
+        "Flexbox y Grid",
+        "Responsive y animaciones"
+      ]
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "category": "foundation",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "essential": true,
+      "description": "Fundamentos, funciones, arrays, objetos, DOM, eventos, asincronía y APIs.",
+      "details": "El contenido está incluido en la versión actual; todavía no es un paquete independiente.",
+      "href": "javascript.html",
+      "capabilities": [
+        "Lenguaje y funciones",
+        "DOM y eventos",
+        "Asincronía y Fetch"
+      ]
+    },
+    {
+      "id": "terminal",
+      "name": "Terminal Linux",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 16,
+      "description": "Comandos, navegación, archivos, búsquedas, permisos y automatización.",
+      "details": "16 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=terminal",
+      "capabilities": [
+        "Comandos esenciales",
+        "Archivos y permisos",
+        "Pipes y automatización"
+      ]
+    },
+    {
+      "id": "git",
+      "name": "Git y GitHub",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 12,
+      "description": "Control de versiones, ramas, commits, colaboración y repositorios remotos.",
+      "details": "12 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=git",
+      "capabilities": [
+        "Historial y commits",
+        "Ramas y merge",
+        "GitHub y colaboración"
+      ]
+    },
+    {
+      "id": "npm",
+      "name": "NPM y paquetes",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 13,
+      "description": "Paquetes, dependencias, scripts, package.json y entorno Node.js.",
+      "details": "13 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=npm",
+      "capabilities": [
+        "Instalación de paquetes",
+        "Dependencias",
+        "Scripts y configuración"
+      ]
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 6,
+      "description": "Componentes, JSX, props, estado y Hooks.",
+      "details": "6 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=react",
+      "capabilities": [
+        "Componentes y JSX",
+        "Props y estado",
+        "Hooks"
+      ]
+    },
+    {
+      "id": "webcomponents",
+      "name": "Web Components",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 6,
+      "description": "Custom Elements, Shadow DOM, templates, slots y eventos.",
+      "details": "6 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=webcomponents",
+      "capabilities": [
+        "Custom Elements",
+        "Shadow DOM",
+        "Templates y slots"
+      ]
+    },
+    {
+      "id": "vuejs",
+      "name": "Vue.js",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 15,
+      "description": "Plantillas, directivas, reactividad, componentes y Composition API.",
+      "details": "15 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=vuejs",
+      "capabilities": [
+        "Plantillas y directivas",
+        "Reactividad",
+        "Componentes y Composition API"
+      ]
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 18,
+      "description": "JavaScript en el servidor, módulos, archivos, procesos y servidores.",
+      "details": "18 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=nodejs",
+      "capabilities": [
+        "Módulos y NPM",
+        "Sistema de archivos",
+        "Servidores y procesos"
+      ]
+    },
+    {
+      "id": "astro",
+      "name": "Astro",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 20,
+      "description": "Páginas, componentes, layouts, estilos e islas interactivas.",
+      "details": "20 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=astro",
+      "capabilities": [
+        "Componentes y layouts",
+        "Islas de arquitectura",
+        "Datos y despliegue"
+      ]
+    },
+    {
+      "id": "phaser",
+      "name": "Phaser",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 18,
+      "description": "Escenas, sprites, animaciones, movimiento, físicas, cámaras y efectos.",
+      "details": "18 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=phaser",
+      "capabilities": [
+        "Escenas y sprites",
+        "Movimiento y físicas",
+        "Cámaras y efectos"
+      ]
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 37,
+      "description": "Tipos, interfaces, genéricos, configuración e integración con JavaScript.",
+      "details": "37 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=typescript",
+      "capabilities": [
+        "Tipos e interfaces",
+        "Genéricos",
+        "Configuración e integración"
+      ]
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 44,
+      "description": "App Router, Server Components, datos, caché, Server Actions y despliegue.",
+      "details": "44 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=nextjs",
+      "capabilities": [
+        "App Router",
+        "Server y Client Components",
+        "Datos y despliegue"
+      ]
+    },
+    {
+      "id": "express",
+      "name": "Express.js",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 42,
+      "description": "Rutas, middleware, APIs REST, validación, autenticación, testing y despliegue.",
+      "details": "42 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=express",
+      "capabilities": [
+        "Rutas y middleware",
+        "APIs REST",
+        "Seguridad y pruebas"
+      ]
+    },
+    {
+      "id": "sql-postgres",
+      "name": "SQL y PostgreSQL",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 42,
+      "description": "Modelo relacional, consultas, JOIN, transacciones, JSONB e índices.",
+      "details": "42 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=sql-postgres",
+      "capabilities": [
+        "Diseño relacional",
+        "Consultas y JOIN",
+        "Transacciones e índices"
+      ]
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 42,
+      "description": "Documentos BSON, modelado, CRUD, arrays, agregaciones e índices.",
+      "details": "42 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=mongodb",
+      "capabilities": [
+        "Modelado documental",
+        "CRUD y agregaciones",
+        "Índices y seguridad"
+      ]
+    },
+    {
+      "id": "apis",
+      "name": "APIs y comunicación web",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 14,
+      "description": "HTTP, REST, JSON, Fetch, CORS, autenticación, OpenAPI y webhooks.",
+      "details": "14 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=apis",
+      "capabilities": [
+        "HTTP y REST",
+        "Fetch y CORS",
+        "Autenticación y OpenAPI"
+      ]
+    },
+    {
+      "id": "testing",
+      "name": "Testing",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 14,
+      "description": "Pruebas unitarias, integración, componentes y E2E.",
+      "details": "14 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=testing",
+      "capabilities": [
+        "Pruebas unitarias",
+        "Integración y componentes",
+        "Pruebas E2E"
+      ]
+    },
+    {
+      "id": "docker-deploy",
+      "name": "Docker y despliegue",
+      "category": "library",
+      "status": "integrated",
+      "stage": 1,
+      "version": "1.0.0",
+      "articleCount": 28,
+      "description": "Contenedores, imágenes, Compose, redes, volúmenes, seguridad y CI/CD.",
+      "details": "28 artículos. Está integrado en el catálogo actual; la descarga selectiva llegará en la etapa 2.",
+      "href": "tools.html?tool=docker-deploy",
+      "capabilities": [
+        "Dockerfile e imágenes",
+        "Compose y redes",
+        "Seguridad y CI/CD"
+      ]
+    },
+    {
+      "id": "lab-frontend",
+      "name": "Laboratorios de frontend",
+      "category": "lab",
+      "status": "planned",
+      "stage": 3,
+      "description": "Entornos descargables para experimentar con HTML, CSS, DOM, React, Vue y Web Components.",
+      "details": "Paquete futuro. La aplicación ya tiene retos y vistas previas, pero este módulo independiente todavía no se descarga.",
+      "capabilities": [
+        "Prácticas visuales",
+        "Experimentos aislados",
+        "Proyectos guiados"
+      ]
+    },
+    {
+      "id": "lab-backend",
+      "name": "Laboratorios de backend",
+      "category": "lab",
+      "status": "planned",
+      "stage": 3,
+      "description": "Laboratorios para Node.js, Express, APIs, autenticación y procesos del servidor.",
+      "details": "Paquete futuro. Los simuladores actuales no equivalen a ejecutar un servidor Node.js real en Android.",
+      "capabilities": [
+        "Rutas y middleware",
+        "Archivos y procesos",
+        "APIs y autenticación"
+      ]
+    },
+    {
+      "id": "lab-databases",
+      "name": "Laboratorios de bases de datos",
+      "category": "lab",
+      "status": "planned",
+      "stage": 3,
+      "description": "Prácticas de SQL, consultas, relaciones, agregaciones y modelado documental.",
+      "details": "Paquete futuro. Los ejercicios existentes pueden incluir simulaciones o motores en navegador; no instala servidores de bases de datos.",
+      "capabilities": [
+        "Consultas SQL",
+        "Relaciones y transacciones",
+        "Colecciones y agregaciones"
+      ]
+    },
+    {
+      "id": "lab-terminal",
+      "name": "Laboratorio de terminal",
+      "category": "lab",
+      "status": "planned",
+      "stage": 3,
+      "description": "Entorno educativo para practicar comandos, rutas, pipes y scripts.",
+      "details": "Paquete futuro. Un simulador didáctico no será presentado como una terminal Linux real.",
+      "capabilities": [
+        "Navegación por archivos",
+        "Comandos y pipes",
+        "Scripts"
+      ]
+    },
+    {
+      "id": "lab-games",
+      "name": "Laboratorios de videojuegos",
+      "category": "lab",
+      "status": "planned",
+      "stage": 3,
+      "description": "Escenas y proyectos prácticos de Phaser con recursos de juego descargables.",
+      "details": "Paquete futuro. Los recursos se separarán de la aplicación para que puedan descargarse cuando hagan falta.",
+      "capabilities": [
+        "Escenas y controles",
+        "Sprites y animaciones",
+        "Colisiones y físicas"
+      ]
+    },
+    {
+      "id": "media-diagrams",
+      "name": "Diagramas interactivos",
+      "category": "media",
+      "status": "planned",
+      "stage": 4,
+      "description": "Diagramas de arquitectura, flujos de datos, redes y ciclos de ejecución.",
+      "details": "Paquete futuro. Se priorizarán formatos ligeros y escalables para uso sin conexión.",
+      "capabilities": [
+        "Flujos y arquitectura",
+        "Redes y protocolos",
+        "Ciclo de renderizado"
+      ]
+    },
+    {
+      "id": "media-illustrations",
+      "name": "Ilustraciones y esquemas",
+      "category": "media",
+      "status": "planned",
+      "stage": 4,
+      "description": "Ilustraciones técnicas, SVG y láminas visuales para acompañar las lecciones.",
+      "details": "Paquete futuro. Se descargarán por colección y se guardarán con control de integridad.",
+      "capabilities": [
+        "Esquemas técnicos",
+        "Ilustraciones SVG",
+        "Colecciones por tecnología"
+      ]
+    },
+    {
+      "id": "media-videos",
+      "name": "Videos educativos",
+      "category": "media",
+      "status": "planned",
+      "stage": 4,
+      "description": "Clases breves y demostraciones audiovisuales organizadas por tecnología.",
+      "details": "Paquete futuro. Los videos se ofrecerán como descarga opcional y con información de tamaño y espacio antes de confirmar.",
+      "capabilities": [
+        "Explicaciones breves",
+        "Demostraciones de código",
+        "Lecciones por tema"
+      ]
+    }
+  ]
+}
