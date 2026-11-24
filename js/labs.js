@@ -24,11 +24,14 @@ function render(){
   const size=document.createElement("span");size.textContent=entry?fmt(entry.sizeBytes):"Paquete descargable";meta.append(count,size);
   const progress=document.createElement("div");progress.className="lab-progress";const fill=document.createElement("i");progress.append(fill);
   const actions=document.createElement("div");actions.className="lab-actions";
-  if(installed){
+  if(installed && st.state!=="corrupt"){
    const open=document.createElement("a");open.className="lab-open";open.href="challenges.html?lab="+encodeURIComponent(lab.id);open.textContent="Abrir laboratorio →";actions.append(open);
+  }
+  if(!installed || st.state==="update" || st.state==="corrupt"){
+   const install=document.createElement("button");install.className="lab-primary";install.type="button";install.textContent=st.state==="update"?"↻ Actualizar":st.state==="corrupt"?"Reparar paquete":"↓ Descargar laboratorio";install.addEventListener("click",async()=>{install.disabled=true;install.textContent="Descargando…";try{await WebDevLabs.download(lab.id,{onProgress:p=>{fill.style.width=p.percent+"%";}});await refreshOne(lab.id);toast(lab.title+" quedó instalado y verificado.");}catch(e){toast(e.message||"No se pudo instalar el laboratorio.");}finally{install.disabled=false;install.textContent="↓ Descargar laboratorio";fill.style.width="0";}});actions.append(install);
+  }
+  if(installed){
    const remove=document.createElement("button");remove.className="lab-danger";remove.type="button";remove.textContent="Quitar";remove.addEventListener("click",async()=>{if(!confirm("¿Quitar "+lab.title+" del dispositivo? El progreso de los retos se conservará."))return;remove.disabled=true;try{await WebDevLabs.remove(lab.id);await refreshOne(lab.id);toast("Laboratorio quitado. Tu progreso sigue guardado.");}catch(e){toast(e.message);}finally{remove.disabled=false;}});actions.append(remove);
-  }else{
-   const install=document.createElement("button");install.className="lab-primary";install.type="button";install.textContent="↓ Descargar laboratorio";install.addEventListener("click",async()=>{install.disabled=true;install.textContent="Descargando…";try{await WebDevLabs.download(lab.id,{onProgress:p=>{fill.style.width=p.percent+"%";}});await refreshOne(lab.id);toast(lab.title+" quedó instalado.");}catch(e){toast(e.message||"No se pudo instalar el laboratorio.");}finally{install.disabled=false;install.textContent="↓ Descargar laboratorio";fill.style.width="0";}});actions.append(install);
   }
   card.append(head,title,subtitle,desc,tech,meta,progress,actions);grid.append(card);
  }
