@@ -57,6 +57,13 @@ jobs:
       - name: Install JavaScript dependencies
         run: npm install --no-audit --no-fund
 
+      - name: Validate update scripts and generate packaged manifest
+        run: |
+          node --check js/navigation.js
+          node --check js/content-updates.js
+          node --check scripts/generate-content-manifest.mjs
+          node scripts/generate-content-manifest.mjs
+
       - name: Prepare local web application
         run: npm run prepare:web
 
