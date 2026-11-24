@@ -31,6 +31,7 @@ const CORE_FILES = [
   "modules/libraries/search-index.json",
   "css/module-center.css",
   "js/module-manager.js",
+  "js/library-packages.js",
   "pages/challenges.html",
   "pages/projects.html",
   "css/projects.css",
