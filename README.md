@@ -20,6 +20,16 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 
 El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
+## Laboratorios interactivos descargables
+
+La etapa 3 incorpora cinco paquetes independientes de práctica: frontend, backend, bases de datos, terminal y lógica de videojuegos 2D. Cada paquete se genera desde el catálogo de retos y se instala con SHA-256 y validación de estructura. Las copias se almacenan bajo claves `lab:<id>` en la misma IndexedDB de módulos, separadas de las bibliotecas `library:<id>`.
+
+La página [Laboratorios](pages/labs.html) permite instalar, actualizar, abrir y quitar paquetes. Los ejercicios reutilizan el motor de retos con pruebas, pistas y soluciones. Los nuevos ejercicios de terminal usan un intérprete con lista cerrada de comandos y un sistema de archivos virtual; no ejecutan un shell del sistema ni acceden a archivos reales. Los ejercicios de videojuegos practican lógica 2D pura; no incorporan todavía el runtime Phaser completo.
+
+React/Vue y PGlite pueden necesitar conexión para descargar su runtime CDN la primera vez. Los simuladores MongoDB, API, Node y terminal no se conectan a servicios reales. El progreso de retos sigue en `localStorage` con la clave existente `webdevbook.challenges.v1`.
+
+Los paquetes se generan con `npm run generate:labs` y se comprueban con `npm run validate:labs`. El workflow **Publish interactive lab packages** publica los paquetes y manifiesto cuando cambian los ejercicios fuente en `main`.
+
 ## Centro de módulos
 
 La página [Centro de módulos](pages/modules.html) muestra el núcleo, las 20 bibliotecas (HTML, CSS, JavaScript y 17 bibliotecas tecnológicas), laboratorios y recursos multimedia. Permite buscar y filtrar módulos, marcar prioridades, consultar el almacenamiento y administrar cada paquete tecnológico. Los laboratorios y multimedia quedan reservados para las etapas 3 y 4.
