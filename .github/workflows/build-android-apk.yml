@@ -10,6 +10,7 @@ on:
       - feat/downloadable-library-packs
       - feat/interactive-laboratories
       - feat/versioned-lab-catalog
+      - feat/multimedia-library
     paths:
       - 'assets/**'
       - 'css/**'
@@ -70,6 +71,9 @@ jobs:
           node --check js/library-packages.js
           node --check js/lab-packages.js
           node --check js/labs.js
+          node --check js/multimedia-library.js
+          node --check scripts/generate-multimedia-manifest.mjs
+          node --check scripts/validate-multimedia.mjs
           node --check scripts/generate-lab-packages.mjs
           node --check scripts/validate-lab-packages.mjs
           node --check js/tools-library.js
@@ -84,6 +88,8 @@ jobs:
           node scripts/validate-lab-packages.mjs
           node scripts/generate-lab-packages.mjs
           node scripts/validate-lab-packages.mjs
+          node scripts/generate-multimedia-manifest.mjs
+          node scripts/validate-multimedia.mjs
           node scripts/validate-module-catalog.mjs
           node scripts/generate-content-manifest.mjs
 

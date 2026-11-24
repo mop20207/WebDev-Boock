@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v23";
+const CACHE_VERSION = "webdev-book-v24";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -33,6 +33,11 @@ const CORE_FILES = [
   "js/module-manager.js",
   "js/library-packages.js",
   "pages/labs.html",
+  "pages/multimedia.html",
+  "css/multimedia.css",
+  "js/multimedia-library.js",
+  "modules/multimedia/catalog.json",
+  "modules/multimedia/manifest.json",
   "css/labs.css",
   "js/lab-packages.js",
   "js/labs.js",

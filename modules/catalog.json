@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "1.0.0",
+  "catalogVersion": "1.1.0",
   "title": "Catálogo de módulos de WebDev Book",
   "description": "Inventario del núcleo, bibliotecas descargables, laboratorios interactivos y recursos multimedia.",
   "modules": [
@@ -439,31 +439,39 @@
     },
     {
       "id": "media-diagrams",
-      "name": "Diagramas interactivos",
+      "name": "Diagramas técnicos",
       "category": "media",
-      "status": "planned",
+      "status": "integrated",
       "stage": 4,
-      "description": "Diagramas de arquitectura, flujos de datos, redes y ciclos de ejecución.",
-      "details": "Paquete futuro. Se priorizarán formatos ligeros y escalables para uso sin conexión.",
+      "description": "Diagramas originales de HTML, CSS, JavaScript, DOM, HTTP, APIs y bases de datos.",
+      "details": "Colección SVG descargable bajo demanda, con vista ampliada, favoritos y SHA-256.",
       "capabilities": [
         "Flujos y arquitectura",
         "Redes y protocolos",
-        "Ciclo de renderizado"
-      ]
+        "Ciclos de ejecución"
+      ],
+      "version": "1.0.0",
+      "href": "multimedia.html?category=diagram",
+      "delivery": "cache",
+      "articleCount": 7
     },
     {
       "id": "media-illustrations",
-      "name": "Ilustraciones y esquemas",
+      "name": "Infografías e ilustraciones",
       "category": "media",
-      "status": "planned",
+      "status": "integrated",
       "stage": 4,
-      "description": "Ilustraciones técnicas, SVG y láminas visuales para acompañar las lecciones.",
-      "details": "Paquete futuro. Se descargarán por colección y se guardarán con control de integridad.",
+      "description": "Esquemas e infografías para comprender conceptos y patrones web.",
+      "details": "Recursos originales con texto alternativo, licencia, atribución y verificación de integridad.",
       "capabilities": [
         "Esquemas técnicos",
-        "Ilustraciones SVG",
-        "Colecciones por tecnología"
-      ]
+        "Modelo de caja",
+        "Accesibilidad"
+      ],
+      "version": "1.0.0",
+      "href": "multimedia.html?category=illustration",
+      "delivery": "cache",
+      "articleCount": 5
     },
     {
       "id": "media-videos",
@@ -471,8 +479,8 @@
       "category": "media",
       "status": "planned",
       "stage": 4,
-      "description": "Clases breves y demostraciones audiovisuales organizadas por tecnología.",
-      "details": "Paquete futuro. Los videos se ofrecerán como descarga opcional y con información de tamaño y espacio antes de confirmar.",
+      "description": "El visor admite video MP4/WebM con controles y subtítulos WebVTT.",
+      "details": "La reproducción está preparada. Se publicarán videos cuando haya materiales propios o con derechos verificados y subtítulos.",
       "capabilities": [
         "Explicaciones breves",
         "Demostraciones de código",
@@ -535,6 +543,38 @@
       ],
       "delivery": "package",
       "packageId": "devops"
+    },
+    {
+      "id": "media-animations",
+      "name": "Animaciones visuales",
+      "category": "media",
+      "status": "integrated",
+      "stage": 4,
+      "version": "1.0.0",
+      "description": "Diagramas SVG animados para observar flujos y cambios paso a paso.",
+      "details": "Animaciones originales compatibles con prefers-reduced-motion y descargas verificadas.",
+      "href": "multimedia.html?category=animation",
+      "capabilities": [
+        "SVG animado",
+        "Movimiento reducido",
+        "Uso sin conexión"
+      ],
+      "delivery": "cache",
+      "articleCount": 2
+    },
+    {
+      "id": "media-audio",
+      "name": "Audio y transcripciones",
+      "category": "media",
+      "status": "planned",
+      "stage": 4,
+      "description": "Audio MP3/OGG con controles, transcripciones y descarga opcional.",
+      "details": "El visor admite audio. Los contenidos se añadirán al disponer de locuciones originales y transcripciones revisadas.",
+      "capabilities": [
+        "Reproductor de audio",
+        "Transcripciones",
+        "Escucha sin conexión"
+      ]
     }
   ]
 }

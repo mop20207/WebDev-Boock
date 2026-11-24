@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "1.0.0",
+  "title": "Biblioteca visual de WebDev Book",
+  "description": "Colección original de diagramas, esquemas e infografías para aprender desarrollo web.",
+  "resources": [
+    {
+      "id": "html-document-tree",
+      "title": "Estructura de documento HTML",
+      "description": "La estructura base de una página",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "html-document-tree.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Un documento declara su tipo, configura metadatos en head y organiza el contenido en body.",
+      "caption": "Un documento declara su tipo, configura metadatos en head y organiza el contenido en body.",
+      "tags": [
+        "html",
+        "estructura",
+        "semántica"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "HTML",
+          "href": "html.html"
+        }
+      ]
+    },
+    {
+      "id": "html-accessible-form",
+      "title": "Formulario HTML accesible",
+      "description": "Etiquetas y controles relacionados",
+      "category": "illustration",
+      "mediaType": "image",
+      "file": "html-accessible-form.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Un formulario accesible relaciona cada control con una etiqueta e instrucciones.",
+      "caption": "Un formulario accesible relaciona cada control con una etiqueta e instrucciones.",
+      "tags": [
+        "html",
+        "formularios",
+        "accesibilidad"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "Formularios",
+          "href": "html.html"
+        }
+      ]
+    },
+    {
+      "id": "css-box-model",
+      "title": "Modelo de caja CSS",
+      "description": "Capas que determinan el espacio de un elemento",
+      "category": "infographic",
+      "mediaType": "image",
+      "file": "css-box-model.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "El tamaño visual depende del contenido, padding, borde y margen.",
+      "caption": "El tamaño visual depende del contenido, padding, borde y margen.",
+      "tags": [
+        "css",
+        "box-model",
+        "layout"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "CSS",
+          "href": "tools.html?tool=css"
+        }
+      ]
+    },
+    {
+      "id": "css-flexbox-axis",
+      "title": "Ejes de Flexbox",
+      "description": "Eje principal y transversal",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "css-flexbox-axis.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Flexbox distribuye elementos en un eje principal y alinea en el transversal.",
+      "caption": "Flexbox distribuye elementos en un eje principal y alinea en el transversal.",
+      "tags": [
+        "css",
+        "flexbox",
+        "layout"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "Flexbox",
+          "href": "tools.html?tool=css"
+        }
+      ]
+    },
+    {
+      "id": "css-grid-layout",
+      "title": "CSS Grid: filas y columnas",
+      "description": "Cuadrícula bidimensional",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "css-grid-layout.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Grid define tracks de filas y columnas y áreas de distribución.",
+      "caption": "Grid define tracks de filas y columnas y áreas de distribución.",
+      "tags": [
+        "css",
+        "grid",
+        "layout"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "CSS Grid",
+          "href": "tools.html?tool=css"
+        }
+      ]
+    },
+    {
+      "id": "js-event-loop",
+      "title": "Event loop de JavaScript",
+      "description": "Pila, tareas y microtareas",
+      "category": "infographic",
+      "mediaType": "image",
+      "file": "js-event-loop.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "JavaScript ejecuta la pila de llamadas y procesa colas cuando queda libre.",
+      "caption": "JavaScript ejecuta la pila de llamadas y procesa colas cuando queda libre.",
+      "tags": [
+        "javascript",
+        "event-loop",
+        "asincronia"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "JavaScript",
+          "href": "javascript.html"
+        }
+      ]
+    },
+    {
+      "id": "dom-rendering-pipeline",
+      "title": "Del DOM al píxel",
+      "description": "Transformación de HTML y CSS en una vista",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "dom-rendering-pipeline.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "El navegador construye árboles, calcula estilos y realiza layout y paint.",
+      "caption": "El navegador construye árboles, calcula estilos y realiza layout y paint.",
+      "tags": [
+        "dom",
+        "cssom",
+        "rendering"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "DOM",
+          "href": "html.html"
+        }
+      ]
+    },
+    {
+      "id": "http-request-cycle",
+      "title": "Ciclo de una petición HTTP",
+      "description": "Viaje de una petición y su respuesta",
+      "category": "animation",
+      "mediaType": "image",
+      "file": "http-request-cycle.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "El cliente envía una petición, el servidor la procesa y devuelve una respuesta.",
+      "caption": "El cliente envía una petición, el servidor la procesa y devuelve una respuesta.",
+      "tags": [
+        "http",
+        "api",
+        "fetch",
+        "network"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "HTTP",
+          "href": "tools.html?tool=apis"
+        }
+      ]
+    },
+    {
+      "id": "api-rest-architecture",
+      "title": "Arquitectura de una API REST",
+      "description": "Cliente, rutas, lógica y datos",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "api-rest-architecture.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Una API expone recursos mediante endpoints e intercambia representaciones con HTTP.",
+      "caption": "Una API expone recursos mediante endpoints e intercambia representaciones con HTTP.",
+      "tags": [
+        "api",
+        "rest",
+        "backend"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "APIs",
+          "href": "tools.html?tool=apis"
+        }
+      ]
+    },
+    {
+      "id": "sql-relational-model",
+      "title": "Modelo relacional y JOIN",
+      "description": "Unión de tablas mediante claves",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "sql-relational-model.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Las claves relacionan filas y permiten consultar datos de varias tablas.",
+      "caption": "Las claves relacionan filas y permiten consultar datos de varias tablas.",
+      "tags": [
+        "sql",
+        "postgresql",
+        "relaciones"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "SQL",
+          "href": "tools.html?tool=sql-postgres"
+        }
+      ]
+    },
+    {
+      "id": "mongodb-document-model",
+      "title": "Documento MongoDB",
+      "description": "Colecciones y documentos BSON",
+      "category": "illustration",
+      "mediaType": "image",
+      "file": "mongodb-document-model.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "MongoDB guarda documentos flexibles dentro de colecciones.",
+      "caption": "MongoDB guarda documentos flexibles dentro de colecciones.",
+      "tags": [
+        "mongodb",
+        "nosql",
+        "documentos"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "MongoDB",
+          "href": "tools.html?tool=mongodb"
+        }
+      ]
+    },
+    {
+      "id": "react-state-flow",
+      "title": "Estado y renderizado en React",
+      "description": "Actualización de estado y nueva interfaz",
+      "category": "diagram",
+      "mediaType": "image",
+      "file": "react-state-flow.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "El estado representa datos cambiantes que determinan la interfaz.",
+      "caption": "El estado representa datos cambiantes que determinan la interfaz.",
+      "tags": [
+        "react",
+        "components",
+        "state"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "React",
+          "href": "tools.html?tool=react"
+        }
+      ]
+    },
+    {
+      "id": "vue-reactivity-flow",
+      "title": "Reactividad de Vue",
+      "description": "Dependencias y actualización de vista",
+      "category": "animation",
+      "mediaType": "image",
+      "file": "vue-reactivity-flow.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Vue registra dependencias y actualiza efectos cuando cambian sus valores.",
+      "caption": "Vue registra dependencias y actualiza efectos cuando cambian sus valores.",
+      "tags": [
+        "vue",
+        "reactividad",
+        "composition-api"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "Vue.js",
+          "href": "tools.html?tool=vuejs"
+        }
+      ]
+    },
+    {
+      "id": "node-event-loop",
+      "title": "Event loop de Node.js",
+      "description": "Coordinación de trabajo asíncrono",
+      "category": "infographic",
+      "mediaType": "image",
+      "file": "node-event-loop.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "Node.js coordina operaciones de I/O y callbacks mediante el event loop.",
+      "caption": "Node.js coordina operaciones de I/O y callbacks mediante el event loop.",
+      "tags": [
+        "nodejs",
+        "event-loop",
+        "backend"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "Node.js",
+          "href": "tools.html?tool=nodejs"
+        }
+      ]
+    },
+    {
+      "id": "web-accessibility-map",
+      "title": "Mapa de accesibilidad web",
+      "description": "Pilares de una experiencia accesible",
+      "category": "infographic",
+      "mediaType": "image",
+      "file": "web-accessibility-map.svg",
+      "mimeType": "image/svg+xml",
+      "altText": "La accesibilidad combina semántica, teclado, contraste y alternativas.",
+      "caption": "La accesibilidad combina semántica, teclado, contraste y alternativas.",
+      "tags": [
+        "a11y",
+        "accesibilidad",
+        "semantica"
+      ],
+      "license": "Original WebDev Book",
+      "attribution": "WebDev Book",
+      "version": "1.0.0",
+      "width": 1200,
+      "height": 760,
+      "related": [
+        {
+          "label": "Accesibilidad",
+          "href": "html.html"
+        }
+      ]
+    }
+  ]
+}

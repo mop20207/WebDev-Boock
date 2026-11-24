@@ -11,7 +11,9 @@
     "generate:libraries": "node scripts/generate-library-packages.mjs",
     "validate:libraries": "node scripts/validate-library-packages.mjs",
     "generate:labs": "node scripts/generate-lab-packages.mjs",
-    "validate:labs": "node scripts/validate-lab-packages.mjs"
+    "validate:labs": "node scripts/validate-lab-packages.mjs",
+    "generate:multimedia": "node scripts/generate-multimedia-manifest.mjs",
+    "validate:multimedia": "node scripts/validate-multimedia.mjs"
   },
   "dependencies": {
     "@capacitor/core": "8.6.2"

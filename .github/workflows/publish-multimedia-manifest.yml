@@ -1,0 +1,37 @@
+name: Publish multimedia manifest
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'modules/multimedia/catalog.json'
+      - 'modules/multimedia/assets/**'
+      - 'scripts/generate-multimedia-manifest.mjs'
+      - 'scripts/validate-multimedia.mjs'
+permissions:
+  contents: write
+concurrency:
+  group: multimedia-manifest-main
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: |
+          node scripts/generate-multimedia-manifest.mjs
+          node scripts/validate-multimedia.mjs
+      - name: Commit manifest when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- modules/multimedia/manifest.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add modules/multimedia/manifest.json
+          git commit -m "chore(multimedia): refresh manifest"
+          git push origin HEAD:main
