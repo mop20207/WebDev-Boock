@@ -32,10 +32,12 @@ for (const absolutePath of paths) {
   });
 }
 
+// La versión depende exclusivamente del contenido. Así, el workflow no
+// vuelve a crear commits infinitos cuando su propio manifiesto dispara otra ejecución.
+const version = createHash("sha256").update(JSON.stringify(files)).digest("hex").slice(0, 16);
 const manifest = {
   schemaVersion: 1,
-  version: process.env.GITHUB_SHA || "local-" + Date.now(),
-  generatedAt: new Date().toISOString(),
+  version,
   files
 };
 
