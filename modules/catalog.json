@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "1.1.0",
+  "catalogVersion": "1.2.0",
   "title": "Catálogo de módulos de WebDev Book",
   "description": "Inventario del núcleo, bibliotecas integradas y paquetes que se prepararán para descarga en etapas posteriores.",
   "modules": [
@@ -440,12 +440,12 @@
       "category": "lab",
       "status": "integrated",
       "stage": 3,
-      "description": "Entorno educativo para practicar comandos, rutas, pipes y scripts.",
+      "description": "Prácticas seguras de comandos, rutas, búsqueda, creación y organización de archivos.",
       "details": "Paquete descargable con 4 ejercicios de terminal didáctica. Los comandos operan exclusivamente sobre un sistema de archivos virtual; no ejecutan shell ni acceden al teléfono.",
       "capabilities": [
-        "Navegación por archivos",
-        "Comandos y pipes",
-        "Scripts"
+        "Comandos permitidos",
+        "Sistema de archivos virtual",
+        "Búsqueda y organización"
       ],
       "delivery": "package",
       "version": "1.0.0",
