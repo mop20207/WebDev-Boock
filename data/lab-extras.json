@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 1,
+  "description": "Retos adicionales para los laboratorios descargables de terminal y lógica de videojuegos 2D.",
+  "challenges": [
+    {
+      "id": "terminal-navega-proyecto",
+      "technology": "terminal",
+      "technologyName": "Terminal Linux",
+      "difficulty": "principiante",
+      "title": "Explorá la estructura de un proyecto",
+      "summary": "Usá pwd, ls y cd para reconocer dónde estás y moverte por carpetas.",
+      "statement": "Llegaste a un proyecto de práctica. Inspeccioná el directorio actual, entrá en src y comprobá qué archivos contiene. Terminá de nuevo en /workspace.",
+      "objectives": [
+        "Interpretar la ruta actual con pwd.",
+        "Listar archivos con ls.",
+        "Cambiar de directorio con cd."
+      ],
+      "requirements": [
+        "Mostrá la ruta de trabajo.",
+        "Entrá en src y listá su contenido.",
+        "Volvé a /workspace al terminar."
+      ],
+      "language": "shell",
+      "runner": "terminal-sim",
+      "starterCode": "pwd\nls\ncd src\npwd\nls\ncd ..\npwd",
+      "terminalSetup": {
+        "cwd": "/workspace",
+        "directories": [
+          "src",
+          "docs"
+        ],
+        "files": {
+          "README.md": "Proyecto de práctica WebDev Book\n",
+          "src/index.js": "console.log('Hola desde src');\n",
+          "docs/guia.txt": "Guía inicial\n"
+        }
+      },
+      "terminalChecks": [
+        {
+          "type": "cwd",
+          "value": "/workspace"
+        },
+        {
+          "type": "outputIncludes",
+          "value": "/workspace/src"
+        },
+        {
+          "type": "outputIncludes",
+          "value": "index.js"
+        }
+      ],
+      "hints": [
+        "pwd muestra el directorio actual; ls enumera su contenido.",
+        "cd src entra en la carpeta src; cd .. sube un nivel.",
+        "Volvé al directorio raíz del ejercicio antes de terminar."
+      ],
+      "solutionCode": "pwd\nls\ncd src\npwd\nls\ncd ..\npwd",
+      "solutionExplanation": "Los comandos pwd, ls y cd permiten orientarte sin modificar archivos. La práctica termina de nuevo en /workspace para que el próximo comando parta de un contexto conocido.",
+      "commonMistakes": [
+        "Confundir ls con pwd.",
+        "Usar cd src/ cuando ya estás dentro de src.",
+        "Olvidar volver al directorio inicial."
+      ],
+      "estimatedMinutes": 8
+    },
+    {
+      "id": "terminal-crea-archivos",
+      "technology": "terminal",
+      "technologyName": "Terminal Linux",
+      "difficulty": "principiante",
+      "title": "Creá carpetas y archivos para una página",
+      "summary": "Construí una pequeña estructura usando mkdir, touch, echo y cat.",
+      "statement": "Prepará una carpeta src con app.js y una carpeta assets. Escribí una línea de JavaScript en app.js y comprobá su contenido.",
+      "objectives": [
+        "Crear directorios con mkdir.",
+        "Crear archivos vacíos con touch.",
+        "Redirigir texto a un archivo con echo.",
+        "Leer archivos con cat."
+      ],
+      "requirements": [
+        "Creá src y assets.",
+        "Creá src/app.js.",
+        "Escribí exactamente console.log('WebDev Book'); en src/app.js.",
+        "Mostrá el contenido con cat."
+      ],
+      "language": "shell",
+      "runner": "terminal-sim",
+      "starterCode": "mkdir src\nmkdir assets\ntouch src/app.js\necho \"console.log('WebDev Book');\" > src/app.js\ncat src/app.js",
+      "terminalSetup": {
+        "cwd": "/workspace",
+        "directories": [],
+        "files": {
+          "README.md": "Creá la estructura solicitada.\n"
+        }
+      },
+      "terminalChecks": [
+        {
+          "type": "fileExists",
+          "path": "/workspace/src/app.js"
+        },
+        {
+          "type": "directoryExists",
+          "path": "/workspace/assets"
+        },
+        {
+          "type": "fileContains",
+          "path": "/workspace/src/app.js",
+          "value": "console.log('WebDev Book');"
+        },
+        {
+          "type": "outputIncludes",
+          "value": "console.log('WebDev Book');"
+        }
+      ],
+      "hints": [
+        "mkdir crea una carpeta y touch crea un archivo vacío.",
+        "La redirección > guarda la salida de echo en un archivo.",
+        "cat permite comprobar el contenido que acabás de escribir."
+      ],
+      "solutionCode": "mkdir src\nmkdir assets\ntouch src/app.js\necho \"console.log('WebDev Book');\" > src/app.js\ncat src/app.js",
+      "solutionExplanation": "Primero se crea la estructura; luego se crea app.js. La redirección escribe el contenido en el archivo y cat confirma el resultado.",
+      "commonMistakes": [
+        "Escribir la ruta sin la carpeta de destino.",
+        "Usar >> cuando necesitás reemplazar el contenido.",
+        "Olvidar las comillas del texto con espacios."
+      ],
+      "estimatedMinutes": 10
+    },
+    {
+      "id": "terminal-busca-archivos",
+      "technology": "terminal",
+      "technologyName": "Terminal Linux",
+      "difficulty": "intermedio",
+      "title": "Buscá archivos y texto en el proyecto",
+      "summary": "Combiná find, grep y wc para localizar archivos y contar líneas.",
+      "statement": "El proyecto incluye varias notas. Encontrá los archivos .js, buscá la palabra export dentro de src y contá las líneas del README.",
+      "objectives": [
+        "Encontrar archivos con find.",
+        "Buscar texto con grep.",
+        "Contar líneas con wc -l."
+      ],
+      "requirements": [
+        "Buscá todos los archivos con extensión .js.",
+        "Encontrá las líneas que contienen export en src.",
+        "Contá las líneas de README.md."
+      ],
+      "language": "shell",
+      "runner": "terminal-sim",
+      "starterCode": "find . -name \"*.js\"\ngrep \"export\" src/app.js\nwc -l README.md",
+      "terminalSetup": {
+        "cwd": "/workspace",
+        "directories": [
+          "src",
+          "src/utils",
+          "docs"
+        ],
+        "files": {
+          "README.md": "# Proyecto\n\nGuía de práctica\n",
+          "src/app.js": "import { suma } from './utils/suma.js';\nexport function iniciar() {\n  return suma(2, 3);\n}\n",
+          "src/utils/suma.js": "export function suma(a, b) {\n  return a + b;\n}\n",
+          "docs/notas.txt": "Recordar revisar los imports.\n"
+        }
+      },
+      "terminalChecks": [
+        {
+          "type": "outputIncludes",
+          "value": "src/app.js"
+        },
+        {
+          "type": "outputIncludes",
+          "value": "src/utils/suma.js"
+        },
+        {
+          "type": "outputIncludes",
+          "value": "export function iniciar()"
+        }
+      ],
+      "hints": [
+        "find . -name \"*.js\" recorre el proyecto virtual.",
+        "grep distingue el patrón que buscás y el archivo donde lo buscás.",
+        "wc -l cuenta las líneas; no cuenta palabras ni bytes."
+      ],
+      "solutionCode": "find . -name \"*.js\"\ngrep \"export\" src/app.js\nwc -l README.md",
+      "solutionExplanation": "find descubre los archivos por nombre, grep localiza líneas que incluyen un patrón y wc -l cuenta líneas. El entorno es una simulación con archivos de práctica.",
+      "commonMistakes": [
+        "Usar grep sobre una carpeta cuando el simulador espera un archivo.",
+        "Olvidar las comillas del patrón con espacios.",
+        "Confundir wc -l con wc -w."
+      ],
+      "estimatedMinutes": 12
+    },
+    {
+      "id": "terminal-organiza-entregables",
+      "technology": "terminal",
+      "technologyName": "Terminal Linux",
+      "difficulty": "intermedio",
+      "title": "Ordená los archivos de una entrega",
+      "summary": "Copiá, renombrá y eliminá archivos de una estructura temporal.",
+      "statement": "Prepará una carpeta entrega. Copiá el README, mové el archivo de configuración con un nombre más claro y eliminá el borrador temporal.",
+      "objectives": [
+        "Copiar archivos con cp.",
+        "Mover o renombrar con mv.",
+        "Eliminar un archivo con rm.",
+        "Verificar el estado final con ls."
+      ],
+      "requirements": [
+        "Creá la carpeta entrega.",
+        "Copiá README.md a entrega/README.md.",
+        "Mové config.tmp a entrega/config.json.",
+        "Eliminá borrador.txt.",
+        "Listá la carpeta entrega."
+      ],
+      "language": "shell",
+      "runner": "terminal-sim",
+      "starterCode": "mkdir entrega\ncp README.md entrega/README.md\nmv config.tmp entrega/config.json\nrm borrador.txt\nls entrega",
+      "terminalSetup": {
+        "cwd": "/workspace",
+        "directories": [],
+        "files": {
+          "README.md": "Entrega de práctica\n",
+          "config.tmp": "{\"modo\":\"demo\"}\n",
+          "borrador.txt": "Archivo que debe eliminarse.\n"
+        }
+      },
+      "terminalChecks": [
+        {
+          "type": "fileExists",
+          "path": "/workspace/entrega/README.md"
+        },
+        {
+          "type": "fileExists",
+          "path": "/workspace/entrega/config.json"
+        },
+        {
+          "type": "fileNotExists",
+          "path": "/workspace/borrador.txt"
+        },
+        {
+          "type": "outputIncludes",
+          "value": "config.json"
+        }
+      ],
+      "hints": [
+        "cp origen destino conserva el original y crea una copia.",
+        "mv puede mover un archivo a otra carpeta y cambiar su nombre.",
+        "rm elimina el archivo indicado; verificá la ruta antes de ejecutarlo."
+      ],
+      "solutionCode": "mkdir entrega\ncp README.md entrega/README.md\nmv config.tmp entrega/config.json\nrm borrador.txt\nls entrega",
+      "solutionExplanation": "La secuencia conserva README en el directorio original, crea una copia dentro de entrega, renombra config.tmp y elimina solo borrador.txt.",
+      "commonMistakes": [
+        "Usar mv en vez de cp cuando se necesita conservar el original.",
+        "Eliminar el archivo equivocado por una ruta incorrecta.",
+        "Olvidar verificar el resultado con ls."
+      ],
+      "estimatedMinutes": 12
+    },
+    {
+      "id": "game-movimiento-limites",
+      "technology": "phaser",
+      "technologyName": "Phaser · Lógica de videojuegos",
+      "difficulty": "principiante",
+      "title": "Mové al personaje dentro de la pantalla",
+      "summary": "Calculá una nueva posición y evitá que el jugador salga de los límites.",
+      "statement": "Un personaje se mueve en un escenario 2D. Completá moverJugador para aplicar la dirección y la velocidad sin permitir que x o y salgan del área visible.",
+      "objectives": [
+        "Modelar posición y velocidad.",
+        "Aplicar una dirección por eje.",
+        "Limitar valores con Math.min y Math.max."
+      ],
+      "requirements": [
+        "La función se llama moverJugador.",
+        "Recibe jugador, direccion, velocidad y limites.",
+        "Devuelve una nueva posición.",
+        "x e y deben permanecer entre 0 y el ancho/alto disponibles."
+      ],
+      "language": "javascript",
+      "runner": "game-logic",
+      "starterCode": "function moverJugador(jugador, direccion, velocidad, limites) {\n  // Calculá la nueva posición sin salir del escenario.\n  return { x: jugador.x, y: jugador.y };\n}",
+      "tests": [
+        {
+          "label": "Se mueve hacia la derecha",
+          "expression": "moverJugador({x:10,y:10},{x:1,y:0},5,{ancho:100,alto:80})",
+          "expected": {
+            "x": 15,
+            "y": 10
+          }
+        },
+        {
+          "label": "Se limita al borde derecho",
+          "expression": "moverJugador({x:98,y:10},{x:1,y:0},8,{ancho:100,alto:80})",
+          "expected": {
+            "x": 100,
+            "y": 10
+          }
+        },
+        {
+          "label": "Se limita al borde superior",
+          "expression": "moverJugador({x:10,y:2},{x:0,y:-1},6,{ancho:100,alto:80})",
+          "expected": {
+            "x": 10,
+            "y": 0
+          }
+        }
+      ],
+      "hints": [
+        "Sumá direccion.x * velocidad a x y direccion.y * velocidad a y.",
+        "Math.max(0, valor) evita coordenadas negativas.",
+        "Math.min(limite, valor) evita superar el tamaño del escenario."
+      ],
+      "solutionCode": "function moverJugador(jugador, direccion, velocidad, limites) {\n  return {\n    x: Math.max(0, Math.min(limites.ancho, jugador.x + direccion.x * velocidad)),\n    y: Math.max(0, Math.min(limites.alto, jugador.y + direccion.y * velocidad))\n  };\n}",
+      "solutionExplanation": "La dirección indica el sentido del movimiento. Se calcula la posición candidata y se limita entre cero y el máximo permitido en cada eje.",
+      "commonMistakes": [
+        "Cambiar directamente el objeto recibido.",
+        "Olvidar limitar uno de los ejes.",
+        "Confundir ancho con alto."
+      ],
+      "estimatedMinutes": 12
+    },
+    {
+      "id": "game-colision-rectangulos",
+      "technology": "phaser",
+      "technologyName": "Phaser · Lógica de videojuegos",
+      "difficulty": "intermedio",
+      "title": "Detectá una colisión entre dos rectángulos",
+      "summary": "Implementá una prueba AABB para saber si dos cajas se superponen.",
+      "statement": "En muchos juegos 2D se utiliza una comprobación de cajas alineadas a los ejes (AABB). Completá colisionan para indicar si dos rectángulos se superponen.",
+      "objectives": [
+        "Interpretar x, y, ancho y alto.",
+        "Comparar bordes de dos rectángulos.",
+        "Detectar correctamente contacto y separación."
+      ],
+      "requirements": [
+        "La función se llama colisionan.",
+        "Debe devolver true cuando existe superposición de área.",
+        "Debe devolver false cuando los rectángulos están separados o solo se tocan por un borde."
+      ],
+      "language": "javascript",
+      "runner": "game-logic",
+      "starterCode": "function colisionan(a, b) {\n  // Compará los cuatro bordes.\n  return false;\n}",
+      "tests": [
+        {
+          "label": "Detecta superposición",
+          "expression": "colisionan({x:0,y:0,ancho:20,alto:20},{x:10,y:10,ancho:20,alto:20})",
+          "expected": true
+        },
+        {
+          "label": "No detecta separación horizontal",
+          "expression": "colisionan({x:0,y:0,ancho:10,alto:10},{x:12,y:0,ancho:10,alto:10})",
+          "expected": false
+        },
+        {
+          "label": "Un borde que solo se toca no cuenta como colisión",
+          "expression": "colisionan({x:0,y:0,ancho:10,alto:10},{x:10,y:0,ancho:10,alto:10})",
+          "expected": false
+        }
+      ],
+      "hints": [
+        "El borde derecho de a es a.x + a.ancho.",
+        "Dos rectángulos están separados si uno queda completamente a la izquierda, derecha, arriba o abajo del otro.",
+        "La colisión requiere que no exista separación en ninguno de los dos ejes."
+      ],
+      "solutionCode": "function colisionan(a, b) {\n  return a.x < b.x + b.ancho &&\n    a.x + a.ancho > b.x &&\n    a.y < b.y + b.alto &&\n    a.y + a.alto > b.y;\n}",
+      "solutionExplanation": "La condición comprueba que los intervalos horizontales y verticales se solapen. Al usar desigualdades estrictas, el contacto exacto entre bordes no se considera colisión.",
+      "commonMistakes": [
+        "Comparar solo posiciones x e y.",
+        "Olvidar el ancho o alto de una caja.",
+        "Usar <= cuando el diseño considera que tocar un borde no es colisión."
+      ],
+      "estimatedMinutes": 15
+    },
+    {
+      "id": "game-puntuacion-combo",
+      "technology": "phaser",
+      "technologyName": "Phaser · Lógica de videojuegos",
+      "difficulty": "intermedio",
+      "title": "Actualizá puntos, vidas y combo",
+      "summary": "Creá una función pura para resolver el resultado de recoger un objeto.",
+      "statement": "Un juego entrega puntos cuando el jugador recoge una gema. Si la gema es especial, suma un bonus y aumenta el combo. Si el jugador recibe daño, pierde una vida y el combo se reinicia.",
+      "objectives": [
+        "Trabajar con objetos de estado.",
+        "Aplicar reglas condicionales.",
+        "Devolver un nuevo estado sin mutar el original."
+      ],
+      "requirements": [
+        "La función se llama aplicarEvento.",
+        "Recibe el estado y un evento.",
+        "evento.tipo puede ser gema, gema-especial o daño.",
+        "Gema suma 10 puntos, especial suma 25 y aumenta combo, daño resta una vida y reinicia combo."
+      ],
+      "language": "javascript",
+      "runner": "game-logic",
+      "starterCode": "function aplicarEvento(estado, evento) {\n  // Devolvé un nuevo estado según el evento recibido.\n  return estado;\n}",
+      "tests": [
+        {
+          "label": "Recoger una gema suma 10 puntos",
+          "expression": "aplicarEvento({puntos:0,vidas:3,combo:0},{tipo:'gema'})",
+          "expected": {
+            "puntos": 10,
+            "vidas": 3,
+            "combo": 0
+          }
+        },
+        {
+          "label": "La gema especial incrementa puntos y combo",
+          "expression": "aplicarEvento({puntos:10,vidas:3,combo:1},{tipo:'gema-especial'})",
+          "expected": {
+            "puntos": 35,
+            "vidas": 3,
+            "combo": 2
+          }
+        },
+        {
+          "label": "El daño resta una vida y reinicia combo",
+          "expression": "aplicarEvento({puntos:35,vidas:3,combo:2},{tipo:'daño'})",
+          "expected": {
+            "puntos": 35,
+            "vidas": 2,
+            "combo": 0
+          }
+        }
+      ],
+      "hints": [
+        "Usá una copia del estado para evitar modificar el objeto original.",
+        "Diferenciá los tres tipos de evento con if o switch.",
+        "Solo la gema especial incrementa combo; el daño lo reinicia."
+      ],
+      "solutionCode": "function aplicarEvento(estado, evento) {\n  const nuevo = { ...estado };\n  if (evento.tipo === 'gema') nuevo.puntos += 10;\n  else if (evento.tipo === 'gema-especial') {\n    nuevo.puntos += 25;\n    nuevo.combo += 1;\n  } else if (evento.tipo === 'daño') {\n    nuevo.vidas = Math.max(0, nuevo.vidas - 1);\n    nuevo.combo = 0;\n  }\n  return nuevo;\n}",
+      "solutionExplanation": "La función aplica una regla por evento sobre una copia del estado. Math.max evita que las vidas bajen de cero; devolver un objeto nuevo facilita probar la lógica y mantener el estado predecible.",
+      "commonMistakes": [
+        "Mutar el estado original.",
+        "Reiniciar el combo al recoger una gema común.",
+        "Permitir vidas negativas."
+      ],
+      "estimatedMinutes": 15
+    },
+    {
+      "id": "game-generar-oleada",
+      "technology": "phaser",
+      "technologyName": "Phaser · Lógica de videojuegos",
+      "difficulty": "avanzado",
+      "title": "Generá una oleada de enemigos",
+      "summary": "Construí posiciones reproducibles según el nivel y el tamaño del escenario.",
+      "statement": "Prepará una función que genere una oleada determinista. La cantidad de enemigos depende del nivel, y cada uno debe aparecer dentro del área horizontal del escenario en posiciones repartidas.",
+      "objectives": [
+        "Usar arrays y bucles.",
+        "Calcular posiciones mediante proporciones.",
+        "Crear resultados deterministas para facilitar pruebas."
+      ],
+      "requirements": [
+        "La función se llama crearOleada.",
+        "Recibe nivel y ancho.",
+        "La cantidad es nivel + 2.",
+        "Cada enemigo devuelve x y velocidad.",
+        "La posición x debe estar dentro de 0 y ancho.",
+        "La velocidad aumenta un punto con cada enemigo."
+      ],
+      "language": "javascript",
+      "runner": "game-logic",
+      "starterCode": "function crearOleada(nivel, ancho) {\n  // Generá nivel + 2 enemigos con posiciones distribuidas.\n  return [];\n}",
+      "tests": [
+        {
+          "label": "La oleada del nivel 1 contiene tres enemigos",
+          "expression": "crearOleada(1,300).length",
+          "expected": 3
+        },
+        {
+          "label": "Las posiciones quedan distribuidas en el escenario",
+          "expression": "crearOleada(2,400).map(e=>e.x)",
+          "expected": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "label": "La velocidad crece de forma gradual",
+          "expression": "crearOleada(2,400).map(e=>e.velocidad)",
+          "expected": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "hints": [
+        "Calculá cantidad = nivel + 2.",
+        "Podés distribuir las posiciones con ancho * (i + 1) / (cantidad + 1).",
+        "Usá un bucle y guardá un objeto por enemigo."
+      ],
+      "solutionCode": "function crearOleada(nivel, ancho) {\n  const cantidad = Math.max(0, Math.floor(nivel)) + 2;\n  const enemigos = [];\n  for (let i = 0; i < cantidad; i++) {\n    enemigos.push({\n      x: ancho * (i + 1) / (cantidad + 1),\n      velocidad: i + 1\n    });\n  }\n  return enemigos;\n}",
+      "solutionExplanation": "La cantidad crece con el nivel. La fórmula reparte los enemigos en puntos equidistantes entre los bordes y la velocidad aumenta con el índice, lo que produce una oleada reproducible.",
+      "commonMistakes": [
+        "Colocar enemigos exactamente sobre los bordes.",
+        "Empezar el índice en 1 y desfasar la fórmula.",
+        "Usar Math.random y volver inestables las pruebas."
+      ],
+      "estimatedMinutes": 18
+    }
+  ]
+}
