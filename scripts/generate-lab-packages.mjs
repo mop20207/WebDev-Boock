@@ -63,7 +63,10 @@ for (const challenge of allChallenges) {
   }
   if (seen.has(challenge.id)) throw new Error("ID de reto duplicado: " + challenge.id);
   seen.add(challenge.id);
-  if (!challenge.title || !challenge.summary || !challenge.statement || !Array.isArray(challenge.tests) || !challenge.tests.length) {
+  const hasTests = Array.isArray(challenge.tests) && challenge.tests.length > 0;
+  const hasTerminalChecks = challenge.runner === "terminal-sim" &&
+    Array.isArray(challenge.terminalChecks) && challenge.terminalChecks.length > 0;
+  if (!challenge.title || !challenge.summary || !challenge.statement || (!hasTests && !hasTerminalChecks)) {
     throw new Error("El reto " + challenge.id + " no tiene contenido o pruebas suficientes.");
   }
   if (!Array.isArray(challenge.hints) || !challenge.hints.length || !challenge.solutionCode) {
