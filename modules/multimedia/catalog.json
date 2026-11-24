@@ -81,7 +81,7 @@
       "related": [
         {
           "label": "CSS",
-          "href": "tools.html?tool=css"
+          "href": "css.html"
         }
       ]
     },
@@ -108,7 +108,7 @@
       "related": [
         {
           "label": "Flexbox",
-          "href": "tools.html?tool=css"
+          "href": "css.html"
         }
       ]
     },
@@ -135,7 +135,7 @@
       "related": [
         {
           "label": "CSS Grid",
-          "href": "tools.html?tool=css"
+          "href": "css.html"
         }
       ]
     },
