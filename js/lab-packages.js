@@ -109,9 +109,12 @@
   async function getLab(id){
     const st=await status(id);
     if(st.state==="missing")throw new Error("Este laboratorio todavía no está instalado. Volvé al Centro de laboratorios para descargarlo.");
+    if(st.state==="corrupt")throw new Error("La copia local de este laboratorio no superó la verificación de integridad. Volvé al Centro de laboratorios y reinstalalo.");
     const file=await record(FILES,key(id));
+    const localHash=await sha(new TextEncoder().encode(file.content));
+    if(localHash!==file.sha256||localHash!==st.installed.sha256)throw new Error("La integridad del laboratorio cambió. Se bloqueó su ejecución.");
     const pack=JSON.parse(file.content);
-    return validate(pack,st.entry);
+    return validate(pack,{...st.entry,challengeCount:st.installed.challengeCount||st.entry.challengeCount});
   }
   async function remove(id){
     const st=await status(id);if(!st.entry)throw new Error("Laboratorio desconocido.");
