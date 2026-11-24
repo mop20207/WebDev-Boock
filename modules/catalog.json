@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "catalogVersion": "1.0.0",
   "title": "Catálogo de módulos de WebDev Book",
-  "description": "Inventario del núcleo, bibliotecas integradas y paquetes que se prepararán para descarga en etapas posteriores.",
+  "description": "Inventario del núcleo, bibliotecas descargables, laboratorios interactivos y recursos multimedia.",
   "modules": [
     {
       "id": "core",
@@ -382,73 +382,60 @@
     },
     {
       "id": "lab-frontend",
-      "name": "Laboratorios de frontend",
+      "name": "Laboratorio Frontend",
       "category": "lab",
-      "status": "planned",
+      "status": "integrated",
       "stage": 3,
-      "description": "Entornos descargables para experimentar con HTML, CSS, DOM, React, Vue y Web Components.",
-      "details": "Paquete futuro. La aplicación ya tiene retos y vistas previas, pero este módulo independiente todavía no se descarga.",
+      "description": "Retos prácticos de HTML, CSS, JavaScript, React, Web Components, Vue.js y Astro.",
+      "details": "Paquete de laboratorio descargable e independiente. Los retos se guardan localmente; los motores avanzados conservan sus requisitos de conexión cuando corresponda.",
       "capabilities": [
-        "Prácticas visuales",
-        "Experimentos aislados",
-        "Proyectos guiados"
-      ]
+        "Retos guiados",
+        "Código inicial y pruebas",
+        "Pistas y soluciones"
+      ],
+      "version": "1.0.0",
+      "articleCount": 24,
+      "href": "labs.html?lab=frontend",
+      "delivery": "package",
+      "packageId": "frontend"
     },
     {
       "id": "lab-backend",
-      "name": "Laboratorios de backend",
+      "name": "Laboratorio Backend y APIs",
       "category": "lab",
-      "status": "planned",
+      "status": "integrated",
       "stage": 3,
-      "description": "Laboratorios para Node.js, Express, APIs, autenticación y procesos del servidor.",
-      "details": "Paquete futuro. Los simuladores actuales no equivalen a ejecutar un servidor Node.js real en Android.",
+      "description": "Prácticas de Node.js y comunicación HTTP mediante retos y simuladores educativos.",
+      "details": "Paquete de laboratorio descargable e independiente. Los retos se guardan localmente; los motores avanzados conservan sus requisitos de conexión cuando corresponda.",
       "capabilities": [
-        "Rutas y middleware",
-        "Archivos y procesos",
-        "APIs y autenticación"
-      ]
+        "Retos guiados",
+        "Código inicial y pruebas",
+        "Pistas y soluciones"
+      ],
+      "version": "1.0.0",
+      "articleCount": 8,
+      "href": "labs.html?lab=backend",
+      "delivery": "package",
+      "packageId": "backend"
     },
     {
       "id": "lab-databases",
-      "name": "Laboratorios de bases de datos",
+      "name": "Laboratorio de bases de datos",
       "category": "lab",
-      "status": "planned",
+      "status": "integrated",
       "stage": 3,
-      "description": "Prácticas de SQL, consultas, relaciones, agregaciones y modelado documental.",
-      "details": "Paquete futuro. Los ejercicios existentes pueden incluir simulaciones o motores en navegador; no instala servidores de bases de datos.",
+      "description": "Consultas SQL, modelado relacional y operaciones MongoDB.",
+      "details": "Paquete de laboratorio descargable e independiente. Los retos se guardan localmente; los motores avanzados conservan sus requisitos de conexión cuando corresponda.",
       "capabilities": [
-        "Consultas SQL",
-        "Relaciones y transacciones",
-        "Colecciones y agregaciones"
-      ]
-    },
-    {
-      "id": "lab-terminal",
-      "name": "Laboratorio de terminal",
-      "category": "lab",
-      "status": "planned",
-      "stage": 3,
-      "description": "Entorno educativo para practicar comandos, rutas, pipes y scripts.",
-      "details": "Paquete futuro. Un simulador didáctico no será presentado como una terminal Linux real.",
-      "capabilities": [
-        "Navegación por archivos",
-        "Comandos y pipes",
-        "Scripts"
-      ]
-    },
-    {
-      "id": "lab-games",
-      "name": "Laboratorios de videojuegos",
-      "category": "lab",
-      "status": "planned",
-      "stage": 3,
-      "description": "Escenas y proyectos prácticos de Phaser con recursos de juego descargables.",
-      "details": "Paquete futuro. Los recursos se separarán de la aplicación para que puedan descargarse cuando hagan falta.",
-      "capabilities": [
-        "Escenas y controles",
-        "Sprites y animaciones",
-        "Colisiones y físicas"
-      ]
+        "Retos guiados",
+        "Código inicial y pruebas",
+        "Pistas y soluciones"
+      ],
+      "version": "1.0.0",
+      "articleCount": 8,
+      "href": "labs.html?lab=databases",
+      "delivery": "package",
+      "packageId": "databases"
     },
     {
       "id": "media-diagrams",
@@ -491,6 +478,63 @@
         "Demostraciones de código",
         "Lecciones por tema"
       ]
+    },
+    {
+      "id": "lab-typescript",
+      "category": "lab",
+      "name": "Laboratorio TypeScript",
+      "status": "integrated",
+      "stage": 3,
+      "version": "1.0.0",
+      "articleCount": 4,
+      "description": "Tipos, interfaces, uniones y genéricos con comprobaciones automáticas.",
+      "details": "Paquete de laboratorio descargable e independiente. Los retos se guardan localmente; los motores avanzados conservan sus requisitos de conexión cuando corresponda.",
+      "href": "labs.html?lab=typescript",
+      "capabilities": [
+        "Retos guiados",
+        "Código inicial y pruebas",
+        "Pistas y soluciones"
+      ],
+      "delivery": "package",
+      "packageId": "typescript"
+    },
+    {
+      "id": "lab-quality",
+      "category": "lab",
+      "name": "Laboratorio de Testing",
+      "status": "integrated",
+      "stage": 3,
+      "version": "1.0.0",
+      "articleCount": 4,
+      "description": "Pruebas unitarias, integración y lectura de resultados.",
+      "details": "Paquete de laboratorio descargable e independiente. Los retos se guardan localmente; los motores avanzados conservan sus requisitos de conexión cuando corresponda.",
+      "href": "labs.html?lab=quality",
+      "capabilities": [
+        "Retos guiados",
+        "Código inicial y pruebas",
+        "Pistas y soluciones"
+      ],
+      "delivery": "package",
+      "packageId": "quality"
+    },
+    {
+      "id": "lab-devops",
+      "category": "lab",
+      "name": "Laboratorio DevOps",
+      "status": "integrated",
+      "stage": 3,
+      "version": "1.0.0",
+      "articleCount": 4,
+      "description": "Dockerfile, Compose y validación estática de configuraciones.",
+      "details": "Paquete de laboratorio descargable e independiente. Los retos se guardan localmente; los motores avanzados conservan sus requisitos de conexión cuando corresponda.",
+      "href": "labs.html?lab=devops",
+      "capabilities": [
+        "Retos guiados",
+        "Código inicial y pruebas",
+        "Pistas y soluciones"
+      ],
+      "delivery": "package",
+      "packageId": "devops"
     }
   ]
 }
