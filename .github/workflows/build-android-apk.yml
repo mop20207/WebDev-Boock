@@ -77,11 +77,13 @@ jobs:
           node --check scripts/generate-lab-packages.mjs
           node --check scripts/validate-lab-packages.mjs
           node --check scripts/validate-library-packages.mjs
+          node --check scripts/test-terminal-runner.mjs
           node --check scripts/generate-content-manifest.mjs
           node scripts/generate-library-packages.mjs
           node scripts/validate-library-packages.mjs
           node scripts/generate-lab-packages.mjs
           node scripts/validate-lab-packages.mjs
+          node scripts/test-terminal-runner.mjs
           node scripts/validate-module-catalog.mjs
           node scripts/generate-content-manifest.mjs
 
