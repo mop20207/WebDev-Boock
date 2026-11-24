@@ -72,7 +72,7 @@
   }
 
   function updateProgressSummary() {
-    const completed = progress.completed.length;
+    const completed = challenges.filter(challenge => progress.completed.includes(challenge.id)).length;
     const total = challenges.length;
     const percent = total ? Math.round(completed / total * 100) : 0;
     const label = document.getElementById("challengeProgressLabel");
@@ -1229,10 +1229,23 @@ const same = (a, b) => sameValue(normalize(a), normalize(b));
 
   async function init() {
     try {
-      const response = await fetch(DATA_URL, { cache: "no-store" });
-      if (!response.ok) throw new Error("No se pudo cargar el catálogo de retos.");
-      const database = await response.json();
-      challenges = Array.isArray(database.challenges) ? database.challenges : [];
+      const params = new URLSearchParams(window.location.search);
+      const requestedLab = params.get("lab");
+      if (requestedLab) {
+        if (!window.WebDevLabs) throw new Error("El administrador de laboratorios no está disponible.");
+        const lab = await window.WebDevLabs.getLab(requestedLab);
+        challenges = Array.isArray(lab.challenges) ? lab.challenges : [];
+        const heading = document.querySelector(".challenges-hero h1");
+        if (heading) heading.textContent = lab.title || "Laboratorio interactivo";
+        const intro = document.querySelector(".challenges-hero > p");
+        if (intro) intro.textContent = "Resolvé los retos de este laboratorio. Tus intentos y avances se guardan en este dispositivo.";
+        document.title = (lab.title || "Laboratorio") + " | WebDev Book";
+      } else {
+        const response = await fetch(DATA_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error("No se pudo cargar el catálogo de retos.");
+        const database = await response.json();
+        challenges = Array.isArray(database.challenges) ? database.challenges : [];
+      }
       if (!challenges.length) throw new Error("El catálogo de retos está vacío.");
       populateTechnologyFilter();
       updateProgressSummary();

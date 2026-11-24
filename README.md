@@ -20,6 +20,19 @@ Biblioteca interactiva y responsive para aprender desarrollo web, herramientas y
 
 El catálogo de herramientas y tecnologías contiene **387 artículos distribuidos en 17 bibliotecas**. TypeScript incorpora 37 artículos, Next.js 44, Express.js 42, SQL y PostgreSQL 42, MongoDB 42, APIs y comunicación web 14, Testing 14 y Docker y despliegue 28. Las bibliotecas más extensas se organizan en siete categorías; APIs y Testing tienen cinco categorías cada una.
 
+## Laboratorios interactivos descargables
+
+La etapa 3 incorpora seis paquetes de práctica generados desde `data/challenges.json` y agrupados mediante `data/labs/catalog.json`: Frontend, Backend y APIs, Bases de datos, TypeScript, Testing y DevOps. Cada paquete conserva los retos originales con sus objetivos, requisitos, código inicial, pruebas, pistas, soluciones y explicaciones.
+
+- `scripts/generate-lab-packages.mjs` genera manifiesto, catálogo y paquetes independientes en `modules/labs/`.
+- `scripts/validate-lab-packages.mjs` verifica SHA-256, tamaños, cobertura completa de retos y estructura.
+- `js/lab-packages.js` instala, actualiza, verifica, abre y elimina paquetes en la base IndexedDB `webdev-book-modules`, con claves `lab:<id>`.
+- `pages/labs.html` ofrece el catálogo, tamaños, estados y controles de descarga.
+- `pages/challenges.html?lab=<id>` carga exclusivamente los retos del paquete instalado y funciona sin red para los retos cuyos motores están disponibles localmente.
+- `.github/workflows/publish-lab-packages.yml` publica los paquetes generados en `main` cuando cambia el catálogo o los retos.
+
+Los retos mantienen su progreso existente en `webdevbook.challenges.v1`. Eliminar un paquete no borra intentos ni logros. Los motores que dependen de CDN o WebAssembly pueden requerir conexión en su primera carga; las simulaciones y validadores locales no se presentan como servidores reales.
+
 ## Centro de módulos
 
 La página [Centro de módulos](pages/modules.html) muestra el núcleo, las 20 bibliotecas (HTML, CSS, JavaScript y 17 bibliotecas tecnológicas), laboratorios y recursos multimedia. Permite buscar y filtrar módulos, marcar prioridades, consultar el almacenamiento y administrar cada paquete tecnológico. Los laboratorios y multimedia quedan reservados para las etapas 3 y 4.

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="Laboratorios interactivos descargables de WebDev Book. Practicá con retos, código, pruebas y seguimiento sin conexión.">
+<title>Laboratorios interactivos | WebDev Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/labs.css">
+<script defer src="../js/theme.js"></script><script defer src="../js/navigation.js"></script><script defer src="../js/lab-packages.js"></script><script defer src="../js/labs.js"></script>
+<link rel="manifest" href="../manifest.json"><link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="../css/pwa.css"><script defer src="../js/pwa.js"></script>
+</head>
+<body data-page="labs">
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="../index.html"><span class="brand-mark">&lt;/&gt;</span><span>WebDev<span class="brand-light">Book</span><small>Tu biblioteca web</small></span></a>
+<div class="sidebar-label">MENÚ PRINCIPAL</div>
+<nav class="main-nav" aria-label="Navegación principal">
+<a class="nav-link" href="../index.html">⌂ Inicio</a><a class="nav-link" href="html.html">5 HTML</a><a class="nav-link" href="css.html">✳ CSS</a><a class="nav-link" href="javascript.html">JS JavaScript</a><a class="nav-link" href="editor.html">⌘ Editor</a>
+<div class="nav-divider"></div><a class="nav-link" href="tools.html">▦ Biblioteca de tecnologías</a><a class="nav-link" href="modules.html">⬡ Centro de módulos</a><a class="nav-link" data-challenges-link href="challenges.html">⌁ Retos interactivos</a><a class="nav-link active" data-lab-center-link href="labs.html">⚗ Laboratorios</a><a class="nav-link" href="projects.html">▣ Biblioteca de proyectos</a>
+</nav>
+<div class="sidebar-bottom"><div class="sidebar-tip"><span class="tip-icon">✦</span><strong>Practicá haciendo</strong><p>Descargá un laboratorio y resolvé sus retos incluso sin conexión.</p></div><button class="theme-toggle" id="themeToggle" type="button"><span id="themeIcon">☼</span><span id="themeLabel">Modo claro</span><span class="toggle-track"><i></i></span></button></div>
+</aside>
+<main class="main-area">
+<header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú" aria-expanded="false">☰</button><div class="breadcrumb"><span>WebDev Book</span><b>/</b><strong>Laboratorios interactivos</strong></div><button class="top-icon" id="topThemeToggle" type="button" aria-label="Cambiar tema">◐</button></header>
+<div class="page-content labs-content">
+<section class="labs-hero">
+<div class="labs-hero-copy"><div class="eyebrow"><span class="status-dot"></span> ETAPA 3 · APRENDER PRACTICANDO</div><h1>Laboratorios <span>interactivos.</span></h1><p>Descargá entornos de práctica por área. Cada laboratorio incluye retos, código inicial, pruebas automáticas, pistas y soluciones explicadas. Una vez instalado, podés practicar sin conexión con los motores disponibles en tu dispositivo.</p><div class="labs-hero-stats"><span><b id="totalLabs">6</b> laboratorios</span><span><b id="totalChallenges">52</b> retos guiados</span><span><b id="installedLabs">0</b> instalados</span></div></div>
+<div class="labs-hero-art" aria-hidden="true"><div class="lab-orbit orbit-one"></div><div class="lab-orbit orbit-two"></div><div class="lab-flask">⚗<small>LAB</small></div><i class="lab-node lab-node-a">&lt;/&gt;</i><i class="lab-node lab-node-b">SQL</i><i class="lab-node lab-node-c">JS</i></div>
+</section>
+<section class="labs-toolbar"><div><div class="eyebrow">CATÁLOGO DE PRÁCTICAS</div><h2>Elegí tu laboratorio</h2><p>Los paquetes se descargan por separado; no aumentan el tamaño de la APK.</p></div><label class="labs-search"><span>⌕</span><input id="labSearch" type="search" aria-label="Buscar laboratorios" placeholder="Buscar por tecnología o tema…"></label></section>
+<div class="labs-filter" role="group" aria-label="Filtrar laboratorios"><button class="is-active" data-lab-filter="all" aria-pressed="true">Todos</button><button data-lab-filter="installed" aria-pressed="false">Instalados</button><button data-lab-filter="available" aria-pressed="false">No instalados</button></div>
+<section id="labGrid" class="lab-grid" aria-live="polite"><p class="labs-loading">Cargando catálogo de laboratorios…</p></section>
+<section class="labs-info-grid">
+<article><span>01</span><h3>Descargá</h3><p>El paquete se verifica mediante SHA-256 antes de guardarse. Una descarga incompleta no reemplaza la versión instalada.</p></article>
+<article><span>02</span><h3>Practicá</h3><p>Resolvé retos con editor, pruebas, pistas progresivas y soluciones comentadas. El progreso se conserva en el dispositivo.</p></article>
+<article><span>03</span><h3>Administrá</h3><p>Actualizá o quitá el paquete cuando quieras. Tus proyectos, favoritos y progreso general se mantienen separados.</p></article>
+</section>
+<div class="labs-note"><strong>Transparencia sobre los motores</strong><p>Los retos usan distintos modos: ejecución aislada en iframe, simuladores educativos, validadores estáticos o motores WebAssembly que se descargan cuando se necesitan. No se presenta un simulador como si fuera un servidor Node.js, Docker o PostgreSQL real. Algunos motores avanzados requieren conexión la primera vez.</p></div>
+<footer class="labs-footer"><span>WebDev Book · Laboratorios interactivos</span><a href="modules.html">Volver al Centro de módulos ↑</a></footer>
+</div></main></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div><div class="labs-toast" id="labsToast" role="status" aria-live="polite"></div>
+</body></html>

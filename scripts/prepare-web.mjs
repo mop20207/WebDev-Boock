@@ -33,6 +33,7 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
         // no dentro de la APK. El núcleo incluye solo manifiestos e índices.
         if (relativePath === "data/tools.json") return false;
         if (relativePath.startsWith("modules/libraries/packages/")) return false;
+        if (relativePath.startsWith("modules/labs/packages/")) return false;
         return true;
       }
     }
