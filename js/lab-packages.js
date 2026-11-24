@@ -75,6 +75,18 @@
     if(localHash!==installed.sha256||localHash!==file.sha256)return{state:"corrupt",entry,installed};
     return{state:installed.sha256===entry.sha256?"installed":"update",entry,installed};
   }
+  async function readResponse(response,expectedBytes,onProgress){
+    if(!response.body?.getReader){
+      const data=new Uint8Array(await response.arrayBuffer());
+      onProgress?.({loaded:data.byteLength,total:expectedBytes,percent:100});
+      return data;
+    }
+    const reader=response.body.getReader(),chunks=[];let total=0;
+    try{while(true){const {done,value}=await reader.read();if(done)break;chunks.push(value);total+=value.byteLength;onProgress?.({loaded:total,total:expectedBytes,percent:expectedBytes?Math.min(99,Math.floor(total/expectedBytes*100)):0});}}
+    catch(error){try{await reader.cancel();}catch{}throw error;}
+    const data=new Uint8Array(total);let offset=0;for(const chunk of chunks){data.set(chunk,offset);offset+=chunk.byteLength;}
+    onProgress?.({loaded:total,total:expectedBytes,percent:100});return data;
+  }
   async function download(id,options={}){
     if(!safe(id))throw new Error("ID de laboratorio inválido.");
     if(inflight.has(id))return inflight.get(id);
@@ -86,7 +98,7 @@
       let response,last;
       for(const url of urls){try{response=await fetch(url,{cache:"no-store",headers:{Accept:"application/json"}});if(!response.ok)throw new Error("HTTP "+response.status);break;}catch(e){last=e;}}
       if(!response||!response.ok)throw last||new Error("No se pudo descargar el laboratorio.");
-      const buffer=await response.arrayBuffer();
+      const buffer=await readResponse(response,entry.sizeBytes,options.onProgress);
       if(buffer.byteLength!==entry.sizeBytes)throw new Error("El tamaño descargado no coincide; no se instaló el laboratorio.");
       if(await sha(buffer)!==entry.sha256)throw new Error("Falló la verificación SHA-256; se conservó la versión anterior.");
       const content=new TextDecoder("utf-8",{fatal:true}).decode(buffer);
