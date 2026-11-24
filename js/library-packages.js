@@ -105,7 +105,9 @@
   }
 
   function validateManifest(manifest) {
-    if (!manifest || manifest.schemaVersion !== 1 || !Array.isArray(manifest.packages)) {
+    if (!manifest || manifest.schemaVersion !== 1 ||
+        !/^[a-f0-9]{64}$/i.test(manifest.manifestVersion || "") ||
+        !Array.isArray(manifest.packages)) {
       throw new Error("El manifiesto de bibliotecas tiene un formato no reconocido.");
     }
     const ids = new Set();
@@ -120,7 +122,8 @@
       if (!/^[a-f0-9]{64}$/i.test(entry.sha256 || "")) {
         throw new Error("El hash SHA-256 de " + entry.id + " no es válido.");
       }
-      if (!Number.isInteger(entry.sizeBytes) || entry.sizeBytes <= 0 ||
+      if (!/^[a-f0-9]{12}$/i.test(entry.version || "") ||
+          !Number.isInteger(entry.sizeBytes) || entry.sizeBytes <= 0 || entry.sizeBytes > 10 * 1024 * 1024 ||
           !Number.isInteger(entry.articleCount) || entry.articleCount < 1) {
         throw new Error("Los metadatos de " + entry.id + " están incompletos.");
       }
@@ -356,7 +359,9 @@
   async function listInstalled() {
     const db = await openDatabase();
     const tx = db.transaction(MODULES_STORE, "readonly");
+    const done = transactionComplete(tx);
     const records = await requestValue(tx.objectStore(MODULES_STORE).getAll());
+    await done;
     return records.filter(record => record?.kind === "library");
   }
 
