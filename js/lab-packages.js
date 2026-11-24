@@ -250,8 +250,24 @@
       const entry = manifest.packages.find(item => item.id === id);
       if (!entry) throw new Error("No existe el laboratorio " + id + ".");
       const old = await readRecord(MODULES, id).catch(() => null);
-      const url = isNative() ? remoteUrl(entry.path) : localUrl(entry.path);
-      const bytes = await downloadBytes(url, entry, options.onProgress);
+      let bytes;
+      if (isNative()) {
+        try {
+          bytes = await downloadBytes(remoteUrl(entry.path), entry, options.onProgress);
+        } catch (remoteError) {
+          // La APK incluye una copia de cada paquete para permitir la instalación
+          // inicial sin red. Si ya cambió el manifiesto remoto, el SHA impide usar
+          // silenciosamente una copia empaquetada que esté desactualizada.
+          try {
+            bytes = await downloadBytes(localUrl(entry.path), entry, options.onProgress);
+          } catch (localError) {
+            throw new Error("No se pudo descargar " + entry.title + " desde GitHub ni verificar la copia incluida. " +
+              (remoteError?.message || "") + " " + (localError?.message || ""));
+          }
+        }
+      } else {
+        bytes = await downloadBytes(localUrl(entry.path), entry, options.onProgress);
+      }
       let pack;
       try { pack = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes)); }
       catch { throw new Error("El paquete de " + entry.title + " no contiene JSON válido."); }
