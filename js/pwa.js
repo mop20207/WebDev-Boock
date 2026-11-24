@@ -1,6 +1,10 @@
 (() => {
   "use strict";
 
+  // En la aplicación Android, Capacitor administra el contenedor nativo y no
+  // debemos registrar el service worker de GitHub Pages (su ruta base es distinta).
+  if (window.Capacitor?.isNativePlatform?.()) return;
+
   const manifestLink = document.querySelector('link[rel="manifest"]');
   if (!("serviceWorker" in navigator) || !manifestLink) return;
 
