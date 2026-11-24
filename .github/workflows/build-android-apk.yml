@@ -9,6 +9,7 @@ on:
       - feat/module-center-core
       - feat/downloadable-library-packs
       - feat/interactive-laboratories
+      - feat/versioned-lab-catalog
     paths:
       - 'assets/**'
       - 'css/**'
