@@ -1,0 +1,907 @@
+{
+  "id": "terminal",
+  "title": "Terminal Linux",
+  "shortTitle": "Terminal",
+  "symbol": "$_",
+  "eyebrow": "LINUX / LÍNEA DE COMANDOS",
+  "tagline": "Aprendé a manejar Linux desde la terminal.",
+  "description": "Una guía práctica para navegar por el sistema, organizar archivos, buscar información, administrar paquetes y automatizar tareas.",
+  "level": "Inicial a avanzado",
+  "accent": "terminal",
+  "categories": [
+    {
+      "id": "introduccion",
+      "title": "Introducción",
+      "description": "Conocé qué es una terminal, una shell y cómo consultar ayuda.",
+      "icon": "⌘",
+      "articles": [
+        "terminal-que-es",
+        "terminal-ayuda"
+      ]
+    },
+    {
+      "id": "instalacion",
+      "title": "Instalación y preparación",
+      "description": "Prepará un entorno Linux y reconocé el prompt y las variables de shell.",
+      "icon": "▣",
+      "articles": [
+        "terminal-wsl",
+        "terminal-shell"
+      ]
+    },
+    {
+      "id": "archivos",
+      "title": "Ficheros y carpetas",
+      "description": "Navegá, listá, creá, leé, copiá, mové y eliminá archivos.",
+      "icon": "▤",
+      "articles": [
+        "terminal-pwd-cd",
+        "terminal-ls",
+        "terminal-crear",
+        "terminal-copiar-mover",
+        "terminal-leer"
+      ]
+    },
+    {
+      "id": "manejo",
+      "title": "Manejo de la terminal",
+      "description": "Filtrá información, conectá comandos y aprovechá el historial.",
+      "icon": "⌁",
+      "articles": [
+        "terminal-grep",
+        "terminal-tuberias",
+        "terminal-historial"
+      ]
+    },
+    {
+      "id": "multimedia",
+      "title": "Multimedia",
+      "description": "Convertí y procesá imágenes, audio y video mediante herramientas de consola.",
+      "icon": "▧",
+      "articles": [
+        "terminal-imagemagick",
+        "terminal-ffmpeg"
+      ]
+    },
+    {
+      "id": "administracion",
+      "title": "Administración",
+      "description": "Administrá paquetes y entendé los permisos elevados.",
+      "icon": "⚙",
+      "articles": [
+        "terminal-apt-sudo"
+      ]
+    },
+    {
+      "id": "seguridad",
+      "title": "Seguridad",
+      "description": "Introducción a reglas básicas de firewall con UFW.",
+      "icon": "◇",
+      "articles": [
+        "terminal-ufw"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "terminal-que-es",
+      "title": "¿Qué es una terminal?",
+      "category": "introduccion",
+      "summary": "Qué es una terminal, qué es una shell y por qué se utiliza para trabajar con un sistema.",
+      "purpose": "La terminal es una interfaz de texto para interactuar con el sistema operativo. La shell interpreta lo que escribís y ejecuta comandos. Es útil para administrar archivos, instalar programas, trabajar con servidores y automatizar tareas.",
+      "syntax": "comando [opciones] [argumentos]",
+      "examples": [
+        {
+          "title": "Conocer tu ubicación",
+          "description": "pwd muestra el directorio de trabajo actual.",
+          "code": "pwd",
+          "explanation": "Devuelve una ruta absoluta, por ejemplo /home/ana/proyectos."
+        },
+        {
+          "title": "Consultar el usuario y el sistema",
+          "description": "Dos comandos sencillos para inspeccionar el entorno.",
+          "code": "whoami\\nuname -s",
+          "explanation": "whoami muestra el usuario actual; uname -s indica el nombre del sistema operativo o núcleo."
+        },
+        {
+          "title": "Preparar una carpeta y comprobar dónde estás",
+          "description": "Encadená creación de directorio, cambio de ubicación y salida informativa sin depender de una ruta escrita a mano.",
+          "language": "bash",
+          "code": "# Crear la carpeta si todavía no existe y entrar\nmkdir -p webdev-lab && cd webdev-lab\n\n# Mostrar la ruta actual\nprintf 'Proyecto actual: %s\\n' \"$PWD\"",
+          "explanation": "mkdir -p evita un error si la carpeta ya existe. && ejecuta cd solo si mkdir terminó correctamente. PWD suele contener el directorio actual y printf permite mostrarlo con formato."
+        }
+      ],
+      "exercise": "Abrí una terminal y ejecutá pwd, whoami y uname -a. Anotá qué información devuelve cada uno.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Manual de Bash",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html"
+        }
+      ],
+      "related": [
+        "terminal-ayuda",
+        "terminal-shell"
+      ],
+      "deepDive": {
+        "model": "Pensá en tres capas: la terminal es la ventana donde escribís y ves resultados; la shell es el programa que interpreta ese texto; y el sistema operativo ejecuta los procesos solicitados. Por eso, escribir un comando no equivale a ejecutar una función de JavaScript: la shell primero interpreta reglas como comillas, variables, tuberías y redirecciones.",
+        "flow": [
+          [
+            "Preparación del contexto",
+            "La shell mantiene un directorio actual, variables de entorno y una configuración. PATH indica en qué carpetas buscar ejecutables cuando escribís un nombre sin ruta."
+          ],
+          [
+            "Interpretación",
+            "La shell separa argumentos, expande variables y comodines y conecta comandos mediante operadores como |, > y &&."
+          ],
+          [
+            "Ejecución y salida",
+            "El programa recibe argumentos y flujos estándar. El código de salida permite encadenar operaciones o detectar fallos."
+          ]
+        ],
+        "decisions": [
+          "Usá rutas relativas cuando el comando deba trabajar dentro del proyecto y rutas absolutas cuando necesites evitar ambigüedades.",
+          "Antes de ejecutar comandos destructivos, comprobá pwd y ls; el mismo comando puede afectar archivos distintos según el directorio actual."
+        ],
+        "debugging": "Si aparece 'command not found', comprobá el nombre, la instalación y PATH. Si aparece 'permission denied', revisá permisos y propietario antes de recurrir a privilegios elevados."
+      },
+      "whenToUse": "Usá la terminal cuando necesites ejecutar herramientas, automatizar tareas, inspeccionar archivos, iniciar servidores o repetir operaciones de forma precisa. Es especialmente útil en proyectos porque muchos procesos de desarrollo, pruebas y despliegue se ejecutan desde comandos."
+    },
+    {
+      "id": "terminal-ayuda",
+      "title": "Ayuda y manuales: --help y man",
+      "category": "introduccion",
+      "summary": "Aprendé a consultar las opciones de un comando sin memorizar toda su sintaxis.",
+      "purpose": "La documentación integrada suele estar disponible con --help. En muchos sistemas Linux, man abre páginas de manual y apropos permite buscar manuales por tema.",
+      "syntax": "comando --help\\nman comando\\napropos palabra",
+      "examples": [
+        {
+          "title": "Consultar las opciones de ls",
+          "description": "La opción --help suele mostrar la sintaxis y los argumentos.",
+          "code": "ls --help",
+          "explanation": "La salida depende de la implementación y versión del programa."
+        },
+        {
+          "title": "Abrir un manual",
+          "description": "man permite leer la documentación instalada.",
+          "code": "man ls",
+          "explanation": "Dentro del manual podés buscar con /palabra y salir con q."
+        }
+      ],
+      "exercise": "Buscá ayuda para pwd, ls y grep. Elegí una opción de cada comando y explicá qué hace.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "GNU Coreutils: manual",
+          "url": "https://www.gnu.org/software/coreutils/manual/coreutils.html"
+        }
+      ],
+      "related": [
+        "terminal-que-es",
+        "terminal-grep"
+      ]
+    },
+    {
+      "id": "terminal-wsl",
+      "title": "Instalar Linux con WSL2 en Windows",
+      "category": "instalacion",
+      "summary": "WSL permite ejecutar una distribución Linux integrada en Windows.",
+      "purpose": "WSL (Windows Subsystem for Linux) permite ejecutar herramientas y entornos Linux en Windows. WSL2 utiliza un núcleo Linux dentro de una máquina virtual ligera. Los requisitos dependen de la versión de Windows.",
+      "syntax": "wsl --install\\nwsl --list --online\\nwsl --list --verbose",
+      "examples": [
+        {
+          "title": "Instalar WSL",
+          "description": "En versiones compatibles de Windows, ejecutá el comando desde una terminal con permisos de administrador.",
+          "code": "wsl --install",
+          "explanation": "La instalación puede requerir reiniciar el equipo y crear un usuario Linux."
+        },
+        {
+          "title": "Consultar distribuciones disponibles",
+          "description": "Listá las distribuciones y luego instalá una por su nombre.",
+          "code": "wsl --list --online\\nwsl --install -d Ubuntu",
+          "explanation": "El nombre debe coincidir con el listado disponible en tu equipo."
+        }
+      ],
+      "exercise": "Consultá los requisitos oficiales de WSL para tu versión de Windows antes de instalarlo.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Verificá los requisitos y hacé una copia de seguridad de los datos importantes.",
+        "No confundas los comandos de PowerShell con los que se ejecutan dentro de Linux."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Microsoft: instalar WSL",
+          "url": "https://learn.microsoft.com/es-es/windows/wsl/install"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "terminal-shell",
+      "title": "Shell, prompt y comandos básicos",
+      "category": "instalacion",
+      "summary": "Reconocé el intérprete de comandos, el prompt y las variables de entorno más habituales.",
+      "purpose": "La shell es el programa que interpreta las órdenes. Bash, Zsh y Fish son ejemplos. El prompt indica que la shell está lista para recibir un comando; las variables como HOME contienen información del entorno.",
+      "syntax": "echo $SHELL\\necho $HOME\\necho \"Hola\"",
+      "examples": [
+        {
+          "title": "Ver la shell configurada",
+          "description": "La variable SHELL suele indicar la shell de inicio de sesión.",
+          "code": "echo $SHELL",
+          "explanation": "Puede devolver una ruta como /bin/bash o /usr/bin/zsh."
+        },
+        {
+          "title": "Consultar el directorio personal",
+          "description": "HOME contiene la ruta del usuario.",
+          "code": "echo $HOME\\ncd ~",
+          "explanation": "El símbolo ~ es una abreviatura del directorio personal."
+        }
+      ],
+      "exercise": "Identificá tu shell y tu directorio personal con echo $SHELL y echo $HOME.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-que-es",
+        "terminal-pwd-cd"
+      ]
+    },
+    {
+      "id": "terminal-pwd-cd",
+      "title": "Navegar entre carpetas con pwd y cd",
+      "category": "archivos",
+      "summary": "Consultá tu ubicación actual y cambiá de directorio mediante rutas absolutas o relativas.",
+      "purpose": "pwd muestra la carpeta actual. cd cambia el directorio de trabajo. Las rutas relativas se interpretan desde la carpeta actual y las rutas absolutas comienzan desde la raíz del sistema.",
+      "syntax": "pwd\\ncd ruta\\ncd ..\\ncd ~\\ncd -",
+      "examples": [
+        {
+          "title": "Entrar a una carpeta",
+          "description": "Usá cd seguido de la ruta de destino.",
+          "code": "cd ~/Documentos\\npwd",
+          "explanation": "~ representa el directorio personal del usuario."
+        },
+        {
+          "title": "Subir un nivel y volver",
+          "description": ".. representa el directorio padre; cd - vuelve a la ubicación anterior.",
+          "code": "cd ..\\ncd -",
+          "explanation": "Estas formas permiten navegar sin escribir rutas completas."
+        }
+      ],
+      "exercise": "Entrá a una carpeta de práctica, subí un nivel y regresá usando cd -.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-ls",
+        "terminal-crear"
+      ]
+    },
+    {
+      "id": "terminal-ls",
+      "title": "Listar archivos con ls",
+      "category": "archivos",
+      "summary": "Mostrá el contenido de una carpeta y revisá permisos, tamaños y archivos ocultos.",
+      "purpose": "ls lista archivos y directorios. Sus opciones permiten incluir elementos ocultos, mostrar metadatos y presentar tamaños legibles.",
+      "syntax": "ls [opciones] [ruta]",
+      "examples": [
+        {
+          "title": "Listado detallado",
+          "description": "-l presenta permisos, propietario, tamaño y fecha.",
+          "code": "ls -l",
+          "explanation": "Cada fila muestra información adicional de un archivo o directorio."
+        },
+        {
+          "title": "Incluir archivos ocultos",
+          "description": "-a incluye entradas que comienzan con punto; -h hace legibles los tamaños.",
+          "code": "ls -lah ~/proyectos",
+          "explanation": "Las opciones se pueden combinar para consultar más información en una sola orden."
+        }
+      ],
+      "exercise": "Compará ls, ls -l y ls -lah dentro de una carpeta que tenga archivos ocultos.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [
+        {
+          "name": "-a",
+          "description": "Incluye archivos ocultos."
+        },
+        {
+          "name": "-l",
+          "description": "Muestra un listado detallado."
+        },
+        {
+          "name": "-h",
+          "description": "Presenta tamaños en unidades legibles."
+        }
+      ],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-pwd-cd",
+        "terminal-leer"
+      ]
+    },
+    {
+      "id": "terminal-crear",
+      "title": "Crear archivos y carpetas con mkdir y touch",
+      "category": "archivos",
+      "summary": "Creá directorios y archivos vacíos directamente desde la consola.",
+      "purpose": "mkdir crea directorios. touch crea un archivo vacío si no existe o actualiza sus marcas de tiempo si ya existe. La opción -p de mkdir crea directorios intermedios.",
+      "syntax": "mkdir carpeta\\nmkdir -p proyecto/src\\ntouch archivo.txt",
+      "examples": [
+        {
+          "title": "Crear una estructura",
+          "description": "-p crea toda la ruta necesaria.",
+          "code": "mkdir -p proyecto/src proyecto/assets/img",
+          "explanation": "No es necesario crear cada directorio intermedio por separado."
+        },
+        {
+          "title": "Crear archivos de un proyecto",
+          "description": "touch acepta varios nombres de archivo.",
+          "code": "touch index.html styles.css app.js",
+          "explanation": "Los archivos se crean vacíos y luego podés editarlos."
+        }
+      ],
+      "exercise": "Creá una carpeta proyecto con src y assets, y dentro tres archivos index.html, styles.css y app.js.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-pwd-cd",
+        "terminal-copiar-mover"
+      ]
+    },
+    {
+      "id": "terminal-copiar-mover",
+      "title": "Copiar, mover y eliminar con cp, mv y rm",
+      "category": "archivos",
+      "summary": "Organizá archivos copiando, moviendo, renombrando o eliminando elementos.",
+      "purpose": "cp copia archivos o directorios; mv mueve o renombra; rm elimina. Algunas eliminaciones no pasan por la papelera y pueden ser difíciles de recuperar.",
+      "syntax": "cp origen destino\\nmv origen destino\\nrm archivo",
+      "examples": [
+        {
+          "title": "Copiar un archivo",
+          "description": "La copia crea un segundo archivo y conserva el original.",
+          "code": "cp notas.txt respaldo-notas.txt",
+          "explanation": "El nombre del destino puede ser diferente."
+        },
+        {
+          "title": "Mover o renombrar",
+          "description": "mv sirve para cambiar de ubicación o de nombre.",
+          "code": "mv borrador.txt documentos/borrador.txt\\nmv borrador.txt final.txt",
+          "explanation": "La primera orden mueve el archivo; la segunda lo renombra."
+        },
+        {
+          "title": "Eliminar con precaución",
+          "description": "rm elimina el archivo indicado.",
+          "code": "rm archivo-temporal.txt",
+          "explanation": "Revisá la ruta antes de confirmar; rm normalmente no usa la papelera."
+        }
+      ],
+      "exercise": "En una carpeta de prueba copiá un archivo, renombrá la copia y eliminá solo ese duplicado.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Practicá con archivos descartables antes de trabajar con datos importantes.",
+        "Comprobá pwd y ls antes de usar rm.",
+        "Evitá rm -r o -f si no comprendés exactamente el alcance."
+      ],
+      "commonMistakes": [
+        "Pensar que rm mueve los archivos a la papelera.",
+        "Omitir comillas en nombres con espacios.",
+        "Ejecutar rutas relativas desde una carpeta inesperada."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-crear",
+        "terminal-leer"
+      ]
+    },
+    {
+      "id": "terminal-leer",
+      "title": "Leer archivos con cat, less y head",
+      "category": "archivos",
+      "summary": "Inspeccioná archivos de texto desde la terminal sin abrir un editor gráfico.",
+      "purpose": "cat imprime el archivo completo. less permite recorrer contenido extenso. head muestra las primeras líneas y tail las últimas.",
+      "syntax": "cat archivo.txt\\nless archivo.txt\\nhead -n 20 archivo.txt\\ntail -n 20 archivo.txt",
+      "examples": [
+        {
+          "title": "Leer un archivo breve",
+          "description": "cat imprime todo el contenido.",
+          "code": "cat README.md",
+          "explanation": "Es cómodo para archivos cortos."
+        },
+        {
+          "title": "Explorar un registro extenso",
+          "description": "less permite desplazarse y buscar dentro del archivo.",
+          "code": "less /var/log/syslog",
+          "explanation": "Dentro de less podés buscar con /palabra y salir con q."
+        }
+      ],
+      "exercise": "Creá un archivo de varias líneas y compará qué muestran cat, head y tail.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-ls",
+        "terminal-grep"
+      ]
+    },
+    {
+      "id": "terminal-grep",
+      "title": "Buscar texto con grep",
+      "category": "manejo",
+      "summary": "Localizá palabras o patrones dentro de archivos y resultados de otros comandos.",
+      "purpose": "grep busca líneas que coinciden con un patrón. Es una herramienta habitual para revisar registros, código y archivos de configuración.",
+      "syntax": "grep [opciones] patrón archivo",
+      "examples": [
+        {
+          "title": "Buscar una palabra",
+          "description": "Mostrá las líneas que contienen un texto.",
+          "code": "grep \"error\" app.log",
+          "explanation": "La salida contiene las coincidencias encontradas en el archivo."
+        },
+        {
+          "title": "Ignorar mayúsculas y mostrar líneas",
+          "description": "-i ignora mayúsculas y -n muestra números de línea.",
+          "code": "grep -in \"warning\" app.log",
+          "explanation": "Podés usar -r para buscar también en subdirectorios."
+        }
+      ],
+      "exercise": "Creá un archivo de texto y buscá una palabra exacta y luego la misma palabra ignorando mayúsculas.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [
+        {
+          "name": "-i",
+          "description": "Ignora mayúsculas y minúsculas."
+        },
+        {
+          "name": "-n",
+          "description": "Muestra números de línea."
+        },
+        {
+          "name": "-r",
+          "description": "Busca recursivamente."
+        },
+        {
+          "name": "-v",
+          "description": "Muestra líneas que no coinciden."
+        }
+      ],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-leer",
+        "terminal-tuberias"
+      ]
+    },
+    {
+      "id": "terminal-tuberias",
+      "title": "Tuberías y redirecciones",
+      "category": "manejo",
+      "summary": "Conectá la salida de un comando con otro y guardá resultados en archivos.",
+      "purpose": "La tubería | conecta la salida estándar de un proceso con la entrada del siguiente. El operador > crea o reemplaza un archivo; >> agrega contenido al final.",
+      "syntax": "comando1 | comando2\\ncomando > salida.txt\\ncomando >> salida.txt",
+      "examples": [
+        {
+          "title": "Filtrar un listado",
+          "description": "La salida de ls se envía a grep.",
+          "code": "ls -la | grep \".js\"",
+          "explanation": "Se muestran las líneas del listado que contienen .js."
+        },
+        {
+          "title": "Guardar y agregar resultados",
+          "description": "Primero creá un archivo de salida y luego agregá otra línea.",
+          "code": "ls -la > listado.txt\\nwhoami >> listado.txt",
+          "explanation": "> reemplaza el archivo; >> agrega sin borrar el contenido anterior."
+        }
+      ],
+      "exercise": "Guardá el listado de una carpeta en un archivo y filtrá luego las líneas que contengan .html.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Recordá que > reemplaza contenido mientras >> agrega al final.",
+        "Probá por separado los comandos antes de encadenarlos.",
+        "La salida de errores puede redirigirse por separado mediante stderr."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": []
+    },
+    {
+      "id": "terminal-historial",
+      "title": "Historial y alias",
+      "category": "manejo",
+      "summary": "Recuperá comandos anteriores y creá atajos para tareas repetitivas.",
+      "purpose": "history muestra órdenes ejecutadas anteriormente. alias asigna un nombre a un comando o combinación de opciones durante la sesión de shell.",
+      "syntax": "history\\nalias ll='ls -lah'\\nunalias ll",
+      "examples": [
+        {
+          "title": "Consultar las últimas órdenes",
+          "description": "Podés combinar history con tail.",
+          "code": "history | tail -n 10",
+          "explanation": "Se muestran las diez entradas más recientes del historial."
+        },
+        {
+          "title": "Crear un alias",
+          "description": "Un alias simplifica un comando de uso frecuente.",
+          "code": "alias ll='ls -lah'\\nll",
+          "explanation": "Para hacerlo permanente agregalo al archivo de configuración de tu shell, por ejemplo .bashrc."
+        }
+      ],
+      "exercise": "Creá un alias llamado proyectos para entrar a tu carpeta de proyectos y luego eliminalo con unalias.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "terminal-shell",
+        "terminal-tuberias"
+      ]
+    },
+    {
+      "id": "terminal-apt-sudo",
+      "title": "Administrar paquetes y permisos con APT y sudo",
+      "category": "administracion",
+      "summary": "Instalá paquetes y entendé cuándo una operación requiere permisos de administrador.",
+      "purpose": "APT administra paquetes en Debian, Ubuntu y sistemas derivados. sudo permite ejecutar una orden con privilegios elevados, de acuerdo con la política del sistema.",
+      "syntax": "sudo apt update\\napt search paquete\\nsudo apt install paquete\\nsudo apt upgrade",
+      "examples": [
+        {
+          "title": "Actualizar la lista de paquetes",
+          "description": "apt update descarga información actualizada de los repositorios.",
+          "code": "sudo apt update",
+          "explanation": "No actualiza por sí solo todos los programas instalados."
+        },
+        {
+          "title": "Buscar e instalar un paquete",
+          "description": "Buscá un nombre conocido y luego instalalo.",
+          "code": "apt search git\\nsudo apt install git",
+          "explanation": "Revisá la descripción del paquete antes de confirmar la instalación."
+        },
+        {
+          "title": "Consultar permisos",
+          "description": "sudo -l lista órdenes que la cuenta puede ejecutar con sudo.",
+          "code": "sudo -l",
+          "explanation": "El resultado depende de la configuración administrativa del equipo."
+        }
+      ],
+      "exercise": "Buscá un paquete con apt search y revisá sudo -l. No ejecutes órdenes administrativas que no comprendas.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Leé la lista de paquetes antes de confirmar una instalación o eliminación.",
+        "No uses sudo por costumbre.",
+        "Usá repositorios confiables y mantenidos."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Ubuntu: guía de APT",
+          "url": "https://help.ubuntu.com/community/AptGet/Howto"
+        },
+        {
+          "label": "Ubuntu: sudo",
+          "url": "https://help.ubuntu.com/community/RootSudo"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "terminal-ufw",
+      "title": "Firewall básico con UFW",
+      "category": "seguridad",
+      "summary": "Consultá y configurá reglas básicas de firewall con UFW.",
+      "purpose": "UFW (Uncomplicated Firewall) facilita administrar reglas de tráfico en sistemas Linux compatibles. Su configuración depende de la distribución y el entorno de red.",
+      "syntax": "sudo ufw status verbose\\nsudo ufw allow 22/tcp\\nsudo ufw enable",
+      "examples": [
+        {
+          "title": "Consultar el estado",
+          "description": "Primero verificá si UFW está instalado y activo.",
+          "code": "sudo ufw status verbose",
+          "explanation": "La salida muestra el estado y las reglas configuradas."
+        },
+        {
+          "title": "Permitir un puerto",
+          "description": "Este ejemplo permite conexiones TCP al puerto 22, utilizado habitualmente por SSH.",
+          "code": "sudo ufw allow 22/tcp",
+          "explanation": "No abras puertos sin saber qué servicio los utiliza y quién necesita acceder."
+        }
+      ],
+      "exercise": "Leé la guía oficial y comprobá el estado de UFW. No actives un firewall en un servidor remoto sin validar antes el acceso administrativo.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Aplicá el principio de mínimo acceso necesario.",
+        "Si administrás un servidor remoto, verificá la regla SSH antes de activar el firewall.",
+        "Revisá las reglas después de cada cambio."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Ubuntu: UFW",
+          "url": "https://help.ubuntu.com/community/UFW"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "terminal-imagemagick",
+      "title": "Procesar imágenes con ImageMagick",
+      "category": "multimedia",
+      "summary": "Consultá dimensiones, redimensioná y convertí imágenes desde la terminal.",
+      "purpose": "ImageMagick reúne herramientas de consola para inspeccionar, redimensionar y convertir imágenes. Sus utilidades habituales incluyen magick e identify. Las operaciones disponibles dependen de la versión instalada.",
+      "syntax": "magick entrada.png -resize 800x600 salida.png\\nidentify imagen.png",
+      "examples": [
+        {
+          "title": "Consultar dimensiones",
+          "description": "identify muestra metadatos como formato y tamaño.",
+          "code": "identify foto.jpg",
+          "explanation": "La salida puede incluir formato, dimensiones, espacio de color y tamaño del archivo."
+        },
+        {
+          "title": "Redimensionar una imagen",
+          "description": "Creá una copia con un tamaño máximo y conservá el archivo original.",
+          "code": "magick foto.jpg -resize 800x600 foto-pequena.jpg",
+          "explanation": "La proporción se conserva en este ejemplo. Trabajá sobre una copia para no sobrescribir el original."
+        }
+      ],
+      "exercise": "Elegí una imagen de prueba, consultá sus dimensiones y creá una copia reducida. Compará el tamaño de ambos archivos.",
+      "hint": "La herramienta identify sirve para inspeccionar; magick se utiliza para transformar la imagen.",
+      "parameters": [
+        {
+          "name": "-resize",
+          "description": "Redimensiona una imagen. El comportamiento exacto depende del valor y los modificadores utilizados."
+        }
+      ],
+      "bestPractices": [
+        "Conservá el original y trabajá sobre copias.",
+        "Revisá las opciones disponibles en la versión instalada.",
+        "Tené en cuenta que algunos formatos con pérdida reducen la calidad."
+      ],
+      "commonMistakes": [
+        "Confundir dimensiones con tamaño del archivo.",
+        "Sobrescribir el original por accidente.",
+        "Suponer que todos los formatos admiten las mismas operaciones."
+      ],
+      "resources": [
+        {
+          "label": "ImageMagick: herramientas de línea de comandos",
+          "url": "https://imagemagick.org/script/command-line-tools.php"
+        }
+      ],
+      "related": [
+        "terminal-leer",
+        "terminal-tuberias"
+      ]
+    },
+    {
+      "id": "terminal-ffmpeg",
+      "title": "Convertir audio y video con FFmpeg",
+      "category": "multimedia",
+      "summary": "Inspeccioná archivos multimedia y convertí formatos desde la línea de comandos.",
+      "purpose": "FFmpeg es una colección de herramientas para inspeccionar, convertir y procesar audio y video. ffmpeg realiza conversiones y transformaciones; ffprobe consulta metadatos y pistas. Los formatos disponibles dependen de la compilación instalada.",
+      "syntax": "ffmpeg -i entrada.mp4 salida.webm\\nffprobe -hide_banner entrada.mp4",
+      "examples": [
+        {
+          "title": "Inspeccionar un archivo",
+          "description": "ffprobe consulta la información del contenedor y sus flujos.",
+          "code": "ffprobe -hide_banner video.mp4",
+          "explanation": "La salida puede mostrar duración, resolución, códecs y pistas de audio o subtítulos."
+        },
+        {
+          "title": "Convertir un video",
+          "description": "Este ejemplo genera un archivo WebM a partir de un video de entrada.",
+          "code": "ffmpeg -i entrada.mp4 salida.webm",
+          "explanation": "FFmpeg elige valores predeterminados. Para controlar calidad, códec o tamaño se agregan opciones específicas."
+        }
+      ],
+      "exercise": "Inspeccioná un archivo multimedia propio con ffprobe y anotá su duración, resolución y códecs.",
+      "hint": "Empezá por ffprobe para conocer el archivo antes de probar una conversión con ffmpeg.",
+      "bestPractices": [
+        "No sobrescribas el archivo original durante las primeras pruebas.",
+        "Verificá los formatos y códecs disponibles en tu instalación.",
+        "Utilizá material que tengas derecho a modificar y publicar."
+      ],
+      "commonMistakes": [
+        "Suponer que la extensión determina por sí sola el códec.",
+        "Sobrescribir un archivo de origen.",
+        "Usar opciones de un códec que no está disponible en la instalación."
+      ],
+      "resources": [
+        {
+          "label": "FFmpeg: documentación oficial",
+          "url": "https://ffmpeg.org/documentation.html"
+        }
+      ],
+      "related": [
+        "terminal-imagemagick",
+        "terminal-tuberias"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "Del comando al resultado",
+    "summary": "La terminal muestra una interfaz de texto; la shell interpreta lo que escribís y solicita al sistema operativo que ejecute procesos.",
+    "steps": [
+      [
+        "Escribís un comando",
+        "La terminal recibe texto y lo entrega a la shell junto con el directorio actual y las variables de entorno."
+      ],
+      [
+        "La shell lo interpreta",
+        "Resuelve expansiones, comillas, tuberías, redirecciones y búsqueda del ejecutable mediante PATH."
+      ],
+      [
+        "El sistema crea el proceso",
+        "El sistema operativo inicia el programa y conecta su entrada, salida y salida de error."
+      ],
+      [
+        "Vuelve el resultado",
+        "La shell muestra stdout o stderr y conserva el código de salida para saber si la operación terminó correctamente."
+      ]
+    ],
+    "note": "Terminal, shell y proceso son piezas distintas. Un error puede venir de la sintaxis de la shell, de un programa o de permisos del sistema."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "terminal-pwd-cd",
+      "terminal-crear",
+      "terminal-tuberias"
+    ],
+    "execution": {
+      "kind": "cli",
+      "label": "Terminal / shell",
+      "description": "Se ejecuta en la terminal del sistema operativo. No se ejecuta dentro del navegador del catálogo. Los comandos y opciones dependen de la shell y del sistema (Linux, macOS, WSL o Windows)."
+    },
+    "compatibility": {
+      "kind": "not-browser",
+      "summary": "No aplica al runtime: Terminal es una interfaz de comandos, no una tecnología que ejecute el navegador.",
+      "note": "El navegador puede mostrar documentación o una aplicación construida con herramientas de terminal, pero no ejecuta una shell local por seguridad."
+    },
+    "advantages": [
+      "Permite automatizar tareas y repetir procesos con precisión.",
+      "Conecta herramientas de desarrollo, administración, pruebas y despliegue.",
+      "Es útil para trabajar con archivos, procesos, servidores y scripts."
+    ],
+    "limitations": [
+      "Los comandos pueden variar entre Bash, Zsh, PowerShell y CMD.",
+      "Un comando mal dirigido puede modificar o borrar archivos; comprobá la ruta antes de operaciones destructivas.",
+      "No sustituye una interfaz gráfica cuando el usuario final necesita explorar o editar visualmente."
+    ],
+    "complements": [
+      [
+        "git",
+        "Control de versiones y trabajo con repositorios."
+      ],
+      [
+        "npm",
+        "Instalar paquetes y ejecutar scripts de proyectos JavaScript."
+      ],
+      [
+        "nodejs",
+        "Ejecutar programas y herramientas escritas en JavaScript."
+      ],
+      [
+        "docker-deploy",
+        "Construir y administrar contenedores desde la línea de comandos."
+      ]
+    ],
+    "docs": [
+      [
+        "GNU Bash — manual",
+        "https://www.gnu.org/software/bash/manual/"
+      ],
+      [
+        "MDN — línea de comandos",
+        "https://developer.mozilla.org/es/docs/Learn_web_development/Getting_started/Environment_setup/Command_line"
+      ]
+    ]
+  }
+}
