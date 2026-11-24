@@ -132,10 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!toolId || !articleId) return;
 
       try {
-        const response = await fetch("../data/tools.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("No se pudo cargar el catálogo de herramientas.");
-        const database = await response.json();
-        const tool = database.tools?.find(item => item.id === toolId);
+        if (!window.WebDevLibraries?.getLibrary) {
+          throw new Error("El administrador de bibliotecas no está disponible.");
+        }
+        const tool = await window.WebDevLibraries.getLibrary(toolId);
         const article = tool?.articles?.find(item => item.id === articleId);
         const category = tool?.categories?.find(item => item.id === article?.category);
         if (!tool || !article) return;
