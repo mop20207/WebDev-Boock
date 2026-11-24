@@ -1,0 +1,885 @@
+{
+  "id": "webcomponents",
+  "title": "Web Components",
+  "shortTitle": "Web Components",
+  "symbol": "◇",
+  "eyebrow": "FRONTEND / ESTÁNDARES WEB",
+  "tagline": "Custom Elements, Shadow DOM, templates, slots y eventos.",
+  "description": "Custom Elements, Shadow DOM, templates, slots y eventos.",
+  "level": "Inicial a avanzado",
+  "accent": "webcomponents",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos",
+      "description": "Elementos personalizados",
+      "icon": "▣",
+      "articles": [
+        "wc-que-son",
+        "wc-ciclo-vida"
+      ]
+    },
+    {
+      "id": "intermedio",
+      "title": "Encapsulación",
+      "description": "Shadow DOM y templates",
+      "icon": "⇄",
+      "articles": [
+        "wc-shadow-dom",
+        "wc-templates"
+      ]
+    },
+    {
+      "id": "avanzado",
+      "title": "Composición",
+      "description": "Slots y eventos",
+      "icon": "⌁",
+      "articles": [
+        "wc-slots",
+        "wc-eventos"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "wc-que-son",
+      "title": "¿Qué son los Web Components?",
+      "category": "fundamentos",
+      "summary": "Creá etiquetas HTML propias y reutilizables con Custom Elements, usando APIs nativas del navegador.",
+      "purpose": "Web Components es un conjunto de estándares del navegador para crear componentes reutilizables sin depender obligatoriamente de una biblioteca como React o Vue. Sus piezas principales son Custom Elements, que permiten registrar etiquetas propias; Shadow DOM, que encapsula una parte de la estructura; y HTML templates y slots, que permiten reutilizar y componer marcado. No es un framework: son APIs nativas que pueden convivir con HTML, CSS y JavaScript tradicionales.",
+      "whenToUse": "Usalos cuando quieras crear controles o piezas de interfaz reutilizables que puedan compartirse entre páginas o proyectos, incluso si esos proyectos usan tecnologías diferentes. Son útiles para componentes independientes como selectores, tarjetas, botones especializados o reproductores. Para una interfaz pequeña y estática quizá alcance con HTML; para una aplicación completa con estado complejo, rutas y muchas vistas, evaluá si necesitás además una biblioteca o framework.",
+      "syntax": "class MiSaludo extends HTMLElement {\n  connectedCallback() {\n    this.textContent = 'Hola desde un componente';\n  }\n}\n\ncustomElements.define('mi-saludo', MiSaludo);\n\n// HTML: <mi-saludo></mi-saludo>",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Tu primera etiqueta personalizada",
+          "description": "Definí una clase que hereda de HTMLElement y registrá una etiqueta con un nombre propio.",
+          "code": "class MiSaludo extends HTMLElement {\n  connectedCallback() {\n    this.textContent = '¡Hola! Este contenido lo creó el componente.';\n  }\n}\n\ncustomElements.define('mi-saludo', MiSaludo);\n\n// En el HTML: <mi-saludo></mi-saludo>",
+          "explanation": "1. HTMLElement es la clase base de los elementos HTML del navegador.\\n2. MiSaludo hereda sus capacidades mediante extends.\\n3. connectedCallback se ejecuta cuando el elemento se conecta al documento.\\n4. customElements.define registra el nombre mi-saludo para que el navegador sepa qué clase debe utilizar.\\n5. Los nombres de elementos autónomos personalizados deben incluir un guion. Este ejemplo es independiente de los demás ejemplos del artículo."
+        },
+        {
+          "title": "Personalizar el componente con un atributo",
+          "description": "Leé un atributo HTML para configurar el texto que muestra la etiqueta.",
+          "code": "class MiEtiqueta extends HTMLElement {\n  connectedCallback() {\n    const texto = this.getAttribute('texto') || 'Texto predeterminado';\n    this.textContent = texto;\n  }\n}\n\ncustomElements.define('mi-etiqueta', MiEtiqueta);\n\n// HTML: <mi-etiqueta texto=\"Aprendiendo Web Components\"></mi-etiqueta>",
+          "explanation": "getAttribute('texto') devuelve el valor del atributo texto o null si no existe. El operador || permite elegir un texto alternativo. textContent inserta texto literal y evita interpretar el valor como HTML. Este ejemplo lee el atributo al conectarse; para reaccionar a cambios posteriores se utiliza observedAttributes, que se explica en el artículo sobre el ciclo de vida."
+        },
+        {
+          "title": "Crear el componente desde JavaScript",
+          "description": "Los elementos personalizados también se pueden crear dinámicamente, igual que cualquier elemento HTML.",
+          "code": "class MiAviso extends HTMLElement {\n  connectedCallback() {\n    this.textContent = this.getAttribute('mensaje') || 'Aviso';\n  }\n}\n\ncustomElements.define('mi-aviso', MiAviso);\n\nconst aviso = document.createElement('mi-aviso');\naviso.setAttribute('mensaje', 'Los cambios se guardaron.');\ndocument.body.append(aviso);",
+          "explanation": "document.createElement crea una instancia de la etiqueta registrada. Se establece el atributo antes de agregar el nodo al documento; al ejecutar append, el navegador conecta el elemento y llama a connectedCallback. Es una forma práctica de crear componentes según los datos recibidos."
+        },
+        {
+          "title": "Evitar registrar dos veces la misma etiqueta",
+          "description": "Comprobá el registro antes de llamar a define, por ejemplo cuando un archivo puede cargarse más de una vez.",
+          "code": "if (!customElements.get('mi-sello')) {\n  class MiSello extends HTMLElement {\n    connectedCallback() {\n      this.textContent = 'WEBDEV BOOK';\n    }\n  }\n\n  customElements.define('mi-sello', MiSello);\n}",
+          "explanation": "customElements.get consulta si ya existe una definición para ese nombre. Si se vuelve a ejecutar customElements.define con el mismo nombre, el navegador lanza un error. La comprobación evita ese registro duplicado. En una aplicación modular bien organizada normalmente cada componente se registra una sola vez."
+        }
+      ],
+      "bestPractices": [
+        "Usá nombres descriptivos y con guion, como mi-tarjeta o selector-color.",
+        "Hacé que cada componente tenga una responsabilidad clara y una API sencilla basada en atributos, propiedades y eventos.",
+        "Llamá a super() en el constructor antes de utilizar this.",
+        "Registrá cada nombre una sola vez y comprobá el registro si el script puede evaluarse más de una vez.",
+        "Preferí textContent para insertar texto procedente de atributos o datos externos; no lo conviertas en HTML sin sanitizarlo.",
+        "Probá el componente en una página HTML mínima antes de integrarlo a una aplicación mayor."
+      ],
+      "commonMistakes": [
+        "Usar un nombre sin guion, como <tarjeta>, para un elemento autónomo personalizado.",
+        "Olvidar extender HTMLElement o no llamar a customElements.define.",
+        "Intentar registrar dos veces el mismo nombre en el registro global.",
+        "Suponer que Custom Elements, Shadow DOM y templates son una única API: son piezas distintas que se pueden combinar.",
+        "Creer que un Web Component crea automáticamente estilos aislados; para eso se debe adjuntar Shadow DOM."
+      ],
+      "exercise": "Creá una etiqueta <mi-tarjeta> que reciba los atributos titulo y descripcion. Debe mostrar ambos valores y usar textos predeterminados cuando falte alguno. Creá dos tarjetas con datos diferentes, una escrita directamente en HTML y otra creada desde JavaScript.",
+      "hint": "Extendé HTMLElement, implementá connectedCallback, leé los atributos con getAttribute y registrá mi-tarjeta mediante customElements.define. Usá textContent para mostrar los valores.",
+      "parameters": [
+        {
+          "name": "HTMLElement",
+          "description": "Clase base que se extiende para crear un elemento personalizado autónomo."
+        },
+        {
+          "name": "customElements.define(nombre, clase)",
+          "description": "Registra una clase bajo un nombre de etiqueta personalizado. El nombre debe incluir un guion y no puede registrarse dos veces en el mismo registro."
+        },
+        {
+          "name": "customElements.get(nombre)",
+          "description": "Devuelve la definición registrada para ese nombre o undefined si todavía no existe."
+        },
+        {
+          "name": "connectedCallback()",
+          "description": "Callback que el navegador invoca cuando el elemento personalizado se conecta al documento."
+        },
+        {
+          "name": "getAttribute(nombre)",
+          "description": "Lee el valor de un atributo HTML del elemento; devuelve null cuando el atributo no está presente."
+        }
+      ],
+      "resources": [
+        {
+          "label": "MDN — Web Components",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components"
+        },
+        {
+          "label": "MDN — Usar elementos personalizados",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_custom_elements"
+        },
+        {
+          "label": "web.dev — Custom elements",
+          "url": "https://web.dev/articles/custom-elements-v1"
+        }
+      ],
+      "deepDive": {
+        "model": "Web Components reúne estándares del navegador, no un framework único. Custom Elements define etiquetas con comportamiento propio; Shadow DOM encapsula una parte del árbol y sus estilos; HTML templates y slots ayudan a reutilizar estructura y contenido. El contrato del componente lo diseñás vos mediante atributos, propiedades, métodos y eventos.",
+        "flow": [
+          [
+            "Registro",
+            "La clase se registra una sola vez con un nombre válido que contiene guion."
+          ],
+          [
+            "Ciclo de vida",
+            "connectedCallback y disconnectedCallback permiten iniciar y limpiar recursos al entrar o salir del documento."
+          ],
+          [
+            "API pública",
+            "observedAttributes y attributeChangedCallback reaccionan a atributos; CustomEvent comunica cambios hacia afuera."
+          ]
+        ],
+        "decisions": [
+          "Preferí atributos para configuración serializable en HTML y propiedades para objetos o valores complejos.",
+          "Usá Shadow DOM cuando el encapsulamiento de estilos y estructura aporte valor; no es obligatorio para cada elemento personalizado."
+        ],
+        "debugging": "Si el elemento no se reconoce, verificá que el script se ejecute antes o después del marcado de forma controlada y que el nombre incluya guion. Si registrás dos veces el mismo nombre, el navegador lanza una excepción."
+      },
+      "related": [
+        "api-http",
+        "ts-que-es-typescript"
+      ]
+    },
+    {
+      "id": "wc-ciclo-vida",
+      "title": "Ciclo de vida de los Custom Elements",
+      "category": "fundamentos",
+      "summary": "Respondé a la conexión, desconexión, adopción y cambios de atributos con callbacks del navegador.",
+      "purpose": "El navegador administra el ciclo de vida de un elemento personalizado y ejecuta callbacks cuando cambia su relación con el documento o cuando se modifican atributos observados. connectedCallback se ejecuta al conectarse; disconnectedCallback, al retirarse; adoptedCallback, al adoptarse en otro documento; y attributeChangedCallback, cuando cambia un atributo incluido en observedAttributes. Este último callback puede ejecutarse durante la creación inicial del elemento si el atributo ya estaba escrito en el HTML.",
+      "whenToUse": "Usá los callbacks para iniciar y limpiar recursos, registrar o retirar listeners, actualizar el componente cuando cambian sus atributos y reaccionar a la adopción en otro documento. No coloques toda la lógica en el constructor: la documentación recomienda realizar la mayor parte de la configuración que depende del DOM en connectedCallback. Recordá que un elemento puede conectarse y desconectarse más de una vez.",
+      "syntax": "class MiComponente extends HTMLElement {\n  static observedAttributes = ['titulo'];\n\n  connectedCallback() {\n    this.render();\n  }\n\n  disconnectedCallback() {\n    // Limpiar listeners o temporizadores\n  }\n\n  attributeChangedCallback(nombre, anterior, nuevo) {\n    if (anterior !== nuevo && this.isConnected) this.render();\n  }\n\n  render() {\n    this.textContent = this.getAttribute('titulo') || 'Sin título';\n  }\n}\n\ncustomElements.define('mi-componente', MiComponente);",
+      "level": "Inicial a intermedio",
+      "examples": [
+        {
+          "title": "Conexión y desconexión con listeners",
+          "description": "Registrá un listener cuando el elemento entra en el documento y retiralo cuando sale.",
+          "code": "class MiBotonRegistro extends HTMLElement {\n  constructor() {\n    super();\n    this.manejarClick = () => console.log('Se pulsó el componente');\n  }\n\n  connectedCallback() {\n    this.addEventListener('click', this.manejarClick);\n    this.textContent = 'Pulsame';\n  }\n\n  disconnectedCallback() {\n    this.removeEventListener('click', this.manejarClick);\n  }\n}\n\ncustomElements.define('mi-boton-registro', MiBotonRegistro);",
+          "explanation": "El constructor prepara una referencia estable a la función manejadora. connectedCallback agrega esa misma función; disconnectedCallback la retira. Si el elemento vuelve a conectarse, el listener se registra otra vez sin acumular copias, porque antes se eliminó la referencia anterior. En este ejemplo no se reemplaza el nodo, solo su texto."
+        },
+        {
+          "title": "Observar cambios de atributos",
+          "description": "Usá observedAttributes y attributeChangedCallback para actualizar la interfaz cuando cambia el título.",
+          "code": "class MiTitulo extends HTMLElement {\n  static observedAttributes = ['titulo'];\n\n  connectedCallback() {\n    this.actualizar();\n  }\n\n  attributeChangedCallback(nombre, valorAnterior, valorNuevo) {\n    if (valorAnterior !== valorNuevo && this.isConnected) {\n      this.actualizar();\n    }\n  }\n\n  actualizar() {\n    this.textContent = this.getAttribute('titulo') || 'Título sin definir';\n  }\n}\n\ncustomElements.define('mi-titulo', MiTitulo);\n\n// HTML: <mi-titulo titulo=\"Primer título\"></mi-titulo>\n// Luego: document.querySelector('mi-titulo').setAttribute('titulo', 'Nuevo título');",
+          "explanation": "observedAttributes es una propiedad estática: contiene los nombres de los atributos que el navegador debe vigilar. attributeChangedCallback recibe el nombre, el valor anterior y el nuevo. isConnected evita intentar actualizar la presentación antes de que el elemento esté conectado. connectedCallback también llama a actualizar para mostrar el valor inicial."
+        },
+        {
+          "title": "Iniciar y limpiar un temporizador",
+          "description": "Un temporizador debe detenerse cuando el componente se retira del documento.",
+          "code": "class MiCronometro extends HTMLElement {\n  constructor() {\n    super();\n    this.segundos = 0;\n    this.intervalo = null;\n  }\n\n  connectedCallback() {\n    if (this.intervalo !== null) return;\n    this.intervalo = setInterval(() => {\n      this.segundos += 1;\n      this.textContent = 'Segundos: ' + this.segundos;\n    }, 1000);\n  }\n\n  disconnectedCallback() {\n    clearInterval(this.intervalo);\n    this.intervalo = null;\n  }\n}\n\ncustomElements.define('mi-cronometro', MiCronometro);",
+          "explanation": "El identificador del intervalo se guarda en una propiedad de la instancia. El control inicial evita crear varios intervalos si connectedCallback se invoca otra vez mientras uno sigue activo. disconnectedCallback llama a clearInterval y vuelve a null el identificador para permitir reiniciar el cronómetro si el mismo nodo se conecta nuevamente."
+        },
+        {
+          "title": "Detectar la adopción en otro documento",
+          "description": "adoptedCallback se ejecuta cuando un elemento pasa a pertenecer a otro documento, algo menos habitual que conectar o desconectar.",
+          "code": "class MiRegistroDocumento extends HTMLElement {\n  adoptedCallback() {\n    console.log('El componente ahora pertenece a otro documento.');\n  }\n}\n\ncustomElements.define('mi-registro-documento', MiRegistroDocumento);\n\nconst componente = document.createElement('mi-registro-documento');\ndocument.body.append(componente);\n\nconst otroDocumento = document.implementation.createHTMLDocument('Documento secundario');\notroDocumento.adoptNode(componente);",
+          "explanation": "adoptedCallback informa que el nodo cambió de documento propietario. document.implementation.createHTMLDocument crea un documento separado y adoptNode mueve la pertenencia del nodo a ese documento. Este callback es útil en escenarios avanzados con documentos o iframes; en componentes cotidianos suele bastar con los callbacks de conexión y atributos."
+        }
+      ],
+      "bestPractices": [
+        "Usá connectedCallback para inicializar lo que depende de que el elemento esté en el documento.",
+        "Retirá en disconnectedCallback los listeners, intervalos, observadores y suscripciones que ya no deban seguir activos.",
+        "Declarà en observedAttributes solamente los atributos que realmente necesitan notificaciones.",
+        "Comprobá que el valor anterior y el nuevo sean distintos antes de repetir una actualización costosa.",
+        "Diseñá los callbacks para que el componente soporte múltiples ciclos de conexión y desconexión.",
+        "No supongas que connectedCallback significa que todo el contenido de la página ya terminó de cargarse."
+      ],
+      "commonMistakes": [
+        "Crear un setInterval o agregar listeners en connectedCallback sin limpiarlos al desconectar.",
+        "Olvidar declarar un atributo en observedAttributes y esperar que attributeChangedCallback lo detecte.",
+        "Leer o modificar atributos y contenido del elemento en el constructor como si el HTML ya estuviera disponible.",
+        "Asumir que connectedCallback se ejecuta una sola vez durante toda la vida de la instancia.",
+        "Confundir atributo HTML con propiedad JavaScript: observedAttributes observa atributos, no cualquier asignación a una propiedad."
+      ],
+      "exercise": "Construí <mi-perfil> con los atributos nombre y profesion. Observá ambos atributos y actualizá el texto cuando cualquiera cambie. Además, agregá un listener de clic al conectarse y retiralo al desconectarse. Probá cambiar un atributo con setAttribute y retirar el componente con remove().",
+      "hint": "Declarà static observedAttributes = ['nombre', 'profesion']; implementá attributeChangedCallback y centralizá la presentación en un método actualizar(). Guardá la función de clic en una propiedad para poder quitar exactamente la misma referencia.",
+      "parameters": [
+        {
+          "name": "static observedAttributes",
+          "description": "Arreglo estático con los nombres de atributos que dispararán attributeChangedCallback cuando se agreguen, cambien o eliminen."
+        },
+        {
+          "name": "connectedCallback()",
+          "description": "Se ejecuta cuando el elemento se conecta al documento; puede volver a ejecutarse después de nuevas conexiones."
+        },
+        {
+          "name": "disconnectedCallback()",
+          "description": "Se ejecuta cuando el elemento se desconecta; es el lugar habitual para limpiar recursos vinculados al documento."
+        },
+        {
+          "name": "attributeChangedCallback(nombre, anterior, nuevo)",
+          "description": "Recibe el nombre del atributo modificado, su valor anterior y el nuevo valor. También puede dispararse durante la inicialización del marcado."
+        },
+        {
+          "name": "adoptedCallback()",
+          "description": "Se ejecuta cuando el nodo se adopta en un documento diferente."
+        },
+        {
+          "name": "this.isConnected",
+          "description": "Indica si el elemento está conectado, directa o indirectamente, al documento."
+        }
+      ],
+      "resources": [
+        {
+          "label": "MDN — Ciclo de vida de elementos personalizados",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_custom_elements#usando_callbacks_de_ciclo_de_vida"
+        },
+        {
+          "label": "MDN — Usar elementos personalizados",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_custom_elements"
+        },
+        {
+          "label": "MDN — Node.isConnected",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Node/isConnected"
+        }
+      ],
+      "deepDive": {
+        "model": "El navegador controla la vida de cada Custom Element registrado. El constructor debe preparar la instancia, pero el elemento puede conectarse, desconectarse y volver a conectarse varias veces. connectedCallback y disconnectedCallback forman una pareja para recursos vinculados a la presencia en el documento. attributeChangedCallback observa solo los nombres declarados en observedAttributes y puede notificarse durante la inicialización si el atributo ya estaba presente.",
+        "flow": [
+          [
+            "Construcción y registro",
+            "La clase extiende HTMLElement y se registra mediante customElements.define con un nombre que contiene guion."
+          ],
+          [
+            "Conexión",
+            "connectedCallback se ejecuta cuando el elemento entra en el documento; es el lugar habitual para configurar la vista dependiente del DOM."
+          ],
+          [
+            "Cambio de atributos",
+            "El navegador llama attributeChangedCallback para cada atributo observado que cambia, incluyendo cambios iniciales cuando corresponda."
+          ],
+          [
+            "Desconexión o adopción",
+            "disconnectedCallback limpia recursos; adoptedCallback permite reaccionar cuando la instancia pasa a otro documento."
+          ]
+        ],
+        "decisions": [
+          "Dejá el constructor para inicializar propiedades internas y, cuando corresponda, adjuntar Shadow DOM; evitá asumir que los atributos y el contenido ya están disponibles allí.",
+          "Hacé connectedCallback idempotente: una instancia puede desconectarse y conectarse de nuevo.",
+          "Guardá una referencia estable a cada listener que luego debas retirar.",
+          "Diferenciá atributos serializables de propiedades JavaScript; observedAttributes no detecta asignaciones directas a propiedades."
+        ],
+        "debugging": "Si un temporizador se duplica, verificá que disconnectedCallback lo cancele y restablezca el identificador. Si un atributo no dispara el callback, agregalo a observedAttributes con el nombre exacto. Si el callback inicializa datos dos veces, recordá que la conexión puede repetirse después de mover el nodo: protegé la inicialización o separá la configuración de la limpieza."
+      }
+    },
+    {
+      "id": "wc-shadow-dom",
+      "title": "Shadow DOM: encapsular estructura y estilos",
+      "category": "intermedio",
+      "summary": "Adjuntá un árbol DOM interno para aislar el marcado y los estilos de un componente.",
+      "purpose": "Shadow DOM permite adjuntar un árbol DOM separado al elemento anfitrión. El contenido interno puede tener su propio marcado y CSS, de modo que los selectores normales de la página no entren automáticamente en ese árbol y los estilos internos no se filtren normalmente hacia afuera. Se crea con attachShadow({ mode: 'open' }) o con mode: 'closed'. Shadow DOM ayuda a encapsular implementación, pero no es una barrera de seguridad: no debe usarse para ocultar datos sensibles.",
+      "whenToUse": "Usalo cuando un componente necesite estilos internos que no colisionen con los estilos globales, o cuando quieras mantener su estructura interna separada de la página que lo utiliza. Es habitual en componentes de diseño, controles reutilizables y widgets independientes. No hace falta utilizar Shadow DOM en todos los Custom Elements: puede ser suficiente con un elemento personalizado que trabaje directamente sobre su contenido de luz.",
+      "syntax": "class MiTarjetaAislada extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = '<style>p { color: teal; }</style><p>Contenido interno</p>';\n  }\n}\n\ncustomElements.define('mi-tarjeta-aislada', MiTarjetaAislada);",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Crear un Shadow DOM básico",
+          "description": "Adjuntá una raíz abierta y agregá estructura y estilos que pertenezcan al componente.",
+          "code": "class MiTarjetaAislada extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    const estilo = document.createElement('style');\n    estilo.textContent = 'article { padding: 1rem; border: 1px solid #888; border-radius: 8px; }';\n    const tarjeta = document.createElement('article');\n    tarjeta.textContent = 'Esta tarjeta vive dentro del Shadow DOM.';\n    root.append(estilo, tarjeta);\n  }\n}\n\ncustomElements.define('mi-tarjeta-aislada', MiTarjetaAislada);\n\n// HTML: <mi-tarjeta-aislada></mi-tarjeta-aislada>",
+          "explanation": "attachShadow crea la raíz interna y la devuelve en root. Los nodos style y article se crean con la API DOM y se agregan a esa raíz. Los selectores de la página externa no seleccionan directamente el article interno, y los estilos internos quedan limitados al árbol de sombra."
+        },
+        {
+          "title": "Estilizar el anfitrión con :host",
+          "description": "El selector :host permite aplicar estilos al propio elemento personalizado desde su Shadow DOM.",
+          "code": "class MiPanelHost extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = `\n      <style>\n        :host { display: block; border: 2px solid #477; padding: 1rem; }\n        :host([compacto]) { padding: .35rem; }\n        p { margin: 0; }\n      </style>\n      <p>Panel encapsulado</p>\n    `;\n  }\n}\n\ncustomElements.define('mi-panel-host', MiPanelHost);\n\n// HTML: <mi-panel-host compacto></mi-panel-host>",
+          "explanation": ":host selecciona el elemento mi-panel-host desde el interior de su árbol de sombra. :host([compacto]) aplica una variante cuando el elemento anfitrión tiene ese atributo. display: block permite que la etiqueta se comporte como un bloque. El contenido HTML del ejemplo es una cadena fija escrita por el desarrollador."
+        },
+        {
+          "title": "Abrir y cerrar el acceso a la raíz",
+          "description": "Compará mode: 'open' y mode: 'closed' para entender qué devuelve la propiedad shadowRoot.",
+          "code": "class MiRaizAbierta extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: 'open' }).textContent = 'Raíz abierta';\n  }\n}\n\nclass MiRaizCerrada extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: 'closed' }).textContent = 'Raíz cerrada';\n  }\n}\n\ncustomElements.define('mi-raiz-abierta', MiRaizAbierta);\ncustomElements.define('mi-raiz-cerrada', MiRaizCerrada);\n\nconst abierta = document.createElement('mi-raiz-abierta');\nconst cerrada = document.createElement('mi-raiz-cerrada');\ndocument.body.append(abierta, cerrada);\nconsole.log(abierta.shadowRoot); // ShadowRoot\nconsole.log(cerrada.shadowRoot); // null",
+          "explanation": "Con mode: 'open', la raíz puede consultarse desde el exterior mediante elemento.shadowRoot. Con mode: 'closed', esa propiedad devuelve null, aunque el componente puede conservar internamente la referencia devuelta por attachShadow. closed no debe considerarse una medida de seguridad: solo limita el acceso habitual a través de shadowRoot."
+        },
+        {
+          "title": "Permitir personalización con propiedades CSS",
+          "description": "Aunque el CSS interno está encapsulado, podés diseñar puntos de personalización con variables CSS heredables.",
+          "code": "class MiBotonTema extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = `\n      <style>\n        button {\n          background: var(--mi-boton-fondo, #245);\n          color: var(--mi-boton-texto, white);\n          border: 0; padding: .7rem 1rem; border-radius: .5rem;\n        }\n      </style>\n      <button><slot>Continuar</slot></button>\n    `;\n  }\n}\n\ncustomElements.define('mi-boton-tema', MiBotonTema);\n\n// HTML: <mi-boton-tema style=\"--mi-boton-fondo: darkslateblue\">Guardar</mi-boton-tema>",
+          "explanation": "Las variables CSS personalizadas pueden heredarse a través del límite del Shadow DOM. El componente define valores de respaldo y permite que quien lo utiliza cambie el fondo desde el anfitrión. El slot proyecta el texto externo dentro del botón; el concepto de slots se desarrolla en el siguiente artículo."
+        }
+      ],
+      "bestPractices": [
+        "Adjuntá la raíz una sola vez, normalmente en el constructor, y conservá la referencia cuando la necesites.",
+        "Elegí mode: 'open' cuando herramientas externas o código de integración necesiten consultar shadowRoot.",
+        "Usá :host para diseñar el elemento anfitrión y variables CSS para ofrecer personalización controlada.",
+        "No dependas de selectores globales para modificar elementos internos: definí los estilos dentro del árbol de sombra.",
+        "Recordá que el contenido del Shadow DOM no es una barrera de seguridad ni debe contener secretos.",
+        "No agregues Shadow DOM por costumbre si el componente no necesita encapsular su estructura o estilos."
+      ],
+      "commonMistakes": [
+        "Llamar attachShadow más de una vez sobre el mismo elemento.",
+        "Esperar que un selector global como .tarjeta encuentre un nodo interno del Shadow DOM.",
+        "Suponer que mode: 'closed' vuelve privado o seguro el contenido frente a cualquier inspección.",
+        "Creer que los estilos internos nunca pueden personalizarse: variables CSS y slots ofrecen puntos de extensión.",
+        "Intentar utilizar this.shadowRoot con mode: 'closed', donde normalmente devuelve null."
+      ],
+      "exercise": "Creá <mi-caja-info> con Shadow DOM abierto. Dentro debe mostrar un título y un párrafo con estilos propios. El anfitrión debe ser un bloque, y el color principal debe poder modificarse desde el documento externo mediante una variable CSS.",
+      "hint": "En el constructor usá this.attachShadow({ mode: 'open' }). Agregá un style y una estructura interna. Probá :host y definí una variable con var(--color-principal, valor-predeterminado).",
+      "parameters": [
+        {
+          "name": "attachShadow({ mode })",
+          "description": "Crea y devuelve una raíz ShadowRoot asociada al elemento anfitrión. El modo es open o closed."
+        },
+        {
+          "name": "mode: 'open'",
+          "description": "Permite consultar la raíz desde el exterior mediante la propiedad shadowRoot del anfitrión."
+        },
+        {
+          "name": "mode: 'closed'",
+          "description": "Hace que la propiedad shadowRoot del anfitrión devuelva null; no constituye una barrera de seguridad."
+        },
+        {
+          "name": "this.shadowRoot",
+          "description": "Devuelve la raíz ShadowRoot cuando fue creada en modo open; devuelve null si no existe o si es closed."
+        },
+        {
+          "name": ":host",
+          "description": "Pseudoclase CSS que selecciona el elemento anfitrión desde las reglas del Shadow DOM."
+        },
+        {
+          "name": "ShadowRoot",
+          "description": "Nodo raíz del árbol de sombra; admite operaciones DOM como querySelector, append y querySelectorAll."
+        }
+      ],
+      "resources": [
+        {
+          "label": "MDN — Usar Shadow DOM",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_shadow_DOM"
+        },
+        {
+          "label": "MDN — Element.attachShadow()",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow"
+        },
+        {
+          "label": "MDN — ShadowRoot",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot"
+        }
+      ],
+      "deepDive": {
+        "model": "Shadow DOM crea una raíz interna asociada a un elemento anfitrión. La página ve el host como parte del DOM normal, mientras que los nodos dentro de la raíz forman un árbol encapsulado con reglas de estilo y selección propias. El modo open permite acceder a host.shadowRoot; el modo closed no expone esa referencia por esa propiedad, pero no debe considerarse una frontera de seguridad. Los slots permiten componer contenido de luz dentro de la presentación interna.",
+        "flow": [
+          [
+            "Crear el host",
+            "El Custom Element representa el punto de integración con el documento."
+          ],
+          [
+            "Adjuntar la raíz",
+            "attachShadow({ mode: 'open' }) crea el Shadow Root una sola vez."
+          ],
+          [
+            "Construir contenido encapsulado",
+            "La raíz recibe nodos y estilos que no colisionan normalmente con reglas globales."
+          ],
+          [
+            "Componer contenido externo",
+            "Los slots proyectan nodos del light DOM en posiciones definidas por el Shadow DOM."
+          ]
+        ],
+        "decisions": [
+          "Usá Shadow DOM cuando el componente necesite aislar estilos y estructura; para elementos simples puede alcanzar con Custom Elements sin raíz de sombra.",
+          "Preferí open si integraciones, pruebas o herramientas necesitan inspeccionar la raíz; closed no protege información sensible.",
+          "Exponé personalización mediante propiedades CSS, partes públicas o atributos documentados en vez de depender de acceder a nodos internos.",
+          "Definí una política de foco, teclado y nombres accesibles: la encapsulación no resuelve por sí sola la accesibilidad."
+        ],
+        "debugging": "Si un selector global no encuentra un nodo interno, comprobá si está dentro de shadowRoot: document.querySelector no atraviesa esa frontera. Si attachShadow lanza una excepción, verificá que no intentes adjuntar una segunda raíz al mismo host. Si un evento no alcanza al documento, revisá bubbles y composed; los eventos sintéticos no cruzan la frontera por defecto."
+      }
+    },
+    {
+      "id": "wc-templates",
+      "title": "HTML Templates: reutilizar estructuras",
+      "category": "intermedio",
+      "summary": "Definí fragmentos HTML inertes con template y cloná su contenido cuando lo necesites.",
+      "purpose": "El elemento <template> almacena HTML que no se renderiza cuando se analiza el documento. Su contenido está disponible mediante template.content, que es un DocumentFragment. Para mostrarlo, se suele clonar con cloneNode(true), completar los datos y agregar el fragmento al DOM. La plantilla separa la estructura del código que decide cuántas instancias crear y qué datos mostrar.",
+      "whenToUse": "Usá templates para repetir tarjetas, filas, elementos de listas o estructuras de componentes sin construir cada nodo manualmente ni concatenar cadenas HTML. Son especialmente útiles cuando una interfaz se genera a partir de arreglos de datos. Combinados con Custom Elements permiten definir una estructura reutilizable para cada instancia.",
+      "syntax": "<template id=\"plantilla-producto\">\n  <article class=\"producto\">\n    <h2></h2>\n    <p></p>\n  </article>\n</template>\n\nconst plantilla = document.querySelector('#plantilla-producto');\nconst copia = plantilla.content.cloneNode(true);\ncopia.querySelector('h2').textContent = 'Teclado';\ncopia.querySelector('p').textContent = 'Accesorio de computadora';\ndocument.body.append(copia);",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Clonar una plantilla y completar sus datos",
+          "description": "Tomá una copia del contenido de template, modificá sus nodos y agregala a la página.",
+          "code": "<template id=\"plantilla-tarjeta\">\n  <article class=\"tarjeta\">\n    <h2></h2>\n    <p></p>\n  </article>\n</template>\n\nconst plantilla = document.querySelector('#plantilla-tarjeta');\nconst copia = plantilla.content.cloneNode(true);\ncopia.querySelector('h2').textContent = 'JavaScript';\ncopia.querySelector('p').textContent = 'Lenguaje de programación para la web.';\ndocument.body.append(copia);",
+          "explanation": "template.content contiene un fragmento que todavía no forma parte del documento visible. cloneNode(true) crea una copia profunda: incluye los elementos descendientes. Después querySelector localiza los nodos de esa copia, textContent completa los textos y append inserta el fragmento en el documento."
+        },
+        {
+          "title": "Generar varias tarjetas desde un arreglo",
+          "description": "Una misma plantilla puede clonarse tantas veces como registros haya en los datos.",
+          "code": "<template id=\"plantilla-libro\">\n  <article class=\"libro\">\n    <h2></h2>\n    <p></p>\n  </article>\n</template>\n\nconst libros = [\n  { titulo: 'Overlord', autor: 'Kugane Maruyama' },\n  { titulo: 'Re:Zero', autor: 'Tappei Nagatsuki' },\n  { titulo: 'Goblin Slayer', autor: 'Kumo Kagyu' }\n];\n\nconst plantilla = document.querySelector('#plantilla-libro');\nconst contenedor = document.querySelector('#catalogo');\n\nlibros.forEach(libro => {\n  const copia = plantilla.content.cloneNode(true);\n  copia.querySelector('h2').textContent = libro.titulo;\n  copia.querySelector('p').textContent = 'Autor: ' + libro.autor;\n  contenedor.append(copia);\n});\n\n// HTML adicional: <div id=\"catalogo\"></div>",
+          "explanation": "forEach recorre los objetos del arreglo. En cada vuelta se crea un fragmento independiente, se completan sus campos y se agrega al contenedor. La plantilla original permanece disponible para la siguiente iteración. Los datos se insertan con textContent para tratarlos como texto y no como marcado HTML."
+        },
+        {
+          "title": "Agregar una imagen y atributos",
+          "description": "Completá también atributos de los nodos clonados, como src, alt y href.",
+          "code": "<template id=\"plantilla-novela\">\n  <article>\n    <img>\n    <h2></h2>\n    <a>Ver detalles</a>\n  </article>\n</template>\n\nconst plantilla = document.querySelector('#plantilla-novela');\nconst copia = plantilla.content.cloneNode(true);\nconst imagen = copia.querySelector('img');\nconst enlace = copia.querySelector('a');\n\nimagen.src = 'assets/overlord.jpg';\nimagen.alt = 'Portada de Overlord';\ncopia.querySelector('h2').textContent = 'Overlord';\nenlace.href = 'novelas/overlord.html';\ndocument.body.append(copia);",
+          "explanation": "Las propiedades src, alt y href configuran atributos habituales de los elementos correspondientes. La referencia copia mantiene aislados los cambios hasta que el fragmento se agrega. En una aplicación real, validá las rutas y los datos antes de asignarlos."
+        },
+        {
+          "title": "Usar una plantilla dentro de un Custom Element",
+          "description": "Cada instancia del componente puede clonar el mismo template y completar su propia estructura interna.",
+          "code": "<template id=\"plantilla-aviso\">\n  <style>p { padding: .75rem; background: #eef; }</style>\n  <p></p>\n</template>\n\nclass MiAvisoPlantilla extends HTMLElement {\n  connectedCallback() {\n    if (this.hasChildNodes()) return;\n    const plantilla = document.querySelector('#plantilla-aviso');\n    const copia = plantilla.content.cloneNode(true);\n    copia.querySelector('p').textContent = this.getAttribute('mensaje') || 'Aviso';\n    this.append(copia);\n  }\n}\n\ncustomElements.define('mi-aviso-plantilla', MiAvisoPlantilla);\n\n// HTML: <mi-aviso-plantilla mensaje=\"Contenido preparado\"></mi-aviso-plantilla>",
+          "explanation": "El template se declara una vez en el documento y cada instancia clona su contenido. El componente busca la plantilla, modifica el párrafo de su copia y la agrega a su propio contenido. Esta versión no usa Shadow DOM: los estilos de la plantilla pasan a formar parte del DOM normal y pueden verse afectados por CSS global."
+        }
+      ],
+      "bestPractices": [
+        "Usá cloneNode(true) cuando necesites copiar también los descendientes de la plantilla.",
+        "Completá los datos con textContent y propiedades DOM como src, alt y href en lugar de concatenar HTML con datos externos.",
+        "Guardá referencias a los elementos de la plantilla y del contenedor para evitar búsquedas repetidas innecesarias.",
+        "Mantené el marcado repetido dentro de template y los datos en arreglos u objetos separados.",
+        "Verificá que el selector de la plantilla y los nodos esperados existan antes de clonarlos en código de producción.",
+        "Recordá que clonar una plantilla copia estructura, no instala automáticamente listeners registrados mediante addEventListener en nodos de otra instancia."
+      ],
+      "commonMistakes": [
+        "Esperar que el contenido dentro de <template> aparezca por sí solo al cargar la página.",
+        "Usar template.cloneNode(true) en lugar de template.content.cloneNode(true) para clonar el contenido que se quiere insertar.",
+        "Olvidar el argumento true y obtener una copia sin los nodos descendientes.",
+        "Modificar la plantilla original cuando lo que se necesita es completar una instancia.",
+        "Insertar datos externos mediante innerHTML sin evaluar el riesgo de inyección de HTML."
+      ],
+      "exercise": "Creá una plantilla para tarjetas de novelas con portada, título, autor y enlace. Prepará un arreglo de al menos tres novelas y generá las tarjetas recorriendo el arreglo. Usá textContent para los textos y asigná src, alt y href a sus respectivos elementos.",
+      "hint": "Definí <template id=\"plantilla-novela\"> con los nodos vacíos. En el recorrido cloná plantilla.content con cloneNode(true), completá la copia y agregala al contenedor.",
+      "parameters": [
+        {
+          "name": "<template>",
+          "description": "Elemento HTML que almacena contenido inerte, no renderizado como parte normal de la página mientras permanece dentro de la plantilla."
+        },
+        {
+          "name": "template.content",
+          "description": "DocumentFragment que contiene los nodos almacenados por el template."
+        },
+        {
+          "name": "cloneNode(true)",
+          "description": "Crea una copia profunda del nodo y de sus descendientes. Con false o sin argumento solo copia el nodo principal."
+        },
+        {
+          "name": "DocumentFragment",
+          "description": "Contenedor ligero de nodos que puede insertarse en el DOM; al insertarlo, sus hijos pasan al documento."
+        },
+        {
+          "name": "querySelector(selector)",
+          "description": "Busca el primer nodo coincidente dentro del fragmento clonado o del contenedor indicado."
+        },
+        {
+          "name": "textContent",
+          "description": "Permite insertar texto literal dentro de un nodo, sin analizarlo como HTML."
+        }
+      ],
+      "resources": [
+        {
+          "label": "MDN — Usar templates y slots",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_templates_and_slots"
+        },
+        {
+          "label": "MDN — HTMLTemplateElement",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLTemplateElement"
+        },
+        {
+          "label": "MDN — DocumentFragment",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/DocumentFragment"
+        }
+      ],
+      "deepDive": {
+        "model": "El elemento <template> contiene un DocumentFragment inerte: sus nodos no se renderizan como parte de la página hasta que se clona y se inserta. template.content es el fragmento reutilizable y cloneNode(true) copia la estructura y sus descendientes. Se puede usar sin Custom Elements, aunque combinado con Shadow DOM permite separar el marcado de la lógica de la clase.",
+        "flow": [
+          [
+            "Declarar el fragmento",
+            "El HTML dentro de <template> permanece inerte y no forma parte del árbol visible."
+          ],
+          [
+            "Obtener su contenido",
+            "JavaScript lee template.content, que es un DocumentFragment."
+          ],
+          [
+            "Clonar por instancia",
+            "cloneNode(true) crea una copia profunda para evitar mover el mismo fragmento entre instancias."
+          ],
+          [
+            "Insertar en el destino",
+            "El clon se agrega al DOM o a un Shadow Root; a partir de ese momento los nodos participan en la página."
+          ]
+        ],
+        "decisions": [
+          "Usá template para estructuras repetidas con marcado legible; si solo necesitás crear un nodo simple, createElement puede ser más directo.",
+          "Cloná el contenido para cada instancia. Al insertar el mismo DocumentFragment, sus nodos se mueven y dejan de estar en el fragmento original.",
+          "Usá document.importNode cuando el contenido proviene de otro documento y querés importar nodos al documento actual.",
+          "Evitá IDs duplicados si el template se instancia varias veces; preferí atributos data-* y referencias internas."
+        ],
+        "debugging": "Si no aparece nada, comprobá que estés insertando template.content.cloneNode(true) y no solo leyendo el template. Si solo la primera instancia funciona, probablemente estés moviendo el mismo fragmento en vez de clonarlo. Si estilos o listeners no se comportan como esperás, recordá que clonar nodos no copia listeners agregados con addEventListener a la instancia original: registralos por instancia o usá delegación."
+      }
+    },
+    {
+      "id": "wc-slots",
+      "title": "Slots: componer contenido desde afuera",
+      "category": "avanzado",
+      "summary": "Definí espacios de contenido en Shadow DOM y permití que quien usa el componente proporcione sus propios nodos.",
+      "purpose": "Un <slot> es un punto de inserción dentro del Shadow DOM. El contenido que se escribe entre la etiqueta de apertura y cierre del Custom Element permanece en el DOM del documento y se distribuye visualmente en los slots correspondientes. Un slot sin name recibe el contenido predeterminado; uno con name recibe los elementos cuyo atributo slot coincide. El texto o contenido de respaldo del slot aparece cuando no se proporciona contenido asignado.",
+      "whenToUse": "Usá slots cuando el componente controla el diseño general, pero quien lo utiliza debe poder decidir parte del contenido. Son útiles para paneles, tarjetas, diálogos y componentes de navegación. Elegí slots nombrados cuando necesites regiones específicas, como título, acciones y contenido principal; usá un slot predeterminado para el contenido flexible.",
+      "syntax": "// Dentro del Shadow DOM:\nroot.innerHTML = '<article><h2><slot name=\"titulo\">Título</slot></h2><div><slot>Contenido</slot></div></article>';\n\n// En el documento:\n// <mi-panel>\n//   <span slot=\"titulo\">Mi perfil</span>\n//   <p>Descripción del usuario</p>\n// </mi-panel>",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Combinar un slot nombrado y uno predeterminado",
+          "description": "El componente define dos regiones; el usuario aporta el título y el contenido.",
+          "code": "class MiPanelSlots extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = `\n      <article>\n        <header><slot name=\"titulo\">Título predeterminado</slot></header>\n        <section><slot>Contenido predeterminado</slot></section>\n      </article>\n    `;\n  }\n}\n\ncustomElements.define('mi-panel-slots', MiPanelSlots);\n\n// HTML:\n// <mi-panel-slots>\n//   <h2 slot=\"titulo\">Mi perfil</h2>\n//   <p>Este contenido ocupa el slot predeterminado.</p>\n// </mi-panel-slots>",
+          "explanation": "El slot name=\"titulo\" recibe el elemento que tiene slot=\"titulo\". El slot sin nombre recibe los nodos que no indican un slot específico. El componente conserva el control del marco visual, mientras que el contenido lo proporciona la página."
+        },
+        {
+          "title": "Mostrar contenido de respaldo",
+          "description": "El contenido escrito dentro de slot se muestra cuando no hay nodos externos asignados a ese espacio.",
+          "code": "class MiDescripcion extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = `\n      <p><slot name=\"descripcion\">Todavía no hay descripción.</slot></p>\n    `;\n  }\n}\n\ncustomElements.define('mi-descripcion', MiDescripcion);\n\n// HTML:\n// <mi-descripcion></mi-descripcion>\n// Resultado: muestra el texto de respaldo.\n// <mi-descripcion><span slot=\"descripcion\">Texto propio</span></mi-descripcion>\n// Resultado: muestra el contenido asignado.",
+          "explanation": "El texto de respaldo no se muestra cuando el slot tiene contenido asignado. Si el componente se utiliza sin un elemento con slot=\"descripcion\", se ve el mensaje predeterminado. Esto permite diseñar componentes que tengan una presentación útil incluso cuando el consumidor omite una región."
+        },
+        {
+          "title": "Reaccionar al evento slotchange",
+          "description": "Escuchá slotchange para detectar cuándo cambia el contenido asignado a un slot.",
+          "code": "class MiListaSlots extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = '<section><slot name=\"item\"></slot><p id=\"cantidad\"></p></section>';\n    const slot = root.querySelector('slot');\n    const salida = root.querySelector('#cantidad');\n    const actualizar = () => {\n      salida.textContent = 'Elementos asignados: ' + slot.assignedElements().length;\n    };\n    slot.addEventListener('slotchange', actualizar);\n    actualizar();\n  }\n}\n\ncustomElements.define('mi-lista-slots', MiListaSlots);\n\n// HTML inicial: <mi-lista-slots><span slot=\"item\">Uno</span></mi-lista-slots>\n// Luego podés agregar otro hijo con slot=\"item\".",
+          "explanation": "assignedElements devuelve los elementos asignados al slot. slotchange se dispara cuando cambia la asignación de nodos, por ejemplo al agregar o quitar un hijo del anfitrión. La función actualizar escribe la cantidad dentro de la raíz de sombra. El evento no se dispara por cualquier cambio interno del contenido de un nodo ya asignado."
+        },
+        {
+          "title": "Consultar el contenido asignado con flatten",
+          "description": "Podés consultar los nodos o elementos que llegan a un slot y a los slots anidados.",
+          "code": "class MiContenidoAsignado extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    root.innerHTML = '<div><slot name=\"contenido\"></slot></div>';\n    const slot = root.querySelector('slot');\n    slot.addEventListener('slotchange', () => {\n      const elementos = slot.assignedElements({ flatten: true });\n      console.log('Elementos recibidos:', elementos);\n    });\n  }\n}\n\ncustomElements.define('mi-contenido-asignado', MiContenidoAsignado);\n\n// HTML: <mi-contenido-asignado>\n//   <strong slot=\"contenido\">Texto importante</strong>\n// </mi-contenido-asignado>",
+          "explanation": "assignedElements({ flatten: true }) devuelve elementos asignados y, cuando corresponde, aplana la distribución a través de slots anidados. También existe assignedNodes para consultar nodos, incluidos los de texto. Usá estas APIs cuando el componente necesite inspeccionar qué contenido recibió, no para reemplazar el mecanismo normal de composición."
+        }
+      ],
+      "bestPractices": [
+        "Elegí nombres de slot claros y consistentes, por ejemplo titulo, acciones y contenido.",
+        "Incluí contenido de respaldo cuando el componente deba seguir siendo comprensible si no se proporciona una región.",
+        "Recordá que el atributo slot se escribe en los elementos hijos del Custom Element, no dentro del Shadow DOM.",
+        "Usá slotchange cuando necesites reaccionar a cambios en la asignación de nodos.",
+        "Preferí la composición por slots antes que leer, mover o reconstruir manualmente los hijos externos del componente.",
+        "Documentá qué regiones acepta el componente para que sea fácil utilizarlo."
+      ],
+      "commonMistakes": [
+        "Escribir un nombre distinto entre slot name=\"titulo\" y slot=\"title\".",
+        "Creer que el contenido asignado se mueve físicamente dentro del Shadow DOM; los slots distribuyen nodos para su presentación.",
+        "Esperar que el slot predeterminado reciba un elemento que tiene un atributo slot con un nombre específico.",
+        "Suponer que slotchange se dispara ante cualquier cambio de texto dentro de un nodo asignado.",
+        "Olvidar que los slots solo tienen sentido en un árbol de sombra."
+      ],
+      "exercise": "Construí <mi-tarjeta-perfil> con tres regiones: un slot nombrado titulo, un slot predeterminado para la descripción y un slot nombrado acciones. Agregá contenido de respaldo para el título y las acciones. Después escuchá slotchange en una de las regiones y registrá cuántos elementos recibió.",
+      "hint": "En el Shadow DOM prepará tres elementos <slot>. Para enviar contenido, escribí slot=\"titulo\" o slot=\"acciones\" en los hijos del componente. El párrafo de descripción puede usar el slot sin nombre.",
+      "parameters": [
+        {
+          "name": "<slot>",
+          "description": "Define un punto de distribución de contenido dentro del Shadow DOM."
+        },
+        {
+          "name": "name",
+          "description": "Atributo del elemento slot que le asigna un nombre a la región; si falta, se trata del slot predeterminado."
+        },
+        {
+          "name": "slot",
+          "description": "Atributo que se escribe en un hijo del Custom Element para asignarlo a un slot nombrado."
+        },
+        {
+          "name": "slotchange",
+          "description": "Evento que se dispara cuando cambia la asignación de nodos a un slot."
+        },
+        {
+          "name": "assignedNodes(options)",
+          "description": "Devuelve los nodos asignados; con flatten: true puede incluir la distribución a través de slots anidados."
+        },
+        {
+          "name": "assignedElements(options)",
+          "description": "Versión que devuelve elementos en lugar de todos los tipos de nodos."
+        }
+      ],
+      "resources": [
+        {
+          "label": "MDN — Usar templates y slots",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_templates_and_slots"
+        },
+        {
+          "label": "MDN — HTMLSlotElement",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLSlotElement"
+        },
+        {
+          "label": "MDN — Element: evento slotchange",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLSlotElement/slotchange_event"
+        }
+      ],
+      "deepDive": {
+        "model": "Los slots son puntos de composición definidos dentro del Shadow DOM. El contenido escrito entre las etiquetas del Custom Element permanece en su light DOM y se proyecta en el slot correspondiente. El slot default recibe nodos sin atributo slot; los slots con name reciben nodos cuyo atributo slot coincide. El contenido de respaldo se muestra cuando no hay nodos asignados al slot.",
+        "flow": [
+          [
+            "El componente define ranuras",
+            "Su Shadow Root contiene <slot> y, opcionalmente, slots con nombre."
+          ],
+          [
+            "El consumidor aporta contenido",
+            "La página coloca nodos dentro del Custom Element y puede marcar algunos con slot='nombre'."
+          ],
+          [
+            "El navegador distribuye nodos",
+            "Los nodos asignados se muestran en la posición de su slot sin trasladar físicamente su propiedad al Shadow DOM."
+          ],
+          [
+            "La composición se actualiza",
+            "slotchange notifica cambios en los nodos asignados, cuando el componente necesita reaccionar a ellos."
+          ]
+        ],
+        "decisions": [
+          "Usá slot default para contenido principal y slots nombrados para regiones semánticas como título, acciones o pie.",
+          "Incluí texto o marcado de respaldo para mantener un componente útil cuando el consumidor no proporciona ese fragmento.",
+          "Usá assignedElements({ flatten: true }) o assignedNodes() solo cuando el componente deba inspeccionar el contenido proyectado.",
+          "Recordá que los estilos del Shadow DOM no seleccionan libremente nodos del light DOM; usá las herramientas de estilo de slots previstas por CSS."
+        ],
+        "debugging": "Si un fragmento no aparece, revisá que el nombre del atributo slot coincida exactamente con el name del slot y que exista una raíz de sombra con ese slot. Si se ve el fallback además del contenido, comprobá qué nodos fueron realmente asignados. Si necesitás reaccionar a cambios del contenido externo, escuchá slotchange en vez de observar el DOM entero sin necesidad."
+      }
+    },
+    {
+      "id": "wc-eventos",
+      "title": "Eventos personalizados con CustomEvent",
+      "category": "avanzado",
+      "summary": "Comunicá acciones y datos desde un componente hacia la página mediante CustomEvent y dispatchEvent.",
+      "purpose": "Los componentes pueden emitir eventos propios para informar que ocurrió una acción sin depender de conocer quién los escucha. CustomEvent permite definir el nombre del evento y transportar información adicional en detail. dispatchEvent lo emite. Las opciones bubbles y composed controlan su recorrido: bubbles permite que el evento ascienda por la cadena de eventos y composed permite que atraviese el límite de un Shadow DOM. cancelable permite que un listener solicite cancelar la acción mediante preventDefault.",
+      "whenToUse": "Usá eventos personalizados cuando un componente deba avisar a la página que se seleccionó un elemento, cambió un valor, se confirmó una acción o se produjo un error. Son una forma de comunicación desacoplada: el componente emite el evento y cualquier parte interesada puede escucharlo. Cuando el evento nace dentro del Shadow DOM y debe llegar al documento, normalmente necesitás bubbles: true y composed: true.",
+      "syntax": "this.dispatchEvent(new CustomEvent('seleccion-cambiada', {\n  detail: { valor: 'azul' },\n  bubbles: true,\n  composed: true\n}));\n\n// Escuchar el evento:\ndocument.addEventListener('seleccion-cambiada', evento => {\n  console.log(evento.detail.valor);\n});",
+      "level": "Intermedio a avanzado",
+      "examples": [
+        {
+          "title": "Emitir un evento desde el componente",
+          "description": "Creá un evento con un nombre claro y escuchalo desde el documento.",
+          "code": "class MiSelectorSimple extends HTMLElement {\n  constructor() {\n    super();\n    this.seleccionar = () => {\n      this.dispatchEvent(new CustomEvent('color-seleccionado', {\n        detail: { color: 'azul' },\n        bubbles: true\n      }));\n    };\n  }\n\n  connectedCallback() {\n    this.textContent = 'Elegir azul';\n    this.addEventListener('click', this.seleccionar);\n  }\n\n  disconnectedCallback() {\n    this.removeEventListener('click', this.seleccionar);\n  }\n}\n\ncustomElements.define('mi-selector-simple', MiSelectorSimple);\n\ndocument.addEventListener('color-seleccionado', evento => {\n  console.log('Color elegido:', evento.detail.color);\n});\n\n// HTML: <mi-selector-simple></mi-selector-simple>",
+          "explanation": "dispatchEvent envía el evento desde la instancia del componente. detail contiene el dato que el componente quiere comunicar. bubbles: true permite que el evento ascienda desde el elemento hasta sus ancestros, incluido document. Como el evento se dispara en el propio anfitrión y no dentro de su Shadow DOM, no necesita composed para atravesar ese límite."
+        },
+        {
+          "title": "Hacer que un evento salga del Shadow DOM",
+          "description": "Si el evento se dispara en un botón interno, configurá bubbles y composed para que lo reciba la página.",
+          "code": "class MiSelectorSombra extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    const boton = document.createElement('button');\n    boton.textContent = 'Elegir verde';\n    boton.addEventListener('click', () => {\n      boton.dispatchEvent(new CustomEvent('color-seleccionado', {\n        detail: { color: 'verde' },\n        bubbles: true,\n        composed: true\n      }));\n    });\n    root.append(boton);\n  }\n}\n\ncustomElements.define('mi-selector-sombra', MiSelectorSombra);\n\ndocument.addEventListener('color-seleccionado', evento => {\n  console.log(evento.detail.color);\n  console.log('Anfitrión visible desde afuera:', evento.target);\n});",
+          "explanation": "El evento nace en el botón interno. bubbles: true permite el recorrido ascendente y composed: true le permite cruzar el límite del Shadow DOM. Fuera de la raíz, el navegador puede retargetear event.target para mostrar el anfitrión en lugar del botón interno. detail sigue transportando los datos del evento."
+        },
+        {
+          "title": "Enviar varios datos dentro de detail",
+          "description": "El objeto detail puede transportar más de un dato para que la página actualice su estado o su interfaz.",
+          "code": "class MiProductoSeleccionable extends HTMLElement {\n  connectedCallback() {\n    this.textContent = 'Agregar teclado';\n    this.addEventListener('click', () => {\n      this.dispatchEvent(new CustomEvent('producto-agregado', {\n        detail: {\n          id: 42,\n          nombre: 'Teclado',\n          cantidad: 1\n        },\n        bubbles: true\n      }));\n    });\n  }\n}\n\ncustomElements.define('mi-producto-seleccionable', MiProductoSeleccionable);\n\ndocument.addEventListener('producto-agregado', evento => {\n  const producto = evento.detail;\n  console.log(producto.id, producto.nombre, producto.cantidad);\n});",
+          "explanation": "detail puede contener un objeto con las propiedades que necesite el consumidor. El listener recibe el objeto a través de evento.detail y decide qué hacer con esos datos. El componente no necesita importar ni conocer el código de la página que recibe el evento."
+        },
+        {
+          "title": "Permitir que el consumidor cancele una acción",
+          "description": "Usá cancelable y preventDefault cuando el componente deba ofrecer la posibilidad de rechazar una operación.",
+          "code": "class MiAccionCancelable extends HTMLElement {\n  connectedCallback() {\n    this.textContent = 'Intentar eliminar';\n    this.addEventListener('click', () => {\n      const permitido = this.dispatchEvent(new CustomEvent('antes-de-eliminar', {\n        detail: { id: 17 },\n        bubbles: true,\n        cancelable: true\n      }));\n\n      if (permitido) {\n        console.log('Se continúa con la eliminación');\n      } else {\n        console.log('La eliminación fue cancelada');\n      }\n    });\n  }\n}\n\ncustomElements.define('mi-accion-cancelable', MiAccionCancelable);\n\ndocument.addEventListener('antes-de-eliminar', evento => {\n  const confirmar = confirm('¿Seguro que querés continuar?');\n  if (!confirmar) evento.preventDefault();\n});",
+          "explanation": "El evento se crea con cancelable: true. dispatchEvent devuelve true si no se canceló y false si algún listener llamó preventDefault. Esto permite que la página anfitriona participe de una decisión antes de que el componente ejecute una acción. preventDefault no detiene automáticamente la propagación; su función aquí es marcar el evento como cancelado."
+        },
+        {
+          "title": "Emitir una selección desde dentro de Shadow DOM",
+          "description": "Publicá el identificador seleccionado para que la aplicación anfitriona pueda escuchar el evento fuera del componente.",
+          "language": "javascript",
+          "code": "class SelectorNovela extends HTMLElement {\n  constructor() {\n    super();\n    const root = this.attachShadow({ mode: 'open' });\n    const boton = document.createElement('button');\n    boton.textContent = 'Elegir Re:Zero';\n    boton.addEventListener('click', () => {\n      const evento = new CustomEvent('novela-seleccionada', {\n        detail: { slug: 're-zero' },\n        bubbles: true,\n        composed: true\n      });\n      boton.dispatchEvent(evento);\n    });\n    root.append(boton);\n  }\n}\n\ncustomElements.define('selector-novela', SelectorNovela);\n\ndocument.addEventListener('novela-seleccionada', evento => {\n  console.log(evento.detail.slug);\n});",
+          "explanation": "El evento se despacha desde el botón interno del Shadow DOM. bubbles permite que ascienda y composed permite atravesar la frontera de Shadow DOM hasta que el listener externo lo reciba; el navegador puede retargetear event.target al host para ocultar detalles internos. detail publica un contrato de datos pequeño y estable. En componentes grandes, evitá exponer nodos privados."
+        }
+      ],
+      "bestPractices": [
+        "Usá nombres de eventos específicos y descriptivos, normalmente en minúsculas y con guiones.",
+        "Definí claramente qué información se envía en detail y mantené estable esa estructura.",
+        "Configurá bubbles: true cuando los ancestros deban poder escuchar el evento mediante propagación.",
+        "Configurá composed: true cuando un evento emitido dentro del Shadow DOM deba salir de esa raíz.",
+        "Usá cancelable: true solo cuando tenga sentido permitir que quien escucha rechace la acción.",
+        "Documentá los eventos que emite cada componente, incluyendo el tipo de dato que transporta detail."
+      ],
+      "commonMistakes": [
+        "Emitir un evento sin dispatchEvent y esperar que los listeners lo reciban.",
+        "Olvidar bubbles cuando se pretende escuchar el evento desde un ancestro.",
+        "Olvidar composed cuando el evento nace dentro del Shadow DOM y debe llegar al documento.",
+        "Confundir event.target con el nodo interno que originó un evento que cruzó un Shadow DOM; el navegador puede retargetearlo.",
+        "Esperar que preventDefault funcione si el evento no fue creado con cancelable: true.",
+        "Acoplar el componente a una función global en lugar de emitir un evento que otros puedan escuchar."
+      ],
+      "exercise": "Creá <mi-selector-idioma> con dos botones internos: Español e Inglés. Al pulsar uno, emití idioma-cambiado con detail que incluya el código del idioma y su nombre. El evento debe llegar a document aunque nazca dentro del Shadow DOM. Desde el documento, escuchalo y mostrá en consola el idioma elegido.",
+      "hint": "Creá los botones dentro de attachShadow. En cada click emití new CustomEvent('idioma-cambiado', { detail: {...}, bubbles: true, composed: true }). Registrá el listener en document y leé evento.detail.",
+      "parameters": [
+        {
+          "name": "new CustomEvent(nombre, opciones)",
+          "description": "Crea un evento personalizado con un nombre y opciones como detail, bubbles, composed y cancelable."
+        },
+        {
+          "name": "detail",
+          "description": "Propiedad que transporta datos asociados al evento. El listener los lee mediante evento.detail."
+        },
+        {
+          "name": "bubbles",
+          "description": "Booleano que indica si el evento puede propagarse hacia los ancestros."
+        },
+        {
+          "name": "composed",
+          "description": "Booleano que indica si el evento puede atravesar el límite de un Shadow DOM."
+        },
+        {
+          "name": "cancelable",
+          "description": "Booleano que habilita la cancelación del evento mediante preventDefault."
+        },
+        {
+          "name": "dispatchEvent(evento)",
+          "description": "Despacha el evento en el nodo indicado y devuelve false si fue cancelado; en caso contrario devuelve true."
+        },
+        {
+          "name": "event.preventDefault()",
+          "description": "Cancela la acción predeterminada de un evento cancelable; no detiene por sí mismo la propagación."
+        }
+      ],
+      "resources": [
+        {
+          "label": "MDN — CustomEvent",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/CustomEvent"
+        },
+        {
+          "label": "MDN — Event.bubbles",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles"
+        },
+        {
+          "label": "MDN — Event.composed",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Event/composed"
+        },
+        {
+          "label": "MDN — Event.preventDefault()",
+          "url": "https://developer.mozilla.org/es/docs/Web/API/Event/preventDefault"
+        }
+      ],
+      "deepDive": {
+        "model": "CustomEvent permite que un componente publique un evento propio con datos en detail. dispatchEvent inicia la propagación del evento desde el nodo que lo emite. Para que un listener externo lo reciba a través del árbol, el evento suele necesitar bubbles: true; si el componente usa Shadow DOM y debe cruzar esa frontera, también necesita composed: true. cancelable: true permite que el consumidor llame preventDefault y que el emisor compruebe si la acción fue cancelada.",
+        "flow": [
+          [
+            "El componente detecta una acción",
+            "Un clic, una selección o una modificación produce un cambio que el componente quiere comunicar."
+          ],
+          [
+            "Se crea un CustomEvent",
+            "El evento recibe un nombre estable y detail con los datos públicos necesarios."
+          ],
+          [
+            "Se despacha",
+            "dispatchEvent emite el evento; bubbles controla propagación ascendente y composed permite cruzar Shadow DOM."
+          ],
+          [
+            "La página escucha y decide",
+            "El consumidor recibe detail y puede llamar preventDefault cuando el evento es cancelable."
+          ]
+        ],
+        "decisions": [
+          "Elegí nombres de eventos claros y estables, normalmente en minúsculas con guiones, como novela-seleccionada.",
+          "En detail enviá identificadores o datos de contrato; evitá exponer referencias internas que la página no debería modificar.",
+          "Usá bubbles y composed solo cuando el contrato del componente requiera que el evento llegue a ancestros fuera de su host.",
+          "Usá cancelable si el componente debe permitir que el consumidor rechace una acción antes de completarla."
+        ],
+        "debugging": "Si el listener del documento no recibe el evento, revisá dónde se ejecuta dispatchEvent, si bubbles está activo y si el evento necesita composed para salir del Shadow DOM. Si event.detail es undefined, comprobá que el dato se haya enviado dentro de detail. Si preventDefault no surte efecto, el evento debe crearse con cancelable: true y el emisor debe comprobar el resultado de dispatchEvent o defaultPrevented."
+      }
+    }
+  ],
+  "architecture": {
+    "title": "Cómo cobra vida una etiqueta personalizada",
+    "summary": "Las APIs nativas del navegador permiten registrar elementos propios, encapsular estructura y estilos y reaccionar a su ciclo de vida.",
+    "steps": [
+      [
+        "Definir la clase",
+        "Una clase extiende HTMLElement y describe el comportamiento del elemento."
+      ],
+      [
+        "Registrar el nombre",
+        "customElements.define vincula un nombre con guion a esa clase en el registro del navegador."
+      ],
+      [
+        "Conectar al documento",
+        "Cuando aparece en el DOM, connectedCallback permite inicializar comportamiento y estructura."
+      ],
+      [
+        "Encapsular y comunicar",
+        "Shadow DOM y slots organizan el contenido; atributos y eventos personalizados permiten configurar y comunicar el componente."
+      ]
+    ],
+    "note": "Un Custom Element no necesita un framework. El Shadow DOM ofrece encapsulación, pero no reemplaza la necesidad de definir una API clara para atributos, propiedades y eventos."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "wc-ciclo-vida",
+      "wc-shadow-dom",
+      "wc-eventos"
+    ],
+    "execution": {
+      "kind": "browser-native",
+      "label": "Navegador / APIs nativas",
+      "description": "Custom Elements, Shadow DOM, templates y slots son estándares de la plataforma web. Se ejecutan en navegadores que implementan esas APIs, sin necesitar un framework para el runtime básico."
+    },
+    "compatibility": {
+      "kind": "browser-native",
+      "summary": "Las funciones principales de Web Components tienen soporte amplio en navegadores modernos.",
+      "rows": [
+        [
+          "Chrome",
+          "Amplio"
+        ],
+        [
+          "Firefox",
+          "Amplio"
+        ],
+        [
+          "Edge",
+          "Amplio"
+        ],
+        [
+          "Safari",
+          "Amplio con diferencias puntuales"
+        ],
+        [
+          "Opera",
+          "Amplio en versiones modernas"
+        ],
+        [
+          "Internet Explorer",
+          "Sin soporte nativo moderno; no recomendado"
+        ]
+      ],
+      "note": "La compatibilidad es por API: Custom Elements, Shadow DOM, templates y slots deben revisarse por separado. Safari no soporta customized built-in elements; los autonomous custom elements son la opción interoperable habitual."
+    },
+    "advantages": [
+      "Usa estándares nativos y no obliga a elegir un framework.",
+      "Encapsula estilos y estructura con Shadow DOM cuando hace falta.",
+      "Permite crear componentes reutilizables que se pueden integrar con React, Vue y HTML común."
+    ],
+    "limitations": [
+      "El ciclo de vida y la comunicación mediante propiedades/eventos requieren diseñar una API pública clara.",
+      "La encapsulación introduce detalles de estilos, foco, eventos y accesibilidad que deben comprenderse.",
+      "No todas las extensiones de Custom Elements tienen el mismo soporte; verificá cada API."
+    ],
+    "complements": [
+      [
+        "react",
+        "Consumir componentes web desde interfaces React."
+      ],
+      [
+        "vuejs",
+        "Integrar etiquetas personalizadas con aplicaciones Vue."
+      ],
+      [
+        "typescript",
+        "Tipar propiedades, eventos y contratos de componentes."
+      ],
+      [
+        "testing",
+        "Verificar comportamiento y accesibilidad de componentes."
+      ]
+    ],
+    "docs": [
+      [
+        "MDN — Web Components",
+        "https://developer.mozilla.org/es/docs/Web/API/Web_components"
+      ],
+      [
+        "HTML Standard — Custom Elements",
+        "https://html.spec.whatwg.org/multipage/custom-elements.html"
+      ]
+    ]
+  }
+}
