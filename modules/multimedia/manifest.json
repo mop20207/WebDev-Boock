@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "catalogVersion": "1.0.0",
-  "manifestVersion": "9848bd456f12b7c85112dfd669eab3a7ab58b290de889d0cb2780e460d2fd712",
+  "manifestVersion": "7fc90f843d1cbf8d9e5e67f8a5f58e566f28e273794a8fc5100d40014a4318f9",
   "resources": [
     {
       "id": "html-document-tree",
@@ -10,7 +10,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "e083b70ed058b1217fb0ca7af18ea47d05c223be483f2e9b2042eef4b1123cd5",
+      "sha256": "b0964409e199b844f7040dee5f4873118cdfd1fd1114f2124a46a4fef290d918",
       "sizeBytes": 3706
     },
     {
@@ -20,7 +20,7 @@
       "mimeType": "image/svg+xml",
       "category": "illustration",
       "version": "1.0.0",
-      "sha256": "6937e08482588ceee19eabe363e98b4b0f043a0ebbfa8017ec3f75175660a034",
+      "sha256": "89aab3197e183306093e08f21a7581a522bcd210f71656d3b264a1f1208fda29",
       "sizeBytes": 3677
     },
     {
@@ -30,7 +30,7 @@
       "mimeType": "image/svg+xml",
       "category": "infographic",
       "version": "1.0.0",
-      "sha256": "494ac9c2a9d395f78f87188ea23a1af3a32f612f5f51dcf069ae93a6a2dd74ae",
+      "sha256": "4b2b0a5ef9e2116d3027642dd22f01ca0e6f6d8e4af25ae6a398160f97599e64",
       "sizeBytes": 3658
     },
     {
@@ -40,7 +40,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "cf82ce97eb295eebe5a0e41886781c247529e929c6675f15e35da0fbac971920",
+      "sha256": "a0e24a5ac348483e93786fc3a4d7bc809496a2a517237fdcf1d9640ff5a9ef42",
       "sizeBytes": 3674
     },
     {
@@ -50,7 +50,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "d7362c2fcb7464461f6a4986520278aa214e63babbec1717861d14d0999d62f3",
+      "sha256": "ab01f000cbb46568f3baab005defcd1efd67d1bfb4578a02f20f8ce31b16bae8",
       "sizeBytes": 3663
     },
     {
@@ -60,7 +60,7 @@
       "mimeType": "image/svg+xml",
       "category": "infographic",
       "version": "1.0.0",
-      "sha256": "c691fbda0e16138d085b30780bd4b721f50a9e03db6f01d34f45a7ac14957e81",
+      "sha256": "b12a346d366f9218f6e96d5f9582e93c22aef5cf185187a9127a5ccff243afa9",
       "sizeBytes": 3666
     },
     {
@@ -70,7 +70,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "176c6ebaebfccaab5a87356fc4d0eff76c447c85bf1ee7a6a328b5e3b99c2db4",
+      "sha256": "7312d1439a8b3c0069ffeafb7121fcf43c7250788b5f04889f9d70196be6d81b",
       "sizeBytes": 3701
     },
     {
@@ -80,7 +80,7 @@
       "mimeType": "image/svg+xml",
       "category": "animation",
       "version": "1.0.0",
-      "sha256": "dac939825292b3624d76ef5b88fe77b641a087ddbe57a4e5278a7eeffa8d0d45",
+      "sha256": "03afc98d06c412f3834bf8374447750f6eb39ad914a4fe9d58e49962bf23f687",
       "sizeBytes": 4026
     },
     {
@@ -90,7 +90,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "04dcdfbb06237c0c42c26689fac73f69c89a092e9288c40520856c3a07a91721",
+      "sha256": "bbdfdc5bd62a9ca201a9298b7a9d2e820a3877c1386be24c7bf5f73b44a584d1",
       "sizeBytes": 3677
     },
     {
@@ -100,7 +100,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "a766cf7a2a8a831977667126a7096e8022cc3e2da151bf2bbba45abdc011f909",
+      "sha256": "3a03518e529475bf5510876d9dd77a8c16d8da8f6db27dc3a4cfcd3e17098db2",
       "sizeBytes": 3678
     },
     {
@@ -110,7 +110,7 @@
       "mimeType": "image/svg+xml",
       "category": "illustration",
       "version": "1.0.0",
-      "sha256": "ddd251a281396cf7c762a35caf9ea081681c042188d8ec24ff0505686e99a2cc",
+      "sha256": "9814ed47b07fdf6dbde88e728e71495492356ac0d7f2819a149b0dd263bf4945",
       "sizeBytes": 3656
     },
     {
@@ -120,7 +120,7 @@
       "mimeType": "image/svg+xml",
       "category": "diagram",
       "version": "1.0.0",
-      "sha256": "df608c967df82f052ade694222aae670c9c9ea86b878bfd5712bc0f7fc8c0161",
+      "sha256": "7400883ca46f603a99aa6bfe175727ef57e449e13179f3c066b5c78715421f6a",
       "sizeBytes": 3667
     },
     {
@@ -130,7 +130,7 @@
       "mimeType": "image/svg+xml",
       "category": "animation",
       "version": "1.0.0",
-      "sha256": "78987e62338cca17c298d66c8386e57595461a1d630f31a245a2f41d9e7fdf61",
+      "sha256": "f8fb502b744f4e9867e55d684f08a4efc048faa09fa1db817df9f25ade709d4d",
       "sizeBytes": 3995
     },
     {
@@ -140,7 +140,7 @@
       "mimeType": "image/svg+xml",
       "category": "infographic",
       "version": "1.0.0",
-      "sha256": "fc2be87d550f750def2c23ede072da330cad8708c597751ccc27cce408a1e139",
+      "sha256": "245b6eae7bfa9ea790b4de3126ed604aca59e3a5bec73cd963e571b70724d2d0",
       "sizeBytes": 3669
     },
     {
@@ -150,7 +150,7 @@
       "mimeType": "image/svg+xml",
       "category": "infographic",
       "version": "1.0.0",
-      "sha256": "355730770d277962f08a5d48e7e3a9488a122719a4adb6e3e9a280da2db5daff",
+      "sha256": "8c898d655643e5e6122c43fd1192503f89b9ae9b05dba4726cc32a8f8e6d7fcd",
       "sizeBytes": 3724
     }
   ]
