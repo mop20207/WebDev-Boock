@@ -66,8 +66,9 @@ for (const entry of manifest.packages || []) {
     }
     canonical.push({
       id: entry.id, path: entry.path, version: entry.version, sha256: entry.sha256,
-      sizeBytes: entry.sizeBytes, challengeCount: entry.challengeCount,
-      technologyCount: entry.technologyCount, runnerTypes: entry.runnerTypes
+      sizeBytes: entry.sizeBytes, description: entry.description,
+      challengeCount: entry.challengeCount, technologyCount: entry.technologyCount,
+      runnerTypes: entry.runnerTypes
     });
   } catch (error) {
     errors.push("No se pudo validar " + expectedPath + ": " + error.message);
