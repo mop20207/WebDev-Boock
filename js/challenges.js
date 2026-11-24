@@ -18,6 +18,8 @@
   const difficultyButtons = [...document.querySelectorAll("[data-difficulty]")];
 
   let challenges = [];
+  let activeLabId = null;
+  let activeLabTitle = null;
   let activeDifficulty = "all";
   let activeChallenge = null;
   let revealedHints = 0;
@@ -127,7 +129,14 @@
     filtered.forEach(challenge => {
       const completed = progress.completed.includes(challenge.id);
       const card = node("a", "challenge-card" + (activeChallenge?.id === challenge.id ? " active" : ""));
-      card.href = "retos/" + challenge.id + ".html";
+      if (activeLabId) {
+        const target = new URL("challenges.html", document.baseURI);
+        target.searchParams.set("lab", activeLabId);
+        target.searchParams.set("challenge", challenge.id);
+        card.href = target.href;
+      } else {
+        card.href = "retos/" + challenge.id + ".html";
+      }
       card.setAttribute("aria-label", "Abrir reto: " + challenge.title);
       const top = node("div", "challenge-card-top");
       top.append(
@@ -184,7 +193,9 @@
     const hasFrameworkPreview = ["react", "vue", "webcomponents"].includes(challenge.runner);
     const editorShell = node("div", "challenge-editor-shell");
     const toolbar = node("div", "challenge-editor-toolbar");
-    const editorLanguage = isHtmlCss
+    const editorLanguage = challenge.runner === "terminal-sim"
+      ? "TERMINAL LINUX · SIMULADOR"
+      : isHtmlCss
       ? "HTML + CSS · EDITOR"
       : challenge.runner === "react" ? "REACT · JSX EDITOR"
         : challenge.runner === "vue" ? "VUE.JS · EDITOR"
@@ -214,7 +225,11 @@
     editor.setAttribute("aria-label", isHtmlCss ? "Editor HTML del reto" : "Editor de código para el reto");
     editor.value = isHtmlCss ? (challenge.htmlCode || "") : (challenge.starterCode || "");
     const editorHelp = node("div", "challenge-editor-help");
-    const runnerHelp = isHtmlCss
+    const runnerHelp = challenge.runner === "terminal-sim"
+      ? "Terminal didáctica segura: solo acepta comandos permitidos y trabaja en un sistema de archivos virtual, sin acceso al teléfono."
+      : challenge.runner === "game-logic"
+        ? "Lógica de videojuegos 2D en JavaScript: se prueban funciones puras. No se ejecuta el motor Phaser completo."
+      : isHtmlCss
       ? "HTML y CSS se renderizan sin scripts ni acceso a la red."
       : challenge.runner === "node-sim"
         ? "Simulador educativo: APIs de Node.js con datos en memoria; no accede al servidor, red ni archivos reales."
@@ -236,6 +251,7 @@
     editorHelp.append(node("span", "", runnerHelp), node("span", "", "Ctrl + Enter para ejecutar"));
     let cssEditor = null;
     let previewFrame = null;
+    let terminalOutput = null;
     if (isHtmlCss) {
       cssEditor = node("textarea", "challenge-editor challenge-editor-compact");
       cssEditor.id = "challengeCssEditor";
@@ -268,6 +284,12 @@
       previewFrame.dataset.persistentPreview = "true";
       previewFrame.srcdoc = "<!doctype html><html lang=\"es\"><body style=\"font:14px sans-serif;padding:16px;color:#64748b\">Ejecutá las pruebas para ver el componente.</body></html>";
       editorShell.append(toolbar, editor, node("div", "challenge-preview-heading", "Vista previa del componente"), previewFrame, editorHelp);
+    } else if (challenge.runner === "terminal-sim") {
+      const outputHeading = node("div", "challenge-preview-heading", "Salida de la terminal virtual");
+      terminalOutput = node("pre", "lab-terminal-output", "La salida de los comandos aparecerá acá.");
+      terminalOutput.setAttribute("aria-live", "polite");
+      terminalOutput.setAttribute("role", "log");
+      editorShell.append(toolbar, editor, outputHeading, terminalOutput, editorHelp);
     } else {
       editorShell.append(toolbar, editor, editorHelp);
     }
@@ -322,9 +344,10 @@
       editor.value = isHtmlCss ? (challenge.htmlCode || "") : (challenge.starterCode || "");
       if (isHtmlCss && cssEditor) { cssEditor.value = challenge.cssCode || ""; previewFrame.srcdoc = htmlCssDocument(editor.value, cssEditor.value, "", ""); }
       if (hasFrameworkPreview && previewFrame) previewFrame.srcdoc = "<!doctype html><html lang=\"es\"><body style=\"font:14px sans-serif;padding:16px;color:#64748b\">Ejecutá las pruebas para ver el componente.</body></html>";
+      if (terminalOutput) terminalOutput.textContent = "La salida de los comandos aparecerá acá.";
       results.replaceChildren(node("h4", "", "Resultado de las pruebas"), node("p", "", "Código restablecido. Volvé a ejecutar las pruebas cuando estés listo."));
     });
-    runButton.addEventListener("click", () => runChallenge(challenge, editor.value, results, completeBanner, runButton, cssEditor?.value, previewFrame));
+    runButton.addEventListener("click", () => runChallenge(challenge, editor.value, results, completeBanner, runButton, cssEditor?.value, previewFrame, terminalOutput));
     editor.addEventListener("keydown", event => {
       if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
         event.preventDefault();
@@ -837,7 +860,7 @@ function requireModule(name) {
   }
 
 
-  function runDocumentRunner(challenge, documentHtml, resultsNode, completeBanner, runButton, timeoutMs) {
+  function runDocumentRunner(challenge, documentHtml, resultsNode, completeBanner, runButton, timeoutMs, onExtraResult) {
     cancelActiveRunner();
     const frame = document.createElement("iframe");
     frame.title = "Entorno aislado: " + challenge.technologyName;
@@ -852,6 +875,7 @@ function requireModule(name) {
       activeRunnerCleanup = null;
       frame.remove();
       activeRunner = null;
+      if (typeof onExtraResult === "function") onExtraResult(event.data.terminal || null);
       displayResults(challenge, event.data.results || [], resultsNode, completeBanner, runButton);
     };
     window.addEventListener("message", receive);
@@ -1204,8 +1228,9 @@ const same = (a, b) => sameValue(normalize(a), normalize(b));
     try { return JSON.stringify(value); } catch (error) { return String(value); }
   }
 
-  async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource, previewFrame) {
+  async function runChallenge(challenge, source, resultsNode, completeBanner, runButton, cssSource, previewFrame, terminalOutput) {
     if (challenge.language === "htmlcss") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando pruebas HTML y CSS"), node("p", "", "Renderizando la página en un iframe aislado.")); runHtmlCss(challenge, source, cssSource || "", resultsNode, completeBanner, runButton); return; }
+    if (challenge.runner === "terminal-sim") { runTerminalSimulationChallenge(challenge, source, resultsNode, completeBanner, runButton, terminalOutput); return; }
     if (challenge.runner === "node-sim") { runButton.disabled = true; runButton.textContent = "Ejecutando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando simulación de Node.js"), node("p", "", "Se probarán módulos y APIs educativas dentro de un entorno en memoria, sin acceder al servidor.")); runNodeSimulationChallenge(challenge, source, resultsNode, completeBanner, runButton); return; }
     if (challenge.runner === "astro-static" || challenge.runner === "docker-static") { runButton.disabled = true; runButton.textContent = "Analizando…"; resultsNode.replaceChildren(node("h4", "", "Analizando estructura"), node("p", "", "Se revisan reglas y patrones del archivo sin ejecutar el proyecto.")); runDocumentRunner(challenge, staticRulesDocument(challenge, source), resultsNode, completeBanner, runButton, 5000); return; }
     if (challenge.runner === "mongo-sim") { runButton.disabled = true; runButton.textContent = "Simulando…"; resultsNode.replaceChildren(node("h4", "", "Ejecutando operaciones MongoDB"), node("p", "", "Se prueban consultas y operaciones en colecciones temporales en memoria.")); runDocumentRunner(challenge, mongoSimulationDocument(challenge, source), resultsNode, completeBanner, runButton, 7000); return; }
@@ -1229,16 +1254,40 @@ const same = (a, b) => sameValue(normalize(a), normalize(b));
 
   async function init() {
     try {
-      const response = await fetch(DATA_URL, { cache: "no-store" });
-      if (!response.ok) throw new Error("No se pudo cargar el catálogo de retos.");
-      const database = await response.json();
-      challenges = Array.isArray(database.challenges) ? database.challenges : [];
+      const params = new URLSearchParams(window.location.search);
+      activeLabId = params.get("lab");
+      const requestedId = params.get("challenge") || document.body.dataset.challengeId;
+      if (activeLabId) {
+        if (!window.WebDevLabs?.getLab) throw new Error("El administrador de laboratorios no está disponible. Actualizá WebDev Book.");
+        const lab = await window.WebDevLabs.getLab(activeLabId);
+        challenges = Array.isArray(lab.challenges) ? lab.challenges : [];
+        if (!challenges.length) throw new Error("El laboratorio instalado no contiene ejercicios.");
+        activeLabTitle = lab.title || activeLabId;
+        document.title = activeLabTitle + " | Laboratorios · WebDev Book";
+        const heading = document.querySelector(".challenges-hero h1");
+        const intro = document.querySelector(".challenges-hero > p");
+        if (heading) heading.textContent = activeLabTitle + ".";
+        if (intro) intro.textContent = "Paquete descargable · " + challenges.length + " ejercicios. Tu progreso se conserva junto con el resto de los retos.";
+        const back = document.querySelector(".tools-back-link");
+        if (back) {
+          back.href = "labs.html";
+          back.textContent = "← Volver a laboratorios";
+        }
+        const hero = document.querySelector(".challenges-hero .eyebrow");
+        if (hero) hero.textContent = "WEBDEV BOOK / LABORATORIO INSTALADO";
+      } else {
+        const response = await fetch(DATA_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error("No se pudo cargar el catálogo de retos.");
+        const database = await response.json();
+        challenges = Array.isArray(database.challenges) ? database.challenges : [];
+      }
+
       if (!challenges.length) throw new Error("El catálogo de retos está vacío.");
       populateTechnologyFilter();
       updateProgressSummary();
       renderList();
-      const requestedId = document.body.dataset.challengeId;
       const requestedChallenge = requestedId && challenges.find(item => item.id === requestedId);
+      if (requestedId && !requestedChallenge) throw new Error("No se encontró el ejercicio solicitado dentro de este laboratorio.");
       if (document.body.dataset.page === "challenge-detail") {
         if (!requestedChallenge) throw new Error("No se encontró el reto solicitado.");
         document.title = requestedChallenge.title + " | Retos · WebDev Book";
@@ -1246,12 +1295,17 @@ const same = (a, b) => sameValue(normalize(a), normalize(b));
         if (pageHeading) pageHeading.textContent = requestedChallenge.title;
         renderChallenge(requestedChallenge.id);
       } else {
-        renderChallenge(challenges[0].id);
+        renderChallenge(requestedChallenge?.id || challenges[0].id);
       }
     } catch (error) {
       workspace.replaceChildren(node("div", "challenge-empty-state"));
       const message = node("p", "", error.message || "Ocurrió un error al cargar los retos.");
       workspace.firstElementChild.append(node("h2", "", "No se pudieron cargar los retos"), message);
+      if (activeLabId) {
+        const link = node("a", "challenge-action primary", "Abrir Centro de módulos");
+        link.href = "modules.html#module-catalog";
+        workspace.firstElementChild.append(link);
+      }
     }
   }
 
