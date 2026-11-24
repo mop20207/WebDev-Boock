@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "title": "Android, Capacitor y estado de la APK",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "capacitor": {
+    "appName": "WebDev Book",
+    "appId": "com.webdevbook.app",
+    "webDir": "www",
+    "backgroundColor": "#080d18",
+    "capacitorCore": "8.6.2",
+    "capacitorAndroid": "8.6.2",
+    "capacitorCli": "8.6.2",
+    "configFile": "capacitor.config.ts"
+  },
+  "packaging": {
+    "preparationScript": "scripts/prepare-web.mjs",
+    "outputDirectory": "www/",
+    "generatedAndroidProject": "android/ (se genera en CI; no está mantenido como fuente principal en el repositorio)",
+    "included": [
+      "páginas HTML",
+      "CSS y JavaScript de aplicación",
+      "catálogos y manifiestos livianos",
+      "archivos de contenido que no estén excluidos"
+    ],
+    "excluded": [
+      "data/tools.json (fuente monolítica del catálogo de herramientas)",
+      "modules/libraries/packages/** (paquetes tecnológicos descargables)",
+      "modules/labs/packages/** (paquetes de laboratorios descargables)",
+      "modules/multimedia/assets/** (archivos multimedia descargados bajo demanda)",
+      "carpetas de desarrollo .git, .github, android, node_modules, www y scripts"
+    ],
+    "reason": "Mantener reducida la APK y descargar los conjuntos grandes cuando se necesiten."
+  },
+  "buildPipeline": {
+    "workflow": ".github/workflows/build-android-apk.yml",
+    "name": "Build Android APK",
+    "trigger": [
+      "workflow_dispatch",
+      "push en ramas configuradas y rutas vigiladas"
+    ],
+    "runtime": {
+      "node": "22",
+      "java": "21",
+      "androidPlatform": "36",
+      "buildTools": "36.0.0"
+    },
+    "steps": [
+      "checkout del repositorio",
+      "instalar dependencias npm",
+      "node --check en scripts y módulos JavaScript seleccionados",
+      "generar y validar paquetes de bibliotecas, laboratorios y multimedia",
+      "validar catálogo de módulos y generar manifiesto de contenido",
+      "ejecutar npm run prepare:web",
+      "generar proyecto Android con npx cap add android",
+      "sincronizar con npx cap sync android",
+      "compilar ./gradlew assembleDebug --no-daemon",
+      "verificar firma y metadatos con apksigner y aapt",
+      "publicar el artefacto webdev-book-debug-apk"
+    ]
+  },
+  "lastVerifiedBuild": {
+    "workflowRunId": 45458423617,
+    "workflowRunNumber": 65,
+    "workflowUrl": "https://github.com/mop20207/WebDev-Boock/actions/runs/45458423617",
+    "branch": "main",
+    "commit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+    "status": "completed",
+    "conclusion": "success",
+    "job": "Compile debug APK",
+    "allJobStepsConclusion": "success",
+    "artifact": {
+      "id": 14950638270,
+      "name": "webdev-book-debug-apk",
+      "sizeBytes": 4829717,
+      "expiredAt": "2026-12-08T18:22:21Z",
+      "downloadUrl": "https://github.com/mop20207/WebDev-Boock/actions/runs/45458423617"
+    },
+    "whatThisProves": [
+      "El workflow consiguió instalar dependencias y preparar los archivos web.",
+      "Capacitor generó y sincronizó el proyecto Android.",
+      "Gradle compiló una APK debug.",
+      "Los chequeos de firma y metadatos finalizaron correctamente.",
+      "GitHub Actions publicó un artefacto descargable."
+    ]
+  },
+  "verificationStatus": {
+    "ciBuild": "passed",
+    "apkSignatureAndPackageMetadataCheck": "passed",
+    "githubPagesDeploymentForSameCommit": {
+      "runId": 45458422238,
+      "conclusion": "success",
+      "url": "https://github.com/mop20207/WebDev-Boock/actions/runs/45458422238"
+    },
+    "multimediaManifestPublicationForSameCommit": {
+      "runId": 45458423742,
+      "conclusion": "success",
+      "url": "https://github.com/mop20207/WebDev-Boock/actions/runs/45458423742"
+    },
+    "physicalAndroidDeviceInstallation": "not yet verified",
+    "physicalAndroidDeviceTesting": "not yet verified",
+    "productionReleaseSigning": "not documented as configured",
+    "androidAppBundle": "not documented as generated"
+  },
+  "importantDistinction": "La APK de este estado es de depuración (debug), no es una release firmada para distribución ni un AAB. Una compilación verde no confirma que cada pantalla se vea y funcione correctamente en el teléfono real.",
+  "howToBuild": [
+    "Abrir GitHub Actions del repositorio.",
+    "Seleccionar Build Android APK.",
+    "Ejecutar Run workflow sobre la rama deseada.",
+    "Esperar a que el workflow termine en verde.",
+    "Abrir la ejecución y descargar webdev-book-debug-apk.",
+    "Descomprimir el ZIP y extraer app-debug.apk.",
+    "Instalar en Android y verificar navegación, almacenamiento, descargas, actualizaciones, editor y estados offline."
+  ],
+  "sourceReferences": [
+    "ANDROID-BUILD.md",
+    "capacitor.config.ts",
+    "scripts/prepare-web.mjs",
+    ".github/workflows/build-android-apk.yml"
+  ]
+}

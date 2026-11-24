@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "title": "Arquitectura del sistema y relaciones entre componentes",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "architectureStyle": "Aplicación web estática por capas, dirigida por páginas HTML, comportamiento JavaScript y catálogos JSON; las partes grandes se entregan como paquetes y se almacenan localmente.",
+  "executionEnvironments": [
+    {
+      "id": "github-pages",
+      "name": "Web/PWA",
+      "entry": "index.html",
+      "basePath": "/WebDev-Boock/",
+      "behavior": "Carga páginas y datos desde el origen publicado. El service worker puede precargar el shell y guardar respuestas de ejecución en caché."
+    },
+    {
+      "id": "capacitor-android",
+      "name": "Android",
+      "entry": "www/index.html (generado durante la compilación)",
+      "appId": "com.webdevbook.app",
+      "behavior": "Capacitor muestra la copia local en una WebView. Algunos catálogos y paquetes se descargan desde raw.githubusercontent.com cuando no están incluidos en el paquete."
+    }
+  ],
+  "repositoryLayers": [
+    {
+      "directory": "pages/",
+      "role": "Documentos HTML de cada pantalla y detalle.",
+      "examples": [
+        "pages/html.html",
+        "pages/tools.html",
+        "pages/modules.html",
+        "pages/labs.html",
+        "pages/multimedia.html",
+        "pages/editor.html",
+        "pages/projects.html",
+        "pages/challenges.html"
+      ],
+      "affects": "Define la estructura, los elementos, los IDs y las rutas que consumen los scripts y estilos de cada página."
+    },
+    {
+      "directory": "css/",
+      "role": "Sistema visual global y estilos específicos por página.",
+      "examples": [
+        "css/global.css",
+        "css/home.css",
+        "css/tools-library.css",
+        "css/module-center.css",
+        "css/labs.css",
+        "css/multimedia.css",
+        "css/projects.css",
+        "css/editor-app.css",
+        "css/challenges.css"
+      ],
+      "affects": "Cambia la presentación. global.css afecta varias pantallas; los estilos específicos normalmente afectan una sección."
+    },
+    {
+      "directory": "js/",
+      "role": "Comportamiento de interfaz, navegación, búsqueda, progreso, editor, descargas y persistencia.",
+      "examples": [
+        "js/navigation.js",
+        "js/theme.js",
+        "js/search.js",
+        "js/tools-library.js",
+        "js/module-manager.js",
+        "js/library-packages.js",
+        "js/lab-packages.js",
+        "js/labs.js",
+        "js/multimedia-library.js",
+        "js/editor-app.js",
+        "js/content-updates.js"
+      ],
+      "affects": "Implementa el comportamiento asociado a los elementos que existen en las páginas HTML y consume catálogos/manifiestos."
+    },
+    {
+      "directory": "data/",
+      "role": "Fuentes JSON de contenido educativo, retos, proyectos y catálogos de origen.",
+      "examples": [
+        "data/html-articulos.json",
+        "data/css-articulos.json",
+        "data/javascript.json",
+        "data/tools.json",
+        "data/challenges.json",
+        "data/projects.json",
+        "data/labs/catalog.json"
+      ],
+      "affects": "Los cambios de contenido pueden regenerar paquetes o manifiestos y, para los JSON publicados en updates, actualizar Android sin reinstalar APK."
+    },
+    {
+      "directory": "modules/",
+      "role": "Catálogo central y paquetes descargables/versionados.",
+      "examples": [
+        "modules/catalog.json",
+        "modules/libraries/",
+        "modules/labs/",
+        "modules/multimedia/"
+      ],
+      "affects": "Determina qué recursos muestra el Centro de módulos y qué manifiestos/paquetes descarga cada administrador."
+    },
+    {
+      "directory": "projects/",
+      "role": "Archivos fuente de los 15 proyectos educativos.",
+      "examples": [
+        "projects/tarjeta-interactiva/",
+        "projects/api-rest-propia/",
+        "projects/blog-postgres/",
+        "projects/gestor-fullstack/"
+      ],
+      "affects": "Los cambios actualizan el código de ejemplo que se consulta o descarga desde la Biblioteca de proyectos; no cambian el catálogo por sí solos."
+    },
+    {
+      "directory": "assets/",
+      "role": "Iconos e imágenes generales del sitio.",
+      "affects": "Puede afectar marca, iconografía, manifest de PWA y elementos visuales de varias páginas."
+    },
+    {
+      "directory": "updates/",
+      "role": "Manifiesto de integridad del contenido JSON que puede recibir el actualizador nativo.",
+      "examples": [
+        "updates/content-manifest.json"
+      ],
+      "affects": "Permite comprobar qué archivos de contenido han cambiado; es un artefacto generado, no debe editarse manualmente."
+    },
+    {
+      "directory": "scripts/",
+      "role": "Generadores, validadores y preparación de la copia web que se empaqueta.",
+      "examples": [
+        "scripts/prepare-web.mjs",
+        "scripts/generate-content-manifest.mjs",
+        "scripts/generate-library-packages.mjs",
+        "scripts/generate-lab-packages.mjs",
+        "scripts/generate-multimedia-manifest.mjs"
+      ],
+      "affects": "Un cambio puede modificar los paquetes generados, sus hashes o los archivos que entran en la APK."
+    },
+    {
+      "directory": ".github/workflows/",
+      "role": "Automatización de publicación, manifiestos y compilación Android.",
+      "examples": [
+        ".github/workflows/build-android-apk.yml",
+        ".github/workflows/publish-content-manifest.yml",
+        ".github/workflows/publish-library-packages.yml",
+        ".github/workflows/publish-lab-packages.yml",
+        ".github/workflows/publish-multimedia-manifest.yml"
+      ],
+      "affects": "Controla cuándo se generan y validan datos, se publica una APK debug o se actualizan archivos derivados."
+    }
+  ],
+  "runtimeFlows": [
+    {
+      "id": "base-content",
+      "steps": [
+        "La página solicita un JSON de data/.",
+        "El script de la página interpreta el JSON.",
+        "La interfaz construye artículos, categorías, tarjetas o retos.",
+        "El progreso/favorito se guarda en el almacenamiento local correspondiente."
+      ],
+      "mainFiles": [
+        "pages/html.html",
+        "pages/css.html",
+        "pages/javascript.html",
+        "js/tools-library.js",
+        "js/challenges.js",
+        "js/learning-progress.js",
+        "data/"
+      ]
+    },
+    {
+      "id": "technology-package",
+      "steps": [
+        "El Centro de módulos consulta modules/catalog.json y el manifiesto de bibliotecas.",
+        "El usuario instala o abre una tecnología.",
+        "library-packages.js obtiene el paquete local o remoto.",
+        "El tamaño, SHA-256, identidad y estructura se verifican.",
+        "El paquete se guarda en IndexedDB webdev-book-modules.",
+        "La biblioteca lee el archivo instalado sin borrar progreso ni proyectos."
+      ],
+      "mainFiles": [
+        "pages/modules.html",
+        "js/module-manager.js",
+        "js/library-packages.js",
+        "modules/catalog.json",
+        "modules/libraries/manifest.json",
+        "modules/libraries/packages/"
+      ]
+    },
+    {
+      "id": "lab-package",
+      "steps": [
+        "El catálogo de laboratorios muestra los seis paquetes.",
+        "lab-packages.js descarga y comprueba manifiesto/tamaño/hash.",
+        "El paquete se almacena con clave lab:<id> en el almacén modular.",
+        "pages/challenges.html?lab=<id> utiliza los retos del laboratorio instalado.",
+        "El progreso del reto sigue en su clave propia y sobrevive al quitar el paquete."
+      ],
+      "mainFiles": [
+        "pages/labs.html",
+        "pages/challenges.html",
+        "js/lab-packages.js",
+        "js/labs.js",
+        "modules/labs/manifest.json",
+        "modules/labs/packages/"
+      ]
+    },
+    {
+      "id": "multimedia",
+      "steps": [
+        "multimedia-library.js carga catálogo y manifiesto.",
+        "Relaciona los recursos por ID y valida ruta/tipo/metadatos.",
+        "El usuario busca, filtra, abre en visor o marca favorito.",
+        "Al descargar, el archivo se obtiene, se comprueban tamaño y SHA-256 y se guarda en Cache Storage.",
+        "La copia cacheada se reconoce por su cabecera X-WebDev-SHA256."
+      ],
+      "mainFiles": [
+        "pages/multimedia.html",
+        "js/multimedia-library.js",
+        "modules/multimedia/catalog.json",
+        "modules/multimedia/manifest.json",
+        "modules/multimedia/assets/"
+      ]
+    },
+    {
+      "id": "native-content-updates",
+      "steps": [
+        "En Capacitor, navigation.js carga content-updates.js e intercepta fetch de JSON de data/.",
+        "content-updates.js consulta el manifiesto remoto y compara SHA-256.",
+        "Los archivos JSON nuevos se descargan y guardan de forma transaccional.",
+        "El usuario aplica el conjunto actualizado recargando la pantalla."
+      ],
+      "mainFiles": [
+        "js/navigation.js",
+        "js/content-updates.js",
+        "updates/content-manifest.json",
+        ".github/workflows/publish-content-manifest.yml"
+      ]
+    },
+    {
+      "id": "android-build",
+      "steps": [
+        "prepare-web.mjs copia el sitio a www/ aplicando exclusiones.",
+        "Capacitor genera/sincroniza el proyecto Android.",
+        "Gradle compila assembleDebug.",
+        "El workflow verifica firma y metadatos del APK y publica un artefacto."
+      ],
+      "mainFiles": [
+        "scripts/prepare-web.mjs",
+        "capacitor.config.ts",
+        ".github/workflows/build-android-apk.yml"
+      ]
+    }
+  ],
+  "sharedContracts": [
+    {
+      "contract": "Los HTML y los JavaScript deben conservar IDs/selectores compatibles; un cambio de ID en HTML puede romper el script que lo consulta."
+    },
+    {
+      "contract": "Los IDs de módulo, biblioteca, laboratorio y recurso deben coincidir con sus manifiestos y catálogos."
+    },
+    {
+      "contract": "El hash SHA-256 y el tamaño deben corresponder a los bytes reales del paquete publicado."
+    },
+    {
+      "contract": "No mezclar progreso, archivos de proyectos, paquetes descargados y actualización OTA: están separados deliberadamente."
+    }
+  ]
+}

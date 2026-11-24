@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "title": "Scripts, validaciones y GitHub Actions",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "npmScripts": [
+    {
+      "command": "npm run prepare:web",
+      "file": "scripts/prepare-web.mjs",
+      "purpose": "prepara www/ con la copia web usada por Capacitor y aplica exclusiones de empaquetado"
+    },
+    {
+      "command": "npm run android:sync",
+      "file": "package.json",
+      "purpose": "prepara la web y sincroniza el proyecto Android existente con Capacitor"
+    },
+    {
+      "command": "npm run android:open",
+      "file": "package.json",
+      "purpose": "abre el proyecto Android en Android Studio si el entorno lo tiene instalado"
+    },
+    {
+      "command": "npm run validate:modules",
+      "file": "scripts/validate-module-catalog.mjs",
+      "purpose": "comprueba estructura y referencias del catálogo de módulos"
+    },
+    {
+      "command": "npm run generate:libraries",
+      "file": "scripts/generate-library-packages.mjs",
+      "purpose": "divide data/tools.json en 17 paquetes, manifiestos, resumen de ecosistema e índice de búsqueda"
+    },
+    {
+      "command": "npm run validate:libraries",
+      "file": "scripts/validate-library-packages.mjs",
+      "purpose": "valida cantidad, estructura, referencias, tamaños y SHA-256 de las bibliotecas"
+    },
+    {
+      "command": "npm run generate:labs",
+      "file": "scripts/generate-lab-packages.mjs",
+      "purpose": "agrupa los retos en seis paquetes JSON y genera catálogo/manifiesto"
+    },
+    {
+      "command": "npm run validate:labs",
+      "file": "scripts/validate-lab-packages.mjs",
+      "purpose": "valida integridad, distribución y cobertura de retos de los laboratorios"
+    },
+    {
+      "command": "npm run generate:multimedia",
+      "file": "scripts/generate-multimedia-manifest.mjs",
+      "purpose": "lee catalog.json y genera tamaños/MIME/SHA-256 en manifest.json"
+    },
+    {
+      "command": "npm run validate:multimedia",
+      "file": "scripts/validate-multimedia.mjs",
+      "purpose": "valida catálogo, manifiesto, recursos, metadatos, hashes y referencias del frontend"
+    }
+  ],
+  "workflows": [
+    {
+      "file": ".github/workflows/build-android-apk.yml",
+      "name": "Build Android APK",
+      "trigger": "manual workflow_dispatch y pushes en ramas/rutas configuradas",
+      "outputs": [
+        "app-debug.apk dentro del artefacto webdev-book-debug-apk"
+      ],
+      "validations": [
+        "sintaxis de scripts seleccionados",
+        "generación/validación de paquetes",
+        "catálogo de módulos",
+        "manifiesto de contenido",
+        "compilación",
+        "firma y metadatos Android"
+      ]
+    },
+    {
+      "file": ".github/workflows/publish-content-manifest.yml",
+      "name": "Publish content update manifest",
+      "trigger": "cambios en data/*.json y data/**/*.json en main, incluyendo su propio bootstrap",
+      "outputs": [
+        "updates/content-manifest.json"
+      ],
+      "sideEffect": "si cambia el manifiesto, GitHub Actions crea un commit automático en main"
+    },
+    {
+      "file": ".github/workflows/publish-library-packages.yml",
+      "name": "Publish technology library packages",
+      "trigger": "cambios en data/tools.json o scripts del generador/validador en main",
+      "outputs": [
+        "modules/libraries/packages/",
+        "modules/libraries/manifest.json",
+        "modules/libraries/ecosystem.json",
+        "modules/libraries/search-index.json"
+      ],
+      "sideEffect": "si hay diferencias, crea un commit automático con los paquetes regenerados"
+    },
+    {
+      "file": ".github/workflows/publish-lab-packages.yml",
+      "name": "Publish interactive lab packages",
+      "trigger": "cambios en data/challenges.json, data/labs/catalog.json o scripts relacionados en main",
+      "outputs": [
+        "modules/labs/packages/",
+        "modules/labs/catalog.json",
+        "modules/labs/manifest.json"
+      ],
+      "sideEffect": "si hay diferencias, crea un commit automático con los paquetes regenerados"
+    },
+    {
+      "file": ".github/workflows/publish-multimedia-manifest.yml",
+      "name": "Publish multimedia manifest",
+      "trigger": "cambios en catálogo, assets o scripts multimedia en main y la rama de etapa 4",
+      "outputs": [
+        "modules/multimedia/manifest.json"
+      ],
+      "sideEffect": "genera y valida los hashes; si el manifiesto cambia, lo confirma en la rama correspondiente"
+    },
+    {
+      "file": "GitHub Pages",
+      "name": "pages build and deployment",
+      "trigger": "publicación del sitio configurada por GitHub Pages",
+      "lastVerifiedRun": 45458422238,
+      "lastVerifiedConclusion": "success"
+    }
+  ],
+  "validationCommandsForResume": [
+    "npm install",
+    "npm run validate:modules",
+    "npm run validate:libraries",
+    "npm run validate:labs",
+    "npm run validate:multimedia",
+    "node --check js/navigation.js",
+    "node --check js/content-updates.js",
+    "node --check js/editor-app.js"
+  ],
+  "generatedFilesPolicy": [
+    "No editar a mano los paquetes generados si existe una fuente canónica y un generador.",
+    "Cambiar la fuente, ejecutar el generador y validador y luego confirmar todos los archivos derivados.",
+    "Los manifiestos son contratos de integridad: rutas, tamaños y SHA-256 deben corresponder a los bytes reales.",
+    "Revisar si el workflow dispara un commit adicional automático después del cambio de fuente."
+  ]
+}

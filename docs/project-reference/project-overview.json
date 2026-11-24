@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "title": "Resumen general del proyecto",
+  "snapshotCommit": "3e91552d56d0dff818728ebb4179fac030a54ebf",
+  "identity": {
+    "name": "WebDev Book",
+    "repository": "https://github.com/mop20207/WebDev-Boock",
+    "publishedSite": "https://mop20207.github.io/WebDev-Boock/",
+    "description": "Biblioteca educativa interactiva y responsive para aprender desarrollo web mediante explicaciones, ejemplos, herramientas, proyectos y prácticas.",
+    "primaryLanguage": "JavaScript",
+    "interfaceLanguage": "es",
+    "applicationType": [
+      "sitio estático",
+      "PWA instalable",
+      "aplicación Android empaquetada con Capacitor"
+    ],
+    "repositoryVisibility": "public",
+    "defaultBranch": "main"
+  },
+  "productModel": {
+    "site": "Las páginas HTML, estilos CSS, lógica JavaScript y datos JSON se publican como sitio estático en GitHub Pages.",
+    "pwa": "El manifiesto web y el service worker permiten instalar la versión web y mantener en caché el shell de la aplicación y recursos solicitados.",
+    "android": "Capacitor empaqueta una copia preparada de la aplicación web en una aplicación Android; no es una aplicación Android nativa reescrita desde cero.",
+    "backend": "WebDev Book no depende de un servidor backend propio para servir su interfaz educativa; los proyectos de backend incluidos son material de aprendizaje y no se ejecutan como servicios backend en GitHub Pages."
+  },
+  "objectives": [
+    "Reunir HTML, CSS y JavaScript en un núcleo de aprendizaje.",
+    "Ampliar contenidos mediante bibliotecas tecnológicas descargables.",
+    "Ofrecer ejercicios guiados y laboratorios descargables.",
+    "Incluir proyectos de ejemplo con archivos reales.",
+    "Añadir recursos visuales con metadatos y controles de integridad.",
+    "Mantener una experiencia web, PWA y Android con una base de código compartida."
+  ],
+  "mainNavigation": [
+    {
+      "label": "Inicio",
+      "path": "index.html",
+      "role": "punto de entrada, accesos y resumen del contenido"
+    },
+    {
+      "label": "HTML",
+      "path": "pages/html.html",
+      "role": "biblioteca de fundamentos HTML"
+    },
+    {
+      "label": "CSS",
+      "path": "pages/css.html",
+      "role": "biblioteca de fundamentos CSS"
+    },
+    {
+      "label": "JavaScript",
+      "path": "pages/javascript.html",
+      "role": "biblioteca de fundamentos JavaScript"
+    },
+    {
+      "label": "Editor",
+      "path": "pages/editor.html",
+      "role": "entorno para crear y guardar proyectos de código"
+    },
+    {
+      "label": "Biblioteca de tecnologías",
+      "path": "pages/tools.html",
+      "role": "catálogo de 17 bibliotecas descargables y sus artículos"
+    },
+    {
+      "label": "Retos",
+      "path": "pages/challenges.html",
+      "role": "catálogo y ejecución de 52 retos"
+    },
+    {
+      "label": "Proyectos",
+      "path": "pages/projects.html",
+      "role": "exploración de 15 proyectos de ejemplo"
+    },
+    {
+      "label": "Centro de módulos",
+      "path": "pages/modules.html",
+      "role": "inventario, prioridades e instalaciones de módulos"
+    },
+    {
+      "label": "Laboratorios",
+      "path": "pages/labs.html",
+      "role": "descarga y administración de seis paquetes de práctica"
+    },
+    {
+      "label": "Biblioteca visual",
+      "path": "pages/multimedia.html",
+      "role": "búsqueda, visor, favoritos y descarga de recursos gráficos"
+    }
+  ],
+  "developmentStages": [
+    {
+      "stage": 1,
+      "name": "Núcleo y administración de módulos",
+      "status": "integrated",
+      "includes": [
+        "navegación y páginas principales",
+        "búsqueda",
+        "lector de contenido",
+        "editor y vista previa",
+        "favoritos y progreso",
+        "catálogo y centro de módulos",
+        "coordinación de actualizaciones"
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "Bibliotecas descargables por tecnología",
+      "status": "integrated",
+      "includes": [
+        "17 paquetes JSON de tecnología",
+        "manifiesto con hash SHA-256 y tamaños",
+        "índice global de búsqueda",
+        "descarga, verificación, instalación, actualización y eliminación de paquetes"
+      ]
+    },
+    {
+      "stage": 3,
+      "name": "Laboratorios interactivos",
+      "status": "integrated",
+      "includes": [
+        "seis paquetes de laboratorios",
+        "52 retos distribuidos por área",
+        "descarga y administración local",
+        "progreso separado de la instalación de paquetes"
+      ]
+    },
+    {
+      "stage": 4,
+      "name": "Recursos multimedia y biblioteca visual",
+      "status": "integrated_with_content_gaps",
+      "includes": [
+        "página de biblioteca visual",
+        "catálogo y manifiesto",
+        "15 SVG originales",
+        "visor y favoritos",
+        "descarga selectiva y caché con SHA-256"
+      ],
+      "gaps": [
+        "el catálogo reserva video y audio, pero todavía no hay archivos de video/audio publicados"
+      ]
+    }
+  ],
+  "currentMaturity": {
+    "coreFunctionality": "Integrada en el repositorio y desplegada en GitHub Pages.",
+    "contentArchitecture": "Separación entre contenido base, bibliotecas descargables, laboratorios y multimedia.",
+    "visualDesign": "Tiene un sistema visual compartido y adaptación móvil, pero no se considera todavía una auditoría visual final de todas las pantallas.",
+    "android": "La APK debug de Etapa 4 se compiló y superó los chequeos de CI; falta instalarla y probarla manualmente en un dispositivo físico.",
+    "productionRelease": "No hay evidencia en el estado documentado de una APK release firmada para distribución ni de un AAB de publicación."
+  },
+  "primaryUrls": {
+    "home": "https://mop20207.github.io/WebDev-Boock/",
+    "tools": "https://mop20207.github.io/WebDev-Boock/pages/tools.html",
+    "modules": "https://mop20207.github.io/WebDev-Boock/pages/modules.html",
+    "challenges": "https://mop20207.github.io/WebDev-Boock/pages/challenges.html",
+    "projects": "https://mop20207.github.io/WebDev-Boock/pages/projects.html",
+    "labs": "https://mop20207.github.io/WebDev-Boock/pages/labs.html",
+    "multimedia": "https://mop20207.github.io/WebDev-Boock/pages/multimedia.html",
+    "editor": "https://mop20207.github.io/WebDev-Boock/pages/editor.html"
+  },
+  "importantLimits": [
+    "GitHub Pages no ejecuta los servidores backend ni las bases de datos de los proyectos avanzados; los documenta y entrega sus archivos.",
+    "Algunos retos emplean motores educativos, simuladores, validación estática, CDN o WebAssembly; no deben confundirse con servicios reales de producción.",
+    "Los paquetes grandes de bibliotecas, laboratorios y multimedia no se incorporan todos a la APK inicial: se solicitan bajo demanda.",
+    "Las actualizaciones de contenido JSON no reemplazan cambios de HTML, CSS, JavaScript, service worker o funciones nativas."
+  ]
+}
