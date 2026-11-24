@@ -89,19 +89,19 @@
     phaser: "Phaser", typescript: "TypeScript", nextjs: "Next.js", express: "Express.js",
     "sql-postgres": "SQL y PostgreSQL", mongodb: "MongoDB", apis: "APIs y comunicación web",
     testing: "Testing", "docker-deploy": "Docker y despliegue", challenges: "Retos interactivos",
-    projects: "Biblioteca de proyectos", modules: "Centro de módulos", exercises: "Ejercicios", favorites: "Favoritos",
+    projects: "Biblioteca de proyectos", modules: "Centro de módulos", labs: "Laboratorios", exercises: "Ejercicios", favorites: "Favoritos",
     resources: "Recursos", progress: "Mi progreso", tools: "Biblioteca de tecnologías"
   };
   const accents = {
     home: "#8EA8FF", html: "#F07845", css: "#3988E8", javascript: "#D9B735", editor: "#8B7CF6",
-    challenges: "#8B70F4", projects: "#E6A34A", modules: "#8EA8FF", exercises: "#4C9BDE", favorites: "#D6A43B",
+    challenges: "#8B70F4", projects: "#E6A34A", modules: "#8EA8FF", labs: "#9A83ED", exercises: "#4C9BDE", favorites: "#D6A43B",
     resources: "#7D9FE8", progress: "#37A98B", tools: "#8EA8FF"
   };
   Object.keys(toolMeta).forEach(key => { accents[key] = toolMeta[key].accent; });
 
   const glyphs = {
     home: "⌂", html: "5", css: "✳", javascript: "JS", editor: "</>",
-    challenges: "⌁", projects: "▦", modules: "⬡", exercises: "✎", favorites: "☆",
+    challenges: "⌁", projects: "▦", modules: "⬡", labs: "⌘", exercises: "✎", favorites: "☆",
     resources: "▣", progress: "◴", tools: "▦"
   };
 
@@ -120,7 +120,7 @@
       "index.html": "home", "html.html": "html", "css.html": "css",
       "javascript.html": "javascript", "editor.html": "editor",
       "challenges.html": "challenges", "projects.html": "projects",
-      "modules.html": "modules", "tools.html": "tools"
+      "modules.html": "modules", "labs.html": "labs", "tools.html": "tools"
     };
     return files[file] || "other";
   }
@@ -140,6 +140,24 @@
     link.textContent = "Centro de módulos";
     const insertionPoint = nav.querySelector("[data-challenges-link]");
     if (insertionPoint) nav.insertBefore(link, insertionPoint);
+    else nav.append(link);
+  }
+
+  function ensureLabsLink(nav) {
+    if (nav.querySelector("[data-labs-link]")) return;
+    const link = document.createElement("a");
+    link.className = "nav-link";
+    link.dataset.labsLink = "true";
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+    if (manifestLink?.href) {
+      const appRoot = new URL("./", manifestLink.href);
+      link.href = new URL("pages/labs.html", appRoot).href;
+    } else {
+      link.href = "pages/labs.html";
+    }
+    link.textContent = "Laboratorios";
+    const challengeLink = nav.querySelector("[data-challenges-link], a[href*='challenges.html']");
+    if (challengeLink) challengeLink.insertAdjacentElement("afterend", link);
     else nav.append(link);
   }
 
@@ -179,6 +197,7 @@
 
     if (mainNav) {
       ensureModuleCenterLink(mainNav);
+      ensureLabsLink(mainNav);
       mainNav.querySelectorAll(".nav-link").forEach(normalizeNavLink);
       const observer = new MutationObserver(records => {
         records.forEach(record => record.addedNodes.forEach(node => {
@@ -210,6 +229,7 @@
         ((page === "challenges" || page === "challenge-detail") && key === "challenges") ||
         (["html", "css", "javascript", "editor"].includes(page) && key === page) ||
         (page === "modules" && key === "modules") ||
+        (page === "labs" && key === "labs") ||
         (toolId && key === toolId);
       if (active) {
         link.classList.add("active");
