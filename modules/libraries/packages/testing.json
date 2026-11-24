@@ -1,0 +1,1152 @@
+{
+  "id": "testing",
+  "title": "Testing",
+  "shortTitle": "Testing",
+  "symbol": "✓",
+  "eyebrow": "CALIDAD / PRUEBAS / AUTOMATIZACIÓN",
+  "tagline": "Aprendé a comprobar que tu código funcione correctamente.",
+  "description": "Biblioteca práctica de pruebas unitarias, integración, componentes, E2E, cobertura y automatización de calidad.",
+  "level": "Inicial a avanzado",
+  "accent": "testing",
+  "categories": [
+    {
+      "id": "fundamentos-testing",
+      "title": "Fundamentos de testing",
+      "description": "Aprendé qué probar, cómo organizar pruebas y cómo interpretar resultados.",
+      "icon": "✓",
+      "articles": [
+        "test-que-es",
+        "test-piramide",
+        "test-aaa"
+      ]
+    },
+    {
+      "id": "unitarias",
+      "title": "Pruebas unitarias",
+      "description": "Probá funciones y módulos de forma aislada con herramientas modernas.",
+      "icon": "▣",
+      "articles": [
+        "test-vitest",
+        "test-async",
+        "test-mocks"
+      ]
+    },
+    {
+      "id": "componentes",
+      "title": "Pruebas de componentes",
+      "description": "Verificá interfaces desde el comportamiento que percibe el usuario.",
+      "icon": "▤",
+      "articles": [
+        "test-testing-library",
+        "test-formularios"
+      ]
+    },
+    {
+      "id": "e2e",
+      "title": "Pruebas end-to-end",
+      "description": "Automatizá flujos completos en un navegador real.",
+      "icon": "⌘",
+      "articles": [
+        "test-playwright",
+        "test-locators",
+        "test-api"
+      ]
+    },
+    {
+      "id": "calidad-ci",
+      "title": "Calidad y automatización",
+      "description": "Medí cobertura, evitá pruebas inestables y ejecutá suites en CI.",
+      "icon": "◇",
+      "articles": [
+        "test-cobertura",
+        "test-flaky",
+        "test-ci"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "test-que-es",
+      "title": "¿Qué es el testing de software y por qué importa?",
+      "category": "fundamentos-testing",
+      "summary": "Comprendé las pruebas como una herramienta para detectar regresiones y verificar comportamientos.",
+      "purpose": "Testing es el proceso de comprobar que un sistema se comporta como se espera. Las pruebas no demuestran que un programa esté libre de defectos, pero ofrecen evidencia reproducible sobre escenarios definidos. Pueden ejecutarse manualmente o automatizarse y abarcar funciones, componentes, integración y flujos completos.",
+      "whenToUse": "Testing es el proceso de comprobar que un sistema se comporta como se espera. Las pruebas no demuestran que un programa esté libre de defectos, pero ofrecen evidencia reproducible sobre escenarios definidos. Pueden ejecutarse manualmente o automatizarse y abarcar funciones, componentes, integración y flujos completos.",
+      "syntax": "Código → escenario de prueba → ejecución → resultado esperado vs. obtenido",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Una función pequeña y su prueba",
+          "description": "Probá una regla de negocio sin depender de la interfaz.",
+          "code": "export function calcularTotal(precio, cantidad) {\n  if (precio < 0 || cantidad < 0) throw new Error('Valores inválidos');\n  return precio * cantidad;\n}\n\n// Prueba conceptual\nconsole.assert(calcularTotal(100, 3) === 300);",
+          "explanation": "La función representa una regla aislada. La prueba compara el resultado con un valor esperado; un runner como Vitest ofrece reportes, organización y aserciones más completas."
+        },
+        {
+          "title": "Pensar en casos límite",
+          "description": "No alcanza con probar un único caso exitoso.",
+          "code": "calcularTotal(100, 3); // caso normal\ncalcularTotal(0, 5);   // precio cero\ncalcularTotal(100, 0); // cantidad cero\ncalcularTotal(-1, 2);  // entrada inválida",
+          "explanation": "Los casos límite suelen revelar errores que no aparecen con datos típicos. También conviene probar tipos incorrectos si la función los puede recibir."
+        },
+        {
+          "title": "Probar una función con una expectativa",
+          "description": "Definí un caso pequeño y comprobá tanto el resultado esperado como un caso límite.",
+          "language": "javascript",
+          "code": "import { describe, expect, it } from 'vitest';\n\nfunction calcularTotal(precios) {\n  return precios.reduce((total, precio) => total + precio, 0);\n}\n\ndescribe('calcularTotal', () => {\n  it('suma los precios', () => {\n    expect(calcularTotal([10, 15, 20])).toBe(45);\n  });\n\n  it('devuelve cero para una lista vacía', () => {\n    expect(calcularTotal([])).toBe(0);\n  });\n});",
+          "explanation": "describe agrupa casos relacionados, it define un comportamiento y expect compara el resultado real con la expectativa. La función se incluye para que el ejemplo sea autocontenido; en un proyecto real la importarías desde el módulo de producción."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Caso de prueba",
+          "description": "Escenario con condiciones, acción y resultado esperado."
+        },
+        {
+          "name": "Aserción",
+          "description": "Comprobación que compara el resultado real con el esperado."
+        },
+        {
+          "name": "Regresión",
+          "description": "Error que reaparece o se introduce al cambiar código que antes funcionaba."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Elegí una función de tu proyecto y definí tres casos normales y tres casos límite con sus resultados esperados.",
+      "hint": "Describí primero el comportamiento observable y después elegí cómo automatizar la comprobación.",
+      "resources": [
+        {
+          "label": "Vitest — Guide",
+          "url": "https://vitest.dev/guide/"
+        },
+        {
+          "label": "Testing Library — Introduction",
+          "url": "https://testing-library.com/docs/"
+        },
+        {
+          "label": "Playwright — Docs",
+          "url": "https://playwright.dev/docs/"
+        }
+      ],
+      "related": [
+        "test-piramide",
+        "test-aaa"
+      ],
+      "deepDive": {
+        "model": "Una prueba automatizada convierte una expectativa en una verificación repetible. El patrón Arrange–Act–Assert separa preparación, acción y comprobación. La calidad no depende de tener muchos tests, sino de cubrir comportamientos importantes, límites y regresiones de manera confiable.",
+        "flow": [
+          [
+            "Arrange",
+            "Construí el estado inicial, datos de entrada y dependencias controladas."
+          ],
+          [
+            "Act",
+            "Ejecutá la unidad o flujo bajo prueba una sola vez cuando sea posible."
+          ],
+          [
+            "Assert",
+            "Verificá resultados observables, efectos y errores esperados."
+          ],
+          [
+            "Feedback",
+            "El runner informa fallos y CI puede impedir que un cambio defectuoso continúe."
+          ]
+        ],
+        "decisions": [
+          "Empezá por pruebas unitarias rápidas y agregá integración y E2E en los límites de mayor riesgo.",
+          "Preferí verificar comportamiento visible al usuario sobre detalles internos frágiles de implementación."
+        ],
+        "debugging": "Una prueba inestable puede depender de reloj, red, orden global o datos compartidos. Aislá esas dependencias, controlá el tiempo y asegurá que cada prueba prepare y limpie su propio escenario."
+      }
+    },
+    {
+      "id": "test-piramide",
+      "title": "Pirámide de testing: unitarias, integración y E2E",
+      "category": "fundamentos-testing",
+      "summary": "Distribuí las pruebas según alcance, costo y confianza que aportan.",
+      "purpose": "La pirámide de testing propone una base amplia de pruebas unitarias rápidas, una capa de integración y una cantidad menor de pruebas end-to-end más costosas. No es una ley rígida: la distribución depende del riesgo y la arquitectura. La meta es detectar fallos cerca de su origen sin depender exclusivamente de flujos lentos de navegador.",
+      "whenToUse": "La pirámide de testing propone una base amplia de pruebas unitarias rápidas, una capa de integración y una cantidad menor de pruebas end-to-end más costosas. No es una ley rígida: la distribución depende del riesgo y la arquitectura. La meta es detectar fallos cerca de su origen sin depender exclusivamente de flujos lentos de navegador.",
+      "syntax": "Unitarias (muchas y rápidas)\nIntegración (servicios y límites)\nE2E (flujos críticos)",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Prueba unitaria",
+          "description": "Verificá una función sin levantar servidor ni navegador.",
+          "code": "expect(calcularDescuento(1000, 10)).toBe(900);",
+          "explanation": "Aísla una unidad de lógica y permite ejecutar muchos casos rápidamente."
+        },
+        {
+          "title": "Prueba de integración",
+          "description": "Comprobá que una ruta HTTP y su capa de datos colaboren.",
+          "code": "const respuesta = await request(app).get('/api/novelas');\nexpect(respuesta.status).toBe(200);\nexpect(respuesta.body).toEqual(expect.any(Array));",
+          "explanation": "La prueba cruza más de una pieza, por ejemplo router, middleware y repositorio de prueba. No necesita simular todo el navegador."
+        },
+        {
+          "title": "Prueba E2E",
+          "description": "Verificá un recorrido importante desde la interfaz.",
+          "code": "await page.goto('/');\nawait page.getByRole('link', { name: 'Novelas' }).click();\nawait expect(page.getByRole('heading', { name: 'Catálogo' })).toBeVisible();",
+          "explanation": "El navegador ejecuta el flujo como un usuario. Es valioso para rutas críticas, pero más lento y sensible al entorno."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Unit test",
+          "description": "Prueba una unidad pequeña de lógica aislada."
+        },
+        {
+          "name": "Integration test",
+          "description": "Verifica la colaboración entre módulos o servicios."
+        },
+        {
+          "name": "E2E test",
+          "description": "Comprueba un flujo completo a través de la aplicación."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Clasificá una validación de precio, una ruta API con base de datos y un flujo de compra en la pirámide.",
+      "hint": "Preguntate cuántos componentes reales necesita la prueba para verificar ese comportamiento.",
+      "resources": [
+        {
+          "label": "Vitest — Guide",
+          "url": "https://vitest.dev/guide/"
+        },
+        {
+          "label": "Testing Library — Introduction",
+          "url": "https://testing-library.com/docs/"
+        },
+        {
+          "label": "Playwright — Docs",
+          "url": "https://playwright.dev/docs/"
+        }
+      ],
+      "related": [
+        "test-que-es",
+        "test-aaa"
+      ]
+    },
+    {
+      "id": "test-aaa",
+      "title": "Patrón AAA: Arrange, Act, Assert",
+      "category": "fundamentos-testing",
+      "summary": "Organizá cada prueba en preparación, acción y verificación.",
+      "purpose": "AAA es una convención para estructurar pruebas: Arrange prepara datos y dependencias; Act ejecuta la acción bajo prueba; Assert comprueba el resultado. Separar estas etapas hace que las pruebas sean fáciles de leer y depurar.",
+      "whenToUse": "AAA es una convención para estructurar pruebas: Arrange prepara datos y dependencias; Act ejecuta la acción bajo prueba; Assert comprueba el resultado. Separar estas etapas hace que las pruebas sean fáciles de leer y depurar.",
+      "syntax": "Arrange → Act → Assert",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Prueba con AAA",
+          "description": "La preparación, ejecución y comprobación quedan separadas.",
+          "code": "it('calcula el total de una compra', () => {\n  // Arrange: preparar los datos.\n  const precio = 250;\n  const cantidad = 4;\n\n  // Act: ejecutar la función.\n  const total = calcularTotal(precio, cantidad);\n\n  // Assert: comprobar el resultado.\n  expect(total).toBe(1000);\n});",
+          "explanation": "it registra el caso de prueba. Los comentarios muestran las tres fases. Una prueba debería enfocarse en un comportamiento y mantener la preparación mínima necesaria."
+        },
+        {
+          "title": "Probar un error esperado",
+          "description": "También se verifica que una operación rechace entradas inválidas.",
+          "code": "it('rechaza precios negativos', () => {\n  expect(() => calcularTotal(-5, 2)).toThrow('Valores inválidos');\n});",
+          "explanation": "La función se envuelve en otra función para que expect pueda capturar la excepción durante su ejecución."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Arrange",
+          "description": "Preparar entradas, estado inicial y dobles de prueba."
+        },
+        {
+          "name": "Act",
+          "description": "Ejecutar la función o interacción que se quiere verificar."
+        },
+        {
+          "name": "Assert",
+          "description": "Comparar el resultado con el comportamiento esperado mediante aserciones."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Escribí una prueba AAA para una función que convierte grados Celsius a Fahrenheit y otra que rechaza un dato inválido.",
+      "hint": "Separá mentalmente qué preparás, qué ejecutás y qué resultado verificás.",
+      "resources": [
+        {
+          "label": "Vitest — Guide",
+          "url": "https://vitest.dev/guide/"
+        },
+        {
+          "label": "Testing Library — Introduction",
+          "url": "https://testing-library.com/docs/"
+        },
+        {
+          "label": "Playwright — Docs",
+          "url": "https://playwright.dev/docs/"
+        }
+      ],
+      "related": [
+        "test-que-es",
+        "test-vitest"
+      ]
+    },
+    {
+      "id": "test-vitest",
+      "title": "Vitest: configurar y ejecutar pruebas unitarias",
+      "category": "unitarias",
+      "summary": "Usá Vitest para ejecutar pruebas JavaScript y TypeScript con una API familiar y rápida.",
+      "purpose": "Vitest es un test runner que se integra con proyectos Vite y también puede configurarse en otros entornos. Proporciona describe, it/test, expect, mocks, cobertura y ejecución en modo watch. Los tests suelen ubicarse junto al módulo o en una carpeta dedicada.",
+      "whenToUse": "Vitest es un test runner que se integra con proyectos Vite y también puede configurarse en otros entornos. Proporciona describe, it/test, expect, mocks, cobertura y ejecución en modo watch. Los tests suelen ubicarse junto al módulo o en una carpeta dedicada.",
+      "syntax": "npm install -D vitest\nnpx vitest\nnpx vitest run",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Configurar un script",
+          "description": "Agregá un comando para ejecutar la suite.",
+          "code": "// package.json\n{\n  \"scripts\": {\n    \"test\": \"vitest\",\n    \"test:run\": \"vitest run\"\n  }\n}",
+          "explanation": "vitest inicia el modo interactivo/watch en entornos compatibles. vitest run ejecuta una vez y termina, útil para CI."
+        },
+        {
+          "title": "Crear una prueba",
+          "description": "Probá una función exportada desde un módulo.",
+          "code": "// suma.js\nexport function sumar(a, b) {\n  return a + b;\n}\n\n// suma.test.js\nimport { describe, it, expect } from 'vitest';\nimport { sumar } from './suma.js';\n\ndescribe('sumar', () => {\n  it('suma dos números', () => {\n    expect(sumar(2, 3)).toBe(5);\n  });\n});",
+          "explanation": "describe agrupa casos relacionados; it declara un caso; expect crea una aserción. Vitest descubre archivos con patrones como *.test.js y *.spec.js."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "describe(nombre, fn)",
+          "description": "Agrupa casos de prueba relacionados."
+        },
+        {
+          "name": "it/test(nombre, fn)",
+          "description": "Define un caso de prueba."
+        },
+        {
+          "name": "expect(valor)",
+          "description": "Crea aserciones para comparar el valor real con el esperado."
+        },
+        {
+          "name": "vitest run",
+          "description": "Ejecuta pruebas una vez sin permanecer en modo watch."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Configurá Vitest en un proyecto pequeño y escribí pruebas para una función de descuento.",
+      "hint": "Creá un archivo con sufijo .test.js, importá la función y usá describe, it y expect.",
+      "resources": [
+        {
+          "label": "Vitest — Guide",
+          "url": "https://vitest.dev/guide/"
+        },
+        {
+          "label": "Testing Library — Introduction",
+          "url": "https://testing-library.com/docs/"
+        },
+        {
+          "label": "Playwright — Docs",
+          "url": "https://playwright.dev/docs/"
+        }
+      ],
+      "related": [
+        "test-aaa",
+        "test-async"
+      ]
+    },
+    {
+      "id": "test-async",
+      "title": "Probar código asíncrono: Promises y async/await",
+      "category": "unitarias",
+      "summary": "Verificá resultados y errores de funciones asíncronas sin crear falsos positivos.",
+      "purpose": "Las pruebas asíncronas deben esperar la Promise que representa el trabajo. Si no se retorna ni se espera, el runner puede finalizar el test antes de que termine la operación. Para errores, usá rejects o await expect(...).rejects; evitá temporizadores reales cuando se puedan controlar con mocks de tiempo.",
+      "whenToUse": "Las pruebas asíncronas deben esperar la Promise que representa el trabajo. Si no se retorna ni se espera, el runner puede finalizar el test antes de que termine la operación. Para errores, usá rejects o await expect(...).rejects; evitá temporizadores reales cuando se puedan controlar con mocks de tiempo.",
+      "syntax": "await expect(obtenerDatos()).resolves.toEqual(datos)\nawait expect(fallar()).rejects.toThrow()",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Esperar un resultado",
+          "description": "El test debe esperar la promesa antes de terminar.",
+          "code": "it('obtiene el perfil', async () => {\n  const perfil = await obtenerPerfil(7);\n  expect(perfil.nombre).toBe('Ana');\n});",
+          "explanation": "async permite usar await. La prueba no se considera terminada hasta que se resuelve la función asíncrona."
+        },
+        {
+          "title": "Comprobar un rechazo",
+          "description": "Verificá errores de promesas con rejects.",
+          "code": "it('rechaza un identificador inexistente', async () => {\n  await expect(obtenerPerfil(999)).rejects.toThrow('No encontrado');\n});",
+          "explanation": "rejects transforma las aserciones para que esperen el rechazo de la Promise. Sin await, el test podría finalizar antes de verificarlo."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "resolves",
+          "description": "Modificador de expect que permite comprobar el valor de una Promise resuelta."
+        },
+        {
+          "name": "rejects",
+          "description": "Modificador para comprobar una Promise rechazada."
+        },
+        {
+          "name": "async/await",
+          "description": "Sintaxis para esperar operaciones asíncronas dentro de la prueba."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Escribí un test para una función que consulta un perfil y otro que verifica un error 404.",
+      "hint": "Asegurate de que el test retorne o espere la promesa que contiene la aserción.",
+      "resources": [
+        {
+          "label": "Vitest — Guide",
+          "url": "https://vitest.dev/guide/"
+        },
+        {
+          "label": "Testing Library — Introduction",
+          "url": "https://testing-library.com/docs/"
+        },
+        {
+          "label": "Playwright — Docs",
+          "url": "https://playwright.dev/docs/"
+        }
+      ],
+      "related": [
+        "test-vitest",
+        "test-mocks"
+      ]
+    },
+    {
+      "id": "test-mocks",
+      "title": "Mocks, stubs y spies: aislar dependencias",
+      "category": "unitarias",
+      "summary": "Controlá dependencias externas y observá cómo interactúa el código con ellas.",
+      "purpose": "Un mock reemplaza una dependencia y permite definir respuestas o verificar llamadas. Un stub proporciona respuestas preparadas; un spy observa llamadas reales o simuladas. Se usan para aislar unidades, pero abusar de ellos puede hacer que las pruebas verifiquen la implementación en vez del comportamiento.",
+      "whenToUse": "Un mock reemplaza una dependencia y permite definir respuestas o verificar llamadas. Un stub proporciona respuestas preparadas; un spy observa llamadas reales o simuladas. Se usan para aislar unidades, pero abusar de ellos puede hacer que las pruebas verifiquen la implementación en vez del comportamiento.",
+      "syntax": "vi.fn() · vi.spyOn(objeto, 'metodo') · vi.mock()",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Crear una función simulada",
+          "description": "Configurá un resultado y comprobá cómo fue llamada.",
+          "code": "import { vi, it, expect } from 'vitest';\n\nit('usa el repositorio para buscar una novela', async () => {\n  const buscar = vi.fn().mockResolvedValue({ id: 3, titulo: 'Dune' });\n  const servicio = crearServicio({ buscar });\n\n  const resultado = await servicio.obtener(3);\n  expect(resultado.titulo).toBe('Dune');\n  expect(buscar).toHaveBeenCalledWith(3);\n});",
+          "explanation": "vi.fn crea una función simulada. mockResolvedValue hace que devuelva una Promise resuelta. toHaveBeenCalledWith verifica los argumentos recibidos."
+        },
+        {
+          "title": "Espiar un método",
+          "description": "Observá una llamada sin reemplazar manualmente toda la dependencia.",
+          "code": "const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});\n\navisarSiFaltaTitulo({ titulo: '' });\nexpect(spy).toHaveBeenCalled();\nspy.mockRestore();",
+          "explanation": "spyOn crea un spy sobre el método existente. mockImplementation reemplaza temporalmente su implementación y mockRestore devuelve el método original."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "vi.fn()",
+          "description": "Crea una función mock que registra llamadas y permite configurar resultados."
+        },
+        {
+          "name": "mockResolvedValue(valor)",
+          "description": "Configura una Promise resuelta con el valor indicado."
+        },
+        {
+          "name": "vi.spyOn(objeto, metodo)",
+          "description": "Espía un método de un objeto."
+        },
+        {
+          "name": "mockRestore()",
+          "description": "Restaura la implementación original de un spy."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Probá un servicio que depende de un repositorio simulado y verificá tanto el resultado como los argumentos enviados.",
+      "hint": "Inyectá la dependencia en el servicio para poder reemplazarla en la prueba.",
+      "resources": [
+        {
+          "label": "Vitest — Guide",
+          "url": "https://vitest.dev/guide/"
+        },
+        {
+          "label": "Testing Library — Introduction",
+          "url": "https://testing-library.com/docs/"
+        },
+        {
+          "label": "Playwright — Docs",
+          "url": "https://playwright.dev/docs/"
+        }
+      ],
+      "related": [
+        "test-vitest",
+        "test-async"
+      ]
+    },
+    {
+      "id": "test-testing-library",
+      "title": "Testing Library: probar componentes desde el usuario",
+      "category": "componentes",
+      "summary": "Verificá componentes a través de roles, etiquetas y texto visibles, no de detalles internos.",
+      "purpose": "Testing Library ofrece utilidades para probar interfaces desde la perspectiva del usuario. Sus consultas priorizan accesibilidad: getByRole, getByLabelText y getByText. En React se usa @testing-library/react y normalmente user-event para simular interacciones reales. Evitá depender de clases CSS o estructura interna cuando no sea necesario.",
+      "whenToUse": "Testing Library ofrece utilidades para probar interfaces desde la perspectiva del usuario. Sus consultas priorizan accesibilidad: getByRole, getByLabelText y getByText. En React se usa @testing-library/react y normalmente user-event para simular interacciones reales. Evitá depender de clases CSS o estructura interna cuando no sea necesario.",
+      "syntax": "render(<Componente />)\nscreen.getByRole('button', { name: 'Guardar' })",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Renderizar y encontrar un botón",
+          "description": "Buscá el control por su rol accesible y nombre.",
+          "code": "import { render, screen } from '@testing-library/react';\nimport { expect, it } from 'vitest';\nimport BotonGuardar from './BotonGuardar.jsx';\n\nit('muestra el botón guardar', () => {\n  render(<BotonGuardar />);\n  expect(screen.getByRole('button', { name: 'Guardar' })).toBeInTheDocument();\n});",
+          "explanation": "render monta el componente en un entorno DOM de prueba. getByRole consulta por rol y nombre accesible. toBeInTheDocument proviene de jest-dom y requiere configurar sus matchers."
+        },
+        {
+          "title": "Interactuar con user-event",
+          "description": "Simulá una acción del usuario y comprobá el resultado visible.",
+          "code": "import userEvent from '@testing-library/user-event';\n\nit('confirma al guardar', async () => {\n  const user = userEvent.setup();\n  render(<Formulario />);\n  await user.click(screen.getByRole('button', { name: 'Guardar' }));\n  expect(screen.getByText('Guardado correctamente')).toBeInTheDocument();\n});",
+          "explanation": "userEvent.setup crea una sesión de interacción. click devuelve una Promise y debe esperarse. La aserción comprueba el resultado que ve la persona."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "render(ui)",
+          "description": "Renderiza un componente dentro del entorno de prueba."
+        },
+        {
+          "name": "screen",
+          "description": "Objeto con consultas sobre el documento renderizado."
+        },
+        {
+          "name": "getByRole(role, options)",
+          "description": "Busca un elemento por rol accesible y opcionalmente por nombre."
+        },
+        {
+          "name": "userEvent.setup()",
+          "description": "Crea una instancia para simular interacciones de usuario."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Probá un formulario que muestre un mensaje después de enviar datos válidos.",
+      "hint": "Buscá el botón por role y name; interactuá con userEvent y verificá el mensaje visible.",
+      "resources": [
+        {
+          "label": "Testing Library — Queries",
+          "url": "https://testing-library.com/docs/queries/about/"
+        },
+        {
+          "label": "Testing Library — user-event",
+          "url": "https://testing-library.com/docs/user-event/intro/"
+        }
+      ],
+      "related": [
+        "test-aaa",
+        "test-formularios"
+      ]
+    },
+    {
+      "id": "test-formularios",
+      "title": "Probar formularios, validación y mensajes",
+      "category": "componentes",
+      "summary": "Comprobá que un formulario acepte datos válidos y comunique errores de manera accesible.",
+      "purpose": "Las pruebas de formularios deben cubrir etiquetas, campos obligatorios, mensajes de validación, envío y estados de carga. Consultá los controles mediante sus labels y roles accesibles. Para operaciones asíncronas, esperá el cambio de estado con findBy o waitFor, sin introducir pausas arbitrarias.",
+      "whenToUse": "Las pruebas de formularios deben cubrir etiquetas, campos obligatorios, mensajes de validación, envío y estados de carga. Consultá los controles mediante sus labels y roles accesibles. Para operaciones asíncronas, esperá el cambio de estado con findBy o waitFor, sin introducir pausas arbitrarias.",
+      "syntax": "getByLabelText('Correo')\nawait user.type(campo, 'ana@example.com')\nawait user.click(boton)",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Validación de campo requerido",
+          "description": "Verificá que el usuario reciba un mensaje claro.",
+          "code": "it('avisa si falta el correo', async () => {\n  const user = userEvent.setup();\n  render(<FormularioRegistro />);\n  await user.click(screen.getByRole('button', { name: 'Crear cuenta' }));\n  expect(screen.getByText('El correo es obligatorio')).toBeInTheDocument();\n});",
+          "explanation": "La prueba ejecuta la misma acción que una persona: intenta enviar sin completar el campo y verifica el mensaje visible."
+        },
+        {
+          "title": "Esperar una respuesta asíncrona",
+          "description": "findBy espera hasta que el elemento aparezca o venza el timeout.",
+          "code": "await user.type(screen.getByLabelText('Correo'), 'ana@example.com');\nawait user.click(screen.getByRole('button', { name: 'Enviar' }));\nexpect(await screen.findByText('Registro completado')).toBeInTheDocument();",
+          "explanation": "findBy combina una consulta con espera asíncrona. Es preferible a usar setTimeout para adivinar cuánto tarda la interfaz."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "getByLabelText",
+          "description": "Busca un control asociado a su etiqueta."
+        },
+        {
+          "name": "findBy...",
+          "description": "Consulta asíncrona que espera hasta que el elemento aparece o se agota el timeout."
+        },
+        {
+          "name": "waitFor",
+          "description": "Reintenta una aserción mientras espera que una condición se cumpla."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Creá pruebas para un formulario de registro: campo vacío, correo inválido, envío exitoso y estado de carga.",
+      "hint": "Probá cada escenario desde la interfaz y verificá los mensajes que realmente se muestran.",
+      "resources": [
+        {
+          "label": "Testing Library — Async Methods",
+          "url": "https://testing-library.com/docs/dom-testing-library/api-async/"
+        }
+      ],
+      "related": [
+        "test-testing-library",
+        "test-async"
+      ]
+    },
+    {
+      "id": "test-playwright",
+      "title": "Playwright: primeras pruebas end-to-end",
+      "category": "e2e",
+      "summary": "Automatizá recorridos completos usando navegadores reales y aserciones que esperan condiciones.",
+      "purpose": "Playwright es una herramienta de automatización de navegadores y pruebas E2E. Permite ejecutar Chromium, Firefox y WebKit, interactuar con páginas, controlar red y capturar trazas. Una prueba E2E debe enfocarse en flujos importantes y ser independiente de otras pruebas.",
+      "whenToUse": "Playwright es una herramienta de automatización de navegadores y pruebas E2E. Permite ejecutar Chromium, Firefox y WebKit, interactuar con páginas, controlar red y capturar trazas. Una prueba E2E debe enfocarse en flujos importantes y ser independiente de otras pruebas.",
+      "syntax": "npm init playwright@latest\nnpx playwright test",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Abrir la aplicación y verificar el título",
+          "description": "Una prueba E2E inicia el navegador y visita una ruta real.",
+          "code": "import { test, expect } from '@playwright/test';\n\ntest('la página principal muestra WebDev Book', async ({ page }) => {\n  await page.goto('http://127.0.0.1:4173');\n  await expect(page).toHaveTitle(/WebDev Book/);\n});",
+          "explanation": "test define el escenario. page es una instancia de página del navegador. goto navega a la URL y toHaveTitle espera y verifica el título."
+        },
+        {
+          "title": "Probar una navegación",
+          "description": "Interactuá con la interfaz como lo haría una persona.",
+          "code": "test('permite abrir la biblioteca de herramientas', async ({ page }) => {\n  await page.goto('http://127.0.0.1:4173');\n  await page.getByRole('link', { name: /herramientas/i }).click();\n  await expect(page).toHaveURL(/tools/);\n});",
+          "explanation": "getByRole prioriza semántica accesible. click espera la interacción y toHaveURL comprueba la navegación."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "test(nombre, fn)",
+          "description": "Define un caso E2E."
+        },
+        {
+          "name": "page.goto(url)",
+          "description": "Navega a una dirección."
+        },
+        {
+          "name": "page.getByRole(role, options)",
+          "description": "Localiza elementos por rol y nombre accesible."
+        },
+        {
+          "name": "expect(locator).toBeVisible()",
+          "description": "Aserción con espera automática para comprobar visibilidad."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Instalá Playwright y escribí una prueba que abra tu aplicación, navegue a una categoría y compruebe un artículo.",
+      "hint": "Configurá primero webServer o iniciá la aplicación de prueba; luego usá locators accesibles.",
+      "resources": [
+        {
+          "label": "Playwright — Getting started",
+          "url": "https://playwright.dev/docs/intro"
+        },
+        {
+          "label": "Playwright — Assertions",
+          "url": "https://playwright.dev/docs/test-assertions"
+        }
+      ],
+      "related": [
+        "test-locators",
+        "test-api"
+      ]
+    },
+    {
+      "id": "test-locators",
+      "title": "Locators de Playwright y buenas consultas",
+      "category": "e2e",
+      "summary": "Elegí localizadores resistentes que representen cómo se identifica un control en la interfaz.",
+      "purpose": "Un Locator representa una consulta que Playwright resuelve cuando necesita interactuar o verificar. Preferí getByRole, getByLabel, getByText y getByTestId cuando corresponda. Los selectores CSS profundos y XPath acoplan la prueba a detalles de implementación y suelen romperse ante cambios visuales.",
+      "whenToUse": "Un Locator representa una consulta que Playwright resuelve cuando necesita interactuar o verificar. Preferí getByRole, getByLabel, getByText y getByTestId cuando corresponda. Los selectores CSS profundos y XPath acoplan la prueba a detalles de implementación y suelen romperse ante cambios visuales.",
+      "syntax": "page.getByRole('button', { name: 'Buscar' })\npage.getByLabel('Correo')\npage.getByText('Resultado')",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Usar rol y nombre",
+          "description": "Localizá un botón de forma accesible.",
+          "code": "const guardar = page.getByRole('button', { name: 'Guardar cambios' });\nawait guardar.click();\nawait expect(guardar).toBeDisabled();",
+          "explanation": "El rol identifica el tipo de control y name su nombre accesible. La aserción comprueba que queda deshabilitado después de la acción."
+        },
+        {
+          "title": "Usar una etiqueta de formulario",
+          "description": "Encontrá el campo mediante su label asociado.",
+          "code": "await page.getByLabel('Título de la novela').fill('Dune');\nawait page.getByRole('button', { name: 'Crear novela' }).click();",
+          "explanation": "getByLabel funciona cuando el control tiene una etiqueta accesible correctamente asociada. fill reemplaza el valor del campo."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "getByRole",
+          "description": "Consulta por rol accesible y nombre."
+        },
+        {
+          "name": "getByLabel",
+          "description": "Consulta por etiqueta de formulario."
+        },
+        {
+          "name": "getByText",
+          "description": "Consulta por contenido textual visible."
+        },
+        {
+          "name": "getByTestId",
+          "description": "Consulta por un atributo de prueba explícito; usalo cuando no exista una consulta semántica adecuada."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Elegí cinco elementos de una pantalla y escribí un locator robusto para cada uno.",
+      "hint": "Priorizá rol y nombre accesible; usá test id como alternativa deliberada, no como primera opción.",
+      "resources": [
+        {
+          "label": "Playwright — Locators",
+          "url": "https://playwright.dev/docs/locators"
+        }
+      ],
+      "related": [
+        "test-playwright",
+        "test-testing-library"
+      ]
+    },
+    {
+      "id": "test-api",
+      "title": "Probar APIs HTTP y respuestas de red",
+      "category": "e2e",
+      "summary": "Comprobá endpoints y escenarios de red sin depender exclusivamente de la interfaz.",
+      "purpose": "Las pruebas de API verifican rutas, códigos, esquemas, validación y permisos. Playwright incluye APIRequestContext para realizar solicitudes HTTP directamente. También permite interceptar y simular tráfico del navegador, útil para probar estados de error o respuestas lentas de forma determinista.",
+      "whenToUse": "Las pruebas de API verifican rutas, códigos, esquemas, validación y permisos. Playwright incluye APIRequestContext para realizar solicitudes HTTP directamente. También permite interceptar y simular tráfico del navegador, útil para probar estados de error o respuestas lentas de forma determinista.",
+      "syntax": "request.get(url)\nrequest.post(url, { data })\npage.route(url, handler)",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Probar un endpoint",
+          "description": "Consultá una API y verificá estado y contenido.",
+          "code": "import { test, expect } from '@playwright/test';\n\ntest('API devuelve una novela', async ({ request }) => {\n  const respuesta = await request.get('http://127.0.0.1:3000/api/novelas/1');\n  expect(respuesta.status()).toBe(200);\n  const novela = await respuesta.json();\n  expect(novela).toHaveProperty('titulo');\n});",
+          "explanation": "request realiza HTTP sin abrir una página. status devuelve el código y json interpreta el cuerpo. En proyectos reales conviene configurar baseURL."
+        },
+        {
+          "title": "Simular una respuesta de error",
+          "description": "Interceptá una ruta para probar cómo responde la interfaz.",
+          "code": "await page.route('**/api/novelas', async route => {\n  await route.fulfill({\n    status: 503,\n    contentType: 'application/json',\n    body: JSON.stringify({ error: 'Servicio temporalmente no disponible' })\n  });\n});\n\nawait page.goto('/catalogo');\nawait expect(page.getByText(/temporalmente no disponible/i)).toBeVisible();",
+          "explanation": "route intercepta solicitudes que coinciden con el patrón. fulfill responde con una respuesta controlada. Esto permite probar estados de error sin depender de una caída real del backend."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "request.get(url)",
+          "description": "Realiza una solicitud GET mediante el contexto API."
+        },
+        {
+          "name": "APIResponse.status()",
+          "description": "Devuelve el estado HTTP."
+        },
+        {
+          "name": "APIResponse.json()",
+          "description": "Interpreta el cuerpo como JSON."
+        },
+        {
+          "name": "page.route(pattern, handler)",
+          "description": "Intercepta solicitudes de red que coinciden con el patrón."
+        },
+        {
+          "name": "route.fulfill(options)",
+          "description": "Completa una solicitud interceptada con una respuesta simulada."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Escribí una prueba que verifique un endpoint existente y otra que simule un error 503 para la interfaz.",
+      "hint": "Separá la prueba directa de API de la prueba de interfaz que consume una respuesta simulada.",
+      "resources": [
+        {
+          "label": "Playwright — API testing",
+          "url": "https://playwright.dev/docs/api-testing"
+        },
+        {
+          "label": "Playwright — Network",
+          "url": "https://playwright.dev/docs/network"
+        }
+      ],
+      "related": [
+        "test-playwright",
+        "test-flaky"
+      ]
+    },
+    {
+      "id": "test-cobertura",
+      "title": "Cobertura de código: statements, branches, functions y lines",
+      "category": "calidad-ci",
+      "summary": "Interpretá qué mide la cobertura y cómo usarla sin convertirla en una meta vacía.",
+      "purpose": "La cobertura mide qué partes del código ejecutó la suite: líneas, sentencias, funciones y ramas. Una cobertura alta no garantiza buenas pruebas; una línea puede ejecutarse sin verificar su resultado. Usá los reportes para encontrar áreas sin escenarios relevantes y priorizá lógica crítica y riesgos.",
+      "whenToUse": "La cobertura mide qué partes del código ejecutó la suite: líneas, sentencias, funciones y ramas. Una cobertura alta no garantiza buenas pruebas; una línea puede ejecutarse sin verificar su resultado. Usá los reportes para encontrar áreas sin escenarios relevantes y priorizá lógica crítica y riesgos.",
+      "syntax": "npx vitest run --coverage",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Habilitar cobertura en Vitest",
+          "description": "Instalá un proveedor y ejecutá el reporte.",
+          "code": "npm install -D @vitest/coverage-v8\nnpx vitest run --coverage",
+          "explanation": "El proveedor V8 recoge información de ejecución. La salida muestra porcentajes por archivo y tipo de cobertura; consultá la configuración de tu versión de Vitest."
+        },
+        {
+          "title": "Pensar en ramas",
+          "description": "Una función puede ejecutar la línea y aun así no probar todas las decisiones.",
+          "code": "function etiquetaStock(cantidad) {\n  if (cantidad > 0) return 'Disponible';\n  return 'Agotado';\n}\n\n// Se necesitan al menos dos escenarios para cubrir ambas ramas.\netiquetaStock(4);\netiquetaStock(0);",
+          "explanation": "Ejecutar solo cantidad 4 no prueba la rama agotado. La cobertura de ramas ayuda a descubrir esa omisión, pero las aserciones deben comprobar el texto correcto."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Statements",
+          "description": "Porcentaje de sentencias ejecutadas."
+        },
+        {
+          "name": "Branches",
+          "description": "Porcentaje de ramas condicionales ejecutadas."
+        },
+        {
+          "name": "Functions",
+          "description": "Porcentaje de funciones invocadas."
+        },
+        {
+          "name": "Lines",
+          "description": "Porcentaje de líneas ejecutadas."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Buscá una función con un if y diseñá pruebas que recorran cada rama y verifiquen el resultado.",
+      "hint": "No te limites a subir el porcentaje: preguntá qué comportamiento demuestra cada aserción.",
+      "resources": [
+        {
+          "label": "Vitest — Coverage",
+          "url": "https://vitest.dev/guide/coverage.html"
+        }
+      ],
+      "related": [
+        "test-vitest",
+        "test-ci"
+      ]
+    },
+    {
+      "id": "test-flaky",
+      "title": "Pruebas flaky: detectar y reducir inestabilidad",
+      "category": "calidad-ci",
+      "summary": "Reconocé pruebas que pasan y fallan sin cambios de código y eliminá sus causas.",
+      "purpose": "Una prueba flaky produce resultados inconsistentes por temporizadores, dependencias externas, datos compartidos, orden de ejecución, concurrencia o selectores frágiles. Reintentar puede ayudar a diagnosticar, pero no corrige la causa. Priorizá esperas basadas en condiciones, aislamiento y datos controlados.",
+      "whenToUse": "Una prueba flaky produce resultados inconsistentes por temporizadores, dependencias externas, datos compartidos, orden de ejecución, concurrencia o selectores frágiles. Reintentar puede ayudar a diagnosticar, pero no corrige la causa. Priorizá esperas basadas en condiciones, aislamiento y datos controlados.",
+      "syntax": "Esperar condición observable > sleep fijo\nDatos aislados > estado compartido",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Evitar pausas arbitrarias",
+          "description": "No uses una espera fija para adivinar cuándo termina una acción.",
+          "code": "// Frágil:\nawait page.waitForTimeout(3000);\n\n// Preferible:\nawait expect(page.getByText('Carga completa')).toBeVisible();",
+          "explanation": "La aserción espera la condición hasta el timeout configurado. Una pausa fija puede ser demasiado corta en CI y demasiado larga en una máquina rápida."
+        },
+        {
+          "title": "Aislar datos de prueba",
+          "description": "Cada prueba debe crear y limpiar su propio estado.",
+          "code": "test('crea una novela', async ({ request }) => {\n  const titulo = `Prueba-${crypto.randomUUID()}`;\n  const respuesta = await request.post('/api/novelas', { data: { titulo } });\n  expect(respuesta.status()).toBe(201);\n  // Limpiar el recurso creado usando el endpoint de test.\n});",
+          "explanation": "Un identificador único evita colisiones entre ejecuciones paralelas. En una suite real, agregá limpieza fiable incluso si falla una aserción, por ejemplo con fixtures o hooks."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Flaky test",
+          "description": "Prueba cuyo resultado cambia de forma no determinista sin cambios relevantes en el código."
+        },
+        {
+          "name": "Auto-wait",
+          "description": "Esperas integradas que aguardan condiciones de locators y aserciones."
+        },
+        {
+          "name": "Retry",
+          "description": "Reejecución configurada para diagnosticar o tolerar fallos transitorios; no sustituye corregir la causa."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Encontrá una prueba que dependa de un tiempo fijo y reemplazá esa espera por una condición observable.",
+      "hint": "Buscá dependencias externas, estado compartido, selectores débiles y carreras entre operaciones.",
+      "resources": [
+        {
+          "label": "Playwright — Best Practices",
+          "url": "https://playwright.dev/docs/best-practices"
+        }
+      ],
+      "related": [
+        "test-playwright",
+        "test-ci"
+      ]
+    },
+    {
+      "id": "test-ci",
+      "title": "Ejecutar pruebas en CI/CD",
+      "category": "calidad-ci",
+      "summary": "Automatizá la ejecución de pruebas para detectar regresiones antes de integrar cambios.",
+      "purpose": "La integración continua ejecuta verificaciones automáticamente ante pushes y pull requests. Una pipeline básica instala dependencias desde el lockfile, ejecuta lint, pruebas unitarias, pruebas de integración y, cuando corresponde, E2E. Los secretos deben almacenarse en el sistema de CI y no en el repositorio.",
+      "whenToUse": "La integración continua ejecuta verificaciones automáticamente ante pushes y pull requests. Una pipeline básica instala dependencias desde el lockfile, ejecuta lint, pruebas unitarias, pruebas de integración y, cuando corresponde, E2E. Los secretos deben almacenarse en el sistema de CI y no en el repositorio.",
+      "syntax": "checkout → setup runtime → npm ci → npm test → build",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Workflow de GitHub Actions",
+          "description": "Ejemplo mínimo para ejecutar pruebas al abrir un pull request.",
+          "code": "name: Tests\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n          cache: npm\n      - run: npm ci\n      - run: npm test -- --run\n      - run: npm run build --if-present",
+          "explanation": "checkout obtiene el código; setup-node configura Node y caché; npm ci instala según el lockfile; las pruebas y build validan el cambio. Ajustá comandos y versión de Node a tu proyecto."
+        },
+        {
+          "title": "Separar verificaciones",
+          "description": "Una suite rápida puede ejecutarse en cada commit y una E2E más amplia en etapas posteriores.",
+          "code": "{\n  \"scripts\": {\n    \"test:unit\": \"vitest run\",\n    \"test:e2e\": \"playwright test\",\n    \"check\": \"npm run test:unit && npm run build\"\n  }\n}",
+          "explanation": "Los scripts nombrados hacen explícito qué tipo de validación se ejecuta. La pipeline puede correr E2E en un job separado con el servidor de prueba."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "npm ci",
+          "description": "Instala dependencias de forma reproducible usando el lockfile y falla si no está sincronizado."
+        },
+        {
+          "name": "Pull request checks",
+          "description": "Verificaciones automáticas que informan si un cambio pasa las condiciones definidas."
+        },
+        {
+          "name": "Secrets",
+          "description": "Valores sensibles configurados en el entorno CI; no deben escribirse en el código fuente."
+        }
+      ],
+      "bestPractices": [
+        "Validá los datos que cruzan límites de confianza y no supongas que el cliente siempre envía valores correctos.",
+        "Separá responsabilidades en funciones pequeñas y nombres descriptivos.",
+        "Probá los casos normales, los límites y los errores antes de integrar el ejemplo."
+      ],
+      "commonMistakes": [
+        "Confundir una respuesta HTTP exitosa con una operación de negocio válida.",
+        "Olvidar manejar errores y estados inesperados.",
+        "Copiar el ejemplo sin adaptar rutas, datos y configuración al proyecto."
+      ],
+      "exercise": "Definí una pipeline que instale dependencias, ejecute pruebas y construya la aplicación ante un pull request.",
+      "hint": "Usá npm ci y comandos que ya existan en package.json; no inventes scripts que el proyecto no tenga.",
+      "resources": [
+        {
+          "label": "GitHub Actions — Node.js",
+          "url": "https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs"
+        },
+        {
+          "label": "Vitest — CI",
+          "url": "https://vitest.dev/guide/cli.html"
+        }
+      ],
+      "related": [
+        "test-cobertura",
+        "test-flaky"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "Cómo una prueba verifica comportamiento",
+    "summary": "El runner ejecuta casos reproducibles, compara resultados observados con expectativas y reporta fallos.",
+    "steps": [
+      [
+        "Preparar el escenario",
+        "Arrange: crear datos, dobles o estado inicial necesario."
+      ],
+      [
+        "Ejecutar la acción",
+        "Act: llamar a la función, componente, endpoint o flujo que se quiere verificar."
+      ],
+      [
+        "Comprobar la expectativa",
+        "Assert: comparar el resultado o efecto observado con el contrato esperado."
+      ],
+      [
+        "Informar el resultado",
+        "El runner reporta éxito, fallo y contexto para que CI pueda detener una entrega defectuosa."
+      ]
+    ],
+    "note": "Las pruebas detectan regresiones en comportamientos cubiertos. No demuestran que el sistema esté libre de errores; los casos deben reflejar riesgos reales."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "test-vitest",
+      "test-async",
+      "test-playwright"
+    ],
+    "execution": {
+      "kind": "mixed",
+      "label": "Node.js y/o navegador según el runner",
+      "description": "Las pruebas unitarias suelen correr en Node.js; las pruebas de componentes pueden usar DOM simulado o navegador; las E2E ejecutan navegadores reales o motores automatizados."
+    },
+    "compatibility": {
+      "kind": "test-target",
+      "summary": "No hay una única matriz: depende del runner, del entorno y de los navegadores instalados para E2E.",
+      "rows": [
+        [
+          "Chrome / Chromium",
+          "Según runner y versión instalada"
+        ],
+        [
+          "Firefox",
+          "Según runner y versión instalada"
+        ],
+        [
+          "Edge",
+          "Según runner y versión instalada"
+        ],
+        [
+          "Safari / WebKit",
+          "Según runner; WebKit automatizado no equivale a probar cada Safari real"
+        ],
+        [
+          "Móvil",
+          "Requiere emulación o dispositivos reales"
+        ],
+        [
+          "Internet Explorer",
+          "Solo con herramientas y entornos heredados específicos"
+        ]
+      ],
+      "note": "Una suite de pruebas debe declarar qué navegadores y versiones verifica. Un test unitario de Node no prueba compatibilidad visual de navegador."
+    },
+    "advantages": [
+      "Detecta regresiones y hace repetible la verificación.",
+      "Las pruebas unitarias dan feedback rápido; integración y E2E cubren fronteras reales.",
+      "CI puede impedir que cambios que rompen comportamientos importantes lleguen a producción."
+    ],
+    "limitations": [
+      "Una suite grande o mal aislada puede ser lenta e inestable.",
+      "La cobertura porcentual no garantiza calidad.",
+      "Las pruebas E2E necesitan mantenimiento de datos, selectores y ambientes."
+    ],
+    "complements": [
+      [
+        "react",
+        "Probar componentes e interacciones."
+      ],
+      [
+        "vuejs",
+        "Probar componentes y composables."
+      ],
+      [
+        "express",
+        "Probar endpoints HTTP."
+      ],
+      [
+        "apis",
+        "Validar contratos y respuestas."
+      ],
+      [
+        "docker-deploy",
+        "Reproducir entornos de integración."
+      ]
+    ],
+    "docs": [
+      [
+        "Vitest — documentación",
+        "https://vitest.dev/guide/"
+      ],
+      [
+        "Playwright — documentación",
+        "https://playwright.dev/docs/intro"
+      ]
+    ]
+  }
+}

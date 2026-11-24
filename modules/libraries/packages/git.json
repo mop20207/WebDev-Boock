@@ -1,0 +1,672 @@
+{
+  "id": "git",
+  "title": "Git y GitHub",
+  "shortTitle": "Git",
+  "symbol": "⑂",
+  "eyebrow": "CONTROL DE VERSIONES",
+  "tagline": "Registrá cambios y colaborá en proyectos con confianza.",
+  "description": "Aprendé a crear repositorios, guardar versiones, trabajar con ramas y compartir tus proyectos en GitHub.",
+  "level": "Inicial a intermedio",
+  "accent": "git",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Introducción a Git y GitHub",
+      "description": "Comprendé el control de versiones y configurá tu entorno.",
+      "icon": "⑂",
+      "articles": [
+        "git-que-es",
+        "git-config",
+        "git-github"
+      ]
+    },
+    {
+      "id": "primeros-pasos",
+      "title": "Primeros pasos",
+      "description": "Creá repositorios, prepará archivos y consultá el historial.",
+      "icon": "▤",
+      "articles": [
+        "git-init",
+        "git-add-commit",
+        "git-log-diff",
+        "git-remoto"
+      ]
+    },
+    {
+      "id": "ramas",
+      "title": "Ramas y combinación",
+      "description": "Desarrollá cambios separados e integrá ramas.",
+      "icon": "⑃",
+      "articles": [
+        "git-branch",
+        "git-merge"
+      ]
+    },
+    {
+      "id": "colaboracion",
+      "title": "GitHub y colaboración",
+      "description": "Publicá cambios, abrí pull requests y excluí archivos locales.",
+      "icon": "◎",
+      "articles": [
+        "git-push-pull",
+        "git-pull-request",
+        "gitignore"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "git-que-es",
+      "title": "¿Qué es Git?",
+      "category": "fundamentos",
+      "summary": "Conocé el control de versiones y cómo permite conservar el historial de un proyecto.",
+      "purpose": "Git es un sistema de control de versiones distribuido. Registra cambios en un proyecto mediante commits y permite comparar, recuperar o combinar versiones. Git funciona localmente y no necesita GitHub para guardar un historial.",
+      "syntax": "git comando [opciones] [argumentos]",
+      "examples": [
+        {
+          "title": "Comprobar la instalación",
+          "description": "Consultá la versión instalada.",
+          "code": "git --version",
+          "explanation": "Si el comando no existe, instalá Git desde una fuente oficial."
+        },
+        {
+          "title": "Consultar ayuda",
+          "description": "Abrí la ayuda general o la de un comando específico.",
+          "code": "git help\\ngit help commit",
+          "explanation": "La ayuda describe la sintaxis y las opciones disponibles."
+        },
+        {
+          "title": "Revisar antes de preparar un commit",
+          "description": "Inspeccioná qué cambió y evitá incluir archivos por accidente.",
+          "language": "bash",
+          "code": "# Resumen corto de archivos modificados\ngit status --short\n\n# Diferencias que todavía no están preparadas\ngit diff",
+          "explanation": "git status --short ofrece un resumen compacto. git diff muestra cambios del working tree que todavía no están en staging. Después podés decidir qué agregar con git add; revisar antes reduce commits con archivos temporales o secretos."
+        }
+      ],
+      "exercise": "Explicá qué problema resuelve el control de versiones y por qué puede ser útil recuperar una versión anterior.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de Git",
+          "url": "https://git-scm.com/doc"
+        }
+      ],
+      "related": [
+        "git-github",
+        "git-config"
+      ],
+      "deepDive": {
+        "model": "Git puede entenderse como una máquina de instantáneas conectadas. El working tree contiene lo que editás, el staging area selecciona qué entrará en el próximo commit y el commit guarda una instantánea identificada por su hash. Una rama es una referencia que apunta a un commit; al crear otro commit, esa referencia avanza.",
+        "flow": [
+          [
+            "Comparar estados",
+            "git status resume diferencias y git diff permite inspeccionar cambios que todavía no están preparados."
+          ],
+          [
+            "Seleccionar contenido",
+            "git add copia al índice la versión de los cambios que querés incluir; podés preparar archivos o partes concretas."
+          ],
+          [
+            "Crear historia",
+            "git commit crea una nueva instantánea vinculada con su commit padre y actualiza la rama actual."
+          ]
+        ],
+        "decisions": [
+          "Hacé commits pequeños y con una intención comprensible; facilitan revisar y revertir cambios.",
+          "Usá ramas para aislar trabajo. fetch trae información del remoto sin integrar cambios automáticamente; pull combina descarga e integración."
+        ],
+        "debugging": "Si un archivo no aparece en el commit, revisá el staging con git status y git diff --staged. Si hay conflictos, resolvé los marcadores y verificá el resultado antes de crear el commit de merge."
+      },
+      "whenToUse": "Usá Git desde el primer momento en que un proyecto tenga cambios que quieras conservar, comparar o compartir. También permite experimentar en ramas, revisar contribuciones y recuperar estados anteriores sin depender de copias manuales de carpetas."
+    },
+    {
+      "id": "git-config",
+      "title": "Configurar nombre y correo",
+      "category": "fundamentos",
+      "summary": "Definí la identidad que Git guardará en los nuevos commits.",
+      "purpose": "Git asocia cada commit con un nombre y un correo. La configuración puede ser global para el usuario o local para un repositorio específico.",
+      "syntax": "git config --global user.name \"Tu Nombre\"\\ngit config --global user.email \"tu@email.com\"\\ngit config --list",
+      "examples": [
+        {
+          "title": "Configuración global",
+          "description": "Se aplica por defecto a los repositorios del usuario.",
+          "code": "git config --global user.name \"Ana Dev\"\\ngit config --global user.email \"ana@example.com\"",
+          "explanation": "Elegí una identidad adecuada para el historial de tus proyectos."
+        },
+        {
+          "title": "Configuración local",
+          "description": "Dentro del repositorio podés establecer datos diferentes.",
+          "code": "git config user.name \"Proyecto Equipo\"\\ngit config user.email \"equipo@example.com\"",
+          "explanation": "La configuración local tiene prioridad dentro de ese repositorio."
+        }
+      ],
+      "exercise": "Configurá nombre y correo de forma global y comprobá los valores con git config --list.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Git: configuración inicial",
+          "url": "https://git-scm.com/book/es/v2/Primeros-pasos-Configurando-Git"
+        }
+      ],
+      "related": [
+        "git-que-es"
+      ]
+    },
+    {
+      "id": "git-github",
+      "title": "Git y GitHub: diferencias",
+      "category": "fundamentos",
+      "summary": "Diferenciá la herramienta de control de versiones de la plataforma colaborativa.",
+      "purpose": "Git registra versiones de un proyecto en repositorios locales o remotos. GitHub aloja repositorios Git y agrega herramientas para colaborar, revisar cambios, gestionar tareas y automatizar flujos.",
+      "syntax": "Git local → commits\\nGit remote → repositorio remoto\\nGitHub → alojamiento y colaboración",
+      "examples": [
+        {
+          "title": "Guardar una versión local",
+          "description": "Estos comandos funcionan sin publicar el proyecto.",
+          "code": "git init\\ngit add .\\ngit commit -m \"Primer commit\"",
+          "explanation": "El commit se guarda en el repositorio local."
+        },
+        {
+          "title": "Conectar un remoto",
+          "description": "Una URL remota permite sincronizar el repositorio.",
+          "code": "git remote add origin https://github.com/usuario/proyecto.git\\ngit push -u origin main",
+          "explanation": "El nombre origin es convencional, pero puede elegirse otro."
+        }
+      ],
+      "exercise": "Clasificá qué tareas podés realizar solo con Git y cuáles requieren una plataforma de alojamiento como GitHub.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "GitHub: sobre Git y GitHub",
+          "url": "https://docs.github.com/es/get-started/start-your-journey/about-github-and-git"
+        }
+      ],
+      "related": [
+        "git-remoto",
+        "git-push-pull"
+      ]
+    },
+    {
+      "id": "git-init",
+      "title": "Crear un repositorio con git init",
+      "category": "primeros-pasos",
+      "summary": "Inicializá el historial de versiones en una carpeta de proyecto.",
+      "purpose": "git init crea los metadatos internos del repositorio. git status muestra el estado de los archivos y la rama actual.",
+      "syntax": "git init\\ngit status",
+      "examples": [
+        {
+          "title": "Inicializar un proyecto",
+          "description": "Entrá en la carpeta y ejecutá git init.",
+          "code": "cd mi-proyecto\\ngit init",
+          "explanation": "Git crea un directorio oculto .git que contiene la información del repositorio."
+        },
+        {
+          "title": "Revisar el estado",
+          "description": "Consultá los archivos que todavía no están bajo seguimiento.",
+          "code": "git status",
+          "explanation": "Los archivos untracked todavía no se han agregado al control de versiones."
+        }
+      ],
+      "exercise": "Creá una carpeta de prueba, inicializá Git y revisá cómo cambia el estado al agregar un archivo.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-add-commit",
+        "git-log-diff"
+      ]
+    },
+    {
+      "id": "git-add-commit",
+      "title": "Preparar y guardar cambios: add y commit",
+      "category": "primeros-pasos",
+      "summary": "Seleccioná cambios y registrá una versión nueva del proyecto.",
+      "purpose": "git add copia los cambios seleccionados al área de preparación. git commit guarda una instantánea del contenido preparado junto con un mensaje descriptivo.",
+      "syntax": "git add archivo\\ngit add .\\ngit commit -m \"Mensaje\"",
+      "examples": [
+        {
+          "title": "Preparar un archivo",
+          "description": "Agregá un archivo específico al área de preparación.",
+          "code": "git add index.html\\ngit status",
+          "explanation": "El archivo queda preparado para el próximo commit."
+        },
+        {
+          "title": "Crear un commit",
+          "description": "Registrá los cambios preparados.",
+          "code": "git commit -m \"Agrega estructura inicial\"",
+          "explanation": "Cada commit tiene un identificador y forma parte del historial."
+        }
+      ],
+      "exercise": "Creá un archivo, preparalo con git add y guardá un commit. Después modificá el archivo y observá git status.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Revisá git diff --staged antes de confirmar cambios importantes.",
+        "Hacé commits pequeños y coherentes.",
+        "No incluyas contraseñas, tokens ni archivos privados."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-init",
+        "git-log-diff",
+        "gitignore"
+      ]
+    },
+    {
+      "id": "git-log-diff",
+      "title": "Consultar historial y diferencias",
+      "category": "primeros-pasos",
+      "summary": "Revisá commits anteriores y compará cambios del proyecto.",
+      "purpose": "git log muestra el historial de commits. git diff compara cambios no preparados, cambios preparados o referencias diferentes.",
+      "syntax": "git log --oneline\\ngit diff\\ngit diff --staged",
+      "examples": [
+        {
+          "title": "Historial resumido",
+          "description": "Mostrá una línea por commit.",
+          "code": "git log --oneline --decorate",
+          "explanation": "Podés reconocer el identificador abreviado, la rama y el mensaje."
+        },
+        {
+          "title": "Ver cambios preparados",
+          "description": "Compará lo que está listo para incluirse en el commit.",
+          "code": "git diff --staged",
+          "explanation": "git diff sin opciones muestra cambios que aún no están preparados."
+        }
+      ],
+      "exercise": "Realizá dos commits en un proyecto de prueba y compará su historial y diferencias.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-add-commit",
+        "git-merge"
+      ]
+    },
+    {
+      "id": "git-remoto",
+      "title": "Clonar y conectar repositorios remotos",
+      "category": "primeros-pasos",
+      "summary": "Descargá un repositorio o configurá la conexión con un servidor remoto.",
+      "purpose": "git clone crea una copia local de un repositorio remoto. git remote permite consultar, agregar y modificar URLs remotas.",
+      "syntax": "git clone URL\\ngit remote -v\\ngit remote add origin URL",
+      "examples": [
+        {
+          "title": "Clonar un repositorio",
+          "description": "Usá la URL HTTPS o SSH del proyecto.",
+          "code": "git clone https://github.com/usuario/proyecto.git",
+          "explanation": "Git crea una carpeta y descarga el historial y los archivos."
+        },
+        {
+          "title": "Listar remotos",
+          "description": "Consultá las conexiones configuradas en el repositorio.",
+          "code": "git remote -v",
+          "explanation": "El remoto predeterminado suele llamarse origin."
+        }
+      ],
+      "exercise": "Cloná un repositorio público de práctica y ejecutá git remote -v para identificar su origen.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-push-pull",
+        "git-github"
+      ]
+    },
+    {
+      "id": "git-branch",
+      "title": "Crear y cambiar de ramas",
+      "category": "ramas",
+      "summary": "Desarrollá funciones o correcciones en líneas de trabajo separadas.",
+      "purpose": "Una rama es una referencia móvil a un commit. Permite trabajar en cambios aislados y combinarlos después con la rama principal.",
+      "syntax": "git branch\\ngit switch -c nueva-rama\\ngit switch main",
+      "examples": [
+        {
+          "title": "Crear y activar una rama",
+          "description": "switch -c crea la rama y cambia a ella.",
+          "code": "git switch -c feature/buscador",
+          "explanation": "Los commits siguientes avanzan sobre la nueva rama."
+        },
+        {
+          "title": "Listar las ramas",
+          "description": "Consultá las ramas locales.",
+          "code": "git branch",
+          "explanation": "Un asterisco identifica la rama activa."
+        }
+      ],
+      "exercise": "Creá una rama llamada prueba-estilos, realizá un cambio y regresá a main.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Usá nombres descriptivos, por ejemplo feature/buscador o fix/menu-mobile.",
+        "Hacé commits antes de cambiar de rama si tenés cambios importantes.",
+        "Integrá los cambios después de probarlos."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-merge",
+        "git-push-pull"
+      ]
+    },
+    {
+      "id": "git-merge",
+      "title": "Fusionar ramas y resolver conflictos",
+      "category": "ramas",
+      "summary": "Integrá cambios de otra rama y entendé cómo resolver conflictos.",
+      "purpose": "git merge integra los cambios de otra rama en la rama actual. Si los cambios son incompatibles, Git solicita resolverlos manualmente.",
+      "syntax": "git switch main\\ngit merge feature/buscador\\ngit status",
+      "examples": [
+        {
+          "title": "Fusionar una rama",
+          "description": "Primero cambiá a la rama que recibirá los cambios.",
+          "code": "git switch main\\ngit merge feature/buscador",
+          "explanation": "Git crea un commit de fusión cuando el historial lo requiere."
+        },
+        {
+          "title": "Resolver un conflicto",
+          "description": "Editá el archivo, elegí el contenido correcto y prepará la resolución.",
+          "code": "git status\\n# Editar archivo en conflicto\\ngit add archivo-resuelto.js\\ngit commit",
+          "explanation": "Quitá las marcas <<<<<<<, ======= y >>>>>>> al resolver el contenido."
+        }
+      ],
+      "exercise": "En dos ramas de prueba modificá la misma línea de forma diferente y luego intentá fusionarlas.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Leé ambas versiones antes de resolver.",
+        "Probá el proyecto después de resolver el conflicto.",
+        "No elimines marcas sin entender qué cambio representa cada lado."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-branch",
+        "git-log-diff"
+      ]
+    },
+    {
+      "id": "git-push-pull",
+      "title": "Sincronizar cambios con push, pull y fetch",
+      "category": "colaboracion",
+      "summary": "Publicá commits locales y descargá cambios desde el repositorio remoto.",
+      "purpose": "git push envía commits al remoto. git fetch descarga referencias remotas sin integrar automáticamente los cambios. git pull descarga e integra cambios en la rama actual.",
+      "syntax": "git push -u origin main\\ngit fetch origin\\ngit pull origin main",
+      "examples": [
+        {
+          "title": "Publicar una rama",
+          "description": "La opción -u configura el seguimiento de la rama remota.",
+          "code": "git push -u origin main",
+          "explanation": "Después suele ser posible usar git push sin repetir remoto y rama."
+        },
+        {
+          "title": "Traer cambios",
+          "description": "pull descarga e integra los cambios de la rama remota.",
+          "code": "git pull origin main",
+          "explanation": "Si hay cambios incompatibles, puede ser necesario resolver conflictos."
+        }
+      ],
+      "exercise": "En un repositorio de prueba publicá un commit y después descargá cambios realizados en el remoto.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Revisá git status antes de sincronizar.",
+        "Comprendé si el equipo usa merge o rebase.",
+        "No uses push --force en ramas compartidas sin conocer su impacto."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "git-remoto",
+        "git-pull-request"
+      ]
+    },
+    {
+      "id": "git-pull-request",
+      "title": "Colaborar mediante pull requests",
+      "category": "colaboracion",
+      "summary": "Proponé cambios en GitHub para revisarlos antes de integrarlos.",
+      "purpose": "Un pull request permite comparar una rama de trabajo con una rama base, discutir los cambios, ejecutar comprobaciones y aprobar la integración. Es una función de GitHub, no un comando de Git.",
+      "syntax": "git push -u origin feature/nueva-funcion\\n# Abrir Pull Request en GitHub",
+      "examples": [
+        {
+          "title": "Publicar una rama",
+          "description": "Subí al remoto la rama en la que trabajaste.",
+          "code": "git switch -c feature/perfil\\n# realizar cambios y commits\\ngit push -u origin feature/perfil",
+          "explanation": "La rama remota permite comparar el trabajo con main."
+        },
+        {
+          "title": "Configurar la comparación",
+          "description": "En GitHub seleccioná la rama base y la rama que contiene los cambios.",
+          "code": "base: main\\ncompare: feature/perfil",
+          "explanation": "Agregá un título, una descripción y los pasos para probar el cambio."
+        }
+      ],
+      "exercise": "Creá un repositorio de práctica y abrí un pull request desde una rama secundaria hacia main.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "GitHub Docs: pull requests",
+          "url": "https://docs.github.com/es/pull-requests"
+        }
+      ],
+      "related": [
+        "git-push-pull",
+        "git-branch"
+      ]
+    },
+    {
+      "id": "gitignore",
+      "title": "Ignorar archivos con .gitignore",
+      "category": "colaboracion",
+      "summary": "Evitá incluir dependencias generadas, archivos temporales y configuraciones privadas.",
+      "purpose": ".gitignore contiene patrones que indican qué archivos sin seguimiento debe ignorar Git. No deja de seguir automáticamente archivos que ya estaban registrados en el repositorio.",
+      "syntax": "# .gitignore\\nnode_modules/\\n.env\\n*.log\\ndist/",
+      "examples": [
+        {
+          "title": "Ignorar dependencias y archivos locales",
+          "description": "Colocá patrones en el archivo .gitignore de la raíz del repositorio.",
+          "code": "node_modules/\\n.env\\n*.log\\n.DS_Store",
+          "explanation": "Los patrones pueden representar directorios, nombres o extensiones."
+        },
+        {
+          "title": "Consultar archivos ignorados",
+          "description": "La opción --ignored muestra elementos excluidos.",
+          "code": "git status --short --ignored",
+          "explanation": "Si Git ya seguía un archivo, primero hay que quitarlo del índice sin borrar la copia local."
+        }
+      ],
+      "exercise": "Prepará un .gitignore para un proyecto JavaScript que excluya node_modules, .env y archivos de log.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "GitHub: ignorar archivos",
+          "url": "https://docs.github.com/es/get-started/git-basics/ignoring-files"
+        }
+      ],
+      "related": [
+        "npm-node-modules",
+        "git-add-commit"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "Cómo se guarda el historial",
+    "summary": "Git construye un historial de instantáneas; el área de preparación permite elegir qué cambios entran en cada commit.",
+    "steps": [
+      [
+        "Working tree",
+        "Editás archivos del proyecto. Git compara su estado con el último commit."
+      ],
+      [
+        "Staging area",
+        "Con git add seleccionás exactamente qué cambios formarán parte de la próxima instantánea."
+      ],
+      [
+        "Commit",
+        "Git crea un objeto commit que apunta a un árbol de archivos y al commit padre."
+      ],
+      [
+        "Ramas y remoto",
+        "Las ramas son referencias móviles. Push y fetch sincronizan referencias y objetos con otro repositorio."
+      ]
+    ],
+    "note": "Git no guarda simplemente una lista de diferencias: cada commit representa una instantánea y se conecta con su historia mediante referencias."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "git-init",
+      "git-add-commit",
+      "git-branch"
+    ],
+    "execution": {
+      "kind": "cli",
+      "label": "Terminal / herramienta de control de versiones",
+      "description": "Git se ejecuta como programa local o en entornos de CI. GitHub y otros servicios alojan repositorios remotos; no son lo mismo que el programa Git."
+    },
+    "compatibility": {
+      "kind": "not-browser",
+      "summary": "No aplica al navegador: Git gestiona versiones de archivos y commits fuera del runtime web.",
+      "note": "El navegador puede abrir repositorios y pull requests en GitHub, pero los comandos Git se ejecutan en la terminal o en herramientas integradas."
+    },
+    "advantages": [
+      "Conserva el historial de cambios y permite comparar versiones.",
+      "Las ramas aíslan experimentos y trabajo paralelo.",
+      "Facilita revisión, colaboración y recuperación de estados anteriores."
+    ],
+    "limitations": [
+      "Necesita una estrategia de commits, ramas y resolución de conflictos.",
+      "No reemplaza copias de seguridad de servicios externos ni guarda por sí solo datos de bases remotas.",
+      "Los secretos no deben agregarse al repositorio, incluso si luego se borran del último commit."
+    ],
+    "complements": [
+      [
+        "terminal",
+        "Ejecutar comandos Git y automatizar tareas."
+      ],
+      [
+        "npm",
+        "Versionar manifiestos, lockfiles y scripts del proyecto."
+      ],
+      [
+        "testing",
+        "Revisar cambios con pruebas antes de integrar."
+      ],
+      [
+        "docker-deploy",
+        "Versionar Dockerfiles y configuración de despliegue."
+      ]
+    ],
+    "docs": [
+      [
+        "Git — documentación oficial",
+        "https://git-scm.com/doc"
+      ],
+      [
+        "GitHub Skills",
+        "https://skills.github.com/"
+      ]
+    ]
+  }
+}

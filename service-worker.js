@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "webdev-book-v20";
+const CACHE_VERSION = "webdev-book-v21";
 const SHELL_CACHE = CACHE_VERSION + "-shell";
 const RUNTIME_CACHE = CACHE_VERSION + "-runtime";
 const APP_BASE = new URL("/WebDev-Boock/", self.location.origin);
@@ -26,8 +26,12 @@ const CORE_FILES = [
   "pages/tools-article.html",
   "pages/modules.html",
   "modules/catalog.json",
+  "modules/libraries/manifest.json",
+  "modules/libraries/ecosystem.json",
+  "modules/libraries/search-index.json",
   "css/module-center.css",
   "js/module-manager.js",
+  "js/library-packages.js",
   "pages/challenges.html",
   "pages/projects.html",
   "css/projects.css",
@@ -199,7 +203,6 @@ const CORE_FILES = [
   "data/html-articulos.json",
   "data/css-articulos.json",
   "data/js-articulos.json",
-  "data/tools.json",
   "data/challenges.json"
 ];
 
@@ -289,6 +292,10 @@ self.addEventListener("fetch", event => {
     return;
   }
   if (!isAppRequest(url)) return;
+
+  // Los paquetes de tecnología se almacenan una sola vez en IndexedDB después
+  // de verificar tamaño, JSON y SHA-256. No duplicarlos en Cache Storage.
+  if (url.pathname.includes("/modules/libraries/packages/")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));

@@ -1,0 +1,3037 @@
+{
+  "id": "mongodb",
+  "title": "MongoDB",
+  "shortTitle": "MongoDB",
+  "symbol": "MDB",
+  "eyebrow": "BASES DOCUMENTALES / BSON",
+  "tagline": "Modelá, consultá y administrá datos documentales.",
+  "description": "Biblioteca práctica para aprender MongoDB: BSON, diseño con documentos embebidos o referencias, consultas CRUD, arrays, agregaciones, índices, consistencia, seguridad y driver oficial de Node.js.",
+  "level": "Inicial a avanzado",
+  "accent": "mongodb",
+  "syntaxLanguage": "javascript",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos y modelo documental",
+      "description": "Entendé MongoDB, BSON, bases, colecciones y decisiones de modelado.",
+      "icon": "▤",
+      "articles": [
+        "mongodb-intro",
+        "mongodb-bson-documentos",
+        "mongodb-db-collections",
+        "mongodb-modelado-flexible",
+        "mongodb-modelado-embed-reference",
+        "mongodb-atlas-mongosh"
+      ]
+    },
+    {
+      "id": "crud-consultas",
+      "title": "CRUD y consultas",
+      "description": "Insertá documentos, filtrá resultados, elegí campos y actualizá o eliminá información.",
+      "icon": "⌕",
+      "articles": [
+        "mongodb-insert-documents",
+        "mongodb-find-filters",
+        "mongodb-projection-sort-limit",
+        "mongodb-query-operators",
+        "mongodb-update-operators",
+        "mongodb-delete-replace-upsert"
+      ]
+    },
+    {
+      "id": "arrays-aggregation",
+      "title": "Arrays y agregaciones",
+      "description": "Consultá arrays, modificá elementos y construí pipelines de agregación.",
+      "icon": "⤢",
+      "articles": [
+        "mongodb-arrays-embedded",
+        "mongodb-elemmatch",
+        "mongodb-array-updates",
+        "mongodb-aggregation-pipeline",
+        "mongodb-aggregation-group-lookup",
+        "mongodb-aggregation-unwind-project"
+      ]
+    },
+    {
+      "id": "indices-performance",
+      "title": "Índices y rendimiento",
+      "description": "Acelerá consultas, leé explain y elegí estrategias para paginación y escala.",
+      "icon": "⚡",
+      "articles": [
+        "mongodb-indices",
+        "mongodb-compound-indexes",
+        "mongodb-unique-ttl-text-indexes",
+        "mongodb-explain",
+        "mongodb-pagination-cursors",
+        "mongodb-query-performance"
+      ]
+    },
+    {
+      "id": "integrity-security",
+      "title": "Integridad, transacciones y seguridad",
+      "description": "Aplicá atomicidad, validación, transacciones, consistencia y control de acceso.",
+      "icon": "🔒",
+      "articles": [
+        "mongodb-atomicity",
+        "mongodb-validacion-esquema",
+        "mongodb-transactions",
+        "mongodb-read-write-concern",
+        "mongodb-roles-access-control",
+        "mongodb-conexion-segura"
+      ]
+    },
+    {
+      "id": "node-driver",
+      "title": "MongoDB con Node.js y Express",
+      "description": "Conectá el driver oficial, trabajá con cursores y organizá el acceso a datos.",
+      "icon": "⬢",
+      "articles": [
+        "mongodb-node-driver-connect",
+        "mongodb-node-crud",
+        "mongodb-node-cursors",
+        "mongodb-node-bulk-errors",
+        "mongodb-node-typescript",
+        "mongodb-express-api"
+      ]
+    },
+    {
+      "id": "administracion-avanzada",
+      "title": "Administración y capacidades avanzadas",
+      "description": "Conocé replicación, sharding, change streams, copias de seguridad y GridFS.",
+      "icon": "⚙",
+      "articles": [
+        "mongodb-replica-sets",
+        "mongodb-sharding",
+        "mongodb-change-streams",
+        "mongodb-backup-restore",
+        "mongodb-migrations",
+        "mongodb-gridfs"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "mongodb-intro",
+      "category": "fundamentos",
+      "title": "¿Qué es MongoDB y cuándo conviene utilizarlo?",
+      "summary": "Conocé MongoDB como base de datos documental y compará su enfoque con el modelo relacional.",
+      "purpose": "MongoDB es una base de datos orientada a documentos. Guarda registros BSON dentro de colecciones y ofrece consultas, índices, agregaciones y transacciones. La flexibilidad ayuda cuando el dominio se expresa naturalmente como documentos; no significa que las relaciones o la consistencia dejen de importar.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "Aplicación → driver → base MongoDB → colección → documentos",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Un documento de producto",
+          "description": "Un producto y sus atributos relacionados pueden guardarse juntos.",
+          "code": "// En mongosh, insertá un producto.\ndb.productos.insertOne({ nombre: \"Teclado\", precio: 85000, activo: true, especificaciones: { idioma: \"ES\", switches: \"brown\" } });",
+          "explanation": "El documento combina campos simples y un objeto anidado; BSON conserva tipos además de texto.",
+          "language": "javascript"
+        },
+        {
+          "title": "Consultar documentos",
+          "description": "Filtrá por estado y precio.",
+          "code": "// Encontrá productos activos por debajo del presupuesto.\ndb.productos.find({ activo: true, precio: { $lt: 100000 } });",
+          "explanation": "find devuelve un cursor con las coincidencias y puede aprovechar índices.",
+          "language": "javascript"
+        },
+        {
+          "title": "Insertar y después consultar documentos",
+          "description": "Guardá una novela y recuperá solo los campos necesarios para una lista.",
+          "language": "javascript",
+          "code": "db.novelas.insertOne({\n  titulo: 'Re:Zero',\n  autor: 'Tappei Nagatsuki',\n  estado: 'leyendo'\n});\n\ndb.novelas.find(\n  { estado: 'leyendo' },\n  { _id: 0, titulo: 1, autor: 1 }\n).sort({ titulo: 1 });",
+          "explanation": "insertOne agrega un documento a la colección. find recibe un filtro y una proyección: 1 incluye un campo y _id: 0 lo excluye. sort ordena ascendentemente por título. El ejemplo usa mongosh."
+        }
+      ],
+      "parameters": [],
+      "exercise": "En una ficha de novela, ¿qué datos guardarías dentro del mismo documento y cuáles en otra colección?",
+      "hint": "Empezá por cómo se consulta y actualiza la ficha; después elegí qué conviene anidar o referenciar.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Introduction",
+          "url": "https://www.mongodb.com/docs/manual/introduction/"
+        },
+        {
+          "label": "MongoDB — Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "related": [
+        "sql-que-es",
+        "sql-modelo-relacional",
+        "mongodb-modelado-embed-reference"
+      ],
+      "deepDive": {
+        "model": "MongoDB almacena documentos BSON dentro de colecciones. El documento suele representar una unidad de lectura de la aplicación; su estructura puede evolucionar, pero eso no significa que el diseño sea libre de reglas. Los patrones de acceso determinan cuándo conviene incrustar datos o mantener referencias.",
+        "flow": [
+          [
+            "Diseñar documentos",
+            "Definí qué datos suelen leerse y actualizarse juntos."
+          ],
+          [
+            "Elegir incrustar o referenciar",
+            "Embebé subdocumentos acotados que pertenecen al agregado; usá referencias cuando los datos se comparten o crecen sin límite."
+          ],
+          [
+            "Consultar e indexar",
+            "Los filtros y proyecciones deben alinearse con índices y patrones reales de consulta."
+          ]
+        ],
+        "decisions": [
+          "Preferí documentos que resuelvan lecturas frecuentes sin duplicar datos que cambian constantemente.",
+          "Usá agregaciones para procesamientos por etapas y mantené índices ajustados al workload real."
+        ],
+        "debugging": "Si una consulta es lenta, inspeccioná explain() y verificá si el índice coincide con el filtro y el ordenamiento. Si el documento crece sin control, revisá arrays ilimitados y el patrón de referencias."
+      }
+    },
+    {
+      "id": "mongodb-bson-documentos",
+      "category": "fundamentos",
+      "title": "BSON, documentos y tipos de datos",
+      "summary": "Reconocé la representación BSON y los tipos que no son simples cadenas JSON.",
+      "purpose": "BSON es la representación binaria que MongoDB utiliza para almacenar documentos. Añade tipos como ObjectId, Date, Decimal128 y binarios. Un documento contiene pares campo-valor y puede anidar objetos y arrays.",
+      "whenToUse": "Comprendé BSON antes de modelar datos, trabajar con identificadores, fechas, importes o arrays desde mongosh y desde el driver de Node.js.",
+      "syntax": "{ campo: valor, objeto: { ... }, lista: [ ... ] }",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "ObjectId y Date",
+          "description": "Usá tipos BSON para identificador y fecha.",
+          "code": "// mongosh crea valores BSON específicos.\ndb.eventos.insertOne({ _id: ObjectId(), tipo: \"login\", creadoEn: new Date() });",
+          "explanation": "ObjectId es un tipo identificador BSON; Date representa un instante temporal.",
+          "language": "javascript"
+        },
+        {
+          "title": "Decimal128 para importes",
+          "description": "Representá importes decimales sin usar un float común.",
+          "code": "// Decimal128 mantiene representación decimal.\ndb.pagos.insertOne({ total: NumberDecimal(\"1250.50\"), moneda: \"ARS\" });",
+          "explanation": "Decimal128 permite exactitud decimal apropiada para importes; mantené una política consistente de conversiones.",
+          "language": "javascript"
+        },
+        {
+          "title": "Combinar identificador, fecha y decimal BSON",
+          "description": "Guardá una novela con tipos BSON apropiados para identidad, instante e importe.",
+          "language": "javascript",
+          "code": "db.ediciones.insertOne({\n  novelaId: ObjectId(),\n  titulo: 'Edición coleccionista',\n  publicadoEn: new Date('2026-10-15T12:00:00Z'),\n  precio: NumberDecimal('1250.50'),\n  etiquetas: ['tapa-dura', 'limitada']\n});",
+          "explanation": "ObjectId identifica la novela relacionada; Date representa el instante y Decimal128 conserva el valor decimal. Los arrays pueden almacenar varias etiquetas en el mismo documento."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "ObjectId",
+          "description": "Tipo BSON usado habitualmente como identificador."
+        },
+        {
+          "name": "Date",
+          "description": "Tipo BSON que representa un instante temporal."
+        },
+        {
+          "name": "Decimal128",
+          "description": "Tipo decimal de precisión adecuada para importes."
+        },
+        {
+          "name": "_id",
+          "description": "Campo identificador único de cada documento."
+        },
+        {
+          "name": "BSON",
+          "description": "Representación binaria serializada que MongoDB usa para documentos."
+        }
+      ],
+      "exercise": "Elegí un tipo BSON para id, fecha de creación, importe monetario y lista de etiquetas.",
+      "hint": "ObjectId, Date, Decimal128 y Array son opciones adecuadas.",
+      "bestPractices": [
+        "Mantené el mismo tipo BSON para un mismo campo en todos los documentos.",
+        "Usá ObjectId para referencias Mongo y convertí strings de ruta en el backend.",
+        "Usá Decimal128 cuando la precisión decimal sea importante.",
+        "Controlá el tamaño y crecimiento de documentos antes de incrustar grandes colecciones."
+      ],
+      "commonMistakes": [
+        "Comparar un ObjectId con una cadena sin convertir el tipo.",
+        "Guardar importes decimales como números binarios de punto flotante sin evaluar precisión.",
+        "Guardar fechas como texto y perder consultas cronológicas adecuadas.",
+        "Suponer que un documento BSON puede crecer sin límite."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — BSON Types",
+          "url": "https://www.mongodb.com/docs/manual/reference/bson-types/"
+        },
+        {
+          "label": "MongoDB — Documents",
+          "url": "https://www.mongodb.com/docs/manual/core/document/"
+        }
+      ],
+      "related": [
+        "mongodb-insert-documents",
+        "sql-tipos-datos"
+      ],
+      "deepDive": {
+        "model": "MongoDB almacena documentos en BSON, una representación binaria con tipos que no existen como primitivos JSON, entre ellos ObjectId, Date, Decimal128 y datos binarios. Un documento es un conjunto de campos con valores; puede anidar documentos y arrays. Aunque el documento se parezca a un objeto JavaScript, los tipos BSON y las reglas de serialización del driver deben tenerse en cuenta.",
+        "flow": [
+          [
+            "Crear el objeto de datos",
+            "La aplicación o mongosh prepara un documento con campos y valores."
+          ],
+          [
+            "Serializar a BSON",
+            "El driver convierte los valores compatibles a la representación BSON que MongoDB almacena."
+          ],
+          [
+            "Persistir el documento",
+            "MongoDB guarda el documento e incluye _id si no se proporcionó."
+          ],
+          [
+            "Deserializar al cliente",
+            "El driver reconstruye valores JavaScript; tipos como ObjectId y Decimal128 conservan su semántica específica."
+          ]
+        ],
+        "decisions": [
+          "Usá Date para instantes temporales y definí una convención de zona horaria en toda la aplicación.",
+          "Usá Decimal128 cuando necesitás decimales exactos, por ejemplo importes, y mantené conversiones coherentes en el frontend/backend.",
+          "No conviertas ObjectId a string prematuramente si después lo necesitás como tipo BSON en filtros.",
+          "Recordá el límite de 16 MiB por documento y diseñá arrays y contenido binario con límites conocidos."
+        ],
+        "debugging": "Si una consulta por _id no coincide, verificá que envíes ObjectId y no una cadena con el mismo texto. Si los valores decimales pierden precisión, revisá si fueron guardados como Number de punto flotante. Si una fecha se desplaza, verificá el instante UTC almacenado y la zona en la que la interfaz lo presenta."
+      }
+    },
+    {
+      "id": "mongodb-db-collections",
+      "category": "fundamentos",
+      "title": "Bases de datos y colecciones",
+      "summary": "Organizá namespaces de MongoDB y entendé cómo nacen las colecciones.",
+      "purpose": "Una base contiene colecciones y cada colección contiene documentos. MongoDB puede crear una colección implícitamente al insertar el primer documento o de forma explícita con createCollection y opciones como validación.",
+      "whenToUse": "Usá bases y colecciones para separar áreas de datos, definir permisos, administrar índices y establecer validadores. Es parte de la configuración inicial de un entorno MongoDB.",
+      "syntax": "use tienda · db.createCollection(\"productos\") · db.productos",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Crear una base y una colección",
+          "description": "Prepará un espacio de trabajo.",
+          "code": "// En mongosh, seleccioná la base y creá la colección.\nuse tienda_dev\ndb.createCollection(\"productos\");",
+          "explanation": "use cambia la base activa del shell; createCollection permite configurar opciones.",
+          "language": "javascript"
+        },
+        {
+          "title": "Creación implícita",
+          "description": "Insertar por primera vez puede crear la colección.",
+          "code": "// Si categorias no existe, la inserción crea la colección.\ndb.categorias.insertOne({ nombre: \"Periféricos\", activa: true });\nshow collections;",
+          "explanation": "La creación implícita es cómoda al comenzar; en entornos controlados puede convenir crear colecciones con validadores.",
+          "language": "javascript"
+        },
+        {
+          "title": "Crear una colección con validación básica",
+          "description": "Definí una estructura mínima para impedir que se inserten novelas sin título o con campos de tipo inesperado.",
+          "language": "javascript",
+          "code": "db.createCollection('novelas', {\n  validator: {\n    $jsonSchema: {\n      bsonType: 'object',\n      required: ['titulo', 'estado'],\n      properties: {\n        titulo: { bsonType: 'string', minLength: 1 },\n        estado: { bsonType: 'string' }\n      }\n    }\n  }\n});",
+          "explanation": "createCollection permite configurar un validador JSON Schema. La colección sigue siendo flexible en los campos no declarados, pero las reglas definidas se aplican a las escrituras."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "use nombreBase",
+          "description": "Selecciona la base activa en mongosh."
+        },
+        {
+          "name": "db.createCollection()",
+          "description": "Crea una colección y permite configurar opciones."
+        },
+        {
+          "name": "show dbs",
+          "description": "Lista las bases visibles para el usuario."
+        },
+        {
+          "name": "show collections",
+          "description": "Lista colecciones de la base activa."
+        },
+        {
+          "name": "validator",
+          "description": "Reglas de validación aplicadas a los documentos escritos."
+        }
+      ],
+      "exercise": "Organizá una base de biblioteca digital con usuarios, novelas, volúmenes y lecturas.",
+      "hint": "Pensá qué representa cada conjunto y cuáles son sus patrones de consulta.",
+      "bestPractices": [
+        "Separá bases o despliegues por entorno cuando sea necesario aislar permisos y configuración.",
+        "Usá createCollection con validador cuando el contrato de datos ya esté definido.",
+        "Comprobá la base activa antes de ejecutar scripts de carga o limpieza.",
+        "Definí nombres consistentes y permisos mínimos por colección."
+      ],
+      "commonMistakes": [
+        "Ejecutar un script en la base equivocada porque olvidaste revisar use o db.getName().",
+        "Confundir una colección con una tabla SQL en cuanto a estructura y restricciones.",
+        "Creer que crear una colección automáticamente define un esquema estricto.",
+        "Dar acceso de escritura a todas las bases cuando el proceso solo necesita una."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Databases and Collections",
+          "url": "https://www.mongodb.com/docs/manual/core/databases-and-collections/"
+        }
+      ],
+      "related": [
+        "mongodb-atlas-mongosh",
+        "mongodb-modelado-flexible"
+      ],
+      "deepDive": {
+        "model": "MongoDB organiza datos en bases de datos y colecciones. Una colección agrupa documentos y puede crearse implícitamente con la primera inserción o explícitamente con createCollection para definir opciones, validadores y otros ajustes. Los nombres de base y colección, los permisos y los índices forman parte del diseño operativo, no solo de la presentación de datos.",
+        "flow": [
+          [
+            "Elegir la base",
+            "mongosh usa use nombreBase para seleccionar el contexto de trabajo."
+          ],
+          [
+            "Crear o abrir colección",
+            "La colección puede existir previamente o crearse explícitamente con createCollection."
+          ],
+          [
+            "Insertar documentos",
+            "Las operaciones de escritura agregan documentos y pueden crear una colección si no existe."
+          ],
+          [
+            "Administrar estructura",
+            "Se inspeccionan colecciones, validadores e índices y se otorgan permisos mínimos."
+          ]
+        ],
+        "decisions": [
+          "Usá una colección por tipo de entidad o agregado cuando sus patrones de acceso y ciclo de vida lo justifiquen.",
+          "Creá colecciones explícitamente cuando necesitás validadores, índices iniciales, opciones o configuración reproducible.",
+          "No crees colecciones por cada usuario o pequeña variación de dato sin una necesidad clara.",
+          "Separá entornos de desarrollo y producción y verificá la base seleccionada antes de hacer cambios."
+        ],
+        "debugging": "Si una colección no aparece, confirmá la base actual con db.getName() y la lista con show collections. Si createCollection informa que ya existe, revisá sus opciones en vez de recrearla. Si una escritura está rechazada, comprobá permisos, validadores y la colección a la que apunta el contexto actual."
+      }
+    },
+    {
+      "id": "mongodb-modelado-flexible",
+      "category": "fundamentos",
+      "title": "Esquema flexible y evolución de documentos",
+      "summary": "Comprendé la flexibilidad y cómo mantener consistentes los documentos.",
+      "purpose": "Los documentos de una colección pueden tener campos diferentes, pero las aplicaciones suelen necesitar una estructura común. La flexibilidad permite agregar atributos y evolucionar el modelo; validadores y convenciones protegen campos esenciales.",
+      "whenToUse": "Usá el esquema flexible cuando los documentos evolucionan o tienen campos opcionales, pero establecé convenciones y validadores para mantener una forma consistente a medida que crece la aplicación.",
+      "syntax": "Documento v1 → documento v2 · campos opcionales · versionado",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Agregar un campo mediante backfill",
+          "description": "Completá documentos antiguos que no tienen el idioma.",
+          "code": "// Solo actualiza novelas donde falta idioma.\ndb.novelas.updateMany({ idioma: { $exists: false } }, { $set: { idioma: \"desconocido\" } });",
+          "explanation": "$exists detecta el campo ausente. El backfill permite normalizar datos antiguos.",
+          "language": "javascript"
+        },
+        {
+          "title": "Mantener compatibilidad en Node",
+          "description": "La aplicación puede tolerar documentos previos a la migración.",
+          "code": "// En JavaScript, asigná un valor de respaldo.\nconst idioma = novela.idioma ?? \"desconocido\";\nconsole.log(idioma);",
+          "explanation": "La compatibilidad evita que un despliegue dependa de una migración instantánea.",
+          "language": "javascript"
+        },
+        {
+          "title": "Versionar un documento durante una evolución",
+          "description": "Agregá un campo nuevo por lotes y registrá qué versión de estructura usa cada documento.",
+          "language": "javascript",
+          "code": "db.novelas.updateMany(\n  { schemaVersion: { $exists: false } },\n  {\n    $set: {\n      idioma: 'desconocido',\n      schemaVersion: 2\n    }\n  }\n);\n\n// La aplicación nueva puede leer documentos v1 y v2 durante la transición.",
+          "explanation": "El filtro limita el backfill a documentos anteriores. En colecciones grandes, ejecutá migraciones en lotes y medí el impacto. La lectura compatible evita exigir que todos los documentos cambien en un único despliegue."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "$jsonSchema",
+          "description": "Define validación de tipos, campos requeridos y reglas de estructura."
+        },
+        {
+          "name": "schemaVersion",
+          "description": "Campo de aplicación para identificar versión del documento."
+        },
+        {
+          "name": "$exists",
+          "description": "Filtra documentos según presencia de un campo."
+        },
+        {
+          "name": "updateMany()",
+          "description": "Actualiza todos los documentos coincidentes."
+        },
+        {
+          "name": "backfill",
+          "description": "Proceso de completar o transformar datos existentes."
+        }
+      ],
+      "exercise": "¿Qué harías si agregás idioma a millones de documentos existentes?",
+      "hint": "Evaluá lectura compatible, backfill por lotes, validación y monitoreo.",
+      "bestPractices": [
+        "Diseñá según patrones de lectura y escritura reales, no solo según las entidades.",
+        "Planificá cómo leerán los documentos antiguos las versiones nuevas del backend.",
+        "Aplicá backfills por lotes y monitoreá errores y carga.",
+        "Usá validación de esquema para los campos cuyo tipo y presencia sean invariantes."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia total de contrato.",
+        "Cambiar el formato de un campo sin migrar ni soportar documentos antiguos.",
+        "Realizar un updateMany masivo sin medir impacto o preparar una estrategia de recuperación.",
+        "Dejar indefinidamente varias versiones de documento sin un plan de normalización."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        },
+        {
+          "label": "MongoDB — Schema Validation",
+          "url": "https://www.mongodb.com/docs/manual/core/schema-validation/"
+        }
+      ],
+      "related": [
+        "mongodb-db-collections",
+        "mongodb-bson-documentos"
+      ],
+      "deepDive": {
+        "model": "El esquema flexible permite que documentos de una colección tengan campos opcionales o estructuras distintas, pero la aplicación sigue necesitando un contrato coherente. La evolución del modelo debe contemplar documentos antiguos y nuevos coexistiendo durante una migración. Los validadores de colección pueden exigir campos, tipos y rangos para evitar que la flexibilidad se convierta en datos inconsistentes.",
+        "flow": [
+          [
+            "Definir una versión del modelo",
+            "La aplicación establece qué campos y tipos espera para cada documento."
+          ],
+          [
+            "Introducir el cambio",
+            "Se agrega un campo o se modifica la estructura sin asumir que todos los documentos se actualizan a la vez."
+          ],
+          [
+            "Leer de forma compatible",
+            "El código soporta temporalmente documentos antiguos y nuevos mientras se ejecuta el backfill."
+          ],
+          [
+            "Validar el estado final",
+            "Se normalizan documentos y se aplican validadores cuando el contrato se estabiliza."
+          ]
+        ],
+        "decisions": [
+          "Diseñá según patrones de lectura y escritura; flexible no significa arbitrario ni libre de reglas.",
+          "Planeá migraciones por lotes cuando la colección es grande, controlando carga y progreso.",
+          "Usá schema validation para exigir campos y tipos que ya son invariantes del dominio.",
+          "Versioná documentos cuando los cambios estructurales requieren lecturas o conversiones distintas."
+        ],
+        "debugging": "Si un documento antiguo rompe el código nuevo, comprobá si falta un campo y si el consumidor tiene un valor de respaldo. Si una escritura falla, inspeccioná el validador de colección. Si un backfill actualiza demasiados documentos, refiná el filtro, limita lotes y registra el avance."
+      }
+    },
+    {
+      "id": "mongodb-modelado-embed-reference",
+      "category": "fundamentos",
+      "title": "Modelar con documentos embebidos o referencias",
+      "summary": "Elegí entre anidar datos en un documento o relacionarlos mediante identificadores.",
+      "purpose": "Embeber datos que se leen juntos, tienen ciclo de vida cercano y tamaño controlado. Referenciá entidades compartidas, relaciones grandes o datos que cambian independientemente. Considerá el límite de tamaño BSON y el patrón de actualización.",
+      "whenToUse": "Usá esta decisión cuando diseñes relaciones entre novelas, autores, volúmenes, reseñas, etiquetas y usuarios. La estructura debe responder a qué se consulta junto, qué crece y qué se actualiza de forma independiente.",
+      "syntax": "Embed: padre { hijos: [...] } · Reference: { hijoId: ObjectId(...) }",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Embeber reseñas acotadas",
+          "description": "Guardá reseñas recientes con el producto cuando se consultan juntas.",
+          "code": "// Un conjunto pequeño y limitado puede vivir junto al producto.\ndb.productos.insertOne({ nombre: \"Mouse\", reseñas: [{ usuario: \"Ana\", estrellas: 5 }, { usuario: \"Luis\", estrellas: 4 }] });",
+          "explanation": "El documento se recupera con sus reseñas; no embeber un historial ilimitado.",
+          "language": "javascript"
+        },
+        {
+          "title": "Referenciar usuario desde pedido",
+          "description": "Guardá el id del usuario en vez de copiar su ficha.",
+          "code": "// El usuario conserva su propia colección y ciclo de vida.\ndb.pedidos.insertOne({ usuarioId: ObjectId(\"64b000000000000000000001\"), total: 12000, estado: \"pendiente\" });",
+          "explanation": "La referencia evita repetir toda la ficha del usuario; podés usar $lookup para combinar datos.",
+          "language": "javascript"
+        },
+        {
+          "title": "Diseñar una vista híbrida con referencia y resumen",
+          "description": "Guardá el identificador del autor y un nombre visible para reducir lecturas frecuentes, definiendo quién actualiza la copia.",
+          "language": "javascript",
+          "code": "db.novelas.insertOne({\n  titulo: 'Re:Zero',\n  autorId: ObjectId('64b000000000000000000001'),\n  autorResumen: {\n    nombre: 'Tappei Nagatsuki'\n  },\n  estado: 'publicada'\n});",
+          "explanation": "autorId conserva la referencia a la entidad fuente; autorResumen es una copia denormalizada para una lectura común. Si cambia el nombre del autor, la aplicación debe decidir si actualiza los resúmenes, los tolera temporalmente o consulta la colección relacionada."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "embedding",
+          "description": "Guardar datos relacionados dentro de un documento padre."
+        },
+        {
+          "name": "reference",
+          "description": "Guardar el identificador de otro documento."
+        },
+        {
+          "name": "$lookup",
+          "description": "Combina documentos de colecciones en una agregación."
+        },
+        {
+          "name": "cardinalidad",
+          "description": "Cantidad de elementos relacionados en una relación."
+        },
+        {
+          "name": "16 MiB",
+          "description": "Tamaño máximo de un documento BSON de MongoDB."
+        }
+      ],
+      "exercise": "Modelá una biblioteca: ¿embeberías las últimas lecturas o usarías una colección separada?",
+      "hint": "Considerá tamaño, frecuencia de actualización y cómo se consulta.",
+      "bestPractices": [
+        "Embeber datos relacionados que se recuperan juntos y tienen tamaño acotado.",
+        "Referenciar entidades compartidas o conjuntos que crecen sin límite.",
+        "Documentá cómo se mantiene la consistencia de los datos duplicados.",
+        "Considerá el límite de tamaño del documento y la frecuencia de actualizaciones."
+      ],
+      "commonMistakes": [
+        "Embeber un historial ilimitado dentro de un único documento.",
+        "Referenciar todo por costumbre y forzar múltiples consultas para cada pantalla.",
+        "Duplicar campos compartidos sin decidir cómo sincronizarlos.",
+        "Usar transacciones distribuidas como sustituto de un modelo de datos mal diseñado."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Embedding",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/embedding/"
+        },
+        {
+          "label": "MongoDB — References",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/referencing/"
+        }
+      ],
+      "related": [
+        "mongodb-aggregation-group-lookup",
+        "sql-modelo-relacional"
+      ],
+      "deepDive": {
+        "model": "El modelo documental permite representar relaciones mediante subdocumentos embebidos o referencias entre colecciones. Embeber facilita recuperar datos relacionados en una operación y permite actualizar atómicamente el documento; referenciar reduce duplicación y encaja con entidades compartidas o colecciones que crecen sin límite. La elección depende de cómo la aplicación lee y modifica esos datos.",
+        "flow": [
+          [
+            "Estudiar el patrón de acceso",
+            "Identificá qué datos se leen juntos, con qué frecuencia cambian y si existen de forma independiente."
+          ],
+          [
+            "Evaluar embedding",
+            "Embeber los datos cuando el conjunto está acotado, pertenece al padre y suele consultarse junto."
+          ],
+          [
+            "Evaluar referencias",
+            "Separar documentos cuando son compartidos, tienen alta cardinalidad o se actualizan independientemente."
+          ],
+          [
+            "Medir la solución",
+            "Probá consultas e índices reales; usá $lookup o varias lecturas cuando se necesita combinar referencias."
+          ]
+        ],
+        "decisions": [
+          "Embeber datos pequeños y acotados que comparten el ciclo de vida del documento padre.",
+          "Referenciar grandes colecciones hijas, relaciones muchos-a-muchos o entidades que se consultan y actualizan por separado.",
+          "Evitá arrays que crecen ilimitadamente dentro de un documento; considerá documentos hijos con una referencia al padre.",
+          "Si duplicás un resumen para acelerar lecturas, definí qué proceso mantiene esa copia sincronizada."
+        ],
+        "debugging": "Si el documento crece demasiado, revisá arrays ilimitados y considera referencias. Si una lectura necesita muchas operaciones adicionales, quizá datos consultados juntos deban embeberse. Si datos duplicados quedan desactualizados, definí fuente de verdad y estrategia de sincronización."
+      }
+    },
+    {
+      "id": "mongodb-atlas-mongosh",
+      "category": "fundamentos",
+      "title": "MongoDB Atlas y mongosh",
+      "summary": "Prepará un entorno local o remoto y conectate con la shell oficial.",
+      "purpose": "MongoDB Atlas es un servicio administrado; mongosh es la shell para interactuar con despliegues MongoDB. La URI identifica clúster y credenciales, por lo que debe mantenerse en secreto. El acceso de red y el usuario se configuran por separado.",
+      "whenToUse": "Usá Atlas para practicar con un cluster administrado y mongosh para explorar, consultar y administrar una base. Es el paso previo a conectar la aplicación mediante el driver.",
+      "syntax": "mongosh \"$MONGODB_URI\" · db · show collections",
+      "syntaxLanguage": "bash",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Conectar con mongosh",
+          "description": "Usá una URI obtenida desde Atlas o el administrador.",
+          "code": "# Ejecutá en la terminal y obtené la URI desde un secreto.\nmongosh \"$MONGODB_URI\"",
+          "explanation": "La URI puede contener credenciales: no la pegues en commits, capturas ni logs.",
+          "language": "bash"
+        },
+        {
+          "title": "Explorar la base",
+          "description": "Verificá la conexión y una colección.",
+          "code": "// En mongosh:\ndb.getName();\nshow collections;\ndb.productos.findOne();",
+          "explanation": "findOne devuelve un documento o null y permite comprobar el acceso.",
+          "language": "javascript"
+        },
+        {
+          "title": "Verificar conexión y base activa",
+          "description": "Comprobá que mongosh alcanzó el servidor y que estás trabajando en la base esperada.",
+          "language": "javascript",
+          "code": "// En mongosh:\ndb.runCommand({ ping: 1 });\nprint('Base activa:', db.getName());\nshow collections;",
+          "explanation": "ping comprueba que el servidor responde; getName muestra el contexto activo y show collections permite revisar las colecciones visibles para el usuario conectado. La conexión correcta no implica permisos de escritura."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "MongoDB Atlas",
+          "description": "Servicio administrado para desplegar bases MongoDB."
+        },
+        {
+          "name": "mongosh",
+          "description": "Shell interactiva oficial para consultar y administrar MongoDB."
+        },
+        {
+          "name": "URI",
+          "description": "Cadena de conexión con destino y opciones de autenticación."
+        },
+        {
+          "name": "network access",
+          "description": "Reglas que controlan desde qué redes se permite conectar."
+        },
+        {
+          "name": "roles",
+          "description": "Privilegios asignados a un usuario de base de datos."
+        }
+      ],
+      "exercise": "Prepará una cuenta de práctica con permisos solo sobre tu base.",
+      "hint": "Creá un usuario de privilegios mínimos, permití la red necesaria y guardá la URI en variables de entorno.",
+      "bestPractices": [
+        "Usá usuarios distintos por aplicación y concede solo permisos necesarios.",
+        "Restringí el acceso de red al entorno que realmente necesita conectarse.",
+        "Mantené la URI en variables de entorno y rotá credenciales expuestas.",
+        "Comprobá conexión, base activa y permisos con operaciones de solo lectura antes de escribir."
+      ],
+      "commonMistakes": [
+        "Publicar la cadena de conexión o capturar una URI con contraseña.",
+        "Abrir acceso a cualquier IP como solución permanente.",
+        "Confundir autenticación correcta con permisos suficientes.",
+        "Usar un usuario administrador desde el backend de una aplicación normal."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB Atlas — Getting Started",
+          "url": "https://www.mongodb.com/docs/atlas/getting-started/"
+        },
+        {
+          "label": "mongosh",
+          "url": "https://www.mongodb.com/docs/manual/mongosh/"
+        }
+      ],
+      "related": [
+        "mongodb-db-collections",
+        "node-env"
+      ],
+      "deepDive": {
+        "model": "MongoDB Atlas es una plataforma administrada para desplegar y operar clusters; mongosh es el cliente interactivo que ejecuta comandos y consultas contra un despliegue. La conexión depende de una URI, credenciales, reglas de acceso de red y permisos del usuario. Tener una URI válida no concede por sí solo permisos sobre todas las bases.",
+        "flow": [
+          [
+            "Preparar el despliegue",
+            "Se crea un cluster local o administrado y se configura el acceso de red."
+          ],
+          [
+            "Crear el usuario",
+            "Se asignan credenciales y roles con los permisos mínimos necesarios."
+          ],
+          [
+            "Conectar mongosh",
+            "El cliente usa la URI para negociar conexión y autenticarse."
+          ],
+          [
+            "Verificar el contexto",
+            "Se comprueba la base activa, las colecciones y los permisos antes de consultar o modificar datos."
+          ]
+        ],
+        "decisions": [
+          "Usá usuarios separados por aplicación y entorno, con roles mínimos sobre las bases necesarias.",
+          "Guardá la URI en una variable de entorno o gestor de secretos; no la subas al repositorio ni la incluyas en capturas.",
+          "Restringí acceso de red al origen necesario y evitá abrir el cluster globalmente por comodidad.",
+          "Usá mongosh para exploración y administración; en una aplicación, conectá mediante el driver oficial y administra el ciclo de vida del cliente."
+        ],
+        "debugging": "Si hay timeout, revisá conectividad y reglas de red antes de cambiar credenciales. Si authentication failed, verificá usuario, contraseña codificada en URI y mecanismo de autenticación. Si la conexión funciona pero una colección devuelve unauthorized, el usuario puede carecer de privilegios para esa operación."
+      }
+    },
+    {
+      "id": "mongodb-insert-documents",
+      "category": "crud-consultas",
+      "title": "insertOne e insertMany: insertar documentos",
+      "summary": "Agregá documentos individuales o lotes y reconocé los identificadores generados.",
+      "purpose": "insertOne agrega un documento; insertMany acepta un array. MongoDB genera _id cuando no se proporciona uno. La opción ordered determina si el lote se detiene ante el primer error.",
+      "whenToUse": "Usá insertOne para una escritura individual e insertMany para lotes, importaciones o cargas iniciales. Validá los documentos antes de insertarlos y prepará el código para errores parciales.",
+      "syntax": "insertOne(documento) · insertMany([...])",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Insertar un producto",
+          "description": "Creá un documento y dejá que MongoDB genere _id.",
+          "code": "// Insertá un producto con varios tipos BSON básicos.\ndb.productos.insertOne({ nombre: \"Monitor\", precio: 180000, stock: 8, activo: true });",
+          "explanation": "insertOne devuelve el insertedId junto con el estado de confirmación.",
+          "language": "javascript"
+        },
+        {
+          "title": "Insertar un lote",
+          "description": "Agregá dos documentos en una llamada.",
+          "code": "// ordered true procesa el lote en orden.\ndb.productos.insertMany([{ nombre: \"Teclado\", precio: 65000 }, { nombre: \"Mouse\", precio: 22000 }], { ordered: true });",
+          "explanation": "Con ordered true, el lote se detiene ante el primer error de escritura.",
+          "language": "javascript"
+        },
+        {
+          "title": "Insertar un lote y continuar ante errores individuales",
+          "description": "Usá ordered:false cuando quieras intentar insertar los demás documentos aunque uno falle.",
+          "language": "javascript",
+          "code": "db.novelas.insertMany([\n  { slug: 'overlord', titulo: 'Overlord' },\n  { slug: 're-zero', titulo: 'Re:Zero' },\n  { slug: 'goblin-slayer', titulo: 'Goblin Slayer' }\n], { ordered: false });",
+          "explanation": "Con ordered:false MongoDB intenta continuar con el resto del lote si una escritura individual falla. La operación aún puede devolver errores parciales; revisá el resultado y los índices únicos para saber qué documentos se insertaron."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "insertOne()",
+          "description": "Inserta un documento individual."
+        },
+        {
+          "name": "insertMany()",
+          "description": "Inserta un conjunto de documentos."
+        },
+        {
+          "name": "_id",
+          "description": "Identificador único del documento; se genera si falta."
+        },
+        {
+          "name": "ordered",
+          "description": "Controla si el lote se detiene en el primer error individual."
+        },
+        {
+          "name": "insertedIds",
+          "description": "Identificadores de los documentos insertados."
+        }
+      ],
+      "exercise": "Insertá tres novelas con título, autor y año.",
+      "hint": "Usá insertMany y dejá que MongoDB asigne _id.",
+      "bestPractices": [
+        "Dejá que MongoDB genere _id o definí identificadores con una política consistente.",
+        "Usá ordered:false solo si la aplicación sabe tratar inserciones parciales.",
+        "Definí índices únicos para slugs y otros campos que no deban repetirse.",
+        "Validá tipos y campos antes de enviar lotes grandes."
+      ],
+      "commonMistakes": [
+        "Asumir que todos los documentos de insertMany se guardaron cuando hubo writeErrors.",
+        "Repetir un lote después de un timeout sin estrategia contra duplicados.",
+        "Guardar documentos gigantes con arrays sin límite.",
+        "Ignorar el resultado de insertedIds o writeErrors."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Insert Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/insert-documents/"
+        },
+        {
+          "label": "Node Driver — Insert",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/usage-examples/insertOne/"
+        }
+      ],
+      "related": [
+        "mongodb-find-filters",
+        "mongodb-update-operators"
+      ],
+      "deepDive": {
+        "model": "Las operaciones de inserción agregan documentos a una colección. insertOne crea un único documento y insertMany acepta un lote; cuando falta _id, MongoDB genera un ObjectId. Las escrituras son atómicas a nivel de un documento. En los lotes, ordered determina si el procesamiento se detiene ante el primer error o continúa intentando los documentos restantes.",
+        "flow": [
+          [
+            "Preparar documentos",
+            "La aplicación valida y construye los objetos que representan entidades del dominio."
+          ],
+          [
+            "Enviar la escritura",
+            "insertOne o insertMany envían uno o varios documentos al servidor."
+          ],
+          [
+            "Asignar identidad y validar",
+            "MongoDB genera _id si hace falta y comprueba reglas de validación e índices únicos."
+          ],
+          [
+            "Interpretar resultado",
+            "El cliente obtiene identificadores insertados o errores de escritura que debe procesar."
+          ]
+        ],
+        "decisions": [
+          "Validá el payload en la API antes de insertar; el hecho de que MongoDB acepte un documento no significa que cumpla todas las reglas del negocio.",
+          "Usá insertMany para lotes y elegí ordered según la necesidad de detener o continuar ante errores individuales.",
+          "Diseñá índices únicos para invariantes como slug o email, además de comprobar duplicados en la aplicación.",
+          "No guardes datos derivados sensibles enviados por el cliente sin recalcularlos o verificarlos en el servidor."
+        ],
+        "debugging": "Si aparece duplicate key, identificá el índice único y decidí si el conflicto debe rechazarse o actualizarse. Si insertMany informa errores parciales con ordered:false, revisá insertedIds y writeErrors. Si el documento es rechazado por validación, compará los tipos BSON reales con el validador."
+      }
+    },
+    {
+      "id": "mongodb-find-filters",
+      "category": "crud-consultas",
+      "title": "find y findOne: consultar documentos",
+      "summary": "Recuperá documentos mediante filtros por igualdad y condiciones.",
+      "purpose": "find devuelve un cursor; findOne devuelve un documento o null. Un filtro vacío coincide con todos los documentos, así que en colecciones grandes combiná filtros selectivos con límite y proyección.",
+      "whenToUse": "Usá find para colecciones de resultados y findOne cuando buscás un único documento. Los filtros deben corresponder al tipo BSON almacenado y a los parámetros validados que recibe tu API.",
+      "syntax": "find(filtro) · findOne(filtro)",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Filtrar por igualdad",
+          "description": "Encontrá novelas publicadas.",
+          "code": "// Busca documentos cuyo campo estado coincida.\ndb.novelas.find({ estado: \"publicada\" });",
+          "explanation": "find devuelve un cursor que se puede ordenar, limitar y recorrer.",
+          "language": "javascript"
+        },
+        {
+          "title": "Buscar por identificador",
+          "description": "Recuperá un único documento.",
+          "code": "// findOne devuelve un documento o null.\ndb.novelas.findOne({ _id: ObjectId(\"64b000000000000000000001\") });",
+          "explanation": "_id tiene un índice único automático. Si no coincide, findOne devuelve null.",
+          "language": "javascript"
+        },
+        {
+          "title": "Consultar campos anidados y una etiqueta",
+          "description": "La notación de punto permite filtrar campos de un subdocumento y los arrays pueden coincidir con uno de sus valores.",
+          "language": "javascript",
+          "code": "db.novelas.find({\n  'autor.nombre': 'Tappei Nagatsuki',\n  etiquetas: 'fantasia'\n}, {\n  titulo: 1,\n  autor: 1,\n  _id: 0\n});",
+          "explanation": "'autor.nombre' consulta un campo anidado. La condición etiquetas:'fantasia' coincide con documentos cuyo array contiene ese valor. La proyección limita los campos devueltos."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "find()",
+          "description": "Devuelve un cursor para documentos coincidentes."
+        },
+        {
+          "name": "findOne()",
+          "description": "Devuelve un documento o null."
+        },
+        {
+          "name": "filtro {}",
+          "description": "Un filtro vacío coincide con todos los documentos."
+        },
+        {
+          "name": "notación de punto",
+          "description": "Permite filtrar campos dentro de subdocumentos."
+        },
+        {
+          "name": "cursor",
+          "description": "Objeto que permite recorrer resultados de consulta."
+        }
+      ],
+      "exercise": "Buscá volúmenes de una novela y luego un volumen por número.",
+      "hint": "Usá novelaId y numero, cuidando que el tipo coincida.",
+      "bestPractices": [
+        "Usá filtros concretos y evita find({}) en rutas públicas sin límite.",
+        "Convertí los identificadores y valores de fecha al tipo BSON esperado.",
+        "Combiná proyección y limit para controlar cantidad y tamaño de resultados.",
+        "Revisá explain cuando una consulta frecuente no escala."
+      ],
+      "commonMistakes": [
+        "Olvidar que find devuelve un cursor y tratarlo como un arreglo ya materializado.",
+        "Comparar ObjectId con string.",
+        "Devolver una colección completa sin filtro ni límite.",
+        "Usar campos anidados con nombres incorrectos o sin notación de punto."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Query Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/query-documents/"
+        }
+      ],
+      "related": [
+        "mongodb-query-operators",
+        "mongodb-projection-sort-limit"
+      ],
+      "deepDive": {
+        "model": "find y findOne reciben un filtro que determina qué documentos coinciden. find devuelve un cursor que puede combinarse con proyección, orden y límites; findOne devuelve un documento o null. Los filtros pueden consultar igualdad, operadores, campos anidados y arrays. Un filtro vacío coincide con todos los documentos, por eso las consultas deben ser intencionales y acotadas.",
+        "flow": [
+          [
+            "Construir el filtro",
+            "La aplicación define campos y operadores que describen los documentos buscados."
+          ],
+          [
+            "Planificar la consulta",
+            "MongoDB evalúa índices disponibles y decide cómo localizar coincidencias."
+          ],
+          [
+            "Obtener documentos",
+            "find crea un cursor; findOne devuelve un único documento o null."
+          ],
+          [
+            "Consumir resultados",
+            "El cliente recorre o limita el cursor y maneja el caso sin coincidencias."
+          ]
+        ],
+        "decisions": [
+          "Usá findOne para búsquedas de un único documento y find cuando esperás una colección de resultados.",
+          "Usá filtros selectivos, proyección y límite en endpoints para evitar transferir colecciones enteras.",
+          "Recordá que ObjectId, Date y otros tipos BSON deben coincidir con el tipo almacenado.",
+          "Diseñá índices a partir de consultas frecuentes, filtros y ordenamientos observados."
+        ],
+        "debugging": "Si findOne devuelve null, comprobá nombre del campo, tipo del valor y base/colección activas. Si find trae demasiados documentos, agrega filtro y limit. Si una consulta anidada no coincide, verificá la notación de punto y si el campo está dentro de un array."
+      }
+    },
+    {
+      "id": "mongodb-projection-sort-limit",
+      "category": "crud-consultas",
+      "title": "Proyección, sort, limit y skip",
+      "summary": "Controlá los campos devueltos y el orden y tamaño de los resultados.",
+      "purpose": "La proyección incluye o excluye campos; sort establece el orden; limit restringe la cantidad; skip salta resultados. No mezcles inclusión y exclusión salvo _id. Para desplazamientos grandes, considerá paginación por clave.",
+      "whenToUse": "Usá proyección, orden y límites cuando construyas listados, paneles o endpoints paginados. Estos recursos reducen la transferencia de datos y hacen más predecible la respuesta de una API.",
+      "syntax": "find(filtro, proyección).sort(...).limit(n).skip(n)",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Devolver solo algunos campos",
+          "description": "Mostrá título y año sin transferir el contenido completo.",
+          "code": "// 1 incluye el campo; _id se excluye explícitamente.\ndb.novelas.find({ estado: \"publicada\" }, { titulo: 1, anio: 1, _id: 0 });",
+          "explanation": "La proyección reduce el tamaño de cada documento transferido.",
+          "language": "javascript"
+        },
+        {
+          "title": "Ordenar y limitar",
+          "description": "Traé los cinco volúmenes más recientes.",
+          "code": "// El id sirve como desempate para mantener orden estable.\ndb.volumenes.find({ novelaId: \"rezero\" }).sort({ publicadoEn: -1, _id: 1 }).limit(5);",
+          "explanation": "El segundo criterio resuelve empates en la fecha.",
+          "language": "javascript"
+        },
+        {
+          "title": "Continuar la página con un cursor compuesto",
+          "description": "Recuperá la siguiente página a partir de fecha e identificador del último documento anterior.",
+          "language": "javascript",
+          "code": "const fechaCursor = ISODate('2026-10-01T12:00:00Z');\nconst idCursor = ObjectId('64b000000000000000000001');\n\ndb.novelas.find({\n  estado: 'publicada',\n  $or: [\n    { creadoEn: { $lt: fechaCursor } },\n    { creadoEn: fechaCursor, _id: { $gt: idCursor } }\n  ]\n}, { titulo: 1, creadoEn: 1 })\n.sort({ creadoEn: -1, _id: 1 })\n.limit(20);",
+          "explanation": "La condición retoma la navegación con el mismo orden: creadoEn descendente y _id ascendente. El cursor compuesto evita saltar muchos documentos con skip; el filtro, el sort y el índice deben alinearse."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "proyección",
+          "description": "Define qué campos se incluyen o excluyen."
+        },
+        {
+          "name": "sort()",
+          "description": "Ordena los documentos por uno o varios campos."
+        },
+        {
+          "name": "limit()",
+          "description": "Limita la cantidad de documentos devueltos."
+        },
+        {
+          "name": "skip()",
+          "description": "Omite un número de documentos antes de devolver resultados."
+        },
+        {
+          "name": "keyset pagination",
+          "description": "Continúa usando el valor de la última clave procesada."
+        }
+      ],
+      "exercise": "Diseñá una consulta con título y autor de los diez libros mejor valorados.",
+      "hint": "Usá proyección, sort descendente y limit(10).",
+      "bestPractices": [
+        "Excluí campos grandes que el consumidor no necesita.",
+        "Usá sort con un campo de desempate único.",
+        "Elegí limit de tamaño moderado y valida el máximo en la API.",
+        "Para colecciones grandes, usa cursor compuesto y un índice que apoye filtro y orden."
+      ],
+      "commonMistakes": [
+        "Mezclar inclusión y exclusión de campos de forma inválida en una proyección.",
+        "Usar skip profundo sin evaluar rendimiento.",
+        "Ordenar por una clave no única y sufrir páginas inestables.",
+        "Suponer que limit mejora una consulta si el filtro sigue examinando una gran parte de la colección."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Projection",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/project-fields-from-query-results/"
+        },
+        {
+          "label": "MongoDB — Sort",
+          "url": "https://www.mongodb.com/docs/manual/reference/method/cursor.sort/"
+        }
+      ],
+      "related": [
+        "mongodb-find-filters",
+        "api-paginacion"
+      ],
+      "deepDive": {
+        "model": "Una consulta find puede controlar los campos devueltos mediante proyección y el orden y cantidad de documentos mediante sort, limit y skip. La proyección reduce datos transferidos; sort define un orden explícito; limit restringe el tamaño; skip permite paginar por desplazamiento, aunque puede volverse costoso en páginas profundas. Una clave de desempate hace estable el orden.",
+        "flow": [
+          [
+            "Filtrar documentos",
+            "El filtro determina qué registros pertenecen al resultado."
+          ],
+          [
+            "Proyectar campos",
+            "La proyección decide qué propiedades se incluyen o excluyen."
+          ],
+          [
+            "Ordenar y limitar",
+            "sort establece orden y limit acota el tamaño del conjunto."
+          ],
+          [
+            "Paginar",
+            "skip puede servir para páginas pequeñas; un cursor por clave suele escalar mejor."
+          ]
+        ],
+        "decisions": [
+          "Usá proyección para no devolver campos grandes o sensibles que el cliente no necesita.",
+          "No mezcles inclusión y exclusión en una misma proyección salvo la excepción de _id.",
+          "Agregá un criterio único al sort para que el orden sea determinista.",
+          "Para listas grandes, considerá paginación por cursor con una clave de orden y un identificador de desempate."
+        ],
+        "debugging": "Si desaparece un campo, comprobá la proyección y si elegiste modo de inclusión o exclusión. Si las páginas repiten resultados, revisá el sort y la clave de desempate. Si páginas profundas tardan, reemplazá skip grande por un filtro que continúe desde el último valor recibido."
+      }
+    },
+    {
+      "id": "mongodb-query-operators",
+      "category": "crud-consultas",
+      "title": "Operadores de consulta: comparación, lógica y existencia",
+      "summary": "Combiná criterios numéricos, alternativas, rangos y campos opcionales.",
+      "purpose": "MongoDB usa operadores como $gt, $gte, $lt, $in, $ne, $and, $or y $exists. Permiten expresar condiciones sobre campos y arrays; filtros selectivos ayudan a usar índices.",
+      "whenToUse": "Usá operadores para expresar filtros con rangos, alternativas, campos opcionales, estructuras anidadas y arrays. Son especialmente útiles al implementar filtros de catálogo y búsquedas en la API.",
+      "syntax": "{ precio: { $gte: 100, $lt: 500 } } · { $or: [...] }",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Comparar y buscar por conjunto",
+          "description": "Encontrá productos dentro de un rango y categorías admitidas.",
+          "code": "// Los campos distintos se combinan mediante AND implícito.\ndb.productos.find({ precio: { $gte: 10000, $lt: 80000 }, categoria: { $in: [\"audio\", \"perifericos\"] } });",
+          "explanation": "$gte incluye el límite; $in acepta cualquiera de los valores.",
+          "language": "javascript"
+        },
+        {
+          "title": "Alternativas y existencia",
+          "description": "Encontrá documentos con descuento positivo o sin el campo.",
+          "code": "// $or expresa alternativas y $exists comprueba presencia.\ndb.productos.find({ $or: [{ descuento: { $gt: 0 } }, { descuento: { $exists: false } }] });",
+          "explanation": "$exists comprueba si el campo existe, no si su valor es útil.",
+          "language": "javascript"
+        },
+        {
+          "title": "Exigir que varias condiciones coincidan en el mismo elemento",
+          "description": "$elemMatch evita que dos condiciones sobre un array se cumplan en subdocumentos distintos.",
+          "language": "javascript",
+          "code": "db.novelas.find({\n  reseñas: {\n    $elemMatch: {\n      usuario: 'Ana',\n      estrellas: { $gte: 4 }\n    }\n  }\n});",
+          "explanation": "Sin $elemMatch, las condiciones sobre rutas de arrays pueden satisfacerse por elementos diferentes. Con $elemMatch, usuario y estrellas deben coincidir dentro del mismo subdocumento de reseña."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "$gt / $gte / $lt / $lte",
+          "description": "Operadores de comparación de rangos."
+        },
+        {
+          "name": "$in",
+          "description": "Coincide con cualquiera de los valores indicados."
+        },
+        {
+          "name": "$or",
+          "description": "Combina alternativas de filtro."
+        },
+        {
+          "name": "$exists",
+          "description": "Comprueba presencia de un campo."
+        },
+        {
+          "name": "$elemMatch",
+          "description": "Exige que varias condiciones coincidan en el mismo elemento de un array."
+        }
+      ],
+      "exercise": "Buscá novelas de un rango de años o destacadas.",
+      "hint": "Combiná comparaciones con $or y verificá el filtro.",
+      "bestPractices": [
+        "Usá $elemMatch si varias condiciones deben corresponder al mismo elemento de un array.",
+        "Validá los operadores permitidos: no aceptes filtros Mongo arbitrarios directamente desde el cliente.",
+        "Usá $exists para presencia y comprueba por separado el valor null.",
+        "Diseñá índices a partir de filtros comunes y revisá explain."
+      ],
+      "commonMistakes": [
+        "Suponer que dos condiciones sobre un array siempre se aplican al mismo subdocumento.",
+        "Usar $exists como si comprobara que el campo no sea null.",
+        "Construir filtros con objetos completos enviados por el usuario sin validación.",
+        "Combinar muchos operadores sin comprobar qué documentos coinciden realmente."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Query Operators",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/query/"
+        }
+      ],
+      "related": [
+        "mongodb-find-filters",
+        "mongodb-elemmatch"
+      ],
+      "deepDive": {
+        "model": "Los operadores de consulta extienden los filtros más allá de la igualdad. Los operadores de comparación como $gt y $gte expresan rangos; $in busca alternativas; $exists comprueba presencia; $or combina condiciones; $elemMatch aplica varias condiciones a un mismo elemento de array. La estructura del filtro afecta tanto a la semántica como al uso de índices.",
+        "flow": [
+          [
+            "Definir la condición",
+            "Se construye un documento de filtro con campos y operadores."
+          ],
+          [
+            "Combinar expresiones",
+            "MongoDB combina condiciones de campos y operadores lógicos."
+          ],
+          [
+            "Evaluar arrays y subdocumentos",
+            "La notación de punto y $elemMatch determinan cómo se interpreta la estructura anidada."
+          ],
+          [
+            "Ejecutar y revisar",
+            "El motor usa el plan disponible; explain permite estudiar si la consulta aprovecha índices."
+          ]
+        ],
+        "decisions": [
+          "Usá $in para un conjunto pequeño de alternativas y $or cuando las expresiones completas son diferentes.",
+          "Usá $elemMatch cuando varias condiciones deban cumplirse en el mismo elemento de un array de documentos.",
+          "Distinguí campo ausente de campo con valor null; $exists solo comprueba presencia.",
+          "Validá tipos y valores de filtros antes de construir consultas a partir de parámetros del usuario."
+        ],
+        "debugging": "Si una consulta con arrays devuelve coincidencias inesperadas, comprobá si las condiciones están coincidiendo en elementos diferentes; quizá necesites $elemMatch. Si $exists:true incluye campos con null, es normal porque el campo está presente. Si la consulta es lenta, inspeccioná explain y el índice adecuado."
+      }
+    },
+    {
+      "id": "mongodb-update-operators",
+      "category": "crud-consultas",
+      "title": "Operadores de actualización: $set, $inc, $unset",
+      "summary": "Modificá campos sin reemplazar todo el documento.",
+      "purpose": "updateOne y updateMany reciben un filtro y un documento de actualización. $set cambia valores, $inc incrementa, $unset elimina campos y $currentDate actualiza fechas. También existen pipelines de actualización.",
+      "whenToUse": "Usá operadores para cambiar campos específicos, actualizar contadores, fechas y arrays sin reemplazar el documento completo. Es preferible a leer todo el documento y escribirlo de nuevo desde la aplicación cuando el cambio puede expresarse como una operación atómica.",
+      "syntax": "$set · $inc · $unset · $currentDate",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Actualizar estado y contador",
+          "description": "Cambiá el estado y sumá una visita.",
+          "code": "// Operadores distintos pueden actuar en un mismo update.\ndb.novelas.updateOne({ slug: \"re-zero\" }, { $set: { estado: \"en-lectura\" }, $inc: { visitas: 1 } });",
+          "explanation": "Solo cambian los campos indicados; los demás permanecen.",
+          "language": "javascript"
+        },
+        {
+          "title": "Eliminar un campo antiguo",
+          "description": "Quitá una propiedad de los documentos coincidentes.",
+          "code": "// $unset elimina el campo; no lo reemplaza por null.\ndb.novelas.updateMany({ formatoAntiguo: { $exists: true } }, { $unset: { formatoAntiguo: \"\" } });",
+          "explanation": "El filtro limita el alcance y $unset elimina la propiedad.",
+          "language": "javascript"
+        },
+        {
+          "title": "Incrementar una lectura y actualizar la fecha",
+          "description": "Combiná operadores para modificar campos distintos en una sola operación.",
+          "language": "javascript",
+          "code": "db.novelas.updateOne(\n  { slug: 're-zero' },\n  {\n    $inc: { lecturas: 1 },\n    $set: { estado: 'en-lectura' },\n    $currentDate: { actualizadoEn: true },\n    $addToSet: { etiquetas: 'seguimiento' }\n  }\n);",
+          "explanation": "$inc modifica un contador, $set asigna el estado, $currentDate registra la fecha actual y $addToSet agrega la etiqueta solo si no está presente. matchedCount y modifiedCount permiten inspeccionar el resultado."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "$set",
+          "description": "Asigna un valor a uno o varios campos."
+        },
+        {
+          "name": "$inc",
+          "description": "Incrementa o decrementa un campo numérico."
+        },
+        {
+          "name": "$unset",
+          "description": "Elimina campos del documento."
+        },
+        {
+          "name": "$addToSet",
+          "description": "Agrega un valor a un array si todavía no existe."
+        },
+        {
+          "name": "$currentDate",
+          "description": "Asigna la fecha/hora actual del servidor a un campo."
+        }
+      ],
+      "exercise": "Actualizá el stock e incrementá un contador de lectura sin reemplazar el documento.",
+      "hint": "Combiná $set y $inc en la misma actualización.",
+      "bestPractices": [
+        "Comprobá el filtro con find antes de un updateMany.",
+        "Usá $inc para contadores y operaciones aritméticas atómicas.",
+        "Usá $addToSet cuando no deban repetirse valores y $push cuando la repetición sea válida.",
+        "Revisá matchedCount y modifiedCount para verificar el efecto de la actualización."
+      ],
+      "commonMistakes": [
+        "Ejecutar updateMany con un filtro demasiado amplio o vacío.",
+        "Confundir $set con reemplazar el documento completo.",
+        "Usar $push cuando el array debe mantener valores únicos.",
+        "Ignorar modifiedCount y asumir que un filtro encontró documentos."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Update Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/update-documents/"
+        }
+      ],
+      "related": [
+        "mongodb-insert-documents",
+        "mongodb-array-updates"
+      ],
+      "deepDive": {
+        "model": "updateOne y updateMany reciben un filtro y una especificación de actualización. Los operadores como $set, $inc, $unset, $addToSet y $currentDate modifican campos concretos sin reemplazar el documento completo. Las escrituras son atómicas a nivel de un documento; el filtro también puede actuar como condición para impedir actualizaciones si el estado actual no es el esperado.",
+        "flow": [
+          [
+            "Seleccionar documentos",
+            "El filtro determina qué documento o conjunto puede actualizarse."
+          ],
+          [
+            "Describir cambios",
+            "Los operadores especifican campos que se asignan, incrementan, eliminan o modifican."
+          ],
+          [
+            "Aplicar operación atómica",
+            "MongoDB aplica los cambios a cada documento de forma atómica a nivel individual."
+          ],
+          [
+            "Revisar resultado",
+            "matchedCount y modifiedCount ayudan a distinguir si hubo coincidencia y si cambió el documento."
+          ]
+        ],
+        "decisions": [
+          "Preferí update operators cuando solo cambian algunos campos; replaceOne sustituye la representación completa.",
+          "Usá filtros suficientemente específicos y comprobá matchedCount; un updateMany puede afectar muchos documentos.",
+          "Combiná $inc para contadores numéricos y $set para valores asignados; evitá leer-modificar-escribir desde la aplicación cuando la operación puede resolverse atómicamente.",
+          "Usá $addToSet para evitar duplicados en arrays cuando la igualdad del valor completo sea el criterio correcto."
+        ],
+        "debugging": "Si modifiedCount es cero, comprobá si el filtro coincidió y si el nuevo valor realmente difiere. Si cambiaste un campo anidado, usá notación de punto con cuidado. Antes de updateMany, ejecutá el mismo filtro con find para revisar el alcance."
+      }
+    },
+    {
+      "id": "mongodb-delete-replace-upsert",
+      "category": "crud-consultas",
+      "title": "deleteOne, deleteMany, replaceOne y upsert",
+      "summary": "Eliminá documentos, reemplazá uno completo y comprendé la opción upsert.",
+      "purpose": "deleteOne elimina como máximo un documento; deleteMany elimina todos los coincidentes. replaceOne sustituye el documento salvo _id. upsert inserta si no encuentra coincidencias y requiere diseño cuidadoso del filtro.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "deleteOne(filtro) · replaceOne(filtro, doc) · upsert:true",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Eliminar un registro de prueba",
+          "description": "Confirmá el filtro con find antes de borrar.",
+          "code": "// El filtro debe ser específico.\ndb.productos.deleteOne({ sku: \"TEST-001\" });",
+          "explanation": "deleteOne elimina como máximo un documento que coincida.",
+          "language": "javascript"
+        },
+        {
+          "title": "Upsert de configuración",
+          "description": "Creá la configuración si falta o actualizala si existe.",
+          "code": "// Asegurá unicidad sobre clave para evitar duplicados concurrentes.\ndb.configuracion.updateOne({ clave: \"tema\" }, { $set: { valor: \"oscuro\" } }, { upsert: true });",
+          "explanation": "upsert inserta cuando no hay coincidencia; un índice unique protege la clave lógica.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Prepará un upsert para la última fecha de lectura por usuario y novela.",
+      "hint": "Usá un filtro compuesto y garantizá unicidad de esa combinación.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Delete Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/remove-documents/"
+        },
+        {
+          "label": "MongoDB — Replace Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/replace-documents/"
+        }
+      ],
+      "related": [
+        "mongodb-update-operators",
+        "mongodb-insert-documents",
+        "mongodb-indices"
+      ]
+    },
+    {
+      "id": "mongodb-arrays-embedded",
+      "category": "arrays-aggregation",
+      "title": "Arrays y documentos anidados",
+      "summary": "Consultá arrays y objetos embebidos como parte de un documento.",
+      "purpose": "Los arrays guardan conjuntos ordenados de valores o documentos. MongoDB permite buscar elementos y recorrerlos en agregaciones. Los arrays sin límites pueden hacer crecer excesivamente un documento; considerá colecciones separadas para historiales extensos.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "{ etiquetas: [\"fantasía\", \"aventura\"], autor: { nombre: \"...\" } }",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Filtrar por una etiqueta",
+          "description": "Encontrá novelas que tengan un valor dentro del array.",
+          "code": "// La igualdad con un valor puede coincidir con un elemento del array.\ndb.novelas.find({ etiquetas: \"fantasía\" });",
+          "explanation": "MongoDB busca la etiqueta dentro del array.",
+          "language": "javascript"
+        },
+        {
+          "title": "Consultar un campo anidado",
+          "description": "Filtrá por la propiedad de un subdocumento.",
+          "code": "// La notación de punto permite consultar propiedades anidadas.\ndb.novelas.find({ \"autor.nombre\": \"U. T.\" });",
+          "explanation": "autor.nombre identifica una propiedad del documento anidado.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Guardá idiomas como array y buscá ediciones que incluyan español.",
+      "hint": "Usá un array de códigos y filtra por el código acordado.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Array Queries",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/array-queries/"
+        },
+        {
+          "label": "MongoDB — Embedded Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/query-embedded-documents/"
+        }
+      ],
+      "related": [
+        "mongodb-elemmatch",
+        "mongodb-modelado-embed-reference",
+        "mongodb-aggregation-unwind-project"
+      ]
+    },
+    {
+      "id": "mongodb-elemmatch",
+      "category": "arrays-aggregation",
+      "title": "$elemMatch: varias condiciones sobre el mismo elemento",
+      "summary": "Aplicá múltiples criterios a un solo elemento dentro de un array.",
+      "purpose": "Si una consulta contiene varias condiciones sobre campos del mismo array, podrían coincidir con elementos distintos. $elemMatch fuerza a que todas se cumplan dentro de un mismo elemento.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "{ array: { $elemMatch: { campoA: valor, campoB: { $gt: n } } } }",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Misma reseña",
+          "description": "Buscá una reseña de una persona con valoración alta.",
+          "code": "// Ambas condiciones deben coincidir en la misma reseña.\ndb.novelas.find({ reseñas: { $elemMatch: { usuarioId: \"u-7\", estrellas: { $gte: 4 } } } });",
+          "explanation": "Sin $elemMatch, las condiciones podrían coincidir en reseñas distintas.",
+          "language": "javascript"
+        },
+        {
+          "title": "Mismo capítulo",
+          "description": "Buscá un capítulo específico dentro de un rango de páginas.",
+          "code": "// numero y paginas se evalúan sobre el mismo subdocumento.\ndb.volumenes.find({ capitulos: { $elemMatch: { numero: 2, paginas: { $gte: 30, $lte: 60 } } } });",
+          "explanation": "$elemMatch delimita ambas condiciones al mismo elemento.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Buscá cursos cuyo mismo módulo dure entre 30 y 60 minutos y sea avanzado.",
+      "hint": "Usá $elemMatch con ambos campos del módulo.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — $elemMatch",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/query/elemmatch/"
+        }
+      ],
+      "related": [
+        "mongodb-arrays-embedded",
+        "mongodb-query-operators",
+        "mongodb-array-updates"
+      ]
+    },
+    {
+      "id": "mongodb-array-updates",
+      "category": "arrays-aggregation",
+      "title": "Actualizar arrays: $push, $addToSet, $pull y posicionales",
+      "summary": "Agregá, evitá duplicados, quitá y actualizá elementos de un array.",
+      "purpose": "$push agrega elementos; $addToSet evita duplicados exactos; $pull elimina elementos que cumplen un filtro. Los operadores posicionales $, $[] y $[identificador] actualizan elementos coincidentes.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "$push · $addToSet · $pull · $ · $[] · $[identificador]",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Agregar una etiqueta sin duplicarla",
+          "description": "Usá $addToSet para sumar un valor si no existe.",
+          "code": "// Agrega la etiqueta una sola vez.\ndb.novelas.updateOne({ slug: \"re-zero\" }, { $addToSet: { etiquetas: \"fantasía\" } });",
+          "explanation": "$addToSet evita duplicados del mismo valor; con subdocumentos compara el documento completo.",
+          "language": "javascript"
+        },
+        {
+          "title": "Actualizar un elemento filtrado",
+          "description": "Modificá una entrada del array identificada por arrayFilters.",
+          "code": "// $[lectura] representa cada elemento que cumple arrayFilters.\ndb.usuarios.updateOne({ _id: 7 }, { $set: { \"lecturas.$[lectura].terminado\": true } }, { arrayFilters: [{ \"lectura.novelaId\": \"re-zero\" }] });",
+          "explanation": "El filtro posicional modifica los elementos coincidentes.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Agregá y quitá etiquetas y actualizá el estado de un volumen embebido.",
+      "hint": "Usá $addToSet/$pull para etiquetas y arrayFilters para el subdocumento.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Array Update Operators",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/update-array/"
+        }
+      ],
+      "related": [
+        "mongodb-arrays-embedded",
+        "mongodb-elemmatch",
+        "mongodb-update-operators"
+      ]
+    },
+    {
+      "id": "mongodb-aggregation-pipeline",
+      "category": "arrays-aggregation",
+      "title": "Aggregation Pipeline: etapas y flujo de datos",
+      "summary": "Transformá documentos con etapas de filtrado, proyección, agrupación y orden.",
+      "purpose": "Una pipeline es una secuencia de etapas donde la salida de una alimenta la siguiente. $match filtra, $project selecciona y calcula campos, $group agrupa y $sort ordena. El orden de etapas afecta significado y rendimiento.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "aggregate([{ $match: ... }, { $group: ... }])",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Filtrar y ordenar ventas",
+          "description": "Seleccioná ventas pagadas y ordenalas por total.",
+          "code": "// Filtrá primero y después ordená y limitá.\ndb.ventas.aggregate([{ $match: { estado: \"pagada\" } }, { $sort: { total: -1 } }, { $limit: 10 }]);",
+          "explanation": "La pipeline pasa documentos de una etapa a la siguiente.",
+          "language": "javascript"
+        },
+        {
+          "title": "Calcular un valor derivado",
+          "description": "Proyectá subtotal a partir de precio y cantidad.",
+          "code": "// $project crea un campo calculado.\ndb.pedidoItems.aggregate([{ $project: { productoId: 1, subtotal: { $multiply: [\"$precio\", \"$cantidad\"] } } }]);",
+          "explanation": "El prefijo $ hace referencia a un campo del documento.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Filtrá pedidos pagados, agrupá por cliente y ordená los totales.",
+      "hint": "Usá $match, $group con $sum y $sort.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "related": [
+        "mongodb-aggregation-group-lookup",
+        "mongodb-aggregation-unwind-project",
+        "mongodb-explain"
+      ]
+    },
+    {
+      "id": "mongodb-aggregation-group-lookup",
+      "category": "arrays-aggregation",
+      "title": "$group y $lookup: resumir y combinar colecciones",
+      "summary": "Agrupá documentos y uní datos de otra colección en una pipeline.",
+      "purpose": "$group crea grupos con acumuladores como $sum y $avg. $lookup realiza una unión tipo left outer y agrega coincidencias como array. La decisión de usar referencias o documentos embebidos debe contemplar el costo de las uniones.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "$group · $sum · $avg · $lookup",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Agrupar pedidos",
+          "description": "Calculá importe y cantidad por cliente.",
+          "code": "// _id define la clave y los acumuladores calculan el resumen.\ndb.pedidos.aggregate([{ $group: { _id: \"$clienteId\", pedidos: { $sum: 1 }, total: { $sum: \"$importe\" } } }]);",
+          "explanation": "Cada grupo representa un cliente y suma su importe.",
+          "language": "javascript"
+        },
+        {
+          "title": "Unir con usuarios",
+          "description": "Añadí la ficha de usuario al resumen o documento.",
+          "code": "// $lookup añade coincidencias como un array.\ndb.pedidos.aggregate([{ $lookup: { from: \"usuarios\", localField: \"usuarioId\", foreignField: \"_id\", as: \"usuario\" } }]);",
+          "explanation": "$lookup conserva el documento de origen y agrega las coincidencias en un array.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Resumí las lecturas por usuario y agregá el nombre del usuario.",
+      "hint": "Agrupá por usuarioId y luego hacé $lookup hacia usuarios.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — $group",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/"
+        },
+        {
+          "label": "MongoDB — $lookup",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/"
+        }
+      ],
+      "related": [
+        "mongodb-aggregation-pipeline",
+        "mongodb-aggregation-unwind-project",
+        "mongodb-modelado-embed-reference"
+      ]
+    },
+    {
+      "id": "mongodb-aggregation-unwind-project",
+      "category": "arrays-aggregation",
+      "title": "$unwind, $project y $addFields",
+      "summary": "Descomponé arrays y prepará la forma final del resultado.",
+      "purpose": "$unwind emite un documento por elemento de un array; $project selecciona o calcula campos; $addFields agrega propiedades conservando las existentes.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "$unwind · $project · $addFields",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Una fila por capítulo",
+          "description": "Descomponé el array de capítulos.",
+          "code": "// Cada capítulo se convierte en un documento de salida.\ndb.volumenes.aggregate([{ $unwind: \"$capitulos\" }, { $project: { titulo: 1, numeroCapitulo: \"$capitulos.numero\" } }]);",
+          "explanation": "Después de $unwind podés filtrar o agrupar cada capítulo.",
+          "language": "javascript"
+        },
+        {
+          "title": "Agregar un campo calculado",
+          "description": "Prepará un nombre completo a partir de nombre y apellido.",
+          "code": "// $addFields conserva campos originales y añade nombreCompleto.\ndb.autores.aggregate([{ $addFields: { nombreCompleto: { $concat: [\"$nombre\", \" \", \"$apellido\"] } } }, { $project: { nombreCompleto: 1, creadoEn: 1 } }]);",
+          "explanation": "$project define finalmente qué campos salen de la pipeline.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Transformá un documento con array de capítulos en un resultado con una fila por capítulo.",
+      "hint": "Usá $unwind y después $project.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — $unwind",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/"
+        },
+        {
+          "label": "MongoDB — $project",
+          "url": "https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/"
+        }
+      ],
+      "related": [
+        "mongodb-arrays-embedded",
+        "mongodb-aggregation-pipeline",
+        "mongodb-aggregation-group-lookup"
+      ]
+    },
+    {
+      "id": "mongodb-indices",
+      "category": "indices-performance",
+      "title": "Índices en MongoDB: conceptos y creación",
+      "summary": "Acelerá filtros frecuentes sin olvidar el costo de mantener índices.",
+      "purpose": "Un índice mantiene una estructura de búsqueda sobre campos. MongoDB crea un índice único sobre _id; otros se diseñan a partir de consultas frecuentes. Reducen lecturas, pero consumen memoria y almacenamiento y encarecen escrituras.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "db.coleccion.createIndex({ campo: 1 })",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Indexar slug",
+          "description": "Acelerá búsquedas por una clave de negocio.",
+          "code": "// Consultas por slug pueden usar este índice.\ndb.novelas.createIndex({ slug: 1 });\ndb.novelas.find({ slug: \"re-zero\" });",
+          "explanation": "El índice ascendente permite localizar documentos por slug; unique:true impondría unicidad.",
+          "language": "javascript"
+        },
+        {
+          "title": "Indexar fecha",
+          "description": "Prepará un índice para ordenar por fecha reciente.",
+          "code": "// El índice debe corresponder con el patrón habitual.\ndb.pedidos.createIndex({ creadoEn: -1 });\ndb.pedidos.find({}).sort({ creadoEn: -1 }).limit(20);",
+          "explanation": "El índice puede apoyar el orden, aunque el optimizador decide si conviene usarlo.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Proponé tres índices para consultas habituales de un catálogo de novelas.",
+      "hint": "Anotá filtros y orden de cada consulta y validá las propuestas con explain.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Indexes",
+          "url": "https://www.mongodb.com/docs/manual/indexes/"
+        }
+      ],
+      "related": [
+        "mongodb-compound-indexes",
+        "mongodb-explain",
+        "postgres-indices"
+      ]
+    },
+    {
+      "id": "mongodb-compound-indexes",
+      "category": "indices-performance",
+      "title": "Índices compuestos y prefijos",
+      "summary": "Combiná campos en un índice y entendé el efecto de su orden.",
+      "purpose": "Un índice compuesto guarda claves de varios campos en un orden definido. El prefijo izquierdo puede servir a consultas que empiezan por esos campos. La elección depende de filtros, orden y cardinalidad.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "createIndex({ campoA: 1, campoB: -1 })",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Filtro por estado y fecha",
+          "description": "Acelerá el patrón que lista pendientes recientes.",
+          "code": "// Este índice sigue el filtro de igualdad y el orden por fecha.\ndb.pedidos.createIndex({ estado: 1, creadoEn: -1 });\ndb.pedidos.find({ estado: \"pendiente\" }).sort({ creadoEn: -1 });",
+          "explanation": "El índice puede cubrir filtro y orden para este patrón, pero no es una regla universal.",
+          "language": "javascript"
+        },
+        {
+          "title": "Reconocer el prefijo",
+          "description": "Un índice empieza por su primer campo.",
+          "code": "// El índice compuesto comienza por autor.\ndb.libros.createIndex({ autor: 1, anio: -1 });\ndb.libros.find({ autor: \"A. Pérez\" });",
+          "explanation": "Puede ayudar a consultas por autor; no equivale a un índice que empiece por año.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá un índice para pedidos de un cliente ordenados por fecha descendente.",
+      "hint": "Evaluá { clienteId: 1, creadoEn: -1 } y confirmá con explain.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Compound Indexes",
+          "url": "https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/"
+        }
+      ],
+      "related": [
+        "mongodb-indices",
+        "mongodb-explain",
+        "sql-order-limit-offset"
+      ]
+    },
+    {
+      "id": "mongodb-unique-ttl-text-indexes",
+      "category": "indices-performance",
+      "title": "Índices únicos, TTL y de texto",
+      "summary": "Conocé índices para unicidad, expiración automática y búsqueda textual.",
+      "purpose": "unique impide duplicados según las claves; TTL elimina documentos después de un tiempo usando una fecha; text habilita búsqueda por términos. TTL es asíncrono y no un temporizador exacto para ejecutar lógica de negocio.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "unique:true · expireAfterSeconds · text",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Garantizar slug único",
+          "description": "Impedí publicaciones con slug duplicado.",
+          "code": "// El índice único rechaza un segundo documento con el mismo slug.\ndb.novelas.createIndex({ slug: 1 }, { unique: true });",
+          "explanation": "La regla se aplica en el servidor incluso ante escrituras concurrentes.",
+          "language": "javascript"
+        },
+        {
+          "title": "Expirar tokens",
+          "description": "Configurá un índice TTL con una fecha de vencimiento.",
+          "code": "// expiresAt debe tener tipo Date.\ndb.tokens.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });",
+          "explanation": "El monitor TTL elimina documentos expirados de manera asíncrona, no en un instante exacto.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Definí una política para que los tokens expiren y los slugs sean únicos.",
+      "hint": "Usá índice TTL sobre fecha e índice unique sobre slug.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Unique Indexes",
+          "url": "https://www.mongodb.com/docs/manual/core/index-unique/"
+        },
+        {
+          "label": "MongoDB — TTL Indexes",
+          "url": "https://www.mongodb.com/docs/manual/core/index-ttl/"
+        },
+        {
+          "label": "MongoDB — Text Indexes",
+          "url": "https://www.mongodb.com/docs/manual/core/indexes/index-types/index-text/"
+        }
+      ],
+      "related": [
+        "mongodb-indices",
+        "mongodb-explain",
+        "mongodb-validacion-esquema"
+      ]
+    },
+    {
+      "id": "mongodb-explain",
+      "category": "indices-performance",
+      "title": "explain(): analizar planes de consulta",
+      "summary": "Observá si una consulta usa índice, qué documentos examina y cuántos devuelve.",
+      "purpose": "explain devuelve información del plan de ejecución. executionStats permite comparar documentos y claves examinadas con el resultado. No interpretes un plan aislado sin datos representativos.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "find(filtro).explain(\"executionStats\")",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Examinar búsqueda por slug",
+          "description": "Medí una consulta típica del catálogo.",
+          "code": "// executionStats incluye métricas observadas.\ndb.novelas.find({ slug: \"re-zero\" }).explain(\"executionStats\");",
+          "explanation": "Revisá winningPlan, totalDocsExamined, totalKeysExamined y nReturned.",
+          "language": "javascript"
+        },
+        {
+          "title": "Comparar tras crear un índice",
+          "description": "Ejecutá la misma consulta antes y después de indexar.",
+          "code": "// Revisá plan y estadísticas para la consulta compuesta.\ndb.volumenes.find({ novelaId: \"rezero\", numero: 3 }).explain(\"executionStats\");",
+          "explanation": "Compará métricas y plan; los resultados dependen del tamaño y distribución de datos.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Elegí una consulta lenta e identificá qué métricas observarías.",
+      "hint": "Compará documentos examinados, claves examinadas, documentos devueltos y plan ganador.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Explain Results",
+          "url": "https://www.mongodb.com/docs/manual/reference/explain-results/"
+        }
+      ],
+      "related": [
+        "mongodb-indices",
+        "mongodb-compound-indexes",
+        "postgres-explain-analyze"
+      ]
+    },
+    {
+      "id": "mongodb-pagination-cursors",
+      "category": "indices-performance",
+      "title": "Paginación eficiente y cursores",
+      "summary": "Elegí entre skip/limit y paginación basada en una clave estable.",
+      "purpose": "find devuelve un cursor. skip/limit es cómodo para páginas pequeñas; para desplazamientos grandes conviene paginar por clave estable usando filtros que continúen desde el último elemento visto.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "find(filtro).sort(...).limit(n) · filtro por última clave",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Paginación con skip",
+          "description": "Implementá una página simple de un conjunto moderado.",
+          "code": "// Orden estable con un campo único como desempate.\ndb.novelas.find({ publicada: true }).sort({ titulo: 1, _id: 1 }).skip(20).limit(10);",
+          "explanation": "skip descarta los primeros documentos y el costo puede crecer en páginas profundas.",
+          "language": "javascript"
+        },
+        {
+          "title": "Paginación por clave",
+          "description": "Usá el último id como punto de continuación.",
+          "code": "// Guardá ultimoId de la página anterior.\ndb.novelas.find({ _id: { $gt: ultimoId } }).sort({ _id: 1 }).limit(10);",
+          "explanation": "Continuar por clave evita saltar miles de registros; con fecha, incluí un desempate único.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá paginación de volúmenes por fecha con desempate único.",
+      "hint": "Guardá última fecha e id y usá filtro compuesto con el mismo orden.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Cursors",
+          "url": "https://www.mongodb.com/docs/manual/reference/method/js-cursor/"
+        },
+        {
+          "label": "MongoDB — Range Queries",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/range-queries/"
+        }
+      ],
+      "related": [
+        "mongodb-projection-sort-limit",
+        "mongodb-query-performance",
+        "node-pg-consultas-parametrizadas"
+      ]
+    },
+    {
+      "id": "mongodb-query-performance",
+      "category": "indices-performance",
+      "title": "Rendimiento de consultas y selectividad",
+      "summary": "Mejorá filtros, proyecciones, índices y volumen de datos transferidos.",
+      "purpose": "El rendimiento depende de selectividad, forma del filtro, orden, índices, tamaño del documento, red y carga. Filtrar, proyectar y limitar ayudan a controlar recursos; evitar arrays ilimitados también importa.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "Filtro selectivo → índice → proyección → límite",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Reducir datos devueltos",
+          "description": "Traé los campos que usa una tarjeta de catálogo.",
+          "code": "// La proyección evita transferir el contenido completo de la novela.\ndb.novelas.find({ publicada: true }, { titulo: 1, portada: 1, autor: 1, _id: 0 }).limit(24);",
+          "explanation": "Reducir la salida ahorra transferencia y procesamiento.",
+          "language": "javascript"
+        },
+        {
+          "title": "Medir una consulta crítica",
+          "description": "Revisá el trabajo del servidor.",
+          "code": "// Medí filtro y orden frecuentes.\ndb.volumenes.find({ novelaId: \"rezero\", idioma: \"es\" }).sort({ numero: 1 }).explain(\"executionStats\");",
+          "explanation": "Las métricas permiten decidir si un índice compuesto mejora el patrón real.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Elegí una pantalla de tu biblioteca y reducí los datos que necesita cargar.",
+      "hint": "Devolvé solo los campos de la tarjeta, no capítulos ni el texto completo.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Query Optimization",
+          "url": "https://www.mongodb.com/docs/manual/core/query-optimization/"
+        },
+        {
+          "label": "MongoDB — Indexes",
+          "url": "https://www.mongodb.com/docs/manual/indexes/"
+        }
+      ],
+      "related": [
+        "mongodb-explain",
+        "mongodb-indices",
+        "mongodb-compound-indexes"
+      ]
+    },
+    {
+      "id": "mongodb-atomicity",
+      "category": "integrity-security",
+      "title": "Atomicidad y límites de un documento",
+      "summary": "Comprendé qué cambios son atómicos y por qué el modelo documental importa.",
+      "purpose": "MongoDB garantiza atomicidad de escritura a nivel de un documento. Operaciones que afectan varios documentos pueden requerir transacciones o un modelo que no necesite atomicidad global.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "updateOne(...) atómico sobre documento · transacción multi-documento",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Actualizar varios campos juntos",
+          "description": "Cambiá estado y fecha en una escritura.",
+          "code": "// Los dos campos pertenecen a una única operación de documento.\ndb.pedidos.updateOne({ _id: 1001 }, { $set: { estado: \"enviado\", enviadoEn: new Date() } });",
+          "explanation": "Los lectores no observan una actualización parcial del mismo documento.",
+          "language": "javascript"
+        },
+        {
+          "title": "Reconocer una operación masiva",
+          "description": "Una actualización multi-documento no equivale a una transacción global.",
+          "code": "// updateMany actualiza cada documento coincidente.\ndb.productos.updateMany({ categoria: \"audio\" }, { $set: { revisado: true } });",
+          "explanation": "No asumas que toda la operación multi-documento se revierte completa ante un error.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué parte de una compra guardarías junta para reducir transacciones?",
+      "hint": "Revisá si pedido y líneas se consultan y actualizan como una unidad.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Atomicity and Transactions",
+          "url": "https://www.mongodb.com/docs/manual/core/transactions/"
+        }
+      ],
+      "related": [
+        "mongodb-transactions",
+        "mongodb-modelado-embed-reference",
+        "sql-transacciones-acid"
+      ]
+    },
+    {
+      "id": "mongodb-validacion-esquema",
+      "category": "integrity-security",
+      "title": "Schema Validation: validar documentos",
+      "summary": "Definí reglas de tipo y obligatoriedad aun cuando los documentos sean flexibles.",
+      "purpose": "MongoDB permite validadores de colección con JSON Schema y operadores de expresión. La validación puede rechazar o advertir sobre documentos que no cumplen las reglas; protege datos de distintos clientes y versiones.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "createCollection(name, { validator: { $jsonSchema: ... } })",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Exigir título y año",
+          "description": "Creá una colección con validación de campos.",
+          "code": "// El validador exige dos propiedades y sus tipos BSON.\ndb.createCollection(\"novelas\", { validator: { $jsonSchema: { bsonType: \"object\", required: [\"titulo\", \"anio\"], properties: { titulo: { bsonType: \"string\" }, anio: { bsonType: \"int\", minimum: 0 } } } } });",
+          "explanation": "required obliga a incluir los campos y properties restringe sus tipos.",
+          "language": "javascript"
+        },
+        {
+          "title": "Modificar un validador",
+          "description": "Ajustá una regla para una colección existente.",
+          "code": "// Agregá una regla de precio no negativo.\ndb.runCommand({ collMod: \"productos\", validator: { $jsonSchema: { bsonType: \"object\", properties: { precio: { bsonType: [\"int\", \"long\", \"double\", \"decimal\"], minimum: 0 } } } } });",
+          "explanation": "collMod cambia opciones de la colección. Revisá validationLevel y documentos existentes.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Definí un validador para que cada volumen tenga novelaId, número y título.",
+      "hint": "Usá required y properties con bsonType adecuados.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Schema Validation",
+          "url": "https://www.mongodb.com/docs/manual/core/schema-validation/"
+        }
+      ],
+      "related": [
+        "mongodb-modelado-flexible",
+        "sql-claves-restricciones",
+        "mongodb-migrations"
+      ]
+    },
+    {
+      "id": "mongodb-transactions",
+      "category": "integrity-security",
+      "title": "Transacciones multi-documento",
+      "summary": "Agrupá cambios sobre varios documentos cuando la operación necesita atomicidad conjunta.",
+      "purpose": "MongoDB admite transacciones multi-documento en despliegues compatibles como replica sets y clústeres sharded. La transacción usa una sesión; el driver inicia, confirma o aborta. Usala cuando el modelo no resuelva la regla con una escritura atómica.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "session.startTransaction() · commitTransaction() · abortTransaction()",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Crear pedido y descontar stock",
+          "description": "Agrupá ambas escrituras dentro de la misma sesión.",
+          "code": "// Ejemplo con driver oficial; session proviene de client.startSession().\nconst session = client.startSession();\ntry {\n  session.startTransaction();\n  await db.collection('pedidos').insertOne({ productoId: 7, cantidad: 1 }, { session });\n  await db.collection('productos').updateOne({ _id: 7 }, { $inc: { stock: -1 } }, { session });\n  await session.commitTransaction();\n} catch (error) {\n  await session.abortTransaction();\n  throw error;\n} finally { await session.endSession(); }",
+          "explanation": "Las operaciones usan la misma session. Validá stock y contemplá reintentos.",
+          "language": "javascript"
+        },
+        {
+          "title": "Usar withTransaction",
+          "description": "Dejá que el helper gestione el ciclo transaccional.",
+          "code": "// El callback debe evitar efectos externos irreversibles.\nconst session = client.startSession();\ntry {\n  await session.withTransaction(async () => {\n    await db.collection('auditoria').insertOne({ evento: 'pago' }, { session });\n    await db.collection('pedidos').updateOne({ _id: 10 }, { $set: { pagado: true } }, { session });\n  });\n} finally { await session.endSession(); }",
+          "explanation": "El driver puede reintentar ante errores transitorios; no envíes emails ni cobres servicios dentro del callback antes del commit.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Cuándo conviene una transacción y cuándo un documento embebido?",
+      "hint": "Preferí una escritura atómica de documento si resuelve el caso; usá transacción cuando la regla cruza documentos.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Transactions",
+          "url": "https://www.mongodb.com/docs/manual/core/transactions/"
+        },
+        {
+          "label": "Node Driver — Transactions",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/fundamentals/transactions/"
+        }
+      ],
+      "related": [
+        "mongodb-atomicity",
+        "mongodb-read-write-concern",
+        "sql-transacciones-acid"
+      ]
+    },
+    {
+      "id": "mongodb-read-write-concern",
+      "category": "integrity-security",
+      "title": "Read Concern y Write Concern",
+      "summary": "Entendé qué garantías de lectura y confirmación ofrece MongoDB.",
+      "purpose": "Read concern determina el nivel de visibilidad de las lecturas; write concern establece cuántos miembros deben reconocer una escritura. Las garantías disponibles dependen de la topología. Elegilas en función del dato, latencia y disponibilidad.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "readConcern: { level: \"majority\" } · writeConcern: { w: \"majority\" }",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Solicitar confirmación de mayoría",
+          "description": "Pedí reconocimiento de mayoría al insertar.",
+          "code": "// Configurá write concern para esta escritura.\ndb.pedidos.insertOne({ numero: \"P-100\", estado: \"creado\" }, { writeConcern: { w: \"majority\", wtimeout: 5000 } });",
+          "explanation": "Un timeout no demuestra necesariamente que la escritura no haya ocurrido; se debe tratar el resultado con cuidado.",
+          "language": "javascript"
+        },
+        {
+          "title": "Leer con read concern majority",
+          "description": "Pedí una lectura con el nivel configurado.",
+          "code": "// Comando de lectura con readConcern explícito.\ndb.runCommand({ find: \"pedidos\", filter: { numero: \"P-100\" }, readConcern: { level: \"majority\" } });",
+          "explanation": "La garantía depende de topología y configuración; no equivale a una promesa de consistencia lineal en todos los escenarios.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Elegí garantías diferentes para un contador de visitas y para el estado de un pago.",
+      "hint": "Compará latencia, disponibilidad y riesgo de perder confirmaciones.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Read Concern",
+          "url": "https://www.mongodb.com/docs/manual/reference/read-concern/"
+        },
+        {
+          "label": "MongoDB — Write Concern",
+          "url": "https://www.mongodb.com/docs/manual/reference/write-concern/"
+        }
+      ],
+      "related": [
+        "mongodb-transactions",
+        "mongodb-replica-sets",
+        "mongodb-conexion-segura"
+      ]
+    },
+    {
+      "id": "mongodb-roles-access-control",
+      "category": "integrity-security",
+      "title": "Usuarios, roles y control de acceso",
+      "summary": "Aplicá autenticación y privilegios mínimos para proteger bases y colecciones.",
+      "purpose": "MongoDB utiliza roles para agrupar privilegios. Una cuenta de aplicación no debería tener permisos administrativos globales si solo necesita leer y escribir colecciones concretas. Considerá autenticación, red, rotación de credenciales y separación de entornos.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "db.createUser({ user, pwd, roles: [...] })",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Crear usuario limitado",
+          "description": "Dale acceso de lectura y escritura a una sola base.",
+          "code": "// Ejecutá con una cuenta administradora.\nuse tienda_dev\ndb.createUser({ user: \"tienda_app\", pwd: passwordPrompt(), roles: [{ role: \"readWrite\", db: \"tienda_dev\" }] });",
+          "explanation": "readWrite otorga permisos sobre una base concreta, no administración global.",
+          "language": "javascript"
+        },
+        {
+          "title": "Inspeccionar usuarios",
+          "description": "Revisá las cuentas de la base activa.",
+          "code": "// Requiere privilegios adecuados.\ndb.getUsers();",
+          "explanation": "La consulta muestra usuarios y roles; no copies secretos ni material de autenticación a documentación pública.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá permisos para una API que solo trabaja con biblioteca_dev.",
+      "hint": "Empezá con readWrite en esa base y separá credenciales administrativas.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — RBAC",
+          "url": "https://www.mongodb.com/docs/manual/core/authorization/"
+        }
+      ],
+      "related": [
+        "mongodb-conexion-segura",
+        "mongodb-atlas-mongosh",
+        "express-security-helmet"
+      ]
+    },
+    {
+      "id": "mongodb-conexion-segura",
+      "category": "integrity-security",
+      "title": "Conexiones seguras, TLS y secretos",
+      "summary": "Protegé el transporte y la autenticación al conectarte a MongoDB.",
+      "purpose": "Las conexiones productivas deben usar TLS cuando corresponda, credenciales de mínimo privilegio, listas de red restringidas y secretos gestionados por el entorno. Nunca registres una URI completa con credenciales.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "MongoClient(process.env.MONGODB_URI) · tls:true",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Cargar URI desde entorno",
+          "description": "No escribas credenciales en el código fuente.",
+          "code": "// MONGODB_URI se inyecta desde el entorno de ejecución.\nimport { MongoClient } from 'mongodb';\nconst client = new MongoClient(process.env.MONGODB_URI);\nawait client.connect();",
+          "explanation": "El secreto queda fuera del repositorio; el despliegue es responsable de suministrarlo.",
+          "language": "javascript"
+        },
+        {
+          "title": "Configurar TLS",
+          "description": "Usá TLS con certificados válidos.",
+          "code": "// La configuración TLS debe corresponder con el despliegue.\nconst client = new MongoClient(process.env.MONGODB_URI, { tls: true, serverSelectionTimeoutMS: 5000 });\nawait client.connect();",
+          "explanation": "No desactives la validación de certificados para resolver errores; corregí la cadena de confianza.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá una checklist para conectar una API a MongoDB Atlas.",
+      "hint": "Incluí URI en entorno, usuario limitado, TLS y reglas de red específicas.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — TLS",
+          "url": "https://www.mongodb.com/docs/manual/security/tls/"
+        },
+        {
+          "label": "Atlas — Network Access",
+          "url": "https://www.mongodb.com/docs/atlas/security/ip-access-list/"
+        }
+      ],
+      "related": [
+        "mongodb-roles-access-control",
+        "mongodb-node-driver-connect",
+        "node-env"
+      ]
+    },
+    {
+      "id": "mongodb-node-driver-connect",
+      "category": "node-driver",
+      "title": "Conectar Node.js con el driver oficial",
+      "summary": "Instalá mongodb y reutilizá un cliente en la aplicación.",
+      "purpose": "El driver oficial proporciona MongoClient, sesiones, colecciones y cursores. Conviene crear un cliente compartido por proceso, conectar durante el inicio y cerrar ordenadamente al terminar. Guardá la URI fuera del código.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "npm install mongodb · new MongoClient(uri) · await client.connect()",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Conectar al inicio",
+          "description": "Creá un cliente y seleccioná una base.",
+          "code": "// Terminal: npm install mongodb\nimport { MongoClient } from 'mongodb';\nconst client = new MongoClient(process.env.MONGODB_URI);\nawait client.connect();\nconst db = client.db('biblioteca_dev');\nexport { client, db };",
+          "explanation": "MongoClient administra el pool de conexiones del driver. Reutilizalo entre peticiones.",
+          "language": "javascript"
+        },
+        {
+          "title": "Cerrar al terminar",
+          "description": "Cerrá el cliente durante un apagado ordenado.",
+          "code": "// Fragmento de cierre para una aplicación Node.\nprocess.on('SIGTERM', async () => {\n  await client.close();\n  process.exit(0);\n});",
+          "explanation": "Un servidor real también debe gestionar errores y no registrar listeners repetidos.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Prepará un módulo compartido de conexión y una función de cierre.",
+      "hint": "Exportá client/db, conectá una vez al iniciar y cerrá durante el apagado.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Node.js Driver",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/"
+        },
+        {
+          "label": "MongoDB — Connect",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/connect/"
+        }
+      ],
+      "related": [
+        "node-que-es",
+        "mongodb-atlas-mongosh",
+        "express-database-integration"
+      ]
+    },
+    {
+      "id": "mongodb-node-crud",
+      "category": "node-driver",
+      "title": "CRUD con el driver de Node.js",
+      "summary": "Usá insertOne, findOne, updateOne y deleteOne desde Node.",
+      "purpose": "El driver ejecuta operaciones CRUD mediante métodos de una colección. Las consultas usan filtros BSON; los resultados incluyen metadatos como insertedId, matchedCount y modifiedCount. Convertí correctamente identificadores string a ObjectId cuando corresponda.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "collection.insertOne() · findOne() · updateOne() · deleteOne()",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Insertar y recuperar",
+          "description": "Creá una novela y recuperala por su id.",
+          "code": "// db es una Database obtenida desde MongoClient.\nconst result = await db.collection('novelas').insertOne({ titulo: 'Libro de prueba', estado: 'borrador' });\nconst novela = await db.collection('novelas').findOne({ _id: result.insertedId });",
+          "explanation": "insertedId contiene el identificador generado y findOne devuelve documento o null.",
+          "language": "javascript"
+        },
+        {
+          "title": "Actualizar y medir",
+          "description": "Modificá el estado y revisá contadores.",
+          "code": "// El filtro debe ser específico.\nconst result = await db.collection('novelas').updateOne({ slug: 'libro-prueba' }, { $set: { estado: 'publicada' } });\nconsole.log(result.matchedCount, result.modifiedCount);",
+          "explanation": "matchedCount indica coincidencias; modifiedCount indica documentos realmente modificados.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Escribí listarNovelas, obtenerNovelaPorId y actualizarEstado con el driver.",
+      "hint": "Devolvé resultados explícitos y contemplá null y errores.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "Node Driver — CRUD",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/crud/"
+        }
+      ],
+      "related": [
+        "mongodb-node-driver-connect",
+        "mongodb-find-filters",
+        "mongodb-update-operators",
+        "express-postgres-repository"
+      ]
+    },
+    {
+      "id": "mongodb-node-cursors",
+      "category": "node-driver",
+      "title": "Cursores en el driver: iterar y limitar memoria",
+      "summary": "Procesá conjuntos grandes por partes en lugar de cargar todos los documentos.",
+      "purpose": "find devuelve un cursor. Podés recorrerlo de forma asíncrona, limitar resultados o procesar lotes. toArray es cómodo para conjuntos pequeños; en colecciones grandes puede consumir mucha memoria.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "collection.find(filtro) → cursor · for await...of · toArray",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Iterar resultados",
+          "description": "Procesá documentos de uno en uno.",
+          "code": "// El cursor solicita lotes a medida que se recorren.\nconst cursor = db.collection('novelas').find({ publicada: true });\nfor await (const novela of cursor) { console.log(novela.titulo); }",
+          "explanation": "El bucle asíncrono evita materializar todos los documentos en un arreglo.",
+          "language": "javascript"
+        },
+        {
+          "title": "Proyectar y limitar",
+          "description": "Procesá solo los campos que necesita la tarea.",
+          "code": "// El límite controla el tamaño del array final.\nconst novelas = await db.collection('novelas').find({}, { projection: { titulo: 1, slug: 1 } }).sort({ titulo: 1 }).limit(50).toArray();",
+          "explanation": "toArray es razonable porque el límite restringe el resultado.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Recorré usuarios activos sin cargar la colección completa en memoria.",
+      "hint": "Usá for await...of y cerrá el cursor cuando interrumpas el proceso.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "Node Driver — Cursors",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/read-operations/cursor/"
+        }
+      ],
+      "related": [
+        "mongodb-node-crud",
+        "mongodb-pagination-cursors",
+        "mongodb-query-performance"
+      ]
+    },
+    {
+      "id": "mongodb-node-bulk-errors",
+      "category": "node-driver",
+      "title": "Bulk operations y manejo de errores",
+      "summary": "Agrupá escrituras y analizá resultados y fallos parciales.",
+      "purpose": "bulkWrite envía una lista de operaciones insertOne, updateOne, deleteOne, etc. ordered decide si se detiene al fallar una operación; un bulk no es por sí mismo una transacción global.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "collection.bulkWrite([...], { ordered:false })",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Operaciones combinadas",
+          "description": "Insertá, actualizá y eliminá en un lote.",
+          "code": "// Cada elemento describe una operación diferente.\nawait db.collection('productos').bulkWrite([\n  { insertOne: { document: { sku: 'A-1', stock: 5 } } },\n  { updateOne: { filter: { sku: 'B-1' }, update: { $inc: { stock: 2 } } } },\n  { deleteOne: { filter: { sku: 'TEST-OLD' } } }\n]);",
+          "explanation": "bulkWrite reduce viajes al servidor cuando hay muchas operaciones.",
+          "language": "javascript"
+        },
+        {
+          "title": "Continuar ante errores",
+          "description": "Usá ordered false cuando las operaciones sean independientes.",
+          "code": "// Las operaciones restantes pueden continuar tras errores individuales.\ntry {\n  await db.collection('productos').bulkWrite(operaciones, { ordered: false });\n} catch (error) {\n  console.error(error.writeErrors);\n}",
+          "explanation": "Inspeccioná qué operaciones fallaron y definí cómo corregirlas.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá un bulkWrite para modificar stock de varios SKU y reportar los que no existen.",
+      "hint": "Usá updateOne y revisá matchedCount y errores.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "Node Driver — Bulk Write",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/bulk-write/"
+        }
+      ],
+      "related": [
+        "mongodb-node-crud",
+        "mongodb-transactions",
+        "mongodb-validacion-esquema"
+      ]
+    },
+    {
+      "id": "mongodb-node-typescript",
+      "category": "node-driver",
+      "title": "MongoDB con TypeScript y tipos de documentos",
+      "summary": "Definí interfaces y tipá colecciones para detectar errores durante el desarrollo.",
+      "purpose": "El driver permite parametrizar Collection con tipos de documento. TypeScript mejora autocompletado y comprobación estática, pero sus anotaciones desaparecen en runtime y no validan documentos externos.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "interface Novela { titulo:string; estado:... } · Collection<Novela>",
+      "syntaxLanguage": "typescript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Tipar una colección",
+          "description": "Vinculá una interfaz con Collection.",
+          "code": "// Los genéricos describen el contrato estático de los documentos.\nimport { Collection, ObjectId } from 'mongodb';\ninterface Novela { _id?: ObjectId; titulo: string; estado: 'borrador' | 'publicada'; }\nconst novelas: Collection<Novela> = db.collection<Novela>('novelas');",
+          "explanation": "El genérico aporta tipos a las operaciones; no crea una validación automática en la base.",
+          "language": "typescript"
+        },
+        {
+          "title": "Tratar un resultado ausente",
+          "description": "findOne puede devolver null.",
+          "code": "// Comprobá null antes de acceder a las propiedades.\nconst novela = await novelas.findOne({ titulo: 'Re:Zero' });\nif (!novela) throw new Error('Novela no encontrada');\nconsole.log(novela.estado);",
+          "explanation": "La comprobación evita acceder a propiedades de un resultado inexistente.",
+          "language": "typescript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Tipá una colección Volumen con numero, titulo y novelaId, y contemplá el findOne sin resultados.",
+      "hint": "Usá Collection<Volumen> y tratá null.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB Node Driver — TypeScript",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/fundamentals/typescript/"
+        }
+      ],
+      "related": [
+        "ts-interfaces",
+        "ts-generics-funciones",
+        "mongodb-validacion-esquema"
+      ]
+    },
+    {
+      "id": "mongodb-express-api",
+      "category": "node-driver",
+      "title": "Crear una API Express que use MongoDB",
+      "summary": "Conectá rutas Express con repositorios que usan el driver oficial.",
+      "purpose": "Una API Express puede usar MongoDB como almacenamiento sin mezclar consultas con el transporte HTTP. Abrí el cliente durante el inicio, validá entradas, convertí identificadores y respondé errores sin exponer detalles internos.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "Express Router → repositorio → MongoDB Collection",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Repositorio de novelas",
+          "description": "Encapsulá la consulta en un módulo.",
+          "code": "// repositories/novelas.js\nexport async function listarNovelas(db) {\n  return db.collection('novelas').find({ publicada: true }, { projection: { titulo: 1, slug: 1 } }).limit(50).toArray();\n}",
+          "explanation": "El repositorio recibe la base como dependencia y devuelve datos, no objetos req/res.",
+          "language": "javascript"
+        },
+        {
+          "title": "Ruta Express",
+          "description": "Transformá el resultado en una respuesta HTTP.",
+          "code": "// routes/novelas.js\nimport { Router } from 'express';\nimport { listarNovelas } from '../repositories/novelas.js';\nconst router = Router();\nrouter.get('/novelas', async (req, res) => {\n  const novelas = await listarNovelas(req.app.locals.db);\n  res.json(novelas);\n});\nexport default router;",
+          "explanation": "La ruta presenta el resultado como JSON. Inicializá app.locals.db antes de aceptar solicitudes.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Agregá GET /novelas/:id con validación de ObjectId y respuesta 404.",
+      "hint": "Usá ObjectId.isValid y no expongas errores internos.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "Express — Routing",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        },
+        {
+          "label": "MongoDB Node Driver",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/"
+        }
+      ],
+      "related": [
+        "express-rest-crud-api",
+        "express-error-handling",
+        "mongodb-node-crud",
+        "mongodb-conexion-segura"
+      ]
+    },
+    {
+      "id": "mongodb-replica-sets",
+      "category": "administracion-avanzada",
+      "title": "Replica sets: alta disponibilidad y failover",
+      "summary": "Comprendé la replicación primaria-secundaria y la elección de un nuevo primario.",
+      "purpose": "Un replica set mantiene copias del conjunto de datos en varios miembros. Un primario recibe escrituras y secundarios replican el oplog; si el primario cae, los miembros elegibles pueden elegir otro. La replicación mejora disponibilidad, pero no sustituye backups.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "Primary → oplog → Secondaries · election · majority",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Consultar el estado",
+          "description": "Revisá la topología desde una shell autorizada.",
+          "code": "// En mongosh conectado al replica set.\nrs.status();",
+          "explanation": "La salida muestra miembros, roles y estado de replicación.",
+          "language": "javascript"
+        },
+        {
+          "title": "Ver configuración",
+          "description": "Inspeccioná miembros y opciones.",
+          "code": "// Consultá la configuración del conjunto.\nrs.conf();",
+          "explanation": "La configuración muestra prioridades, votos y miembros.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Explicá qué sucede cuando deja de responder el primario y por qué una sola instancia no ofrece la misma disponibilidad.",
+      "hint": "Pensá en la elección, la mayoría y el tiempo de interrupción.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Replica Sets",
+          "url": "https://www.mongodb.com/docs/manual/replication/"
+        }
+      ],
+      "related": [
+        "mongodb-read-write-concern",
+        "mongodb-backup-restore",
+        "mongodb-transactions"
+      ]
+    },
+    {
+      "id": "mongodb-sharding",
+      "category": "administracion-avanzada",
+      "title": "Sharding: distribuir datos horizontalmente",
+      "summary": "Conocé cómo MongoDB distribuye colecciones y por qué la shard key importa.",
+      "purpose": "Sharding reparte documentos entre varios shards. La shard key determina distribución y ruteo; una mala elección puede crear hotspots o consultas que contacten demasiados shards. Es una decisión de arquitectura, no un ajuste automático.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "Shard key → chunks → shards · mongos · config servers",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Evaluar una clave candidata",
+          "description": "Elegí una clave con cardinalidad y distribución razonables.",
+          "code": "// Ejemplo conceptual; la shard key real requiere análisis de carga.\nsh.shardCollection(\"analitica.eventos\", { tenantId: 1, creadoEn: 1 });",
+          "explanation": "La clave condiciona distribución y ruteo; su forma correcta depende de cardinalidad, escrituras y consultas.",
+          "language": "javascript"
+        },
+        {
+          "title": "Consultar estado de sharding",
+          "description": "Inspeccioná la topología administrativa.",
+          "code": "// Ejecutá con permisos de administración.\nsh.status();",
+          "explanation": "La salida muestra shards, rangos y colecciones distribuidas; no sustituye pruebas de carga.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué problemas puede causar una marca de tiempo creciente como única shard key en una colección con altas escrituras?",
+      "hint": "Pensá en escrituras concentradas en un rango y posibles hotspots.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Sharding",
+          "url": "https://www.mongodb.com/docs/manual/sharding/"
+        }
+      ],
+      "related": [
+        "mongodb-replica-sets",
+        "mongodb-query-performance"
+      ]
+    },
+    {
+      "id": "mongodb-change-streams",
+      "category": "administracion-avanzada",
+      "title": "Change Streams: reaccionar a cambios",
+      "summary": "Escuchá eventos de inserción, actualización y eliminación en una colección.",
+      "purpose": "Change Streams permiten suscribirse a cambios en replica sets y clústeres sharded. El consumidor recibe eventos con resume token para continuar tras interrupciones. Requiere reintentos, retención del oplog y consumidores idempotentes.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "collection.watch() · change event · resumeToken",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Escuchar inserciones",
+          "description": "Abrí un stream y reaccioná a nuevos eventos.",
+          "code": "// Requiere deployment compatible con Change Streams.\nconst stream = db.collection('pedidos').watch();\nstream.on('change', change => console.log(change.operationType, change.documentKey));",
+          "explanation": "El consumidor debe cerrar el stream al apagar el servicio y manejar errores.",
+          "language": "javascript"
+        },
+        {
+          "title": "Guardar el resume token",
+          "description": "Persistí el token después de procesar correctamente el evento.",
+          "code": "// Guardá token luego de procesar el cambio de manera durable.\nstream.on('change', async change => {\n  await procesarCambio(change);\n  await guardarToken(change._id);\n});",
+          "explanation": "Si guardás el token antes de procesar, podrías perder un evento al reiniciar.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá un consumidor que actualice una búsqueda cuando cambia una novela.",
+      "hint": "Incluí resume token, idempotencia y recuperación de errores.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Change Streams",
+          "url": "https://www.mongodb.com/docs/manual/changeStreams/"
+        },
+        {
+          "label": "Node Driver — Change Streams",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/monitoring-and-logging/change-streams/"
+        }
+      ],
+      "related": [
+        "mongodb-replica-sets",
+        "mongodb-node-cursors",
+        "express-testing-integration"
+      ]
+    },
+    {
+      "id": "mongodb-backup-restore",
+      "category": "administracion-avanzada",
+      "title": "Backup y restore: mongodump y mongorestore",
+      "summary": "Creá copias lógicas y practicá su recuperación en un entorno separado.",
+      "purpose": "mongodump genera un backup lógico y mongorestore lo restaura. Las opciones de autenticación, TLS, filtros y consistencia dependen del despliegue. La política debe incluir pruebas de restauración y objetivos de recuperación.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "mongodump --uri=\"$MONGODB_URI\" --out=backup/ · mongorestore ...",
+      "syntaxLanguage": "bash",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Crear una copia",
+          "description": "Generá un respaldo en una ruta protegida.",
+          "code": "# Ejecutá desde terminal usando una URI de secreto.\nmongodump --uri=\"$MONGODB_URI\" --out=\"./backup-2026-11-21\"",
+          "explanation": "Protegé el directorio porque puede contener todos los datos.",
+          "language": "javascript"
+        },
+        {
+          "title": "Restaurar en prueba",
+          "description": "Probá en otra instancia, no sobre producción.",
+          "code": "# Usá una instancia de desarrollo aislada.\nmongorestore --uri=\"$MONGODB_RESTORE_TEST_URI\" ./backup-2026-11-21",
+          "explanation": "La verificación debe revisar documentos, índices y validez de la información.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Definí backups diarios y retención semanal para una biblioteca digital.",
+      "hint": "Incluí ubicación separada, cifrado, retención y pruebas de restauración.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Backup Methods",
+          "url": "https://www.mongodb.com/docs/manual/core/backups/"
+        },
+        {
+          "label": "mongodump",
+          "url": "https://www.mongodb.com/docs/manual/reference/program/mongodump/"
+        },
+        {
+          "label": "mongorestore",
+          "url": "https://www.mongodb.com/docs/manual/reference/program/mongorestore/"
+        }
+      ],
+      "related": [
+        "mongodb-replica-sets",
+        "postgres-backup-restore",
+        "mongodb-conexion-segura"
+      ]
+    },
+    {
+      "id": "mongodb-migrations",
+      "category": "administracion-avanzada",
+      "title": "Migraciones y cambios de esquema en MongoDB",
+      "summary": "Organizá transformaciones de documentos para evolucionar la aplicación.",
+      "purpose": "Aunque MongoDB tenga esquema flexible, la aplicación mantiene contratos de datos. Una migración puede agregar campos, convertir tipos o normalizar valores. Versioná scripts, hacé backfills por lotes y mantenelos idempotentes.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "Script versionado → lectura compatible → backfill → validación → limpieza",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Backfill por lotes",
+          "description": "Agregá un campo a documentos donde todavía falta.",
+          "code": "// Repetible: solo modifica documentos sin idioma.\ndb.novelas.updateMany({ idioma: { $exists: false } }, { $set: { idioma: \"desconocido\" } });",
+          "explanation": "El filtro evita reescribir documentos ya procesados.",
+          "language": "javascript"
+        },
+        {
+          "title": "Marcar versión del documento",
+          "description": "Guardá una versión para distinguir formatos.",
+          "code": "// La aplicación puede reconocer el formato actualizado.\ndb.novelas.updateMany({ schemaVersion: { $exists: false } }, { $set: { schemaVersion: 2 } });",
+          "explanation": "La versión ayuda a diferenciar generaciones de documentos.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá una migración para renombrar autor a autores manteniendo compatibilidad.",
+      "hint": "Planificá lectura de ambas formas, backfill, validación y retirada de la forma antigua.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — Schema Versioning",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/design-patterns/schema-versioning/"
+        },
+        {
+          "label": "MongoDB — Update Documents",
+          "url": "https://www.mongodb.com/docs/manual/tutorial/update-documents/"
+        }
+      ],
+      "related": [
+        "mongodb-modelado-flexible",
+        "mongodb-validacion-esquema",
+        "postgres-migraciones"
+      ]
+    },
+    {
+      "id": "mongodb-gridfs",
+      "category": "administracion-avanzada",
+      "title": "GridFS: almacenar archivos grandes",
+      "summary": "Entendé cuándo usar GridFS y cuándo conviene almacenamiento de objetos externo.",
+      "purpose": "GridFS almacena archivos grandes en fragmentos y metadatos relacionados mediante colecciones dedicadas. Puede servir cuando se requiere almacenar archivos en MongoDB; para muchos sistemas un servicio de objetos/CDN es más simple.",
+      "whenToUse": "Usá este recurso cuando el modelo documental, las consultas o la integración de MongoDB resuelvan una necesidad concreta de tu aplicación.",
+      "syntax": "GridFSBucket · openUploadStream() · openDownloadStream()",
+      "syntaxLanguage": "javascript",
+      "level": "Inicial a avanzado",
+      "examples": [
+        {
+          "title": "Subir un archivo",
+          "description": "Usá GridFSBucket y streams desde Node.",
+          "code": "// Ejemplo con driver oficial y un bucket conectado.\nimport { GridFSBucket } from 'mongodb';\nimport { createReadStream } from 'node:fs';\nconst bucket = new GridFSBucket(db, { bucketName: 'archivos' });\nconst upload = bucket.openUploadStream('portada.jpg', { contentType: 'image/jpeg' });\ncreateReadStream('./portada.jpg').pipe(upload);",
+          "explanation": "GridFS crea metadatos y chunks; esperá finish/error antes de responder que la carga terminó.",
+          "language": "javascript"
+        },
+        {
+          "title": "Descargar por id",
+          "description": "Transferí el archivo mediante un stream.",
+          "code": "// fileId debe ser el ObjectId de un archivo existente.\nconst download = bucket.openDownloadStream(fileId);\ndownload.pipe(res);",
+          "explanation": "El stream evita cargar todo en memoria. Controlá errores y headers HTTP.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Evaluá si las portadas de una biblioteca deberían ir en GridFS o en un CDN de objetos.",
+      "hint": "Considerá tamaño, tráfico, entrega pública, costos, backups e integración con metadatos.",
+      "bestPractices": [
+        "Modelá los documentos según los patrones reales de lectura y escritura.",
+        "Usá filtros selectivos, límites y proyecciones para controlar los datos transferidos.",
+        "Probá cambios y agregaciones con datos representativos en un entorno de desarrollo."
+      ],
+      "commonMistakes": [
+        "Confundir esquema flexible con ausencia de diseño o validación.",
+        "Traer colecciones completas cuando solo necesitás unos campos o documentos.",
+        "Asumir que una operación aislada demuestra la seguridad y el rendimiento en producción."
+      ],
+      "resources": [
+        {
+          "label": "MongoDB — GridFS",
+          "url": "https://www.mongodb.com/docs/manual/core/gridfs/"
+        },
+        {
+          "label": "Node Driver — GridFS",
+          "url": "https://www.mongodb.com/docs/drivers/node/current/fundamentals/gridfs/"
+        }
+      ],
+      "related": [
+        "mongodb-node-driver-connect",
+        "mongodb-backup-restore"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "Cómo MongoDB encuentra documentos",
+    "summary": "MongoDB consulta colecciones de documentos BSON; los filtros, proyecciones e índices determinan qué documentos se recuperan.",
+    "steps": [
+      [
+        "La aplicación construye el filtro",
+        "El driver envía una operación con colección, filtro, proyección y opciones."
+      ],
+      [
+        "Se selecciona el plan",
+        "El motor evalúa índices disponibles y decide cómo localizar documentos coincidentes."
+      ],
+      [
+        "Se recuperan y transforman datos",
+        "La consulta devuelve documentos; una agregación puede encadenar etapas para filtrar, agrupar o proyectar."
+      ],
+      [
+        "El cursor entrega resultados",
+        "El cliente consume los documentos por lotes cuando corresponde."
+      ]
+    ],
+    "note": "El diseño de documentos debe responder a los patrones de lectura y escritura. Incrustar evita joins en ciertos casos; referenciar ayuda cuando los datos crecen o se comparten."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "mongodb-insert-documents",
+      "mongodb-find-filters",
+      "mongodb-aggregation-pipeline"
+    ],
+    "execution": {
+      "kind": "database",
+      "label": "Servidor MongoDB / mongosh / driver",
+      "description": "MongoDB se ejecuta como servidor o servicio administrado. Las consultas se envían desde mongosh o desde el driver del backend; no desde el runtime normal del navegador."
+    },
+    "compatibility": {
+      "kind": "not-browser",
+      "summary": "No aplica a navegadores: MongoDB es un motor de base de datos documental.",
+      "note": "El frontend debe comunicarse con una API segura. No conectes una aplicación pública directamente con credenciales privilegiadas de MongoDB."
+    },
+    "advantages": [
+      "El modelo documental resulta flexible para estructuras anidadas.",
+      "Puede reducir joins en patrones de lectura adecuados.",
+      "Aggregation Pipeline permite transformar y resumir documentos."
+    ],
+    "limitations": [
+      "Un esquema flexible no evita la necesidad de reglas de validación y modelado.",
+      "Los arrays sin límite y documentos excesivos pueden generar problemas.",
+      "Índices y consultas deben alinearse con los patrones de acceso."
+    ],
+    "complements": [
+      [
+        "nodejs",
+        "Usar el driver oficial desde el servidor."
+      ],
+      [
+        "express",
+        "Exponer CRUD y operaciones de documentos mediante API."
+      ],
+      [
+        "typescript",
+        "Definir modelos y contratos de datos."
+      ],
+      [
+        "testing",
+        "Probar consultas y servicios."
+      ],
+      [
+        "docker-deploy",
+        "Ejecutar servicios y entornos locales."
+      ]
+    ],
+    "docs": [
+      [
+        "MongoDB — documentación",
+        "https://www.mongodb.com/docs/"
+      ],
+      [
+        "MongoDB — Node.js Driver",
+        "https://www.mongodb.com/docs/drivers/node/current/"
+      ]
+    ]
+  }
+}

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="../css/module-center.css">
 <script defer src="../js/theme.js"></script>
 <script defer src="../js/navigation.js"></script>
+<script defer src="../js/library-packages.js"></script>
 <script defer src="../js/module-manager.js"></script>
 <link rel="manifest" href="../manifest.json">
 <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml">
@@ -111,10 +112,10 @@
   </section>
 
   <section class="module-section" id="module-catalog" aria-labelledby="moduleCatalogHeading">
-    <div class="module-section-heading module-catalog-heading"><div><div class="eyebrow">CATÁLOGO Y ADMINISTRACIÓN</div><h2 id="moduleCatalogHeading">Todos los módulos</h2><p class="module-section-intro">Podés abrir lo que ya forma parte de la aplicación y marcar lo que querés priorizar. Los paquetes futuros todavía no se ofrecen como descargas.</p></div><span class="module-result-count" id="moduleResultCount">— módulos</span></div>
+    <div class="module-section-heading module-catalog-heading"><div><div class="eyebrow">CATÁLOGO Y ADMINISTRACIÓN</div><h2 id="moduleCatalogHeading">Todos los módulos</h2><p class="module-section-intro">Descargá solo las tecnologías que necesitás, abrí las bibliotecas instaladas y marcá tus prioridades. Laboratorios y multimedia se habilitarán en sus próximas etapas.</p></div><span class="module-result-count" id="moduleResultCount">— módulos</span></div>
     <div class="module-filters" role="group" aria-label="Filtrar módulos">
       <button class="module-filter is-active" data-filter="all" type="button" aria-pressed="true">Todos</button>
-      <button class="module-filter" data-filter="integrated" type="button" aria-pressed="false">Incluidos</button>
+      <button class="module-filter" data-filter="integrated" type="button" aria-pressed="false">Disponibles</button>
       <button class="module-filter" data-filter="library" type="button" aria-pressed="false">Bibliotecas</button>
       <button class="module-filter" data-filter="lab" type="button" aria-pressed="false">Laboratorios</button>
       <button class="module-filter" data-filter="media" type="button" aria-pressed="false">Multimedia</button>
@@ -126,10 +127,10 @@
     <p class="module-empty" id="moduleEmpty" hidden>No hay módulos que coincidan con la búsqueda.</p>
   </section>
   <section class="module-note">
-    <strong>Importante: esta es la primera etapa.</strong>
-    <p>Hoy las bibliotecas actuales siguen incluidas en el paquete principal. Este centro ya administra el catálogo y tus prioridades locales; todavía no descarga ni elimina paquetes. La descarga real con verificación de integridad, dependencias y recuperación ante errores se implementará en la etapa 2, sin poner en riesgo tus proyectos ni tu progreso.</p>
+    <strong>Etapa 2 · Bibliotecas independientes activas.</strong>
+    <p>Las 17 bibliotecas tecnológicas se pueden descargar, actualizar y quitar de forma independiente. La aplicación conserva en el núcleo el índice de búsqueda y los metadatos livianos; cada paquete completo se guarda en IndexedDB después de verificar SHA-256. Quitar una biblioteca no borra favoritos, progreso, proyectos ni archivos del editor.</p>
   </section>
-  <footer class="module-footer"><span>WebDev Book · Núcleo y administración de módulos</span><a href="../index.html">Volver al inicio ↑</a></footer>
+  <footer class="module-footer"><span>WebDev Book · Núcleo y bibliotecas descargables</span><a href="../index.html">Volver al inicio ↑</a></footer>
 </div>
 </main>
 </div>

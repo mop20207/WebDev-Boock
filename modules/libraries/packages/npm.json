@@ -1,0 +1,704 @@
+{
+  "id": "npm",
+  "title": "NPM y paquetes",
+  "shortTitle": "NPM",
+  "symbol": "npm",
+  "eyebrow": "ECOSISTEMA JAVASCRIPT",
+  "tagline": "Administrá paquetes, dependencias y scripts de tus proyectos.",
+  "description": "Aprendé a trabajar con Node.js, NPM, package.json y las herramientas del ecosistema JavaScript.",
+  "level": "Inicial a intermedio",
+  "accent": "npm",
+  "categories": [
+    {
+      "id": "introduccion",
+      "title": "Introducción a NPM",
+      "description": "Conocé el gestor de paquetes y prepará Node.js.",
+      "icon": "⬡",
+      "articles": [
+        "npm-que-es",
+        "npm-node",
+        "npm-pnpm",
+        "npm-global-local",
+        "npm-permisos"
+      ]
+    },
+    {
+      "id": "administracion",
+      "title": "Administración de proyectos",
+      "description": "Creá proyectos, instalá paquetes y mantené las dependencias.",
+      "icon": "▦",
+      "articles": [
+        "npm-init",
+        "npm-install",
+        "npm-package-json",
+        "npm-update",
+        "npm-scripts",
+        "npm-node-modules",
+        "npm-npx",
+        "npm-semver"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "npm-que-es",
+      "title": "¿Qué es NPM?",
+      "category": "introduccion",
+      "summary": "Conocé el gestor de paquetes y su función en el ecosistema de JavaScript.",
+      "purpose": "NPM es una herramienta de línea de comandos y un registro de paquetes. Permite instalar, actualizar, quitar y publicar paquetes; también administra dependencias de un proyecto mediante package.json y archivos de bloqueo.",
+      "syntax": "npm comando [opciones] [paquete]",
+      "examples": [
+        {
+          "title": "Consultar versiones",
+          "description": "Comprobá las versiones de Node.js y NPM.",
+          "code": "node --version\\nnpm --version",
+          "explanation": "Node y NPM tienen ciclos de versión propios aunque habitualmente se distribuyen juntos."
+        },
+        {
+          "title": "Consultar ayuda",
+          "description": "La ayuda puede abrirse para comandos concretos.",
+          "code": "npm help install\\nnpm help scripts",
+          "explanation": "La documentación explica opciones y comportamientos."
+        },
+        {
+          "title": "Crear un proyecto con Vite",
+          "description": "Generá una aplicación base, instalá dependencias y ejecutá el servidor de desarrollo.",
+          "language": "bash",
+          "code": "# Crear un proyecto JavaScript con Vite\nnpm create vite@latest mi-app -- --template vanilla\ncd mi-app\nnpm install\nnpm run dev",
+          "explanation": "El generador crea el manifiesto y los archivos iniciales. npm install instala lo declarado en el proyecto. npm run dev ejecuta el script definido por la plantilla; la terminal muestra la URL local disponible."
+        }
+      ],
+      "exercise": "Verificá las versiones instaladas y explicá qué papel cumple Node.js y cuál cumple NPM.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Documentación oficial de NPM",
+          "url": "https://docs.npmjs.com/"
+        }
+      ],
+      "related": [
+        "npm-node",
+        "npm-package-json"
+      ],
+      "deepDive": {
+        "model": "NPM no es solo un comando para descargar librerías. Mantiene el contrato de dependencias del proyecto, calcula una resolución compatible de versiones, instala paquetes y ejecuta scripts. El manifiesto describe lo que necesita el proyecto; el lockfile registra una resolución concreta para que otros entornos puedan reproducirla.",
+        "flow": [
+          [
+            "Declarar",
+            "package.json enumera dependencias, rangos de versión y comandos repetibles en scripts."
+          ],
+          [
+            "Resolver",
+            "El gestor construye un árbol compatible teniendo en cuenta dependencias directas, transitivas y restricciones."
+          ],
+          [
+            "Reproducir",
+            "package-lock.json fija la resolución. npm ci instala desde ese lockfile y falla si no coincide con el manifiesto."
+          ]
+        ],
+        "decisions": [
+          "Usá dependencias de desarrollo para herramientas que no forman parte del runtime de producción, como linters y bundlers.",
+          "Preferí npm ci en automatizaciones que requieren instalación reproducible desde un lockfile comprometido."
+        ],
+        "debugging": "Si una dependencia no se encuentra, confirmá el nombre del paquete y el registro configurado. Si el proyecto se comporta distinto en otra máquina, compará Node, NPM y el lockfile antes de borrar node_modules."
+      },
+      "whenToUse": "Usá NPM para instalar y actualizar paquetes, mantener dependencias del proyecto, ejecutar scripts y compartir una instalación reproducible mediante package.json y package-lock.json. Es la herramienta habitual cuando trabajás con proyectos JavaScript y Node.js."
+    },
+    {
+      "id": "npm-node",
+      "title": "Instalar Node.js y administrar versiones",
+      "category": "introduccion",
+      "summary": "Node.js ejecuta JavaScript fuera del navegador y NVM ayuda a cambiar entre versiones.",
+      "purpose": "Node.js es un entorno de ejecución de JavaScript basado en V8. NVM (Node Version Manager) permite instalar y seleccionar distintas versiones en sistemas compatibles. En Windows existen administradores de versiones con comandos propios.",
+      "syntax": "nvm install --lts\\nnvm use --lts\\nnode --version",
+      "examples": [
+        {
+          "title": "Instalar una versión LTS",
+          "description": "En NVM para Unix, --lts instala la versión con soporte prolongado disponible.",
+          "code": "nvm install --lts\\nnvm use --lts",
+          "explanation": "Los comandos pueden variar entre NVM para Unix y herramientas equivalentes para Windows."
+        },
+        {
+          "title": "Comprobar el entorno",
+          "description": "Consultá el runtime y el gestor disponibles.",
+          "code": "node --version\\nnpm --version",
+          "explanation": "Un proyecto puede requerir una versión específica de Node."
+        }
+      ],
+      "exercise": "Consultá qué versión de Node requiere un proyecto y comparala con la versión activa en tu terminal.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Preferí una versión LTS compatible con el proyecto.",
+        "No mezcles comandos de distintas implementaciones de NVM."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "Node.js: descargas",
+          "url": "https://nodejs.org/en/download"
+        },
+        {
+          "label": "NVM para Unix",
+          "url": "https://github.com/nvm-sh/nvm"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "npm-pnpm",
+      "title": "NPM y PNPM: gestores de paquetes",
+      "category": "introduccion",
+      "summary": "Compará NPM con PNPM y entendé por qué un proyecto elige un gestor concreto.",
+      "purpose": "NPM viene habitualmente con Node.js. PNPM es una alternativa que utiliza un almacén compartido y enlaces para administrar paquetes. Cada gestor usa su propio archivo de bloqueo y sus convenciones.",
+      "syntax": "npm install\\npnpm install\\npnpm add paquete",
+      "examples": [
+        {
+          "title": "Instalar dependencias con NPM",
+          "description": "NPM utiliza package-lock.json como lockfile habitual.",
+          "code": "npm install",
+          "explanation": "Instala dependencias declaradas en package.json."
+        },
+        {
+          "title": "Instalar con PNPM",
+          "description": "PNPM utiliza pnpm-lock.yaml.",
+          "code": "pnpm install\\npnpm add dayjs",
+          "explanation": "Respetá el gestor configurado por el proyecto y evitá mezclar lockfiles."
+        }
+      ],
+      "exercise": "Identificá qué gestor utiliza un proyecto mirando sus archivos de bloqueo y explicá qué información guardan.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "PNPM: documentación",
+          "url": "https://pnpm.io/"
+        }
+      ],
+      "related": [
+        "npm-install",
+        "npm-package-json"
+      ]
+    },
+    {
+      "id": "npm-global-local",
+      "title": "Dependencias locales y globales",
+      "category": "introduccion",
+      "summary": "Diferenciá los paquetes instalados para un proyecto de las herramientas globales.",
+      "purpose": "Una dependencia local se instala dentro del proyecto y se registra en package.json. Una instalación global permite utilizar una herramienta desde distintas carpetas, pero no queda declarada como dependencia específica del proyecto.",
+      "syntax": "npm install paquete\\nnpm install -g herramienta\\nnpm list -g --depth=0",
+      "examples": [
+        {
+          "title": "Instalar una dependencia local",
+          "description": "La biblioteca queda disponible para el proyecto.",
+          "code": "npm install dayjs",
+          "explanation": "Se registra normalmente en dependencies."
+        },
+        {
+          "title": "Instalar una herramienta global",
+          "description": "Las herramientas CLI pueden instalarse para el usuario o el sistema.",
+          "code": "npm install -g typescript\\ntsc --version",
+          "explanation": "El ejecutable debe estar en una ruta incluida en PATH."
+        }
+      ],
+      "exercise": "Instalá una dependencia local y comprobá cómo aparece en package.json.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "npm-install",
+        "npm-permisos"
+      ]
+    },
+    {
+      "id": "npm-permisos",
+      "title": "Resolver problemas de permisos de NPM",
+      "category": "introduccion",
+      "summary": "Identificá errores de permisos en instalaciones y evitá soluciones inseguras.",
+      "purpose": "Los errores EACCES suelen aparecer cuando una carpeta global no tiene permisos adecuados para el usuario. La solución depende del sistema y de cómo se instaló Node.js; no conviene aplicar permisos amplios de manera indiscriminada.",
+      "syntax": "npm config get prefix\\nnpm config get cache",
+      "examples": [
+        {
+          "title": "Consultar las rutas",
+          "description": "Revisá los directorios que utiliza NPM.",
+          "code": "npm config get prefix\\nnpm config get cache",
+          "explanation": "Las rutas ayudan a detectar qué carpeta está provocando el problema."
+        },
+        {
+          "title": "Preferir una dependencia local",
+          "description": "Muchas herramientas pueden instalarse en el proyecto y ejecutarse mediante npx o scripts.",
+          "code": "npm install -D typescript\\nnpx tsc --version",
+          "explanation": "Esto evita modificar directorios globales en muchos flujos."
+        }
+      ],
+      "exercise": "Ante un error EACCES, guardá el mensaje completo y consultá la guía oficial antes de cambiar permisos.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "No uses chmod 777 como solución general.",
+        "No ejecutes npm install con sudo por costumbre.",
+        "Preferí administrar Node bajo tu usuario cuando sea apropiado."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "NPM: resolver errores EACCES",
+          "url": "https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "npm-init",
+      "title": "Crear un proyecto con npm init",
+      "category": "administracion",
+      "summary": "Inicializá un proyecto y generá el archivo package.json.",
+      "purpose": "npm init permite crear el manifiesto de un proyecto mediante preguntas. La opción -y acepta valores predeterminados y crea el archivo rápidamente.",
+      "syntax": "npm init\\nnpm init -y",
+      "examples": [
+        {
+          "title": "Inicialización interactiva",
+          "description": "NPM pregunta por los metadatos del proyecto.",
+          "code": "mkdir mi-app\\ncd mi-app\\nnpm init",
+          "explanation": "Podés indicar nombre, versión, descripción, punto de entrada y licencia."
+        },
+        {
+          "title": "Inicialización rápida",
+          "description": "-y acepta los valores propuestos.",
+          "code": "npm init -y",
+          "explanation": "Después editá package.json para ajustar los campos."
+        }
+      ],
+      "exercise": "Creá un proyecto nuevo con npm init y completá su nombre, descripción y punto de entrada.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "npm-package-json",
+        "npm-scripts"
+      ]
+    },
+    {
+      "id": "npm-install",
+      "title": "Instalar y quitar paquetes",
+      "category": "administracion",
+      "summary": "Agregá paquetes a un proyecto y mantené registradas sus dependencias.",
+      "purpose": "npm install instala dependencias y puede agregar un paquete nuevo al proyecto. npm uninstall quita el paquete y actualiza los archivos de configuración correspondientes.",
+      "syntax": "npm install paquete\\nnpm install -D paquete\\nnpm uninstall paquete",
+      "examples": [
+        {
+          "title": "Agregar una dependencia",
+          "description": "El paquete queda registrado como dependencia de ejecución.",
+          "code": "npm install dayjs",
+          "explanation": "Se incorpora a dependencies y queda disponible para el código del proyecto."
+        },
+        {
+          "title": "Agregar una herramienta de desarrollo",
+          "description": "-D o --save-dev registra el paquete en devDependencies.",
+          "code": "npm install -D eslint",
+          "explanation": "Estas dependencias se utilizan habitualmente durante el desarrollo y las pruebas."
+        }
+      ],
+      "exercise": "Instalá una biblioteca y una herramienta de desarrollo. Compará cómo aparecen en package.json.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "npm-package-json",
+        "npm-update"
+      ]
+    },
+    {
+      "id": "npm-package-json",
+      "title": "El archivo package.json",
+      "category": "administracion",
+      "summary": "Entendé los metadatos, scripts y dependencias que describen un proyecto.",
+      "purpose": "package.json es el manifiesto principal del proyecto. Contiene información como nombre, versión, scripts y dependencias. Debe ser JSON válido y suele versionarse junto con el archivo de bloqueo.",
+      "syntax": "{\\n  \"name\": \"mi-app\",\\n  \"version\": \"1.0.0\",\\n  \"scripts\": {},\\n  \"dependencies\": {}\\n}",
+      "examples": [
+        {
+          "title": "Ejemplo de manifiesto",
+          "description": "Un proyecto puede declarar scripts y dependencias.",
+          "code": "{\\n  \"name\": \"mi-app\",\\n  \"version\": \"1.0.0\",\\n  \"private\": true,\\n  \"scripts\": { \"start\": \"node app.js\" },\\n  \"dependencies\": { \"dayjs\": \"^1.11.0\" }\\n}",
+          "explanation": "Las claves y cadenas van entre comillas dobles y no se permiten comas finales."
+        },
+        {
+          "title": "Consultar campos",
+          "description": "npm pkg permite leer propiedades del manifiesto.",
+          "code": "npm pkg get name version scripts",
+          "explanation": "Podés consultar uno o varios campos sin abrir el archivo manualmente."
+        }
+      ],
+      "exercise": "Creá un package.json con nombre, versión, un script start y una dependencia.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "NPM: package.json",
+          "url": "https://docs.npmjs.com/cli/configuring-npm/package-json"
+        }
+      ],
+      "related": [
+        "npm-init",
+        "npm-scripts",
+        "npm-semver"
+      ]
+    },
+    {
+      "id": "npm-update",
+      "title": "Actualizar dependencias",
+      "category": "administracion",
+      "summary": "Detectá paquetes desactualizados y aplicá actualizaciones dentro de los rangos configurados.",
+      "purpose": "npm outdated muestra paquetes con versiones nuevas disponibles. npm update actualiza dependencias dentro de los rangos declarados. Las actualizaciones mayores pueden requerir cambios manuales y pruebas.",
+      "syntax": "npm outdated\\nnpm update\\nnpm install paquete@latest",
+      "examples": [
+        {
+          "title": "Consultar paquetes desactualizados",
+          "description": "Mostrá versiones instaladas y versiones disponibles.",
+          "code": "npm outdated",
+          "explanation": "La tabla informa current, wanted y latest."
+        },
+        {
+          "title": "Actualizar dentro del rango",
+          "description": "npm update aplica versiones permitidas por package.json.",
+          "code": "npm update",
+          "explanation": "Para actualizar a una versión mayor se puede requerir cambiar la especificación y revisar incompatibilidades."
+        }
+      ],
+      "exercise": "Ejecutá npm outdated en un proyecto de práctica y explicá las columnas current, wanted y latest.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Leé las notas de versión antes de una actualización mayor.",
+        "Ejecutá pruebas después de actualizar paquetes.",
+        "Hacé un commit antes de cambios amplios en las dependencias."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "npm-package-json",
+        "npm-semver"
+      ]
+    },
+    {
+      "id": "npm-scripts",
+      "title": "Scripts de NPM",
+      "category": "administracion",
+      "summary": "Definí tareas reutilizables para arrancar, probar o construir un proyecto.",
+      "purpose": "Los scripts se declaran en la propiedad scripts de package.json. Se ejecutan con npm run nombre; algunos scripts como start y test tienen comandos abreviados.",
+      "syntax": "npm run nombre\\nnpm run\\nnpm start",
+      "examples": [
+        {
+          "title": "Definir scripts",
+          "description": "Agregá comandos con nombres claros.",
+          "code": "{\\n  \"scripts\": {\\n    \"start\": \"node app.js\",\\n    \"dev\": \"vite\",\\n    \"build\": \"vite build\"\\n  }\\n}",
+          "explanation": "El comando debe estar disponible en el entorno del proyecto."
+        },
+        {
+          "title": "Ejecutar una tarea",
+          "description": "Listá los scripts o ejecutá uno en particular.",
+          "code": "npm run\\nnpm run build",
+          "explanation": "NPM agrega los ejecutables locales de node_modules/.bin al PATH durante la ejecución."
+        }
+      ],
+      "exercise": "Agregá scripts dev, build y test a un proyecto de práctica y ejecutá los que tengan herramientas instaladas.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "npm-package-json",
+        "npm-node-modules"
+      ]
+    },
+    {
+      "id": "npm-node-modules",
+      "title": "node_modules y package-lock.json",
+      "category": "administracion",
+      "summary": "Comprendé dónde se instalan las dependencias y cómo se reproduce el árbol de paquetes.",
+      "purpose": "node_modules contiene las dependencias instaladas. package-lock.json registra el árbol concreto de paquetes para facilitar instalaciones reproducibles. Normalmente node_modules se excluye del repositorio.",
+      "syntax": "npm install\\nnpm ci\\n# .gitignore\\nnode_modules/",
+      "examples": [
+        {
+          "title": "Instalación limpia",
+          "description": "npm ci instala según el lockfile y está pensado para entornos limpios.",
+          "code": "npm ci",
+          "explanation": "Requiere un package-lock compatible y reemplaza node_modules."
+        },
+        {
+          "title": "Ignorar dependencias instaladas",
+          "description": "La carpeta node_modules suele ser generada y no se sube a Git.",
+          "code": "# .gitignore\\nnode_modules/",
+          "explanation": "Otra persona puede recrearla utilizando package.json y el lockfile."
+        }
+      ],
+      "exercise": "Revisá un proyecto con package-lock.json y node_modules. Explicá cuál se comparte y cuál se genera.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "NPM: package-lock.json",
+          "url": "https://docs.npmjs.com/cli/configuring-npm/package-lock-json"
+        }
+      ],
+      "related": [
+        "npm-install",
+        "gitignore"
+      ]
+    },
+    {
+      "id": "npm-npx",
+      "title": "Ejecutar herramientas con npx",
+      "category": "administracion",
+      "summary": "Ejecutá herramientas locales o paquetes sin instalar siempre comandos globales.",
+      "purpose": "npx permite ejecutar binarios disponibles en el proyecto o resolver paquetes desde el registro. Antes de ejecutar una herramienta descargada, comprobá su nombre y origen.",
+      "syntax": "npx comando\\nnpx paquete",
+      "examples": [
+        {
+          "title": "Ejecutar una herramienta local",
+          "description": "Instalá una herramienta de desarrollo y ejecutala con npx.",
+          "code": "npm install -D eslint\\nnpx eslint .",
+          "explanation": "Se utiliza la versión instalada por el proyecto."
+        },
+        {
+          "title": "Iniciar un proyecto",
+          "description": "Algunas herramientas ofrecen comandos de creación mediante npx.",
+          "code": "npx create-vite mi-app",
+          "explanation": "El comando puede descargar un paquete para esa ejecución; verificá siempre el nombre y la fuente."
+        }
+      ],
+      "exercise": "Instalá una herramienta como dependencia de desarrollo y ejecutala mediante npx.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Verificá la identidad del paquete antes de ejecutarlo.",
+        "Evitá ejecutar herramientas desconocidas con permisos elevados."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [],
+      "related": [
+        "npm-install",
+        "npm-scripts"
+      ]
+    },
+    {
+      "id": "npm-semver",
+      "title": "Versionado semántico",
+      "category": "administracion",
+      "summary": "Interpretá MAJOR.MINOR.PATCH y los rangos de versiones usados por las dependencias.",
+      "purpose": "El versionado semántico expresa una versión en tres partes: mayor, menor y parche. En NPM, los rangos indican qué actualizaciones puede aceptar el gestor dentro de package.json.",
+      "syntax": "MAJOR.MINOR.PATCH\\n^1.2.3\\n~1.2.3",
+      "examples": [
+        {
+          "title": "Leer una versión",
+          "description": "En 2.4.1, 2 es la versión mayor, 4 la menor y 1 el parche.",
+          "code": "2.4.1",
+          "explanation": "Los cambios mayores pueden introducir incompatibilidades; los menores agregan funcionalidad compatible y los parches corrigen errores compatibles."
+        },
+        {
+          "title": "Comparar rangos",
+          "description": "^ y ~ permiten diferentes niveles de actualización.",
+          "code": "^1.2.3\\n~1.2.3",
+          "explanation": "^ acepta versiones compatibles dentro del major; ~ permite actualizaciones de parche dentro de la serie minor. Hay matices para 0.x y prereleases."
+        }
+      ],
+      "exercise": "Elegí tres dependencias de un package.json e interpretá qué versiones puede aceptar cada rango.",
+      "hint": "Hacé la prueba en un proyecto o carpeta de práctica y verificá el resultado antes de continuar.",
+      "parameters": [],
+      "bestPractices": [
+        "Comprobá la carpeta o el proyecto activo antes de ejecutar el comando.",
+        "Leé las opciones antes de combinar parámetros.",
+        "Practicá primero con archivos y repositorios que puedas descartar."
+      ],
+      "commonMistakes": [
+        "Ejecutar el comando desde una ubicación incorrecta.",
+        "Confundir una opción con un argumento.",
+        "No revisar el resultado después de ejecutar la orden."
+      ],
+      "resources": [
+        {
+          "label": "NPM: semver",
+          "url": "https://docs.npmjs.com/cli/v10/using-npm/semver"
+        }
+      ],
+      "related": [
+        "npm-package-json",
+        "npm-update"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "De una dependencia a un proyecto ejecutable",
+    "summary": "NPM administra dependencias, versiones, scripts y la instalación reproducible de paquetes de JavaScript.",
+    "steps": [
+      [
+        "package.json",
+        "El manifiesto declara nombre, scripts y rangos de versiones de dependencias."
+      ],
+      [
+        "Resolución de versiones",
+        "NPM consulta el registro y resuelve el árbol compatible con las reglas declaradas."
+      ],
+      [
+        "package-lock.json",
+        "El lockfile registra las versiones concretas y metadatos para repetir la instalación."
+      ],
+      [
+        "node_modules y scripts",
+        "Los paquetes quedan disponibles para el proyecto y npm run ejecuta los scripts definidos."
+      ]
+    ],
+    "note": "package.json expresa lo que el proyecto necesita; package-lock.json fija la resolución obtenida. No conviene editar manualmente node_modules."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "npm-init",
+      "npm-install",
+      "npm-scripts"
+    ],
+    "execution": {
+      "kind": "cli",
+      "label": "Node.js + terminal",
+      "description": "NPM se ejecuta en Node.js desde una terminal. Administra dependencias del proyecto, el lockfile y los scripts; no se ejecuta como biblioteca dentro del navegador."
+    },
+    "compatibility": {
+      "kind": "not-browser",
+      "summary": "No aplica directamente: npm es un gestor de paquetes y scripts del entorno de desarrollo.",
+      "note": "Los paquetes instalados pueden terminar formando parte de una aplicación web; la compatibilidad de esa aplicación depende del código generado y sus objetivos de navegador."
+    },
+    "advantages": [
+      "Resuelve e instala dependencias del ecosistema JavaScript.",
+      "package.json documenta scripts y dependencias del proyecto.",
+      "package-lock.json ayuda a reproducir instalaciones."
+    ],
+    "limitations": [
+      "Las versiones y dependencias transitivas pueden introducir cambios o vulnerabilidades.",
+      "node_modules no debe subirse normalmente al repositorio.",
+      "La compatibilidad final del paquete depende de su runtime y del proceso de build."
+    ],
+    "complements": [
+      [
+        "nodejs",
+        "NPM necesita Node.js para ejecutarse."
+      ],
+      [
+        "typescript",
+        "Instalar compilador y utilidades del proyecto."
+      ],
+      [
+        "react",
+        "Gestionar librerías y herramientas de React."
+      ],
+      [
+        "testing",
+        "Ejecutar runners y herramientas de pruebas."
+      ]
+    ],
+    "docs": [
+      [
+        "NPM — documentación",
+        "https://docs.npmjs.com/"
+      ],
+      [
+        "NPM — package.json",
+        "https://docs.npmjs.com/cli/v11/configuring-npm/package-json"
+      ]
+    ]
+  }
+}

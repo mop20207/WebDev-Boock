@@ -1,5 +1,4 @@
-/* Biblioteca compartida de herramientas y tecnologías.
-   Las páginas usan una sola plantilla y leen su contenido desde data/tools.json. */
+/* Biblioteca de tecnologías. Cada pantalla carga únicamente el paquete de su tecnología desde IndexedDB o la red. */
 document.addEventListener("DOMContentLoaded", async () => {
   const page = document.body.dataset.page;
   if (!["tools-index", "tools-category", "tools-article"].includes(page)) return;
@@ -433,9 +432,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   try {
-    const response = await fetch(new URL("data/tools.json", root).href, { cache: "no-store" });
-    if (!response.ok) throw new Error("No se pudo cargar data/tools.json (HTTP " + response.status + ").");
-    const database = await response.json();
+    if (!window.WebDevLibraries?.getLibrary || !window.WebDevLibraries?.getEcosystem) {
+      throw new Error("El administrador de bibliotecas no está disponible. Actualizá WebDev Book y volvé a intentar.");
+    }
+    // Cada página carga solo el paquete de la tecnología elegida. Los metadatos
+    // compactos conservan las relaciones y proyectos integradores entre tecnologías.
+    const [tool, ecosystem] = await Promise.all([
+      window.WebDevLibraries.getLibrary(toolId),
+      window.WebDevLibraries.getEcosystem()
+    ]);
+    const database = {
+      tools: ecosystem.tools || [],
+      integrations: ecosystem.integrations || []
+    };
 
     // Las bibliotecas agregadas al catálogo también aparecen en la navegación
     // lateral sin tener que duplicar enlaces en cada plantilla HTML.
@@ -455,8 +464,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         mainNav.append(link);
       });
     }
-
-    const tool = database.tools?.find(item => item.id === toolId);
 
     if (!tool) {
       setText("toolTitle", "Sección no encontrada");

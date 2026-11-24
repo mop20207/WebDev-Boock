@@ -15,6 +15,10 @@ async function collectJson(directory) {
     if (entry.isDirectory()) {
       files.push(...await collectJson(absolutePath));
     } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".json")) {
+      // data/tools.json se divide en paquetes tecnológicos independientes.
+      // No debe volver a descargarse como un bloque monolítico en cada APK.
+      const relativePath = relative(root, absolutePath).split(sep).join("/");
+      if (relativePath === "data/tools.json") continue;
       files.push(absolutePath);
     }
   }

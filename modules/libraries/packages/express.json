@@ -1,0 +1,3265 @@
+{
+  "id": "express",
+  "title": "Express.js",
+  "shortTitle": "Express",
+  "symbol": "EX",
+  "eyebrow": "EXPRESS.JS / SERVIDOR NODE.JS",
+  "tagline": "Construí servidores y APIs con JavaScript y Node.js.",
+  "description": "Aprendé Express 5 desde las primeras rutas hasta middleware, APIs REST, autenticación, manejo de errores, pruebas y despliegue. Este recorrido se centra en los cambios de Express 5 y explica patrones heredados de Express 4.",
+  "level": "Inicial a avanzado",
+  "accent": "express",
+  "syntaxLanguage": "javascript",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos y servidor",
+      "description": "Entendé el rol de Express, prepará el servidor HTTP y construí tus primeras rutas.",
+      "icon": "E",
+      "articles": [
+        "express-que-es",
+        "express-installation",
+        "express-app-listen",
+        "express-routes-basics",
+        "express-req-res",
+        "express-route-params-query"
+      ]
+    },
+    {
+      "id": "routing-middleware",
+      "title": "Routers y middleware",
+      "description": "Separá rutas por módulos y entendé cómo una solicitud atraviesa la pila de middleware.",
+      "icon": "↪",
+      "articles": [
+        "express-routers",
+        "express-middleware",
+        "express-built-in-middleware",
+        "express-custom-middleware",
+        "express-static-files",
+        "express-route-patterns-v5"
+      ]
+    },
+    {
+      "id": "apis-data",
+      "title": "APIs y manejo de datos",
+      "description": "Construí endpoints REST, procesá JSON y formularios, validá entradas e integrá otros servicios.",
+      "icon": "{ }",
+      "articles": [
+        "express-rest-crud-api",
+        "express-body-parsing",
+        "express-async-handlers",
+        "express-validation",
+        "express-cors",
+        "express-file-uploads"
+      ]
+    },
+    {
+      "id": "errors-security",
+      "title": "Errores y seguridad",
+      "description": "Manej á fallos sin filtrar información interna y aplicá controles básicos de seguridad.",
+      "icon": "🔐",
+      "articles": [
+        "express-error-handling",
+        "express-404-handler",
+        "express-security-helmet",
+        "express-rate-limiting",
+        "express-authentication",
+        "express-cookies-sessions"
+      ]
+    },
+    {
+      "id": "data-capabilities",
+      "title": "Datos y capacidades del servidor",
+      "description": "Conectá persistencia, serví archivos y organizá funciones avanzadas de una aplicación Express.",
+      "icon": "▦",
+      "articles": [
+        "express-database-integration",
+        "express-template-engines",
+        "express-file-downloads",
+        "express-subapps-mounts",
+        "express-server-logging",
+        "express-trust-proxy"
+      ]
+    },
+    {
+      "id": "typescript-testing",
+      "title": "TypeScript, pruebas y calidad",
+      "description": "Tipá handlers, probá endpoints y documentá contratos para mantener una API confiable.",
+      "icon": "✓",
+      "articles": [
+        "express-typescript",
+        "express-typescript-middleware",
+        "express-testing-supertest",
+        "express-testing-integration",
+        "express-openapi-docs",
+        "express-graceful-shutdown"
+      ]
+    },
+    {
+      "id": "production-migration",
+      "title": "Producción, arquitectura y migración",
+      "description": "Prepará Express para producción, organizá el proyecto y actualizá aplicaciones heredadas.",
+      "icon": "🚀",
+      "articles": [
+        "express-environment-config",
+        "express-deployment",
+        "express-production-performance",
+        "express-migration-v4-v5",
+        "express-nextjs-integration",
+        "express-project-architecture"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "express-que-es",
+      "title": "¿Qué es Express.js y para qué sirve?",
+      "category": "fundamentos",
+      "summary": "Conocé Express como framework web minimalista para Node.js y el papel que cumple en aplicaciones y APIs.",
+      "purpose": "Express simplifica el manejo de solicitudes HTTP en Node.js. Ofrece rutas, middleware y utilidades para construir respuestas. No incorpora por defecto una base de datos, un sistema de autenticación ni una arquitectura obligatoria: se integra con las herramientas que el proyecto necesite.",
+      "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+      "syntax": "cliente HTTP → Express → middleware → ruta → respuesta",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Servidor mínimo",
+          "description": "Una aplicación Express recibe una solicitud y devuelve una respuesta.",
+          "code": "import express from \"express\";\n\nconst app = express();\napp.get(\"/\", (req, res) => {\n  res.send(\"Hola desde Express\");\n});\napp.listen(3000);",
+          "explanation": "express() crea la aplicación; app.get define una ruta GET; res.send termina la solicitud con una respuesta."
+        },
+        {
+          "title": "API JSON",
+          "description": "Express también puede responder datos.",
+          "code": "app.get(\"/api/estado\", (_req, res) => {\n  res.json({ estado: \"ok\", servicio: \"catalogo\" });\n});",
+          "explanation": "res.json serializa el objeto y configura el tipo de contenido apropiado. El cliente puede consumirlo con fetch."
+        },
+        {
+          "title": "Crear una ruta parametrizada",
+          "description": "Leé un parámetro de la URL y devolvé una respuesta JSON con un estado HTTP explícito.",
+          "language": "javascript",
+          "code": "import express from 'express';\n\nconst app = express();\napp.get('/api/saludo/:nombre', (req, res) => {\n  const nombre = req.params.nombre;\n  res.status(200).json({ mensaje: `Hola, ${nombre}` });\n});\n\napp.listen(3000, () => {\n  console.log('Servidor en http://localhost:3000');\n});",
+          "explanation": "La ruta :nombre captura un segmento de la URL y Express lo expone en req.params. res.status(200) establece el código y res.json serializa el objeto y envía la respuesta. En una API real también validarías el valor recibido."
+        }
+      ],
+      "exercise": "Explicá qué resuelve Express y qué sigue siendo responsabilidad del proyecto: base de datos, autenticación y validación.",
+      "hint": "Express coordina el ciclo HTTP y el middleware. No es una base de datos ni un framework full-stack con todas las funciones incorporadas.",
+      "parameters": [
+        {
+          "name": "express()",
+          "description": "Crea una instancia de aplicación Express."
+        },
+        {
+          "name": "app.get(path, handler)",
+          "description": "Registra un handler para solicitudes GET."
+        },
+        {
+          "name": "app.listen(port)",
+          "description": "Inicia el servidor HTTP."
+        }
+      ],
+      "bestPractices": [
+        "Separá transporte HTTP, reglas de negocio y acceso a datos.",
+        "Elegí dependencias según las necesidades reales."
+      ],
+      "commonMistakes": [
+        "Creer que Express trae un ORM o autenticación completa.",
+        "Confundir Express con Node.js: Express se ejecuta sobre Node."
+      ],
+      "resources": [
+        {
+          "label": "Express — guía de inicio",
+          "url": "https://expressjs.com/en/starter/installing.html"
+        },
+        {
+          "label": "Express 5 API",
+          "url": "https://expressjs.com/en/5x/api.html"
+        }
+      ],
+      "related": [
+        "express-installation",
+        "express-app-listen"
+      ],
+      "deepDive": {
+        "model": "Express organiza el servidor como una cadena de funciones. Cada middleware recibe request, response y next; puede modificar el contexto, responder o pasar el control. Un router agrupa rutas y la lógica de negocio suele vivir mejor en servicios separados que dentro de callbacks largos.",
+        "flow": [
+          [
+            "Middleware transversal",
+            "Parseo de JSON, logs, CORS y autenticación pueden ejecutarse antes de las rutas."
+          ],
+          [
+            "Controlador",
+            "Valida parámetros y coordina la operación solicitada."
+          ],
+          [
+            "Servicio y persistencia",
+            "La lógica de negocio se separa del transporte HTTP y consulta la base de datos mediante una capa adecuada."
+          ],
+          [
+            "Respuesta/errores",
+            "La ruta responde con el estado correcto o propaga fallos al middleware de errores."
+          ]
+        ],
+        "decisions": [
+          "Separá router, controlador y servicio cuando la API crece; una ruta pequeña puede seguir siendo directa.",
+          "En Express 5, las funciones async que devuelven Promise propagan rechazos automáticamente; seguí manejando errores de validación y respuestas HTTP explícitas."
+        ],
+        "debugging": "Si una petición queda pendiente, buscá un middleware que no respondió ni llamó next(). Si la ruta no se ejecuta, revisá orden de registro, método, prefijo del router y parámetros."
+      }
+    },
+    {
+      "id": "express-installation",
+      "title": "Instalación y creación del proyecto",
+      "category": "fundamentos",
+      "summary": "Prepará Node.js, npm e instalá Express 5 en un proyecto nuevo.",
+      "purpose": "Express 5 se instala como dependencia de Node.js y requiere Node 18 o superior. En un proyecto ESM se puede usar import; en CommonJS se puede usar require. Declarar el modo de módulos en package.json evita mezclar sintaxis sin control.",
+      "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+      "syntax": "mkdir api-catalogo\ncd api-catalogo\nnpm init -y\nnpm install express@5",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Crear el paquete",
+          "description": "Inicializá package.json e instalá Express 5.",
+          "code": "mkdir api-catalogo\ncd api-catalogo\nnpm init -y\nnpm install express@5",
+          "explanation": "npm init -y crea el manifiesto; npm install agrega Express a dependencies y actualiza el lockfile."
+        },
+        {
+          "title": "Configurar ESM",
+          "description": "Indicá que los archivos .js usan módulos ES.",
+          "code": "{\n  \"type\": \"module\",\n  \"scripts\": { \"start\": \"node src/server.js\", \"dev\": \"node --watch src/server.js\" }\n}\n\n// src/server.js\nimport express from \"express\";\nconst app = express();",
+          "explanation": "El package.json declara ESM. node --watch reinicia el proceso al detectar cambios en versiones actuales de Node."
+        }
+      ],
+      "exercise": "Creá un proyecto api-novelas, instalá Express 5, configurá ESM y agregá scripts start y dev.",
+      "hint": "Express 5 requiere Node 18 o superior. Ejecutá los comandos desde la carpeta que contiene package.json.",
+      "parameters": [
+        {
+          "name": "npm init -y",
+          "description": "Crea package.json con valores predeterminados."
+        },
+        {
+          "name": "npm install express@5",
+          "description": "Instala Express de la línea 5.x."
+        },
+        {
+          "name": "type: module",
+          "description": "Interpreta archivos .js como módulos ES."
+        }
+      ],
+      "bestPractices": [
+        "Conservá el lockfile en el repositorio.",
+        "Usá una versión de Node soportada en desarrollo y producción."
+      ],
+      "commonMistakes": [
+        "Ejecutar npm install fuera del directorio del proyecto.",
+        "Mezclar import y require sin configurar interop.",
+        "Asumir que ejemplos de Express 4 son idénticos a Express 5."
+      ],
+      "resources": [
+        {
+          "label": "Installing Express",
+          "url": "https://expressjs.com/en/starter/installing.html"
+        },
+        {
+          "label": "Express 5 API — requisitos",
+          "url": "https://expressjs.com/en/5x/api.html"
+        }
+      ],
+      "related": [
+        "express-que-es",
+        "express-app-listen"
+      ]
+    },
+    {
+      "id": "express-app-listen",
+      "title": "Crear la aplicación y poner el servidor a escuchar",
+      "category": "fundamentos",
+      "summary": "Construí la instancia app, configurá un puerto y separá la aplicación del arranque del proceso.",
+      "purpose": "express() crea el objeto que configura rutas y middleware. app.listen inicia el servidor HTTP y devuelve un objeto Server. En proyectos reales conviene exportar app por separado y reservar listen para el archivo que inicia el proceso, así las pruebas pueden importar la app sin abrir un puerto.",
+      "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+      "syntax": "const app = express();\nconst server = app.listen(port, callback);",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Escuchar en un puerto",
+          "description": "Usá la variable de entorno PORT con un valor local alternativo.",
+          "code": "import express from \"express\";\nconst app = express();\nconst port = Number(process.env.PORT) || 3000;\napp.get(\"/\", (_req, res) => res.send(\"API activa\"));\napp.listen(port, () => console.log(`Servidor en ${port}`));",
+          "explanation": "El proveedor puede asignar PORT. Number convierte el valor de texto en un número."
+        },
+        {
+          "title": "Separar app y server",
+          "description": "Exportá la app para reutilizarla en pruebas.",
+          "code": "// app.js\nimport express from \"express\";\nexport const app = express();\napp.get(\"/health\", (_req, res) => res.json({ ok: true }));\n\n// server.js\nimport { app } from \"./app.js\";\napp.listen(Number(process.env.PORT) || 3000);",
+          "explanation": "Importar app no inicia un servidor. Solo server.js abre el puerto."
+        }
+      ],
+      "exercise": "Separá src/app.js y src/server.js. Hacé que app.js declare GET /health y server.js sea el único archivo que abre el puerto.",
+      "hint": "Una app configura el comportamiento; el servidor HTTP la ejecuta y escucha conexiones.",
+      "parameters": [
+        {
+          "name": "express()",
+          "description": "Crea la aplicación Express."
+        },
+        {
+          "name": "app.listen(port, callback)",
+          "description": "Crea e inicia el servidor HTTP."
+        },
+        {
+          "name": "process.env.PORT",
+          "description": "Variable del entorno de ejecución que indica el puerto."
+        }
+      ],
+      "bestPractices": [
+        "Separá app de server para facilitar las pruebas.",
+        "No codifiques un puerto fijo en producción."
+      ],
+      "commonMistakes": [
+        "Ejecutar app.listen al importar un módulo de rutas.",
+        "No convertir ni validar el valor de PORT.",
+        "Confundir app con el objeto Server devuelto por listen."
+      ],
+      "resources": [
+        {
+          "label": "Express application",
+          "url": "https://expressjs.com/en/5x/api.html#app"
+        }
+      ],
+      "related": [
+        "express-installation",
+        "express-testing-supertest"
+      ]
+    },
+    {
+      "id": "express-routes-basics",
+      "title": "Primeras rutas y métodos HTTP",
+      "category": "fundamentos",
+      "summary": "Definí endpoints usando GET, POST, PUT, PATCH y DELETE.",
+      "purpose": "Una ruta Express combina método HTTP, path y uno o más handlers. El método expresa la intención: GET consulta, POST crea o inicia una operación, PUT reemplaza, PATCH modifica parcialmente y DELETE solicita eliminar. La ruta debe responder o pasar el control para que el cliente no quede esperando.",
+      "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+      "syntax": "app.get(path, handler)\napp.post(path, handler)\napp.patch(path, handler)\napp.delete(path, handler)",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "GET y POST",
+          "description": "GET devuelve información y POST recibe una nueva entidad.",
+          "code": "app.get(\"/api/novelas\", (_req, res) => {\n  res.json([{ id: 1, titulo: \"Overlord\" }]);\n});\napp.post(\"/api/novelas\", (_req, res) => {\n  res.status(201).json({ mensaje: \"Creada\" });\n});",
+          "explanation": "GET consulta una colección. POST suele crear un recurso y responde 201 Created cuando se completa."
+        },
+        {
+          "title": "PUT, PATCH y DELETE",
+          "description": "Separá reemplazo, cambio parcial y eliminación.",
+          "code": "app.put(\"/api/novelas/:id\", actualizarCompleta);\napp.patch(\"/api/novelas/:id\", actualizarParcial);\napp.delete(\"/api/novelas/:id\", eliminarNovela);",
+          "explanation": "PUT representa reemplazo; PATCH una modificación parcial; DELETE solicita eliminar el recurso."
+        },
+        {
+          "title": "Una colección con lectura, creación y eliminación",
+          "description": "Concentrá las rutas de un recurso y diferenciá la respuesta de creación de una eliminación sin cuerpo.",
+          "language": "javascript",
+          "code": "import express from 'express';\nconst app = express();\napp.use(express.json());\n\nconst novelas = [{ id: 1, titulo: 'Overlord' }];\nlet siguienteId = 2;\n\napp.get('/api/novelas', (_req, res) => res.json(novelas));\napp.post('/api/novelas', (req, res) => {\n  const nueva = { id: siguienteId++, titulo: req.body.titulo };\n  novelas.push(nueva);\n  res.status(201).location(`/api/novelas/${nueva.id}`).json(nueva);\n});\napp.delete('/api/novelas/:id', (req, res) => {\n  const indice = novelas.findIndex(n => n.id === Number(req.params.id));\n  if (indice === -1) return res.status(404).json({ error: 'No encontrada' });\n  novelas.splice(indice, 1);\n  res.status(204).end();\n});",
+          "explanation": "Es un ejemplo didáctico en memoria: los datos se pierden al reiniciar el proceso. POST devuelve 201 y Location para la nueva novela; DELETE devuelve 204 cuando la eliminación terminó y no hay cuerpo de respuesta. Una aplicación real debe validar el body y persistir en una base de datos."
+        }
+      ],
+      "exercise": "Diseñá las rutas CRUD de /api/novelas e indicá qué método usarías en cada operación.",
+      "hint": "Una API se diseña alrededor de recursos. No conviertas todas las acciones en GET.",
+      "parameters": [
+        {
+          "name": "app.METHOD(path, handlers)",
+          "description": "Registra una ruta para un método HTTP específico."
+        },
+        {
+          "name": "GET",
+          "description": "Solicita una representación del recurso."
+        },
+        {
+          "name": "POST",
+          "description": "Envía datos para crear un recurso o iniciar una operación."
+        },
+        {
+          "name": "PUT / PATCH / DELETE",
+          "description": "Reemplaza, modifica parcialmente o elimina un recurso."
+        }
+      ],
+      "bestPractices": [
+        "Usá nombres de rutas predecibles.",
+        "Respondé con códigos HTTP coherentes.",
+        "Documentá el formato de entrada y salida."
+      ],
+      "commonMistakes": [
+        "Usar GET para crear o borrar datos.",
+        "Responder siempre 200 después de crear un recurso.",
+        "Mezclar reglas de negocio y consultas dentro del router."
+      ],
+      "resources": [
+        {
+          "label": "Routing",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        },
+        {
+          "label": "Express 5 API — routing",
+          "url": "https://expressjs.com/en/5x/api.html#app.METHOD"
+        }
+      ],
+      "related": [
+        "express-req-res",
+        "express-rest-crud-api"
+      ],
+      "deepDive": {
+        "model": "Una ruta Express se identifica por un método HTTP y un path. Express compara la solicitud entrante con las rutas en el orden en que fueron registradas y ejecuta sus handlers cuando hay coincidencia. El método describe la intención de la operación, pero la lógica de negocio y la persistencia deben permanecer en servicios separados a medida que el proyecto crece.",
+        "flow": [
+          [
+            "Llega la solicitud",
+            "Express recibe método, path y datos de la petición."
+          ],
+          [
+            "Se busca una coincidencia",
+            "El router compara método y patrón de ruta, respetando el orden de registro."
+          ],
+          [
+            "Se ejecuta el handler",
+            "El handler valida datos y decide responder o pasar el control."
+          ],
+          [
+            "Se devuelve HTTP",
+            "La respuesta comunica estado, headers y cuerpo al cliente."
+          ]
+        ],
+        "decisions": [
+          "Usá GET para lecturas sin efectos secundarios; evitá modificar datos mediante GET.",
+          "Usá POST para crear recursos o iniciar operaciones; devolvé 201 cuando creás un recurso.",
+          "Usá PUT para reemplazo completo y PATCH para modificación parcial según el contrato de tu API.",
+          "Usá DELETE para solicitar eliminación y documentá si responde 204 o una representación."
+        ],
+        "debugging": "Si una ruta no coincide, verificá método, path, prefijos y orden de registro. Si la solicitud queda pendiente, asegurate de responder o llamar next. Si una ruta genérica captura una ruta específica, reordená o refiná los patrones."
+      }
+    },
+    {
+      "id": "express-req-res",
+      "title": "Request y Response: leer solicitudes y responder",
+      "category": "fundamentos",
+      "summary": "Conocé req y res, sus propiedades y cómo construir respuestas HTTP.",
+      "purpose": "req representa la solicitud entrante; res construye la respuesta. req contiene datos de ruta, query, headers y body si un parser lo procesó. res permite establecer estado, headers y enviar texto, HTML o JSON. Cada solicitud debe terminar una sola vez con una respuesta o continuar al siguiente middleware.",
+      "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+      "syntax": "(req, res) => {\n  res.status(200).json({ ok: true });\n}",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Leer encabezados",
+          "description": "Los headers aportan información sobre la solicitud.",
+          "code": "app.get(\"/api/info\", (req, res) => {\n  const agente = req.get(\"user-agent\") ?? \"desconocido\";\n  res.status(200).json({ agente });\n});",
+          "explanation": "req.get consulta un encabezado. El valor puede no estar presente."
+        },
+        {
+          "title": "Elegir la respuesta",
+          "description": "Respondé JSON, texto o redirigí a otra URL.",
+          "code": "app.get(\"/texto\", (_req, res) => res.type(\"text/plain\").send(\"Hola\"));\napp.get(\"/json\", (_req, res) => res.json({ mensaje: \"Hola\" }));\napp.get(\"/mover\", (_req, res) => res.redirect(302, \"/json\"));",
+          "explanation": "type define Content-Type; json serializa datos; redirect envía un status de redirección."
+        },
+        {
+          "title": "Leer parámetros, query y body sin confundirlos",
+          "description": "Los tres orígenes representan partes diferentes de la solicitud HTTP.",
+          "language": "javascript",
+          "code": "app.use(express.json());\n\napp.patch('/api/novelas/:id', (req, res) => {\n  const id = req.params.id;              // segmento de ruta\n  const incluirCapitulos = req.query.detalle === 'completo';\n  const { titulo } = req.body ?? {};     // JSON parseado\n\n  res.json({ id, titulo, incluirCapitulos });\n});\n\n// PATCH /api/novelas/12?detalle=completo\n// Body: { \"titulo\": \"Re:Zero\" }",
+          "explanation": "req.params identifica el recurso; req.query contiene filtros de la URL; req.body contiene los datos enviados en el cuerpo y necesita el parser apropiado. Los valores recibidos deben validarse y normalizarse antes de enviarlos al servicio."
+        }
+      ],
+      "exercise": "Creá /api/perfil que lea un header opcional y devuelva JSON con status 200. Agregá otra ruta que responda texto plano.",
+      "hint": "req contiene la información entrante; res construye y finaliza la respuesta.",
+      "parameters": [
+        {
+          "name": "req.params",
+          "description": "Parámetros capturados en el path."
+        },
+        {
+          "name": "req.query",
+          "description": "Parámetros de búsqueda de la URL."
+        },
+        {
+          "name": "req.body",
+          "description": "Cuerpo procesado por el parser correspondiente."
+        },
+        {
+          "name": "req.get(name)",
+          "description": "Obtiene un header HTTP."
+        },
+        {
+          "name": "res.status(code)",
+          "description": "Establece el código HTTP."
+        },
+        {
+          "name": "res.json(data)",
+          "description": "Envía JSON."
+        },
+        {
+          "name": "res.send(body)",
+          "description": "Envía el cuerpo de la respuesta."
+        }
+      ],
+      "bestPractices": [
+        "Validá la entrada antes de utilizarla.",
+        "Finalizá cada camino con respuesta o next, no accidentalmente con ambos."
+      ],
+      "commonMistakes": [
+        "Leer req.body sin parser.",
+        "Enviar dos respuestas para la misma solicitud.",
+        "Continuar ejecutando código después de enviar una respuesta."
+      ],
+      "resources": [
+        {
+          "label": "Request object",
+          "url": "https://expressjs.com/en/5x/api.html#req"
+        },
+        {
+          "label": "Response object",
+          "url": "https://expressjs.com/en/5x/api.html#res"
+        }
+      ],
+      "related": [
+        "express-body-parsing",
+        "express-route-params-query"
+      ],
+      "deepDive": {
+        "model": "req y res representan dos mitades del ciclo HTTP. req expone método, ruta, params, query, headers y body parseado por middleware; res construye la respuesta con status, headers y representación. La solicitud puede leerse una sola vez como flujo y la respuesta debe finalizarse una vez. No todos los datos están disponibles antes de configurar los parsers.",
+        "flow": [
+          [
+            "Se recibe req",
+            "Express entrega el objeto de solicitud con URL, método, headers y parámetros."
+          ],
+          [
+            "Middleware prepara datos",
+            "Los parsers y middleware agregan body parseado o contexto autenticado."
+          ],
+          [
+            "El handler decide",
+            "La ruta valida los datos y llama a un servicio o crea una respuesta."
+          ],
+          [
+            "res finaliza",
+            "send, json, end o redirect termina el ciclo con un estado y cabeceras."
+          ]
+        ],
+        "decisions": [
+          "Usá req.params para segmentos identificadores, req.query para filtros y req.body para contenido parseado.",
+          "Comprobá que un parser esté registrado antes de leer req.body.",
+          "Usá res.status(...).json(...) para respuestas JSON con estado explícito.",
+          "Después de enviar una respuesta, retorná o evitá que el handler continúe y trate de responder por segunda vez."
+        ],
+        "debugging": "Si req.body es undefined, revisá express.json o express.urlencoded y el Content-Type. Si aparece ERR_HTTP_HEADERS_SENT, buscá dos caminos que envían respuesta o falta un return después de responder. Si los query params no tienen el tipo esperado, recordá que llegan como texto y deben validarse."
+      }
+    },
+    {
+      "id": "express-route-params-query",
+      "title": "Parámetros de ruta y query strings",
+      "category": "fundamentos",
+      "summary": "Leé identificadores como /novelas/12 y filtros como ?genero=fantasia.",
+      "purpose": "Express separa parámetros del path en req.params y parámetros de búsqueda en req.query. Los valores deben validarse y convertirse antes de utilizarlos en reglas de negocio o consultas. En Express 5, req.query es un getter de solo lectura y el parser predeterminado es simple.",
+      "whenToUse": "Usalo cuando estés construyendo un servidor Node.js que deba recibir solicitudes HTTP, ofrecer páginas o exponer datos a otros clientes.",
+      "syntax": "app.get(\"/novelas/:id\", (req, res) => {\n  const { id } = req.params;\n  const pagina = req.query.pagina;\n});",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Parámetro de ruta",
+          "description": "El segmento :id se captura en req.params.",
+          "code": "app.get(\"/api/novelas/:id\", (req, res) => {\n  res.json({ id: req.params.id });\n});\n// GET /api/novelas/42",
+          "explanation": "Los parámetros de ruta llegan como cadenas. Convertí y validá el ID."
+        },
+        {
+          "title": "Query string",
+          "description": "La URL puede incluir filtros y paginación.",
+          "code": "app.get(\"/api/novelas\", (req, res) => {\n  const genero = req.query.genero ?? \"todos\";\n  const pagina = Number(req.query.pagina ?? 1);\n  if (!Number.isInteger(pagina) || pagina < 1) return res.status(400).json({ error: \"Página inválida\" });\n  res.json({ genero, pagina });\n});",
+          "explanation": "Convertí números explícitamente y comprobá rangos antes de consultar datos."
+        }
+      ],
+      "exercise": "Creá /api/novelas/:id y /api/novelas?genero=...&pagina=.... Validá que pagina sea un entero positivo.",
+      "hint": "req.params corresponde al path; req.query a la parte después de ?. No modifiques req.query.",
+      "parameters": [
+        {
+          "name": "req.params",
+          "description": "Parámetros definidos en el patrón de ruta."
+        },
+        {
+          "name": "req.query",
+          "description": "Valores derivados de la query string."
+        },
+        {
+          "name": "Number(value)",
+          "description": "Conversión explícita; comprobá que el resultado sea válido."
+        }
+      ],
+      "bestPractices": [
+        "Validá tipo, rango y formato de cada parámetro.",
+        "Usá consultas parametrizadas para SQL."
+      ],
+      "commonMistakes": [
+        "Tratar IDs como números sin convertirlos.",
+        "Suponer que req.query siempre es una cadena simple.",
+        "Intentar mutar req.query en Express 5."
+      ],
+      "resources": [
+        {
+          "label": "Request object — params y query",
+          "url": "https://expressjs.com/en/5x/api.html#req.params"
+        },
+        {
+          "label": "Routing",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        }
+      ],
+      "related": [
+        "express-routes-basics",
+        "express-validation"
+      ]
+    },
+    {
+      "id": "express-routers",
+      "title": "Express Router y organización de rutas",
+      "category": "routing-middleware",
+      "summary": "Dividí endpoints por recurso o área usando instancias independientes de Router.",
+      "purpose": "express.Router crea un router modular que funciona como una mini-aplicación con rutas y middleware propios. Después se monta en la aplicación con app.use. Permite separar archivos por recursos y aplicar prefijos comunes como /api/novelas.",
+      "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+      "syntax": "const router = express.Router();\nrouter.get(\"/\", listar);\napp.use(\"/api/novelas\", router);",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Crear un router",
+          "description": "Separá las rutas de novelas en un archivo.",
+          "code": "// routes/novelas.js\nimport { Router } from \"express\";\nexport const novelasRouter = Router();\nnovelasRouter.get(\"/\", listarNovelas);\nnovelasRouter.get(\"/:id\", obtenerNovela);",
+          "explanation": "Router define paths relativos al punto de montaje. El archivo puede importarse desde app.js."
+        },
+        {
+          "title": "Montar el router",
+          "description": "La aplicación agrega un prefijo a todas las rutas.",
+          "code": "app.use(\"/api/novelas\", novelasRouter);\n// GET /api/novelas\n// GET /api/novelas/42",
+          "explanation": "No repitas el prefijo en cada ruta del router."
+        }
+      ],
+      "exercise": "Separá rutas de novelas y usuarios en dos routers y montá ambos bajo /api.",
+      "hint": "El router declara paths relativos; app.use define el prefijo final.",
+      "parameters": [
+        {
+          "name": "express.Router()",
+          "description": "Crea una instancia modular de Router."
+        },
+        {
+          "name": "router.get() / router.post()",
+          "description": "Registra rutas para métodos HTTP."
+        },
+        {
+          "name": "app.use(path, router)",
+          "description": "Monta un router debajo de un prefijo."
+        },
+        {
+          "name": "mergeParams",
+          "description": "Permite que un router hijo herede parámetros del router padre."
+        }
+      ],
+      "bestPractices": [
+        "Separá rutas por recurso o dominio.",
+        "Mantené controladores fuera del router cuando crezcan."
+      ],
+      "commonMistakes": [
+        "Duplicar el prefijo en cada ruta y al montar Router.",
+        "Olvidar exportar o importar el router.",
+        "Esperar que un router hijo herede parámetros sin configurar mergeParams."
+      ],
+      "resources": [
+        {
+          "label": "Express Router",
+          "url": "https://expressjs.com/en/guide/routing.html#express-router"
+        }
+      ],
+      "related": [
+        "express-routes-basics",
+        "express-middleware"
+      ]
+    },
+    {
+      "id": "express-middleware",
+      "title": "Cómo funciona el middleware y el ciclo de solicitud",
+      "category": "routing-middleware",
+      "summary": "Entendé cómo Express ejecuta funciones intermedias antes, durante y después de una ruta.",
+      "purpose": "Un middleware es una función con acceso a req, res y next. Puede ejecutar lógica, agregar propiedades, modificar la respuesta, finalizar el ciclo o pasar el control. Si no responde ni llama a next, la solicitud queda pendiente. El orden de registro importa.",
+      "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+      "syntax": "(req, res, next) => { /* trabajo */ next(); }",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Pasar al siguiente middleware",
+          "description": "next continúa el flujo de la pila.",
+          "code": "app.use((req, res, next) => {\n  console.log(req.method, req.path);\n  next();\n});\napp.get(\"/\", (_req, res) => res.send(\"Inicio\"));",
+          "explanation": "El middleware registra la solicitud y entrega el control al siguiente handler."
+        },
+        {
+          "title": "Finalizar la respuesta",
+          "description": "Un middleware puede responder y detener la cadena.",
+          "code": "app.use(\"/mantenimiento\", (_req, res) => {\n  res.status(503).send(\"Servicio temporalmente no disponible\");\n});",
+          "explanation": "Después de enviar la respuesta no llames next sin motivo; podrías iniciar otra respuesta."
+        },
+        {
+          "title": "Modificar req",
+          "description": "Una capa puede compartir datos con handlers posteriores.",
+          "code": "app.use((req, _res, next) => {\n  req.inicio = Date.now(); // extender Request en TypeScript\n  next();\n});",
+          "explanation": "El siguiente middleware puede leer el dato agregado. En TypeScript extendé los tipos de Request."
+        }
+      ],
+      "exercise": "Escribí tres capas: registro, agregado de hora de inicio y ruta final que responda el tiempo transcurrido.",
+      "hint": "Cada middleware debe responder o pasar el control con next.",
+      "parameters": [
+        {
+          "name": "req",
+          "description": "Solicitud HTTP entrante."
+        },
+        {
+          "name": "res",
+          "description": "Objeto que construye y envía la respuesta."
+        },
+        {
+          "name": "next()",
+          "description": "Pasa el control al siguiente middleware."
+        },
+        {
+          "name": "next(err)",
+          "description": "Transfiere el flujo al middleware de errores."
+        }
+      ],
+      "bestPractices": [
+        "Registrá middleware en el orden necesario.",
+        "No llames next después de finalizar la respuesta."
+      ],
+      "commonMistakes": [
+        "Olvidar next y dejar solicitudes pendientes.",
+        "Responder y continuar ejecutando otros handlers.",
+        "Confundir next() con next(err)."
+      ],
+      "resources": [
+        {
+          "label": "Using middleware",
+          "url": "https://expressjs.com/en/guide/using-middleware.html"
+        }
+      ],
+      "related": [
+        "express-custom-middleware",
+        "express-error-handling"
+      ],
+      "deepDive": {
+        "model": "El middleware forma una cadena ordenada por la que avanza una solicitud. Cada función recibe req, res y next. Puede adjuntar contexto a req, terminar la respuesta o transferir el control con next. La posición del middleware determina qué rutas afecta y qué datos están disponibles cuando se ejecuta.",
+        "flow": [
+          [
+            "Registro",
+            "app.use o router.use añade middleware a una posición del stack."
+          ],
+          [
+            "Ejecución",
+            "Express ejecuta las funciones que coinciden con el path y método."
+          ],
+          [
+            "Continuación o respuesta",
+            "next pasa a la siguiente capa; res termina la solicitud."
+          ],
+          [
+            "Ruta o error",
+            "La cadena llega a un handler final o se desvía al middleware de errores."
+          ]
+        ],
+        "decisions": [
+          "Registrá primero parsers y logs que deban aplicarse a muchas rutas; luego autenticación y routers.",
+          "Montá middleware con prefijo cuando solo deba aplicarse a una parte de la API.",
+          "Llamá next(err) para propagar errores desde callbacks o lógica que no devuelve una Promise.",
+          "Evitá middleware global que haga trabajo costoso si la ruta no lo necesita."
+        ],
+        "debugging": "Si el request queda colgado, localizá un middleware que no llama next ni responde. Si next se llama dos veces, la cadena puede avanzar de forma inesperada. Si un middleware de error no se ejecuta, comprobá la firma de cuatro argumentos y que esté registrado después de las rutas."
+      }
+    },
+    {
+      "id": "express-built-in-middleware",
+      "title": "Middleware integrado: json, urlencoded y static",
+      "category": "routing-middleware",
+      "summary": "Usá el middleware incorporado para parsear cuerpos y servir archivos.",
+      "purpose": "Express incluye express.json para cuerpos JSON, express.urlencoded para formularios URL-encoded y express.static para recursos públicos. Los parsers deben registrarse antes de las rutas que leen req.body.",
+      "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+      "syntax": "app.use(express.json());\napp.use(express.urlencoded({ extended: false }));\napp.use(express.static(\"public\"));",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Parsear JSON",
+          "description": "El middleware crea req.body a partir de un cuerpo JSON válido.",
+          "code": "app.use(express.json());\napp.post(\"/api/novelas\", (req, res) => {\n  const { titulo } = req.body;\n  res.status(201).json({ titulo });\n});",
+          "explanation": "El parser debe ejecutarse antes de la ruta y el cliente debe enviar Content-Type application/json."
+        },
+        {
+          "title": "Parsear formularios",
+          "description": "express.urlencoded procesa formularios codificados.",
+          "code": "app.use(express.urlencoded({ extended: false }));\napp.post(\"/contacto\", (req, res) => {\n  res.send(`Recibido: ${req.body.nombre}`);\n});",
+          "explanation": "En Express 5, extended tiene false como valor predeterminado. Declararlo explícitamente deja clara la intención."
+        },
+        {
+          "title": "Servir public",
+          "description": "Los archivos pueden solicitarse desde la raíz.",
+          "code": "app.use(express.static(\"public\"));\n// public/logo.svg → GET /logo.svg",
+          "explanation": "La carpeta del sistema no aparece en la URL."
+        }
+      ],
+      "exercise": "Configurá parsers JSON y URL-encoded y un directorio estático. Probá un POST JSON, un formulario y una imagen.",
+      "hint": "El orden importa: primero los parsers y luego las rutas que leen req.body.",
+      "parameters": [
+        {
+          "name": "express.json(options)",
+          "description": "Parsea cuerpos entrantes con Content-Type JSON."
+        },
+        {
+          "name": "express.urlencoded(options)",
+          "description": "Parsea cuerpos de formularios URL-encoded."
+        },
+        {
+          "name": "express.static(root, options)",
+          "description": "Sirve archivos desde una carpeta."
+        },
+        {
+          "name": "limit",
+          "description": "Limita el tamaño del cuerpo aceptado por el parser."
+        }
+      ],
+      "bestPractices": [
+        "Configurá límites razonables.",
+        "No uses parsers que no necesitás.",
+        "Registrá los parsers antes de las rutas."
+      ],
+      "commonMistakes": [
+        "Leer req.body antes de instalar un parser.",
+        "Asumir que req.body siempre es un objeto: en Express 5 puede ser undefined.",
+        "Publicar carpetas que contienen archivos privados."
+      ],
+      "resources": [
+        {
+          "label": "Built-in middleware",
+          "url": "https://expressjs.com/en/guide/using-middleware.html#middleware.built-in"
+        },
+        {
+          "label": "express.json API",
+          "url": "https://expressjs.com/en/5x/api.html#express.json"
+        }
+      ],
+      "related": [
+        "express-body-parsing",
+        "express-static-files"
+      ],
+      "deepDive": {
+        "model": "Los middleware integrados resuelven tareas comunes sin dependencias adicionales: express.json interpreta cuerpos JSON, express.urlencoded interpreta formularios URL-encoded y express.static expone archivos de una carpeta. Se instalan en el stack y se ejecutan según el orden de registro, por eso las rutas deben venir después de los parsers que utilizan req.body.",
+        "flow": [
+          [
+            "Registrar parser",
+            "app.use(express.json()) o express.urlencoded(...) se coloca antes de las rutas."
+          ],
+          [
+            "Coincidir Content-Type",
+            "El parser analiza solo los tipos de contenido que reconoce y respeta los límites configurados."
+          ],
+          [
+            "Preparar req.body",
+            "La ruta recibe una representación JavaScript cuando el cuerpo pudo parsearse."
+          ],
+          [
+            "Servir recursos",
+            "express.static responde por archivos públicos que coinciden con la ruta solicitada."
+          ]
+        ],
+        "decisions": [
+          "Configurá límites de tamaño razonables para cuerpos JSON y formularios.",
+          "Usá extended según el formato de formulario que necesite la aplicación.",
+          "Serví solo carpetas públicas; no montes por accidente directorios con secretos o archivos internos.",
+          "Colocá middleware específicos antes de rutas que dependen de ellos."
+        ],
+        "debugging": "Si req.body es undefined, comprobá orden y Content-Type. Si un cuerpo es rechazado por tamaño o JSON inválido, revisá el límite y el formato enviado. Si un archivo no se sirve, confirmá la raíz de express.static y la URL relativa que se solicita."
+      }
+    },
+    {
+      "id": "express-custom-middleware",
+      "title": "Crear middleware propio y reutilizable",
+      "category": "routing-middleware",
+      "summary": "Escribí funciones intermedias para registrar solicitudes, validar headers y proteger rutas.",
+      "purpose": "El middleware personalizado encapsula una tarea transversal. Puede registrarse en la aplicación, un router o una ruta. Para personalizar su comportamiento, podés crear una función que reciba opciones y devuelva otra función middleware.",
+      "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+      "syntax": "(req, res, next) => { /* verificar */ next(); }",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Verificar un header",
+          "description": "Rechazá solicitudes que no presentan una clave válida.",
+          "code": "function requiereClave(req, res, next) {\n  if (req.get(\"x-api-key\") !== process.env.API_KEY) {\n    return res.status(401).json({ error: \"Clave inválida\" });\n  }\n  next();\n}\napp.get(\"/api/privado\", requiereClave, controlador);",
+          "explanation": "El return evita continuar después de responder. En producción, gestioná claves con un sistema adecuado."
+        },
+        {
+          "title": "Middleware configurable",
+          "description": "Una factory devuelve una función que conserva sus opciones.",
+          "code": "function permitirRol(rolRequerido) {\n  return (req, res, next) => {\n    if (req.usuario?.rol !== rolRequerido) return res.status(403).json({ error: \"Permiso insuficiente\" });\n    next();\n  };\n}\napp.delete(\"/api/usuarios/:id\", permitirRol(\"admin\"), borrarUsuario);",
+          "explanation": "La factory sirve para distintos permisos. req.usuario debe establecerse antes mediante autenticación."
+        }
+      ],
+      "exercise": "Creá un middleware factory permitirRol y aplicalo a una ruta de eliminación exclusiva para administradores.",
+      "hint": "Separá autenticación (quién sos) de autorización (qué podés hacer).",
+      "parameters": [
+        {
+          "name": "app.use(fn)",
+          "description": "Registra middleware en toda la aplicación o un prefijo."
+        },
+        {
+          "name": "router.use(fn)",
+          "description": "Registra middleware dentro de un router."
+        },
+        {
+          "name": "next()",
+          "description": "Transfiere el control a la siguiente capa."
+        }
+      ],
+      "bestPractices": [
+        "Documentá qué propiedades agrega a req.",
+        "No confíes en roles enviados por el cliente.",
+        "Mantené cada middleware enfocado."
+      ],
+      "commonMistakes": [
+        "No llamar next después de responder.",
+        "Usar req.usuario antes de que se establezca.",
+        "Repetir validaciones en controladores distintos."
+      ],
+      "resources": [
+        {
+          "label": "Writing middleware",
+          "url": "https://expressjs.com/en/guide/writing-middleware.html"
+        },
+        {
+          "label": "Using middleware",
+          "url": "https://expressjs.com/en/guide/using-middleware.html"
+        }
+      ],
+      "related": [
+        "express-middleware",
+        "express-authentication"
+      ]
+    },
+    {
+      "id": "express-static-files",
+      "title": "Archivos estáticos y rutas de recursos",
+      "category": "routing-middleware",
+      "summary": "Serví imágenes, CSS, JavaScript y documentos públicos desde una carpeta controlada.",
+      "purpose": "express.static entrega archivos desde un directorio. Puede montarse en raíz o bajo un prefijo y admite opciones como maxAge, etag, dotfiles e index. En Express 5, dotfiles tiene ignore como valor predeterminado.",
+      "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+      "syntax": "app.use(\"/assets\", express.static(\"public\"));",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Montar una carpeta",
+          "description": "Un prefijo separa los recursos de otras rutas.",
+          "code": "app.use(\"/assets\", express.static(\"public\"));\n// public/logo.svg → /assets/logo.svg",
+          "explanation": "El path público incluye /assets aunque la carpeta del sistema se llame public."
+        },
+        {
+          "title": "Configurar caché y dotfiles",
+          "description": "Definí cómo se sirven los archivos y cuánto tiempo pueden cachearse.",
+          "code": "app.use(express.static(\"public\", {\n  maxAge: \"1d\",\n  dotfiles: \"ignore\",\n  index: \"index.html\"\n}));",
+          "explanation": "No habilites dotfiles indiscriminadamente. Si necesitás servir /.well-known, configurá ese caso explícitamente."
+        }
+      ],
+      "exercise": "Serví public/images bajo /assets/images, configurá caché y explicá por qué no publicarías una carpeta privada.",
+      "hint": "El directorio estático debe contener solo recursos públicos. No apuntes express.static a la raíz del proyecto.",
+      "parameters": [
+        {
+          "name": "express.static(root, options)",
+          "description": "Middleware que busca y envía archivos desde root."
+        },
+        {
+          "name": "maxAge",
+          "description": "Configura Cache-Control para recursos estáticos."
+        },
+        {
+          "name": "dotfiles",
+          "description": "Controla cómo se sirven archivos y directorios ocultos."
+        }
+      ],
+      "bestPractices": [
+        "Serví una carpeta dedicada a archivos públicos.",
+        "No expongas .env, backups ni datos privados.",
+        "Configurá maxAge según el versionado de assets."
+      ],
+      "commonMistakes": [
+        "Apuntar express.static a la raíz del proyecto.",
+        "Habilitar dotfiles: allow sin necesitarlo.",
+        "Creer que public aparece literalmente en la URL."
+      ],
+      "resources": [
+        {
+          "label": "Serving static files",
+          "url": "https://expressjs.com/en/starter/static-files.html"
+        },
+        {
+          "label": "express.static API",
+          "url": "https://expressjs.com/en/5x/api.html#express.static"
+        }
+      ],
+      "related": [
+        "express-built-in-middleware",
+        "express-file-uploads"
+      ]
+    },
+    {
+      "id": "express-route-patterns-v5",
+      "title": "Patrones de rutas y cambios de sintaxis en Express 5",
+      "category": "routing-middleware",
+      "summary": "Aprendé comodines con nombre y segmentos opcionales usando la sintaxis vigente.",
+      "purpose": "Express 5 utiliza la sintaxis actualizada de path-to-regexp. Los comodines deben tener nombre: /*splat captura segmentos excepto la raíz y /{*splat} también coincide con /. Los segmentos opcionales usan llaves en lugar del modificador ? de versiones anteriores.",
+      "whenToUse": "Aplicalo cuando necesites separar rutas, compartir lógica entre endpoints o controlar cómo una solicitud avanza por la aplicación.",
+      "syntax": "app.get(\"/*splat\", handler);\napp.get(\"/{*splat}\", handler);\napp.get(\"/:file{.:ext}\", handler);",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Wildcard nombrado",
+          "description": "El comodín necesita un identificador.",
+          "code": "app.get(\"/*splat\", (req, res) => {\n  res.json({ partes: req.params.splat });\n});\n// GET /docs/api → [\"docs\", \"api\"]",
+          "explanation": "En Express 5, el wildcard captura segmentos como un array. /*splat no coincide con /."
+        },
+        {
+          "title": "Incluir la raíz",
+          "description": "La variante entre llaves permite incluir la ruta raíz.",
+          "code": "app.get(\"/{*splat}\", (req, res) => {\n  res.json({ ruta: req.params.splat ?? [] });\n});",
+          "explanation": "La propiedad puede no existir para la raíz, por eso se maneja un valor alternativo."
+        },
+        {
+          "title": "Extensión opcional",
+          "description": "Las llaves reemplazan la sintaxis antigua con ?.",
+          "code": "app.get(\"/:archivo{.:extension}\", (req, res) => {\n  res.json({ archivo: req.params.archivo, extension: req.params.extension });\n});",
+          "explanation": "La ruta acepta /manual y /manual.pdf. La propiedad extension puede estar ausente."
+        }
+      ],
+      "exercise": "Reescribí tres patrones antiguos: /*, /:file.:ext? y un patrón con corchetes. Usá sintaxis Express 5.",
+      "hint": "No copies /* de Express 4. Usá /*splat o /{*splat} según si necesitás cubrir la raíz.",
+      "parameters": [
+        {
+          "name": "/*splat",
+          "description": "Wildcard nombrado que captura uno o más segmentos, pero no la raíz."
+        },
+        {
+          "name": "/{*splat}",
+          "description": "Wildcard opcional que también coincide con la raíz."
+        },
+        {
+          "name": "/:file{.:ext}",
+          "description": "Sintaxis moderna para un segmento opcional."
+        }
+      ],
+      "bestPractices": [
+        "Probá tanto la raíz como paths anidados.",
+        "Consultá la guía de migración cuando actualices rutas."
+      ],
+      "commonMistakes": [
+        "Dejar un wildcard sin nombre.",
+        "Esperar un string cuando Express 5 devuelve un array.",
+        "Usar ? o regexp embebidas con sintaxis antigua."
+      ],
+      "resources": [
+        {
+          "label": "Upgrade to Express 5 — path syntax",
+          "url": "https://expressjs.com/en/guide/migrating-5.html#path-syntax"
+        },
+        {
+          "label": "Routing",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        }
+      ],
+      "related": [
+        "express-routes-basics",
+        "express-404-handler"
+      ]
+    },
+    {
+      "id": "express-rest-crud-api",
+      "title": "Diseñar una API REST y operaciones CRUD",
+      "category": "apis-data",
+      "summary": "Organizá una API alrededor de recursos y construí operaciones de listar, crear, consultar, modificar y borrar.",
+      "purpose": "Una API REST utiliza recursos identificables por URL y métodos HTTP para expresar operaciones. Express facilita crear rutas, respuestas JSON y middleware compartidos. Una API consistente documenta parámetros, status, errores y paginación.",
+      "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+      "syntax": "GET /api/novelas\nPOST /api/novelas\nGET /api/novelas/:id\nPATCH /api/novelas/:id\nDELETE /api/novelas/:id",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Listar y consultar",
+          "description": "Las rutas de colección y detalle tienen responsabilidades distintas.",
+          "code": "app.get(\"/api/novelas\", async (_req, res) => {\n  res.json(await servicio.listar());\n});\napp.get(\"/api/novelas/:id\", async (req, res) => {\n  const novela = await servicio.buscar(req.params.id);\n  if (!novela) return res.status(404).json({ error: \"No encontrada\" });\n  res.json(novela);\n});",
+          "explanation": "La colección devuelve varios recursos. El detalle devuelve uno o 404 cuando no existe."
+        },
+        {
+          "title": "Crear un recurso",
+          "description": "POST suele responder 201 y puede indicar la URL del nuevo recurso.",
+          "code": "app.post(\"/api/novelas\", async (req, res) => {\n  const nueva = await servicio.crear(req.body);\n  res.status(201).location(`/api/novelas/${nueva.id}`).json(nueva);\n});",
+          "explanation": "201 Created indica que se creó un recurso; Location puede señalar su URL."
+        },
+        {
+          "title": "Controlador pequeño que delega la lógica",
+          "description": "El router describe HTTP y un servicio conserva la operación de negocio.",
+          "language": "javascript",
+          "code": "app.get('/api/novelas/:id', async (req, res) => {\n  const novela = await servicioNovelas.buscarPorId(req.params.id);\n  if (!novela) {\n    return res.status(404).json({ error: 'Novela no encontrada' });\n  }\n  res.json(novela);\n});\n\napp.patch('/api/novelas/:id', validarNovelaParcial, async (req, res) => {\n  const actualizada = await servicioNovelas.actualizar(req.params.id, req.body);\n  if (!actualizada) {\n    return res.status(404).json({ error: 'Novela no encontrada' });\n  }\n  res.json(actualizada);\n});",
+          "explanation": "El router se ocupa del transporte HTTP. La validación y el servicio se separan para reutilizar reglas y facilitar pruebas. Con Express 5, si un handler async rechaza, el error pasa al middleware central; los errores esperados como recurso inexistente pueden responderse de forma explícita."
+        }
+      ],
+      "exercise": "Diseñá una API CRUD de novelas con rutas, métodos, códigos HTTP y un formato uniforme de error.",
+      "hint": "Separá router, controlador y servicio de datos. Express no valida ni persiste automáticamente lo que recibe.",
+      "parameters": [
+        {
+          "name": "GET collection",
+          "description": "Lista recursos, normalmente con filtros y paginación."
+        },
+        {
+          "name": "GET item",
+          "description": "Obtiene un recurso por identificador."
+        },
+        {
+          "name": "POST",
+          "description": "Crea un recurso."
+        },
+        {
+          "name": "PATCH",
+          "description": "Actualiza campos de un recurso."
+        },
+        {
+          "name": "DELETE",
+          "description": "Elimina un recurso."
+        }
+      ],
+      "bestPractices": [
+        "Usá paginación para colecciones grandes.",
+        "Definí formato uniforme de respuestas y errores.",
+        "No filtres datos privados en respuestas públicas."
+      ],
+      "commonMistakes": [
+        "Responder 200 sin indicar correctamente la creación.",
+        "Devolver todos los registros sin límite.",
+        "Mezclar reglas de negocio y consultas en el router."
+      ],
+      "resources": [
+        {
+          "label": "Routing",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        },
+        {
+          "label": "Response API",
+          "url": "https://expressjs.com/en/5x/api.html#res"
+        }
+      ],
+      "related": [
+        "express-routes-basics",
+        "express-validation"
+      ],
+      "deepDive": {
+        "model": "Una API CRUD organiza operaciones alrededor de un recurso, por ejemplo novelas. La colección tiene una ruta base y cada elemento se identifica con un segmento como /:id. Express recibe HTTP, pero el servicio decide reglas de negocio y el repositorio consulta la base de datos. El router no debería convertirse en una capa que mezcle validación, persistencia y presentación.",
+        "flow": [
+          [
+            "Definir recursos",
+            "Se identifican colecciones y recursos individuales con rutas consistentes."
+          ],
+          [
+            "Asignar métodos",
+            "GET lista/consulta, POST crea, PUT reemplaza, PATCH modifica y DELETE elimina."
+          ],
+          [
+            "Procesar la operación",
+            "El controlador valida la entrada y delega reglas al servicio."
+          ],
+          [
+            "Responder con contrato",
+            "Se devuelven estado HTTP, datos, ubicación del nuevo recurso o error normalizado."
+          ]
+        ],
+        "decisions": [
+          "Diseñá rutas con sustantivos y mantén los métodos como semántica de operación.",
+          "Paginá colecciones y limitá el tamaño de las respuestas.",
+          "Devolvé 201 y Location al crear; usá 404 para recursos inexistentes y 204 cuando no haya cuerpo de respuesta.",
+          "Hacé coherentes los esquemas de éxito y error y documentalos con OpenAPI."
+        ],
+        "debugging": "Si una creación duplica datos al reintentar, revisá la idempotencia y los identificadores de solicitud. Si un listado es lento o enorme, agregá paginación y filtros. Si todas las respuestas devuelven 200, corregí los códigos para reflejar el resultado real."
+      }
+    },
+    {
+      "id": "express-body-parsing",
+      "title": "Procesamiento de JSON, formularios y cuerpos HTTP",
+      "category": "apis-data",
+      "summary": "Leé datos enviados en el body y reconocé los límites de cada parser.",
+      "purpose": "Express ofrece parsers integrados para JSON y formularios URL-encoded. req.body existe cuando un middleware compatible procesó el Content-Type. En Express 5, si no se parseó el cuerpo, req.body es undefined. Para multipart/form-data necesitás un middleware dedicado.",
+      "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+      "syntax": "app.use(express.json());\napp.use(express.urlencoded({ extended: false }));",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "JSON enviado por fetch",
+          "description": "El cliente debe declarar Content-Type y serializar el objeto.",
+          "code": "fetch(\"/api/novelas\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({ titulo: \"Overlord\" })\n});\n\n// Servidor\napp.use(express.json());",
+          "explanation": "El parser detecta application/json y coloca el objeto en req.body."
+        },
+        {
+          "title": "Formulario URL-encoded",
+          "description": "El parser procesa datos de formularios tradicionales.",
+          "code": "app.use(express.urlencoded({ extended: false }));\napp.post(\"/contacto\", (req, res) => {\n  const nombre = req.body?.nombre;\n  res.json({ recibido: Boolean(nombre) });\n});",
+          "explanation": "En Express 5, extended tiene false como valor predeterminado. Explicitarlo deja clara la intención."
+        }
+      ],
+      "exercise": "Probá un POST JSON y un POST de formulario. Después enviá una solicitud sin body y manejá req.body undefined.",
+      "hint": "El Content-Type debe coincidir con el parser registrado antes de la ruta.",
+      "parameters": [
+        {
+          "name": "express.json(options)",
+          "description": "Parser de application/json."
+        },
+        {
+          "name": "express.urlencoded(options)",
+          "description": "Parser de application/x-www-form-urlencoded."
+        },
+        {
+          "name": "req.body",
+          "description": "Valor parseado; puede ser undefined si no se procesó un cuerpo."
+        },
+        {
+          "name": "limit",
+          "description": "Tamaño máximo aceptado por el parser."
+        }
+      ],
+      "bestPractices": [
+        "Comprobá que body exista y tenga la forma esperada.",
+        "Configurá un límite de tamaño razonable."
+      ],
+      "commonMistakes": [
+        "Leer req.body antes de registrar el parser.",
+        "Asumir que req.body siempre es un objeto vacío en Express 5.",
+        "Enviar JSON sin el Content-Type apropiado."
+      ],
+      "resources": [
+        {
+          "label": "Express 5 — req.body",
+          "url": "https://expressjs.com/en/guide/migrating-5.html#req.body"
+        },
+        {
+          "label": "express.json API",
+          "url": "https://expressjs.com/en/5x/api.html#express.json"
+        }
+      ],
+      "related": [
+        "express-built-in-middleware",
+        "express-file-uploads"
+      ]
+    },
+    {
+      "id": "express-async-handlers",
+      "title": "Handlers asíncronos y promesas en Express 5",
+      "category": "apis-data",
+      "summary": "Usá async/await y entendé cómo Express 5 propaga errores rechazados.",
+      "purpose": "Express 5 reenvía automáticamente al middleware de errores los rechazos de promesas y errores arrojados por handlers y middleware que devuelven una Promise. Las APIs basadas en callbacks que no devuelven promesas siguen necesitando next(err) o manejo explícito.",
+      "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+      "syntax": "app.get(\"/\", async (req, res) => {\n  const data = await obtenerDatos();\n  res.json(data);\n});",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Handler async",
+          "description": "Express 5 detecta una promesa rechazada y pasa el error al siguiente handler de errores.",
+          "code": "app.get(\"/api/novelas\", async (_req, res) => {\n  const novelas = await db.novela.findMany();\n  res.json(novelas);\n});",
+          "explanation": "Si la consulta rechaza, Express 5 llama a next(error) automáticamente."
+        },
+        {
+          "title": "Callback tradicional",
+          "description": "Una función basada en callback debe transferir errores explícitamente.",
+          "code": "app.get(\"/archivo\", (req, res, next) => {\n  leerArchivo((error, contenido) => {\n    if (error) return next(error);\n    res.type(\"text/plain\").send(contenido);\n  });\n});",
+          "explanation": "Express no puede detectar un error que ocurre dentro de una API callback si no lo transferís a next."
+        },
+        {
+          "title": "Capturar un error en Express 5 y dejar que llegue al manejador central",
+          "description": "Los errores de handlers asíncronos pasan automáticamente al flujo de errores en Express 5.",
+          "language": "javascript",
+          "code": "app.get('/api/novelas/:id', async (req, res) => {\n  const novela = await repositorio.buscar(req.params.id);\n  if (!novela) {\n    return res.status(404).json({ error: 'No encontrada' });\n  }\n  res.json(novela);\n});\n\napp.use((err, req, res, next) => {\n  console.error(err);\n  if (res.headersSent) return next(err);\n  res.status(500).json({ error: 'Error interno' });\n});",
+          "explanation": "La consulta puede rechazar su Promise y Express 5 invoca el middleware de errores. El manejador no muestra el detalle interno al cliente y comprueba headersSent antes de intentar enviar otra respuesta. El 404 es un resultado esperado, no un error interno."
+        }
+      ],
+      "exercise": "Escribí una ruta async que consulte un servicio y responda 404 cuando el recurso no exista. Comparala con una callback API.",
+      "hint": "Express 5 propaga rechazos de promesas devueltas. Los callbacks tradicionales necesitan manejo explícito.",
+      "parameters": [
+        {
+          "name": "async handler",
+          "description": "Función que devuelve una Promise y puede utilizar await."
+        },
+        {
+          "name": "next(error)",
+          "description": "Envía el error al middleware de errores."
+        },
+        {
+          "name": "Promise rejection",
+          "description": "Rechazo de promesa que Express 5 puede reenviar automáticamente desde un handler."
+        }
+      ],
+      "bestPractices": [
+        "Separá errores de negocio esperados de fallos inesperados.",
+        "En callbacks, transferí el error explícitamente."
+      ],
+      "commonMistakes": [
+        "Mantener wrappers innecesarios de Express 4 sin saber qué resuelven.",
+        "Olvidar next(err) en callbacks.",
+        "Capturar errores y no responder ni reenviarlos."
+      ],
+      "resources": [
+        {
+          "label": "Error Handling — async errors",
+          "url": "https://expressjs.com/en/guide/error-handling.html"
+        },
+        {
+          "label": "Upgrade to Express 5",
+          "url": "https://expressjs.com/en/guide/migrating-5.html"
+        }
+      ],
+      "related": [
+        "express-error-handling",
+        "express-rest-crud-api"
+      ],
+      "deepDive": {
+        "model": "En Express 5, los handlers y middleware que devuelven una Promise propagan automáticamente los rechazos al flujo de errores. async devuelve una Promise aun cuando se escribe un return simple. Las APIs antiguas basadas en callbacks no generan automáticamente una Promise, por lo que sus errores deben pasar explícitamente con next(err).",
+        "flow": [
+          [
+            "La ruta inicia trabajo async",
+            "El handler async llama una base de datos, servicio o API externa."
+          ],
+          [
+            "Se espera el resultado",
+            "await suspende la continuación mientras Node procesa otras tareas."
+          ],
+          [
+            "Promesa resuelta o rechazada",
+            "Un resultado exitoso permite construir la respuesta; un rechazo pasa al middleware de errores en Express 5."
+          ],
+          [
+            "El middleware normaliza",
+            "El handler central decide status y mensaje sin filtrar detalles internos."
+          ]
+        ],
+        "decisions": [
+          "En Express 5, evitá wrappers de Express 4 que solo repetían next(catch).",
+          "Usá try/catch local solo cuando puedas recuperarte o traducir el error con contexto útil.",
+          "Asegurá que una ruta devuelva o espere la Promise que representa el trabajo asincrónico.",
+          "En callbacks Node tradicionales, llamá next(err) si ocurre un error."
+        ],
+        "debugging": "Si un error async no llega al middleware, comprobá que la función efectivamente devuelva la Promise y que se ejecute bajo Express 5. Si una ruta termina antes de la consulta, revisá que uses await o return. Si capturás una excepción y no hacés nada, la petición puede quedar sin respuesta."
+      }
+    },
+    {
+      "id": "express-validation",
+      "title": "Validación y normalización de entradas",
+      "category": "apis-data",
+      "summary": "Validá parámetros, query y body antes de pasar datos a la lógica de negocio.",
+      "purpose": "Express no valida datos entrantes automáticamente. Una API debe comprobar tipos, rangos y estructura. Una biblioteca de esquemas como Zod valida datos en runtime e infiere tipos TypeScript; también son posibles comprobaciones manuales para casos pequeños.",
+      "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+      "syntax": "const result = schema.safeParse(req.body);\nif (!result.success) return res.status(400).json({ error: \"Datos inválidos\" });",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Validación manual",
+          "description": "Comprobá valores básicos antes de continuar.",
+          "code": "app.post(\"/api/novelas\", (req, res, next) => {\n  const titulo = req.body?.titulo;\n  if (typeof titulo !== \"string\" || !titulo.trim()) {\n    return res.status(400).json({ error: \"El título es obligatorio\" });\n  }\n  next();\n}, crearNovela);",
+          "explanation": "La comprobación revisa existencia y tipo. Para esquemas grandes conviene una biblioteca."
+        },
+        {
+          "title": "Validar con Zod",
+          "description": "El esquema aporta reglas runtime y tipos inferidos.",
+          "code": "import { z } from \"zod\";\nconst Schema = z.object({ titulo: z.string().trim().min(1).max(120) });\nconst parsed = Schema.safeParse(req.body);\nif (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });\nconst datos = parsed.data;",
+          "explanation": "safeParse evita una excepción para errores normales de validación. Usá parsed.data solo cuando success sea true."
+        },
+        {
+          "title": "Validar parámetros con un esquema reutilizable",
+          "description": "Validá la entrada antes de usarla en la lógica del endpoint.",
+          "language": "javascript",
+          "code": "import { z } from 'zod';\n\nconst CrearNovela = z.object({\n  titulo: z.string().trim().min(1).max(120),\n  volumenes: z.number().int().min(1).max(200)\n}).strict();\n\nfunction validarCrearNovela(req, res, next) {\n  const resultado = CrearNovela.safeParse(req.body);\n  if (!resultado.success) {\n    return res.status(400).json({\n      error: 'Datos inválidos',\n      detalles: resultado.error.flatten().fieldErrors\n    });\n  }\n  req.datosValidados = resultado.data;\n  next();\n}",
+          "explanation": "safeParse devuelve success y datos tipados si el esquema se cumple. strict() rechaza propiedades que no forman parte del contrato. El middleware puede continuar con next() solo después de validar; en un proyecto TypeScript habría que extender el tipo de Request para datosValidados."
+        }
+      ],
+      "exercise": "Definí un esquema de novela con título obligatorio, género y número de volúmenes. Devolvé 400 ante datos inválidos.",
+      "hint": "Validá datos en runtime aunque declares un tipo TypeScript para el mismo objeto.",
+      "parameters": [
+        {
+          "name": "safeParse(value)",
+          "description": "Valida y devuelve success junto con data o errores."
+        },
+        {
+          "name": "z.object(shape)",
+          "description": "Define un esquema de objeto."
+        },
+        {
+          "name": "z.string().min().max()",
+          "description": "Reglas de longitud para cadenas."
+        }
+      ],
+      "bestPractices": [
+        "Normalizá strings cuando corresponda.",
+        "Devolvé mensajes útiles sin detalles internos.",
+        "Validá en servidor aunque también valides en frontend."
+      ],
+      "commonMistakes": [
+        "Confiar solo en la validación del formulario frontend.",
+        "Usar body sin comprobar tipos y tamaños.",
+        "Confundir tipos TypeScript con validación runtime."
+      ],
+      "resources": [
+        {
+          "label": "Zod",
+          "url": "https://zod.dev/"
+        },
+        {
+          "label": "Express middleware guide",
+          "url": "https://expressjs.com/en/guide/using-middleware.html"
+        }
+      ],
+      "related": [
+        "express-body-parsing",
+        "express-authentication"
+      ],
+      "deepDive": {
+        "model": "Express recibe datos externos que deben tratarse como no confiables. TypeScript puede describir la forma esperada durante el desarrollo, pero no valida lo que llega por la red. La validación en runtime comprueba estructura, tipos, rangos, longitud y reglas de negocio antes de que el servicio utilice esos valores.",
+        "flow": [
+          [
+            "Recibir entrada",
+            "La API obtiene params, query o body de una fuente controlada por el cliente."
+          ],
+          [
+            "Validar estructura",
+            "Se comprueban tipos, campos requeridos, límites y formatos."
+          ],
+          [
+            "Normalizar datos",
+            "Se recortan espacios, convierten valores y se descartan campos no permitidos según la política."
+          ],
+          [
+            "Delegar datos confiables",
+            "El servicio recibe un objeto validado y la API responde con error 400/422 si falla el contrato."
+          ]
+        ],
+        "decisions": [
+          "Validá en servidor aunque el frontend valide los formularios; el cliente puede saltarse sus controles.",
+          "Preferí esquemas declarativos para contratos compartidos y mantenibles.",
+          "Distinguí errores de sintaxis/entrada inválida de errores internos del servidor.",
+          "Controlá tamaño, longitud y tipos de archivos, no solamente que los campos existan."
+        ],
+        "debugging": "Si una validación pasa datos inesperados, revisá coerciones y si usaste parse en vez de safeParse. Si el cliente recibe detalles internos, normalizá el error antes de responder. Si TypeScript acepta el objeto pero la entrada real falla, recordá que los tipos desaparecen en runtime."
+      }
+    },
+    {
+      "id": "express-cors",
+      "title": "CORS y solicitudes entre distintos orígenes",
+      "category": "apis-data",
+      "summary": "Configurá qué orígenes pueden leer respuestas de tu API desde navegadores.",
+      "purpose": "CORS es un mecanismo del navegador basado en encabezados HTTP. Express no lo habilita automáticamente; el paquete cors puede agregar los encabezados apropiados. CORS no reemplaza autenticación ni impide que clientes no navegadores llamen a la API.",
+      "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+      "syntax": "import cors from \"cors\";\napp.use(cors({ origin: \"https://app.example.com\" }));",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Permitir un origen",
+          "description": "El middleware autoriza un origen concreto.",
+          "code": "import cors from \"cors\";\napp.use(cors({ origin: \"http://localhost:5173\" }));",
+          "explanation": "El navegador permite que ese frontend lea la respuesta. No es necesario permitir todos los orígenes."
+        },
+        {
+          "title": "Allowlist y credenciales",
+          "description": "Podés decidir dinámicamente qué orígenes aceptás.",
+          "code": "const permitidos = new Set([\"https://app.example.com\", \"https://admin.example.com\"]);\napp.use(cors({\n  origin(origin, callback) {\n    if (!origin || permitidos.has(origin)) return callback(null, true);\n    callback(new Error(\"Origen no permitido\"));\n  },\n  credentials: true\n}));",
+          "explanation": "Con credenciales, no combines Allow-Credentials con un origen comodín *. La política debe ser explícita."
+        }
+      ],
+      "exercise": "Configurá una API local para localhost:5173 y luego definí una allowlist para producción.",
+      "hint": "CORS controla qué respuesta puede leer el navegador. No autentica al usuario ni protege contra curl.",
+      "parameters": [
+        {
+          "name": "cors(options)",
+          "description": "Middleware que configura encabezados CORS."
+        },
+        {
+          "name": "origin",
+          "description": "Origen o función para determinar qué origen se permite."
+        },
+        {
+          "name": "credentials",
+          "description": "Permite solicitudes del navegador que incluyen credenciales cuando se configura adecuadamente."
+        },
+        {
+          "name": "preflight",
+          "description": "Solicitud OPTIONS previa que puede enviar el navegador."
+        }
+      ],
+      "bestPractices": [
+        "Usá orígenes explícitos en producción.",
+        "Configurá métodos y headers solo cuando hagan falta."
+      ],
+      "commonMistakes": [
+        "Creer que CORS protege una API de clientes no navegador.",
+        "Combinar origin * con credenciales.",
+        "Confundir CORS con autenticación."
+      ],
+      "resources": [
+        {
+          "label": "Express CORS middleware",
+          "url": "https://expressjs.com/en/resources/middleware/cors.html"
+        },
+        {
+          "label": "MDN — CORS",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS"
+        }
+      ],
+      "related": [
+        "express-cookies-sessions",
+        "express-authentication"
+      ]
+    },
+    {
+      "id": "express-file-uploads",
+      "title": "Subida de archivos y multipart/form-data",
+      "category": "apis-data",
+      "summary": "Recibí archivos desde formularios y controlá tamaño, tipo y almacenamiento.",
+      "purpose": "express.json y express.urlencoded no procesan multipart/form-data. Para archivos se utiliza un middleware específico como Multer. Los archivos deben validarse, almacenarse con nombres controlados y no confiar en el MIME declarado por el cliente como única comprobación.",
+      "whenToUse": "Aplicalo cuando un cliente necesite consultar o modificar datos del servidor mediante HTTP, formularios o integraciones externas.",
+      "syntax": "import multer from \"multer\";\nconst upload = multer({ dest: \"uploads/\" });",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Subir un archivo",
+          "description": "Multer coloca los datos procesados en req.file.",
+          "code": "import multer from \"multer\";\nconst upload = multer({ dest: \"uploads/\", limits: { fileSize: 2 * 1024 * 1024 } });\napp.post(\"/api/portadas\", upload.single(\"portada\"), (req, res) => {\n  if (!req.file) return res.status(400).json({ error: \"Falta el archivo\" });\n  res.status(201).json({ archivo: req.file.filename });\n});",
+          "explanation": "El input debe llamarse portada. El límite restringe a 2 MB; todavía se debe verificar contenido y extensión."
+        },
+        {
+          "title": "Múltiples archivos",
+          "description": "Aceptá varios archivos con un máximo explícito.",
+          "code": "app.post(\"/api/imagenes\", upload.array(\"imagenes\", 4), (req, res) => {\n  const archivos = req.files ?? [];\n  res.status(201).json({ cantidad: archivos.length });\n});",
+          "explanation": "El límite controla la cantidad recibida. No guardes nombres proporcionados por el navegador sin normalizarlos."
+        }
+      ],
+      "exercise": "Creá un endpoint que acepte una portada de hasta 2 MB. Documentá validación de MIME real, extensión, tamaño y almacenamiento.",
+      "hint": "Multer procesa multipart/form-data. El nombre del input coincide con upload.single o upload.array.",
+      "parameters": [
+        {
+          "name": "upload.single(field)",
+          "description": "Procesa un archivo en un campo."
+        },
+        {
+          "name": "upload.array(field, maxCount)",
+          "description": "Procesa varios archivos del mismo campo con máximo."
+        },
+        {
+          "name": "req.file",
+          "description": "Metadatos del archivo procesado."
+        },
+        {
+          "name": "limits.fileSize",
+          "description": "Límite de bytes para cada archivo."
+        }
+      ],
+      "bestPractices": [
+        "Generá nombres de archivo en el servidor.",
+        "Comprobá contenido real y tamaño.",
+        "Almacená archivos privados fuera de rutas estáticas."
+      ],
+      "commonMistakes": [
+        "Suponer que express.json procesa archivos multipart.",
+        "Aceptar archivos sin validar contenido.",
+        "Usar el nombre original como ruta de guardado y permitir path traversal."
+      ],
+      "resources": [
+        {
+          "label": "Multer documentation",
+          "url": "https://github.com/expressjs/multer"
+        },
+        {
+          "label": "Express resources — middleware",
+          "url": "https://expressjs.com/en/resources/middleware.html"
+        }
+      ],
+      "related": [
+        "express-body-parsing",
+        "express-static-files"
+      ]
+    },
+    {
+      "id": "express-error-handling",
+      "title": "Manejo centralizado de errores",
+      "category": "errors-security",
+      "summary": "Construí un middleware de errores que transforme fallos en respuestas HTTP seguras y consistentes.",
+      "purpose": "Express reconoce un middleware de errores por su firma de cuatro argumentos: err, req, res y next. Debe registrarse después de las rutas. Si ya se enviaron headers, el handler debe delegar al manejador predeterminado con next(err). Express 5 pasa automáticamente rechazos de handlers async al flujo de errores.",
+      "whenToUse": "Aplicalo cuando quieras que la API responda de forma segura ante errores, proteja información y limite operaciones sensibles.",
+      "syntax": "(err, req, res, next) => {\n  res.status(500).json({ error: \"Error interno\" });\n}",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Middleware central",
+          "description": "Definí la firma de cuatro argumentos y registralo al final.",
+          "code": "app.use((err, req, res, next) => {\n  console.error(err);\n  if (res.headersSent) return next(err);\n  res.status(500).json({ error: \"Ocurrió un error interno\" });\n});",
+          "explanation": "headersSent evita enviar una segunda respuesta. next(err) delega al handler predeterminado si el envío ya comenzó."
+        },
+        {
+          "title": "Status controlado",
+          "description": "Usá propiedades conocidas para definir el status sin exponer detalles internos.",
+          "code": "app.use((err, _req, res, next) => {\n  if (res.headersSent) return next(err);\n  const status = Number.isInteger(err.status) ? err.status : 500;\n  const mensaje = status < 500 ? err.message : \"Error interno\";\n  res.status(status).json({ error: mensaje });\n});",
+          "explanation": "No envíes cualquier detalle técnico al usuario. Definí qué mensajes pueden considerarse públicos."
+        },
+        {
+          "title": "Crear un error de negocio con status controlado",
+          "description": "Conservá un status esperado y ocultá detalles inesperados.",
+          "language": "javascript",
+          "code": "function noEncontrada(mensaje = 'Recurso no encontrado') {\n  const error = new Error(mensaje);\n  error.status = 404;\n  return error;\n}\n\napp.get('/api/novelas/:id', async (req, res) => {\n  const novela = await repositorio.buscar(req.params.id);\n  if (!novela) throw noEncontrada('Novela no encontrada');\n  res.json(novela);\n});\n\napp.use((err, req, res, next) => {\n  if (res.headersSent) return next(err);\n  const status = Number.isInteger(err.status) ? err.status : 500;\n  res.status(status).json({\n    error: status === 500 ? 'Error interno' : err.message\n  });\n});",
+          "explanation": "En Express 5 el throw dentro del handler async se propaga. El middleware final traduce errores con status conocido y presenta un mensaje genérico para fallos 500. En aplicaciones reales conviene modelar tipos de error y no confiar ciegamente en propiedades arbitrarias del objeto Error."
+        }
+      ],
+      "exercise": "Implementá un middleware final que registre el error, controle headersSent y devuelva JSON sin stack trace en producción.",
+      "hint": "El middleware de errores lleva cuatro parámetros, incluso si algunos no se usan.",
+      "parameters": [
+        {
+          "name": "err",
+          "description": "Error transferido desde una ruta o middleware."
+        },
+        {
+          "name": "next(err)",
+          "description": "Pasa el error al siguiente handler de errores."
+        },
+        {
+          "name": "res.headersSent",
+          "description": "Indica si comenzó el envío de los encabezados."
+        }
+      ],
+      "bestPractices": [
+        "Registrá detalles técnicos en servidor y devolvé mensajes públicos seguros.",
+        "Colocá el handler después de las rutas.",
+        "Delegá si headersSent ya es true."
+      ],
+      "commonMistakes": [
+        "Escribir un middleware de error con tres parámetros.",
+        "Responder con err.stack en producción.",
+        "Intentar enviar una segunda respuesta."
+      ],
+      "resources": [
+        {
+          "label": "Error Handling",
+          "url": "https://expressjs.com/en/guide/error-handling.html"
+        }
+      ],
+      "related": [
+        "express-async-handlers",
+        "express-404-handler"
+      ],
+      "deepDive": {
+        "model": "Express distingue middleware normal de middleware de error por su firma de cuatro parámetros. Las rutas y middleware pueden propagar fallos con next(err); Express 5 también dirige rechazos de Promises al flujo de error. Un manejador centralizado registra el detalle interno y devuelve al cliente un contrato seguro y consistente.",
+        "flow": [
+          [
+            "Se produce el error",
+            "Un handler arroja una excepción, rechaza una Promise o llama next(err)."
+          ],
+          [
+            "Express salta al flujo de errores",
+            "Las capas normales se omiten y se buscan middleware con firma de error."
+          ],
+          [
+            "Se registra y clasifica",
+            "La aplicación conserva detalles internos en logs y determina status/categoría."
+          ],
+          [
+            "Se responde con seguridad",
+            "El cliente recibe un mensaje público y un identificador de seguimiento, sin stack trace sensible."
+          ]
+        ],
+        "decisions": [
+          "Registrá el middleware de errores después de routers y rutas.",
+          "Comprobá res.headersSent y delegá con next(err) si ya comenzó la respuesta.",
+          "No envíes stack traces, secretos ni SQL al cliente en producción.",
+          "Definí errores esperados de negocio y diferenciálos de fallos inesperados."
+        ],
+        "debugging": "Si el handler no se ejecuta, verificá firma, orden y que el error llegue por throw o next(err). Si aparece ERR_HTTP_HEADERS_SENT, revisá si la ruta respondió antes de propagar. Si el cliente ve demasiado detalle, centralizá la serialización y desactivá información interna en producción."
+      }
+    },
+    {
+      "id": "express-404-handler",
+      "title": "Rutas inexistentes y respuestas 404",
+      "category": "errors-security",
+      "summary": "Detectá cuando ninguna ruta coincide y devolvé un mensaje claro con el status correcto.",
+      "purpose": "Una respuesta 404 indica que no se encontró la ruta o el recurso solicitado. En Express, un middleware al final de la pila maneja paths no coincidentes. Debe registrarse después de routers y rutas, pero antes del middleware de errores.",
+      "whenToUse": "Aplicalo cuando quieras que la API responda de forma segura ante errores, proteja información y limite operaciones sensibles.",
+      "syntax": "app.use((req, res) => {\n  res.status(404).json({ error: \"Ruta no encontrada\" });\n});",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "404 global de API",
+          "description": "El middleware finaliza si ninguna ruta respondió.",
+          "code": "app.use((req, res) => {\n  res.status(404).json({ error: \"Ruta no encontrada\", path: req.originalUrl });\n});",
+          "explanation": "req.originalUrl permite identificar la URL solicitada. No devuelvas 200 ante una ruta desconocida."
+        },
+        {
+          "title": "404 de recurso",
+          "description": "Una ruta puede responder 404 cuando el registro no existe.",
+          "code": "app.get(\"/api/novelas/:id\", async (req, res) => {\n  const novela = await buscarNovela(req.params.id);\n  if (!novela) return res.status(404).json({ error: \"Novela no encontrada\" });\n  res.json(novela);\n});",
+          "explanation": "La ruta existe, pero el recurso identificado no. Es diferente del fallback global."
+        }
+      ],
+      "exercise": "Agregá un 404 final y uno específico para un ID inexistente. Probá una URL no declarada.",
+      "hint": "El middleware 404 va después de routers y antes del handler de errores.",
+      "parameters": [
+        {
+          "name": "404 Not Found",
+          "description": "Status HTTP que indica que el recurso solicitado no fue encontrado."
+        },
+        {
+          "name": "req.originalUrl",
+          "description": "URL original de la solicitud."
+        }
+      ],
+      "bestPractices": [
+        "Diferenciá ruta desconocida y recurso inexistente.",
+        "Mantené 404 separado del manejo de errores 500."
+      ],
+      "commonMistakes": [
+        "Registrar 404 antes de los routers.",
+        "Responder status 200 a una ruta desconocida.",
+        "Convertir un recurso ausente en 500."
+      ],
+      "resources": [
+        {
+          "label": "Express FAQ — 404",
+          "url": "https://expressjs.com/en/5x/starter/faq.html#how-do-i-handle-404-responses"
+        }
+      ],
+      "related": [
+        "express-error-handling",
+        "express-route-patterns-v5"
+      ]
+    },
+    {
+      "id": "express-security-helmet",
+      "title": "Seguridad HTTP con Helmet y headers",
+      "category": "errors-security",
+      "summary": "Agregá encabezados HTTP de seguridad y entendé qué protegen y qué no.",
+      "purpose": "Helmet es un middleware que configura varios encabezados HTTP relacionados con seguridad, como Content-Security-Policy y X-Content-Type-Options. No vuelve segura una aplicación por sí solo: debe combinarse con validación, autenticación, autorización y dependencias actualizadas.",
+      "whenToUse": "Aplicalo cuando quieras que la API responda de forma segura ante errores, proteja información y limite operaciones sensibles.",
+      "syntax": "import helmet from \"helmet\";\napp.use(helmet());",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Activar Helmet",
+          "description": "La configuración predeterminada agrega un conjunto de headers recomendados.",
+          "code": "import helmet from \"helmet\";\nimport express from \"express\";\nconst app = express();\napp.use(helmet());",
+          "explanation": "Colocalo cerca del inicio de la pila para aplicar headers a las respuestas posteriores."
+        },
+        {
+          "title": "Configurar CSP",
+          "description": "Una política puede permitir recursos de orígenes aprobados.",
+          "code": "app.use(helmet({\n  contentSecurityPolicy: {\n    directives: {\n      defaultSrc: [\"'self'\"],\n      imgSrc: [\"'self'\", \"https://cdn.example.com\"]\n    }\n  }\n}));",
+          "explanation": "La política debe adaptarse a los scripts, estilos e imágenes reales. Probala antes de producción."
+        }
+      ],
+      "exercise": "Instalá Helmet, inspeccioná los encabezados y proponé una CSP que permita recursos propios y un CDN conocido.",
+      "hint": "Helmet agrega headers; la política concreta debe probarse con los recursos reales de la aplicación.",
+      "parameters": [
+        {
+          "name": "helmet()",
+          "description": "Middleware que configura varios encabezados HTTP de seguridad."
+        },
+        {
+          "name": "Content-Security-Policy",
+          "description": "Política que restringe las fuentes de scripts, estilos, imágenes y otros recursos."
+        },
+        {
+          "name": "X-Content-Type-Options",
+          "description": "Header que ayuda a prevenir interpretaciones MIME incorrectas."
+        }
+      ],
+      "bestPractices": [
+        "Probá CSP antes de imponer restricciones estrictas.",
+        "Mantené Helmet actualizado.",
+        "Combiná headers con autorización y validación."
+      ],
+      "commonMistakes": [
+        "Creer que Helmet reemplaza autenticación.",
+        "Copiar una CSP sin revisar los recursos utilizados.",
+        "Desactivar headers sin evaluar el riesgo."
+      ],
+      "resources": [
+        {
+          "label": "Express Security Best Practices",
+          "url": "https://expressjs.com/en/advanced/best-practice-security.html"
+        },
+        {
+          "label": "Helmet documentation",
+          "url": "https://helmetjs.github.io/"
+        }
+      ],
+      "related": [
+        "express-authentication",
+        "express-cors"
+      ]
+    },
+    {
+      "id": "express-rate-limiting",
+      "title": "Limitación de solicitudes y protección ante abuso",
+      "category": "errors-security",
+      "summary": "Limitá la frecuencia de solicitudes para reducir abusos, fuerza bruta y consumo excesivo.",
+      "purpose": "Un rate limiter cuenta solicitudes durante una ventana y rechaza o limita cuando se supera un máximo. express-rate-limit es una opción conocida. En sistemas con varias instancias, un almacenamiento compartido es importante: un contador en memoria puede diferir entre procesos.",
+      "whenToUse": "Aplicalo cuando quieras que la API responda de forma segura ante errores, proteja información y limite operaciones sensibles.",
+      "syntax": "import rateLimit from \"express-rate-limit\";\nconst limiter = rateLimit({ windowMs, limit });",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Límite general",
+          "description": "Aplicá un máximo de solicitudes por IP durante una ventana.",
+          "code": "import rateLimit from \"express-rate-limit\";\nconst apiLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  limit: 100,\n  standardHeaders: \"draft-8\",\n  legacyHeaders: false\n});\napp.use(\"/api\", apiLimiter);",
+          "explanation": "El ejemplo limita a 100 solicitudes durante 15 minutos. Los headers dependen de la configuración y versión del paquete."
+        },
+        {
+          "title": "Límite de login",
+          "description": "Un endpoint sensible puede tener un límite más estricto.",
+          "code": "const loginLimiter = rateLimit({\n  windowMs: 10 * 60 * 1000,\n  limit: 5,\n  message: { error: \"Demasiados intentos. Probá más tarde.\" }\n});\napp.use(\"/api/login\", loginLimiter);",
+          "explanation": "El límite reduce intentos automatizados, pero debe combinarse con monitoreo y protección de cuentas."
+        }
+      ],
+      "exercise": "Agregá un límite general y otro más estricto al login. Explicá qué cambia al ejecutar varias instancias.",
+      "hint": "El almacenamiento en memoria no coordina contadores entre procesos o servidores.",
+      "parameters": [
+        {
+          "name": "windowMs",
+          "description": "Duración de la ventana de conteo."
+        },
+        {
+          "name": "limit",
+          "description": "Máximo de solicitudes permitidas por ventana."
+        },
+        {
+          "name": "standardHeaders",
+          "description": "Controla headers que comunican límite y estado."
+        },
+        {
+          "name": "store",
+          "description": "Almacenamiento de contadores que puede compartirse entre instancias."
+        }
+      ],
+      "bestPractices": [
+        "Aplicá límites según el riesgo del endpoint.",
+        "Usá un store compartido cuando escales horizontalmente."
+      ],
+      "commonMistakes": [
+        "Un límite demasiado bajo puede bloquear usuarios legítimos.",
+        "Confiar en contadores locales en un cluster.",
+        "Confundir rate limiting con protección completa contra DDoS."
+      ],
+      "resources": [
+        {
+          "label": "express-rate-limit",
+          "url": "https://express-rate-limit.mintlify.app/"
+        }
+      ],
+      "related": [
+        "express-security-helmet",
+        "express-authentication"
+      ]
+    },
+    {
+      "id": "express-authentication",
+      "title": "Autenticación y autorización en una API",
+      "category": "errors-security",
+      "summary": "Separá la identificación de usuarios de la comprobación de permisos por operación.",
+      "purpose": "Autenticación comprueba identidad y suele establecer sesión o validar un token. Autorización verifica si esa identidad puede ejecutar una acción concreta. Express permite implementar middleware para ambos pasos, pero no incluye un sistema de usuarios completo.",
+      "whenToUse": "Aplicalo cuando quieras que la API responda de forma segura ante errores, proteja información y limite operaciones sensibles.",
+      "syntax": "solicitud → validar credencial → obtener usuario → comprobar permiso → ejecutar operación",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Middleware de autenticación",
+          "description": "Verificá credenciales antes de entrar a una ruta protegida.",
+          "code": "async function autenticar(req, res, next) {\n  const token = req.get(\"authorization\")?.replace(/^Bearer\\s+/i, \"\");\n  if (!token) return res.status(401).json({ error: \"Falta autenticación\" });\n  try {\n    req.usuario = await verificarToken(token);\n    next();\n  } catch {\n    res.status(401).json({ error: \"Credencial inválida\" });\n  }\n}",
+          "explanation": "La función de verificación debe comprobar firma, emisor, audiencia y expiración. req.usuario debe provenir de una credencial válida."
+        },
+        {
+          "title": "Middleware de rol",
+          "description": "Comprobá permisos después de identificar al usuario.",
+          "code": "function requiereAdmin(req, res, next) {\n  if (req.usuario?.rol !== \"admin\") return res.status(403).json({ error: \"Permiso insuficiente\" });\n  next();\n}\napp.delete(\"/api/usuarios/:id\", autenticar, requiereAdmin, eliminarUsuario);",
+          "explanation": "401 señala falta de autenticación válida; 403 que el usuario identificado no tiene permiso."
+        }
+      ],
+      "exercise": "Diseñá una ruta protegida que autentique primero y compruebe el rol después. Explicá por qué ocultar un botón no es suficiente.",
+      "hint": "Autenticá antes de autorizar. No confíes en roles enviados desde el navegador.",
+      "parameters": [
+        {
+          "name": "401 Unauthorized",
+          "description": "Respuesta cuando no hay credenciales válidas."
+        },
+        {
+          "name": "403 Forbidden",
+          "description": "Respuesta cuando la identidad autenticada no tiene permiso."
+        },
+        {
+          "name": "Authorization: Bearer",
+          "description": "Header habitual para enviar un token de acceso."
+        }
+      ],
+      "bestPractices": [
+        "Verificá permisos en cada operación privada.",
+        "Usá bibliotecas revisadas para tokens y contraseñas.",
+        "Rotá los secretos y controlá su almacenamiento."
+      ],
+      "commonMistakes": [
+        "Aceptar un token sin comprobar firma o expiración.",
+        "Usar 401 cuando corresponde 403.",
+        "Confiar en datos de usuario enviados desde el frontend."
+      ],
+      "resources": [
+        {
+          "label": "Express Security Best Practices",
+          "url": "https://expressjs.com/en/advanced/best-practice-security.html"
+        },
+        {
+          "label": "OWASP Authentication Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+        }
+      ],
+      "related": [
+        "express-cookies-sessions",
+        "express-authentication"
+      ]
+    },
+    {
+      "id": "express-cookies-sessions",
+      "title": "Cookies y sesiones de usuario",
+      "category": "errors-security",
+      "summary": "Reconocé cookies HTTP y administrá sesiones sin guardar información sensible en el navegador.",
+      "purpose": "Las cookies permiten que el navegador envíe un pequeño valor en solicitudes posteriores. express-session guarda los datos de sesión del lado servidor y utiliza una cookie con un identificador. Su MemoryStore predeterminado es solo para desarrollo. Las opciones httpOnly, secure, sameSite y maxAge deben elegirse según el modelo de seguridad.",
+      "whenToUse": "Aplicalo cuando quieras que la API responda de forma segura ante errores, proteja información y limite operaciones sensibles.",
+      "syntax": "import session from \"express-session\";\napp.use(session({ secret, resave: false, saveUninitialized: false }));",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Configurar una sesión",
+          "description": "El servidor conserva la sesión y el navegador guarda el identificador.",
+          "code": "import session from \"express-session\";\napp.use(session({\n  secret: process.env.SESSION_SECRET,\n  resave: false,\n  saveUninitialized: false,\n  cookie: { httpOnly: true, secure: true, sameSite: \"lax\", maxAge: 3600000 }\n}));",
+          "explanation": "Configurá un store persistente para producción. secure true requiere HTTPS y puede necesitar trust proxy detrás de un proxy TLS."
+        },
+        {
+          "title": "Cerrar sesión",
+          "description": "Destruí la sesión del servidor y limpiá la cookie del navegador.",
+          "code": "app.post(\"/logout\", (req, res, next) => {\n  req.session.destroy(error => {\n    if (error) return next(error);\n    res.clearCookie(\"connect.sid\").status(204).end();\n  });\n});",
+          "explanation": "El nombre de cookie debe coincidir con la configuración. Destruir sesión invalida el estado guardado."
+        }
+      ],
+      "exercise": "Configurá una sesión con cookie httpOnly y sameSite. Definí un store de producción y escribí el cierre de sesión.",
+      "hint": "No uses MemoryStore en producción. Guardá SESSION_SECRET fuera del repositorio.",
+      "parameters": [
+        {
+          "name": "secret",
+          "description": "Secreto que firma el identificador de sesión."
+        },
+        {
+          "name": "resave",
+          "description": "Controla si se guarda de nuevo una sesión sin cambios."
+        },
+        {
+          "name": "saveUninitialized",
+          "description": "Controla si se guardan sesiones nuevas sin modificar."
+        },
+        {
+          "name": "cookie.httpOnly",
+          "description": "Impide que JavaScript del navegador lea la cookie."
+        },
+        {
+          "name": "cookie.secure",
+          "description": "Limita la cookie a conexiones HTTPS."
+        },
+        {
+          "name": "cookie.sameSite",
+          "description": "Controla envío de cookies en contextos entre sitios."
+        }
+      ],
+      "bestPractices": [
+        "Usá un store persistente para producción.",
+        "Definí expiración y flags de cookie apropiados.",
+        "Evaluá protección CSRF según el flujo."
+      ],
+      "commonMistakes": [
+        "Usar MemoryStore en producción.",
+        "Guardar el secret dentro del código fuente.",
+        "Desactivar httpOnly para que el frontend lea la cookie sin necesitarlo."
+      ],
+      "resources": [
+        {
+          "label": "express-session",
+          "url": "https://expressjs.com/en/resources/middleware/session.html"
+        },
+        {
+          "label": "OWASP Session Management",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+        }
+      ],
+      "related": [
+        "express-authentication",
+        "express-cors"
+      ]
+    },
+    {
+      "id": "express-database-integration",
+      "title": "Conectar Express con una base de datos",
+      "category": "data-capabilities",
+      "summary": "Separá el acceso a datos del transporte HTTP e integrá un driver u ORM.",
+      "purpose": "Express no incorpora una base de datos. La aplicación importa un driver u ORM para conectar con PostgreSQL, MySQL, SQLite, MongoDB u otro motor. Conviene encapsular consultas en una capa de acceso a datos y mantener las rutas independientes de los detalles del motor.",
+      "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+      "syntax": "ruta → servicio → repositorio/ORM → base de datos",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Separar un servicio",
+          "description": "El router delega la consulta a una función reutilizable.",
+          "code": "// services/novelas.js\nimport { db } from \"../lib/db.js\";\nexport async function listarNovelas() {\n  return db.novela.findMany({ orderBy: { titulo: \"asc\" } });\n}\n\n// routes/novelas.js\nrouter.get(\"/\", async (_req, res) => res.json(await listarNovelas()));",
+          "explanation": "La consulta vive en el servicio. El router se ocupa de HTTP y puede cambiar sin reescribir la consulta."
+        },
+        {
+          "title": "Manejar un registro inexistente",
+          "description": "El servicio puede devolver null y el controlador decide el status.",
+          "code": "const novela = await repositorio.buscarPorId(req.params.id);\nif (!novela) return res.status(404).json({ error: \"No encontrada\" });\nres.json(novela);",
+          "explanation": "Un resultado inexistente no tiene por qué ser una excepción técnica. La ruta lo traduce a 404."
+        }
+      ],
+      "exercise": "Organizá un backend de novelas con router, controlador, servicio y repositorio. Indicá dónde ubicarías las consultas SQL.",
+      "hint": "Express atiende HTTP. El driver u ORM maneja persistencia; mantené esa dependencia detrás de una capa.",
+      "parameters": [
+        {
+          "name": "Pool",
+          "description": "Conjunto de conexiones reutilizables a una base de datos."
+        },
+        {
+          "name": "ORM",
+          "description": "Herramienta que representa tablas o colecciones y ofrece operaciones de persistencia."
+        },
+        {
+          "name": "Repositorio",
+          "description": "Módulo que encapsula consultas y operaciones de datos."
+        }
+      ],
+      "bestPractices": [
+        "Usá consultas parametrizadas para evitar SQL injection.",
+        "Gestioná conexiones y transacciones correctamente.",
+        "No abras una conexión manual por request si el driver ofrece un pool."
+      ],
+      "commonMistakes": [
+        "Concatenar SQL con datos del usuario.",
+        "Poner consultas completas dentro de las rutas.",
+        "Exponer credenciales de base de datos al frontend."
+      ],
+      "resources": [
+        {
+          "label": "Express — Database integration",
+          "url": "https://expressjs.com/en/guide/database-integration.html"
+        }
+      ],
+      "related": [
+        "express-rest-crud-api",
+        "express-environment-config"
+      ]
+    },
+    {
+      "id": "express-template-engines",
+      "title": "Plantillas y renderizado de vistas",
+      "category": "data-capabilities",
+      "summary": "Generá páginas HTML dinámicas desde el servidor con un motor de plantillas.",
+      "purpose": "Express puede integrar motores de vistas como Pug, EJS o Handlebars. app.set(\"view engine\", ...) define el motor y res.render renderiza una plantilla con los datos que recibe. La elección del motor es externa y requiere instalar un paquete.",
+      "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+      "syntax": "app.set(\"view engine\", \"ejs\");\nres.render(\"inicio\", { titulo: \"Catálogo\" });",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Configurar EJS",
+          "description": "Instalá el motor y declaralo en Express.",
+          "code": "npm install ejs\n\napp.set(\"view engine\", \"ejs\");\napp.set(\"views\", \"./views\");\napp.get(\"/\", (_req, res) => res.render(\"inicio\", { titulo: \"Novelas\" }));",
+          "explanation": "Express busca views/inicio.ejs y le pasa los datos como variables."
+        },
+        {
+          "title": "Renderizar plantilla",
+          "description": "EJS permite interpolar variables escapadas.",
+          "code": "<!-- views/inicio.ejs -->\n<h1><%= titulo %></h1>\n<p>Bienvenido al catálogo.</p>",
+          "explanation": "<%= escapa el valor al mostrarlo. No uses salida sin escapar para texto controlado por usuarios."
+        }
+      ],
+      "exercise": "Creá una página de inicio con EJS que reciba un título y una lista de novelas.",
+      "hint": "Configurá view engine y la carpeta views; después res.render usa el nombre de plantilla sin extensión.",
+      "parameters": [
+        {
+          "name": "app.set(\"view engine\", engine)",
+          "description": "Define el motor de plantillas."
+        },
+        {
+          "name": "app.set(\"views\", path)",
+          "description": "Define la carpeta de vistas."
+        },
+        {
+          "name": "res.render(view, locals)",
+          "description": "Renderiza una plantilla con variables."
+        }
+      ],
+      "bestPractices": [
+        "Usá escape automático para contenido de usuario.",
+        "Mantené las vistas separadas de las consultas a datos."
+      ],
+      "commonMistakes": [
+        "Olvidar instalar el motor elegido.",
+        "Configurar una carpeta de vistas incorrecta.",
+        "Insertar HTML no escapado proveniente de usuarios."
+      ],
+      "resources": [
+        {
+          "label": "Using template engines",
+          "url": "https://expressjs.com/en/guide/using-template-engines.html"
+        }
+      ],
+      "related": [
+        "express-routes-basics",
+        "express-static-files"
+      ]
+    },
+    {
+      "id": "express-file-downloads",
+      "title": "Enviar y descargar archivos",
+      "category": "data-capabilities",
+      "summary": "Respondé con archivos mediante sendFile, download y tipos de contenido adecuados.",
+      "purpose": "Express ofrece res.sendFile para enviar un archivo y res.download para iniciar una descarga. Las rutas deben resolverse con cuidado para no permitir que un usuario elija archivos fuera del directorio autorizado. sendFile admite opciones como root para restringir resolución.",
+      "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+      "syntax": "res.sendFile(path, options, callback);\nres.download(path, filename);",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Enviar archivo fijo",
+          "description": "sendFile permite servir un documento conocido.",
+          "code": "import path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\nconst __dirname = path.dirname(fileURLToPath(import.meta.url));\napp.get(\"/manual\", (_req, res, next) => {\n  res.sendFile(\"manual.pdf\", { root: path.join(__dirname, \"files\") }, error => {\n    if (error) next(error);\n  });\n});",
+          "explanation": "La opción root acota la ruta. El callback permite transferir errores si el envío falla."
+        },
+        {
+          "title": "Descargar con nombre",
+          "description": "download indica al navegador que el archivo se descargue.",
+          "code": "app.get(\"/descargas/reporte\", (_req, res, next) => {\n  res.download(\"./private/reporte.pdf\", \"mi-reporte.pdf\", error => {\n    if (error) next(error);\n  });\n});",
+          "explanation": "El archivo debe ser conocido y autorizado. No construyas rutas del sistema con texto arbitrario del usuario."
+        }
+      ],
+      "exercise": "Implementá una descarga protegida para un reporte solicitado por ID y verificá autorización antes de enviar el archivo.",
+      "hint": "No tomes una ruta absoluta desde req.query. Usá IDs y rutas resueltas por el servidor.",
+      "parameters": [
+        {
+          "name": "res.sendFile(path, options)",
+          "description": "Envía un archivo como respuesta."
+        },
+        {
+          "name": "res.download(path, filename)",
+          "description": "Envía un archivo con disposición de descarga."
+        },
+        {
+          "name": "root",
+          "description": "Directorio raíz permitido para resolver un path relativo."
+        }
+      ],
+      "bestPractices": [
+        "Restringí la selección de archivos mediante IDs autorizados.",
+        "Manej á el callback de error del envío.",
+        "Verificá permisos antes de enviar archivos privados."
+      ],
+      "commonMistakes": [
+        "Permitir ../ en un path de usuario.",
+        "Servir una carpeta privada con express.static.",
+        "Asumir que la descarga se completó solo porque se llamó res.download."
+      ],
+      "resources": [
+        {
+          "label": "Response API — sendFile",
+          "url": "https://expressjs.com/en/5x/api.html#res.sendFile"
+        },
+        {
+          "label": "Response API — download",
+          "url": "https://expressjs.com/en/5x/api.html#res.download"
+        }
+      ],
+      "related": [
+        "express-static-files",
+        "express-authentication"
+      ]
+    },
+    {
+      "id": "express-subapps-mounts",
+      "title": "Montar routers, subaplicaciones y prefijos",
+      "category": "data-capabilities",
+      "summary": "Organizá áreas de una aplicación y montá routers o subaplicaciones bajo un path.",
+      "purpose": "app.use puede montar middleware, routers o una instancia Express debajo de un path. req.baseUrl, req.path y req.originalUrl permiten distinguir ruta de montaje, path interno y URL original. Los prefijos ayudan a aislar versiones de API y áreas del producto.",
+      "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+      "syntax": "app.use(\"/api/v1\", apiV1);\napp.use(\"/admin\", adminApp);",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Versionar una API",
+          "description": "Montá routers diferentes según la versión.",
+          "code": "import { Router } from \"express\";\nconst v1 = Router();\nconst v2 = Router();\nv1.get(\"/novelas\", listarV1);\nv2.get(\"/novelas\", listarV2);\napp.use(\"/api/v1\", v1);\napp.use(\"/api/v2\", v2);",
+          "explanation": "Cada router mantiene paths relativos; el montaje determina la URL pública."
+        },
+        {
+          "title": "Inspeccionar el montaje",
+          "description": "Las propiedades de request muestran el contexto.",
+          "code": "app.use(\"/admin\", (req, res) => {\n  res.json({ baseUrl: req.baseUrl, path: req.path, originalUrl: req.originalUrl });\n});",
+          "explanation": "Para GET /admin/usuarios, baseUrl indica /admin y originalUrl conserva /admin/usuarios."
+        }
+      ],
+      "exercise": "Montá v1 y v2 de una API y compará baseUrl, path y originalUrl.",
+      "hint": "El router usa paths relativos; el path público combina el prefijo y la ruta interna.",
+      "parameters": [
+        {
+          "name": "app.use(path, middleware)",
+          "description": "Monta middleware, router o aplicación en un prefijo."
+        },
+        {
+          "name": "req.baseUrl",
+          "description": "Path donde fue montado el router actual."
+        },
+        {
+          "name": "req.path",
+          "description": "Path de la URL sin query string."
+        },
+        {
+          "name": "req.originalUrl",
+          "description": "URL original recibida por la aplicación."
+        }
+      ],
+      "bestPractices": [
+        "Versioná APIs cuando los contratos deban convivir.",
+        "Aislá rutas administrativas y públicas."
+      ],
+      "commonMistakes": [
+        "Repetir el prefijo dentro de cada ruta.",
+        "Confundir req.path con req.originalUrl.",
+        "Montar un handler general antes del router y capturar sus rutas."
+      ],
+      "resources": [
+        {
+          "label": "Application API — app.use",
+          "url": "https://expressjs.com/en/5x/api.html#app.use"
+        },
+        {
+          "label": "Request API",
+          "url": "https://expressjs.com/en/5x/api.html#req"
+        }
+      ],
+      "related": [
+        "express-routers",
+        "express-project-architecture"
+      ]
+    },
+    {
+      "id": "express-server-logging",
+      "title": "Registro de solicitudes y niveles de log",
+      "category": "data-capabilities",
+      "summary": "Registrá actividad HTTP y errores con mensajes estructurados y útiles para producción.",
+      "purpose": "El logging permite observar solicitudes, fallos y operaciones importantes. Un middleware puede registrar método, path, status y duración; paquetes como Morgan ofrecen logging HTTP y Pino o Winston pueden estructurar eventos. No registres contraseñas, tokens ni cuerpos sensibles sin necesidad y protección estrictas.",
+      "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+      "syntax": "(req, res, next) => { /* medir y registrar */ next(); }",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Medir duración",
+          "description": "Usá el evento finish para registrar cuánto tardó una solicitud.",
+          "code": "app.use((req, res, next) => {\n  const inicio = process.hrtime.bigint();\n  res.on(\"finish\", () => {\n    const ms = Number(process.hrtime.bigint() - inicio) / 1e6;\n    console.log({ method: req.method, path: req.path, status: res.statusCode, ms });\n  });\n  next();\n});",
+          "explanation": "finish se dispara cuando terminó de enviarse la respuesta. process.hrtime.bigint mide intervalos con alta resolución."
+        },
+        {
+          "title": "Usar Morgan",
+          "description": "Morgan ofrece formatos predefinidos para logging HTTP.",
+          "code": "import morgan from \"morgan\";\napp.use(morgan(\"combined\"));",
+          "explanation": "Morgan registra datos HTTP habituales. En producción podés enviar la salida a un sistema centralizado."
+        }
+      ],
+      "exercise": "Registrá método, path, código de respuesta y duración. Asegurate de no imprimir Authorization ni cookies.",
+      "hint": "El logging HTTP debe ejecutarse antes de las rutas.",
+      "parameters": [
+        {
+          "name": "res.on(\"finish\", callback)",
+          "description": "Evento para registrar una respuesta ya finalizada."
+        },
+        {
+          "name": "process.hrtime.bigint()",
+          "description": "Reloj monotónico de alta resolución."
+        },
+        {
+          "name": "morgan(format)",
+          "description": "Middleware de registro HTTP."
+        }
+      ],
+      "bestPractices": [
+        "Usá logs estructurados y niveles adecuados.",
+        "Ocultá tokens, cookies y datos personales.",
+        "Agregá un identificador de solicitud."
+      ],
+      "commonMistakes": [
+        "Registrar todos los headers y filtrar credenciales después.",
+        "Usar logs sin estructura en producción.",
+        "Imprimir detalles sensibles de negocio."
+      ],
+      "resources": [
+        {
+          "label": "Morgan middleware",
+          "url": "https://expressjs.com/en/resources/middleware/morgan.html"
+        }
+      ],
+      "related": [
+        "express-error-handling",
+        "express-graceful-shutdown"
+      ]
+    },
+    {
+      "id": "express-trust-proxy",
+      "title": "Proxy inverso y configuración de trust proxy",
+      "category": "data-capabilities",
+      "summary": "Entendé cómo Express interpreta IP y protocolo detrás de un proxy.",
+      "purpose": "Detrás de un balanceador o proxy TLS, la conexión directa a Node puede provenir del proxy y no del cliente. trust proxy controla cuánto confía Express en encabezados como X-Forwarded-For y X-Forwarded-Proto. Una configuración demasiado amplia puede permitir que el cliente falsifique IP o protocolo.",
+      "whenToUse": "Usalo cuando tu backend necesite conectarse con sistemas externos, organizar aplicaciones más grandes o servir y observar contenido.",
+      "syntax": "app.set(\"trust proxy\", 1);",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Confiar en un proxy conocido",
+          "description": "Configurá el número de saltos solo si la topología es estable.",
+          "code": "app.set(\"trust proxy\", 1);\napp.get(\"/debug/ip\", (req, res) => {\n  res.json({ ip: req.ip, secure: req.secure });\n});",
+          "explanation": "El valor 1 confía en un salto. La cifra correcta depende de la infraestructura real."
+        },
+        {
+          "title": "No confiar indiscriminadamente",
+          "description": "La confianza abierta solo es segura si el proxy limpia y controla los headers.",
+          "code": "// No copies esto sin revisar tu infraestructura:\napp.set(\"trust proxy\", true);\n// Preferí una configuración explícita de IP/subred o saltos conocidos.",
+          "explanation": "Con true, Express puede aceptar encabezados reenviados desde un origen no confiable si la red no está protegida."
+        }
+      ],
+      "exercise": "Dibujá cliente → proxy → Express y elegí una configuración trust proxy para tu entorno.",
+      "hint": "No elijas el número de saltos por intuición. Consultá la infraestructura y asegurá que el proxy gestione los headers.",
+      "parameters": [
+        {
+          "name": "app.set(\"trust proxy\", value)",
+          "description": "Configura qué proxies y encabezados reenviados considera confiables."
+        },
+        {
+          "name": "req.ip",
+          "description": "IP del cliente inferida según trust proxy."
+        },
+        {
+          "name": "req.secure",
+          "description": "Indica si la solicitud se considera HTTPS."
+        },
+        {
+          "name": "X-Forwarded-For",
+          "description": "Header que puede contener la cadena de IPs reenviadas."
+        }
+      ],
+      "bestPractices": [
+        "Configurá trust proxy según proveedor y topología.",
+        "Asegurá que el proxy controle los encabezados entrantes."
+      ],
+      "commonMistakes": [
+        "Activar trust proxy true sin verificar el proxy.",
+        "Usar req.ip como confiable con una cadena mal configurada.",
+        "Olvidar que afecta cookies secure y rate limiting."
+      ],
+      "resources": [
+        {
+          "label": "Express behind proxies",
+          "url": "https://expressjs.com/en/guide/behind-proxies.html"
+        },
+        {
+          "label": "Application API — trust proxy",
+          "url": "https://expressjs.com/en/5x/api.html#trust.proxy"
+        }
+      ],
+      "related": [
+        "express-cookies-sessions",
+        "express-rate-limiting"
+      ]
+    },
+    {
+      "id": "express-typescript",
+      "title": "Configurar Express con TypeScript",
+      "category": "typescript-testing",
+      "summary": "Prepará un servidor Express tipado y comprendé cómo TypeScript se integra con Node.",
+      "purpose": "Express se puede utilizar con TypeScript mediante los tipos publicados por el proyecto DefinitelyTyped. En proyectos actuales conviene definir el modo de módulos, el objetivo de compilación y los scripts de desarrollo/build con coherencia. Los tipos ayudan durante el desarrollo, pero los datos HTTP todavía necesitan validación en runtime.",
+      "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+      "syntax": "npm install express\nnpm install -D typescript @types/node @types/express\nnpx tsc --init",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Instalar tipos",
+          "description": "Los tipos de Express y Node suelen agregarse como dependencias de desarrollo.",
+          "code": "npm install express\nnpm install -D typescript @types/node @types/express\nnpx tsc --init",
+          "explanation": "@types/express aporta interfaces para Request, Response y Router; @types/node tipa APIs del runtime."
+        },
+        {
+          "title": "Servidor TypeScript",
+          "description": "Tipá la aplicación y sus handlers.",
+          "code": "import express, { type Express, type Request, type Response } from \"express\";\n\nconst app: Express = express();\napp.get(\"/\", (_req: Request, res: Response) => {\n  res.json({ ok: true });\n});\n\nexport { app };",
+          "explanation": "Express puede integrarse con TypeScript sin modificar su ciclo HTTP. Elegí un runner/compilador que coincida con la versión de Node."
+        }
+      ],
+      "exercise": "Configurá un proyecto Express con TypeScript, un script de desarrollo y un build que genere JavaScript en dist.",
+      "hint": "Instalá @types/express y @types/node. Separá el directorio de fuentes del resultado compilado.",
+      "parameters": [
+        {
+          "name": "@types/express",
+          "description": "Declaraciones TypeScript para la API de Express."
+        },
+        {
+          "name": "@types/node",
+          "description": "Declaraciones de tipo para APIs de Node.js."
+        },
+        {
+          "name": "tsconfig.json",
+          "description": "Configuración del compilador TypeScript."
+        },
+        {
+          "name": "strict",
+          "description": "Activa controles estrictos de tipos."
+        }
+      ],
+      "bestPractices": [
+        "Usá strict y tratá los datos de red como unknown o tipos validados.",
+        "Mantené fuentes y salida compilada en directorios separados.",
+        "Usá imports type para elementos que solo se necesitan al compilar."
+      ],
+      "commonMistakes": [
+        "Creer que TypeScript valida req.body en runtime.",
+        "No instalar los tipos de Node.",
+        "Mezclar módulos ESM y CommonJS sin configurar Node y TypeScript de forma compatible."
+      ],
+      "resources": [
+        {
+          "label": "Express 5 — TypeScript API",
+          "url": "https://expressjs.com/en/5x/api.html"
+        },
+        {
+          "label": "TypeScript documentation",
+          "url": "https://www.typescriptlang.org/docs/"
+        }
+      ],
+      "related": [
+        "express-typescript-middleware",
+        "express-testing-supertest"
+      ]
+    },
+    {
+      "id": "express-typescript-middleware",
+      "title": "Tipar Request, Response y middleware personalizados",
+      "category": "typescript-testing",
+      "summary": "Usá genéricos de Express para definir params, body, query y respuestas.",
+      "purpose": "Los tipos Request y RequestHandler de @types/express aceptan parámetros genéricos para describir la forma de los datos. Esto mejora el autocompletado y detecta errores de uso, pero no reemplaza la validación de los valores que llegan desde HTTP.",
+      "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+      "syntax": "Request<Params, ResBody, ReqBody, ReqQuery>",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Tipar el body",
+          "description": "Definí la estructura esperada que el handler utiliza después de validarla.",
+          "code": "import type { Request, Response } from \"express\";\n\ntype CrearNovelaBody = { titulo: string; volumenes: number };\n\napp.post(\"/api/novelas\", (req: Request<{}, {}, CrearNovelaBody>, res: Response) => {\n  res.status(201).json({ titulo: req.body.titulo });\n});",
+          "explanation": "El tipo describe lo que el código espera; antes de confiar en el cuerpo real, ejecutá una validación runtime."
+        },
+        {
+          "title": "Tipar parámetros y respuesta",
+          "description": "Podés establecer nombres para el ID y el objeto que devuelve la ruta.",
+          "code": "import type { RequestHandler } from \"express\";\n\ntype Params = { id: string };\ntype Novela = { id: string; titulo: string };\nconst obtener: RequestHandler<Params, Novela | { error: string }> = async (req, res) => {\n  res.json({ id: req.params.id, titulo: \"Overlord\" });\n};",
+          "explanation": "RequestHandler tipa parámetros, respuesta, body, query y locals. El ejemplo muestra el contrato del handler."
+        }
+      ],
+      "exercise": "Tipá una ruta PATCH /api/novelas/:id con body parcial y response JSON. Agregá validación real para la entrada.",
+      "hint": "Request usa el orden de genéricos Params, ResBody, ReqBody, ReqQuery y Locals.",
+      "parameters": [
+        {
+          "name": "Request<P, ResBody, ReqBody, ReqQuery, Locals>",
+          "description": "Tipo de solicitud parametrizado por path, respuesta, body, query y locals."
+        },
+        {
+          "name": "Response<ResBody, Locals>",
+          "description": "Tipo de respuesta con cuerpo y datos locales."
+        },
+        {
+          "name": "RequestHandler<P, ResBody, ReqBody, ReqQuery, Locals>",
+          "description": "Tipo para handlers y middleware Express."
+        }
+      ],
+      "bestPractices": [
+        "Tipá las estructuras de dominio en módulos compartidos.",
+        "Validá en runtime antes de asumir que req.body cumple el tipo.",
+        "Evitá any para resolver errores de tipos."
+      ],
+      "commonMistakes": [
+        "Creer que el genérico Request valida el JSON entrante.",
+        "Usar el orden equivocado de parámetros genéricos.",
+        "Ampliar globalmente Request para propiedades que podrían ser locales a una sola ruta."
+      ],
+      "resources": [
+        {
+          "label": "Express 5 API — TypeScript",
+          "url": "https://expressjs.com/en/5x/api.html"
+        },
+        {
+          "label": "TypeScript — Everyday Types",
+          "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+        }
+      ],
+      "related": [
+        "express-typescript",
+        "express-validation"
+      ]
+    },
+    {
+      "id": "express-testing-supertest",
+      "title": "Pruebas HTTP con Supertest",
+      "category": "typescript-testing",
+      "summary": "Probá endpoints sin tener que iniciar manualmente un puerto de red.",
+      "purpose": "Supertest permite enviar solicitudes HTTP a una app Express y comprobar status, headers y body. Si app se exporta separada de app.listen, las pruebas pueden importar la aplicación y dejar que Supertest gestione el servidor temporal. Combinado con Vitest o Jest permite ejecutar pruebas repetibles.",
+      "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+      "syntax": "import request from \"supertest\";\nawait request(app).get(\"/health\").expect(200);",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Primera prueba",
+          "description": "Supertest comprueba el status y el contenido de respuesta.",
+          "code": "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport { app } from \"../src/app.js\";\n\ndescribe(\"GET /health\", () => {\n  it(\"devuelve estado ok\", async () => {\n    const response = await request(app).get(\"/health\").expect(200);\n    expect(response.body).toEqual({ ok: true });\n  });\n});",
+          "explanation": "La prueba importa app sin ejecutar listen. Supertest abre el servidor temporal necesario."
+        },
+        {
+          "title": "Probar un POST JSON",
+          "description": "El método send permite enviar un objeto como cuerpo.",
+          "code": "const response = await request(app)\n  .post(\"/api/novelas\")\n  .send({ titulo: \"Overlord\" })\n  .expect(\"Content-Type\", /json/)\n  .expect(201);\n\nexpect(response.body.titulo).toBe(\"Overlord\");",
+          "explanation": "send serializa el objeto en la solicitud. La prueba puede comprobar status, headers y datos devueltos."
+        }
+      ],
+      "exercise": "Escribí pruebas para GET /api/novelas y POST /api/novelas, incluyendo un caso inválido.",
+      "hint": "Exportá app sin app.listen desde el módulo de aplicación. Usá el runner para agrupar y ejecutar pruebas.",
+      "parameters": [
+        {
+          "name": "request(app)",
+          "description": "Construye un cliente de pruebas para una aplicación o servidor HTTP."
+        },
+        {
+          "name": ".get() / .post()",
+          "description": "Seleccionan el método HTTP de la solicitud."
+        },
+        {
+          "name": ".send(data)",
+          "description": "Envía datos en el cuerpo de la solicitud."
+        },
+        {
+          "name": ".expect(status)",
+          "description": "Comprueba el status HTTP esperado."
+        }
+      ],
+      "bestPractices": [
+        "Probá status y contratos de respuesta.",
+        "Aislá los datos de pruebas para evitar contaminación entre casos.",
+        "Cubrí tanto entradas válidas como inválidas."
+      ],
+      "commonMistakes": [
+        "Importar un archivo que llama app.listen y abrir un puerto en cada prueba.",
+        "Probar solo el status y no el cuerpo cuando el contrato importa.",
+        "Depender de la base de datos de producción durante pruebas."
+      ],
+      "resources": [
+        {
+          "label": "Supertest",
+          "url": "https://github.com/ladjs/supertest"
+        },
+        {
+          "label": "Vitest",
+          "url": "https://vitest.dev/"
+        }
+      ],
+      "related": [
+        "express-app-listen",
+        "express-testing-integration"
+      ]
+    },
+    {
+      "id": "express-testing-integration",
+      "title": "Pruebas de integración, mocks y entorno de test",
+      "category": "typescript-testing",
+      "summary": "Probá routers y servicios combinados usando datos controlados y dependencias sustituidas.",
+      "purpose": "Las pruebas de integración comprueban que varias partes funcionan juntas: rutas, middleware, servicios y acceso a datos. Conviene usar una base de pruebas aislada, limpiar datos entre casos y simular únicamente servicios externos difíciles de controlar. Los tests no deben depender de datos personales ni del entorno de producción.",
+      "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+      "syntax": "beforeEach(prepararDatos);\nafterEach(limpiarDatos);",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Preparar datos por prueba",
+          "description": "Los hooks permiten inicializar un entorno limpio.",
+          "code": "import { beforeEach, afterEach } from \"vitest\";\n\nbeforeEach(async () => {\n  await testDb.novela.deleteMany();\n  await testDb.novela.create({ data: { titulo: \"Overlord\" } });\n});\nafterEach(async () => {\n  await testDb.$disconnect();\n});",
+          "explanation": "El ejemplo ilustra el aislamiento. Adaptá las operaciones al driver o ORM elegido y administrá el ciclo de vida de la conexión."
+        },
+        {
+          "title": "Sustituir un servicio externo",
+          "description": "Un mock evita depender de un proveedor real en cada ejecución.",
+          "code": "import { vi } from \"vitest\";\nvi.mock(\"../src/services/cotizacion.js\", () => ({\n  obtenerCotizacion: vi.fn().mockResolvedValue({ moneda: \"USD\", valor: 1200 })\n}));",
+          "explanation": "El mock controla el resultado y permite probar cómo responde la ruta ante un proveedor estable o ante fallos definidos."
+        }
+      ],
+      "exercise": "Diseñá una prueba de integración que cree un recurso, lo consulte y después lo elimine. Usá una base de test aislada.",
+      "hint": "La base de test no debe compartir credenciales ni registros con producción.",
+      "parameters": [
+        {
+          "name": "beforeEach",
+          "description": "Hook que se ejecuta antes de cada prueba."
+        },
+        {
+          "name": "afterEach",
+          "description": "Hook que se ejecuta después de cada prueba."
+        },
+        {
+          "name": "vi.mock()",
+          "description": "Sustituye un módulo con una implementación simulada en Vitest."
+        }
+      ],
+      "bestPractices": [
+        "Aislá datos de prueba de producción.",
+        "Restaurá mocks y conexiones al terminar.",
+        "Evitá que el orden de ejecución cambie el resultado."
+      ],
+      "commonMistakes": [
+        "Ejecutar pruebas destructivas contra la base real.",
+        "Compartir registros entre pruebas sin limpiar.",
+        "Mockear todas las partes y terminar sin probar la integración real."
+      ],
+      "resources": [
+        {
+          "label": "Vitest mocking",
+          "url": "https://vitest.dev/guide/mocking.html"
+        },
+        {
+          "label": "Supertest",
+          "url": "https://github.com/ladjs/supertest"
+        }
+      ],
+      "related": [
+        "express-testing-supertest",
+        "express-database-integration"
+      ]
+    },
+    {
+      "id": "express-openapi-docs",
+      "title": "Documentar la API con OpenAPI y Swagger UI",
+      "category": "typescript-testing",
+      "summary": "Publicá un contrato legible de endpoints, parámetros, esquemas y respuestas.",
+      "purpose": "OpenAPI es una especificación para describir APIs HTTP. Puede documentar rutas, parámetros, cuerpos, autenticación y respuestas. Swagger UI permite explorar esa documentación desde una interfaz. La documentación debe mantenerse sincronizada con el comportamiento real y no reemplaza la validación de entrada.",
+      "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+      "syntax": "app.use(\"/docs\", swaggerUi.serve, swaggerUi.setup(openapiSpec));",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Definir un documento mínimo",
+          "description": "OpenAPI describe rutas y respuestas mediante un objeto estructurado.",
+          "code": "const openapiSpec = {\n  openapi: \"3.1.0\",\n  info: { title: \"API de novelas\", version: \"1.0.0\" },\n  paths: {\n    \"/api/novelas\": {\n      get: {\n        summary: \"Listar novelas\",\n        responses: { \"200\": { description: \"Colección de novelas\" } }\n      }\n    }\n  }\n};",
+          "explanation": "El objeto contiene metadatos y un path con su operación. Para contratos completos agregá schemas y respuestas detalladas."
+        },
+        {
+          "title": "Publicar Swagger UI",
+          "description": "El paquete swagger-ui-express sirve la interfaz del documento.",
+          "code": "import swaggerUi from \"swagger-ui-express\";\napp.use(\"/docs\", swaggerUi.serve, swaggerUi.setup(openapiSpec));",
+          "explanation": "La ruta /docs presenta la documentación interactiva. En producción evaluá si debe ser pública o protegida."
+        }
+      ],
+      "exercise": "Documentá GET y POST /api/novelas con parámetros, esquema JSON y respuestas 200, 201, 400 y 404.",
+      "hint": "Separá el contrato OpenAPI de la implementación del controlador y mantenelo versionado.",
+      "parameters": [
+        {
+          "name": "openapi",
+          "description": "Versión de la especificación OpenAPI utilizada."
+        },
+        {
+          "name": "paths",
+          "description": "Mapa de rutas y métodos disponibles."
+        },
+        {
+          "name": "responses",
+          "description": "Respuestas HTTP documentadas para cada operación."
+        },
+        {
+          "name": "swaggerUi.setup(spec)",
+          "description": "Configura la interfaz Swagger UI para el documento."
+        }
+      ],
+      "bestPractices": [
+        "Documentá errores y autenticación, no solo el caso exitoso.",
+        "Versioná el contrato junto a los cambios de rutas.",
+        "Comprobá que las respuestas documentadas coincidan con los tests."
+      ],
+      "commonMistakes": [
+        "Publicar documentación que quedó desactualizada.",
+        "Documentar 200 para una ruta que devuelve 201.",
+        "Exponer endpoints internos en documentación pública."
+      ],
+      "resources": [
+        {
+          "label": "OpenAPI Specification",
+          "url": "https://spec.openapis.org/oas/latest.html"
+        },
+        {
+          "label": "swagger-ui-express",
+          "url": "https://github.com/scottie1984/swagger-ui-express"
+        }
+      ],
+      "related": [
+        "express-rest-crud-api",
+        "express-testing-supertest"
+      ]
+    },
+    {
+      "id": "express-graceful-shutdown",
+      "title": "Cierre ordenado y señales del proceso",
+      "category": "typescript-testing",
+      "summary": "Cerrá el servidor y sus recursos cuando Node recibe SIGTERM o SIGINT.",
+      "purpose": "Un apagado ordenado deja de aceptar conexiones nuevas, permite finalizar solicitudes activas y cierra recursos como pools de base de datos. Node ofrece eventos de proceso; el objeto Server de http.Server expone close. En producción, el cierre debe tener un límite de tiempo para evitar procesos bloqueados indefinidamente.",
+      "whenToUse": "Aplicalo cuando necesites robustecer el backend con tipos estáticos, pruebas automatizadas o documentación clara para otros desarrolladores.",
+      "syntax": "process.on(\"SIGTERM\", () => server.close(callback));",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Cerrar el servidor",
+          "description": "El evento de señal permite iniciar el cierre.",
+          "code": "const server = app.listen(port);\n\nfunction cerrar(signal) {\n  console.log(`Recibida señal ${signal}`);\n  server.close(error => {\n    if (error) {\n      console.error(error);\n      process.exitCode = 1;\n    }\n  });\n}\nprocess.on(\"SIGTERM\", () => cerrar(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => cerrar(\"SIGINT\"));",
+          "explanation": "server.close deja de aceptar nuevas conexiones y ejecuta el callback al terminar el cierre del servidor."
+        },
+        {
+          "title": "Cerrar dependencias",
+          "description": "Además del HTTP, liberá pools y recursos propios.",
+          "code": "async function cerrar(signal) {\n  console.log(`Cerrando por ${signal}`);\n  server.close(async error => {\n    try {\n      await db.disconnect();\n      process.exitCode = error ? 1 : 0;\n    } catch (closeError) {\n      console.error(closeError);\n      process.exitCode = 1;\n    }\n  });\n}",
+          "explanation": "Adaptá disconnect al driver real. También conviene agregar un timeout máximo y registrar los recursos que no cerraron."
+        }
+      ],
+      "exercise": "Implementá SIGTERM y SIGINT, cerrá el servidor y desconectá la base de datos sin finalizar el proceso antes de tiempo.",
+      "hint": "El apagado debe coordinar servidor, conexiones, tareas y recursos antes de que termine el proceso.",
+      "parameters": [
+        {
+          "name": "process.on(\"SIGTERM\")",
+          "description": "Escucha la señal usada frecuentemente por plataformas y contenedores para solicitar apagado."
+        },
+        {
+          "name": "server.close(callback)",
+          "description": "Deja de aceptar conexiones nuevas y llama al callback al cerrar el servidor."
+        },
+        {
+          "name": "process.exitCode",
+          "description": "Establece el código de salida del proceso sin terminarlo de forma inmediata."
+        }
+      ],
+      "bestPractices": [
+        "Usá un timeout de apagado como última protección.",
+        "Cerrá la base de datos y otros recursos después de dejar de aceptar requests.",
+        "Hacé que el cierre sea idempotente para evitar ejecutarlo varias veces."
+      ],
+      "commonMistakes": [
+        "Llamar process.exit inmediatamente y cortar respuestas activas.",
+        "Olvidar cerrar pools de base de datos.",
+        "No poner límite de tiempo a un recurso que nunca termina de cerrarse."
+      ],
+      "resources": [
+        {
+          "label": "Node.js process signals",
+          "url": "https://nodejs.org/api/process.html#signal-events"
+        },
+        {
+          "label": "Node.js HTTP server close",
+          "url": "https://nodejs.org/api/http.html#serverclosecallback"
+        }
+      ],
+      "related": [
+        "express-app-listen",
+        "express-deployment"
+      ]
+    },
+    {
+      "id": "express-environment-config",
+      "title": "Variables de entorno y configuración por ambiente",
+      "category": "production-migration",
+      "summary": "Centralizá puerto, secretos y opciones para desarrollo, pruebas y producción.",
+      "purpose": "Las variables de entorno permiten configurar una aplicación sin escribir valores sensibles en el código. Node expone process.env y un paquete como dotenv puede cargar un archivo local durante desarrollo. Los secretos deben almacenarse en el gestor del entorno de despliegue y nunca en el repositorio.",
+      "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+      "syntax": "const port = Number(process.env.PORT) || 3000;\nconst secret = process.env.SESSION_SECRET;",
+      "level": "Inicial",
+      "examples": [
+        {
+          "title": "Leer variables",
+          "description": "Consultá configuración del proceso y validá los valores requeridos.",
+          "code": "const port = Number(process.env.PORT) || 3000;\nconst databaseUrl = process.env.DATABASE_URL;\nif (!databaseUrl) throw new Error(\"Falta DATABASE_URL\");",
+          "explanation": "PORT puede ser asignado por el proveedor. DATABASE_URL debe existir antes de iniciar el backend."
+        },
+        {
+          "title": "Cargar .env en desarrollo",
+          "description": "dotenv permite cargar valores de un archivo local.",
+          "code": "// npm install dotenv\nimport \"dotenv/config\";\n\nconsole.log(process.env.NODE_ENV);\n// .env debe estar en .gitignore",
+          "explanation": "No subas .env. En producción, configurá las variables en la plataforma y evitá depender de un archivo local."
+        }
+      ],
+      "exercise": "Definí PORT, DATABASE_URL y SESSION_SECRET. Indicá cuáles podrían ser públicas y cuáles nunca deben llegar al navegador.",
+      "hint": "process.env devuelve valores de texto o undefined. Validá variables críticas al arrancar.",
+      "parameters": [
+        {
+          "name": "process.env.NAME",
+          "description": "Acceso a variables del entorno del proceso."
+        },
+        {
+          "name": "dotenv/config",
+          "description": "Carga variables desde un archivo .env durante el arranque."
+        },
+        {
+          "name": "NODE_ENV",
+          "description": "Valor convencional para indicar development, test o production."
+        }
+      ],
+      "bestPractices": [
+        "Validá la configuración al iniciar.",
+        "Mantené .env fuera de Git.",
+        "Usá nombres coherentes y documentá variables obligatorias sin sus valores."
+      ],
+      "commonMistakes": [
+        "Subir .env al repositorio.",
+        "Exponer SESSION_SECRET o DATABASE_URL al cliente.",
+        "Asumir que PORT siempre será 3000 en hosting."
+      ],
+      "resources": [
+        {
+          "label": "Node.js Environment Variables",
+          "url": "https://nodejs.org/api/environment_variables.html"
+        },
+        {
+          "label": "dotenv",
+          "url": "https://github.com/motdotla/dotenv"
+        }
+      ],
+      "related": [
+        "express-typescript",
+        "express-deployment",
+        "express-cookies-sessions"
+      ]
+    },
+    {
+      "id": "express-deployment",
+      "title": "Despliegue de Express en un servidor o plataforma cloud",
+      "category": "production-migration",
+      "summary": "Prepará un backend Node para desplegar y escuchá el puerto indicado por el entorno.",
+      "purpose": "Express es un servidor Node.js, por lo que necesita una plataforma que ejecute procesos Node o contenedores. El proceso debe escuchar en el puerto asignado, configurar variables y conectarse a servicios externos. Un hosting de archivos estáticos como GitHub Pages no ejecuta una aplicación Express.",
+      "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+      "syntax": "npm ci\nnpm start",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Script de producción",
+          "description": "Definí un comando start que ejecute el servidor compilado o de producción.",
+          "code": "{\n  \"scripts\": {\n    \"build\": \"tsc\",\n    \"start\": \"node dist/server.js\"\n  }\n}",
+          "explanation": "Si el proyecto usa JavaScript sin compilación, el script puede ejecutar directamente el archivo de entrada. En TypeScript, compilá y ejecutá la salida."
+        },
+        {
+          "title": "Puerto asignado por el host",
+          "description": "Escuchá en 0.0.0.0 cuando la plataforma requiera una interfaz explícita.",
+          "code": "const port = Number(process.env.PORT) || 3000;\nconst server = app.listen(port, \"0.0.0.0\", () => {\n  console.log(`API escuchando en ${port}`);\n});",
+          "explanation": "El host puede asignar PORT y esperar que el proceso acepte conexiones desde fuera del contenedor."
+        }
+      ],
+      "exercise": "Prepará scripts build/start, configurá variables en el proveedor y explicá por qué GitHub Pages no puede ejecutar Express.",
+      "hint": "Express necesita un proceso Node en ejecución; un host estático solo sirve archivos ya generados.",
+      "parameters": [
+        {
+          "name": "npm ci",
+          "description": "Instala dependencias reproducibles a partir del lockfile."
+        },
+        {
+          "name": "npm start",
+          "description": "Ejecuta el script de producción definido en package.json."
+        },
+        {
+          "name": "PORT",
+          "description": "Puerto asignado por el entorno."
+        },
+        {
+          "name": "0.0.0.0",
+          "description": "Interfaz que permite recibir conexiones externas en algunos entornos."
+        }
+      ],
+      "bestPractices": [
+        "Usá npm ci en pipelines de instalación reproducible.",
+        "Separá variables y secretos por ambiente.",
+        "Probá el servidor después de desplegar mediante un health endpoint."
+      ],
+      "commonMistakes": [
+        "Usar GitHub Pages para ejecutar un servidor Node persistente.",
+        "Fijar puerto en producción sin leer PORT.",
+        "Desplegar dependencias de desarrollo como requisito de runtime sin necesidad."
+      ],
+      "resources": [
+        {
+          "label": "Express — Production Best Practices",
+          "url": "https://expressjs.com/en/advanced/best-practice-performance.html"
+        },
+        {
+          "label": "Node.js deployment",
+          "url": "https://nodejs.org/en/learn/getting-started/deploying-nodejs-applications"
+        }
+      ],
+      "related": [
+        "express-environment-config",
+        "express-graceful-shutdown",
+        "express-trust-proxy"
+      ]
+    },
+    {
+      "id": "express-production-performance",
+      "title": "Rendimiento y buenas prácticas de producción",
+      "category": "production-migration",
+      "summary": "Mejorá compresión, caché, conexiones y comportamiento del servidor bajo carga.",
+      "purpose": "El rendimiento de Express depende del código de rutas, las operaciones I/O, el uso de CPU, la configuración del runtime y la infraestructura. Las recomendaciones oficiales incluyen NODE_ENV=production, compresión cuando corresponde, evitar trabajo síncrono en el request path, manejar errores y usar un proxy inverso para despliegues adecuados.",
+      "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+      "syntax": "NODE_ENV=production\napp.use(compression());",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Compresión HTTP",
+          "description": "El middleware compression puede comprimir respuestas compatibles.",
+          "code": "import compression from \"compression\";\napp.use(compression());",
+          "explanation": "La compresión reduce bytes de texto, pero consume CPU. En ciertos despliegues el proxy inverso puede encargarse de esta tarea."
+        },
+        {
+          "title": "Evitar trabajo síncrono",
+          "description": "Una operación síncrona pesada bloquea el event loop.",
+          "code": "// Evitá en un handler concurrido:\nconst data = readFileSync(\"./large.json\", \"utf8\");\n\n// Preferí una API asíncrona:\nconst data = await readFile(\"./large.json\", \"utf8\");",
+          "explanation": "La operación síncrona bloquea el hilo de JavaScript mientras trabaja. Usá APIs asíncronas para I/O en rutas concurridas."
+        }
+      ],
+      "exercise": "Auditá una ruta lenta: identificá I/O síncrono, llamadas externas, payloads grandes y oportunidades de caché.",
+      "hint": "Medí antes de optimizar. NODE_ENV=production activa comportamientos orientados a producción en varias dependencias.",
+      "parameters": [
+        {
+          "name": "NODE_ENV=production",
+          "description": "Activa configuraciones de producción en Express y otras dependencias."
+        },
+        {
+          "name": "compression()",
+          "description": "Middleware que negocia compresión HTTP compatible."
+        },
+        {
+          "name": "Cache-Control",
+          "description": "Header que define reglas de caché de una respuesta."
+        }
+      ],
+      "bestPractices": [
+        "Evitá operaciones síncronas largas dentro de rutas.",
+        "Usá pools de conexiones y límites de entrada.",
+        "Medí latencia, uso de memoria y errores en el entorno real."
+      ],
+      "commonMistakes": [
+        "Agregar compresión dos veces cuando el proxy ya lo hace.",
+        "Bloquear el event loop con operaciones sync.",
+        "Optimizar únicamente con intuición sin métricas."
+      ],
+      "resources": [
+        {
+          "label": "Express — Performance Best Practices",
+          "url": "https://expressjs.com/en/advanced/best-practice-performance.html"
+        },
+        {
+          "label": "Express — Production Best Practices",
+          "url": "https://expressjs.com/en/advanced/best-practice-production.html"
+        }
+      ],
+      "related": [
+        "express-server-logging",
+        "express-deployment",
+        "express-rate-limiting"
+      ]
+    },
+    {
+      "id": "express-migration-v4-v5",
+      "title": "Migrar de Express 4 a Express 5",
+      "category": "production-migration",
+      "summary": "Reconocé cambios incompatibles y actualizá código antiguo de forma controlada.",
+      "purpose": "Express 5 mantiene gran parte de la API anterior, pero introduce cambios que pueden romper compatibilidad. Entre los más importantes: async handlers reenvían rechazos automáticamente; los comodines de ruta necesitan nombre; los segmentos opcionales usan llaves; req.body puede ser undefined si no se parseó; req.query es un getter y su parser predeterminado cambió a simple; express.urlencoded usa extended false por defecto.",
+      "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+      "syntax": "npm install express@5\nnpm test",
+      "level": "Avanzado",
+      "examples": [
+        {
+          "title": "Actualizar rutas wildcard",
+          "description": "La sintaxis comodín antigua necesita un nombre.",
+          "code": "// Express 4\napp.get(\"/*\", handler);\n\n// Express 5\napp.get(\"/*splat\", handler);\n// Para incluir también /:\napp.get(\"/{*splat}\", handler);",
+          "explanation": "Express 5 exige nombre para el comodín. La variante entre llaves también incluye la raíz."
+        },
+        {
+          "title": "Revisar body y urlencoded",
+          "description": "No asumas que body existe ni que el parser extendido está activo.",
+          "code": "app.use(express.urlencoded({ extended: false }));\napp.use(express.json());\n\napp.post(\"/datos\", (req, res) => {\n  const body = req.body ?? {};\n  res.json({ recibido: body });\n});",
+          "explanation": "La propiedad req.body puede ser undefined si no hubo parser aplicable. Configurá extended explícitamente si tu aplicación requiere el comportamiento anterior."
+        },
+        {
+          "title": "Simplificar async handlers",
+          "description": "En Express 5 los rechazos de async handlers llegan al middleware de error.",
+          "code": "app.get(\"/novelas\", async (_req, res) => {\n  const novelas = await obtenerNovelas();\n  res.json(novelas);\n});",
+          "explanation": "Podés quitar wrappers catch(next) genéricos si ya no aportan lógica, pero revisá callbacks y errores fuera de una promesa devuelta."
+        }
+      ],
+      "exercise": "Auditá una aplicación Express 4 y prepará una lista de cambios antes de actualizar la dependencia. Incluí rutas, body, query y async handlers.",
+      "hint": "No actualices solo package.json. Revisá la guía oficial y ejecutá pruebas de regresión.",
+      "parameters": [
+        {
+          "name": "Path syntax",
+          "description": "Express 5 requiere comodines nombrados y sintaxis de opcionales con llaves."
+        },
+        {
+          "name": "Async error forwarding",
+          "description": "Handlers que devuelven promesas propagan rechazos automáticamente."
+        },
+        {
+          "name": "req.body",
+          "description": "Puede ser undefined si ningún parser procesó el cuerpo."
+        },
+        {
+          "name": "req.query",
+          "description": "Es un getter y el parser predeterminado es simple."
+        }
+      ],
+      "bestPractices": [
+        "Actualizá una rama separada y ejecutá pruebas.",
+        "Migrá rutas y parsers de forma explícita.",
+        "Revisá middleware de terceros compatible con Express 5."
+      ],
+      "commonMistakes": [
+        "Cambiar solo la versión de Express y asumir compatibilidad completa.",
+        "Dejar paths /* sin nombre.",
+        "Seguir esperando req.body igual a {} cuando no hubo parser.",
+        "Conservar wrappers obsoletos sin verificar sus efectos."
+      ],
+      "resources": [
+        {
+          "label": "Upgrade to Express 5",
+          "url": "https://expressjs.com/en/guide/migrating-5.html"
+        },
+        {
+          "label": "Express 5 API",
+          "url": "https://expressjs.com/en/5x/api.html"
+        }
+      ],
+      "related": [
+        "express-route-patterns-v5",
+        "express-async-handlers",
+        "express-body-parsing"
+      ]
+    },
+    {
+      "id": "express-nextjs-integration",
+      "title": "Usar Express junto a Next.js y otros frontends",
+      "category": "production-migration",
+      "summary": "Conectá una aplicación frontend con una API Express y elegí cómo separar las responsabilidades.",
+      "purpose": "Express puede funcionar como backend independiente de una aplicación React, Vue o Next.js. Una opción común es ejecutar frontend y API como servicios separados y comunicarlos mediante fetch. Si están en distintos orígenes, configurá CORS; si comparten dominio, un proxy inverso puede enrutar /api al servidor Express. Next.js también permite un custom server Express, pero no suele ser necesario y puede quitar optimizaciones automáticas del framework.",
+      "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+      "syntax": "Frontend → fetch(\"/api/novelas\") → Express API",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Frontend y API separados",
+          "description": "Un cliente Next.js puede consultar la API Express con fetch.",
+          "code": "// En una página o componente del frontend\nconst response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/novelas`);\nif (!response.ok) throw new Error(\"No se pudo cargar el catálogo\");\nconst novelas = await response.json();",
+          "explanation": "La URL pública de la API puede exponerse al cliente; las claves secretas del backend nunca deben formar parte de NEXT_PUBLIC variables."
+        },
+        {
+          "title": "Mismo dominio mediante proxy",
+          "description": "Un proxy inverso puede enviar /api a Express y el resto al frontend.",
+          "code": "// Ejemplo conceptual de routing:\n// /api/* → servicio Express\n// /*     → aplicación Next.js",
+          "explanation": "El proxy permite evitar CORS entre ambos servicios si el navegador ve el mismo origen. La configuración depende del proveedor de hosting."
+        }
+      ],
+      "exercise": "Diseñá la arquitectura de un catálogo con Next.js como frontend y Express como API independiente. Decidí qué rutas maneja cada servicio.",
+      "hint": "No necesitás un custom server Express para que Next.js consuma una API. Empezá con servicios separados y comunicación HTTP clara.",
+      "parameters": [
+        {
+          "name": "NEXT_PUBLIC_API_URL",
+          "description": "URL pública del backend cuando el navegador necesita conocer el endpoint."
+        },
+        {
+          "name": "fetch()",
+          "description": "API HTTP usada por frontend y servidor para consultar Express."
+        },
+        {
+          "name": "Reverse proxy",
+          "description": "Componente que enruta solicitudes hacia frontend o backend según host/path."
+        }
+      ],
+      "bestPractices": [
+        "Mantené Next.js y Express como servicios separados si no necesitás compartir proceso.",
+        "Protegé endpoints del backend independientemente del frontend.",
+        "Usá CORS solo si los orígenes lo requieren."
+      ],
+      "commonMistakes": [
+        "Poner tokens privados en variables NEXT_PUBLIC_.",
+        "Suponer que CORS autentica al usuario.",
+        "Crear un custom server para Next.js sin necesitarlo y perder optimizaciones."
+      ],
+      "resources": [
+        {
+          "label": "Next.js — Custom Server",
+          "url": "https://nextjs.org/docs/pages/building-your-application/configuring/custom-server"
+        },
+        {
+          "label": "Express — CORS middleware",
+          "url": "https://expressjs.com/en/resources/middleware/cors.html"
+        }
+      ],
+      "related": [
+        "express-cors",
+        "express-rest-crud-api",
+        "express-deployment"
+      ]
+    },
+    {
+      "id": "express-project-architecture",
+      "title": "Arquitectura de proyecto: routes, controllers, services y repositories",
+      "category": "production-migration",
+      "summary": "Organizá una aplicación Express por responsabilidades para reducir acoplamiento y facilitar pruebas.",
+      "purpose": "Express no impone una estructura de carpetas. Una arquitectura habitual separa el punto de entrada, la creación de app, rutas, controladores, servicios de negocio, repositorios, validadores y middleware. La separación evita que los handlers HTTP acumulen consultas, validación y reglas de negocio.",
+      "whenToUse": "Aplicalo al preparar una aplicación Express para distintos entornos, producción o convivencia con otras tecnologías frontend y backend.",
+      "syntax": "src/\n  app.js\n  server.js\n  routes/\n  controllers/\n  services/\n  repositories/\n  middlewares/",
+      "level": "Intermedio",
+      "examples": [
+        {
+          "title": "Estructura de carpetas",
+          "description": "Una aplicación mediana puede separar los módulos por responsabilidad.",
+          "code": "src/\n  app.js\n  server.js\n  routes/novelas.routes.js\n  controllers/novelas.controller.js\n  services/novelas.service.js\n  repositories/novelas.repository.js\n  middlewares/error-handler.js\n  validators/novelas.schema.js",
+          "explanation": "Cada capa tiene una tarea principal. No es obligatorio reproducir cada carpeta en proyectos pequeños."
+        },
+        {
+          "title": "Ruta delgada",
+          "description": "El router conecta método, validación y controlador.",
+          "code": "router.post(\"/\", validarCrearNovela, novelasController.crear);\n\n// Controller: traduce HTTP\n// Service: reglas de negocio\n// Repository: acceso a base de datos",
+          "explanation": "La ruta describe el endpoint y delega las tareas. Así podés probar el servicio sin construir una solicitud HTTP."
+        }
+      ],
+      "exercise": "Tomá un CRUD de novelas y separalo en router, controller, service, repository, validator y middleware.",
+      "hint": "No crees capas vacías por obligación. Separá cuando una responsabilidad tiene suficiente lógica para vivir por sí misma.",
+      "parameters": [
+        {
+          "name": "routes",
+          "description": "Declara paths y métodos HTTP."
+        },
+        {
+          "name": "controllers",
+          "description": "Convierte request y resultado de negocio en respuestas HTTP."
+        },
+        {
+          "name": "services",
+          "description": "Contiene reglas de negocio y coordinación de operaciones."
+        },
+        {
+          "name": "repositories",
+          "description": "Encapsula consultas a la base de datos."
+        },
+        {
+          "name": "validators",
+          "description": "Comprueba entrada externa mediante esquemas."
+        }
+      ],
+      "bestPractices": [
+        "Mantené dependencias en una dirección clara.",
+        "Evitá que los repositorios conozcan Express req/res.",
+        "Escribí servicios que se puedan probar sin abrir un servidor."
+      ],
+      "commonMistakes": [
+        "Poner toda la lógica en un archivo server.js.",
+        "Hacer que el service dependa de req y res.",
+        "Crear diez capas para una aplicación mínima sin necesidad."
+      ],
+      "resources": [
+        {
+          "label": "Express — FAQ and application structure",
+          "url": "https://expressjs.com/en/guide/faq.html"
+        },
+        {
+          "label": "Express — Writing middleware",
+          "url": "https://expressjs.com/en/guide/writing-middleware.html"
+        }
+      ],
+      "related": [
+        "express-routers",
+        "express-database-integration",
+        "express-testing-supertest"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "El recorrido de una solicitud en Express",
+    "summary": "Express procesa cada solicitud mediante una cadena ordenada de middleware y rutas; cada función debe responder o ceder el control.",
+    "steps": [
+      [
+        "Llega la petición HTTP",
+        "Express recibe método, URL, cabeceras y cuerpo."
+      ],
+      [
+        "Middleware de aplicación",
+        "Se pueden analizar JSON, registrar la solicitud, habilitar CORS o aplicar autenticación."
+      ],
+      [
+        "Router y controlador",
+        "La ruta valida parámetros, ejecuta la lógica y coordina acceso a servicios o persistencia."
+      ],
+      [
+        "Respuesta o middleware de error",
+        "Se devuelve estado, cabeceras y cuerpo; los errores pasan a manejadores de error."
+      ]
+    ],
+    "note": "Un middleware que no termina la respuesta debe llamar next(). En Express 5 los handlers que devuelven Promises propagan rechazos al flujo de errores."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "express-routes-basics",
+      "express-middleware",
+      "express-rest-crud-api"
+    ],
+    "execution": {
+      "kind": "server-runtime",
+      "label": "Servidor Node.js",
+      "description": "Express es un framework backend que procesa solicitudes HTTP en Node.js. Los navegadores consumen las rutas de la API; no ejecutan Express como código cliente."
+    },
+    "compatibility": {
+      "kind": "not-browser",
+      "summary": "No aplica al runtime del navegador: Express 5 funciona en Node.js, no en Chrome, Firefox o Safari.",
+      "note": "Express 5 requiere Node.js 18 o superior. La interfaz que consume la API se ejecuta en los navegadores y debe implementar Fetch, CORS y el contrato HTTP correspondiente."
+    },
+    "advantages": [
+      "Permite organizar rutas, middleware y respuestas HTTP.",
+      "El estilo minimalista permite elegir base de datos y herramientas complementarias.",
+      "Express 5 propaga rechazos de handlers que devuelven Promise al flujo de errores."
+    ],
+    "limitations": [
+      "No incluye un ORM ni validación de negocio de forma automática.",
+      "El orden de middleware y el cierre de respuestas deben controlarse.",
+      "La seguridad, autenticación, logs, rate limit y despliegue requieren configuración explícita."
+    ],
+    "complements": [
+      [
+        "nodejs",
+        "Runtime donde se ejecuta Express."
+      ],
+      [
+        "apis",
+        "Diseñar contratos HTTP y REST."
+      ],
+      [
+        "typescript",
+        "Tipar handlers y middleware."
+      ],
+      [
+        "sql-postgres",
+        "Persistencia relacional."
+      ],
+      [
+        "mongodb",
+        "Persistencia documental."
+      ],
+      [
+        "testing",
+        "Pruebas de rutas y respuestas HTTP."
+      ]
+    ],
+    "docs": [
+      [
+        "Express 5 — documentación",
+        "https://expressjs.com/en/5x/"
+      ],
+      [
+        "Express — compatibilidad de versiones",
+        "https://expressjs.com/en/support/"
+      ]
+    ]
+  }
+}

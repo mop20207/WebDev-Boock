@@ -1,5 +1,5 @@
 import { cp, mkdir, rm } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { relative, resolve, sep } from 'node:path';
 
 const root = process.cwd();
 const output = resolve(root, 'www');
@@ -24,7 +24,18 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
   await cp(
     resolve(root, entry.name),
     resolve(output, entry.name),
-    { recursive: true, force: true }
+    {
+      recursive: true,
+      force: true,
+      filter(sourcePath) {
+        const relativePath = relative(root, sourcePath).split(sep).join("/");
+        // El catálogo monolítico y los paquetes completos viven en GitHub,
+        // no dentro de la APK. El núcleo incluye solo manifiestos e índices.
+        if (relativePath === "data/tools.json") return false;
+        if (relativePath.startsWith("modules/libraries/packages/")) return false;
+        return true;
+      }
+    }
   );
 }
 

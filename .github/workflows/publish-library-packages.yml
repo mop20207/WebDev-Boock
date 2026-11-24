@@ -1,0 +1,52 @@
+name: Publish technology library packages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/tools.json'
+      - 'scripts/generate-library-packages.mjs'
+      - 'scripts/validate-library-packages.mjs'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: technology-library-packages-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Generate and publish technology packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate technology packages
+        run: node scripts/generate-library-packages.mjs
+
+      - name: Validate package contents, hashes and references
+        run: node scripts/validate-library-packages.mjs
+
+      - name: Commit generated packages when they changed
+        shell: bash
+        run: |
+          if git diff --quiet -- modules/libraries; then
+            echo "Los paquetes ya corresponden a data/tools.json."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add modules/libraries
+          git commit -m "chore(libraries): refresh technology packages"
+          git push origin HEAD:main

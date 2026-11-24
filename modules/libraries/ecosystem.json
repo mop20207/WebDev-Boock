@@ -1,0 +1,2842 @@
+{
+  "schemaVersion": 1,
+  "tools": [
+    {
+      "id": "terminal",
+      "title": "Terminal Linux",
+      "shortTitle": "Terminal",
+      "accent": "terminal",
+      "symbol": "$_",
+      "eyebrow": "LINUX / LÍNEA DE COMANDOS",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Una guía práctica para navegar por el sistema, organizar archivos, buscar información, administrar paquetes y automatizar tareas.",
+      "articles": [
+        {
+          "id": "terminal-que-es",
+          "title": "¿Qué es una terminal?",
+          "summary": "Qué es una terminal, qué es una shell y por qué se utiliza para trabajar con un sistema.",
+          "category": "introduccion"
+        },
+        {
+          "id": "terminal-ayuda",
+          "title": "Ayuda y manuales: --help y man",
+          "summary": "Aprendé a consultar las opciones de un comando sin memorizar toda su sintaxis.",
+          "category": "introduccion"
+        },
+        {
+          "id": "terminal-wsl",
+          "title": "Instalar Linux con WSL2 en Windows",
+          "summary": "WSL permite ejecutar una distribución Linux integrada en Windows.",
+          "category": "instalacion"
+        },
+        {
+          "id": "terminal-shell",
+          "title": "Shell, prompt y comandos básicos",
+          "summary": "Reconocé el intérprete de comandos, el prompt y las variables de entorno más habituales.",
+          "category": "instalacion"
+        },
+        {
+          "id": "terminal-pwd-cd",
+          "title": "Navegar entre carpetas con pwd y cd",
+          "summary": "Consultá tu ubicación actual y cambiá de directorio mediante rutas absolutas o relativas.",
+          "category": "archivos"
+        },
+        {
+          "id": "terminal-ls",
+          "title": "Listar archivos con ls",
+          "summary": "Mostrá el contenido de una carpeta y revisá permisos, tamaños y archivos ocultos.",
+          "category": "archivos"
+        },
+        {
+          "id": "terminal-crear",
+          "title": "Crear archivos y carpetas con mkdir y touch",
+          "summary": "Creá directorios y archivos vacíos directamente desde la consola.",
+          "category": "archivos"
+        },
+        {
+          "id": "terminal-copiar-mover",
+          "title": "Copiar, mover y eliminar con cp, mv y rm",
+          "summary": "Organizá archivos copiando, moviendo, renombrando o eliminando elementos.",
+          "category": "archivos"
+        },
+        {
+          "id": "terminal-leer",
+          "title": "Leer archivos con cat, less y head",
+          "summary": "Inspeccioná archivos de texto desde la terminal sin abrir un editor gráfico.",
+          "category": "archivos"
+        },
+        {
+          "id": "terminal-grep",
+          "title": "Buscar texto con grep",
+          "summary": "Localizá palabras o patrones dentro de archivos y resultados de otros comandos.",
+          "category": "manejo"
+        },
+        {
+          "id": "terminal-tuberias",
+          "title": "Tuberías y redirecciones",
+          "summary": "Conectá la salida de un comando con otro y guardá resultados en archivos.",
+          "category": "manejo"
+        },
+        {
+          "id": "terminal-historial",
+          "title": "Historial y alias",
+          "summary": "Recuperá comandos anteriores y creá atajos para tareas repetitivas.",
+          "category": "manejo"
+        },
+        {
+          "id": "terminal-apt-sudo",
+          "title": "Administrar paquetes y permisos con APT y sudo",
+          "summary": "Instalá paquetes y entendé cuándo una operación requiere permisos de administrador.",
+          "category": "administracion"
+        },
+        {
+          "id": "terminal-ufw",
+          "title": "Firewall básico con UFW",
+          "summary": "Consultá y configurá reglas básicas de firewall con UFW.",
+          "category": "seguridad"
+        },
+        {
+          "id": "terminal-imagemagick",
+          "title": "Procesar imágenes con ImageMagick",
+          "summary": "Consultá dimensiones, redimensioná y convertí imágenes desde la terminal.",
+          "category": "multimedia"
+        },
+        {
+          "id": "terminal-ffmpeg",
+          "title": "Convertir audio y video con FFmpeg",
+          "summary": "Inspeccioná archivos multimedia y convertí formatos desde la línea de comandos.",
+          "category": "multimedia"
+        }
+      ]
+    },
+    {
+      "id": "git",
+      "title": "Git y GitHub",
+      "shortTitle": "Git",
+      "accent": "git",
+      "symbol": "⑂",
+      "eyebrow": "CONTROL DE VERSIONES",
+      "level": "Inicial a intermedio",
+      "syntaxLanguage": "",
+      "description": "Aprendé a crear repositorios, guardar versiones, trabajar con ramas y compartir tus proyectos en GitHub.",
+      "articles": [
+        {
+          "id": "git-que-es",
+          "title": "¿Qué es Git?",
+          "summary": "Conocé el control de versiones y cómo permite conservar el historial de un proyecto.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "git-config",
+          "title": "Configurar nombre y correo",
+          "summary": "Definí la identidad que Git guardará en los nuevos commits.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "git-github",
+          "title": "Git y GitHub: diferencias",
+          "summary": "Diferenciá la herramienta de control de versiones de la plataforma colaborativa.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "git-init",
+          "title": "Crear un repositorio con git init",
+          "summary": "Inicializá el historial de versiones en una carpeta de proyecto.",
+          "category": "primeros-pasos"
+        },
+        {
+          "id": "git-add-commit",
+          "title": "Preparar y guardar cambios: add y commit",
+          "summary": "Seleccioná cambios y registrá una versión nueva del proyecto.",
+          "category": "primeros-pasos"
+        },
+        {
+          "id": "git-log-diff",
+          "title": "Consultar historial y diferencias",
+          "summary": "Revisá commits anteriores y compará cambios del proyecto.",
+          "category": "primeros-pasos"
+        },
+        {
+          "id": "git-remoto",
+          "title": "Clonar y conectar repositorios remotos",
+          "summary": "Descargá un repositorio o configurá la conexión con un servidor remoto.",
+          "category": "primeros-pasos"
+        },
+        {
+          "id": "git-branch",
+          "title": "Crear y cambiar de ramas",
+          "summary": "Desarrollá funciones o correcciones en líneas de trabajo separadas.",
+          "category": "ramas"
+        },
+        {
+          "id": "git-merge",
+          "title": "Fusionar ramas y resolver conflictos",
+          "summary": "Integrá cambios de otra rama y entendé cómo resolver conflictos.",
+          "category": "ramas"
+        },
+        {
+          "id": "git-push-pull",
+          "title": "Sincronizar cambios con push, pull y fetch",
+          "summary": "Publicá commits locales y descargá cambios desde el repositorio remoto.",
+          "category": "colaboracion"
+        },
+        {
+          "id": "git-pull-request",
+          "title": "Colaborar mediante pull requests",
+          "summary": "Proponé cambios en GitHub para revisarlos antes de integrarlos.",
+          "category": "colaboracion"
+        },
+        {
+          "id": "gitignore",
+          "title": "Ignorar archivos con .gitignore",
+          "summary": "Evitá incluir dependencias generadas, archivos temporales y configuraciones privadas.",
+          "category": "colaboracion"
+        }
+      ]
+    },
+    {
+      "id": "npm",
+      "title": "NPM y paquetes",
+      "shortTitle": "NPM",
+      "accent": "npm",
+      "symbol": "npm",
+      "eyebrow": "ECOSISTEMA JAVASCRIPT",
+      "level": "Inicial a intermedio",
+      "syntaxLanguage": "",
+      "description": "Aprendé a trabajar con Node.js, NPM, package.json y las herramientas del ecosistema JavaScript.",
+      "articles": [
+        {
+          "id": "npm-que-es",
+          "title": "¿Qué es NPM?",
+          "summary": "Conocé el gestor de paquetes y su función en el ecosistema de JavaScript.",
+          "category": "introduccion"
+        },
+        {
+          "id": "npm-node",
+          "title": "Instalar Node.js y administrar versiones",
+          "summary": "Node.js ejecuta JavaScript fuera del navegador y NVM ayuda a cambiar entre versiones.",
+          "category": "introduccion"
+        },
+        {
+          "id": "npm-pnpm",
+          "title": "NPM y PNPM: gestores de paquetes",
+          "summary": "Compará NPM con PNPM y entendé por qué un proyecto elige un gestor concreto.",
+          "category": "introduccion"
+        },
+        {
+          "id": "npm-global-local",
+          "title": "Dependencias locales y globales",
+          "summary": "Diferenciá los paquetes instalados para un proyecto de las herramientas globales.",
+          "category": "introduccion"
+        },
+        {
+          "id": "npm-permisos",
+          "title": "Resolver problemas de permisos de NPM",
+          "summary": "Identificá errores de permisos en instalaciones y evitá soluciones inseguras.",
+          "category": "introduccion"
+        },
+        {
+          "id": "npm-init",
+          "title": "Crear un proyecto con npm init",
+          "summary": "Inicializá un proyecto y generá el archivo package.json.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-install",
+          "title": "Instalar y quitar paquetes",
+          "summary": "Agregá paquetes a un proyecto y mantené registradas sus dependencias.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-package-json",
+          "title": "El archivo package.json",
+          "summary": "Entendé los metadatos, scripts y dependencias que describen un proyecto.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-update",
+          "title": "Actualizar dependencias",
+          "summary": "Detectá paquetes desactualizados y aplicá actualizaciones dentro de los rangos configurados.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-scripts",
+          "title": "Scripts de NPM",
+          "summary": "Definí tareas reutilizables para arrancar, probar o construir un proyecto.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-node-modules",
+          "title": "node_modules y package-lock.json",
+          "summary": "Comprendé dónde se instalan las dependencias y cómo se reproduce el árbol de paquetes.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-npx",
+          "title": "Ejecutar herramientas con npx",
+          "summary": "Ejecutá herramientas locales o paquetes sin instalar siempre comandos globales.",
+          "category": "administracion"
+        },
+        {
+          "id": "npm-semver",
+          "title": "Versionado semántico",
+          "summary": "Interpretá MAJOR.MINOR.PATCH y los rangos de versiones usados por las dependencias.",
+          "category": "administracion"
+        }
+      ]
+    },
+    {
+      "id": "react",
+      "title": "React",
+      "shortTitle": "React",
+      "accent": "react",
+      "symbol": "⚛",
+      "eyebrow": "FRONTEND / INTERFACES",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Componentes, JSX, props, estado y Hooks.",
+      "articles": [
+        {
+          "id": "react-que-es",
+          "title": "¿Qué es React y cómo funciona?",
+          "summary": "Comprendé React, el renderizado declarativo, los componentes y el flujo básico de una aplicación.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "react-jsx",
+          "title": "JSX: escribir marcado dentro de JavaScript",
+          "summary": "Aprendé expresiones, atributos, fragmentos, listas y renderizado condicional con JSX.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "react-props",
+          "title": "Props: pasar información entre componentes",
+          "summary": "Dominá props, desestructuración, valores predeterminados, children y composición.",
+          "category": "intermedio"
+        },
+        {
+          "id": "react-state",
+          "title": "Estado con useState",
+          "summary": "Aprendé a crear, actualizar y organizar estado con useState sin mutar objetos ni arreglos.",
+          "category": "intermedio"
+        },
+        {
+          "id": "react-useeffect",
+          "title": "useEffect: sincronizar con sistemas externos",
+          "summary": "Comprendé efectos, dependencias, limpieza, temporizadores y solicitudes de datos.",
+          "category": "avanzado"
+        },
+        {
+          "id": "react-usecontext",
+          "title": "useContext: compartir información entre componentes",
+          "summary": "Aprendé a crear contextos, ofrecer valores con Provider y leerlos desde componentes descendientes.",
+          "category": "avanzado"
+        }
+      ]
+    },
+    {
+      "id": "webcomponents",
+      "title": "Web Components",
+      "shortTitle": "Web Components",
+      "accent": "webcomponents",
+      "symbol": "◇",
+      "eyebrow": "FRONTEND / ESTÁNDARES WEB",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Custom Elements, Shadow DOM, templates, slots y eventos.",
+      "articles": [
+        {
+          "id": "wc-que-son",
+          "title": "¿Qué son los Web Components?",
+          "summary": "Creá etiquetas HTML propias y reutilizables con Custom Elements, usando APIs nativas del navegador.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "wc-ciclo-vida",
+          "title": "Ciclo de vida de los Custom Elements",
+          "summary": "Respondé a la conexión, desconexión, adopción y cambios de atributos con callbacks del navegador.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "wc-shadow-dom",
+          "title": "Shadow DOM: encapsular estructura y estilos",
+          "summary": "Adjuntá un árbol DOM interno para aislar el marcado y los estilos de un componente.",
+          "category": "intermedio"
+        },
+        {
+          "id": "wc-templates",
+          "title": "HTML Templates: reutilizar estructuras",
+          "summary": "Definí fragmentos HTML inertes con template y cloná su contenido cuando lo necesites.",
+          "category": "intermedio"
+        },
+        {
+          "id": "wc-slots",
+          "title": "Slots: componer contenido desde afuera",
+          "summary": "Definí espacios de contenido en Shadow DOM y permití que quien usa el componente proporcione sus propios nodos.",
+          "category": "avanzado"
+        },
+        {
+          "id": "wc-eventos",
+          "title": "Eventos personalizados con CustomEvent",
+          "summary": "Comunicá acciones y datos desde un componente hacia la página mediante CustomEvent y dispatchEvent.",
+          "category": "avanzado"
+        }
+      ]
+    },
+    {
+      "id": "vuejs",
+      "title": "Vue.js",
+      "shortTitle": "Vue.js",
+      "accent": "vuejs",
+      "symbol": "V",
+      "eyebrow": "FRONTEND / INTERFACES",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Plantillas, directivas, reactividad, componentes y Composition API.",
+      "articles": [
+        {
+          "id": "vue-que-es",
+          "title": "¿Qué es Vue.js y cómo funciona?",
+          "summary": "Comprendé Vue 3, el renderizado declarativo, la reactividad y las dos formas principales de escribir componentes.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "vue-template",
+          "title": "Plantillas de Vue: interpolación y atributos",
+          "summary": "Dominá la interpolación, expresiones, v-bind, atributos dinámicos y el uso seguro de contenido HTML.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "vue-directivas",
+          "title": "Directivas de Vue: v-if, v-show, v-bind y v-on",
+          "summary": "Controlá la presencia de elementos, atributos, clases y eventos con las directivas esenciales.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "vue-listas",
+          "title": "Listas con v-for y claves key",
+          "summary": "Renderizá arreglos y objetos, utilizá keys estables y filtrá colecciones con propiedades computadas.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "vue-ref",
+          "title": "ref(): crear estado reactivo",
+          "summary": "Creá y actualizá valores reactivos primitivos, objetos y arreglos mediante referencias ref.",
+          "category": "intermedio"
+        },
+        {
+          "id": "vue-reactive",
+          "title": "reactive(): objetos reactivos y proxies",
+          "summary": "Agrupá estado en objetos reactivos y aprendé a evitar la pérdida de reactividad al desestructurar propiedades.",
+          "category": "intermedio"
+        },
+        {
+          "id": "vue-computed",
+          "title": "computed(): propiedades computadas",
+          "summary": "Calculá valores derivados con caché reactiva y distinguí computed de métodos y watchers.",
+          "category": "intermedio"
+        },
+        {
+          "id": "vue-watchers",
+          "title": "watch y watchEffect: observar cambios",
+          "summary": "Ejecutá efectos secundarios cuando cambian fuentes reactivas y limpiá solicitudes o suscripciones anteriores.",
+          "category": "intermedio"
+        },
+        {
+          "id": "vue-forms",
+          "title": "Formularios con v-model",
+          "summary": "Sincronizá inputs, checkboxes, radios, selects y componentes personalizados con el estado de Vue.",
+          "category": "intermedio"
+        },
+        {
+          "id": "vue-componentes",
+          "title": "Componentes y Single-File Components (.vue)",
+          "summary": "Organizá interfaces en archivos .vue, usá script setup, templates, estilos y componentes reutilizables.",
+          "category": "avanzado"
+        },
+        {
+          "id": "vue-props",
+          "title": "Props: enviar datos al componente hijo",
+          "summary": "Declarà props, validá tipos, asigná valores por defecto y respetá el flujo de datos unidireccional.",
+          "category": "avanzado"
+        },
+        {
+          "id": "vue-emits",
+          "title": "Eventos de componentes con defineEmits",
+          "summary": "Declarà los eventos que emite un hijo, enviá payloads y conectá acciones con el componente padre.",
+          "category": "avanzado"
+        },
+        {
+          "id": "vue-slots",
+          "title": "Slots: componer contenido entre componentes",
+          "summary": "Usá slots predeterminados, nombrados y scoped slots para que el padre controle el contenido de un componente hijo.",
+          "category": "avanzado"
+        },
+        {
+          "id": "vue-lifecycle",
+          "title": "Ciclo de vida y hooks de Vue",
+          "summary": "Entendé cuándo se crea, monta, actualiza y desmonta un componente y dónde registrar efectos del DOM.",
+          "category": "avanzado"
+        },
+        {
+          "id": "vue-composables",
+          "title": "Composables: reutilizar lógica con Composition API",
+          "summary": "Extraé estado y lógica reutilizable en funciones use... que aprovechan reactividad y lifecycle hooks.",
+          "category": "avanzado"
+        }
+      ]
+    },
+    {
+      "id": "nodejs",
+      "title": "Node.js",
+      "shortTitle": "Node.js",
+      "accent": "nodejs",
+      "symbol": "⬢",
+      "eyebrow": "BACKEND / JAVASCRIPT",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "JavaScript en el servidor, módulos, archivos, procesos, servidores y APIs.",
+      "articles": [
+        {
+          "id": "node-que-es",
+          "title": "¿Qué es Node.js y cómo funciona?",
+          "summary": "Conocé Node.js como entorno de ejecución de JavaScript, sus usos y las diferencias con el navegador.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "node-instalacion",
+          "title": "Instalación, terminal y REPL",
+          "summary": "Instalá Node.js, comprobá las versiones y ejecutá archivos o instrucciones desde la terminal.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "node-modulos",
+          "title": "Módulos: import, export y CommonJS",
+          "summary": "Dividí el programa en archivos reutilizables y entendé los sistemas ECMAScript Modules y CommonJS.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "node-npm",
+          "title": "NPM, package.json y dependencias",
+          "summary": "Creá un proyecto, instalá paquetes y organizá scripts y dependencias con npm.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "node-process",
+          "title": "El objeto process y los argumentos",
+          "summary": "Inspeccioná el proceso de Node, leé argumentos de terminal y controlá el código de salida.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-env",
+          "title": "Variables de entorno y configuración",
+          "summary": "Configurá puertos y opciones por entorno sin escribir secretos directamente en el código.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-path",
+          "title": "Rutas y directorios con node:path",
+          "summary": "Construí y analizá rutas sin depender manualmente de las barras de Windows o Linux.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-fs",
+          "title": "Sistema de archivos con node:fs",
+          "summary": "Leé, escribí, modificá y recorré archivos y carpetas usando la API de promesas.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-async",
+          "title": "Asincronía: Promise, async y await",
+          "summary": "Organizá operaciones asíncronas y manejá promesas sin bloquear innecesariamente el flujo del programa.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-events",
+          "title": "Eventos y EventEmitter",
+          "summary": "Creá emisores de eventos y conectá funciones que reaccionan cuando ocurre una acción.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-buffer",
+          "title": "Buffer y datos binarios",
+          "summary": "Representá secuencias de bytes y convertí datos entre texto y formatos binarios.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-streams",
+          "title": "Streams: procesar datos por fragmentos",
+          "summary": "Leé y escribí datos progresivamente para trabajar con archivos grandes y flujos de información.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-url",
+          "title": "URL y parámetros de consulta",
+          "summary": "Analizá direcciones, rutas y parámetros de consulta con URL y URLSearchParams.",
+          "category": "intermedio"
+        },
+        {
+          "id": "node-http",
+          "title": "Crear un servidor HTTP nativo",
+          "summary": "Construí un servidor con node:http y entendé las solicitudes, respuestas, encabezados y puertos.",
+          "category": "avanzado"
+        },
+        {
+          "id": "node-api-rest",
+          "title": "Crear una API REST con Node.js",
+          "summary": "Organizá recursos mediante rutas, métodos HTTP, respuestas JSON y códigos de estado.",
+          "category": "avanzado"
+        },
+        {
+          "id": "node-errores",
+          "title": "Manejo de errores y excepciones",
+          "summary": "Detectá fallos, diferenciá tipos de errores y evitá que una promesa rechazada pase inadvertida.",
+          "category": "avanzado"
+        },
+        {
+          "id": "node-testing",
+          "title": "Pruebas automáticas con node:test",
+          "summary": "Escribí pruebas para funciones y comprobá resultados usando el test runner integrado de Node.",
+          "category": "avanzado"
+        },
+        {
+          "id": "node-debugging",
+          "title": "Depuración y modo watch",
+          "summary": "Inspeccioná variables, pausá la ejecución y reiniciá el proceso cuando cambie el código.",
+          "category": "avanzado"
+        }
+      ]
+    },
+    {
+      "id": "astro",
+      "title": "Astro",
+      "shortTitle": "Astro",
+      "accent": "astro",
+      "symbol": "✦",
+      "eyebrow": "FRONTEND / SITIOS WEB",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Aprendé a crear sitios rápidos y centrados en contenido con páginas, componentes, layouts, islas interactivas, colecciones y despliegue.",
+      "articles": [
+        {
+          "id": "astro-que-es",
+          "title": "¿Qué es Astro y cuándo conviene usarlo?",
+          "summary": "Framework web server-first para sitios de contenido, con HTML generado y JavaScript selectivo.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "astro-instalacion",
+          "title": "Instalación y creación de un proyecto",
+          "summary": "Creá un proyecto Astro, instalá dependencias y ejecutá el servidor local.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "astro-paginas",
+          "title": "Páginas y enrutamiento basado en archivos",
+          "summary": "Creá rutas colocando archivos dentro de src/pages y navegá con anchors HTML.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "astro-estructura",
+          "title": "Estructura de carpetas y archivos",
+          "summary": "Reconocé src, public, pages, components, layouts, assets y configuración.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "astro-componentes",
+          "title": "Componentes Astro, props y composición",
+          "summary": "Construí piezas reutilizables con .astro, recibí props y componé páginas.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-layouts",
+          "title": "Layouts reutilizables y slots",
+          "summary": "Compartí estructura HTML, metadatos y navegación entre páginas.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-estilos",
+          "title": "CSS global, scoped y clases dinámicas",
+          "summary": "Aplicá estilos globales y locales, importá CSS y combiná clases condicionales.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-scripts",
+          "title": "Scripts de cliente e interactividad nativa",
+          "summary": "Agregá JavaScript al navegador para manejar eventos y comportamiento interactivo.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-slots",
+          "title": "Slots y composición avanzada",
+          "summary": "Distribuí contenido entre regiones y reutilizá bloques de interfaz.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-assets",
+          "title": "Imágenes y recursos estáticos",
+          "summary": "Diferenciá imágenes de public y assets importados y utilizá astro:assets.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-rutas-dinamicas",
+          "title": "Rutas dinámicas y getStaticPaths",
+          "summary": "Generá páginas desde parámetros slug o id usando archivos dinámicos.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-markdown",
+          "title": "Markdown y contenido MDX",
+          "summary": "Escribí contenido en Markdown y MDX y mostralo como páginas.",
+          "category": "intermedio"
+        },
+        {
+          "id": "astro-islas",
+          "title": "Arquitectura de islas e hidratación selectiva",
+          "summary": "Combiná HTML estático con componentes interactivos de React, Vue y otros frameworks.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-endpoints",
+          "title": "Endpoints y respuestas HTTP",
+          "summary": "Creá endpoints dentro de src/pages que respondan JSON, texto y otros formatos.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-content-collections",
+          "title": "Content Layer y colecciones de contenido",
+          "summary": "Definí colecciones tipadas con loaders para Markdown, JSON y fuentes externas.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-fetch",
+          "title": "Obtener datos desde APIs externas",
+          "summary": "Consultá servicios externos con fetch durante render o compilación.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-actions",
+          "title": "Actions y formularios con validación",
+          "summary": "Definí funciones de servidor tipadas para procesar formularios.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-integraciones",
+          "title": "Integraciones y configuración",
+          "summary": "Extendé Astro con integraciones oficiales para React, Vue, MDX y otras herramientas.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-transiciones",
+          "title": "Navegación de cliente y View Transitions",
+          "summary": "Agregá transiciones entre páginas con ClientRouter.",
+          "category": "avanzado"
+        },
+        {
+          "id": "astro-deploy",
+          "title": "Build, adaptadores y despliegue",
+          "summary": "Generá salida de producción y elegí entre sitio estático o renderizado bajo demanda.",
+          "category": "avanzado"
+        }
+      ]
+    },
+    {
+      "id": "phaser",
+      "title": "Phaser",
+      "shortTitle": "Phaser",
+      "accent": "phaser",
+      "symbol": "🎮",
+      "eyebrow": "DESARROLLO DE JUEGOS",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Aprendé a desarrollar juegos 2D con Phaser: escenas, sprites, animaciones, entrada, físicas, mapas, cámaras y efectos.",
+      "articles": [
+        {
+          "id": "phaser-que-es",
+          "title": "¿Qué es Phaser y para qué sirve?",
+          "summary": "Conocé Phaser como framework para crear juegos 2D con JavaScript en navegadores.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "phaser-configuracion",
+          "title": "Instalación y configuración del juego",
+          "summary": "Prepará un proyecto Phaser, instalá la biblioteca y configurá tamaño, renderizador, escena, escala y físicas.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "phaser-escenas",
+          "title": "Escenas y ciclo de vida",
+          "summary": "Dividí un juego en menú, niveles y pantallas de resultado mediante escenas y sus métodos de ciclo de vida.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "phaser-assets",
+          "title": "Cargar imágenes, audio y otros recursos",
+          "summary": "Utilizá el Loader de Phaser para cargar imágenes, spritesheets, audio y datos antes de crear los objetos.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "phaser-gameobjects",
+          "title": "Game Objects: imágenes, formas y texto",
+          "summary": "Creá y manipulá los objetos visuales que forman el mundo del juego.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "phaser-sprites",
+          "title": "Sprites: personajes y hojas de sprites",
+          "summary": "Representá personajes con sprites, seleccioná fotogramas y cambiá sus propiedades visuales.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "phaser-animaciones",
+          "title": "Animaciones por fotogramas",
+          "summary": "Creá ciclos de animación desde spritesheets y controlá su reproducción.",
+          "category": "intermedio"
+        },
+        {
+          "id": "phaser-input",
+          "title": "Entrada: teclado, mouse y pantalla táctil",
+          "summary": "Detectá pulsaciones, clics, toques y acciones sobre Game Objects mediante el sistema unificado de entrada.",
+          "category": "intermedio"
+        },
+        {
+          "id": "phaser-controles-movimiento",
+          "title": "Movimiento de personajes y delta time",
+          "summary": "Mové personajes con teclado o puntero y mantené una velocidad coherente entre distintas frecuencias de actualización.",
+          "category": "intermedio"
+        },
+        {
+          "id": "phaser-fisica",
+          "title": "Arcade Physics: gravedad, velocidad y cuerpos",
+          "summary": "Agregá cuerpos físicos a personajes y objetos para simular gravedad, aceleración, rebotes y límites.",
+          "category": "intermedio"
+        },
+        {
+          "id": "phaser-colisiones",
+          "title": "Colisiones y detección de overlaps",
+          "summary": "Separá cuerpos que chocan y detectá cuando un personaje recoge, toca o atraviesa un objeto.",
+          "category": "intermedio"
+        },
+        {
+          "id": "phaser-cameras",
+          "title": "Cámaras: seguir al jugador y recorrer el mundo",
+          "summary": "Controlá qué parte del mundo se ve con cámaras, seguimiento, límites, zoom y desplazamiento.",
+          "category": "avanzado"
+        },
+        {
+          "id": "phaser-tweens",
+          "title": "Tweens: animar propiedades de objetos",
+          "summary": "Creá transiciones suaves de posición, escala, alpha y otras propiedades sin programar cada frame manualmente.",
+          "category": "avanzado"
+        },
+        {
+          "id": "phaser-scale",
+          "title": "Diseño adaptable: Scale Manager",
+          "summary": "Adaptá el canvas a distintas pantallas con modos FIT, RESIZE y centrado automático.",
+          "category": "avanzado"
+        },
+        {
+          "id": "phaser-audio",
+          "title": "Audio: efectos y música",
+          "summary": "Cargá sonidos, reproducí efectos, configurá volumen y administrá música en bucle.",
+          "category": "avanzado"
+        },
+        {
+          "id": "phaser-particles",
+          "title": "Partículas y efectos visuales",
+          "summary": "Creá emisores de partículas para humo, chispas, polvo, explosiones y efectos de movimiento.",
+          "category": "avanzado"
+        },
+        {
+          "id": "phaser-tilemaps",
+          "title": "Tilemaps: construir niveles con mapas de tiles",
+          "summary": "Importá mapas de Tiled, creá capas y definí colisiones sobre los tiles del escenario.",
+          "category": "intermedio"
+        },
+        {
+          "id": "phaser-deploy-debug",
+          "title": "Depuración, rendimiento y publicación",
+          "summary": "Diagnosticá errores, inspeccioná cuerpos físicos y prepará el build de un juego web.",
+          "category": "avanzado"
+        }
+      ]
+    },
+    {
+      "id": "typescript",
+      "title": "TypeScript",
+      "shortTitle": "TS",
+      "accent": "typescript",
+      "symbol": "TS",
+      "eyebrow": "JAVASCRIPT / TIPADO ESTÁTICO",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "typescript",
+      "description": "Aprendé TypeScript desde sus fundamentos hasta genéricos, configuración e integración con el DOM, React y Node.js. Cada tema incluye ejemplos comentados, errores frecuentes y prácticas.",
+      "articles": [
+        {
+          "id": "ts-que-es-typescript",
+          "title": "¿Qué es TypeScript y qué problema resuelve?",
+          "summary": "Conocé qué agrega TypeScript sobre JavaScript, qué beneficios aporta y qué no hace por sí solo.",
+          "category": "introduccion"
+        },
+        {
+          "id": "ts-diferencias-javascript",
+          "title": "TypeScript y JavaScript: diferencias y relación",
+          "summary": "Compará ambos lenguajes y reconocé qué sintaxis agrega TypeScript y qué comportamiento sigue siendo JavaScript.",
+          "category": "introduccion"
+        },
+        {
+          "id": "ts-checking-static-runtime",
+          "title": "Comprobación estática, compilación y ejecución",
+          "summary": "Separá el trabajo del editor, el compilador TypeScript y el motor que ejecuta JavaScript.",
+          "category": "introduccion"
+        },
+        {
+          "id": "ts-instalacion-primer-proyecto",
+          "title": "Instalar TypeScript y preparar el primer proyecto",
+          "summary": "Instalá el compilador como dependencia local, creá un archivo .ts y comprobá tu primer programa.",
+          "category": "introduccion"
+        },
+        {
+          "id": "ts-tipos-primitivos",
+          "title": "Tipos primitivos: string, number, boolean y más",
+          "summary": "Usá tipos primitivos para describir texto, números, booleanos y otros valores fundamentales.",
+          "category": "tipos-basicos"
+        },
+        {
+          "id": "ts-inferencia",
+          "title": "Inferencia de tipos y tipado contextual",
+          "summary": "Aprendé cuándo TypeScript deduce un tipo y cuándo conviene escribir una anotación explícita.",
+          "category": "tipos-basicos"
+        },
+        {
+          "id": "ts-any-unknown-never",
+          "title": "any, unknown y never: tres tipos especiales",
+          "summary": "Diferenciá el escape any, el valor seguro unknown y el tipo imposible never.",
+          "category": "tipos-basicos"
+        },
+        {
+          "id": "ts-arrays-tuplas",
+          "title": "Arrays y tuplas: colecciones con tipos definidos",
+          "summary": "Definí colecciones homogéneas con arrays y estructuras de posiciones fijas con tuplas.",
+          "category": "tipos-basicos"
+        },
+        {
+          "id": "ts-uniones-literales",
+          "title": "Uniones, intersecciones y tipos literales",
+          "summary": "Combiná alternativas con |, reuní requisitos con & y restringí valores mediante literales.",
+          "category": "tipos-basicos"
+        },
+        {
+          "id": "ts-tipos-objetos",
+          "title": "Tipos de objetos, propiedades opcionales y readonly",
+          "summary": "Describí estructuras de objetos y controlá qué propiedades son obligatorias, opcionales o de solo lectura.",
+          "category": "objetos-funciones"
+        },
+        {
+          "id": "ts-type-alias",
+          "title": "Type aliases: nombres para tipos reutilizables",
+          "summary": "Agrupá estructuras, uniones y firmas de funciones bajo nombres reutilizables mediante type.",
+          "category": "objetos-funciones"
+        },
+        {
+          "id": "ts-interfaces",
+          "title": "Interfaces: contratos para objetos y extensiones",
+          "summary": "Definí contratos de objetos con interface y extendé estructuras sin duplicar propiedades.",
+          "category": "objetos-funciones"
+        },
+        {
+          "id": "ts-funciones-tipadas",
+          "title": "Funciones tipadas: parámetros, retornos y callbacks",
+          "summary": "Especificá qué recibe una función, qué devuelve y qué forma deben respetar sus callbacks.",
+          "category": "objetos-funciones"
+        },
+        {
+          "id": "ts-parametros-overloads",
+          "title": "Parámetros opcionales, rest y sobrecargas",
+          "summary": "Modelá funciones que reciben distintos números de argumentos o varias formas válidas de entrada.",
+          "category": "objetos-funciones"
+        },
+        {
+          "id": "ts-narrowing",
+          "title": "Narrowing: estrechar un tipo paso a paso",
+          "summary": "Reducí una unión a una alternativa concreta mediante comprobaciones que TypeScript reconoce.",
+          "category": "control-tipos"
+        },
+        {
+          "id": "ts-type-guards",
+          "title": "Type guards: predicados y validaciones reutilizables",
+          "summary": "Creá funciones que comprueben un valor y comuniquen al compilador qué tipo tiene cuando la comprobación resulta verdadera.",
+          "category": "control-tipos"
+        },
+        {
+          "id": "ts-uniones-discriminadas",
+          "title": "Uniones discriminadas y comprobación exhaustiva",
+          "summary": "Modelá estados y variantes de objetos con una propiedad discriminadora y comprobá que todos los casos estén cubiertos.",
+          "category": "control-tipos"
+        },
+        {
+          "id": "ts-null-undefined",
+          "title": "null, undefined y strictNullChecks",
+          "summary": "Tratà la ausencia de datos explícitamente y evitá asumir que una búsqueda o una propiedad siempre existe.",
+          "category": "control-tipos"
+        },
+        {
+          "id": "ts-assertions-satisfies",
+          "title": "Type assertions y satisfies: afirmar sin convertir",
+          "summary": "Entendé cuándo as cambia la interpretación estática y cuándo satisfies comprueba un contrato conservando el tipo inferido.",
+          "category": "control-tipos"
+        },
+        {
+          "id": "ts-generics-funciones",
+          "title": "Genéricos: funciones que conservan el tipo recibido",
+          "summary": "Creá funciones reutilizables que trabajan con distintos tipos sin perder la información concreta de cada valor.",
+          "category": "generics"
+        },
+        {
+          "id": "ts-generics-constraints",
+          "title": "Restricciones y valores predeterminados en genéricos",
+          "summary": "Limitá los tipos permitidos por un genérico y establecé valores predeterminados cuando corresponda.",
+          "category": "generics"
+        },
+        {
+          "id": "ts-generics-interfaces-classes",
+          "title": "Genéricos en interfaces, clases y estructuras de datos",
+          "summary": "Aplicá parámetros de tipo a contratos y clases para reutilizar estructuras sin perder la información de sus elementos.",
+          "category": "generics"
+        },
+        {
+          "id": "ts-keyof-typeof-indexed",
+          "title": "keyof, typeof e indexed access types",
+          "summary": "Derivá tipos a partir de propiedades y valores existentes para reducir duplicaciones y mantener contratos sincronizados.",
+          "category": "generics"
+        },
+        {
+          "id": "ts-utility-types",
+          "title": "Utility Types: Partial, Pick, Omit, Record y más",
+          "summary": "Transformá tipos existentes con utilidades integradas en TypeScript en lugar de copiar estructuras manualmente.",
+          "category": "generics"
+        },
+        {
+          "id": "ts-mapped-conditional-types",
+          "title": "Mapped types y conditional types",
+          "summary": "Creá tipos que recorren propiedades de otro tipo y aplican reglas según la estructura de cada valor.",
+          "category": "generics"
+        },
+        {
+          "id": "ts-clases",
+          "title": "Clases en TypeScript: propiedades, constructor y métodos",
+          "summary": "Definí clases con propiedades tipadas, constructores, métodos y relaciones de herencia.",
+          "category": "clases-modulos"
+        },
+        {
+          "id": "ts-modificadores",
+          "title": "public, private, protected, readonly y static",
+          "summary": "Controlá qué miembros de una clase se usan desde fuera, desde subclases o desde la propia clase.",
+          "category": "clases-modulos"
+        },
+        {
+          "id": "ts-clases-abstractas",
+          "title": "Clases abstractas e interfaces con implements",
+          "summary": "Definí una base incompleta que obliga a las subclases a implementar comportamientos específicos.",
+          "category": "clases-modulos"
+        },
+        {
+          "id": "ts-modulos-import-export",
+          "title": "Módulos: export, import y type-only imports",
+          "summary": "Separá tipos y funciones en archivos y compartí contratos entre módulos de un proyecto.",
+          "category": "clases-modulos"
+        },
+        {
+          "id": "ts-declaration-files",
+          "title": "Archivos .d.ts, @types y bibliotecas JavaScript",
+          "summary": "Entendé cómo TypeScript conoce los tipos de paquetes que no están escritos en TypeScript.",
+          "category": "clases-modulos"
+        },
+        {
+          "id": "ts-tsconfig",
+          "title": "tsconfig.json: configurar el compilador",
+          "summary": "Configurá TypeScript según el entorno, la estructura y el nivel de seguridad que necesita tu proyecto.",
+          "category": "config-integracion"
+        },
+        {
+          "id": "ts-cli-compilation",
+          "title": "tsc: compilar, observar cambios y revisar errores",
+          "summary": "Usá la interfaz de línea de comandos del compilador para comprobar proyectos, observar archivos y generar JavaScript.",
+          "category": "config-integracion"
+        },
+        {
+          "id": "ts-js-migration",
+          "title": "Migrar JavaScript a TypeScript gradualmente",
+          "summary": "Convertí un proyecto JavaScript existente por etapas sin reescribirlo todo de una sola vez.",
+          "category": "config-integracion"
+        },
+        {
+          "id": "ts-dom-events",
+          "title": "TypeScript en el DOM: elementos y eventos",
+          "summary": "Trabajá con elementos del documento, formularios y eventos utilizando los tipos que ofrece la biblioteca DOM.",
+          "category": "config-integracion"
+        },
+        {
+          "id": "ts-async-api",
+          "title": "Promesas, async/await y respuestas de APIs tipadas",
+          "summary": "Tipá operaciones asíncronas y entendé por qué una respuesta JSON necesita validación antes de tratarla como un objeto confiable.",
+          "category": "config-integracion"
+        },
+        {
+          "id": "ts-react-node",
+          "title": "TypeScript con React y Node.js",
+          "summary": "Conectá TypeScript con React en el frontend y Node.js en el backend sin repetir sus fundamentos.",
+          "category": "config-integracion"
+        },
+        {
+          "id": "ts-enums",
+          "title": "Enums y alternativas con uniones literales",
+          "summary": "Representá conjuntos de valores relacionados y compará enums con uniones de strings y objetos const.",
+          "category": "tipos-basicos"
+        }
+      ]
+    },
+    {
+      "id": "nextjs",
+      "title": "Next.js",
+      "shortTitle": "Next.js",
+      "accent": "nextjs",
+      "symbol": "N",
+      "eyebrow": "NEXT.JS / FRAMEWORK DE REACT",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "typescript",
+      "description": "Aprendé Next.js desde la instalación y App Router hasta Server Components, caché, Server Actions, APIs, seguridad, pruebas y despliegue. El recorrido prioriza las convenciones actuales de Next.js 16 y también cubre Pages Router para mantenimiento y migración.",
+      "articles": [
+        {
+          "id": "nextjs-que-es",
+          "title": "¿Qué es Next.js y qué aporta sobre React?",
+          "summary": "Entendé Next.js como framework de React: enrutamiento, renderizado en servidor, optimización y herramientas integradas.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "nextjs-instalacion",
+          "title": "Instalación y creación de un proyecto",
+          "summary": "Prepará Node.js, creá una aplicación con create-next-app y levantá el servidor local.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "nextjs-estructura-proyecto",
+          "title": "Estructura de carpetas de un proyecto",
+          "summary": "Reconocé app, public, archivos de configuración y la opción de organizar el código dentro de src.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "nextjs-archivos-y-convenciones",
+          "title": "Archivos especiales, segmentos y convenciones",
+          "summary": "Aprendé qué significan page, layout, loading, error, not-found, route y los grupos de rutas.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "nextjs-layouts-pages",
+          "title": "Layouts, páginas y composición de la interfaz",
+          "summary": "Construí la raíz de la aplicación, layouts anidados y páginas que cambian según la ruta.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "nextjs-estilos-css",
+          "title": "Estilos CSS, CSS Modules y Tailwind",
+          "summary": "Compará CSS global, módulos locales y Tailwind para estilizar componentes de Next.js.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "nextjs-enrutamiento-app",
+          "title": "Enrutamiento con App Router",
+          "summary": "Convertí carpetas y archivos page.tsx en URLs y organizá rutas anidadas.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-rutas-dinamicas",
+          "title": "Rutas dinámicas, catch-all y generateStaticParams",
+          "summary": "Creá páginas para identificadores variables como /novelas/[slug] y generá rutas conocidas durante el build.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-search-params",
+          "title": "Parámetros de búsqueda y filtros de URL",
+          "summary": "Leé query strings como ?pagina=2&categoria=fantasia para filtrar o paginar datos.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-link-navigation",
+          "title": "Navegación con Link, prefetching y transiciones",
+          "summary": "Usá next/link para navegar entre páginas sin recargar todo el documento.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-use-router",
+          "title": "Navegación programática con useRouter",
+          "summary": "Cambiá de ruta desde eventos de usuario con router.push, replace, back y refresh.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-loading-streaming",
+          "title": "Estados de carga, Suspense y streaming",
+          "summary": "Mostrá interfaces de carga mientras el servidor prepara partes de una ruta.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-errores-not-found",
+          "title": "Manejo de errores, error.tsx y not-found",
+          "summary": "Controlá errores de renderizado y mostrale al usuario una página 404 cuando un recurso no existe.",
+          "category": "routing"
+        },
+        {
+          "id": "nextjs-server-client-components",
+          "title": "Server Components y Client Components",
+          "summary": "Comprendé la diferencia entre componentes que se ejecutan en el servidor y componentes que necesitan el navegador.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-client-components-use-client",
+          "title": "use client, estado, eventos y APIs del navegador",
+          "summary": "Marcá el límite cliente y utilizá hooks de React y APIs como localStorage cuando realmente hagan falta.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-composicion-server-client",
+          "title": "Composición entre componentes de servidor y cliente",
+          "summary": "Organizá límites cliente sin perder la capacidad de renderizar contenido desde el servidor.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-data-fetching",
+          "title": "Obtención de datos con fetch y componentes asíncronos",
+          "summary": "Consultá APIs y bases de datos desde Server Components utilizando async/await y manejando respuestas fallidas.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-rendering-static-dynamic",
+          "title": "Renderizado estático, dinámico y prerenderizado",
+          "summary": "Distinguí cuándo una ruta se puede preparar en build y cuándo necesita datos del request actual.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-cache-components",
+          "title": "Caché moderna con Cache Components y use cache",
+          "summary": "Aprendé el modelo de Cache Components y cómo reutilizar resultados de funciones y componentes.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-revalidacion",
+          "title": "Revalidación de datos con cacheTag, updateTag y revalidatePath",
+          "summary": "Actualizá contenido cacheado por tiempo, etiqueta o ruta cuando los datos cambien.",
+          "category": "rendering-data"
+        },
+        {
+          "id": "nextjs-server-functions-actions",
+          "title": "Server Functions, Server Actions y use server",
+          "summary": "Ejecutá funciones asíncronas en el servidor y llamalas desde formularios o componentes cliente.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-formularios-useactionstate",
+          "title": "Formularios, useActionState y estados pendientes",
+          "summary": "Construí formularios progresivos que envían datos al servidor y muestran errores o confirmaciones.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-route-handlers",
+          "title": "Route Handlers y creación de APIs HTTP",
+          "summary": "Creá endpoints con route.ts usando los métodos GET, POST, PUT, PATCH y DELETE.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-cookies-headers",
+          "title": "Cookies, headers y APIs asíncronas del request",
+          "summary": "Leé cookies y encabezados HTTP desde componentes de servidor o handlers.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-environment-variables",
+          "title": "Variables de entorno y secretos",
+          "summary": "Configurá URLs, claves y credenciales sin escribirlas directamente en el código.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-proxy",
+          "title": "Proxy en Next.js 16 y migración desde Middleware",
+          "summary": "Interceptá solicitudes antes de completar la ruta para reescribir, redirigir o modificar encabezados.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-redirects",
+          "title": "Redirecciones y navegación ante cambios de estado",
+          "summary": "Redirigí usuarios desde componentes del servidor, acciones, handlers o configuración.",
+          "category": "backend"
+        },
+        {
+          "id": "nextjs-metadata-seo",
+          "title": "Metadata, SEO y generateMetadata",
+          "summary": "Definí títulos, descripciones y Open Graph mediante las APIs de metadata de Next.js.",
+          "category": "seo-assets"
+        },
+        {
+          "id": "nextjs-image-optimization",
+          "title": "Optimización de imágenes con next/image",
+          "summary": "Usá el componente Image para entregar tamaños adecuados, evitar saltos de layout y optimizar imágenes.",
+          "category": "seo-assets"
+        },
+        {
+          "id": "nextjs-font-optimization",
+          "title": "Optimización de fuentes con next/font",
+          "summary": "Cargá Google Fonts o fuentes locales con next/font y aplicalas al layout de la aplicación.",
+          "category": "seo-assets"
+        },
+        {
+          "id": "nextjs-public-assets",
+          "title": "Archivos estáticos, favicon e imágenes sociales",
+          "summary": "Serví recursos desde public y aprovechá convenciones de archivos para iconos y Open Graph.",
+          "category": "seo-assets"
+        },
+        {
+          "id": "nextjs-scripts-third-party",
+          "title": "Scripts externos y next/script",
+          "summary": "Integrá scripts de terceros controlando cuándo se descargan y ejecutan.",
+          "category": "seo-assets"
+        },
+        {
+          "id": "nextjs-authentication-authorization",
+          "title": "Autenticación, sesiones y autorización",
+          "summary": "Separá la identificación del usuario de los permisos que puede ejercer dentro de la aplicación.",
+          "category": "security-types"
+        },
+        {
+          "id": "nextjs-server-security",
+          "title": "Seguridad del servidor, límites de confianza y protección de datos",
+          "summary": "Protegé secretos y operaciones críticas entendiendo que acciones y endpoints pueden invocarse directamente.",
+          "category": "security-types"
+        },
+        {
+          "id": "nextjs-validacion-datos",
+          "title": "Validación de datos con esquemas y Zod",
+          "summary": "Validá entradas de formularios y APIs en tiempo de ejecución, además de utilizar TypeScript.",
+          "category": "security-types"
+        },
+        {
+          "id": "nextjs-typescript",
+          "title": "TypeScript en Next.js y tipos generados",
+          "summary": "Tipá páginas, layouts, parámetros, Route Handlers y configuración usando los helpers de Next.js.",
+          "category": "security-types"
+        },
+        {
+          "id": "nextjs-configuration",
+          "title": "Configuración con next.config.ts y alias de importación",
+          "summary": "Personalizá opciones del framework y configurá alias para mantener imports claros.",
+          "category": "security-types"
+        },
+        {
+          "id": "nextjs-build-commands",
+          "title": "Comandos de desarrollo, build, lint y typegen",
+          "summary": "Conocé los comandos principales del proyecto y diferenciá el servidor de desarrollo de producción.",
+          "category": "quality-deploy"
+        },
+        {
+          "id": "nextjs-testing-playwright-vitest",
+          "title": "Pruebas con Playwright, Vitest y Testing Library",
+          "summary": "Elegí pruebas unitarias, de componentes o de extremo a extremo según el comportamiento que quieras verificar.",
+          "category": "quality-deploy"
+        },
+        {
+          "id": "nextjs-performance-turbopack",
+          "title": "Rendimiento, bundles y Turbopack",
+          "summary": "Reducí JavaScript innecesario y medí el rendimiento con herramientas de desarrollo y producción.",
+          "category": "quality-deploy"
+        },
+        {
+          "id": "nextjs-deployment",
+          "title": "Despliegue, Node.js, plataformas y exportación estática",
+          "summary": "Prepará una aplicación para producción y entendé qué capacidades necesitan un servidor.",
+          "category": "quality-deploy"
+        },
+        {
+          "id": "nextjs-pages-router-comparison",
+          "title": "App Router y Pages Router: diferencias y migración",
+          "summary": "Identificá las dos arquitecturas de rutas y planificá una migración sin mezclar convenciones.",
+          "category": "quality-deploy"
+        },
+        {
+          "id": "nextjs-pages-router-data-fetching",
+          "title": "Obtención de datos tradicional en Pages Router",
+          "summary": "Comprendé getStaticProps, getStaticPaths y getServerSideProps para mantener o migrar aplicaciones existentes.",
+          "category": "quality-deploy"
+        },
+        {
+          "id": "nextjs-pages-router-api",
+          "title": "API Routes del Pages Router y compatibilidad",
+          "summary": "Reconocé pages/api y comparalo con Route Handlers cuando trabajes en proyectos tradicionales.",
+          "category": "quality-deploy"
+        }
+      ]
+    },
+    {
+      "id": "express",
+      "title": "Express.js",
+      "shortTitle": "Express",
+      "accent": "express",
+      "symbol": "EX",
+      "eyebrow": "EXPRESS.JS / SERVIDOR NODE.JS",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "description": "Aprendé Express 5 desde las primeras rutas hasta middleware, APIs REST, autenticación, manejo de errores, pruebas y despliegue. Este recorrido se centra en los cambios de Express 5 y explica patrones heredados de Express 4.",
+      "articles": [
+        {
+          "id": "express-que-es",
+          "title": "¿Qué es Express.js y para qué sirve?",
+          "summary": "Conocé Express como framework web minimalista para Node.js y el papel que cumple en aplicaciones y APIs.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "express-installation",
+          "title": "Instalación y creación del proyecto",
+          "summary": "Prepará Node.js, npm e instalá Express 5 en un proyecto nuevo.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "express-app-listen",
+          "title": "Crear la aplicación y poner el servidor a escuchar",
+          "summary": "Construí la instancia app, configurá un puerto y separá la aplicación del arranque del proceso.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "express-routes-basics",
+          "title": "Primeras rutas y métodos HTTP",
+          "summary": "Definí endpoints usando GET, POST, PUT, PATCH y DELETE.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "express-req-res",
+          "title": "Request y Response: leer solicitudes y responder",
+          "summary": "Conocé req y res, sus propiedades y cómo construir respuestas HTTP.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "express-route-params-query",
+          "title": "Parámetros de ruta y query strings",
+          "summary": "Leé identificadores como /novelas/12 y filtros como ?genero=fantasia.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "express-routers",
+          "title": "Express Router y organización de rutas",
+          "summary": "Dividí endpoints por recurso o área usando instancias independientes de Router.",
+          "category": "routing-middleware"
+        },
+        {
+          "id": "express-middleware",
+          "title": "Cómo funciona el middleware y el ciclo de solicitud",
+          "summary": "Entendé cómo Express ejecuta funciones intermedias antes, durante y después de una ruta.",
+          "category": "routing-middleware"
+        },
+        {
+          "id": "express-built-in-middleware",
+          "title": "Middleware integrado: json, urlencoded y static",
+          "summary": "Usá el middleware incorporado para parsear cuerpos y servir archivos.",
+          "category": "routing-middleware"
+        },
+        {
+          "id": "express-custom-middleware",
+          "title": "Crear middleware propio y reutilizable",
+          "summary": "Escribí funciones intermedias para registrar solicitudes, validar headers y proteger rutas.",
+          "category": "routing-middleware"
+        },
+        {
+          "id": "express-static-files",
+          "title": "Archivos estáticos y rutas de recursos",
+          "summary": "Serví imágenes, CSS, JavaScript y documentos públicos desde una carpeta controlada.",
+          "category": "routing-middleware"
+        },
+        {
+          "id": "express-route-patterns-v5",
+          "title": "Patrones de rutas y cambios de sintaxis en Express 5",
+          "summary": "Aprendé comodines con nombre y segmentos opcionales usando la sintaxis vigente.",
+          "category": "routing-middleware"
+        },
+        {
+          "id": "express-rest-crud-api",
+          "title": "Diseñar una API REST y operaciones CRUD",
+          "summary": "Organizá una API alrededor de recursos y construí operaciones de listar, crear, consultar, modificar y borrar.",
+          "category": "apis-data"
+        },
+        {
+          "id": "express-body-parsing",
+          "title": "Procesamiento de JSON, formularios y cuerpos HTTP",
+          "summary": "Leé datos enviados en el body y reconocé los límites de cada parser.",
+          "category": "apis-data"
+        },
+        {
+          "id": "express-async-handlers",
+          "title": "Handlers asíncronos y promesas en Express 5",
+          "summary": "Usá async/await y entendé cómo Express 5 propaga errores rechazados.",
+          "category": "apis-data"
+        },
+        {
+          "id": "express-validation",
+          "title": "Validación y normalización de entradas",
+          "summary": "Validá parámetros, query y body antes de pasar datos a la lógica de negocio.",
+          "category": "apis-data"
+        },
+        {
+          "id": "express-cors",
+          "title": "CORS y solicitudes entre distintos orígenes",
+          "summary": "Configurá qué orígenes pueden leer respuestas de tu API desde navegadores.",
+          "category": "apis-data"
+        },
+        {
+          "id": "express-file-uploads",
+          "title": "Subida de archivos y multipart/form-data",
+          "summary": "Recibí archivos desde formularios y controlá tamaño, tipo y almacenamiento.",
+          "category": "apis-data"
+        },
+        {
+          "id": "express-error-handling",
+          "title": "Manejo centralizado de errores",
+          "summary": "Construí un middleware de errores que transforme fallos en respuestas HTTP seguras y consistentes.",
+          "category": "errors-security"
+        },
+        {
+          "id": "express-404-handler",
+          "title": "Rutas inexistentes y respuestas 404",
+          "summary": "Detectá cuando ninguna ruta coincide y devolvé un mensaje claro con el status correcto.",
+          "category": "errors-security"
+        },
+        {
+          "id": "express-security-helmet",
+          "title": "Seguridad HTTP con Helmet y headers",
+          "summary": "Agregá encabezados HTTP de seguridad y entendé qué protegen y qué no.",
+          "category": "errors-security"
+        },
+        {
+          "id": "express-rate-limiting",
+          "title": "Limitación de solicitudes y protección ante abuso",
+          "summary": "Limitá la frecuencia de solicitudes para reducir abusos, fuerza bruta y consumo excesivo.",
+          "category": "errors-security"
+        },
+        {
+          "id": "express-authentication",
+          "title": "Autenticación y autorización en una API",
+          "summary": "Separá la identificación de usuarios de la comprobación de permisos por operación.",
+          "category": "errors-security"
+        },
+        {
+          "id": "express-cookies-sessions",
+          "title": "Cookies y sesiones de usuario",
+          "summary": "Reconocé cookies HTTP y administrá sesiones sin guardar información sensible en el navegador.",
+          "category": "errors-security"
+        },
+        {
+          "id": "express-database-integration",
+          "title": "Conectar Express con una base de datos",
+          "summary": "Separá el acceso a datos del transporte HTTP e integrá un driver u ORM.",
+          "category": "data-capabilities"
+        },
+        {
+          "id": "express-template-engines",
+          "title": "Plantillas y renderizado de vistas",
+          "summary": "Generá páginas HTML dinámicas desde el servidor con un motor de plantillas.",
+          "category": "data-capabilities"
+        },
+        {
+          "id": "express-file-downloads",
+          "title": "Enviar y descargar archivos",
+          "summary": "Respondé con archivos mediante sendFile, download y tipos de contenido adecuados.",
+          "category": "data-capabilities"
+        },
+        {
+          "id": "express-subapps-mounts",
+          "title": "Montar routers, subaplicaciones y prefijos",
+          "summary": "Organizá áreas de una aplicación y montá routers o subaplicaciones bajo un path.",
+          "category": "data-capabilities"
+        },
+        {
+          "id": "express-server-logging",
+          "title": "Registro de solicitudes y niveles de log",
+          "summary": "Registrá actividad HTTP y errores con mensajes estructurados y útiles para producción.",
+          "category": "data-capabilities"
+        },
+        {
+          "id": "express-trust-proxy",
+          "title": "Proxy inverso y configuración de trust proxy",
+          "summary": "Entendé cómo Express interpreta IP y protocolo detrás de un proxy.",
+          "category": "data-capabilities"
+        },
+        {
+          "id": "express-typescript",
+          "title": "Configurar Express con TypeScript",
+          "summary": "Prepará un servidor Express tipado y comprendé cómo TypeScript se integra con Node.",
+          "category": "typescript-testing"
+        },
+        {
+          "id": "express-typescript-middleware",
+          "title": "Tipar Request, Response y middleware personalizados",
+          "summary": "Usá genéricos de Express para definir params, body, query y respuestas.",
+          "category": "typescript-testing"
+        },
+        {
+          "id": "express-testing-supertest",
+          "title": "Pruebas HTTP con Supertest",
+          "summary": "Probá endpoints sin tener que iniciar manualmente un puerto de red.",
+          "category": "typescript-testing"
+        },
+        {
+          "id": "express-testing-integration",
+          "title": "Pruebas de integración, mocks y entorno de test",
+          "summary": "Probá routers y servicios combinados usando datos controlados y dependencias sustituidas.",
+          "category": "typescript-testing"
+        },
+        {
+          "id": "express-openapi-docs",
+          "title": "Documentar la API con OpenAPI y Swagger UI",
+          "summary": "Publicá un contrato legible de endpoints, parámetros, esquemas y respuestas.",
+          "category": "typescript-testing"
+        },
+        {
+          "id": "express-graceful-shutdown",
+          "title": "Cierre ordenado y señales del proceso",
+          "summary": "Cerrá el servidor y sus recursos cuando Node recibe SIGTERM o SIGINT.",
+          "category": "typescript-testing"
+        },
+        {
+          "id": "express-environment-config",
+          "title": "Variables de entorno y configuración por ambiente",
+          "summary": "Centralizá puerto, secretos y opciones para desarrollo, pruebas y producción.",
+          "category": "production-migration"
+        },
+        {
+          "id": "express-deployment",
+          "title": "Despliegue de Express en un servidor o plataforma cloud",
+          "summary": "Prepará un backend Node para desplegar y escuchá el puerto indicado por el entorno.",
+          "category": "production-migration"
+        },
+        {
+          "id": "express-production-performance",
+          "title": "Rendimiento y buenas prácticas de producción",
+          "summary": "Mejorá compresión, caché, conexiones y comportamiento del servidor bajo carga.",
+          "category": "production-migration"
+        },
+        {
+          "id": "express-migration-v4-v5",
+          "title": "Migrar de Express 4 a Express 5",
+          "summary": "Reconocé cambios incompatibles y actualizá código antiguo de forma controlada.",
+          "category": "production-migration"
+        },
+        {
+          "id": "express-nextjs-integration",
+          "title": "Usar Express junto a Next.js y otros frontends",
+          "summary": "Conectá una aplicación frontend con una API Express y elegí cómo separar las responsabilidades.",
+          "category": "production-migration"
+        },
+        {
+          "id": "express-project-architecture",
+          "title": "Arquitectura de proyecto: routes, controllers, services y repositories",
+          "summary": "Organizá una aplicación Express por responsabilidades para reducir acoplamiento y facilitar pruebas.",
+          "category": "production-migration"
+        }
+      ]
+    },
+    {
+      "id": "sql-postgres",
+      "title": "SQL y PostgreSQL",
+      "shortTitle": "SQL / PostgreSQL",
+      "accent": "sql-postgres",
+      "symbol": "SQL",
+      "eyebrow": "BASES RELACIONALES / POSTGRESQL 19",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "description": "Biblioteca práctica para aprender SQL y profundizar en PostgreSQL: diseño relacional, consultas, JOIN, transacciones, JSONB, índices, rendimiento y conexión segura desde Node.js.",
+      "articles": [
+        {
+          "id": "sql-que-es",
+          "title": "¿Qué es SQL y para qué se utiliza?",
+          "summary": "Diferenciá SQL, un gestor de bases de datos y PostgreSQL.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "postgres-arquitectura-database-schema",
+          "title": "Servidor, base de datos y esquema en PostgreSQL",
+          "summary": "Comprendé la jerarquía clúster, base, esquema, tabla y conexión.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "sql-modelo-relacional",
+          "title": "El modelo relacional: tablas, filas y columnas",
+          "summary": "Entendé cómo una tabla representa entidades y cómo se vinculan mediante claves.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "postgres-psql",
+          "title": "Conectarse a PostgreSQL con psql",
+          "summary": "Usá el cliente de terminal psql para conectarte, explorar bases y ejecutar consultas.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "sql-tipos-datos",
+          "title": "Tipos de datos habituales en PostgreSQL",
+          "summary": "Elegí tipos para texto, cantidades, fechas, identificadores y valores lógicos.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "sql-claves-restricciones",
+          "title": "Claves y restricciones: PRIMARY KEY, FOREIGN KEY, UNIQUE y CHECK",
+          "summary": "Protegé la integridad mediante claves y reglas que se aplican en la base.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "sql-select-basico",
+          "title": "SELECT: recuperar columnas y filas",
+          "summary": "Construí consultas que devuelvan solo los datos necesarios.",
+          "category": "consultas"
+        },
+        {
+          "id": "sql-alias-expresiones",
+          "title": "Alias y expresiones en SELECT",
+          "summary": "Renombrá columnas y calculá valores derivados en una consulta.",
+          "category": "consultas"
+        },
+        {
+          "id": "sql-where",
+          "title": "WHERE: filtrar filas con condiciones",
+          "summary": "Seleccioná filas que cumplen una o varias condiciones lógicas.",
+          "category": "consultas"
+        },
+        {
+          "id": "sql-operadores-filtros",
+          "title": "Operadores de comparación, IN, BETWEEN y LIKE",
+          "summary": "Compará valores, buscá patrones y expresá listas de alternativas.",
+          "category": "consultas"
+        },
+        {
+          "id": "sql-null",
+          "title": "NULL, IS NULL y COALESCE",
+          "summary": "Entendé la ausencia de valor en SQL y evitá comparaciones incorrectas.",
+          "category": "consultas"
+        },
+        {
+          "id": "sql-order-limit-offset",
+          "title": "ORDER BY, LIMIT y OFFSET: ordenar y paginar",
+          "summary": "Ordená resultados y construí paginación para interfaces y endpoints.",
+          "category": "consultas"
+        },
+        {
+          "id": "sql-inner-join",
+          "title": "INNER JOIN: combinar filas relacionadas",
+          "summary": "Combiná registros de dos tablas cuando existe coincidencia entre sus claves.",
+          "category": "joins-agrupaciones"
+        },
+        {
+          "id": "sql-left-join",
+          "title": "LEFT JOIN: conservar filas sin coincidencia",
+          "summary": "Conservá filas de la tabla izquierda y agregá datos de la derecha cuando existan.",
+          "category": "joins-agrupaciones"
+        },
+        {
+          "id": "sql-otros-joins",
+          "title": "RIGHT, FULL, CROSS y self JOIN",
+          "summary": "Reconocé otras formas de combinar tablas y cuándo conviene usarlas.",
+          "category": "joins-agrupaciones"
+        },
+        {
+          "id": "sql-group-by-agregaciones",
+          "title": "GROUP BY y funciones de agregación",
+          "summary": "Calculá sumas, promedios, mínimos, máximos y cantidades por grupo.",
+          "category": "joins-agrupaciones"
+        },
+        {
+          "id": "sql-having",
+          "title": "HAVING: filtrar grupos después de agrupar",
+          "summary": "Aplicá condiciones a resultados agregados sin confundir HAVING con WHERE.",
+          "category": "joins-agrupaciones"
+        },
+        {
+          "id": "sql-subqueries-exists",
+          "title": "Subconsultas, IN y EXISTS",
+          "summary": "Usá consultas anidadas para expresar pertenencia, existencia y cálculos dependientes.",
+          "category": "joins-agrupaciones"
+        },
+        {
+          "id": "sql-insert-returning",
+          "title": "INSERT y RETURNING",
+          "summary": "Insertá filas y recuperá identificadores o valores generados por PostgreSQL.",
+          "category": "escritura-transacciones"
+        },
+        {
+          "id": "sql-update",
+          "title": "UPDATE: modificar filas con seguridad",
+          "summary": "Actualizá valores y controlá qué registros serán afectados.",
+          "category": "escritura-transacciones"
+        },
+        {
+          "id": "sql-delete",
+          "title": "DELETE: eliminar filas y verificar el alcance",
+          "summary": "Eliminá registros con un filtro preciso y comprendé el efecto de claves foráneas.",
+          "category": "escritura-transacciones"
+        },
+        {
+          "id": "sql-upsert",
+          "title": "UPSERT con INSERT ... ON CONFLICT",
+          "summary": "Insertá un registro o actualizalo cuando ya existe una clave única.",
+          "category": "escritura-transacciones"
+        },
+        {
+          "id": "sql-transacciones-acid",
+          "title": "Transacciones y propiedades ACID",
+          "summary": "Agrupá operaciones para que se confirmen o reviertan como una unidad.",
+          "category": "escritura-transacciones"
+        },
+        {
+          "id": "sql-savepoints-isolation",
+          "title": "SAVEPOINT y niveles de aislamiento",
+          "summary": "Controlá suboperaciones y comprendé cómo PostgreSQL maneja escrituras concurrentes.",
+          "category": "escritura-transacciones"
+        },
+        {
+          "id": "postgres-cte",
+          "title": "CTE con WITH y consultas recursivas",
+          "summary": "Dividí consultas complejas en bloques nombrados y recorré jerarquías con WITH RECURSIVE.",
+          "category": "postgres-avanzado"
+        },
+        {
+          "id": "postgres-window-functions",
+          "title": "Funciones de ventana: OVER y PARTITION BY",
+          "summary": "Calculá rankings y acumulados sin colapsar grupos en una sola fila.",
+          "category": "postgres-avanzado"
+        },
+        {
+          "id": "postgres-jsonb",
+          "title": "JSON y JSONB en PostgreSQL",
+          "summary": "Almacená atributos semiestructurados y consultá claves con operadores nativos.",
+          "category": "postgres-avanzado"
+        },
+        {
+          "id": "postgres-vistas-materializadas",
+          "title": "Vistas y vistas materializadas",
+          "summary": "Reutilizá consultas con vistas o almacená resultados con vistas materializadas.",
+          "category": "postgres-avanzado"
+        },
+        {
+          "id": "postgres-funciones-fechas-texto",
+          "title": "Funciones de texto, fechas y conversiones",
+          "summary": "Transformá cadenas, fechas y valores dentro de consultas.",
+          "category": "postgres-avanzado"
+        },
+        {
+          "id": "postgres-full-text-search",
+          "title": "Búsqueda de texto completo con tsvector y tsquery",
+          "summary": "Construí búsquedas lingüísticas en documentos sin depender solo de LIKE.",
+          "category": "postgres-avanzado"
+        },
+        {
+          "id": "sql-normalizacion",
+          "title": "Normalización: 1FN, 2FN y 3FN",
+          "summary": "Reducí duplicaciones y anomalías separando datos según sus dependencias.",
+          "category": "diseno-rendimiento"
+        },
+        {
+          "id": "sql-relaciones-tablas-puente",
+          "title": "Relaciones 1:N y N:M con claves foráneas",
+          "summary": "Representá relaciones mediante claves foráneas y tablas puente.",
+          "category": "diseno-rendimiento"
+        },
+        {
+          "id": "postgres-indices",
+          "title": "Índices en PostgreSQL: B-tree, GIN y otros",
+          "summary": "Acelerá consultas frecuentes entendiendo el costo de almacenamiento y escritura.",
+          "category": "diseno-rendimiento"
+        },
+        {
+          "id": "postgres-explain-analyze",
+          "title": "EXPLAIN y EXPLAIN ANALYZE",
+          "summary": "Leé planes de ejecución y compará estimaciones con filas y tiempos reales.",
+          "category": "diseno-rendimiento"
+        },
+        {
+          "id": "postgres-migraciones",
+          "title": "Migraciones de esquema y cambios versionados",
+          "summary": "Administrá cambios de tablas, columnas, índices y restricciones de forma repetible.",
+          "category": "diseno-rendimiento"
+        },
+        {
+          "id": "postgres-backup-restore",
+          "title": "Copias de seguridad y restauración",
+          "summary": "Usá pg_dump y pg_restore y verificá que las copias se puedan recuperar.",
+          "category": "diseno-rendimiento"
+        },
+        {
+          "id": "node-pg-instalacion-conexion",
+          "title": "Conectar Node.js con PostgreSQL usando pg",
+          "summary": "Instalá node-postgres y conectá una aplicación Node.js.",
+          "category": "node-postgres"
+        },
+        {
+          "id": "node-pg-pool",
+          "title": "Pool de conexiones: Pool, connect y release",
+          "summary": "Administrá conexiones reutilizables y liberá clientes correctamente.",
+          "category": "node-postgres"
+        },
+        {
+          "id": "node-pg-consultas-parametrizadas",
+          "title": "Consultas parametrizadas y SQL injection",
+          "summary": "Enviá valores separados del texto SQL para evitar concatenación insegura.",
+          "category": "node-postgres"
+        },
+        {
+          "id": "node-pg-transacciones",
+          "title": "Transacciones con node-postgres",
+          "summary": "Ejecutá BEGIN, COMMIT y ROLLBACK mediante un mismo Client del pool.",
+          "category": "node-postgres"
+        },
+        {
+          "id": "express-postgres-repository",
+          "title": "Separar rutas Express y acceso a PostgreSQL",
+          "summary": "Organizá consultas en un repositorio y mantené rutas centradas en HTTP.",
+          "category": "node-postgres"
+        },
+        {
+          "id": "node-pg-errores-y-pruebas",
+          "title": "Errores SQLSTATE y pruebas de persistencia",
+          "summary": "Interpretá errores del motor y prepará una capa de datos que pueda probarse.",
+          "category": "node-postgres"
+        }
+      ]
+    },
+    {
+      "id": "mongodb",
+      "title": "MongoDB",
+      "shortTitle": "MongoDB",
+      "accent": "mongodb",
+      "symbol": "MDB",
+      "eyebrow": "BASES DOCUMENTALES / BSON",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "description": "Biblioteca práctica para aprender MongoDB: BSON, diseño con documentos embebidos o referencias, consultas CRUD, arrays, agregaciones, índices, consistencia, seguridad y driver oficial de Node.js.",
+      "articles": [
+        {
+          "id": "mongodb-intro",
+          "title": "¿Qué es MongoDB y cuándo conviene utilizarlo?",
+          "summary": "Conocé MongoDB como base de datos documental y compará su enfoque con el modelo relacional.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "mongodb-bson-documentos",
+          "title": "BSON, documentos y tipos de datos",
+          "summary": "Reconocé la representación BSON y los tipos que no son simples cadenas JSON.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "mongodb-db-collections",
+          "title": "Bases de datos y colecciones",
+          "summary": "Organizá namespaces de MongoDB y entendé cómo nacen las colecciones.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "mongodb-modelado-flexible",
+          "title": "Esquema flexible y evolución de documentos",
+          "summary": "Comprendé la flexibilidad y cómo mantener consistentes los documentos.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "mongodb-modelado-embed-reference",
+          "title": "Modelar con documentos embebidos o referencias",
+          "summary": "Elegí entre anidar datos en un documento o relacionarlos mediante identificadores.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "mongodb-atlas-mongosh",
+          "title": "MongoDB Atlas y mongosh",
+          "summary": "Prepará un entorno local o remoto y conectate con la shell oficial.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "mongodb-insert-documents",
+          "title": "insertOne e insertMany: insertar documentos",
+          "summary": "Agregá documentos individuales o lotes y reconocé los identificadores generados.",
+          "category": "crud-consultas"
+        },
+        {
+          "id": "mongodb-find-filters",
+          "title": "find y findOne: consultar documentos",
+          "summary": "Recuperá documentos mediante filtros por igualdad y condiciones.",
+          "category": "crud-consultas"
+        },
+        {
+          "id": "mongodb-projection-sort-limit",
+          "title": "Proyección, sort, limit y skip",
+          "summary": "Controlá los campos devueltos y el orden y tamaño de los resultados.",
+          "category": "crud-consultas"
+        },
+        {
+          "id": "mongodb-query-operators",
+          "title": "Operadores de consulta: comparación, lógica y existencia",
+          "summary": "Combiná criterios numéricos, alternativas, rangos y campos opcionales.",
+          "category": "crud-consultas"
+        },
+        {
+          "id": "mongodb-update-operators",
+          "title": "Operadores de actualización: $set, $inc, $unset",
+          "summary": "Modificá campos sin reemplazar todo el documento.",
+          "category": "crud-consultas"
+        },
+        {
+          "id": "mongodb-delete-replace-upsert",
+          "title": "deleteOne, deleteMany, replaceOne y upsert",
+          "summary": "Eliminá documentos, reemplazá uno completo y comprendé la opción upsert.",
+          "category": "crud-consultas"
+        },
+        {
+          "id": "mongodb-arrays-embedded",
+          "title": "Arrays y documentos anidados",
+          "summary": "Consultá arrays y objetos embebidos como parte de un documento.",
+          "category": "arrays-aggregation"
+        },
+        {
+          "id": "mongodb-elemmatch",
+          "title": "$elemMatch: varias condiciones sobre el mismo elemento",
+          "summary": "Aplicá múltiples criterios a un solo elemento dentro de un array.",
+          "category": "arrays-aggregation"
+        },
+        {
+          "id": "mongodb-array-updates",
+          "title": "Actualizar arrays: $push, $addToSet, $pull y posicionales",
+          "summary": "Agregá, evitá duplicados, quitá y actualizá elementos de un array.",
+          "category": "arrays-aggregation"
+        },
+        {
+          "id": "mongodb-aggregation-pipeline",
+          "title": "Aggregation Pipeline: etapas y flujo de datos",
+          "summary": "Transformá documentos con etapas de filtrado, proyección, agrupación y orden.",
+          "category": "arrays-aggregation"
+        },
+        {
+          "id": "mongodb-aggregation-group-lookup",
+          "title": "$group y $lookup: resumir y combinar colecciones",
+          "summary": "Agrupá documentos y uní datos de otra colección en una pipeline.",
+          "category": "arrays-aggregation"
+        },
+        {
+          "id": "mongodb-aggregation-unwind-project",
+          "title": "$unwind, $project y $addFields",
+          "summary": "Descomponé arrays y prepará la forma final del resultado.",
+          "category": "arrays-aggregation"
+        },
+        {
+          "id": "mongodb-indices",
+          "title": "Índices en MongoDB: conceptos y creación",
+          "summary": "Acelerá filtros frecuentes sin olvidar el costo de mantener índices.",
+          "category": "indices-performance"
+        },
+        {
+          "id": "mongodb-compound-indexes",
+          "title": "Índices compuestos y prefijos",
+          "summary": "Combiná campos en un índice y entendé el efecto de su orden.",
+          "category": "indices-performance"
+        },
+        {
+          "id": "mongodb-unique-ttl-text-indexes",
+          "title": "Índices únicos, TTL y de texto",
+          "summary": "Conocé índices para unicidad, expiración automática y búsqueda textual.",
+          "category": "indices-performance"
+        },
+        {
+          "id": "mongodb-explain",
+          "title": "explain(): analizar planes de consulta",
+          "summary": "Observá si una consulta usa índice, qué documentos examina y cuántos devuelve.",
+          "category": "indices-performance"
+        },
+        {
+          "id": "mongodb-pagination-cursors",
+          "title": "Paginación eficiente y cursores",
+          "summary": "Elegí entre skip/limit y paginación basada en una clave estable.",
+          "category": "indices-performance"
+        },
+        {
+          "id": "mongodb-query-performance",
+          "title": "Rendimiento de consultas y selectividad",
+          "summary": "Mejorá filtros, proyecciones, índices y volumen de datos transferidos.",
+          "category": "indices-performance"
+        },
+        {
+          "id": "mongodb-atomicity",
+          "title": "Atomicidad y límites de un documento",
+          "summary": "Comprendé qué cambios son atómicos y por qué el modelo documental importa.",
+          "category": "integrity-security"
+        },
+        {
+          "id": "mongodb-validacion-esquema",
+          "title": "Schema Validation: validar documentos",
+          "summary": "Definí reglas de tipo y obligatoriedad aun cuando los documentos sean flexibles.",
+          "category": "integrity-security"
+        },
+        {
+          "id": "mongodb-transactions",
+          "title": "Transacciones multi-documento",
+          "summary": "Agrupá cambios sobre varios documentos cuando la operación necesita atomicidad conjunta.",
+          "category": "integrity-security"
+        },
+        {
+          "id": "mongodb-read-write-concern",
+          "title": "Read Concern y Write Concern",
+          "summary": "Entendé qué garantías de lectura y confirmación ofrece MongoDB.",
+          "category": "integrity-security"
+        },
+        {
+          "id": "mongodb-roles-access-control",
+          "title": "Usuarios, roles y control de acceso",
+          "summary": "Aplicá autenticación y privilegios mínimos para proteger bases y colecciones.",
+          "category": "integrity-security"
+        },
+        {
+          "id": "mongodb-conexion-segura",
+          "title": "Conexiones seguras, TLS y secretos",
+          "summary": "Protegé el transporte y la autenticación al conectarte a MongoDB.",
+          "category": "integrity-security"
+        },
+        {
+          "id": "mongodb-node-driver-connect",
+          "title": "Conectar Node.js con el driver oficial",
+          "summary": "Instalá mongodb y reutilizá un cliente en la aplicación.",
+          "category": "node-driver"
+        },
+        {
+          "id": "mongodb-node-crud",
+          "title": "CRUD con el driver de Node.js",
+          "summary": "Usá insertOne, findOne, updateOne y deleteOne desde Node.",
+          "category": "node-driver"
+        },
+        {
+          "id": "mongodb-node-cursors",
+          "title": "Cursores en el driver: iterar y limitar memoria",
+          "summary": "Procesá conjuntos grandes por partes en lugar de cargar todos los documentos.",
+          "category": "node-driver"
+        },
+        {
+          "id": "mongodb-node-bulk-errors",
+          "title": "Bulk operations y manejo de errores",
+          "summary": "Agrupá escrituras y analizá resultados y fallos parciales.",
+          "category": "node-driver"
+        },
+        {
+          "id": "mongodb-node-typescript",
+          "title": "MongoDB con TypeScript y tipos de documentos",
+          "summary": "Definí interfaces y tipá colecciones para detectar errores durante el desarrollo.",
+          "category": "node-driver"
+        },
+        {
+          "id": "mongodb-express-api",
+          "title": "Crear una API Express que use MongoDB",
+          "summary": "Conectá rutas Express con repositorios que usan el driver oficial.",
+          "category": "node-driver"
+        },
+        {
+          "id": "mongodb-replica-sets",
+          "title": "Replica sets: alta disponibilidad y failover",
+          "summary": "Comprendé la replicación primaria-secundaria y la elección de un nuevo primario.",
+          "category": "administracion-avanzada"
+        },
+        {
+          "id": "mongodb-sharding",
+          "title": "Sharding: distribuir datos horizontalmente",
+          "summary": "Conocé cómo MongoDB distribuye colecciones y por qué la shard key importa.",
+          "category": "administracion-avanzada"
+        },
+        {
+          "id": "mongodb-change-streams",
+          "title": "Change Streams: reaccionar a cambios",
+          "summary": "Escuchá eventos de inserción, actualización y eliminación en una colección.",
+          "category": "administracion-avanzada"
+        },
+        {
+          "id": "mongodb-backup-restore",
+          "title": "Backup y restore: mongodump y mongorestore",
+          "summary": "Creá copias lógicas y practicá su recuperación en un entorno separado.",
+          "category": "administracion-avanzada"
+        },
+        {
+          "id": "mongodb-migrations",
+          "title": "Migraciones y cambios de esquema en MongoDB",
+          "summary": "Organizá transformaciones de documentos para evolucionar la aplicación.",
+          "category": "administracion-avanzada"
+        },
+        {
+          "id": "mongodb-gridfs",
+          "title": "GridFS: almacenar archivos grandes",
+          "summary": "Entendé cuándo usar GridFS y cuándo conviene almacenamiento de objetos externo.",
+          "category": "administracion-avanzada"
+        }
+      ]
+    },
+    {
+      "id": "apis",
+      "title": "APIs y comunicación web",
+      "shortTitle": "APIs",
+      "accent": "apis",
+      "symbol": "⇄",
+      "eyebrow": "HTTP / REST / FETCH",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Biblioteca práctica sobre HTTP, diseño REST, JSON, Fetch, seguridad, documentación e integración entre aplicaciones.",
+      "articles": [
+        {
+          "id": "api-http",
+          "title": "¿Qué es HTTP y cómo funciona una comunicación web?",
+          "summary": "Conocé el protocolo que permite que navegadores, aplicaciones y servidores intercambien solicitudes y respuestas.",
+          "category": "fundamentos-http"
+        },
+        {
+          "id": "api-metodos",
+          "title": "Métodos HTTP: GET, POST, PUT, PATCH y DELETE",
+          "summary": "Elegí el método HTTP según la intención de la operación sobre un recurso.",
+          "category": "fundamentos-http"
+        },
+        {
+          "id": "api-status",
+          "title": "Códigos de estado HTTP: 2xx, 3xx, 4xx y 5xx",
+          "summary": "Interpretá el resultado de una solicitud mediante su código de estado.",
+          "category": "fundamentos-http"
+        },
+        {
+          "id": "api-headers",
+          "title": "Cabeceras HTTP y negociación de contenido",
+          "summary": "Usá cabeceras para describir el contenido, la autenticación, la caché y las preferencias del cliente.",
+          "category": "fundamentos-http"
+        },
+        {
+          "id": "api-rest",
+          "title": "Diseño de APIs REST y recursos",
+          "summary": "Modelá una API alrededor de recursos, rutas predecibles y operaciones HTTP coherentes.",
+          "category": "diseno-rest"
+        },
+        {
+          "id": "api-json",
+          "title": "JSON, validación y contratos de datos",
+          "summary": "Comprendé cómo representar datos y validar lo que recibís de una API.",
+          "category": "diseno-rest"
+        },
+        {
+          "id": "api-paginacion",
+          "title": "Paginación, filtros y ordenamiento",
+          "summary": "Evitá respuestas enormes y diseñá colecciones fáciles de recorrer.",
+          "category": "diseno-rest"
+        },
+        {
+          "id": "api-fetch",
+          "title": "Fetch API: solicitudes GET y POST",
+          "summary": "Consumí endpoints desde JavaScript usando la API nativa Fetch.",
+          "category": "consumo"
+        },
+        {
+          "id": "api-response",
+          "title": "Response: leer JSON, texto, cabeceras y estado",
+          "summary": "Aprendé a interpretar el objeto Response que devuelve Fetch.",
+          "category": "consumo"
+        },
+        {
+          "id": "api-abort",
+          "title": "AbortController: cancelar solicitudes y manejar timeouts",
+          "summary": "Cancelá solicitudes que ya no hacen falta y evitá esperas indefinidas.",
+          "category": "consumo"
+        },
+        {
+          "id": "api-cors",
+          "title": "CORS y solicitudes entre distintos orígenes",
+          "summary": "Comprendé por qué el navegador bloquea ciertas respuestas y cómo habilitar el acceso correctamente.",
+          "category": "seguridad"
+        },
+        {
+          "id": "api-auth",
+          "title": "Autenticación, autorización y tokens Bearer",
+          "summary": "Diferenciá identidad y permisos y aprendé el patrón de autenticación Bearer.",
+          "category": "seguridad"
+        },
+        {
+          "id": "api-openapi",
+          "title": "OpenAPI: documentar contratos de una API",
+          "summary": "Documentá rutas, parámetros, respuestas y esquemas con una especificación legible por personas y herramientas.",
+          "category": "integracion"
+        },
+        {
+          "id": "api-webhooks",
+          "title": "Webhooks: recibir eventos de otros servicios",
+          "summary": "Usá webhooks para reaccionar a eventos sin consultar continuamente una API.",
+          "category": "integracion"
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "title": "Testing",
+      "shortTitle": "Testing",
+      "accent": "testing",
+      "symbol": "✓",
+      "eyebrow": "CALIDAD / PRUEBAS / AUTOMATIZACIÓN",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "",
+      "description": "Biblioteca práctica de pruebas unitarias, integración, componentes, E2E, cobertura y automatización de calidad.",
+      "articles": [
+        {
+          "id": "test-que-es",
+          "title": "¿Qué es el testing de software y por qué importa?",
+          "summary": "Comprendé las pruebas como una herramienta para detectar regresiones y verificar comportamientos.",
+          "category": "fundamentos-testing"
+        },
+        {
+          "id": "test-piramide",
+          "title": "Pirámide de testing: unitarias, integración y E2E",
+          "summary": "Distribuí las pruebas según alcance, costo y confianza que aportan.",
+          "category": "fundamentos-testing"
+        },
+        {
+          "id": "test-aaa",
+          "title": "Patrón AAA: Arrange, Act, Assert",
+          "summary": "Organizá cada prueba en preparación, acción y verificación.",
+          "category": "fundamentos-testing"
+        },
+        {
+          "id": "test-vitest",
+          "title": "Vitest: configurar y ejecutar pruebas unitarias",
+          "summary": "Usá Vitest para ejecutar pruebas JavaScript y TypeScript con una API familiar y rápida.",
+          "category": "unitarias"
+        },
+        {
+          "id": "test-async",
+          "title": "Probar código asíncrono: Promises y async/await",
+          "summary": "Verificá resultados y errores de funciones asíncronas sin crear falsos positivos.",
+          "category": "unitarias"
+        },
+        {
+          "id": "test-mocks",
+          "title": "Mocks, stubs y spies: aislar dependencias",
+          "summary": "Controlá dependencias externas y observá cómo interactúa el código con ellas.",
+          "category": "unitarias"
+        },
+        {
+          "id": "test-testing-library",
+          "title": "Testing Library: probar componentes desde el usuario",
+          "summary": "Verificá componentes a través de roles, etiquetas y texto visibles, no de detalles internos.",
+          "category": "componentes"
+        },
+        {
+          "id": "test-formularios",
+          "title": "Probar formularios, validación y mensajes",
+          "summary": "Comprobá que un formulario acepte datos válidos y comunique errores de manera accesible.",
+          "category": "componentes"
+        },
+        {
+          "id": "test-playwright",
+          "title": "Playwright: primeras pruebas end-to-end",
+          "summary": "Automatizá recorridos completos usando navegadores reales y aserciones que esperan condiciones.",
+          "category": "e2e"
+        },
+        {
+          "id": "test-locators",
+          "title": "Locators de Playwright y buenas consultas",
+          "summary": "Elegí localizadores resistentes que representen cómo se identifica un control en la interfaz.",
+          "category": "e2e"
+        },
+        {
+          "id": "test-api",
+          "title": "Probar APIs HTTP y respuestas de red",
+          "summary": "Comprobá endpoints y escenarios de red sin depender exclusivamente de la interfaz.",
+          "category": "e2e"
+        },
+        {
+          "id": "test-cobertura",
+          "title": "Cobertura de código: statements, branches, functions y lines",
+          "summary": "Interpretá qué mide la cobertura y cómo usarla sin convertirla en una meta vacía.",
+          "category": "calidad-ci"
+        },
+        {
+          "id": "test-flaky",
+          "title": "Pruebas flaky: detectar y reducir inestabilidad",
+          "summary": "Reconocé pruebas que pasan y fallan sin cambios de código y eliminá sus causas.",
+          "category": "calidad-ci"
+        },
+        {
+          "id": "test-ci",
+          "title": "Ejecutar pruebas en CI/CD",
+          "summary": "Automatizá la ejecución de pruebas para detectar regresiones antes de integrar cambios.",
+          "category": "calidad-ci"
+        }
+      ]
+    },
+    {
+      "id": "docker-deploy",
+      "title": "Docker y despliegue",
+      "shortTitle": "Docker",
+      "accent": "docker",
+      "symbol": "🐳",
+      "eyebrow": "CONTENEDORES / CI-CD / PRODUCCIÓN",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "dockerfile",
+      "description": "Biblioteca práctica para aprender Docker, Dockerfile, Compose, redes, persistencia, seguridad, registros de imágenes, CI/CD y despliegues en servidores.",
+      "articles": [
+        {
+          "id": "docker-contenedores",
+          "title": "¿Qué es Docker y qué problema resuelve?",
+          "summary": "Comprendé la contenerización y la diferencia entre imagen, contenedor y máquina virtual.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "docker-instalacion",
+          "title": "Instalar Docker Engine y Docker Desktop",
+          "summary": "Prepará Docker en tu sistema operativo y comprobá que el motor esté disponible.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "docker-imagenes",
+          "title": "Imágenes Docker: capas, etiquetas y caché",
+          "summary": "Comprendé cómo Docker almacena imágenes y cómo identificar versiones de manera reproducible.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "docker-run",
+          "title": "Crear, iniciar, detener y eliminar contenedores",
+          "summary": "Dominá docker run y los comandos esenciales del ciclo de vida de un contenedor.",
+          "category": "fundamentos"
+        },
+        {
+          "id": "dockerfile-estructura",
+          "title": "¿Qué es un Dockerfile?",
+          "summary": "Definí cómo se construye una imagen de tu propia aplicación.",
+          "category": "dockerfiles"
+        },
+        {
+          "id": "dockerfile-instrucciones",
+          "title": "Instrucciones Dockerfile: COPY, RUN, CMD, ENTRYPOINT, ARG y ENV",
+          "summary": "Elegí las instrucciones adecuadas para construir y ejecutar una imagen.",
+          "category": "dockerfiles"
+        },
+        {
+          "id": "dockerignore-cache",
+          "title": ".dockerignore, contexto de construcción y caché",
+          "summary": "Reducí el contexto enviado al motor y evitá copiar archivos innecesarios o sensibles.",
+          "category": "dockerfiles"
+        },
+        {
+          "id": "docker-multistage",
+          "title": "Builds multi-stage: imágenes más pequeñas y seguras",
+          "summary": "Separá compilación y ejecución para no distribuir herramientas que producción no necesita.",
+          "category": "dockerfiles"
+        },
+        {
+          "id": "docker-puertos",
+          "title": "Puertos: EXPOSE y publicación con -p",
+          "summary": "Entendé qué puerto escucha la aplicación y cómo hacerlo accesible desde el host.",
+          "category": "runtime"
+        },
+        {
+          "id": "docker-volumenes",
+          "title": "Volúmenes y bind mounts: persistir datos",
+          "summary": "Mantené datos fuera del ciclo de vida del contenedor y compartí archivos cuando haga falta.",
+          "category": "runtime"
+        },
+        {
+          "id": "docker-redes",
+          "title": "Redes Docker y comunicación entre servicios",
+          "summary": "Conectá contenedores entre sí sin depender de direcciones IP cambiantes.",
+          "category": "runtime"
+        },
+        {
+          "id": "docker-env-secrets",
+          "title": "Variables de entorno, archivos .env y secretos",
+          "summary": "Configurá cada entorno sin incrustar credenciales en el código o en la imagen.",
+          "category": "runtime"
+        },
+        {
+          "id": "compose-intro",
+          "title": "Docker Compose: definir aplicaciones de varios servicios",
+          "summary": "Describí aplicación, base de datos, red y volúmenes en un solo archivo declarativo.",
+          "category": "compose"
+        },
+        {
+          "id": "compose-dependencias",
+          "title": "Compose: dependencias, readiness y healthchecks",
+          "summary": "Controlá el orden de inicio y diferenciá un proceso iniciado de un servicio listo.",
+          "category": "compose"
+        },
+        {
+          "id": "compose-perfiles",
+          "title": "Perfiles de Compose: servicios opcionales",
+          "summary": "Activá herramientas auxiliares solo cuando el entorno las necesite.",
+          "category": "compose"
+        },
+        {
+          "id": "compose-produccion",
+          "title": "Preparar Compose para producción",
+          "summary": "Separá desarrollo y producción y aplicá ajustes seguros para un entorno público.",
+          "category": "compose"
+        },
+        {
+          "id": "docker-registry-tags",
+          "title": "Registros, repositorios y versionado de imágenes",
+          "summary": "Publicá imágenes en un registro y asignales referencias reproducibles.",
+          "category": "publicacion"
+        },
+        {
+          "id": "docker-ghcr-actions",
+          "title": "Publicar imágenes automáticamente con GitHub Actions y GHCR",
+          "summary": "Automatizá la construcción y publicación de una imagen cuando el código supera las comprobaciones.",
+          "category": "publicacion"
+        },
+        {
+          "id": "docker-vps",
+          "title": "Desplegar un contenedor en un VPS",
+          "summary": "Llevá una imagen publicada a un servidor virtual y ejecutala de forma controlada.",
+          "category": "publicacion"
+        },
+        {
+          "id": "docker-proxy-tls",
+          "title": "Proxy inverso y HTTPS para aplicaciones desplegadas",
+          "summary": "Publicá servicios internos mediante un punto de entrada y protegé el tráfico con TLS.",
+          "category": "publicacion"
+        },
+        {
+          "id": "docker-logs-debug",
+          "title": "Logs e inspección: diagnosticar contenedores",
+          "summary": "Encontrá fallos de arranque, configuración y conectividad usando logs e inspect.",
+          "category": "operaciones"
+        },
+        {
+          "id": "docker-health-restart",
+          "title": "Healthchecks, restart policies y disponibilidad",
+          "summary": "Detectá servicios que están activos como proceso pero no responden correctamente.",
+          "category": "operaciones"
+        },
+        {
+          "id": "docker-backup",
+          "title": "Persistencia y backups de bases de datos en contenedores",
+          "summary": "Protegé los datos que viven en volúmenes y practicá restauraciones verificables.",
+          "category": "operaciones"
+        },
+        {
+          "id": "docker-seguridad",
+          "title": "Seguridad de contenedores: usuarios, permisos y secretos",
+          "summary": "Reducí privilegios y superficie de ataque en imágenes y servicios Docker.",
+          "category": "operaciones"
+        },
+        {
+          "id": "deploy-dns",
+          "title": "Dominios, DNS y configuración del punto de entrada",
+          "summary": "Conectá un dominio con el servidor y verificá la resolución antes de configurar HTTPS.",
+          "category": "entrega"
+        },
+        {
+          "id": "deploy-actualizar-rollback",
+          "title": "Actualizar versiones y volver atrás (rollback)",
+          "summary": "Desplegá cambios identificables y prepará una forma controlada de regresar a la versión anterior.",
+          "category": "entrega"
+        },
+        {
+          "id": "deploy-monitoring",
+          "title": "Monitoreo, métricas y alertas básicas",
+          "summary": "Observá disponibilidad y recursos para detectar problemas antes de que afecten a los usuarios.",
+          "category": "entrega"
+        },
+        {
+          "id": "deploy-blue-green",
+          "title": "Estrategias de despliegue: rolling, blue-green y canary",
+          "summary": "Conocé formas de publicar cambios reduciendo el riesgo y el tiempo de interrupción.",
+          "category": "entrega"
+        }
+      ]
+    }
+  ],
+  "integrations": [
+    {
+      "id": "biblioteca-novelas",
+      "title": "Biblioteca de novelas ligeras",
+      "level": "Intermedio a avanzado",
+      "outcome": "Una aplicación de catálogo con páginas públicas, filtros interactivos y una API que organiza novelas, volúmenes, capítulos e ilustraciones.",
+      "summary": "Evolucioná un catálogo estático hacia una aplicación completa. Astro sirve las páginas de lectura y contenido, React resuelve filtros interactivos, Express expone la API y PostgreSQL mantiene las relaciones del catálogo.",
+      "stack": [
+        {
+          "tool": "astro",
+          "role": "Páginas públicas, layouts y contenido renderizado en servidor."
+        },
+        {
+          "tool": "react",
+          "role": "Filtros, búsqueda y controles interactivos como islas."
+        },
+        {
+          "tool": "typescript",
+          "role": "Contratos de datos compartidos y tipos de respuestas."
+        },
+        {
+          "tool": "express",
+          "role": "API REST para novelas, volúmenes, capítulos e ilustraciones."
+        },
+        {
+          "tool": "sql-postgres",
+          "role": "Modelo relacional y consultas del catálogo."
+        },
+        {
+          "tool": "testing",
+          "role": "Pruebas de servicios, rutas y flujos principales."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Entorno reproducible para API y base de datos."
+        },
+        {
+          "tool": "git",
+          "role": "Historial, ramas y revisión de cambios."
+        }
+      ],
+      "flow": [
+        [
+          "Lector",
+          "Abre el catálogo, aplica filtros o entra al detalle de una novela."
+        ],
+        [
+          "Astro + React",
+          "Astro presenta páginas y React hidrata únicamente los controles que necesitan interacción."
+        ],
+        [
+          "API Express",
+          "Valida parámetros y consulta los servicios de catálogo."
+        ],
+        [
+          "PostgreSQL",
+          "Relaciona novelas, volúmenes, capítulos e ilustraciones y devuelve los datos solicitados."
+        ]
+      ],
+      "milestones": [
+        [
+          "Modelo de datos",
+          "Diseñá novelas, volúmenes, capítulos e ilustraciones con claves primarias, foráneas y restricciones."
+        ],
+        [
+          "API",
+          "Construí GET /api/novelas, GET /api/novelas/:slug y rutas para volúmenes e ilustraciones; agregá validación y errores coherentes."
+        ],
+        [
+          "Interfaz",
+          "Creá páginas Astro para navegación y detalle; agregá una isla React para búsqueda, filtros y estado de lectura local."
+        ],
+        [
+          "Calidad y entrega",
+          "Probá consultas y endpoints, levantá API y PostgreSQL con Compose y documentá variables de entorno."
+        ]
+      ],
+      "dataModel": "novelas(id, slug, titulo, autor, sinopsis, portada_url, estado) · volumenes(id, novela_id, numero, titulo) · capitulos(id, volumen_id, numero, titulo, recurso_url) · ilustraciones(id, capitulo_id, orden, imagen_url, texto_alternativo)",
+      "endpoints": "GET /api/novelas?buscar=&estado= · GET /api/novelas/:slug · GET /api/novelas/:slug/volumenes · GET /api/volumenes/:id/ilustraciones"
+    },
+    {
+      "id": "panel-tareas",
+      "title": "Panel de tareas y seguimiento",
+      "level": "Intermedio",
+      "outcome": "Un panel CRUD con filtros, estados, fechas y persistencia en una base documental.",
+      "summary": "Construí una aplicación donde los usuarios puedan crear tareas, actualizar su estado, filtrar por prioridad y consultar actividad. Vue administra la interfaz reactiva y Express conecta el frontend con MongoDB.",
+      "stack": [
+        {
+          "tool": "vuejs",
+          "role": "Componentes, estado reactivo, formularios y filtros."
+        },
+        {
+          "tool": "typescript",
+          "role": "Tipos para tareas, filtros y respuestas de la API."
+        },
+        {
+          "tool": "express",
+          "role": "Rutas CRUD, middleware de validación y errores."
+        },
+        {
+          "tool": "mongodb",
+          "role": "Documentos de tareas y consultas por estado o fecha."
+        },
+        {
+          "tool": "testing",
+          "role": "Pruebas de validación, servicios y API."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Servicios locales reproducibles."
+        }
+      ],
+      "flow": [
+        [
+          "Usuario",
+          "Completa un formulario o cambia el estado de una tarea."
+        ],
+        [
+          "Vue",
+          "Actualiza la interfaz, valida campos y envía una solicitud HTTP."
+        ],
+        [
+          "Express",
+          "Valida el payload, aplica reglas de negocio y llama al repositorio."
+        ],
+        [
+          "MongoDB",
+          "Guarda el documento y devuelve el resultado para actualizar la vista."
+        ]
+      ],
+      "milestones": [
+        [
+          "Dominio",
+          "Definí tarea, prioridad, estado, fecha límite y reglas de transición."
+        ],
+        [
+          "Persistencia y API",
+          "Diseñá documentos e índices; implementá crear, listar, editar y eliminar."
+        ],
+        [
+          "Interfaz",
+          "Separá formulario, lista, tarjeta y filtros en componentes; gestioná carga y errores."
+        ],
+        [
+          "Verificación",
+          "Probá casos válidos, datos inválidos, tareas inexistentes y filtros combinados."
+        ]
+      ],
+      "dataModel": "Una tarea puede incluir _id, titulo, descripcion, estado, prioridad, fechaLimite, etiquetas y createdAt. Evitá arrays ilimitados de historial dentro del mismo documento.",
+      "endpoints": "GET /api/tareas · POST /api/tareas · PATCH /api/tareas/:id · DELETE /api/tareas/:id"
+    },
+    {
+      "id": "arcade-ranking",
+      "title": "Juego arcade con tabla de posiciones",
+      "level": "Intermedio a avanzado",
+      "outcome": "Un juego 2D que registra puntuaciones en un servidor y muestra un ranking persistente.",
+      "summary": "Phaser se ocupa del ciclo de juego y la entrada; una API Node/Express recibe las puntuaciones y PostgreSQL conserva resultados y jugadores.",
+      "stack": [
+        {
+          "tool": "phaser",
+          "role": "Escenas, sprites, input, física y lógica del juego."
+        },
+        {
+          "tool": "nodejs",
+          "role": "Entorno de ejecución para el servidor."
+        },
+        {
+          "tool": "express",
+          "role": "Endpoints para registrar y consultar puntuaciones."
+        },
+        {
+          "tool": "sql-postgres",
+          "role": "Jugadores, partidas y clasificación."
+        },
+        {
+          "tool": "testing",
+          "role": "Pruebas de reglas de puntuación y endpoints."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Servidor y base de datos reproducibles."
+        }
+      ],
+      "flow": [
+        [
+          "Juego Phaser",
+          "Procesa controles, colisiones y estado de la partida."
+        ],
+        [
+          "Fin de partida",
+          "El cliente prepara puntuación y metadatos permitidos."
+        ],
+        [
+          "API Express",
+          "Valida tipo, rango y límites antes de registrar el resultado."
+        ],
+        [
+          "PostgreSQL",
+          "Guarda la partida y consulta el top de puntuaciones."
+        ]
+      ],
+      "milestones": [
+        [
+          "Prototipo",
+          "Creá menú, nivel, jugador, obstáculos y pantalla de resultado."
+        ],
+        [
+          "API y esquema",
+          "Definí jugadores y partidas; implementá POST /api/scores y GET /api/leaderboard."
+        ],
+        [
+          "Integración",
+          "Enviá la puntuación al finalizar y mostrá el ranking sin bloquear el loop del juego."
+        ],
+        [
+          "Seguridad y calidad",
+          "Validá entradas en servidor, limita frecuencia de escritura y probá reglas de puntuación."
+        ]
+      ],
+      "dataModel": "jugadores(id, alias, creado_en) · partidas(id, jugador_id, puntuacion, duracion_ms, creada_en). El servidor debe calcular o verificar reglas importantes; no confíes ciegamente en el cliente.",
+      "endpoints": "POST /api/scores · GET /api/leaderboard?limit=10"
+    },
+    {
+      "id": "sitio-documentacion",
+      "title": "Portal de documentación interactiva",
+      "level": "Inicial a intermedio",
+      "outcome": "Un sitio de documentación rápido con buscador, componentes reutilizables y ejemplos que pueden probarse.",
+      "summary": "Astro genera páginas de contenido; Web Components encapsula widgets independientes; una API ofrece búsqueda y el pipeline de pruebas verifica enlaces y comportamiento antes de publicar.",
+      "stack": [
+        {
+          "tool": "astro",
+          "role": "Rutas de documentación y páginas generadas desde contenido."
+        },
+        {
+          "tool": "webcomponents",
+          "role": "Widgets reutilizables como pestañas, avisos y tarjetas."
+        },
+        {
+          "tool": "apis",
+          "role": "Contrato HTTP para búsqueda y sugerencias."
+        },
+        {
+          "tool": "testing",
+          "role": "Verificación de componentes, enlaces y recorridos."
+        },
+        {
+          "tool": "git",
+          "role": "Control de versiones y revisión."
+        },
+        {
+          "tool": "docker-deploy",
+          "role": "Ejecución reproducible del servicio de búsqueda si se necesita backend."
+        }
+      ],
+      "flow": [
+        [
+          "Autor",
+          "Escribe contenido estructurado y ejemplos."
+        ],
+        [
+          "Astro",
+          "Genera páginas HTML y deja estático el contenido que no requiere interacción."
+        ],
+        [
+          "Web Components",
+          "Añade widgets encapsulados cuando el lector necesita pestañas, copiar o expandir."
+        ],
+        [
+          "API y pruebas",
+          "La búsqueda consulta el servicio y las pruebas revisan rutas, enlaces y controles."
+        ]
+      ],
+      "milestones": [
+        [
+          "Contenido",
+          "Definí estructura de secciones, slugs, metadatos y navegación."
+        ],
+        [
+          "Componentes",
+          "Creá widgets nativos con atributos claros, slots y eventos personalizados."
+        ],
+        [
+          "Búsqueda",
+          "Definí un endpoint de consulta y estados de carga, vacío y error."
+        ],
+        [
+          "Publicación",
+          "Automatizá pruebas de rutas y enlaces; desplegá las páginas estáticas."
+        ]
+      ],
+      "dataModel": "Documento de contenido: slug, titulo, resumen, seccion, etiquetas y cuerpo. La API de búsqueda puede indexar texto y etiquetas sin almacenar la presentación visual.",
+      "endpoints": "GET /api/search?q=react · GET /api/suggestions?q=comp"
+    }
+  ]
+}

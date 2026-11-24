@@ -1,0 +1,3063 @@
+{
+  "id": "sql-postgres",
+  "title": "SQL y PostgreSQL",
+  "shortTitle": "SQL / PostgreSQL",
+  "symbol": "SQL",
+  "eyebrow": "BASES RELACIONALES / POSTGRESQL 19",
+  "tagline": "Consultá, modelá y administrá datos relacionales con SQL.",
+  "description": "Biblioteca práctica para aprender SQL y profundizar en PostgreSQL: diseño relacional, consultas, JOIN, transacciones, JSONB, índices, rendimiento y conexión segura desde Node.js.",
+  "level": "Inicial a avanzado",
+  "accent": "sql-postgres",
+  "syntaxLanguage": "sql",
+  "categories": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos y modelo relacional",
+      "description": "Entendé SQL, la organización de PostgreSQL y el diseño de tablas, tipos y restricciones.",
+      "icon": "▦",
+      "articles": [
+        "sql-que-es",
+        "postgres-arquitectura-database-schema",
+        "sql-modelo-relacional",
+        "postgres-psql",
+        "sql-tipos-datos",
+        "sql-claves-restricciones"
+      ]
+    },
+    {
+      "id": "consultas",
+      "title": "Consultas y filtros con SELECT",
+      "description": "Recuperá datos con SELECT, expresiones, condiciones, NULL, orden y paginación.",
+      "icon": "⌕",
+      "articles": [
+        "sql-select-basico",
+        "sql-alias-expresiones",
+        "sql-where",
+        "sql-operadores-filtros",
+        "sql-null",
+        "sql-order-limit-offset"
+      ]
+    },
+    {
+      "id": "joins-agrupaciones",
+      "title": "Relaciones, JOIN y agrupaciones",
+      "description": "Combiná tablas, agrupá resultados y resolvé consultas con subconsultas.",
+      "icon": "⤢",
+      "articles": [
+        "sql-inner-join",
+        "sql-left-join",
+        "sql-otros-joins",
+        "sql-group-by-agregaciones",
+        "sql-having",
+        "sql-subqueries-exists"
+      ]
+    },
+    {
+      "id": "escritura-transacciones",
+      "title": "Escritura de datos y transacciones",
+      "description": "Insertá, modificá y eliminá filas de forma controlada y agrupá operaciones con transacciones.",
+      "icon": "✎",
+      "articles": [
+        "sql-insert-returning",
+        "sql-update",
+        "sql-delete",
+        "sql-upsert",
+        "sql-transacciones-acid",
+        "sql-savepoints-isolation"
+      ]
+    },
+    {
+      "id": "postgres-avanzado",
+      "title": "Funciones y capacidades de PostgreSQL",
+      "description": "Trabajá con CTE, funciones de ventana, JSONB, vistas y búsqueda de texto.",
+      "icon": "◇",
+      "articles": [
+        "postgres-cte",
+        "postgres-window-functions",
+        "postgres-jsonb",
+        "postgres-vistas-materializadas",
+        "postgres-funciones-fechas-texto",
+        "postgres-full-text-search"
+      ]
+    },
+    {
+      "id": "diseno-rendimiento",
+      "title": "Diseño, rendimiento y mantenimiento",
+      "description": "Diseñá esquemas sostenibles, medí consultas, creá índices y prepará migraciones y backups.",
+      "icon": "⚙",
+      "articles": [
+        "sql-normalizacion",
+        "sql-relaciones-tablas-puente",
+        "postgres-indices",
+        "postgres-explain-analyze",
+        "postgres-migraciones",
+        "postgres-backup-restore"
+      ]
+    },
+    {
+      "id": "node-postgres",
+      "title": "PostgreSQL con Node.js y Express",
+      "description": "Conectá tu backend, administrá conexiones y ejecutá consultas seguras.",
+      "icon": "⬢",
+      "articles": [
+        "node-pg-instalacion-conexion",
+        "node-pg-pool",
+        "node-pg-consultas-parametrizadas",
+        "node-pg-transacciones",
+        "express-postgres-repository",
+        "node-pg-errores-y-pruebas"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "sql-que-es",
+      "category": "fundamentos",
+      "title": "¿Qué es SQL y para qué se utiliza?",
+      "summary": "Diferenciá SQL, un gestor de bases de datos y PostgreSQL.",
+      "purpose": "SQL es un lenguaje declarativo para definir estructuras, consultar filas y modificar datos relacionales. PostgreSQL es un sistema gestor que interpreta SQL y agrega funciones y tipos propios. SQL no es una base de datos ni PostgreSQL es el único motor que lo implementa.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "SELECT ... FROM ... WHERE ...",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Consultar datos",
+          "description": "Pedí solo las columnas que necesita la pantalla.",
+          "code": "-- Ejemplo práctico:\nSELECT nombre\nFROM clientes\nWHERE activo = true;",
+          "explanation": "SQL describe el resultado. El planificador del motor elige cómo recuperar los registros.",
+          "language": "sql"
+        },
+        {
+          "title": "Definir una tabla",
+          "description": "SQL también sirve para definir estructuras y reglas.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE etiquetas (\n  id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL\n);\n\nSELECT id, nombre FROM etiquetas;",
+          "explanation": "CREATE TABLE define la estructura; SELECT consulta las filas creadas.",
+          "language": "sql"
+        },
+        {
+          "title": "Filtrar y ordenar resultados",
+          "description": "Consultá solo las novelas que están en lectura y ordenalas por título.",
+          "language": "sql",
+          "code": "SELECT titulo, autor, estado\nFROM novelas\nWHERE estado = 'leyendo'\nORDER BY titulo ASC;",
+          "explanation": "SELECT enumera las columnas que querés devolver; FROM identifica la tabla; WHERE filtra filas y ORDER BY define el orden. El punto y coma termina la sentencia. La tabla y columnas deben existir en el esquema de tu base."
+        }
+      ],
+      "parameters": [],
+      "exercise": "Explicá la diferencia entre SQL, PostgreSQL y una tabla.",
+      "hint": "SQL es el lenguaje; PostgreSQL es el motor; una tabla es una estructura dentro de una base.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Tutorial",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html"
+        },
+        {
+          "label": "PostgreSQL — SQL",
+          "url": "https://www.postgresql.org/docs/19/sql.html"
+        }
+      ],
+      "related": [
+        "express-database-integration",
+        "node-pg-instalacion-conexion"
+      ],
+      "deepDive": {
+        "model": "SQL describe qué resultado querés obtener, no cada paso físico para conseguirlo. PostgreSQL parsea la consulta, el planificador evalúa alternativas y el ejecutor usa operaciones como scans y joins. Las restricciones protegen la integridad y las transacciones agrupan operaciones para que se comporten como una unidad.",
+        "flow": [
+          [
+            "Modelo relacional",
+            "Tablas, claves primarias, claves foráneas y restricciones expresan relaciones e invariantes."
+          ],
+          [
+            "Consulta declarativa",
+            "SELECT, JOIN, WHERE y GROUP BY describen el resultado requerido."
+          ],
+          [
+            "Plan y ejecución",
+            "El planner estima costos y elige scans, índices y algoritmos de join."
+          ],
+          [
+            "Transacción",
+            "BEGIN, COMMIT y ROLLBACK delimitan cambios que deben conservar consistencia."
+          ]
+        ],
+        "decisions": [
+          "Normalizá para evitar duplicación y anomalías; desnormalizá solo cuando exista una razón medida.",
+          "Usá índices para consultas frecuentes y selectivas, pero evaluá el costo adicional sobre INSERT, UPDATE, DELETE y almacenamiento."
+        ],
+        "debugging": "Cuando una consulta sea lenta, inspeccioná EXPLAIN (ANALYZE, BUFFERS) en un entorno seguro y revisá cardinalidad, filtros, joins e índices. No asumas que agregar un índice siempre mejora el plan."
+      }
+    },
+    {
+      "id": "postgres-arquitectura-database-schema",
+      "category": "fundamentos",
+      "title": "Servidor, base de datos y esquema en PostgreSQL",
+      "summary": "Comprendé la jerarquía clúster, base, esquema, tabla y conexión.",
+      "purpose": "Una instalación administra un clúster con varias bases. Cada base contiene esquemas; un esquema agrupa tablas, vistas, secuencias y funciones. Una conexión trabaja dentro de una base concreta.",
+      "whenToUse": "Usá este concepto al configurar PostgreSQL, diseñar ambientes separados o resolver por qué un objeto no aparece en una consulta. Es fundamental para entender a qué base se conecta un backend y cómo se resuelven nombres de tablas.",
+      "syntax": "Clúster → base → esquema → tablas, vistas y funciones",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Crear una base y un esquema",
+          "description": "Separá los objetos de una aplicación.",
+          "code": "-- Desde otra base, por ejemplo postgres:\nCREATE DATABASE tienda_dev;\n\n-- Conectate a tienda_dev y luego:\nCREATE SCHEMA catalogo;\nCREATE TABLE catalogo.productos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL\n);",
+          "explanation": "La base contiene el esquema catalogo y la tabla se identifica mediante el nombre calificado catalogo.productos.",
+          "language": "sql"
+        },
+        {
+          "title": "Consultar un objeto calificado",
+          "description": "Indicá explícitamente el esquema de origen.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre\nFROM catalogo.productos;",
+          "explanation": "El nombre esquema.tabla evita ambigüedades cuando existen objetos con el mismo nombre.",
+          "language": "sql"
+        },
+        {
+          "title": "Confirmar la base y el esquema actuales",
+          "description": "Comprobá el contexto de la sesión antes de consultar o modificar objetos.",
+          "language": "sql",
+          "code": "SELECT current_database() AS base_actual,\n       current_schema() AS esquema_actual,\n       current_user AS rol_actual;\n\n-- En psql también podés inspeccionar los esquemas:\n-- \\dn+",
+          "explanation": "current_database identifica la base de la conexión; current_schema informa el esquema actual de resolución y current_user muestra el rol efectivo. \\dn+ es un metacomando de psql, no una sentencia SQL."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "current_database()",
+          "description": "Devuelve el nombre de la base de datos de la conexión actual."
+        },
+        {
+          "name": "current_schema()",
+          "description": "Devuelve el esquema actual utilizado para la resolución de nombres."
+        },
+        {
+          "name": "search_path",
+          "description": "Define el orden de esquemas en los que PostgreSQL busca nombres no calificados."
+        },
+        {
+          "name": "GRANT",
+          "description": "Concede privilegios sobre bases, esquemas y objetos."
+        }
+      ],
+      "exercise": "¿Qué diferencia hay entre conectarte a tienda_dev y consultar catalogo.productos?",
+      "hint": "La conexión selecciona la base; el nombre calificado identifica un objeto dentro de ella.",
+      "bestPractices": [
+        "Verificá la base y el rol activos antes de ejecutar una migración o comando administrativo.",
+        "Usá esquemas para ordenar objetos relacionados y calificá nombres en scripts de despliegue.",
+        "Separá roles de administración y roles de aplicación con privilegios mínimos.",
+        "Documentá qué esquema utiliza cada servicio y cómo se configura search_path."
+      ],
+      "commonMistakes": [
+        "Creer que una conexión a una base permite consultar directamente tablas de otra base del mismo clúster.",
+        "Confundir esquema con base de datos.",
+        "Suponer que una tabla está ausente cuando en realidad está en otro esquema.",
+        "Conceder permisos de superusuario a una aplicación para resolver un problema de acceso."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Esquemas",
+          "url": "https://www.postgresql.org/docs/19/ddl-schemas.html"
+        },
+        {
+          "label": "PostgreSQL — Bases de datos",
+          "url": "https://www.postgresql.org/docs/19/managing-databases.html"
+        }
+      ],
+      "related": [
+        "postgres-psql",
+        "express-database-integration"
+      ],
+      "deepDive": {
+        "model": "PostgreSQL organiza el servicio en varios niveles. Un clúster es el conjunto de datos administrado por una instancia del servidor; dentro de él existen bases de datos. Una conexión se abre contra una base concreta. Dentro de esa base, los esquemas agrupan objetos como tablas, vistas, secuencias y funciones. Por eso una tabla se puede identificar como esquema.tabla y la búsqueda de nombres no depende solamente de la base seleccionada.",
+        "flow": [
+          [
+            "Servidor y clúster",
+            "El proceso PostgreSQL administra un directorio de datos y los recursos compartidos de la instancia."
+          ],
+          [
+            "Base de datos",
+            "El cliente se conecta a una base determinada dentro del clúster; una sesión no consulta libremente otra base como si fuera un esquema."
+          ],
+          [
+            "Esquema",
+            "La base contiene esquemas que organizan y califican nombres de objetos."
+          ],
+          [
+            "Objeto y permisos",
+            "La tabla, vista o función se resuelve por su nombre y esquema; los permisos controlan qué puede hacer el rol conectado."
+          ]
+        ],
+        "decisions": [
+          "Separá bases cuando necesitás aislamiento operativo fuerte o aplicaciones independientes; usá esquemas cuando los objetos pertenecen a una misma base y necesitan organización.",
+          "Calificá nombres con esquema.tabla en scripts importantes para evitar ambigüedad con search_path.",
+          "Creá roles de aplicación con permisos mínimos y evitá conectar el backend como superusuario.",
+          "No confundas CREATE DATABASE con CREATE SCHEMA: la base se selecciona al conectar y el esquema se usa dentro de esa base."
+        ],
+        "debugging": "Si una tabla existe pero PostgreSQL dice que no existe, comprobá la base actual con current_database(), el esquema con current_schema() y el search_path. Si aparece permission denied, revisá privilegios sobre la base, esquema y tabla; poder conectarse no implica poder consultar todos los objetos."
+      }
+    },
+    {
+      "id": "sql-modelo-relacional",
+      "category": "fundamentos",
+      "title": "El modelo relacional: tablas, filas y columnas",
+      "summary": "Entendé cómo una tabla representa entidades y cómo se vinculan mediante claves.",
+      "purpose": "En el modelo relacional, una tabla representa una relación; las columnas describen atributos y las filas representan registros. Las claves identifican filas y permiten expresar vínculos. Un buen diseño evita listas repetidas dentro de una sola celda.",
+      "whenToUse": "Usá el modelo relacional cuando los datos tienen entidades identificables, reglas de integridad y relaciones que necesitás consultar de forma consistente, como novelas, autores, volúmenes y capítulos.",
+      "syntax": "Entidad → tabla · atributo → columna · registro → fila · relación → clave",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Separar clientes y pedidos",
+          "description": "Cada entidad tiene su propia tabla.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE clientes (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL\n);\nCREATE TABLE pedidos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  cliente_id bigint NOT NULL REFERENCES clientes(id),\n  total numeric(12,2) NOT NULL\n);",
+          "explanation": "El pedido referencia al cliente en vez de duplicar sus datos.",
+          "language": "sql"
+        },
+        {
+          "title": "Consultar por una clave",
+          "description": "Filtrá pedidos de un cliente concreto.",
+          "code": "-- Ejemplo práctico:\nSELECT id, total\nFROM pedidos\nWHERE cliente_id = 7;",
+          "explanation": "La clave foránea permite encontrar registros relacionados.",
+          "language": "sql"
+        },
+        {
+          "title": "Representar una relación muchos a muchos",
+          "description": "Usá una tabla intermedia cuando una novela pueda tener varias etiquetas y una etiqueta pertenezca a muchas novelas.",
+          "language": "sql",
+          "code": "CREATE TABLE novelas (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  titulo text NOT NULL\n);\n\nCREATE TABLE etiquetas (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL UNIQUE\n);\n\nCREATE TABLE novela_etiquetas (\n  novela_id bigint NOT NULL REFERENCES novelas(id),\n  etiqueta_id bigint NOT NULL REFERENCES etiquetas(id),\n  PRIMARY KEY (novela_id, etiqueta_id)\n);",
+          "explanation": "La tabla intermedia materializa la relación muchos-a-muchos. La clave primaria compuesta impide asignar la misma etiqueta dos veces a una novela."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "PRIMARY KEY",
+          "description": "Identifica de forma única cada fila de una tabla."
+        },
+        {
+          "name": "FOREIGN KEY",
+          "description": "Mantiene una referencia válida a una clave de otra tabla."
+        },
+        {
+          "name": "UNIQUE",
+          "description": "Impide que se repita un valor o combinación de columnas."
+        },
+        {
+          "name": "tabla intermedia",
+          "description": "Representa una relación muchos-a-muchos entre dos entidades."
+        }
+      ],
+      "exercise": "¿Por qué conviene separar clientes y pedidos?",
+      "hint": "Pensá cuántos lugares habría que corregir si cambia el email del cliente.",
+      "bestPractices": [
+        "Identificá entidades y relaciones antes de crear tablas.",
+        "Usá claves primarias estables y claves foráneas para expresar vínculos.",
+        "Creá tablas intermedias para relaciones muchos-a-muchos.",
+        "Evitá duplicar atributos de una entidad en todas las filas que la referencian."
+      ],
+      "commonMistakes": [
+        "Guardar varias entidades o valores repetidos en una sola columna de texto.",
+        "Duplicar datos del autor en cada novela sin una regla de sincronización.",
+        "Confundir una relación uno-a-muchos con muchos-a-muchos.",
+        "Agregar tablas sin pensar qué consultas y operaciones necesita la aplicación."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Tutorial",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html"
+        },
+        {
+          "label": "PostgreSQL — DDL",
+          "url": "https://www.postgresql.org/docs/19/ddl.html"
+        }
+      ],
+      "related": [
+        "mongodb-modelado-embed-reference",
+        "sql-inner-join"
+      ],
+      "deepDive": {
+        "model": "El modelo relacional representa información mediante relaciones, que en la práctica se implementan como tablas. Una fila describe una instancia; las columnas expresan atributos y las claves definen identidad y vínculos. Una clave primaria identifica una fila; una clave foránea conecta una fila con otra. La normalización busca reducir duplicación y anomalías de inserción, actualización y borrado, aunque las consultas pueden combinar tablas mediante JOIN.",
+        "flow": [
+          [
+            "Identificar entidades",
+            "Detectá conceptos del dominio con identidad y ciclo de vida propio, como novelas, autores y volúmenes."
+          ],
+          [
+            "Definir atributos",
+            "Elegí columnas atómicas y tipos adecuados para los datos que pertenecen a cada entidad."
+          ],
+          [
+            "Asignar claves",
+            "La clave primaria identifica cada fila; las claves foráneas representan relaciones entre entidades."
+          ],
+          [
+            "Consultar relaciones",
+            "JOIN reconstruye vistas de negocio combinando registros vinculados sin duplicar innecesariamente los datos fuente."
+          ]
+        ],
+        "decisions": [
+          "Separá entidades cuando tengan identidad propia o se repitan en muchos registros; evitá guardar listas de valores separados por comas en una columna.",
+          "Usá una tabla intermedia para relaciones muchos-a-muchos, por ejemplo novelas y etiquetas.",
+          "Elegí claves naturales solo cuando sean estables; un identificador técnico puede simplificar referencias y cambios de negocio.",
+          "Normalizá primero y desnormalizá únicamente cuando exista una necesidad de rendimiento medida y una estrategia de consistencia."
+        ],
+        "debugging": "Si una consulta duplica filas después de un JOIN, comprobá la cardinalidad de la relación: una fila del lado izquierdo puede coincidir con varias del derecho. Si no podés insertar un registro, revisá claves foráneas y restricciones. Si actualizar un dato requiere modificar muchas filas, quizá el diseño esté duplicando una entidad que debería tener tabla propia."
+      }
+    },
+    {
+      "id": "postgres-psql",
+      "category": "fundamentos",
+      "title": "Conectarse a PostgreSQL con psql",
+      "summary": "Usá el cliente de terminal psql para conectarte, explorar bases y ejecutar consultas.",
+      "purpose": "psql es el cliente de línea de comandos de PostgreSQL. Permite conectarse, ejecutar SQL y usar metacomandos que comienzan con barra invertida. \\dt pertenece a psql, no al lenguaje SQL.",
+      "whenToUse": "Usá psql para conectarte a un PostgreSQL local o remoto, explorar esquemas, ejecutar consultas, revisar errores y probar scripts SQL antes de integrarlos desde Node.js u otra aplicación.",
+      "syntax": "psql -h host -p puerto -U usuario -d base",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Abrir una sesión",
+          "description": "Indicá host, puerto, usuario y base.",
+          "code": "psql -h localhost -p 5432 -U app_user -d tienda_dev\n\n# Ya dentro de psql, listá las tablas:\n\\dt",
+          "explanation": "psql solicita credenciales y \\dt lista las tablas visibles en el search_path.",
+          "language": "bash"
+        },
+        {
+          "title": "Explorar una tabla",
+          "description": "Consultá la conexión y las columnas.",
+          "code": "# Ejemplo práctico:\n\\conninfo\n\\d pedidos\n\\q",
+          "explanation": "\\conninfo, \\d y \\q son metacomandos del cliente; un driver Node.js no los ejecuta como SQL.",
+          "language": "bash"
+        },
+        {
+          "title": "Medir consultas y ver el contexto",
+          "description": "Activá el tiempo de ejecución en psql y ejecutá una consulta de práctica.",
+          "language": "bash",
+          "code": "psql \"$DATABASE_URL\"\n\n-- Dentro de psql:\n\\conninfo\n\\timing on\nSELECT id, titulo FROM novelas ORDER BY id LIMIT 5;\n\\q",
+          "explanation": "La variable DATABASE_URL evita escribir credenciales directamente en el comando. \\timing muestra duración aproximada de consultas dentro de esa sesión; no es un benchmark de producción."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "-h",
+          "description": "Host o dirección del servidor PostgreSQL."
+        },
+        {
+          "name": "-p",
+          "description": "Puerto TCP del servidor; el valor habitual es 5432."
+        },
+        {
+          "name": "-U",
+          "description": "Rol de PostgreSQL utilizado para autenticarse."
+        },
+        {
+          "name": "-d",
+          "description": "Base de datos a la que se conecta psql."
+        },
+        {
+          "name": "\\dt / \\d / \\q",
+          "description": "Metacomandos para listar tablas, describir objetos y salir de psql."
+        }
+      ],
+      "exercise": "Conectate a una base de práctica y listá las tablas sin modificar datos.",
+      "hint": "Usá \\l, \\c, \\dt y \\d.",
+      "bestPractices": [
+        "Confirmá conexión, base y usuario con \\conninfo y SELECT current_database().",
+        "Usá variables de entorno o mecanismos seguros para credenciales.",
+        "Guardá consultas repetibles en archivos SQL y versioná migraciones.",
+        "Diferenciá metacomandos de psql de sentencias que ejecuta el servidor."
+      ],
+      "commonMistakes": [
+        "Ejecutar \\dt desde un driver como si fuera SQL.",
+        "Suponer que estar conectado implica tener permisos sobre todas las tablas.",
+        "Pegar contraseñas reales en comandos que quedan guardados en el historial.",
+        "Ejecutar UPDATE o DELETE sin revisar primero el filtro con un SELECT."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — psql",
+          "url": "https://www.postgresql.org/docs/19/app-psql.html"
+        },
+        {
+          "label": "PostgreSQL — Conexión",
+          "url": "https://www.postgresql.org/docs/19/libpq-connect.html"
+        }
+      ],
+      "related": [
+        "postgres-arquitectura-database-schema",
+        "sql-select-basico"
+      ],
+      "deepDive": {
+        "model": "psql es un cliente de terminal que mantiene una conexión con PostgreSQL y permite enviar sentencias SQL. Además incorpora metacomandos que comienzan con barra invertida, como \\dt, \\d y \\conninfo. Esos comandos pertenecen al cliente psql; no son SQL y no se pueden enviar sin más desde un driver de Node.js.",
+        "flow": [
+          [
+            "Abrir el cliente",
+            "psql recibe host, puerto, usuario y base o usa variables y servicios configurados."
+          ],
+          [
+            "Establecer conexión",
+            "El cliente autentica el rol y abre una sesión con la base solicitada."
+          ],
+          [
+            "Explorar y consultar",
+            "Se pueden ejecutar sentencias SQL y metacomandos propios de psql."
+          ],
+          [
+            "Cerrar la sesión",
+            "\\q termina el cliente; el servidor continúa funcionando si es un servicio independiente."
+          ]
+        ],
+        "decisions": [
+          "Usá psql para aprender, inspeccionar y diagnosticar; guardá consultas repetibles en archivos .sql.",
+          "Preferí variables de entorno o un archivo de servicio protegido para credenciales, no contraseñas en comandos guardados en el historial.",
+          "Usá \\timing para observar duración aproximada y EXPLAIN para estudiar planes; no confundas el tiempo de una prueba pequeña con rendimiento de producción.",
+          "Revisá la base y el usuario antes de ejecutar UPDATE, DELETE o DDL; los metacomandos \\conninfo y SELECT current_database() ayudan a confirmar el contexto."
+        ],
+        "debugging": "Si psql no conecta, separá los posibles puntos: servidor encendido, host/puerto accesible, base existente, usuario y método de autenticación. Si \\dt no muestra una tabla, comprobá el esquema y search_path; la tabla puede existir en otro esquema."
+      }
+    },
+    {
+      "id": "sql-tipos-datos",
+      "category": "fundamentos",
+      "title": "Tipos de datos habituales en PostgreSQL",
+      "summary": "Elegí tipos para texto, cantidades, fechas, identificadores y valores lógicos.",
+      "purpose": "El tipo define qué valores puede guardar una columna. PostgreSQL ofrece tipos numéricos, texto, booleanos, fecha/hora, UUID, arrays y JSONB. Para importes exactos suele convenir numeric; para aproximaciones científicas, punto flotante.",
+      "whenToUse": "Elegí tipos de datos al diseñar tablas o al modificar columnas. La decisión afecta precisión, validación, orden, índices, almacenamiento y cómo el backend convierte los valores.",
+      "syntax": "numeric · integer · text · boolean · date · timestamptz · uuid · jsonb",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Modelar productos",
+          "description": "Elegí tipos de acuerdo con el significado de cada atributo.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE productos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre text NOT NULL,\n  precio numeric(10,2) NOT NULL,\n  stock integer NOT NULL DEFAULT 0,\n  activo boolean NOT NULL DEFAULT true,\n  creado_en timestamptz NOT NULL DEFAULT now()\n);",
+          "explanation": "numeric conserva precisión decimal; integer representa unidades; timestamptz almacena un instante.",
+          "language": "sql"
+        },
+        {
+          "title": "Separar fecha e instante",
+          "description": "Usá DATE para fecha civil y timestamptz para un momento.",
+          "code": "-- Ejemplo práctico:\nALTER TABLE productos ADD COLUMN vence_el date;\n\nSELECT id, nombre\nFROM productos\nWHERE creado_en >= date_trunc('day', now());",
+          "explanation": "DATE y TIMESTAMPTZ tienen significados distintos; elegí según el dato.",
+          "language": "sql"
+        },
+        {
+          "title": "Guardar un importe y un instante sin perder semántica",
+          "description": "Elegí numeric para el valor monetario y timestamptz para el momento de creación.",
+          "language": "sql",
+          "code": "CREATE TABLE pagos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  total numeric(12,2) NOT NULL CHECK (total >= 0),\n  creado_en timestamptz NOT NULL DEFAULT now(),\n  dia_vencimiento date\n);\n\nINSERT INTO pagos (total, dia_vencimiento)\nVALUES (1250.50, DATE '2026-12-15');",
+          "explanation": "numeric(12,2) conserva dos decimales exactos. timestamptz representa un instante; date representa una fecha civil sin hora."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "numeric(p,s)",
+          "description": "Decimal exacto con precisión p y escala s."
+        },
+        {
+          "name": "integer / bigint",
+          "description": "Tipos enteros para cantidades y contadores."
+        },
+        {
+          "name": "date",
+          "description": "Fecha civil sin hora ni zona horaria."
+        },
+        {
+          "name": "timestamptz",
+          "description": "Instante temporal que PostgreSQL normaliza internamente."
+        },
+        {
+          "name": "jsonb",
+          "description": "Documento JSON binario consultable dentro de una columna."
+        }
+      ],
+      "exercise": "Elegí tipos para precio, cantidad, fecha de nacimiento e instante de creación.",
+      "hint": "Precio: numeric; cantidad: integer; fecha civil: date; instante: timestamptz.",
+      "bestPractices": [
+        "Modelá el significado del dato, no solo el formato que muestra la interfaz.",
+        "Usá numeric para valores monetarios exactos y date/timestamptz según el significado temporal.",
+        "Definí NOT NULL, DEFAULT y CHECK cuando formen parte de las reglas del dominio.",
+        "Probá conversiones desde el lenguaje y driver de la aplicación."
+      ],
+      "commonMistakes": [
+        "Usar float para importes que deben ser exactos.",
+        "Guardar fechas e instantes como texto sin una convención clara.",
+        "Tratar timestamptz como si conservara literalmente la zona horaria original.",
+        "Elegir jsonb para reemplazar columnas estables y relaciones que necesitan integridad."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Tipos",
+          "url": "https://www.postgresql.org/docs/19/datatype.html"
+        },
+        {
+          "label": "PostgreSQL — Fecha y hora",
+          "url": "https://www.postgresql.org/docs/19/datatype-datetime.html"
+        }
+      ],
+      "related": [
+        "sql-claves-restricciones",
+        "mongodb-bson-documentos"
+      ],
+      "deepDive": {
+        "model": "El tipo de una columna define qué valores acepta, cómo se representan y qué operaciones tienen sentido. PostgreSQL dispone de enteros, decimales exactos, punto flotante, texto, booleanos, fechas, instantes, UUID, arrays y JSONB, entre otros. Elegir el tipo correcto protege la integridad y evita conversiones ambiguas en consultas y aplicaciones.",
+        "flow": [
+          [
+            "Definir el significado",
+            "Decidí si el dato representa cantidad, importe, fecha civil, instante global, identificador o estructura flexible."
+          ],
+          [
+            "Elegir representación",
+            "Seleccioná un tipo que conserve precisión y permita las operaciones requeridas."
+          ],
+          [
+            "Aplicar límites",
+            "Usá NOT NULL, CHECK, DEFAULT y precisión/escala cuando formen parte de las reglas del dominio."
+          ],
+          [
+            "Convertir en las fronteras",
+            "Validá y convertí los datos que llegan desde formularios, JSON o drivers antes de persistirlos."
+          ]
+        ],
+        "decisions": [
+          "Usá numeric para importes que requieren exactitud decimal; evitá real/double precision para cálculos monetarios exactos.",
+          "Usá date para una fecha civil y timestamptz para un instante; definí además la política de zona horaria de la aplicación.",
+          "Preferí text para cadenas cuando no haya una razón concreta para limitar longitud con varchar(n).",
+          "Usá JSONB cuando una parte del documento sea flexible y consultable; no lo conviertas en excusa para ocultar relaciones y atributos estables."
+        ],
+        "debugging": "Si una suma monetaria presenta diferencias, revisá si se eligió un tipo de punto flotante. Si una fecha aparece desplazada, comprobá si representa un día civil o un instante con zona horaria. Si un INSERT falla por tipo, inspeccioná el valor real que envía el driver y no solo el tipo que declara TypeScript."
+      }
+    },
+    {
+      "id": "sql-claves-restricciones",
+      "category": "fundamentos",
+      "title": "Claves y restricciones: PRIMARY KEY, FOREIGN KEY, UNIQUE y CHECK",
+      "summary": "Protegé la integridad mediante claves y reglas que se aplican en la base.",
+      "purpose": "PRIMARY KEY identifica filas; FOREIGN KEY exige referencias existentes; UNIQUE evita duplicados; NOT NULL exige un valor; CHECK verifica condiciones. Las restricciones protegen datos aunque provengan de distintos clientes.",
+      "whenToUse": "Usá restricciones cuando una regla de datos deba cumplirse sin importar qué cliente escriba en la base: unicidad, referencias válidas, campos obligatorios y rangos admitidos.",
+      "syntax": "PRIMARY KEY · FOREIGN KEY · UNIQUE · NOT NULL · CHECK · DEFAULT",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Reglas para productos",
+          "description": "Exigí SKU único y precio no negativo.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE productos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  sku text NOT NULL UNIQUE,\n  nombre text NOT NULL,\n  precio numeric(10,2) NOT NULL CHECK (precio >= 0),\n  activo boolean NOT NULL DEFAULT true\n);",
+          "explanation": "IDENTITY genera el id; UNIQUE controla SKU repetidos y CHECK impide precios negativos.",
+          "language": "sql"
+        },
+        {
+          "title": "Impedir referencias inválidas",
+          "description": "Definí una política explícita para borrar clientes.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE pedidos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  cliente_id bigint NOT NULL,\n  CONSTRAINT fk_pedido_cliente\n    FOREIGN KEY (cliente_id) REFERENCES clientes(id)\n    ON DELETE RESTRICT\n);",
+          "explanation": "RESTRICT evita borrar un cliente que tenga pedidos relacionados.",
+          "language": "sql"
+        },
+        {
+          "title": "Impedir números de volumen repetidos dentro de una novela",
+          "description": "Una restricción compuesta expresa que el número solo debe ser único dentro de cada novela.",
+          "language": "sql",
+          "code": "CREATE TABLE volumenes (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  novela_id bigint NOT NULL REFERENCES novelas(id),\n  numero integer NOT NULL CHECK (numero > 0),\n  titulo text,\n  CONSTRAINT uq_volumen_por_novela UNIQUE (novela_id, numero)\n);",
+          "explanation": "La clave única compuesta permite que distintas novelas tengan un volumen 1, pero impide duplicar el volumen 1 dentro de una misma novela. CHECK valida el rango y la clave foránea protege la relación."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "PRIMARY KEY",
+          "description": "Clave única y no nula que identifica filas."
+        },
+        {
+          "name": "FOREIGN KEY",
+          "description": "Exige que la referencia cumpla la relación definida."
+        },
+        {
+          "name": "UNIQUE",
+          "description": "Impide duplicados en una columna o combinación."
+        },
+        {
+          "name": "NOT NULL",
+          "description": "Rechaza valores NULL."
+        },
+        {
+          "name": "CHECK",
+          "description": "Exige que una expresión de validación sea verdadera o no falsa."
+        }
+      ],
+      "exercise": "Agregá una regla para impedir stock negativo y otra para que email sea único.",
+      "hint": "Usá CHECK (stock >= 0) y UNIQUE (email).",
+      "bestPractices": [
+        "Declarà restricciones en la base y reflejalas también en la validación de la API.",
+        "Nombrá las restricciones para facilitar diagnóstico y migraciones.",
+        "Definí acciones ON DELETE de acuerdo con el ciclo de vida del dato relacionado.",
+        "Usá claves únicas compuestas si la regla depende de más de una columna."
+      ],
+      "commonMistakes": [
+        "Confiar solo en la validación del formulario frontend.",
+        "Elegir ON DELETE CASCADE sin evaluar qué datos podrían borrarse en cadena.",
+        "Pensar que CHECK reemplaza una validación entre tablas.",
+        "Capturar una violación de unicidad y continuar como si la inserción hubiera sido exitosa."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Constraints",
+          "url": "https://www.postgresql.org/docs/19/ddl-constraints.html"
+        },
+        {
+          "label": "PostgreSQL — Identity",
+          "url": "https://www.postgresql.org/docs/19/ddl-identity-columns.html"
+        }
+      ],
+      "related": [
+        "sql-modelo-relacional",
+        "express-validation"
+      ],
+      "deepDive": {
+        "model": "Las restricciones son reglas aplicadas por PostgreSQL en el momento de escribir datos. PRIMARY KEY exige identidad única y no nula; FOREIGN KEY mantiene referencias válidas; UNIQUE impide duplicados; NOT NULL exige presencia; CHECK evalúa una condición y DEFAULT proporciona un valor cuando la columna se omite. Al residir en la base, las reglas protegen datos aunque existan varios clientes o servicios.",
+        "flow": [
+          [
+            "Definir la identidad",
+            "PRIMARY KEY establece qué columnas identifican una fila de forma única."
+          ],
+          [
+            "Expresar relaciones",
+            "FOREIGN KEY obliga a que la referencia exista o cumpla la política de borrado configurada."
+          ],
+          [
+            "Proteger invariantes",
+            "UNIQUE, NOT NULL y CHECK expresan reglas que deben cumplirse siempre."
+          ],
+          [
+            "Validar al escribir",
+            "PostgreSQL rechaza operaciones que violan las restricciones, manteniendo la integridad."
+          ]
+        ],
+        "decisions": [
+          "Implementá reglas esenciales en la base además de validarlas en el frontend y backend.",
+          "Nombrá restricciones para que los errores y las migraciones sean más comprensibles.",
+          "Elegí ON DELETE RESTRICT, CASCADE o SET NULL según la semántica real del dominio, no por comodidad.",
+          "Usá UNIQUE compuesto cuando la unicidad depende de una combinación, por ejemplo (novela_id, numero_volumen)."
+        ],
+        "debugging": "Ante duplicate key, identificá la restricción UNIQUE o PRIMARY KEY y decidí si el flujo debe actualizar, rechazar o usar una estrategia de upsert. Ante foreign key violation, comprobá el registro padre y el orden de inserción. Ante CHECK violation, compará el valor con la regla definida."
+      }
+    },
+    {
+      "id": "sql-select-basico",
+      "category": "consultas",
+      "title": "SELECT: recuperar columnas y filas",
+      "summary": "Construí consultas que devuelvan solo los datos necesarios.",
+      "purpose": "SELECT define columnas y expresiones; FROM indica la fuente. WHERE filtra, ORDER BY ordena y LIMIT limita resultados. Evitá SELECT * en endpoints cuando conocés las columnas necesarias.",
+      "whenToUse": "Usá SELECT para recuperar la información que necesita una pantalla, un informe, una API o un proceso. Es la operación central de lectura en SQL.",
+      "syntax": "SELECT columnas FROM tabla WHERE condición;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Elegir columnas",
+          "description": "Mostrá id, nombre y precio.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre, precio\nFROM productos;",
+          "explanation": "El orden de las expresiones define el orden de salida.",
+          "language": "sql"
+        },
+        {
+          "title": "Filtrar resultados",
+          "description": "Traé productos activos con stock.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre, stock\nFROM productos\nWHERE activo = true AND stock > 0;",
+          "explanation": "WHERE descarta filas que no cumplen la condición.",
+          "language": "sql"
+        },
+        {
+          "title": "Crear una columna calculada y ponerle alias",
+          "description": "Seleccioná los campos que necesita una tarjeta y construí una expresión para mostrar un texto alternativo.",
+          "language": "sql",
+          "code": "SELECT id,\n       titulo AS nombre_novela,\n       COALESCE(sinopsis, 'Sin sinopsis disponible') AS resumen\nFROM novelas\nWHERE publicada = true\nORDER BY titulo ASC;",
+          "explanation": "AS establece nombres de salida. COALESCE devuelve el primer argumento no NULL, así que la consulta puede crear una representación útil sin modificar el dato almacenado."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "SELECT",
+          "description": "Define columnas y expresiones que devuelve la consulta."
+        },
+        {
+          "name": "FROM",
+          "description": "Indica la tabla o fuente de datos."
+        },
+        {
+          "name": "WHERE",
+          "description": "Filtra filas antes de agrupar."
+        },
+        {
+          "name": "ORDER BY",
+          "description": "Ordena las filas del resultado."
+        },
+        {
+          "name": "LIMIT / OFFSET",
+          "description": "Controlan el tamaño y desplazamiento del conjunto devuelto."
+        }
+      ],
+      "exercise": "Mostrá nombre y email de usuarios activos.",
+      "hint": "Elegí las columnas requeridas y filtrá por activo.",
+      "bestPractices": [
+        "Seleccioná solo las columnas que necesita el consumidor.",
+        "Usá alias y nombres calificados para que la consulta se lea con claridad.",
+        "Aplicá LIMIT cuando la pantalla no necesita toda la colección.",
+        "Agregá ORDER BY si el orden tiene significado para el usuario o para una paginación."
+      ],
+      "commonMistakes": [
+        "Usar SELECT * en endpoints estables y transferir campos innecesarios.",
+        "Esperar que una tabla devuelva filas en un orden natural estable.",
+        "Confundir un alias de salida con el nombre real de la columna.",
+        "Construir SQL concatenando directamente valores proporcionados por el usuario."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial PostgreSQL — SELECT",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html#id-1.5"
+        },
+        {
+          "label": "PostgreSQL — SELECT",
+          "url": "https://www.postgresql.org/docs/19/sql-select.html"
+        }
+      ],
+      "related": [
+        "sql-where",
+        "sql-inner-join"
+      ],
+      "deepDive": {
+        "model": "SELECT es una consulta declarativa: describe qué columnas y filas querés obtener, mientras que PostgreSQL decide cómo acceder a los datos. FROM define las fuentes, WHERE filtra filas, GROUP BY agrupa, ORDER BY ordena y LIMIT restringe el resultado. El orden escrito de las cláusulas no es el orden físico de ejecución; el planificador elige un plan adecuado.",
+        "flow": [
+          [
+            "Elegir fuente",
+            "FROM indica tabla, vista, subconsulta o combinación de fuentes."
+          ],
+          [
+            "Filtrar candidatos",
+            "WHERE elimina filas que no cumplen las condiciones."
+          ],
+          [
+            "Proyectar resultado",
+            "SELECT define columnas, expresiones y alias que se mostrarán."
+          ],
+          [
+            "Ordenar y limitar",
+            "ORDER BY define orden; LIMIT/FETCH limita la cantidad devuelta."
+          ]
+        ],
+        "decisions": [
+          "Seleccioná columnas necesarias en vez de SELECT * cuando construís endpoints o reportes estables.",
+          "Usá alias con AS para expresar nombres de salida claros.",
+          "Agregá un criterio de orden único cuando el resultado se pagina o debe ser reproducible.",
+          "Para saber cómo se ejecuta una consulta, inspeccioná EXPLAIN; no supongas que la escritura SQL determina el uso de índices."
+        ],
+        "debugging": "Si faltan filas, revisá filtros y valores NULL antes de revisar el JOIN. Si recibís columnas ambiguas, calificá con alias de tabla. Si los resultados cambian de orden entre ejecuciones, agregá ORDER BY: sin orden explícito no hay orden garantizado."
+      }
+    },
+    {
+      "id": "sql-alias-expresiones",
+      "category": "consultas",
+      "title": "Alias y expresiones en SELECT",
+      "summary": "Renombrá columnas y calculá valores derivados en una consulta.",
+      "purpose": "AS asigna nombres de salida. También podés calcular expresiones con operadores, CASE y funciones. El alias mejora la lectura, pero no está disponible en todas las cláusulas de la misma consulta; por ejemplo, no se usa directamente en WHERE.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "SELECT expresión AS nombre_resultado FROM tabla;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Calcular subtotal",
+          "description": "Multiplicá precio y cantidad.",
+          "code": "-- Ejemplo práctico:\nSELECT producto_id, precio_unitario, cantidad,\n       precio_unitario * cantidad AS subtotal\nFROM pedido_items;",
+          "explanation": "La expresión se calcula por fila y se devuelve como subtotal.",
+          "language": "sql"
+        },
+        {
+          "title": "Clasificar con CASE",
+          "description": "Convertí un nivel de stock en una etiqueta.",
+          "code": "-- Ejemplo práctico:\nSELECT nombre, stock,\n  CASE WHEN stock = 0 THEN 'Sin stock'\n       WHEN stock < 5 THEN 'Stock bajo'\n       ELSE 'Disponible' END AS estado\nFROM productos;",
+          "explanation": "CASE devuelve el primer resultado cuya condición sea verdadera.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Calculá el precio con IVA del 21% en una columna precio_final.",
+      "hint": "Usá precio * 1.21 AS precio_final.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — SELECT",
+          "url": "https://www.postgresql.org/docs/19/sql-select.html"
+        },
+        {
+          "label": "Expresiones condicionales",
+          "url": "https://www.postgresql.org/docs/19/functions-conditional.html"
+        }
+      ],
+      "related": [
+        "sql-select-basico",
+        "postgres-funciones-fechas-texto"
+      ]
+    },
+    {
+      "id": "sql-where",
+      "category": "consultas",
+      "title": "WHERE: filtrar filas con condiciones",
+      "summary": "Seleccioná filas que cumplen una o varias condiciones lógicas.",
+      "purpose": "WHERE evalúa condiciones por fila. Combiná expresiones con AND, OR y NOT; los paréntesis aclaran el orden. SQL usa lógica de tres valores cuando aparece NULL.",
+      "whenToUse": "Usá WHERE para reducir las filas que una consulta lee, actualiza o elimina. En operaciones de escritura el filtro determina el alcance del cambio, por lo que debe comprobarse con especial cuidado.",
+      "syntax": "SELECT ... FROM tabla WHERE condición;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Filtrar varias condiciones",
+          "description": "Buscá productos activos de menos de 500.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre, precio\nFROM productos\nWHERE activo = true AND precio < 500;",
+          "explanation": "AND exige que ambas condiciones sean verdaderas.",
+          "language": "sql"
+        },
+        {
+          "title": "Agrupar alternativas",
+          "description": "Incluí dos categorías para productos activos.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre, categoria_id\nFROM productos\nWHERE activo = true\n  AND (categoria_id = 2 OR categoria_id = 4);",
+          "explanation": "Los paréntesis agrupan alternativas antes de combinarlas con activo.",
+          "language": "sql"
+        },
+        {
+          "title": "Combinar rango, alternativas y valores NULL",
+          "description": "Filtrá registros usando condiciones que consideran correctamente los valores ausentes.",
+          "language": "sql",
+          "code": "SELECT id, titulo, anio_publicacion\nFROM novelas\nWHERE anio_publicacion BETWEEN 2015 AND 2025\n  AND estado IN ('publicada', 'en-lectura')\n  AND sinopsis IS NOT NULL;",
+          "explanation": "BETWEEN incluye ambos extremos; IN comprueba pertenencia a la lista; IS NOT NULL selecciona filas donde la sinopsis está presente. No reemplaces esa última condición por sinopsis <> NULL."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "AND",
+          "description": "Exige que todas las condiciones sean TRUE."
+        },
+        {
+          "name": "OR",
+          "description": "Acepta si al menos una condición es TRUE."
+        },
+        {
+          "name": "IN",
+          "description": "Comprueba pertenencia a una lista de valores."
+        },
+        {
+          "name": "BETWEEN",
+          "description": "Comprueba un rango inclusivo."
+        },
+        {
+          "name": "IS NULL",
+          "description": "Comprueba si un valor es NULL sin usar igualdad."
+        }
+      ],
+      "exercise": "Buscá pedidos pendientes de un cliente y excluí los cancelados.",
+      "hint": "Combiná cliente_id y estado con AND.",
+      "bestPractices": [
+        "Usá paréntesis para expresar claramente condiciones mixtas.",
+        "Usá IS NULL/IS NOT NULL para valores NULL.",
+        "Parametrizá valores desde el backend en lugar de concatenar texto SQL.",
+        "Antes de UPDATE o DELETE, ejecutá un SELECT con el mismo WHERE para revisar las filas afectadas."
+      ],
+      "commonMistakes": [
+        "Comparar una columna con NULL mediante = o <>.",
+        "Olvidar precedencia de AND y OR.",
+        "Usar un filtro demasiado amplio en UPDATE o DELETE.",
+        "Asumir que UNKNOWN se comporta como TRUE."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Expresiones de tabla",
+          "url": "https://www.postgresql.org/docs/19/queries-table-expressions.html"
+        }
+      ],
+      "related": [
+        "sql-select-basico",
+        "mongodb-query-operators"
+      ],
+      "deepDive": {
+        "model": "WHERE evalúa una condición para cada fila candidata y conserva las filas cuya expresión resulta TRUE. SQL usa lógica de tres valores: TRUE, FALSE y UNKNOWN; las comparaciones con NULL suelen producir UNKNOWN, no TRUE ni FALSE. AND, OR y NOT combinan condiciones, y los paréntesis hacen explícita la intención cuando se mezclan operadores.",
+        "flow": [
+          [
+            "Evaluar una fila",
+            "Cada comparación produce TRUE, FALSE o UNKNOWN."
+          ],
+          [
+            "Combinar condiciones",
+            "AND, OR y NOT aplican la lógica booleana SQL a los resultados."
+          ],
+          [
+            "Conservar coincidencias",
+            "WHERE deja pasar solo filas cuya condición final es TRUE."
+          ],
+          [
+            "Devolver el conjunto",
+            "Las filas FALSE o UNKNOWN quedan fuera del resultado."
+          ]
+        ],
+        "decisions": [
+          "Usá paréntesis cuando mezcles AND y OR para que la intención del filtro sea inequívoca.",
+          "Usá IS NULL e IS NOT NULL para campos ausentes; no compares con = NULL.",
+          "Preferí IN para listas pequeñas de valores y BETWEEN cuando ambos límites sean inclusivos.",
+          "Validá parámetros y usá consultas parametrizadas desde la aplicación; no concatentes texto del usuario en SQL."
+        ],
+        "debugging": "Si las filas con NULL no aparecen, recordá que una comparación común produce UNKNOWN. Si el filtro con AND/OR devuelve más filas de las esperadas, agregá paréntesis. Si una consulta falla al mezclar texto y número, comprobá el tipo y el valor recibido antes de convertirlo."
+      }
+    },
+    {
+      "id": "sql-operadores-filtros",
+      "category": "consultas",
+      "title": "Operadores de comparación, IN, BETWEEN y LIKE",
+      "summary": "Compará valores, buscá patrones y expresá listas de alternativas.",
+      "purpose": "IN compara con una lista; BETWEEN incluye ambos extremos; LIKE busca patrones con % y _. ILIKE es una extensión de PostgreSQL que ignora mayúsculas según la configuración.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "= · <> · > · < · IN · BETWEEN · LIKE · ILIKE",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Rango y conjunto",
+          "description": "Filtrá precios y categorías.",
+          "code": "-- Ejemplo práctico:\nSELECT nombre, precio\nFROM productos\nWHERE precio BETWEEN 100 AND 500\n  AND categoria_id IN (2, 4, 8);",
+          "explanation": "BETWEEN incluye ambos límites e IN acepta cualquiera de los valores listados.",
+          "language": "sql"
+        },
+        {
+          "title": "Buscar por patrón",
+          "description": "Encontrá nombres que comiencen con cafe.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre\nFROM productos\nWHERE nombre ILIKE 'cafe%';",
+          "explanation": "% representa cero o más caracteres; ILIKE ignora mayúsculas.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Buscá emails que terminen en un dominio y pedidos entre fechas.",
+      "hint": "Usá LIKE/ILIKE y BETWEEN con valores del tipo adecuado.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Funciones y operadores",
+          "url": "https://www.postgresql.org/docs/19/functions.html"
+        },
+        {
+          "label": "Operadores de comparación",
+          "url": "https://www.postgresql.org/docs/19/functions-comparison.html"
+        }
+      ],
+      "related": [
+        "sql-where",
+        "sql-null",
+        "postgres-indices"
+      ]
+    },
+    {
+      "id": "sql-null",
+      "category": "consultas",
+      "title": "NULL, IS NULL y COALESCE",
+      "summary": "Entendé la ausencia de valor en SQL y evitá comparaciones incorrectas.",
+      "purpose": "NULL representa un valor desconocido o ausente; no equivale a cero ni cadena vacía. Las comparaciones normales con NULL producen unknown. Usá IS NULL, IS NOT NULL y COALESCE.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "columna IS NULL · IS NOT NULL · COALESCE(columna, valor)",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Filtrar datos ausentes",
+          "description": "Listá usuarios sin teléfono.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre\nFROM usuarios\nWHERE telefono IS NULL;",
+          "explanation": "IS NULL comprueba ausencia; = NULL no es una comparación válida.",
+          "language": "sql"
+        },
+        {
+          "title": "Mostrar un valor alternativo",
+          "description": "Presentá una etiqueta cuando falte una descripción.",
+          "code": "-- Ejemplo práctico:\nSELECT nombre,\n       COALESCE(descripcion, 'Sin descripción') AS descripcion_visible\nFROM productos;",
+          "explanation": "COALESCE devuelve la primera expresión no nula.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Encontrá pedidos sin fecha de envío y mostrales 'Aún no enviado'.",
+      "hint": "Filtrá con IS NULL y usá COALESCE en SELECT.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Comparaciones",
+          "url": "https://www.postgresql.org/docs/19/functions-comparison.html"
+        },
+        {
+          "label": "Expresiones condicionales",
+          "url": "https://www.postgresql.org/docs/19/functions-conditional.html"
+        }
+      ],
+      "related": [
+        "sql-where",
+        "sql-alias-expresiones"
+      ]
+    },
+    {
+      "id": "sql-order-limit-offset",
+      "category": "consultas",
+      "title": "ORDER BY, LIMIT y OFFSET: ordenar y paginar",
+      "summary": "Ordená resultados y construí paginación para interfaces y endpoints.",
+      "purpose": "ORDER BY define el orden; LIMIT limita filas y OFFSET salta un tramo. Para paginar de forma determinista agregá una clave única como desempate. En conjuntos grandes, la paginación por cursor puede escalar mejor.",
+      "whenToUse": "Usá ORDER BY, LIMIT y OFFSET para mostrar listas ordenadas y paginadas. Si el catálogo crece mucho o recibe inserciones frecuentes, evaluá paginación por cursor.",
+      "syntax": "ORDER BY columna DESC, id ASC LIMIT n OFFSET desplazamiento",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Últimos pedidos",
+          "description": "Mostrá diez pedidos recientes con criterio de desempate.",
+          "code": "-- Ejemplo práctico:\nSELECT id, cliente_id, creado_en\nFROM pedidos\nORDER BY creado_en DESC, id DESC\nLIMIT 10;",
+          "explanation": "El id resuelve empates cuando las fechas coinciden.",
+          "language": "sql"
+        },
+        {
+          "title": "Página con OFFSET",
+          "description": "Obtené la tercera página de diez productos.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre\nFROM productos\nORDER BY nombre ASC, id ASC\nLIMIT 10 OFFSET 20;",
+          "explanation": "OFFSET omite veinte filas; puede costar más al aumentar mucho el desplazamiento.",
+          "language": "sql"
+        },
+        {
+          "title": "Continuar con paginación por cursor",
+          "description": "En una lista ordenada por fecha descendente, pedí los registros anteriores al último elemento de la página.",
+          "language": "sql",
+          "code": "SELECT id, titulo, creado_en\nFROM novelas\nWHERE (creado_en, id) < (TIMESTAMPTZ '2026-10-01 12:00:00+00', 120)\nORDER BY creado_en DESC, id DESC\nLIMIT 20;",
+          "explanation": "El cursor conserva los dos valores del último registro de la página anterior. La comparación por tupla mantiene el mismo orden descendente y evita saltar un OFFSET cada vez mayor. El filtro y el ORDER BY deben usar exactamente las mismas claves y direcciones."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "ASC / DESC",
+          "description": "Orden ascendente o descendente."
+        },
+        {
+          "name": "LIMIT",
+          "description": "Máximo de filas que devuelve la consulta."
+        },
+        {
+          "name": "OFFSET",
+          "description": "Cantidad de filas que se omite antes de devolver resultados."
+        },
+        {
+          "name": "keyset pagination",
+          "description": "Paginación que continúa desde la última clave recibida."
+        },
+        {
+          "name": "ORDER BY compuesto",
+          "description": "Orden con varias columnas para resolver empates."
+        }
+      ],
+      "exercise": "Diseñá página 4 con 15 resultados y orden estable.",
+      "hint": "OFFSET = (página - 1) × tamaño; agregá clave única al ORDER BY.",
+      "bestPractices": [
+        "Incluí una columna única al final de ORDER BY para desempatar.",
+        "Mantén el orden consistente entre solicitudes de página.",
+        "Limitá tamaños máximos de página desde la API.",
+        "Medí paginación profunda y evaluá keyset pagination si OFFSET se vuelve costoso."
+      ],
+      "commonMistakes": [
+        "Usar LIMIT sin ORDER BY y esperar resultados repetibles.",
+        "Ordenar por una fecha que puede repetirse sin un segundo criterio único.",
+        "Calcular OFFSET con base cero cuando la interfaz cuenta desde página uno.",
+        "Mezclar filtros distintos entre solicitudes de una misma navegación."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — ORDER BY",
+          "url": "https://www.postgresql.org/docs/19/queries-order.html"
+        },
+        {
+          "label": "PostgreSQL — LIMIT y OFFSET",
+          "url": "https://www.postgresql.org/docs/19/queries-limit.html"
+        }
+      ],
+      "related": [
+        "api-paginacion",
+        "mongodb-projection-sort-limit"
+      ],
+      "deepDive": {
+        "model": "ORDER BY define el orden de salida; LIMIT o FETCH FIRST determina cuántas filas devuelve la consulta; OFFSET omite un número de filas. Para paginar de forma estable, el orden debe ser determinista e incluir un desempate único. OFFSET resulta sencillo para páginas pequeñas, pero los desplazamientos grandes pueden exigir recorrer y descartar muchas filas.",
+        "flow": [
+          [
+            "Definir orden",
+            "ORDER BY usa una o más expresiones y direcciones ASC/DESC."
+          ],
+          [
+            "Resolver empates",
+            "Una clave única adicional crea un orden determinista entre valores iguales."
+          ],
+          [
+            "Seleccionar ventana",
+            "LIMIT/FETCH define el tamaño de página y OFFSET el desplazamiento."
+          ],
+          [
+            "Continuar la navegación",
+            "Para colecciones grandes, un cursor basado en la última clave puede evitar offsets muy profundos."
+          ]
+        ],
+        "decisions": [
+          "Usá ORDER BY antes de confiar en el resultado de LIMIT; sin orden, las filas elegidas no están garantizadas.",
+          "Incluí una clave única como criterio final de orden para evitar que filas con valores iguales salten o se repitan.",
+          "Usá OFFSET para páginas pequeñas y navegaciones directas; evaluá keyset pagination para feeds o conjuntos grandes.",
+          "Mantené el mismo filtro y orden entre páginas; una inserción concurrente puede cambiar la posición de filas en paginación por offset."
+        ],
+        "debugging": "Si aparecen duplicados o faltantes al pasar de página, comprobá si el ORDER BY incluye un desempate único y si los datos cambian entre solicitudes. Si páginas profundas son lentas, evaluá paginación por cursor y revisá el índice que acompaña el filtro y el orden."
+      }
+    },
+    {
+      "id": "sql-inner-join",
+      "category": "joins-agrupaciones",
+      "title": "INNER JOIN: combinar filas relacionadas",
+      "summary": "Combiná registros de dos tablas cuando existe coincidencia entre sus claves.",
+      "purpose": "INNER JOIN produce una fila por cada pareja que satisface ON. Es habitual para mostrar pedidos junto a clientes cuando solo interesan filas con relación coincidente.",
+      "whenToUse": "Usá INNER JOIN cuando necesites devolver información combinada y solo tengan sentido los registros que poseen una coincidencia en las tablas relacionadas.",
+      "syntax": "FROM tabla_a INNER JOIN tabla_b ON tabla_a.clave = tabla_b.clave",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Pedidos con clientes",
+          "description": "Uní pedidos y clientes por la clave foránea.",
+          "code": "-- Ejemplo práctico:\nSELECT p.id AS pedido_id, c.nombre AS cliente, p.total\nFROM pedidos AS p\nINNER JOIN clientes AS c ON c.id = p.cliente_id;",
+          "explanation": "Los alias representan las tablas; ON establece la relación.",
+          "language": "sql"
+        },
+        {
+          "title": "Unir items y productos",
+          "description": "Mostrá los productos incluidos en pedidos.",
+          "code": "-- Ejemplo práctico:\nSELECT pi.pedido_id, pr.nombre, pi.cantidad\nFROM pedido_items AS pi\nJOIN productos AS pr ON pr.id = pi.producto_id;",
+          "explanation": "JOIN sin LEFT o RIGHT equivale a INNER JOIN.",
+          "language": "sql"
+        },
+        {
+          "title": "Unir tres tablas para reconstruir el detalle de un pedido",
+          "description": "Combiná pedidos, sus líneas y los productos correspondientes.",
+          "language": "sql",
+          "code": "SELECT p.id AS pedido_id,\n       pr.nombre AS producto,\n       pi.cantidad,\n       pi.precio_unitario\nFROM pedidos AS p\nINNER JOIN pedido_items AS pi ON pi.pedido_id = p.id\nINNER JOIN productos AS pr ON pr.id = pi.producto_id\nWHERE p.id = 42;",
+          "explanation": "Cada JOIN agrega una relación adicional. Si un pedido contiene varios productos, aparecerá una fila por línea; esa multiplicidad es esperada y no debe eliminarse con DISTINCT sin entender el resultado."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "INNER JOIN",
+          "description": "Devuelve parejas de filas que satisfacen ON."
+        },
+        {
+          "name": "ON",
+          "description": "Define la condición de coincidencia entre las fuentes."
+        },
+        {
+          "name": "alias",
+          "description": "Nombre corto para referirse a una tabla o expresión."
+        },
+        {
+          "name": "cardinalidad",
+          "description": "Describe si una relación es uno-a-uno, uno-a-muchos o muchos-a-muchos."
+        }
+      ],
+      "exercise": "Listá pedidos junto con su dirección de envío.",
+      "hint": "Uní pedidos y direcciones mediante la clave foránea.",
+      "bestPractices": [
+        "Escribí la condición ON de manera explícita y usa alias claros.",
+        "Revisá cardinalidad uno-a-uno, uno-a-muchos o muchos-a-muchos.",
+        "Elegí LEFT JOIN cuando debas conservar filas sin coincidencia.",
+        "Examiná el plan de ejecución ante joins grandes o lentos."
+      ],
+      "commonMistakes": [
+        "Olvidar la condición ON y producir un producto cartesiano.",
+        "Esperar una fila por cada fila de la tabla principal en una relación uno-a-muchos.",
+        "Agregar DISTINCT para ocultar duplicados sin entender su origen.",
+        "Poner filtros sobre la tabla derecha en WHERE cuando se necesita conservar filas sin coincidencia mediante LEFT JOIN."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial PostgreSQL — JOIN",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html#id-1.6"
+        },
+        {
+          "label": "PostgreSQL — JOIN",
+          "url": "https://www.postgresql.org/docs/19/queries-table-expressions.html"
+        }
+      ],
+      "related": [
+        "sql-modelo-relacional",
+        "mongodb-modelado-embed-reference"
+      ],
+      "deepDive": {
+        "model": "INNER JOIN combina filas de dos fuentes cuando la expresión ON resulta verdadera. Cada coincidencia produce una fila en el resultado; por eso una fila puede repetirse si coincide con varias filas del otro lado. La condición ON expresa la relación entre las fuentes y el conjunto devuelto contiene únicamente coincidencias, a diferencia de LEFT JOIN que conserva filas del lado izquierdo sin pareja.",
+        "flow": [
+          [
+            "Elegir las fuentes",
+            "FROM y JOIN identifican tablas o resultados que se quieren combinar."
+          ],
+          [
+            "Definir la relación",
+            "ON especifica las columnas y condiciones que conectan cada fila."
+          ],
+          [
+            "Encontrar coincidencias",
+            "El motor ejecuta el algoritmo de join elegido por el planificador."
+          ],
+          [
+            "Construir filas combinadas",
+            "El resultado incluye una fila por cada pareja que satisface ON."
+          ]
+        ],
+        "decisions": [
+          "Usá alias cortos y calificá las columnas cuando más de una tabla tenga nombres iguales.",
+          "Elegí INNER JOIN cuando solo tengan sentido las filas con pareja; usá LEFT JOIN si debés conservar los elementos sin relación.",
+          "Comprobá la cardinalidad antes de usar DISTINCT para ocultar duplicados; una relación uno-a-muchos produce varias filas legítimas.",
+          "Asegurá tipos compatibles y claves bien definidas en las columnas de relación."
+        ],
+        "debugging": "Si el resultado tiene más filas que la tabla inicial, comprobá si la relación es uno-a-muchos o muchos-a-muchos. Si faltan filas, quizás la ausencia de coincidencia sea esperada y necesites LEFT JOIN. Si el join es lento, estudiá EXPLAIN y la selectividad de las condiciones."
+      }
+    },
+    {
+      "id": "sql-left-join",
+      "category": "joins-agrupaciones",
+      "title": "LEFT JOIN: conservar filas sin coincidencia",
+      "summary": "Conservá filas de la tabla izquierda y agregá datos de la derecha cuando existan.",
+      "purpose": "LEFT JOIN devuelve todas las filas de la izquierda. Si no existe coincidencia, las columnas derechas aparecen como NULL. Es útil para detectar entidades sin elementos relacionados.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "FROM izquierda LEFT JOIN derecha ON condición",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Clientes con o sin pedidos",
+          "description": "Incluí también clientes que todavía no compraron.",
+          "code": "-- Ejemplo práctico:\nSELECT c.id, c.nombre, p.id AS pedido_id\nFROM clientes AS c\nLEFT JOIN pedidos AS p ON p.cliente_id = c.id;",
+          "explanation": "Clientes sin pedidos permanecen con pedido_id NULL.",
+          "language": "sql"
+        },
+        {
+          "title": "Encontrar clientes sin pedidos",
+          "description": "Filtrá la falta de coincidencia.",
+          "code": "-- Ejemplo práctico:\nSELECT c.id, c.nombre\nFROM clientes AS c\nLEFT JOIN pedidos AS p ON p.cliente_id = c.id\nWHERE p.id IS NULL;",
+          "explanation": "La clave derecha queda NULL cuando no hay fila relacionada.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Encontrá productos que nunca aparecieron en pedido_items.",
+      "hint": "Hacé LEFT JOIN y filtrá una clave no nullable del item con IS NULL.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — JOIN",
+          "url": "https://www.postgresql.org/docs/19/queries-table-expressions.html"
+        }
+      ],
+      "related": [
+        "sql-inner-join",
+        "sql-subqueries-exists"
+      ]
+    },
+    {
+      "id": "sql-otros-joins",
+      "category": "joins-agrupaciones",
+      "title": "RIGHT, FULL, CROSS y self JOIN",
+      "summary": "Reconocé otras formas de combinar tablas y cuándo conviene usarlas.",
+      "purpose": "RIGHT conserva la derecha; FULL conserva ambos lados; CROSS produce todas las combinaciones; self JOIN relaciona una tabla consigo misma con alias. RIGHT puede reescribirse invirtiendo el orden y usando LEFT.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "RIGHT JOIN · FULL OUTER JOIN · CROSS JOIN · self JOIN",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Comparar catálogos",
+          "description": "Conservá elementos presentes en cualquiera de las fuentes.",
+          "code": "-- Ejemplo práctico:\nSELECT a.codigo, a.nombre AS origen_a, b.nombre AS origen_b\nFROM catalogo_a AS a\nFULL OUTER JOIN catalogo_b AS b ON b.codigo = a.codigo;",
+          "explanation": "FULL OUTER JOIN permite detectar coincidencias y diferencias.",
+          "language": "sql"
+        },
+        {
+          "title": "Jerarquía de empleados",
+          "description": "Relacioná empleados con responsables en la misma tabla.",
+          "code": "-- Ejemplo práctico:\nSELECT e.nombre AS empleado, j.nombre AS responsable\nFROM empleados AS e\nLEFT JOIN empleados AS j ON j.id = e.responsable_id;",
+          "explanation": "Los alias representan roles distintos de una misma tabla.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué JOIN usarías para comparar dos catálogos completos?",
+      "hint": "FULL OUTER JOIN conserva ambos conjuntos.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — JOIN",
+          "url": "https://www.postgresql.org/docs/19/queries-table-expressions.html"
+        }
+      ],
+      "related": [
+        "sql-inner-join",
+        "sql-left-join",
+        "sql-relaciones-tablas-puente"
+      ]
+    },
+    {
+      "id": "sql-group-by-agregaciones",
+      "category": "joins-agrupaciones",
+      "title": "GROUP BY y funciones de agregación",
+      "summary": "Calculá sumas, promedios, mínimos, máximos y cantidades por grupo.",
+      "purpose": "GROUP BY agrupa filas que comparten valores. COUNT, SUM, AVG, MIN y MAX producen un resultado por grupo. Las columnas seleccionadas deben estar agrupadas o agregadas.",
+      "whenToUse": "Usá agrupaciones para informes y métricas, por ejemplo cantidad de volúmenes por novela, pedidos por cliente o ventas por mes.",
+      "syntax": "SELECT clave, COUNT(*), SUM(valor) FROM tabla GROUP BY clave",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Total por cliente",
+          "description": "Sumá importes y contá pedidos.",
+          "code": "-- Ejemplo práctico:\nSELECT cliente_id, COUNT(*) AS pedidos,\n       SUM(total) AS total_comprado\nFROM pedidos\nGROUP BY cliente_id;",
+          "explanation": "COUNT cuenta filas y SUM suma valores dentro del grupo.",
+          "language": "sql"
+        },
+        {
+          "title": "Promedio por categoría",
+          "description": "Calculá promedio y extremos de precios.",
+          "code": "-- Ejemplo práctico:\nSELECT categoria_id, AVG(precio) AS promedio,\n       MIN(precio) AS minimo, MAX(precio) AS maximo\nFROM productos\nGROUP BY categoria_id;",
+          "explanation": "Las funciones se calculan para cada categoría.",
+          "language": "sql"
+        },
+        {
+          "title": "Filtrar grupos después de calcular sus totales",
+          "description": "Mostrá solo los clientes con al menos tres pedidos y un gasto acumulado relevante.",
+          "language": "sql",
+          "code": "SELECT cliente_id,\n       COUNT(*) AS cantidad_pedidos,\n       SUM(total) AS gasto_total\nFROM pedidos\nWHERE estado <> 'cancelado'\nGROUP BY cliente_id\nHAVING COUNT(*) >= 3 AND SUM(total) >= 10000\nORDER BY gasto_total DESC;",
+          "explanation": "WHERE elimina pedidos cancelados antes de agrupar. HAVING filtra los grupos después de calcular COUNT y SUM. ORDER BY usa el agregado para ordenar los clientes."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "GROUP BY",
+          "description": "Agrupa filas por valores comunes."
+        },
+        {
+          "name": "COUNT(*)",
+          "description": "Cuenta filas del grupo."
+        },
+        {
+          "name": "COUNT(columna)",
+          "description": "Cuenta valores no NULL de una columna."
+        },
+        {
+          "name": "SUM / AVG",
+          "description": "Suma y promedio de los valores de cada grupo."
+        },
+        {
+          "name": "HAVING",
+          "description": "Filtra grupos después de calcular agregados."
+        }
+      ],
+      "exercise": "Contá pedidos y sumá importes por estado.",
+      "hint": "Agrupá por estado y combiná COUNT(*) con SUM(total).",
+      "bestPractices": [
+        "Definí con claridad qué representa cada grupo antes de elegir columnas.",
+        "Usá WHERE para filtrar filas y HAVING para filtrar resultados agregados.",
+        "Elegí COUNT(*) o COUNT(columna) según debas incluir o excluir NULLs.",
+        "Probá las agregaciones con datos pequeños cuyo resultado puedas calcular manualmente."
+      ],
+      "commonMistakes": [
+        "Seleccionar columnas que no están agrupadas ni agregadas.",
+        "Usar HAVING para filtros simples que deberían estar en WHERE.",
+        "Contar una columna nullable y asumir que equivale a COUNT(*).",
+        "Sumar filas después de un JOIN que multiplica registros."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Agregaciones",
+          "url": "https://www.postgresql.org/docs/19/functions-aggregate.html"
+        },
+        {
+          "label": "Tutorial — Agregaciones",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html#id-1.7"
+        }
+      ],
+      "related": [
+        "sql-inner-join",
+        "mongodb-aggregation-pipeline"
+      ],
+      "deepDive": {
+        "model": "GROUP BY particiona las filas en grupos que comparten los valores indicados. Funciones agregadas como COUNT, SUM, AVG, MIN y MAX calculan un resultado por grupo. HAVING filtra grupos después de agregarlos; WHERE filtra filas antes de agruparlas. Los valores NULL y el modo en que COUNT los cuenta importan al interpretar resultados.",
+        "flow": [
+          [
+            "Filtrar filas base",
+            "WHERE reduce las filas que participarán en los grupos."
+          ],
+          [
+            "Formar grupos",
+            "GROUP BY reúne filas con valores iguales en las claves indicadas."
+          ],
+          [
+            "Calcular agregados",
+            "COUNT, SUM, AVG, MIN y MAX producen métricas para cada grupo."
+          ],
+          [
+            "Filtrar grupos",
+            "HAVING descarta grupos que no satisfacen la condición agregada."
+          ]
+        ],
+        "decisions": [
+          "Usá WHERE para condiciones sobre filas y HAVING para condiciones sobre resultados agregados.",
+          "Recordá que COUNT(*) cuenta filas y COUNT(columna) ignora valores NULL de esa columna.",
+          "Agrupá solo por columnas que definan el nivel de detalle esperado; agregar una columna extra puede dividir los grupos.",
+          "Validá cómo se tratan valores NULL y filas sin coincidencia antes de interpretar sumas o promedios."
+        ],
+        "debugging": "Si la consulta rechaza una columna en SELECT, verificá que esté agrupada o agregada. Si COUNT(columna) es menor que COUNT(*), comprobá NULLs. Si los totales se multiplican, revisá joins previos al GROUP BY: una relación uno-a-muchos puede multiplicar filas."
+      }
+    },
+    {
+      "id": "sql-having",
+      "category": "joins-agrupaciones",
+      "title": "HAVING: filtrar grupos después de agrupar",
+      "summary": "Aplicá condiciones a resultados agregados sin confundir HAVING con WHERE.",
+      "purpose": "WHERE filtra filas antes de agrupar; HAVING filtra grupos después de GROUP BY y agregaciones. Usalo para cantidades o totales mínimos por grupo.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "GROUP BY clave HAVING COUNT(*) > n",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Clientes frecuentes",
+          "description": "Mostrá clientes con al menos tres pedidos.",
+          "code": "-- Ejemplo práctico:\nSELECT cliente_id, COUNT(*) AS pedidos\nFROM pedidos\nGROUP BY cliente_id\nHAVING COUNT(*) >= 3;",
+          "explanation": "HAVING descarta grupos con menos de tres registros.",
+          "language": "sql"
+        },
+        {
+          "title": "Filtrar período y total",
+          "description": "Filtrá fechas antes de agrupar y evaluá el agregado después.",
+          "code": "-- Ejemplo práctico:\nSELECT cliente_id, SUM(total) AS gasto\nFROM pedidos\nWHERE creado_en >= DATE '2026-01-01'\nGROUP BY cliente_id\nHAVING SUM(total) > 10000;",
+          "explanation": "WHERE reduce las filas; HAVING evalúa la suma por grupo.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Encontrá categorías con más de cinco productos activos y stock total menor a cien.",
+      "hint": "Filtrá activo en WHERE y usá COUNT y SUM en HAVING.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — SELECT",
+          "url": "https://www.postgresql.org/docs/19/sql-select.html"
+        }
+      ],
+      "related": [
+        "sql-group-by-agregaciones",
+        "sql-where"
+      ]
+    },
+    {
+      "id": "sql-subqueries-exists",
+      "category": "joins-agrupaciones",
+      "title": "Subconsultas, IN y EXISTS",
+      "summary": "Usá consultas anidadas para expresar pertenencia, existencia y cálculos dependientes.",
+      "purpose": "Una subconsulta está dentro de otra y puede devolver un valor, una lista o una tabla. EXISTS comprueba si la subconsulta devuelve al menos una fila y expresa relaciones sin traer columnas relacionadas.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "IN (SELECT ...) · EXISTS (SELECT 1 ...)",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Clientes con pedidos",
+          "description": "Comprobá si existe al menos un pedido por cliente.",
+          "code": "-- Ejemplo práctico:\nSELECT c.id, c.nombre\nFROM clientes AS c\nWHERE EXISTS (\n  SELECT 1 FROM pedidos AS p WHERE p.cliente_id = c.id\n);",
+          "explanation": "EXISTS puede detener la búsqueda al encontrar una coincidencia.",
+          "language": "sql"
+        },
+        {
+          "title": "Productos sobre el promedio",
+          "description": "Compará cada precio con el promedio general.",
+          "code": "-- Ejemplo práctico:\nSELECT id, nombre, precio\nFROM productos\nWHERE precio > (SELECT AVG(precio) FROM productos);",
+          "explanation": "La subconsulta escalar devuelve un único promedio.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Listá productos nunca vendidos mediante una subconsulta.",
+      "hint": "NOT EXISTS comparando pedido_items.producto_id con productos.id.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Subconsultas",
+          "url": "https://www.postgresql.org/docs/19/functions-subquery.html"
+        },
+        {
+          "label": "PostgreSQL — Expresiones de tabla",
+          "url": "https://www.postgresql.org/docs/19/queries-table-expressions.html"
+        }
+      ],
+      "related": [
+        "sql-left-join",
+        "sql-group-by-agregaciones",
+        "postgres-cte"
+      ]
+    },
+    {
+      "id": "sql-insert-returning",
+      "category": "escritura-transacciones",
+      "title": "INSERT y RETURNING",
+      "summary": "Insertá filas y recuperá identificadores o valores generados por PostgreSQL.",
+      "purpose": "INSERT crea una o más filas. RETURNING devuelve columnas insertadas sin una consulta separada. Especificá las columnas destino para que el código resista cambios del esquema.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "INSERT INTO tabla (columnas) VALUES (...) RETURNING columnas;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Insertar un producto",
+          "description": "Creá un producto y recuperá el id generado.",
+          "code": "-- Ejemplo práctico:\nINSERT INTO productos (sku, nombre, precio)\nVALUES ('CAF-01', 'Café molido', 1250.50)\nRETURNING id, nombre, creado_en;",
+          "explanation": "IDENTITY genera el id y RETURNING devuelve la fila creada.",
+          "language": "sql"
+        },
+        {
+          "title": "Insertar varias filas",
+          "description": "Creá varias categorías en una sola operación.",
+          "code": "-- Ejemplo práctico:\nINSERT INTO categorias (nombre)\nVALUES ('Libros'), ('Accesorios'), ('Juegos')\nRETURNING id, nombre;",
+          "explanation": "INSERT admite varias tuplas y RETURNING devuelve las filas creadas.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Insertá un cliente y recuperá su id.",
+      "hint": "Especificá las columnas y agregá RETURNING id.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — INSERT",
+          "url": "https://www.postgresql.org/docs/19/sql-insert.html"
+        },
+        {
+          "label": "Tutorial — insertar filas",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html#id-1.4"
+        }
+      ],
+      "related": [
+        "sql-claves-restricciones",
+        "sql-upsert",
+        "node-pg-consultas-parametrizadas"
+      ]
+    },
+    {
+      "id": "sql-update",
+      "category": "escritura-transacciones",
+      "title": "UPDATE: modificar filas con seguridad",
+      "summary": "Actualizá valores y controlá qué registros serán afectados.",
+      "purpose": "UPDATE cambia columnas de las filas que cumplen WHERE. Sin WHERE puede modificar todas las filas. RETURNING permite verificar el resultado y SET puede utilizar valores actuales de la misma fila.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "UPDATE tabla SET columna = valor WHERE condición RETURNING columnas;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Actualizar precio",
+          "description": "Cambiá el precio de un SKU único.",
+          "code": "-- Ejemplo práctico:\nUPDATE productos\nSET precio = 1399.90\nWHERE sku = 'CAF-01'\nRETURNING id, nombre, precio;",
+          "explanation": "El filtro por SKU limita la operación a un producto.",
+          "language": "sql"
+        },
+        {
+          "title": "Incrementar stock",
+          "description": "Actualizá el valor directamente en el servidor.",
+          "code": "-- Ejemplo práctico:\nUPDATE productos\nSET stock = stock + 10\nWHERE id = 42\nRETURNING id, stock;",
+          "explanation": "No necesitás leer primero el stock en Node y volver a escribirlo.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Marcá como inactivos los productos sin stock y revisá el filtro antes.",
+      "hint": "Probá el mismo WHERE con SELECT antes de ejecutar UPDATE.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — UPDATE",
+          "url": "https://www.postgresql.org/docs/19/sql-update.html"
+        }
+      ],
+      "related": [
+        "sql-where",
+        "sql-delete",
+        "sql-transacciones-acid"
+      ]
+    },
+    {
+      "id": "sql-delete",
+      "category": "escritura-transacciones",
+      "title": "DELETE: eliminar filas y verificar el alcance",
+      "summary": "Eliminá registros con un filtro preciso y comprendé el efecto de claves foráneas.",
+      "purpose": "DELETE quita filas que cumplen WHERE. Sin filtro elimina todas las filas, pero conserva la tabla. Una FK puede impedir el borrado, propagarlo o establecer referencias a NULL según su política.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "DELETE FROM tabla WHERE condición RETURNING columnas;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Eliminar por id",
+          "description": "Borrá una fila de prueba y verificá qué se afectó.",
+          "code": "-- Ejemplo práctico:\nDELETE FROM productos\nWHERE id = 42\nRETURNING id, nombre;",
+          "explanation": "RETURNING devuelve las filas eliminadas; una FK puede impedir el borrado.",
+          "language": "sql"
+        },
+        {
+          "title": "Revertir una prueba",
+          "description": "Probá una limpieza y deshacela dentro de la transacción.",
+          "code": "-- Ejemplo práctico:\nBEGIN;\nSELECT id FROM pedidos WHERE estado = 'cancelado';\nDELETE FROM pedidos WHERE estado = 'cancelado';\nROLLBACK; -- Deshace la prueba.",
+          "explanation": "ROLLBACK revierte cambios no confirmados.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Eliminá una fila de prueba por id y devolvé sus columnas.",
+      "hint": "Usá WHERE id y RETURNING sobre datos de práctica.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — DELETE",
+          "url": "https://www.postgresql.org/docs/19/sql-delete.html"
+        },
+        {
+          "label": "PostgreSQL — Constraints",
+          "url": "https://www.postgresql.org/docs/19/ddl-constraints.html"
+        }
+      ],
+      "related": [
+        "sql-update",
+        "sql-transacciones-acid",
+        "sql-claves-restricciones"
+      ]
+    },
+    {
+      "id": "sql-upsert",
+      "category": "escritura-transacciones",
+      "title": "UPSERT con INSERT ... ON CONFLICT",
+      "summary": "Insertá un registro o actualizalo cuando ya existe una clave única.",
+      "purpose": "ON CONFLICT requiere un índice o restricción única. DO NOTHING ignora duplicados; DO UPDATE modifica la fila usando EXCLUDED para referirse a los valores propuestos.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "INSERT ... ON CONFLICT (clave) DO NOTHING | DO UPDATE",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Insertar o actualizar precio",
+          "description": "El SKU único identifica el conflicto.",
+          "code": "-- Ejemplo práctico:\nINSERT INTO productos (sku, nombre, precio)\nVALUES ('CAF-01', 'Café molido', 1450)\nON CONFLICT (sku) DO UPDATE\nSET precio = EXCLUDED.precio,\n    nombre = EXCLUDED.nombre\nRETURNING id, sku, precio;",
+          "explanation": "EXCLUDED representa la fila propuesta para insertar.",
+          "language": "sql"
+        },
+        {
+          "title": "Ignorar un evento repetido",
+          "description": "Hacé idempotente el ingreso de eventos.",
+          "code": "-- Ejemplo práctico:\nINSERT INTO eventos (proveedor_id, evento_id, payload)\nVALUES (3, 'evt-900', '{\"estado\":\"recibido\"}'::jsonb)\nON CONFLICT (proveedor_id, evento_id) DO NOTHING;",
+          "explanation": "Una clave única compuesta evita guardar dos veces el mismo evento.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá una inserción idempotente para suscripciones por usuario y plan.",
+      "hint": "Definí UNIQUE(usuario_id, plan_id) y elegí DO NOTHING o DO UPDATE.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — INSERT / ON CONFLICT",
+          "url": "https://www.postgresql.org/docs/19/sql-insert.html"
+        }
+      ],
+      "related": [
+        "sql-insert-returning",
+        "sql-claves-restricciones",
+        "node-pg-consultas-parametrizadas"
+      ]
+    },
+    {
+      "id": "sql-transacciones-acid",
+      "category": "escritura-transacciones",
+      "title": "Transacciones y propiedades ACID",
+      "summary": "Agrupá operaciones para que se confirmen o reviertan como una unidad.",
+      "purpose": "BEGIN abre una transacción; COMMIT confirma; ROLLBACK revierte. ACID resume atomicidad, consistencia, aislamiento y durabilidad. Cada sentencia puede ejecutarse en una transacción implícita.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "BEGIN; operaciones SQL; COMMIT; o ROLLBACK",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Transferencia entre cuentas",
+          "description": "Debitar y acreditar deben confirmarse juntas.",
+          "code": "-- Ejemplo práctico:\nBEGIN;\nUPDATE cuentas SET saldo = saldo - 500 WHERE id = 1;\nUPDATE cuentas SET saldo = saldo + 500 WHERE id = 2;\nCOMMIT;",
+          "explanation": "Si una operación falla antes de confirmar, ROLLBACK puede deshacer ambas.",
+          "language": "sql"
+        },
+        {
+          "title": "Deshacer una prueba",
+          "description": "Inspeccioná un cambio sin conservarlo.",
+          "code": "-- Ejemplo práctico:\nBEGIN;\nUPDATE productos SET precio = precio * 1.10;\nSELECT id, precio FROM productos LIMIT 5;\nROLLBACK; -- Revierte el cambio.",
+          "explanation": "ROLLBACK deshace cambios no confirmados; no reemplaza backups.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Explicá por qué una transferencia necesita una transacción.",
+      "hint": "¿Qué pasa si se debita la cuenta origen pero falla el crédito?",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Transacciones",
+          "url": "https://www.postgresql.org/docs/19/transaction-iso.html"
+        },
+        {
+          "label": "Tutorial — Transactions",
+          "url": "https://www.postgresql.org/docs/19/tutorial-transactions.html"
+        }
+      ],
+      "related": [
+        "sql-savepoints-isolation",
+        "node-pg-transacciones",
+        "express-database-integration"
+      ]
+    },
+    {
+      "id": "sql-savepoints-isolation",
+      "category": "escritura-transacciones",
+      "title": "SAVEPOINT y niveles de aislamiento",
+      "summary": "Controlá suboperaciones y comprendé cómo PostgreSQL maneja escrituras concurrentes.",
+      "purpose": "SAVEPOINT crea un punto al que volver sin cancelar toda la transacción. El aislamiento regula qué anomalías se observan. PostgreSQL ofrece READ COMMITTED, REPEATABLE READ y SERIALIZABLE; READ UNCOMMITTED se trata como READ COMMITTED.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "BEGIN; SAVEPOINT punto; ROLLBACK TO SAVEPOINT punto; COMMIT;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Revertir una suboperación",
+          "description": "Conservá el primer registro y deshacé el segundo.",
+          "code": "-- Ejemplo práctico:\nBEGIN;\nINSERT INTO auditoria(evento) VALUES ('inicio');\nSAVEPOINT antes_de_extra;\nINSERT INTO auditoria(evento) VALUES ('prueba');\nROLLBACK TO SAVEPOINT antes_de_extra;\nCOMMIT;",
+          "explanation": "El registro inicio permanece y prueba se revierte.",
+          "language": "sql"
+        },
+        {
+          "title": "Solicitar SERIALIZABLE",
+          "description": "Configurá el nivel antes de ejecutar consultas.",
+          "code": "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;\nSELECT saldo FROM cuentas WHERE id = 1;\n-- Realizá operaciones relacionadas.\nCOMMIT;",
+          "explanation": "El motor puede abortar para mantener equivalencia serial; prepará reintentos ante SQLSTATE 40001.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué diferencia hay entre ROLLBACK TO SAVEPOINT y ROLLBACK?",
+      "hint": "El primero vuelve a un punto interno; el segundo cancela toda la transacción.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — SAVEPOINT",
+          "url": "https://www.postgresql.org/docs/19/sql-savepoint.html"
+        },
+        {
+          "label": "PostgreSQL — Aislamiento",
+          "url": "https://www.postgresql.org/docs/19/transaction-iso.html"
+        }
+      ],
+      "related": [
+        "sql-transacciones-acid",
+        "node-pg-transacciones",
+        "node-pg-errores-y-pruebas"
+      ]
+    },
+    {
+      "id": "postgres-cte",
+      "category": "postgres-avanzado",
+      "title": "CTE con WITH y consultas recursivas",
+      "summary": "Dividí consultas complejas en bloques nombrados y recorré jerarquías con WITH RECURSIVE.",
+      "purpose": "Una CTE se define con WITH y funciona como fuente temporal dentro de una sentencia. WITH RECURSIVE recorre estructuras padre-hijo con una parte inicial y otra recursiva.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "WITH nombre AS (SELECT ...) SELECT ... FROM nombre;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Consulta en etapas",
+          "description": "Filtrá pedidos recientes y después resumilos.",
+          "code": "-- Ejemplo práctico:\nWITH recientes AS (\n  SELECT cliente_id, total FROM pedidos\n  WHERE creado_en >= CURRENT_DATE - INTERVAL '30 days'\n)\nSELECT cliente_id, SUM(total) FROM recientes GROUP BY cliente_id;",
+          "explanation": "El CTE nombra el conjunto intermedio y separa las etapas.",
+          "language": "sql"
+        },
+        {
+          "title": "Recorrer una jerarquía",
+          "description": "Obtené subordinados de un responsable.",
+          "code": "-- Ejemplo práctico:\nWITH RECURSIVE equipo AS (\n  SELECT id, nombre, responsable_id, 0 AS nivel\n  FROM empleados WHERE id = 10\n  UNION ALL\n  SELECT e.id, e.nombre, e.responsable_id, eq.nivel + 1\n  FROM empleados e JOIN equipo eq ON e.responsable_id = eq.id\n)\nSELECT * FROM equipo ORDER BY nivel, id;",
+          "explanation": "La parte recursiva añade empleados cuyo responsable ya está en equipo; protegé contra ciclos.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Creá un CTE que filtre pedidos del último mes y calcule el total por cliente.",
+      "hint": "Definí el conjunto reciente con WITH y después agrupalo.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — WITH",
+          "url": "https://www.postgresql.org/docs/19/queries-with.html"
+        }
+      ],
+      "related": [
+        "sql-subqueries-exists",
+        "sql-group-by-agregaciones",
+        "postgres-window-functions"
+      ]
+    },
+    {
+      "id": "postgres-window-functions",
+      "category": "postgres-avanzado",
+      "title": "Funciones de ventana: OVER y PARTITION BY",
+      "summary": "Calculá rankings y acumulados sin colapsar grupos en una sola fila.",
+      "purpose": "Una función de ventana opera sobre filas relacionadas con la fila actual. A diferencia de GROUP BY, mantiene cada fila y agrega un valor. OVER define la ventana; PARTITION BY separa grupos; ORDER BY y el frame definen el recorrido.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "función(...) OVER (PARTITION BY grupo ORDER BY criterio)",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Numerar pedidos por cliente",
+          "description": "Asigná un número por fecha más reciente.",
+          "code": "-- Ejemplo práctico:\nSELECT id, cliente_id, creado_en,\n  ROW_NUMBER() OVER (\n    PARTITION BY cliente_id ORDER BY creado_en DESC, id DESC\n  ) AS posicion\nFROM pedidos;",
+          "explanation": "ROW_NUMBER reinicia la numeración en cada cliente.",
+          "language": "sql"
+        },
+        {
+          "title": "Calcular acumulado",
+          "description": "Sumá importes sin perder el detalle.",
+          "code": "-- Ejemplo práctico:\nSELECT cliente_id, creado_en, total,\n  SUM(total) OVER (\n    PARTITION BY cliente_id ORDER BY creado_en, id\n    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  ) AS acumulado\nFROM pedidos;",
+          "explanation": "El frame suma desde la primera fila del cliente hasta la actual.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Obtené ranking de productos por precio dentro de cada categoría.",
+      "hint": "Usá DENSE_RANK() OVER (PARTITION BY categoria_id ORDER BY precio DESC).",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial — Window Functions",
+          "url": "https://www.postgresql.org/docs/19/tutorial-window.html"
+        },
+        {
+          "label": "PostgreSQL — Window Functions",
+          "url": "https://www.postgresql.org/docs/19/functions-window.html"
+        }
+      ],
+      "related": [
+        "sql-group-by-agregaciones",
+        "sql-having",
+        "postgres-cte"
+      ]
+    },
+    {
+      "id": "postgres-jsonb",
+      "category": "postgres-avanzado",
+      "title": "JSON y JSONB en PostgreSQL",
+      "summary": "Almacená atributos semiestructurados y consultá claves con operadores nativos.",
+      "purpose": "JSON conserva el texto de entrada; JSONB usa una representación binaria útil para operaciones e índices. Es válido para atributos flexibles, pero no reemplaza columnas relacionales cuando los datos son centrales.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "jsonb · -> objeto · ->> texto · @> contiene",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Guardar JSONB",
+          "description": "Creá una tabla para atributos adicionales.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE productos_extra (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  datos jsonb NOT NULL\n);\nINSERT INTO productos_extra(datos)\nVALUES ('{\"color\":\"azul\",\"talla\":\"M\"}'::jsonb);",
+          "explanation": "El cast convierte el literal en JSONB; la aplicación debe validar la forma esperada.",
+          "language": "sql"
+        },
+        {
+          "title": "Consultar claves",
+          "description": "Extraé color y filtrá por talla.",
+          "code": "-- Ejemplo práctico:\nSELECT id, datos ->> 'color' AS color\nFROM productos_extra\nWHERE datos @> '{\"talla\":\"M\"}'::jsonb;",
+          "explanation": "->> devuelve texto; @> verifica contención estructural.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá una consulta que devuelva marca y filtre por una marca específica.",
+      "hint": "Usá datos ->> 'marca' o contención JSONB.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — JSON Types",
+          "url": "https://www.postgresql.org/docs/19/datatype-json.html"
+        },
+        {
+          "label": "PostgreSQL — JSON Functions",
+          "url": "https://www.postgresql.org/docs/19/functions-json.html"
+        }
+      ],
+      "related": [
+        "sql-tipos-datos",
+        "postgres-indices",
+        "mongodb-bson-documentos",
+        "mongodb-intro"
+      ]
+    },
+    {
+      "id": "postgres-vistas-materializadas",
+      "category": "postgres-avanzado",
+      "title": "Vistas y vistas materializadas",
+      "summary": "Reutilizá consultas con vistas o almacená resultados con vistas materializadas.",
+      "purpose": "Una vista representa una consulta ejecutada al leerla. Una vista materializada guarda el resultado hasta REFRESH. Las vistas encapsulan consultas; las materializadas ayudan en informes costosos cuando se acepta retraso.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "CREATE VIEW ... AS SELECT ... · CREATE MATERIALIZED VIEW ...",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Crear una vista",
+          "description": "Encapsulá pedidos con sus clientes.",
+          "code": "-- Ejemplo práctico:\nCREATE VIEW vista_pedidos_clientes AS\nSELECT p.id AS pedido_id, c.nombre AS cliente, p.total\nFROM pedidos p JOIN clientes c ON c.id = p.cliente_id;\nSELECT * FROM vista_pedidos_clientes;",
+          "explanation": "La vista es una consulta guardada, no una copia física.",
+          "language": "sql"
+        },
+        {
+          "title": "Materializar un resumen",
+          "description": "Guardá y refrescá un informe mensual.",
+          "code": "-- Ejemplo práctico:\nCREATE MATERIALIZED VIEW resumen_ventas AS\nSELECT DATE_TRUNC('month', creado_en) AS mes, SUM(total) AS importe\nFROM pedidos GROUP BY DATE_TRUNC('month', creado_en);\nREFRESH MATERIALIZED VIEW resumen_ventas;",
+          "explanation": "El resultado queda almacenado hasta la siguiente actualización.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué conviene para una pantalla siempre actualizada y para un informe horario?",
+      "hint": "Vista común para actualidad; materializada para resultado guardado con refresh.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "CREATE VIEW",
+          "url": "https://www.postgresql.org/docs/19/sql-createview.html"
+        },
+        {
+          "label": "Materialized Views",
+          "url": "https://www.postgresql.org/docs/19/rules-materializedviews.html"
+        }
+      ],
+      "related": [
+        "postgres-cte",
+        "postgres-indices",
+        "sql-group-by-agregaciones"
+      ]
+    },
+    {
+      "id": "postgres-funciones-fechas-texto",
+      "category": "postgres-avanzado",
+      "title": "Funciones de texto, fechas y conversiones",
+      "summary": "Transformá cadenas, fechas y valores dentro de consultas.",
+      "purpose": "PostgreSQL incluye funciones para texto, fechas, intervalos y conversiones. Aplicar funciones a columnas indexadas en filtros puede impedir usar el índice esperado, salvo que exista uno compatible.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "LOWER() · TRIM() · DATE_TRUNC() · EXTRACT() · CAST()",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Normalizar una búsqueda",
+          "description": "Compará email sin espacios externos ni mayúsculas.",
+          "code": "-- Ejemplo práctico:\nSELECT id, email FROM usuarios\nWHERE LOWER(TRIM(email)) = LOWER(TRIM(' ANA@EJEMPLO.COM '));",
+          "explanation": "TRIM quita espacios; LOWER normaliza mayúsculas.",
+          "language": "sql"
+        },
+        {
+          "title": "Agrupar por mes",
+          "description": "Contá pedidos por mes calendario.",
+          "code": "-- Ejemplo práctico:\nSELECT DATE_TRUNC('month', creado_en) AS mes, COUNT(*) AS pedidos\nFROM pedidos\nGROUP BY DATE_TRUNC('month', creado_en)\nORDER BY mes;",
+          "explanation": "DATE_TRUNC redondea al inicio de la unidad temporal.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Obtené el año de cada pedido y contá por año.",
+      "hint": "Usá EXTRACT(YEAR FROM creado_en) y agrupá por la expresión.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Funciones",
+          "url": "https://www.postgresql.org/docs/19/functions.html"
+        },
+        {
+          "label": "Fecha y hora",
+          "url": "https://www.postgresql.org/docs/19/functions-datetime.html"
+        }
+      ],
+      "related": [
+        "sql-alias-expresiones",
+        "postgres-jsonb",
+        "postgres-indices"
+      ]
+    },
+    {
+      "id": "postgres-full-text-search",
+      "category": "postgres-avanzado",
+      "title": "Búsqueda de texto completo con tsvector y tsquery",
+      "summary": "Construí búsquedas lingüísticas en documentos sin depender solo de LIKE.",
+      "purpose": "La búsqueda transforma documentos en lexemas y compara términos normalizados. to_tsvector prepara contenido; plainto_tsquery o websearch_to_tsquery preparan la consulta; @@ comprueba coincidencias. GIN puede acelerar búsquedas.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "to_tsvector('spanish', texto) @@ plainto_tsquery('spanish', consulta)",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Buscar palabras",
+          "description": "Buscá términos en título y contenido.",
+          "code": "-- Ejemplo práctico:\nSELECT id, titulo FROM articulos\nWHERE to_tsvector('spanish', titulo || ' ' || contenido)\n  @@ plainto_tsquery('spanish', 'bases de datos');",
+          "explanation": "El parser normaliza palabras según el diccionario.",
+          "language": "sql"
+        },
+        {
+          "title": "Crear un índice GIN",
+          "description": "Indexá la misma expresión usada en la consulta.",
+          "code": "-- Ejemplo práctico:\nCREATE INDEX articulos_busqueda_gin\nON articulos USING GIN (to_tsvector('spanish', titulo || ' ' || contenido));\nSELECT id FROM articulos\nWHERE to_tsvector('spanish', titulo || ' ' || contenido)\n  @@ websearch_to_tsquery('spanish', 'postgresql OR sql');",
+          "explanation": "La expresión consultada debe coincidir con la indexada; medí el beneficio con EXPLAIN.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿En qué se diferencia de LIKE '%palabra%'?",
+      "hint": "La búsqueda completa tokeniza y normaliza; LIKE busca patrones de caracteres.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Text Search",
+          "url": "https://www.postgresql.org/docs/19/textsearch.html"
+        },
+        {
+          "label": "PostgreSQL — GIN",
+          "url": "https://www.postgresql.org/docs/19/gin.html"
+        }
+      ],
+      "related": [
+        "postgres-indices",
+        "postgres-jsonb",
+        "sql-operadores-filtros"
+      ]
+    },
+    {
+      "id": "sql-normalizacion",
+      "category": "diseno-rendimiento",
+      "title": "Normalización: 1FN, 2FN y 3FN",
+      "summary": "Reducí duplicaciones y anomalías separando datos según sus dependencias.",
+      "purpose": "La normalización organiza tablas para reducir redundancia y anomalías de inserción, actualización y eliminación. Las formas normales describen reglas; empezá con entidades separadas, claves claras y atributos atómicos.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "Atributos atómicos → entidades separadas → FK",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Evitar listas dentro de una celda",
+          "description": "Separá los productos del pedido en filas.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE pedido_items (\n  pedido_id bigint REFERENCES pedidos(id),\n  producto_id bigint REFERENCES productos(id),\n  cantidad integer NOT NULL CHECK (cantidad > 0),\n  PRIMARY KEY (pedido_id, producto_id)\n);",
+          "explanation": "Cada producto ocupa una fila que puede consultarse y sumarse.",
+          "language": "sql"
+        },
+        {
+          "title": "Evitar repetir datos",
+          "description": "Guardá una sola copia del cliente.",
+          "code": "-- Ejemplo práctico:\nSELECT p.id, c.nombre, c.email\nFROM pedidos p JOIN clientes c ON c.id = p.cliente_id;",
+          "explanation": "La unión combina los datos cuando se necesitan.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué anomalías aparecen si los pedidos duplican el email del cliente?",
+      "hint": "Pensá qué ocurre al cambiar el email o crear un cliente sin pedidos.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Tutorial",
+          "url": "https://www.postgresql.org/docs/19/tutorial.html"
+        },
+        {
+          "label": "Constraints",
+          "url": "https://www.postgresql.org/docs/19/ddl-constraints.html"
+        }
+      ],
+      "related": [
+        "sql-modelo-relacional",
+        "sql-relaciones-tablas-puente",
+        "mongodb-modelado-embed-reference"
+      ]
+    },
+    {
+      "id": "sql-relaciones-tablas-puente",
+      "category": "diseno-rendimiento",
+      "title": "Relaciones 1:N y N:M con claves foráneas",
+      "summary": "Representá relaciones mediante claves foráneas y tablas puente.",
+      "purpose": "Una relación 1:N guarda la FK en el lado muchos. N:M requiere una tabla puente con dos claves foráneas, normalmente con clave compuesta. La tabla puente puede guardar atributos propios de la relación.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "1:N → FK en tabla hija · N:M → tabla puente",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Uno a muchos",
+          "description": "Cada pedido pertenece a un cliente.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE pedidos (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  cliente_id bigint NOT NULL REFERENCES clientes(id),\n  creado_en timestamptz NOT NULL DEFAULT now()\n);",
+          "explanation": "Muchos pedidos pueden referenciar al mismo cliente.",
+          "language": "sql"
+        },
+        {
+          "title": "Muchos a muchos",
+          "description": "Un libro tiene varios autores y un autor varios libros.",
+          "code": "-- Ejemplo práctico:\nCREATE TABLE libros_autores (\n  libro_id bigint REFERENCES libros(id),\n  autor_id bigint REFERENCES autores(id),\n  PRIMARY KEY (libro_id, autor_id)\n);",
+          "explanation": "La tabla puente evita duplicar la misma relación.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Modelá la relación N:M entre estudiantes y cursos.",
+      "hint": "Creá estudiantes_cursos con dos FK y clave compuesta.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Foreign Keys",
+          "url": "https://www.postgresql.org/docs/19/ddl-constraints.html"
+        }
+      ],
+      "related": [
+        "sql-claves-restricciones",
+        "sql-inner-join",
+        "sql-normalizacion",
+        "mongodb-modelado-embed-reference"
+      ]
+    },
+    {
+      "id": "postgres-indices",
+      "category": "diseno-rendimiento",
+      "title": "Índices en PostgreSQL: B-tree, GIN y otros",
+      "summary": "Acelerá consultas frecuentes entendiendo el costo de almacenamiento y escritura.",
+      "purpose": "Un índice ayuda a localizar filas. B-tree es la opción general; GIN sirve para JSONB y texto; GiST y BRIN responden a otros patrones. Cada índice ocupa espacio y añade trabajo a INSERT, UPDATE y DELETE.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "CREATE INDEX nombre ON tabla USING método (columna);",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Crear B-tree",
+          "description": "Acelerá filtros por email.",
+          "code": "-- Ejemplo práctico:\nCREATE INDEX usuarios_email_idx ON usuarios(email);\nSELECT id, nombre FROM usuarios WHERE email = 'ana@example.com';",
+          "explanation": "B-tree funciona para igualdad, rangos y varios patrones de orden.",
+          "language": "sql"
+        },
+        {
+          "title": "Crear GIN para JSONB",
+          "description": "Acelerá consultas de contención.",
+          "code": "-- Ejemplo práctico:\nCREATE INDEX productos_datos_gin ON productos_extra USING GIN(datos);\nSELECT id FROM productos_extra WHERE datos @> '{\"color\":\"azul\"}'::jsonb;",
+          "explanation": "GIN indexa componentes de valores compuestos.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Elegí índices para email y búsquedas JSONB.",
+      "hint": "B-tree para igualdad de email; GIN puede servir para contención JSONB.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Índices",
+          "url": "https://www.postgresql.org/docs/19/indexes.html"
+        },
+        {
+          "label": "Index Types",
+          "url": "https://www.postgresql.org/docs/19/index-types.html"
+        }
+      ],
+      "related": [
+        "postgres-explain-analyze",
+        "postgres-jsonb",
+        "sql-order-limit-offset",
+        "mongodb-indices"
+      ]
+    },
+    {
+      "id": "postgres-explain-analyze",
+      "category": "diseno-rendimiento",
+      "title": "EXPLAIN y EXPLAIN ANALYZE",
+      "summary": "Leé planes de ejecución y compará estimaciones con filas y tiempos reales.",
+      "purpose": "EXPLAIN muestra el plan del optimizador. EXPLAIN ANALYZE ejecuta la sentencia y añade mediciones; BUFFERS muestra actividad de bloques. En escrituras, ANALYZE ejecuta el cambio realmente.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "EXPLAIN (ANALYZE, BUFFERS) SELECT ...;",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Inspeccionar un SELECT",
+          "description": "Revisá cómo se recuperan productos por categoría.",
+          "code": "-- Ejemplo práctico:\nEXPLAIN (ANALYZE, BUFFERS)\nSELECT id, nombre FROM productos WHERE categoria_id = 4;",
+          "explanation": "Observá scan, filas estimadas/reales, tiempo y buffers.",
+          "language": "sql"
+        },
+        {
+          "title": "Medir UPDATE en una prueba",
+          "description": "ANALYZE ejecuta la sentencia; una transacción permite revertirla.",
+          "code": "-- Ejemplo práctico:\nBEGIN;\nEXPLAIN (ANALYZE, BUFFERS)\nUPDATE productos SET precio = precio * 1.01 WHERE categoria_id = 4;\nROLLBACK;",
+          "explanation": "El UPDATE se ejecuta realmente; ROLLBACK evita confirmar los cambios.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Elegí una consulta lenta y anotá scan, estimaciones, filas reales y buffers.",
+      "hint": "Compará estimaciones y realidad; revisá estadísticas y filtros.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — EXPLAIN",
+          "url": "https://www.postgresql.org/docs/19/sql-explain.html"
+        },
+        {
+          "label": "Rendimiento",
+          "url": "https://www.postgresql.org/docs/19/performance-tips.html"
+        }
+      ],
+      "related": [
+        "postgres-indices",
+        "sql-order-limit-offset",
+        "mongodb-explain"
+      ]
+    },
+    {
+      "id": "postgres-migraciones",
+      "category": "diseno-rendimiento",
+      "title": "Migraciones de esquema y cambios versionados",
+      "summary": "Administrá cambios de tablas, columnas, índices y restricciones de forma repetible.",
+      "purpose": "Una migración versiona un cambio del esquema. Se aplica en orden y debe poder ejecutarse en cada entorno. Dividí cambios grandes en pasos pequeños coordinados con las versiones de la aplicación.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "Versión N → migración SQL → versión N+1",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "sql",
+      "examples": [
+        {
+          "title": "Agregar columna opcional",
+          "description": "Separá estructura de la obligación de poblarla.",
+          "code": "ALTER TABLE usuarios ADD COLUMN telefono text;\n\n-- Tras completar datos existentes, si corresponde:\n-- ALTER TABLE usuarios ALTER COLUMN telefono SET NOT NULL;",
+          "explanation": "Un despliegue gradual permite que versiones de aplicación convivan.",
+          "language": "sql"
+        },
+        {
+          "title": "Agrupar DDL compatible",
+          "description": "Usá transacciones cuando el comando lo permita.",
+          "code": "-- Ejemplo práctico:\nBEGIN;\nALTER TABLE productos ADD COLUMN codigo_interno text;\nCREATE UNIQUE INDEX productos_codigo_interno_uq\nON productos(codigo_interno) WHERE codigo_interno IS NOT NULL;\nCOMMIT;",
+          "explanation": "Muchas operaciones DDL de PostgreSQL admiten transacciones; revisá excepciones de cada comando.",
+          "language": "sql"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá una migración para agregar descripción opcional y poblarla.",
+      "hint": "Separá ADD COLUMN, backfill y NOT NULL cuando el volumen lo amerite.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — ALTER TABLE",
+          "url": "https://www.postgresql.org/docs/19/sql-altertable.html"
+        },
+        {
+          "label": "PostgreSQL — CREATE INDEX",
+          "url": "https://www.postgresql.org/docs/19/sql-createindex.html"
+        }
+      ],
+      "related": [
+        "sql-claves-restricciones",
+        "postgres-indices",
+        "express-database-integration"
+      ]
+    },
+    {
+      "id": "postgres-backup-restore",
+      "category": "diseno-rendimiento",
+      "title": "Copias de seguridad y restauración",
+      "summary": "Usá pg_dump y pg_restore y verificá que las copias se puedan recuperar.",
+      "purpose": "PostgreSQL ofrece backups lógicos con pg_dump/pg_restore y copias físicas con archivado continuo. Una estrategia real requiere probar restauraciones, definir retención y almacenar copias de forma segura.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "pg_dump -Fc base > backup.dump · pg_restore -d base backup.dump",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "bash",
+      "examples": [
+        {
+          "title": "Crear backup custom",
+          "description": "Exportá una base para restaurarla con pg_restore.",
+          "code": "# Ejemplo práctico:\npg_dump -Fc -d tienda_dev -f tienda_dev.dump",
+          "explanation": "El formato custom permite restaurar objetos selectivos y comprimir el archivo.",
+          "language": "bash"
+        },
+        {
+          "title": "Restaurar en una base de prueba",
+          "description": "Comprobá la copia sin sobrescribir producción.",
+          "code": "# Ejemplo práctico:\ncreatedb tienda_restore_test\npg_restore -d tienda_restore_test tienda_dev.dump\npsql -d tienda_restore_test -c '\\dt'",
+          "explanation": "La restauración de prueba verifica el archivo; roles y objetos globales pueden requerir pasos adicionales.",
+          "language": "bash"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Creá una rutina de backup fechado y comprobá que el archivo exista.",
+      "hint": "Usá pg_dump, ruta protegida y nombre con timestamp; probá restaurar aparte.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — Backup and Restore",
+          "url": "https://www.postgresql.org/docs/19/backup.html"
+        },
+        {
+          "label": "pg_dump",
+          "url": "https://www.postgresql.org/docs/19/app-pgdump.html"
+        },
+        {
+          "label": "pg_restore",
+          "url": "https://www.postgresql.org/docs/19/app-pgrestore.html"
+        }
+      ],
+      "related": [
+        "postgres-arquitectura-database-schema",
+        "postgres-migraciones"
+      ]
+    },
+    {
+      "id": "node-pg-instalacion-conexion",
+      "category": "node-postgres",
+      "title": "Conectar Node.js con PostgreSQL usando pg",
+      "summary": "Instalá node-postgres y conectá una aplicación Node.js.",
+      "purpose": "node-postgres (paquete pg) es un driver para PostgreSQL. Expone Client y Pool y permite consultas asíncronas. La conexión se guarda en variables de entorno, nunca en código compartido.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "npm install pg · import { Pool } from 'pg' · pool.query(...)",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "examples": [
+        {
+          "title": "Instalar el driver",
+          "description": "Creá un Pool y consultá el servidor.",
+          "code": "// En la terminal: npm install pg\n// db.js\nimport { Pool } from 'pg';\nexport const pool = new Pool({\n  connectionString: process.env.DATABASE_URL\n});\nconst result = await pool.query('SELECT now() AS servidor');\nconsole.log(result.rows[0].servidor);",
+          "explanation": "Pool administra conexiones; rows contiene los resultados.",
+          "language": "javascript"
+        },
+        {
+          "title": "Configurar entorno",
+          "description": "Cargá un .env local ignorado por Git.",
+          "code": "// .env local: DATABASE_URL=postgresql://usuario:clave@localhost:5432/tienda_dev\nimport 'dotenv/config';\nimport { pool } from './db.js';\nconst { rows } = await pool.query('SELECT current_database() AS base');\nconsole.log(rows[0].base);",
+          "explanation": "pg lee process.env, pero no carga archivos .env automáticamente. En producción usá secretos del entorno.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Prepará db.js que exporte el Pool y consulte SELECT now().",
+      "hint": "Instalá pg, definí DATABASE_URL y reutilizá el Pool.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "node-postgres — Documentación",
+          "url": "https://node-postgres.com/"
+        },
+        {
+          "label": "Conexión",
+          "url": "https://node-postgres.com/features/connecting"
+        }
+      ],
+      "related": [
+        "node-que-es",
+        "express-database-integration",
+        "ts-react-node"
+      ]
+    },
+    {
+      "id": "node-pg-pool",
+      "category": "node-postgres",
+      "title": "Pool de conexiones: Pool, connect y release",
+      "summary": "Administrá conexiones reutilizables y liberá clientes correctamente.",
+      "purpose": "Pool mantiene conexiones para consultas simultáneas. pool.query sirve para operaciones independientes; pool.connect entrega un Client que debe liberarse en finally.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "new Pool({ max, idleTimeoutMillis, connectionTimeoutMillis })",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "examples": [
+        {
+          "title": "Consulta independiente",
+          "description": "Usá pool.query para una sola operación.",
+          "code": "// Configuración compartida del pool.\nconst pool = new Pool({\n  connectionString: process.env.DATABASE_URL,\n  max: 10, idleTimeoutMillis: 30000, connectionTimeoutMillis: 2000\n});\nconst result = await pool.query('SELECT COUNT(*)::int AS total FROM productos');\nconsole.log(result.rows[0].total);",
+          "explanation": "Pool selecciona una conexión, ejecuta la consulta y la devuelve automáticamente.",
+          "language": "javascript"
+        },
+        {
+          "title": "Liberar un Client",
+          "description": "Tomá un Client cuando necesitás controlar su ciclo de vida.",
+          "code": "// Ejemplo práctico:\nconst client = await pool.connect();\ntry {\n  const result = await client.query('SELECT current_user AS usuario');\n  console.log(result.rows[0].usuario);\n} finally {\n  client.release(); // Devolver la conexión al pool.\n}",
+          "explanation": "Sin release la conexión queda retenida y puede agotar el pool.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Qué ocurre si olvidás liberar un Client?",
+      "hint": "La conexión queda ocupada y otras solicitudes pueden esperar.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "node-postgres — Pooling",
+          "url": "https://node-postgres.com/features/pooling"
+        },
+        {
+          "label": "node-postgres — Pool API",
+          "url": "https://node-postgres.com/apis/pool"
+        }
+      ],
+      "related": [
+        "node-pg-transacciones",
+        "express-postgres-repository"
+      ]
+    },
+    {
+      "id": "node-pg-consultas-parametrizadas",
+      "category": "node-postgres",
+      "title": "Consultas parametrizadas y SQL injection",
+      "summary": "Enviá valores separados del texto SQL para evitar concatenación insegura.",
+      "purpose": "node-postgres admite parámetros posicionales $1, $2 y un arreglo de valores. Los parámetros representan valores, no identificadores SQL; para columnas dinámicas usá una lista permitida.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "client.query('SELECT ... WHERE id = $1', [id])",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "examples": [
+        {
+          "title": "Buscar por email",
+          "description": "El email se transmite como parámetro.",
+          "code": "// Ejemplo práctico:\nconst email = req.query.email;\nconst result = await pool.query(\n  'SELECT id, nombre FROM usuarios WHERE email = $1',\n  [email]\n);\nres.json(result.rows);",
+          "explanation": "Aunque el dato incluya comillas o texto parecido a SQL, se trata como valor.",
+          "language": "javascript"
+        },
+        {
+          "title": "Enviar varios filtros",
+          "description": "Filtrá por estado y fecha.",
+          "code": "// Ejemplo práctico:\nconst result = await pool.query(\n  `SELECT id, total FROM pedidos\n   WHERE estado = $1 AND creado_en >= $2 ORDER BY creado_en DESC`,\n  ['pendiente', new Date('2026-01-01')]\n);",
+          "explanation": "$1 y $2 se enlazan con el arreglo; los valores no se interpolan dentro de SQL.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Corregí una consulta que concatena req.params.id dentro del SQL.",
+      "hint": "Usá $1 y pasá el id en el arreglo.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "node-postgres — Queries",
+          "url": "https://node-postgres.com/features/queries"
+        },
+        {
+          "label": "OWASP — SQL Injection",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+        }
+      ],
+      "related": [
+        "sql-where",
+        "express-validation",
+        "express-security-helmet"
+      ]
+    },
+    {
+      "id": "node-pg-transacciones",
+      "category": "node-postgres",
+      "title": "Transacciones con node-postgres",
+      "summary": "Ejecutá BEGIN, COMMIT y ROLLBACK mediante un mismo Client del pool.",
+      "purpose": "Una transacción pertenece a una conexión. Obtené Client con pool.connect y ejecutá todas las sentencias sobre la misma instancia; no uses pool.query para repartirlas entre conexiones.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "client = await pool.connect(); BEGIN → queries → COMMIT/ROLLBACK → release",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "examples": [
+        {
+          "title": "Transferencia segura",
+          "description": "Debitar y acreditar deben confirmarse juntas.",
+          "code": "// Ejemplo práctico:\nconst client = await pool.connect();\ntry {\n  await client.query('BEGIN');\n  await client.query('UPDATE cuentas SET saldo = saldo - $1 WHERE id = $2', [500, 1]);\n  await client.query('UPDATE cuentas SET saldo = saldo + $1 WHERE id = $2', [500, 2]);\n  await client.query('COMMIT');\n} catch (error) {\n  await client.query('ROLLBACK');\n  throw error;\n} finally {\n  client.release();\n}",
+          "explanation": "El mismo Client ejecuta toda la transacción; catch revierte y finally libera.",
+          "language": "javascript"
+        },
+        {
+          "title": "Verificar saldo disponible",
+          "description": "Comprobá que el débito afectó exactamente una fila.",
+          "code": "// Ejemplo práctico:\nconst client = await pool.connect();\ntry {\n  await client.query('BEGIN');\n  const debit = await client.query(\n    'UPDATE cuentas SET saldo = saldo - $1 WHERE id = $2 AND saldo >= $1 RETURNING id',\n    [250, 1]\n  );\n  if (debit.rowCount !== 1) throw new Error('Saldo insuficiente');\n  await client.query('COMMIT');\n} catch (error) { await client.query('ROLLBACK'); throw error; }\nfinally { client.release(); }",
+          "explanation": "rowCount permite comprobar la operación; completá la lógica para acreditar la cuenta destino.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "¿Por qué todas las consultas deben usar el mismo Client?",
+      "hint": "El estado transaccional vive en una conexión concreta.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "node-postgres — Transactions",
+          "url": "https://node-postgres.com/features/transactions"
+        },
+        {
+          "label": "PostgreSQL — Aislamiento",
+          "url": "https://www.postgresql.org/docs/19/transaction-iso.html"
+        }
+      ],
+      "related": [
+        "sql-transacciones-acid",
+        "sql-savepoints-isolation",
+        "express-postgres-repository"
+      ]
+    },
+    {
+      "id": "express-postgres-repository",
+      "category": "node-postgres",
+      "title": "Separar rutas Express y acceso a PostgreSQL",
+      "summary": "Organizá consultas en un repositorio y mantené rutas centradas en HTTP.",
+      "purpose": "Una ruta no debería mezclar conexión, SQL, reglas y respuesta. El repositorio encapsula consultas; el controlador interpreta parámetros y transforma resultados en respuestas HTTP.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "Router → controlador → repositorio → Pool → PostgreSQL",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "examples": [
+        {
+          "title": "Repositorio de productos",
+          "description": "Centralizá SQL en un módulo.",
+          "code": "// repositories/productos.js\nimport { pool } from '../db.js';\nexport async function listarProductos() {\n  const { rows } = await pool.query(\n    'SELECT id, nombre, precio FROM productos ORDER BY nombre'\n  );\n  return rows;\n}",
+          "explanation": "El repositorio conoce persistencia, pero no necesita req y res.",
+          "language": "javascript"
+        },
+        {
+          "title": "Ruta Express",
+          "description": "Invocá el repositorio y devolvé JSON.",
+          "code": "// routes/productos.js\nimport { Router } from 'express';\nimport { listarProductos } from '../repositories/productos.js';\nconst router = Router();\nrouter.get('/productos', async (_req, res) => {\n  const productos = await listarProductos();\n  res.json(productos);\n});\nexport default router;",
+          "explanation": "La ruta maneja HTTP y el repositorio acceso a datos. Express 5 propaga rechazos de handlers async.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Agregá obtenerProductoPorId(id) y una ruta que devuelva 404 si no existe.",
+      "hint": "El repositorio devuelve una fila o null; la ruta decide el estado HTTP.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "Express — Routing",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        },
+        {
+          "label": "node-postgres — Pooling",
+          "url": "https://node-postgres.com/features/pooling"
+        }
+      ],
+      "related": [
+        "express-rest-crud-api",
+        "express-database-integration",
+        "express-error-handling",
+        "sql-select-basico"
+      ]
+    },
+    {
+      "id": "node-pg-errores-y-pruebas",
+      "category": "node-postgres",
+      "title": "Errores SQLSTATE y pruebas de persistencia",
+      "summary": "Interpretá errores del motor y prepará una capa de datos que pueda probarse.",
+      "purpose": "PostgreSQL identifica errores con SQLSTATE: 23505 es UNIQUE; 23503, FK; 23502, NOT NULL; 40001, fallo de serialización. La aplicación traduce casos esperados a errores de dominio y registra detalles técnicos de forma segura.",
+      "whenToUse": "Usá este concepto cuando el diseño o la consulta de datos de tu aplicación requiera esta capacidad. Probalo primero en una base local o de práctica.",
+      "syntax": "try/catch → error.code → error de dominio / log",
+      "level": "Inicial a avanzado",
+      "syntaxLanguage": "javascript",
+      "examples": [
+        {
+          "title": "Reconocer una clave duplicada",
+          "description": "Detectá un conflicto UNIQUE mediante el código.",
+          "code": "// Ejemplo práctico:\ntry {\n  await pool.query('INSERT INTO usuarios (email) VALUES ($1)', ['ana@example.com']);\n} catch (error) {\n  if (error.code === '23505') throw new Error('Ese email ya está registrado');\n  throw error;\n}",
+          "explanation": "23505 identifica una violación de unicidad y puede convertirse en un error de dominio.",
+          "language": "javascript"
+        },
+        {
+          "title": "Probar un repositorio",
+          "description": "Usá una base aislada y datos controlados.",
+          "code": "// Ejemplo con node:test.\nimport test from 'node:test';\nimport assert from 'node:assert/strict';\nimport { listarProductos } from './repositories/productos.js';\ntest('listarProductos devuelve un arreglo', async () => {\n  const productos = await listarProductos();\n  assert.ok(Array.isArray(productos));\n});",
+          "explanation": "La prueba necesita una base de test y migraciones; nunca debe apuntar a producción.",
+          "language": "javascript"
+        }
+      ],
+      "parameters": [],
+      "exercise": "Diseñá una función que convierta 23505 en conflicto del dominio.",
+      "hint": "Inspeccioná error.code y guardá detalles técnicos solo en logs internos.",
+      "bestPractices": [
+        "Nombrá tablas, columnas y restricciones de forma consistente y descriptiva.",
+        "Verificá el resultado con datos de prueba y medí las consultas con volúmenes representativos.",
+        "Mantené separadas las responsabilidades de la base, el driver y la lógica de la aplicación."
+      ],
+      "commonMistakes": [
+        "Confundir la sintaxis específica de PostgreSQL con SQL portable para cualquier motor.",
+        "Probar operaciones destructivas sobre datos reales sin revisar el alcance o preparar una transacción.",
+        "Asumir que un ejemplo aislado resuelve por sí solo validación, seguridad, concurrencia y operación en producción."
+      ],
+      "resources": [
+        {
+          "label": "PostgreSQL — SQLSTATE",
+          "url": "https://www.postgresql.org/docs/19/errcodes-appendix.html"
+        },
+        {
+          "label": "node-postgres — Result",
+          "url": "https://node-postgres.com/apis/result"
+        }
+      ],
+      "related": [
+        "express-error-handling",
+        "express-testing-supertest",
+        "sql-claves-restricciones",
+        "node-pg-transacciones"
+      ]
+    }
+  ],
+  "architecture": {
+    "title": "Cómo se ejecuta una consulta SQL",
+    "summary": "PostgreSQL interpreta una consulta declarativa, prepara un plan y lo ejecuta respetando restricciones y transacciones.",
+    "steps": [
+      [
+        "La aplicación envía SQL",
+        "El cliente envía la consulta y sus parámetros al servidor de PostgreSQL."
+      ],
+      [
+        "Parseo y planificación",
+        "PostgreSQL analiza sintaxis, resuelve objetos y estima un plan de ejecución."
+      ],
+      [
+        "Ejecución y acceso a datos",
+        "El motor combina filtros, joins, índices y lecturas de páginas según el plan elegido."
+      ],
+      [
+        "Transacción y resultado",
+        "Se devuelven filas o estado de escritura manteniendo las reglas de integridad y aislamiento configuradas."
+      ]
+    ],
+    "note": "Un índice puede acelerar lecturas, pero añade costo a escrituras y almacenamiento. EXPLAIN ayuda a estudiar el plan real."
+  },
+  "catalogProfile": {
+    "sampleArticleIds": [
+      "sql-select-basico",
+      "sql-where",
+      "sql-inner-join"
+    ],
+    "execution": {
+      "kind": "database",
+      "label": "Servidor PostgreSQL / cliente SQL",
+      "description": "SQL se envía a un motor de base de datos como PostgreSQL desde un cliente, una aplicación backend o herramientas de administración. El navegador no ejecuta PostgreSQL directamente."
+    },
+    "compatibility": {
+      "kind": "not-browser",
+      "summary": "No aplica a navegadores: PostgreSQL es un servidor de base de datos y SQL es el lenguaje de consulta.",
+      "note": "Una aplicación web puede mostrar datos que obtuvo desde una API backend que consulta PostgreSQL. No expongas credenciales de base de datos en el navegador."
+    },
+    "advantages": [
+      "Las relaciones y restricciones ayudan a mantener integridad de datos.",
+      "SQL permite consultas, agregaciones y joins expresivos.",
+      "PostgreSQL ofrece transacciones, índices, JSONB y extensiones."
+    ],
+    "limitations": [
+      "Hay que diseñar esquema, relaciones, migraciones y permisos.",
+      "Las consultas ineficientes pueden degradar rendimiento con datos grandes.",
+      "Concurrencia y transacciones exigen comprender aislamiento y bloqueos."
+    ],
+    "complements": [
+      [
+        "nodejs",
+        "Conectar aplicaciones mediante drivers."
+      ],
+      [
+        "express",
+        "Exponer operaciones de base de datos a través de una API."
+      ],
+      [
+        "testing",
+        "Probar consultas, transacciones y servicios."
+      ],
+      [
+        "docker-deploy",
+        "Levantar PostgreSQL en entornos reproducibles."
+      ]
+    ],
+    "docs": [
+      [
+        "PostgreSQL — documentación oficial",
+        "https://www.postgresql.org/docs/"
+      ],
+      [
+        "PostgreSQL — tutorial SQL",
+        "https://www.postgresql.org/docs/current/tutorial-sql.html"
+      ]
+    ]
+  }
+}

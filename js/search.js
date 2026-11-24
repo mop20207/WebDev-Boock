@@ -258,14 +258,36 @@ document.addEventListener("DOMContentLoaded", () => {
       return data;
     };
 
+    const fetchLibrarySearchIndex = async () => {
+      const localUrl = new URL("modules/libraries/search-index.json", dataRoot).href;
+      const urls = window.Capacitor?.isNativePlatform?.()
+        ? [
+            "https://raw.githubusercontent.com/mop20207/WebDev-Boock/main/modules/libraries/search-index.json",
+            localUrl
+          ]
+        : [localUrl];
+      let lastError;
+      for (const url of urls) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const index = await response.json();
+          if (!index || index.schemaVersion !== 1 || !Array.isArray(index.entries)) {
+            throw new Error("El índice de bibliotecas tiene un formato inválido.");
+          }
+          return index;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      throw lastError || new Error("No se pudo cargar el índice de bibliotecas.");
+    };
+
     catalogPromise = Promise.allSettled([
       fetchCatalog("html-articulos.json", "HTML"),
       fetchCatalog("css-articulos.json", "CSS"),
       fetchCatalog("js-articulos.json", "JavaScript"),
-      fetch(new URL("data/tools.json", dataRoot).href, { cache: "no-store" }).then(response => {
-        if (!response.ok) throw new Error("Herramientas: HTTP " + response.status + " al cargar data/tools.json.");
-        return response.json();
-      })
+      fetchLibrarySearchIndex()
     ]).then(results => {
       const entries = [];
       catalogWarnings.length = 0;
@@ -305,25 +327,25 @@ document.addEventListener("DOMContentLoaded", () => {
         catalogWarnings.push("JavaScript: " + jsResult.reason.message);
       }
 
-      if (toolsResult.status === "fulfilled" && Array.isArray(toolsResult.value.tools)) {
-        toolsResult.value.tools.forEach(tool => {
-          (tool.categories || []).forEach(category => {
-            (category.articles || []).forEach(articleId => {
-              const article = (tool.articles || []).find(item => item.id === articleId);
-              if (!article) return;
-              const href = new URL(
-                "pages/tools-article.html?tool=" + encodeURIComponent(tool.id) + "&id=" + encodeURIComponent(article.id),
-                dataRoot
-              ).href;
-              const searchCategory = tool.title + " · " + category.title;
-              const aliases = tool.title + " " + (tool.shortTitle || "") + " " + category.title +
-                " terminal linux consola shell comandos control de versiones git github npm node paquetes dependencias";
-              entries.push(createEntry("Herramientas", searchCategory, article, href, aliases));
-            });
-          });
+      if (toolsResult.status === "fulfilled" && Array.isArray(toolsResult.value.entries)) {
+        toolsResult.value.entries.forEach(item => {
+          const article = {
+            id: item.articleId,
+            title: item.title,
+            summary: item.summary,
+            searchText: item.searchText
+          };
+          const href = new URL(
+            "pages/tools-article.html?tool=" + encodeURIComponent(item.toolId) + "&id=" + encodeURIComponent(item.articleId),
+            dataRoot
+          ).href;
+          const searchCategory = item.toolTitle + " · " + item.categoryTitle;
+          const aliases = item.toolTitle + " " + (item.toolShortTitle || "") + " " + item.categoryTitle +
+            " terminal linux consola shell comandos control de versiones git github npm node paquetes dependencias";
+          entries.push(createEntry("Herramientas", searchCategory, article, href, aliases));
         });
       } else {
-        catalogWarnings.push("Herramientas: " + (toolsResult.reason?.message || "el catálogo no tiene una estructura válida."));
+        catalogWarnings.push("Herramientas: " + (toolsResult.reason?.message || "el índice de búsqueda no tiene una estructura válida."));
       }
 
       if (!entries.length) {

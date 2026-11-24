@@ -147,17 +147,36 @@
     });
   }
 
-  function renderModule(module) {
+  function makeActionButton(label, className, handler) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = className;
+    button.textContent = label;
+    button.addEventListener("click", handler);
+    return button;
+  }
+
+  function renderModule(module, packageStatus = null) {
     const card = document.createElement("article");
     card.className = "module-card";
     card.dataset.moduleId = module.id;
 
+    const isLibrary = module.category === "library";
+    const packageState = packageStatus?.state || "missing";
+    const hasLocalCopy = Boolean(packageStatus?.installed);
+    const installed = packageState === "installed";
+    const needsUpdate = packageState === "update";
     const top = document.createElement("div");
     top.className = "module-card-top";
+    const badge = isLibrary
+      ? (installed ? "Descargado" : needsUpdate ? "Actualización" : packageState === "unavailable" ? "No disponible" : "Descargable")
+      : (module.status === "integrated" ? (module.essential ? "Esencial" : "Incluido") : "Etapa " + module.stage);
+    const badgeState = isLibrary
+      ? (installed ? "status-integrated" : needsUpdate ? "status-planned" : "status-planned")
+      : (module.status === "integrated" ? "status-integrated" : "status-planned");
     top.append(
       createText("span", "module-card-category", categoryLabel(module.category)),
-      createText("span", "module-card-state " + (module.status === "integrated" ? "status-integrated" : "status-planned"),
-        module.status === "integrated" ? (module.essential ? "Esencial" : "Incluido") : "Etapa " + module.stage)
+      createText("span", "module-card-state " + badgeState, badge)
     );
 
     const title = createText("h3", "", module.name);
@@ -165,23 +184,85 @@
     const details = createText("p", "module-card-details", module.details || "");
     const meta = document.createElement("div");
     meta.className = "module-card-meta";
-    meta.append(createText("span", "", "v" + module.version));
-    if (Number.isInteger(module.articleCount)) meta.append(createText("span", "", module.articleCount + " artículos"));
-    else if (module.category === "library" || module.category === "foundation") meta.append(createText("span", "", "Contenido incluido"));
+    meta.append(createText("span", "", "v" + (isLibrary ? packageStatus?.entry?.version || "—" : module.version)));
+    if (isLibrary && packageStatus?.entry) {
+      meta.append(createText("span", "", formatBytes(packageStatus.entry.sizeBytes)));
+      meta.append(createText("span", "", packageStatus.entry.articleCount + " artículos"));
+    } else if (Number.isInteger(module.articleCount)) {
+      meta.append(createText("span", "", module.articleCount + " artículos"));
+    } else if (module.category === "foundation") {
+      meta.append(createText("span", "", "Contenido esencial"));
+    }
     if (module.essential) meta.append(createText("span", "", "No desinstalable"));
 
     const actions = document.createElement("div");
     actions.className = "module-card-actions";
-    const open = document.createElement("a");
-    open.className = "module-card-open";
-    if (module.status === "integrated" && module.href) {
-      open.href = module.href;
-      open.textContent = module.category === "core" ? "Ir al inicio →" : "Abrir biblioteca →";
+
+    if (isLibrary) {
+      const apiReady = Boolean(window.WebDevLibraries);
+      if (hasLocalCopy && module.href) {
+        const open = document.createElement("a");
+        open.className = "module-card-open";
+        open.href = module.href;
+        open.textContent = "Abrir biblioteca →";
+        actions.append(open);
+      }
+      if (!installed) {
+        const label = needsUpdate ? "Actualizar" : "Descargar";
+        const action = makeActionButton(label, "module-card-open", async () => {
+          action.disabled = true;
+          const initial = action.textContent;
+          try {
+            await window.WebDevLibraries.downloadLibrary(module.id, {
+              onProgress(progress) {
+                action.textContent = progress.total > 0
+                  ? "Descargando " + progress.percent + "%"
+                  : "Descargando…";
+              }
+            });
+            showToast(module.name + " quedó disponible sin conexión.");
+            await renderCatalog();
+            await updateStorage();
+          } catch (error) {
+            action.textContent = initial;
+            action.disabled = false;
+            showToast(error?.message || "No se pudo instalar la biblioteca.");
+          }
+        });
+        action.disabled = !apiReady || Boolean(packageStatus?.error) || packageState === "unavailable";
+        if (!apiReady) action.title = "El administrador de paquetes no está disponible.";
+        actions.append(action);
+      }
+
+      if (hasLocalCopy) {
+        const remove = makeActionButton("Quitar", "module-priority", async () => {
+          if (!window.confirm("Se quitará la copia sin conexión de " + module.name + ". No se borrarán tus favoritos, progreso, proyectos ni archivos del editor. ¿Continuar?")) return;
+          remove.disabled = true;
+          try {
+            await window.WebDevLibraries.removeLibrary(module.id);
+            showToast(module.name + " se quitó del almacenamiento local.");
+            await renderCatalog();
+            await updateStorage();
+          } catch (error) {
+            remove.disabled = false;
+            showToast(error?.message || "No se pudo quitar la biblioteca.");
+          }
+        });
+        actions.append(remove);
+      }
     } else {
-      open.textContent = "Disponible en etapa " + module.stage;
-      open.setAttribute("aria-disabled", "true");
-      open.tabIndex = -1;
-      open.classList.add("is-future");
+      const open = document.createElement("a");
+      open.className = "module-card-open";
+      if (module.status === "integrated" && module.href) {
+        open.href = module.href;
+        open.textContent = module.category === "core" ? "Ir al inicio →" : "Abrir sección →";
+      } else {
+        open.textContent = "Disponible en etapa " + module.stage;
+        open.setAttribute("aria-disabled", "true");
+        open.tabIndex = -1;
+        open.classList.add("is-future");
+      }
+      actions.append(open);
     }
 
     const priority = document.createElement("button");
@@ -197,7 +278,7 @@
       else state.priorities.add(module.id);
       try {
         await persistPriorities();
-        renderCatalog();
+        await renderCatalog();
         showToast(wasPinned ? "Se quitó de tus prioridades." : "Módulo agregado a tus prioridades.");
       } catch (error) {
         if (wasPinned) state.priorities.add(module.id);
@@ -206,17 +287,33 @@
       }
     });
 
-    actions.append(open, priority);
+    actions.append(priority);
     card.append(top, title, description, details, meta, actions);
     return card;
   }
 
-  function renderCatalog() {
+  let catalogRenderSequence = 0;
+  async function renderCatalog() {
     if (!state.catalog) return;
+    const sequence = ++catalogRenderSequence;
     const grid = $("#moduleGrid");
     const empty = $("#moduleEmpty");
     const visible = getVisibleModules();
-    grid.replaceChildren(...visible.map(renderModule));
+    const packageEntries = visible.filter(module => module.category === "library");
+    const statusPairs = await Promise.all(packageEntries.map(async module => {
+      try {
+        if (!window.WebDevLibraries?.getPackageStatus) {
+          return [module.id, { state: "unavailable", entry: null }];
+        }
+        return [module.id, await window.WebDevLibraries.getPackageStatus(module.id)];
+      } catch (error) {
+        console.warn("[WebDev Book] No se pudo consultar " + module.name + ":", error);
+        return [module.id, { state: "unavailable", entry: null, error }];
+      }
+    }));
+    if (sequence !== catalogRenderSequence) return;
+    const statuses = new Map(statusPairs);
+    grid.replaceChildren(...visible.map(module => renderModule(module, statuses.get(module.id))));
     $("#moduleResultCount").textContent = visible.length + (visible.length === 1 ? " módulo" : " módulos");
     empty.hidden = visible.length !== 0;
   }

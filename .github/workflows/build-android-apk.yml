@@ -7,6 +7,7 @@ on:
       - main
       - feat/capacitor-android-cloud-build
       - feat/module-center-core
+      - feat/downloadable-library-packs
     paths:
       - 'assets/**'
       - 'css/**'
@@ -64,7 +65,15 @@ jobs:
           node --check js/navigation.js
           node --check js/content-updates.js
           node --check js/module-manager.js
+          node --check js/library-packages.js
+          node --check js/tools-library.js
+          node --check js/search.js
+          node --check js/learning-progress.js
+          node --check scripts/generate-library-packages.mjs
+          node --check scripts/validate-library-packages.mjs
           node --check scripts/generate-content-manifest.mjs
+          node scripts/generate-library-packages.mjs
+          node scripts/validate-library-packages.mjs
           node scripts/validate-module-catalog.mjs
           node scripts/generate-content-manifest.mjs
 

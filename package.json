@@ -7,7 +7,9 @@
     "prepare:web": "node scripts/prepare-web.mjs",
     "android:sync": "npm run prepare:web && cap sync android",
     "android:open": "cap open android",
-    "validate:modules": "node scripts/validate-module-catalog.mjs"
+    "validate:modules": "node scripts/validate-module-catalog.mjs",
+    "generate:libraries": "node scripts/generate-library-packages.mjs",
+    "validate:libraries": "node scripts/validate-library-packages.mjs"
   },
   "dependencies": {
     "@capacitor/core": "8.6.2"
