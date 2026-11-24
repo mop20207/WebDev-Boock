@@ -39,7 +39,7 @@ jobs:
       - name: Commit generated packages when changed
         shell: bash
         run: |
-          if git diff --quiet -- modules/labs; then
+          if [ -z "$(git status --porcelain -- modules/labs)" ]; then
             echo "Los paquetes de laboratorios ya están actualizados."
             exit 0
           fi
