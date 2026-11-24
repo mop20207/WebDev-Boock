@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - feat/capacitor-android-cloud-build
+      - feat/module-center-core
     paths:
       - 'assets/**'
       - 'css/**'
